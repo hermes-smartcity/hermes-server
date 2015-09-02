@@ -5,7 +5,7 @@ DB_PASS=***REMOVED***
 DB_NAME=meco1401
 PSQL_FLAGS=-h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER) $(DB_NAME)
 
-all: download osm2HermesTN
+all: initdb download osmosis osm2po hermes osm2HermesTN
 
 target:
 	mkdir target
@@ -59,7 +59,7 @@ initdb: dropdb
 	@echo '==='
 	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE EXTENSION postgis; CREATE EXTENSION hstore;'
 
-osmosis: download_osmosis download_osm initdb
+osmosis: 
 	@echo '==='
 	@echo '=== pgsnapshot_schema'
 	@echo '==='
@@ -80,7 +80,7 @@ osmosis: download_osmosis download_osm initdb
 	@echo '==='
 	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE INDEX ways_i_tags ON ways USING gist (tags);'
 
-osm2po: download_osm2po initdb
+osm2po: 
 	@echo '==='
 	@echo '===  Split OSM ways'
 	@echo '==='
@@ -91,7 +91,13 @@ osm2po: download_osm2po initdb
 	@echo '==='
 	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f target/es_cor/es_cor_2po_4pgr.sql
 
-osm2HermesTN: initdb osmosis osm2po
+hermes: 
+	@echo '==='
+	@echo '===  Creating Hermes Schema'
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f ../common/hermes_schema.sql
+
+osm2HermesTN: osm2hermes.sql
 	@echo '==='
 	@echo '===  OSM2HermesTN'
 	@echo '==='

@@ -6,7 +6,7 @@ DB_NAME=meco1401_avi
 PSQL_FLAGS=-h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER) $(DB_NAME)
 SHP_FILES=eje_vial.shp eje_vial.dbf eje_vial.shx
 
-all: shp2HermesTN
+all: initdb shp hermes shp2HermesTN
 
 dropdb:
 	@echo '==='
@@ -25,13 +25,19 @@ initdb: dropdb
 	@echo '==='
 	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE EXTENSION postgis; CREATE EXTENSION pgrouting;'
 
-shp: initdb $(SHP_FILES)
+shp: $(SHP_FILES)
 	@echo '==='
 	@echo '=== Import SHP data'
 	@echo '==='
-	shp2pgsql -s 25830 -d -I -S eje_vial.shp es_avi_streets | psql $(PSQL_FLAGS)
+	shp2pgsql -s 25830 -d -I -S eje_vial.shp es_avi_streets | PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS)
 
-shp2HermesTN: initdb shp shp2hermes.sql
+hermes: 
+	@echo '==='
+	@echo '===  Creating Hermes Schema'
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f ../common/hermes_schema.sql
+
+shp2HermesTN: shp2hermes.sql 
 	@echo '==='
 	@echo '===  SHP2HermesTN'
 	@echo '==='
