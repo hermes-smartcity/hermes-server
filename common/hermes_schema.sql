@@ -292,8 +292,8 @@ CREATE OR REPLACE VIEW h_link AS
 
 DROP VIEW IF EXISTS h_link_seq;
 CREATE OR REPLACE VIEW h_link_seq AS 
-	SELECT hne.id id,
-		hne.osm_id osm_id,
+	SELECT hne.id seq_id,
+		hne.osm_id seq_osm_id,
 		h_link.id link_id,
 		h_link.osm_id link_osm_id, 
 		"order" link_order,

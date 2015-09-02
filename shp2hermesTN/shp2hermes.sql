@@ -41,12 +41,43 @@ UPDATE hermes_transport_link htl SET centerline_geometry = (
 -- Create a topology with Transport Nodes for our Links:
 INSERT INTO hermes_network_element (type) SELECT 'TransportNode' FROM generate_series(1, (SELECT count(*)*2 FROM hermes_transport_link));  -- Dirty fix to comply with the foreign keys during pgr_createTopology
 INSERT INTO hermes_transport_node (id) SELECT id FROM hermes_network_element;
-DROP TABLE IF EXISTS hermes_transport_link_vertices_pgr;
+DROP TABLE IF EXISTS hermes_transport_link_vertices_pgr CASCADE;
 SELECT pgr_createTopology('hermes_transport_link', 1, 'centerline_geometry', source:='start_node', target:='end_node');
 UPDATE hermes_transport_link SET start_node = currval('tmp_hermes_network_element_id') + start_node, end_node = currval('tmp_hermes_network_element_id') + end_node;
 UPDATE hermes_transport_node htn SET geometry = (SELECT the_geom FROM hermes_transport_link_vertices_pgr WHERE id + currval('tmp_hermes_network_element_id') = htn.id);
-DROP TABLE hermes_transport_link_vertices_pgr;
 DELETE FROM hermes_transport_node WHERE geometry IS NULL;
 DELETE FROM hermes_network_element WHERE id > (SELECT max(id) FROM hermes_transport_node);
+DROP TABLE hermes_transport_link_vertices_pgr CASCADE;
 
 DROP SEQUENCE tmp_hermes_network_element_id;
+
+-- TEMP: 
+SELECT pgr_createVerticesTable('hermes_transport_link', 'centerline_geometry', source:='start_node', target:='end_node');
+SELECT pgr_analyzeGraph('hermes_transport_link', 1.5, 'centerline_geometry', source:='start_node', target:='end_node');
+
+-- Nodes that are (probably) in a gap:
+DROP VIEW IF EXISTS bad_nodes;
+CREATE OR REPLACE VIEW bad_nodes AS (SELECT id, the_geom FROM hermes_transport_link_vertices_pgr WHERE chk > 0);
+
+-- Streets that intersect themselves in their definition:
+DROP VIEW IF EXISTS bad_streets;
+CREATE OR REPLACE VIEW bad_streets AS
+	SELECT gid, geom FROM es_avi_streets WHERE NOT ST_IsSimple(geom);
+
+-- Self intersection points of the above streets:
+DROP VIEW IF EXISTS self_intersections;
+CREATE OR REPLACE VIEW self_intersections AS
+	SELECT row_number() OVER (), geom
+	FROM (SELECT (ST_Dump(ST_Intersection(w1.geom, w2.geom))).geom geom
+		FROM (SELECT gid, (ST_Dump(ST_Node(geom))).geom geom FROM es_avi_streets WHERE NOT ST_IsSimple(geom)) w1
+		JOIN (SELECT gid, (ST_Dump(ST_Node(geom))).geom geom FROM es_avi_streets WHERE NOT ST_IsSimple(geom)) w2 ON w1.gid = w2.gid) intersections
+	WHERE GeometryType(geom) = 'POINT'
+	GROUP BY geom;
+
+-- Useless links that are covered by others:
+DROP VIEW IF EXISTS bad_links;
+CREATE OR REPLACE VIEW bad_links AS 
+	SELECT l2.id, l2.centerline_geometry
+	FROM hermes_transport_link l1
+		JOIN hermes_transport_link l2 ON l1.id != l2.id AND ST_Covers(l1.centerline_geometry, l2.centerline_geometry);
+
