@@ -3,6 +3,8 @@ DB_PORT=5432
 DB_USER=***REMOVED***
 DB_PASS=***REMOVED***
 DB_NAME=meco1401_imposm
+#OSM_FILE=avila_spain.osm
+OSM_FILE=acoruna_spain.osm
 PSQL_FLAGS=-h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER) $(DB_NAME)
 
 all: download osm2psql
@@ -14,10 +16,10 @@ download: target
 	@echo '==='
 	@echo '=== Download OSM data'
 	@echo '==='
-	wget https://s3.amazonaws.com/metro-extracts.mapzen.com/acoruna_spain.osm.bz2
-	mv acoruna_spain.osm.bz2 target
-	bzip2 -f -d target/acoruna_spain.osm.bz2
-	rm -f acoruna_spain.osm.bz2
+	wget https://s3.amazonaws.com/metro-extracts.mapzen.com/$(OSM_FILE).bz2
+	mv $(OSM_FILE).bz2 target
+	bzip2 -f -d target/$(OSM_FILE).bz2
+	rm -f $(OSM_FILE).bz2
 
 dropdb:
 	@echo '==='
@@ -40,7 +42,7 @@ imposm:
 	@echo '==='
 	@echo '=== imposm'
 	@echo '==='
-	imposm --read target/acoruna_spain.osm --cache-dir=target --merge-cache --mapping-file=hermesmapping.py 
+	imposm --read target/$(OSM_FILE) --cache-dir=target --merge-cache --mapping-file=hermesmapping.py 
 	imposm --write --cache-dir=target --connection postgis://$(DB_USER):$(DB_PASS)@$(DB_HOST)/$(DB_NAME) --mapping-file=hermesmapping.py
 
 osm2psql: initdb imposm

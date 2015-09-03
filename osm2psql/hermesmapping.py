@@ -55,7 +55,7 @@ db_conf = Options(
     password='osm',
     sslmode='allow',
     prefix='osm_new_',
-    proj='epsg:900913',
+    proj='epsg:25830',
 )
 
 class Highway(LineStrings):
