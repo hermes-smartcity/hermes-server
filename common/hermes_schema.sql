@@ -201,6 +201,39 @@ ALTER TABLE hermes_form_of_way ADD CONSTRAINT hermes_form_of_way_fk_transport_pr
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
 
+-- TRAFFIC SIGNALS:
+
+DROP TABLE IF EXISTS hermes_traffic_information;
+CREATE TABLE hermes_traffic_information (
+	id bigserial,
+	link_set_id bigint,
+	class varchar(255),
+	function varchar(255)[],
+	usage varchar(255),
+	direction varchar(255),
+	yearOfInstalation int,
+	trafficGroup varchar(255),
+	lod0Point geometry(Point),
+	-- TODO more geometries
+
+	CONSTRAINT hermes_traffic_information_pk PRIMARY KEY (id),
+	CONSTRAINT hermes_traffic_information_fk_transport_link_set FOREIGN KEY (link_set_id) 
+		REFERENCES hermes_transport_link_set(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS hermes_traffic_sign;
+CREATE TABLE hermes_traffic_sign (
+	id bigint,
+	height numeric,
+	characteristicLength numeric,
+	orientation numeric[4],
+
+	CONSTRAINT hermes_traffic_sign_pk PRIMARY KEY(id),
+	CONSTRAINT hermes_traffic_sign_fk_traffic_information FOREIGN KEY (id) 
+		REFERENCES hermes_traffic_information(id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
 -- GLOBAL INDEXES:
 
 CREATE INDEX hermes_network_element_i_osm_id 
@@ -260,6 +293,11 @@ $$ LANGUAGE plpgsql immutable;
 DROP CAST IF EXISTS (text AS integer);
 CREATE cast (text AS integer) WITH FUNCTION castToInt(text);
 
+CREATE OR REPLACE FUNCTION nearestNode(table_name text, x_long double precision, y_lat double precision, OUT nodo bigint) AS $$
+BEGIN
+    EXECUTE format('SELECT id FROM %I ORDER BY geometry <-> ''POINT(%s %s)''::geometry(Point) LIMIT 1', table_name, x_long, y_lat) INTO nodo;
+END;
+$$ LANGUAGE plpgsql;
 
 -- VIEWS FOR DEBUGING:
 

@@ -24,10 +24,17 @@ INSERT INTO hermes_transport_link (id, centerline_geometry, start_node, end_node
 		JOIN hermes_network_element hnet ON hnet.osm_id = w.osm_target_id;
 
 INSERT INTO hermes_transport_link_sequence (id) SELECT id FROM hermes_network_element WHERE type = 'TransportLinkSequence';
-INSERT INTO hermes_transport_link_sequence_transport_link (link_sequence_id, link_id, "order") 
-	SELECT htls.id, htl.id, (SELECT count(*) FROM hermes_network_element WHERE osm_id = htl.osm_id AND id < htl.id) 
+INSERT INTO hermes_transport_link_sequence_transport_link (link_sequence_id, link_id, "order", direction) 
+	SELECT htls.id, htl.id, (SELECT count(*) FROM hermes_network_element WHERE osm_id = htl.osm_id AND id < htl.id), CASE
+			WHEN w.tags->'oneway' = 'no' THEN 'bothDirections'	-- FIXME I shouldn't use this field to store the direction of the traffic flow...
+			WHEN w.tags->'oneway' = 'yes' OR w.tags->'oneway'='1' OR w.tags->'junction' = 'roundabout' 
+				OR w.tags->'highway' = 'motorway' OR w.tags->'highway' = 'motorway_link' THEN 'inDirection' 
+			WHEN w.tags->'oneway' = '-1' THEN 'inOppositeDirection'
+			ELSE 'bothDirections'
+		END 
 	FROM hermes_network_element htls 
 		JOIN hermes_network_element htl ON htl.type = 'TransportLink' AND htl.osm_id = htls.osm_id
+		JOIN ways w ON w.id = htls.osm_id
 	WHERE htls.type = 'TransportLinkSequence';
 
 DROP SEQUENCE tmp_hermes_network_element_id;

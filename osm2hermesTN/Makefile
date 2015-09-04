@@ -57,7 +57,7 @@ initdb: dropdb
 	@echo '==='
 	@echo '=== Create extensions'
 	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE EXTENSION postgis; CREATE EXTENSION hstore;'
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION pgRouting;'
 
 osmosis: 
 	@echo '==='
