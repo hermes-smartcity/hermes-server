@@ -115,6 +115,12 @@ CREATE TABLE hermes_form_of_way (
 	formOfWay varchar(255)
 );
 
+DROP TABLE IF EXISTS hermes_traffic_flow_direction CASCADE;
+CREATE TABLE hermes_traffic_flow_direction (
+	id bigint NOT NULL,
+	direction varchar(255)
+);
+
 -- HERMES TRANSPORT PROPERTIES PKS:
 
 ALTER TABLE hermes_network_reference ADD CONSTRAINT hermes_network_reference_pk PRIMARY KEY(id);
@@ -124,6 +130,7 @@ ALTER TABLE hermes_number_of_lanes ADD CONSTRAINT hermes_number_of_lanes_pk PRIM
 ALTER TABLE hermes_road_name ADD CONSTRAINT hermes_road_name_pk PRIMARY KEY(id);
 ALTER TABLE hermes_vertical_position ADD CONSTRAINT hermes_vertical_position_pk PRIMARY KEY(id);
 ALTER TABLE hermes_form_of_way ADD CONSTRAINT hermes_form_of_way_pk PRIMARY KEY(id);
+ALTER TABLE hermes_traffic_flow_direction ADD CONSTRAINT hermes_traffic_flow_direction_pk PRIMARY KEY(id);
 
 
 -- GLOBAL FKS:
@@ -200,13 +207,19 @@ ALTER TABLE hermes_form_of_way ADD CONSTRAINT hermes_form_of_way_fk_transport_pr
 	FOREIGN KEY (id) REFERENCES hermes_transport_property(id) 
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE hermes_traffic_flow_direction ADD CONSTRAINT hermes_traffic_flow_direction_fk_transport_property 
+	FOREIGN KEY (id) REFERENCES hermes_transport_property(id) 
+	ON UPDATE CASCADE ON DELETE CASCADE;
+
 
 -- TRAFFIC SIGNALS:
 
-DROP TABLE IF EXISTS hermes_traffic_information;
+DROP TABLE IF EXISTS hermes_traffic_information CASCADE;
 CREATE TABLE hermes_traffic_information (
 	id bigserial,
-	link_set_id bigint,
+	link_set_id bigint, -- TODO remove this
+	position bigint,
+	effect bigint,
 	class varchar(255),
 	function varchar(255)[],
 	usage varchar(255),
@@ -218,10 +231,14 @@ CREATE TABLE hermes_traffic_information (
 
 	CONSTRAINT hermes_traffic_information_pk PRIMARY KEY (id),
 	CONSTRAINT hermes_traffic_information_fk_transport_link_set FOREIGN KEY (link_set_id) 
-		REFERENCES hermes_transport_link_set(id) ON UPDATE CASCADE ON DELETE CASCADE
+		REFERENCES hermes_transport_link_set(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	CONSTRAINT hermes_traffic_information_fk_position FOREIGN KEY (position) 
+		REFERENCES hermes_network_reference(id) ON UPDATE SET NULL ON DELETE SET NULL,
+	CONSTRAINT hermes_traffic_information_fk_effect FOREIGN KEY (effect) 
+		REFERENCES hermes_network_reference(id) ON UPDATE SET NULL ON DELETE SET NULL
 );
 
-DROP TABLE IF EXISTS hermes_traffic_sign;
+DROP TABLE IF EXISTS hermes_traffic_sign CASCADE;
 CREATE TABLE hermes_traffic_sign (
 	id bigint,
 	height numeric,
@@ -296,6 +313,17 @@ CREATE cast (text AS integer) WITH FUNCTION castToInt(text);
 CREATE OR REPLACE FUNCTION nearestNode(table_name text, x_long double precision, y_lat double precision, OUT nodo bigint) AS $$
 BEGIN
     EXECUTE format('SELECT id FROM %I ORDER BY geometry <-> ''POINT(%s %s)''::geometry(Point) LIMIT 1', table_name, x_long, y_lat) INTO nodo;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION compareSlope(a double precision, b double precision) RETURNS double precision AS $$
+BEGIN
+	RETURN CASE
+	WHEN a - b > 270 THEN a - b - 360
+	WHEN a - b > 90 THEN a - b - 180
+	WHEN a - b < -270 THEN a - b + 360
+	WHEN a - b < -90 THEN a - b + 180
+	ELSE a - b END;
 END;
 $$ LANGUAGE plpgsql;
 
