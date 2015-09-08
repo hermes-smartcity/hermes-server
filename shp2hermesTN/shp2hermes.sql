@@ -29,13 +29,16 @@ INSERT INTO hermes_transport_link_sequence (id) SELECT id FROM hermes_network_el
 
 -- Map each splitted link to a Transport Link within a Sequence:
 SELECT setval('tmp_hermes_network_element_id', currval('hermes_network_element_id_seq')); -- Evitarme un join
-INSERT INTO hermes_network_element (osm_id, type) SELECT street_id, 'TransportLink' FROM es_avi_links;
+INSERT INTO hermes_network_element (type) SELECT 'TransportLink' FROM es_avi_links;
 INSERT INTO hermes_transport_link (id) SELECT id FROM hermes_network_element WHERE id > currval('tmp_hermes_network_element_id');
-INSERT INTO hermes_transport_link_sequence_transport_link (link_sequence_id, link_id, "order") SELECT street_id, nextval('tmp_hermes_network_element_id'), "order" FROM es_avi_links;
+INSERT INTO hermes_transport_link_sequence_transport_link (link_sequence_id, link_id, "order") SELECT hne.id, nextval('tmp_hermes_network_element_id'), "order" 
+	FROM es_avi_links eal
+		JOIN hermes_network_element hne ON hne.type = 'TransportLinkSequence' AND hne.osm_id = eal.street_id;
 UPDATE hermes_transport_link htl SET centerline_geometry = (
 	SELECT eal.geom 
 	FROM es_avi_links eal 
-		JOIN hermes_transport_link_sequence_transport_link htlstl ON htlstl.link_sequence_id = eal.street_id AND htlstl."order" = eal."order"
+		JOIN hermes_network_element hne ON hne.type = 'TransportLinkSequence' AND hne.osm_id = eal.street_id
+		JOIN hermes_transport_link_sequence_transport_link htlstl ON htlstl.link_sequence_id = hne.id AND htlstl."order" = eal."order"
 	WHERE htlstl.link_id = htl.id);
 
 -- Create a topology with Transport Nodes for our Links:
