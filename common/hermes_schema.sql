@@ -121,6 +121,21 @@ CREATE TABLE hermes_traffic_flow_direction (
 	direction varchar(255)
 );
 
+DROP TABLE IF EXISTS hermes_speed_limit CASCADE;
+CREATE TABLE hermes_speed_limit (
+	id bigint NOT NULL,
+	speedLimitMinMaxType varchar(255) NOT NULL DEFAULT 'maximum',
+	speedLimitValue numeric NOT NULL,
+	areaCondicion varchar(255),
+	direction varchar(255),
+	laneExtension integer,
+	speedLimitSource varchar(255),
+	startLane integer,
+	validityPeriod varchar(255),
+	vehicleType varchar(255),
+	weatherCondicion varchar(255)
+);
+
 -- HERMES TRANSPORT PROPERTIES PKS:
 
 ALTER TABLE hermes_network_reference ADD CONSTRAINT hermes_network_reference_pk PRIMARY KEY(id);
@@ -131,6 +146,7 @@ ALTER TABLE hermes_road_name ADD CONSTRAINT hermes_road_name_pk PRIMARY KEY(id);
 ALTER TABLE hermes_vertical_position ADD CONSTRAINT hermes_vertical_position_pk PRIMARY KEY(id);
 ALTER TABLE hermes_form_of_way ADD CONSTRAINT hermes_form_of_way_pk PRIMARY KEY(id);
 ALTER TABLE hermes_traffic_flow_direction ADD CONSTRAINT hermes_traffic_flow_direction_pk PRIMARY KEY(id);
+ALTER TABLE hermes_speed_limit ADD CONSTRAINT hermes_speed_limit_pk PRIMARY KEY(id);
 
 
 -- GLOBAL FKS:
@@ -208,6 +224,10 @@ ALTER TABLE hermes_form_of_way ADD CONSTRAINT hermes_form_of_way_fk_transport_pr
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE hermes_traffic_flow_direction ADD CONSTRAINT hermes_traffic_flow_direction_fk_transport_property 
+	FOREIGN KEY (id) REFERENCES hermes_transport_property(id) 
+	ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE hermes_speed_limit ADD CONSTRAINT hermes_speed_limit_fk_transport_property 
 	FOREIGN KEY (id) REFERENCES hermes_transport_property(id) 
 	ON UPDATE CASCADE ON DELETE CASCADE;
 
