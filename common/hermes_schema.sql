@@ -392,30 +392,24 @@ CREATE OR REPLACE VIEW h_link_seq AS
 		t_id,
 		t_osm_id,
 		t_geometry,
-		hnr.id ref_id,
-		hnr.atPosition ref_atPosition,
-		hnr.fromPosition ref_fromPosition,
-		hnr.toPosition ref_toPosition,
-		hnr."offset" ref_offset,
 
 		(SELECT first(name) 
 			FROM hermes_road_name hrn 
 				JOIN hermes_network_reference_transport_property hnrtp ON hnrtp.transport_property_id = hrn.id 
-			WHERE hnrtp.network_reference_id = hnr.id) AS name,
+				JOIN hermes_network_reference hnr ON hnr.network_element_id = hne.id AND hnr.id = hnrtp.network_reference_id) AS name,
 		(SELECT array_agg(numberOfLanes) 
 			FROM hermes_number_of_lanes hnol
 				JOIN hermes_network_reference_transport_property hnrtp ON hnrtp.transport_property_id = hnol.id 
-			WHERE hnrtp.network_reference_id = hnr.id) AS numberOfLanes,
+				JOIN hermes_network_reference hnr ON hnr.network_element_id = hne.id AND hnr.id = hnrtp.network_reference_id) AS numberOfLanes,
 		(SELECT first(verticalPosition) 
 			FROM hermes_vertical_position hvp 
 				JOIN hermes_network_reference_transport_property hnrtp ON hnrtp.transport_property_id = hvp.id 
-			WHERE hnrtp.network_reference_id = hnr.id) AS verticalPosition,
+				JOIN hermes_network_reference hnr ON hnr.network_element_id = hne.id AND hnr.id = hnrtp.network_reference_id) AS verticalPosition,
 		(SELECT array_agg(formOfWay) 
 			FROM hermes_form_of_way hfow
 				JOIN hermes_network_reference_transport_property hnrtp ON hnrtp.transport_property_id = hfow.id 
-			WHERE hnrtp.network_reference_id = hnr.id) AS formOfWay
+				JOIN hermes_network_reference hnr ON hnr.network_element_id = hne.id AND hnr.id = hnrtp.network_reference_id) AS formOfWay
 
 	FROM h_link 
 		JOIN hermes_transport_link_sequence_transport_link htlstl ON htlstl.link_id = h_link.id
-		JOIN hermes_network_element hne ON hne.id = htlstl.link_sequence_id 
-		LEFT JOIN hermes_network_reference hnr ON hnr.network_element_id = hne.id;
+		JOIN hermes_network_element hne ON hne.id = htlstl.link_sequence_id;
