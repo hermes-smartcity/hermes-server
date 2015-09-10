@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	
+	<definition name="events/dataSection/listar" extends="baseAdmin">
+		<!-- <put-attribute name="entradaMenu" value="xestorContidos"/> -->
+		<!-- <put-attribute name="accion" value="crear" /> -->
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/events/dataSection/listar.jspx" />
+		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/admin/xestorContidos/submenu.jspx"/>	-->
+	</definition>
+	
+	<definition name="events/measurement/listar" extends="baseAdmin">
+		<!-- <put-attribute name="entradaMenu" value="xestorContidos"/> -->
+		<!-- <put-attribute name="accion" value="crear" /> -->
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/events/measurement/listar.jspx" />
+		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/admin/xestorContidos/submenu.jspx"/>	-->
+	</definition>
+	
+	<definition name="events/vehicleLocation/listar" extends="baseAdmin">
+		<!-- <put-attribute name="entradaMenu" value="xestorContidos"/> -->
+		<!-- <put-attribute name="accion" value="crear" /> -->
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/events/vehicleLocation/listar.jspx" />
+		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/admin/xestorContidos/submenu.jspx"/>	-->
+	</definition>
+	
+</tiles-definitions>

@@ -1,0 +1,7 @@
+WARNING=DO NOT MODIFY THIS FILE IF YOU DON'T UNDERSTAND
+defaultDestination=@target/citydriver-0.1
+defaultVariables=
+eclipse.preferences.version=1
+includeTeamPrivateFiles=true
+map|0=src/main/webapp|,|,|,|,
+useCurrentDateForDestinationFiles=false

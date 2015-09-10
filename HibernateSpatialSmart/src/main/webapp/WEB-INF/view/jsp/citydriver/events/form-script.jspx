@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+
+	<c:url var="ckeditor" value="/view/js/ckeditor/ckeditor.js" />
+	<script type="text/javascript" src="${ckeditor}"><!-- c --></script>
+	<fmt:message var="confirmarProcesoFmt" key="admin.comun.confirmarPrevisualizacionParcial" />
+	<c:url value="/usuarioXestor/literatura" var="rutaLiteratura" />
+	
+	<script type="text/javascript">
+	
+	<![CDATA[
+  	//<![CDATA[  	           
+	
+		$("document").ready(function() {	
+			
+			comprobarPestanaActual('${pestana}');
+		
+			$(".pestanasFormulario .selectoresFormulario .selector").click(function() {			
+   				var indice = $(".pestanasFormulario .selectoresFormulario .selector").index($(this));
+   				$(".pestanasFormulario .selectoresFormulario .activa").removeClass("activa");
+   				$(this).addClass("activa");
+   				var fichas = $($(this)).parent().siblings(".fichas");
+   				$(fichas).find(".activa").removeClass("activa");
+   				$($(fichas).find(".ficha")[indice]).addClass("activa");
+   			});
+   								
+	});	
+	
+	
+	function comprobarPestanaActual(pestana){
+		if(pestana == 'pestanaFragmentos'){
+			mudarPestana();
+		}
+	}
+	
+	function mudarPestana(){
+		var indice = 1;
+		$(".pestanasFormulario .selectoresFormulario .activa").removeClass("activa");
+		$("#selectorF").addClass("activa");
+		var fichas = $("#selectorF").parent().siblings(".fichas");
+		$(fichas).find(".activa").removeClass("activa");
+		$($(fichas).find(".ficha")[indice]).addClass("activa");
+   }
+	//]]>]]&gt;
+	</script>
+
+</jsp:root>
