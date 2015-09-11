@@ -336,6 +336,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION normalizeAngle(a double precision) RETURNS double precision AS $$
+DECLARE
+	turns int := sign(a)*(abs(trunc(a/360)) + (sign(a) = -1)::int);
+BEGIN
+	RETURN a - turns*360;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION compareSlope(a double precision, b double precision) RETURNS double precision AS $$
 BEGIN
 	RETURN CASE

@@ -1,3 +1,19 @@
+
+-- p: starting point
+-- h: triangle's height from p
+-- a: azimuth of one of the sides from p in grades
+-- b: angle between the two sides of p in grades. Negative means counter-clockwise
+CREATE OR REPLACE FUNCTION makeTriangle(p Geometry(Point), h float, a float, b float) RETURNS Geometry AS $$
+DECLARE
+	b float := radians(b);
+	a float := -radians(a-90);
+	hi float := h*cos(b/2); -- length of the sides of p, or the hipothenuse of the semi-triangles if divided by its height
+BEGIN
+	RETURN ST_MakePolygon(ST_MakeLine(ARRAY[p, ST_Translate(p, hi*cos(a), hi*sin(a)), ST_Translate(p, hi*cos(a+b), hi*sin(a+b))::Geometry, p]));
+END;
+$$ LANGUAGE plpgsql;
+
+
 -- Traffic signs:
 DROP VIEW IF EXISTS h_traffic_sign;
 CREATE OR REPLACE VIEW h_traffic_sign AS
@@ -18,9 +34,10 @@ CREATE OR REPLACE VIEW h_traffic_sign AS
 				'origin' ref_type, 
 				ST_Distance(eas.geom, centerline_geometry) -- Close
 					+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(centerline_geometry), ST_EndPoint(centerline_geometry))), azimut)) -- With a parallel slope
+					+ abs(normalizeAngle(degrees(ST_Azimuth(eas.geom, ST_ClosestPoint(centerline_geometry, eas.geom))) - azimut) - 90) -- To the left of the sign
 					ref_score
 			FROM hermes_transport_link htl
-			WHERE tipo = 'R101' AND (eas.geom <#> centerline_geometry) < 20
+			WHERE tipo = 'R101' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut+135, 90), centerline_geometry)
 			ORDER BY ref_score
 			LIMIT 1)
 			UNION ALL
@@ -32,7 +49,7 @@ CREATE OR REPLACE VIEW h_traffic_sign AS
 					+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(centerline_geometry), ST_EndPoint(centerline_geometry))), azimut)) -- With a parallel slope
 					ref_score
 			FROM hermes_transport_link htl
-			WHERE tipo = 'R302' AND (eas.geom <#> centerline_geometry) < 20
+			WHERE tipo = 'R302' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut-45, 90), centerline_geometry)
 			ORDER BY ref_score
 			LIMIT 1)
 			UNION ALL
@@ -42,11 +59,11 @@ CREATE OR REPLACE VIEW h_traffic_sign AS
 				'dest1' ref_type, 
 				ST_Distance(eas.geom, centerline_geometry) -- Close
 					- abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(centerline_geometry), ST_EndPoint(centerline_geometry))), azimut)) -- With a perpendicular slope
-					+ abs(compareSlope(degrees(ST_Azimuth(eas.geom, ST_Centroid(centerline_geometry))), azimut) - 90) -- To the right of the sign
+					--+ abs(compareSlope(degrees(ST_Azimuth(eas.geom, ST_Centroid(centerline_geometry))), azimut) - 90) -- To the right of the sign
 					ref_score
 				
 			FROM hermes_transport_link htl
-			WHERE tipo = 'R302' AND (eas.geom <#> centerline_geometry) < 20
+			WHERE tipo = 'R302' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut+180, 90), centerline_geometry)
 			ORDER BY ref_score
 			LIMIT 1)
 			UNION ALL
@@ -62,7 +79,7 @@ CREATE OR REPLACE VIEW h_traffic_sign AS
 				JOIN hermes_transport_link_sequence_transport_link htlstl ON htlstl.link_id = htl.id
 				JOIN hermes_network_element hne ON hne.id = htlstl.link_sequence_id
 				JOIN es_avi_streets streets ON streets.gid = hne.osm_id
-			WHERE tipo = 'R301-30' AND (eas.geom <#> centerline_geometry) < 20
+			WHERE tipo = 'R301-30' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut+135, 90), centerline_geometry)
 			ORDER BY ref_score
 			LIMIT 1)
 		) ref;
