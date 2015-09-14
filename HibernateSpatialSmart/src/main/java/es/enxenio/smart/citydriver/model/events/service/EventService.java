@@ -8,9 +8,9 @@ import es.enxenio.smart.citydriver.util.PararEventManagerException;
 
 public interface EventService {
 	
-	public void startEventManager(EventManager eventManager) throws ArrancarEventManagerException;
+	public void startEventManager(EventManager eventManager) throws InterruptedException, ArrancarEventManagerException;
 	
-	public void stopEventManager(EventManager eventManager) throws PararEventManagerException;
+	public void stopEventManager(EventManager eventManager) throws InterruptedException, PararEventManagerException;
 	
 	public EventoProcesado get(Long id);
 	

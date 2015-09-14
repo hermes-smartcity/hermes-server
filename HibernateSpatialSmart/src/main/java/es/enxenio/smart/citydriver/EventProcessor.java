@@ -31,16 +31,16 @@ public class EventProcessor extends Thread {
 	private static final String URI_RECUPERAR_EVENTOS_PASADOS = "http://hermes1.gast.it.uc3m.es:9102/dbfeed/long-polling?last-seen=";
 	ApplicationContext context = new FileSystemXmlApplicationContext("src\\main\\java\\es\\enxenio\\smart\\citydriver\\spring-config.xml");
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	// Escucha los eventos pasados, le envian en un buffer todos los eventos durante el tiempo de desconexión
 	public void escucharEventosPasados(){
 		EventService eventService = (EventService) context.getBean("eventService");
 		EventoProcesado eventoProcesado = eventService.obterEventoProcesado();
-
+		
 		if(eventoProcesado!=null){
 			logger.info("Escuchando eventos pasados");			
 			final Response response = establecerConexion(URI_RECUPERAR_EVENTOS_PASADOS+eventoProcesado.getEventId(), "application/json");	
-			procesarEventosEnviados(response, false);
+			procesarEventosEnviadosPasados(response);
 		}	
 	}
 
@@ -48,7 +48,7 @@ public class EventProcessor extends Thread {
 	public void escucharEventos(){
 		final Response response = establecerConexion(URI, "application/x-ldjson");
 		logger.info("Escuchando eventos en tiempo real");	
-		procesarEventosEnviados(response, true);
+		procesarEventosEnviados(response);
 	}
 
 	// Comportamiento del thread
@@ -64,103 +64,81 @@ public class EventProcessor extends Thread {
 
 		final Response response = client.target(url).request()
 				.accept(cabecera).get();
-		
+
 		return response;
 	}
 
 	// Procesamos los eventos enviamos en formato JSON
-	private void procesarEventosEnviados(Response response, boolean actuales){
+	private void procesarEventosEnviados(Response response){
 		String chunk;
 		JSONParser parser = new JSONParser();
 
 		final ChunkedInput<String> chunkedInput = response
 				.readEntity(new GenericType<ChunkedInput<String>>() {
 				});
-		
+
 		logger.info("Procesando eventos");
-		
-		while (actuales && (chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {					
+
+		while ((chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {					
 			Object obj;
-			try {
-				System.out.println("11111- "+chunk);
+			try {				
 				obj = parser.parse(chunk);
 				JSONObject eventoJSON = (JSONObject) obj;
-				procesarEvento(eventoJSON);				
+				System.out.println("eventoJSON: "+eventoJSON);
+				// 				procesarEvento(eventoJSON);				
 			} catch (ParseException e) {
 				logger.error("Error convirtiendo chunk a JSON: "+e);				
 				e.printStackTrace();					
 			}		
 		}
-		
-		if(!actuales){
-			try {
-				chunk = chunkedInput.read();				
-				Object obj = parser.parse(chunk);
-				// Me envían un array JSON con todos los eventos pasados
-				JSONArray eventosArray = (JSONArray) obj;
-	
-				for(int i=0;i<eventosArray.size();i++){
-					JSONObject eventoJSON = (JSONObject) eventosArray.get(i);
-					procesarEvento(eventoJSON);
-				}
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				logger.error("Error convirtiendo chunk a JSON: "+e);				
-				e.printStackTrace();					
-			}
-			chunkedInput.close();
-		}
 
 		return;
 	}
 
-//	private void procesarEventosEnviadosPasados(Response response){
-//		String chunk;
-//		JSONParser parser = new JSONParser();
-//
-//		final ChunkedInput<String> chunkedInput = response
-//				.readEntity(new GenericType<ChunkedInput<String>>() {
-//				});
-//
-//		//		boolean interrumpido = isInterrupted();
-//		chunk = chunkedInput.read();
-//
-//		Object obj;
-//		try {
-//			System.out.println("-------------- "+chunk);
-//			obj = parser.parse(chunk);
-//			JSONArray eventosArray = (JSONArray) obj;
-//
-//			for(int i=0;i<eventosArray.size();i++){
-//				JSONObject eventoJSON = (JSONObject) eventosArray.get(i);
-//			}
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println("Error convirtiendo chunk a JSON: "+e);
-//			e.printStackTrace();					
-//		} catch (NullPointerException e) {
-//			// logger.error("Excepción recuperando tipo de evento ",e);
-//			System.out.println("Excepción recuperando tipo de evento " + e );			
-//		}			
-//
-//		//		chunkedInput.close();
-//
-//		return;
-//	}
+	private void procesarEventosEnviadosPasados(Response response){
 
-	// Almacenamos los diferentes tipos de eventos en la BD
-	private void procesarEvento(JSONObject eventoJSON){
-		EventType tipoEvento = null;
-//		try {
+		String chunk;
+		JSONParser parser = new JSONParser();
+
+		final ChunkedInput<String> chunkedInput = response
+				.readEntity(new GenericType<ChunkedInput<String>>() { });
+
+		chunk = chunkedInput.read();
+
+		Object obj;
+		try {
+			chunk = chunkedInput.read();				
+			obj = parser.parse(chunk);
+			// Me envían un array JSON con todos los eventos pasados
+			JSONArray eventosArray = (JSONArray) obj;
+			
+			for(int i=0;i<eventosArray.size();i++){
+				JSONObject eventoJSON = (JSONObject) eventosArray.get(i);
+				System.out.println("--eventoJSON: "+eventoJSON);
+				//			procesarEvento(eventoJSON);
+			}
+		} catch (ParseException e) {
+			logger.error("Error convirtiendo chunk a JSON: "+e);				
+			e.printStackTrace();					
+		}
+		chunkedInput.close();
+		
+				return;
+		}
+
+		// Almacenamos los diferentes tipos de eventos en la BD
+		private void procesarEvento(JSONObject eventoJSON){
+			EventType tipoEvento = null;
+			//		try {
 			System.out.println("-------------- "+eventoJSON);
 			tipoEvento = EventType.getTipo((String) eventoJSON.get("Event-Type"));
 			System.out.println(" "+tipoEvento);
 			EventStrategy estrategia = EventFactory.getEvent(tipoEvento);
 			estrategia.processEvent(eventoJSON);
 			logger.info("Guardado el evento con Event-Type: "+tipoEvento.getName());
-//		} catch (NullPointerException e) {
-//			logger.error("Excepción recuperando tipo de evento "+ e);	
-//		}		
-		
+			//		} catch (NullPointerException e) {
+			//			logger.error("Excepción recuperando tipo de evento "+ e);	
+			//		}		
+
+		}
 	}
-}

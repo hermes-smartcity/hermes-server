@@ -2,6 +2,8 @@ package es.enxenio.smart.citydriver;
 
 import java.util.concurrent.Semaphore;
 
+import es.enxenio.smart.citydriver.util.PararEventManagerException;
+
 // Singleton . Sera guardado en session. Desde aqui se llamara a eventProcessor, que escuchará y almacenará los eventos
 public class EventManager{
 
@@ -17,17 +19,19 @@ public class EventManager{
 	}
 
 	public void startEventProcessor(){
-		if(this.eventProcessor==null)
+		if(this.eventProcessor==null) {
 			this.eventProcessor =  new Thread(new EventProcessor());
-		// Comienzo a escuchar todos los eventos desde el ultimo que me enviaron
-		this.eventProcessor.start();
+			// Comienzo a escuchar todos los eventos desde el ultimo que me enviaron
+			this.eventProcessor.start();
+		}
 	}
 
-	public void stopEventProcessor(){
-		if(this.eventProcessor!=null){			
-			this.eventProcessor.interrupt();			
-			this.eventProcessor = null;
-		}	
+	public void stopEventProcessor() /*throws PararEventManagerException */{
+		if(this.eventProcessor!=null){
+				this.eventProcessor.interrupt();			
+				this.eventProcessor = null;
+			
+		} /* else throw new PararEventManagerException();*/	
 
 	}
 

@@ -19,14 +19,14 @@ public class EventServiceImpl implements EventService {
 	@Autowired
 	private EventoProcesadoDao eventoProcesadoDao;
 	
-	public void startEventManager(EventManager eventManager) throws ArrancarEventManagerException {
+	public void startEventManager(EventManager eventManager) throws InterruptedException, ArrancarEventManagerException {
 		if(eventManager.getSemaphore().tryAcquire()){
 			eventManager.startEventProcessor();
 			eventManager.getSemaphore().release();	
 		} else throw new ArrancarEventManagerException();
 	}
 
-	public void stopEventManager(EventManager eventManager) throws PararEventManagerException {		
+	public void stopEventManager(EventManager eventManager) throws InterruptedException, PararEventManagerException {		
 		if(eventManager.getSemaphore().tryAcquire()){
 			eventManager.stopEventProcessor();
 			eventManager.getSemaphore().release();
