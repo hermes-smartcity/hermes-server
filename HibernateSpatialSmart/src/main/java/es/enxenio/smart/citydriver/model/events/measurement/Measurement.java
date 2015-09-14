@@ -46,6 +46,10 @@ public class Measurement implements Serializable{
     	@JoinColumn(name = "idUsuario")
     	private Usuario usuario;
         
+        @Version
+    	@SuppressWarnings("unused")
+    	private long version;
+        
         public Measurement() {
         }
 
@@ -103,6 +107,14 @@ public class Measurement implements Serializable{
 
 		public void setUsuario(Usuario usuario) {
 			this.usuario = usuario;
+		}
+
+		public long getVersion() {
+			return version;
+		}
+
+		public void setVersion(long version) {
+			this.version = version;
 		}
 
 }

@@ -19,6 +19,10 @@ public class EventoProcesado implements Serializable{
 		private Calendar timestamp;
         
 		private String eventId;
+		
+		@Version
+		@SuppressWarnings("unused")
+		private long version;
        
         public EventoProcesado() {
         }
@@ -46,4 +50,13 @@ public class EventoProcesado implements Serializable{
 		public void setEventId(String eventId) {
 			this.eventId = eventId;
 		}
+
+		public long getVersion() {
+			return version;
+		}
+
+		public void setVersion(long version) {
+			this.version = version;
+		}
+		
 }

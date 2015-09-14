@@ -21,6 +21,9 @@ public class Usuario implements Serializable{
 
 		private String sourceId;
 		
+		@Version
+		@SuppressWarnings("unused")
+		private long version;
 		        
         public Usuario() {
         }
@@ -41,4 +44,12 @@ public class Usuario implements Serializable{
 			this.sourceId = sourceId;
 		}
 
+		public long getVersion() {
+			return version;
+		}
+
+		public void setVersion(long version) {
+			this.version = version;
+		}
+		
 }

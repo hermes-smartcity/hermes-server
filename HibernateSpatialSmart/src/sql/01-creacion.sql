@@ -7,10 +7,9 @@ create sequence usuario_id_seq;
 CREATE TABLE usuario (
   id bigint NOT NULL DEFAULT nextval('usuario_id_seq'::regclass),
   sourceId VARCHAR(160),
+  version bigint not null default 0,
   CONSTRAINT usuario_id_pk PRIMARY KEY (id)
 );
-
-
 
 -- measurement --
 drop table if exists measurement cascade;
@@ -25,10 +24,10 @@ CREATE TABLE measurement (
   tipo VARCHAR(20) NOT NULL,
   value integer NOT NULL,
   idUsuario BIGINT,
+  version bigint not null default 0,
   CONSTRAINT idmeasurement_pk PRIMARY KEY (id),
   CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
-
 
 -- vehicleLocation --
 drop table if exists vehicleLocation cascade;
@@ -41,10 +40,10 @@ CREATE TABLE vehicleLocation (
   position geometry(POINT, 4258),
   eventId VARCHAR(50) NOT NULL,
   idUsuario BIGINT,
+  version bigint not null default 0,
   CONSTRAINT idvehicleLocation_pk PRIMARY KEY (id),
   CONSTRAINT vehicleLocation_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
-
 
 -- dataSection --
 drop table if exists dataSection cascade;
@@ -73,12 +72,12 @@ CREATE TABLE dataSection (
    meanBeatBeat double precision,
    medianBeatBeat integer,
    idUsuario BIGINT,
+   version bigint not null default 0,
   CONSTRAINT iddataSection_pk PRIMARY KEY (id),
   CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 -- eventoProcesado --
-
 drop table if exists eventoProcesado cascade;
 drop sequence if exists eventoProcesado_id_seq cascade;
 create sequence eventoProcesado_id_seq;
@@ -86,5 +85,35 @@ create sequence eventoProcesado_id_seq;
 CREATE TABLE eventoProcesado (
   id bigint NOT NULL DEFAULT nextval('eventoProcesado_id_seq'::regclass),
   timestamp timestamp without time zone,
-  eventId VARCHAR(50) NOT NULL
+  eventId VARCHAR(50) NOT NULL,
+  version bigint not null default 0
+);
+
+-- menu --
+drop table if exists menu cascade;
+drop sequence if exists menu_id_seq cascade;
+create sequence menu_id_seq;
+
+CREATE TABLE menu (
+  id bigint NOT NULL DEFAULT nextval('menu_id_seq'::regclass),
+  texto TEXT,
+  url VARCHAR(255),
+  orden integer not null default 0,
+  idPadre bigint,
+  version bigint not null default 0,
+  CONSTRAINT idMenu_pk PRIMARY KEY (id),
+  CONSTRAINT padre_fk_menu FOREIGN KEY (idPadre) REFERENCES menu(id) ON DELETE CASCADE
+);
+
+-- estatica --
+drop table if exists estatica cascade;
+drop sequence if exists estatica_id_seq cascade;
+create sequence estatica_id_seq;
+
+CREATE TABLE estatica (
+  id bigint NOT NULL DEFAULT nextval('estatica_id_seq'::regclass),
+  titulo VARCHAR(255) NOT NULL,
+  contenido TEXT,
+  version bigint not null default 0,
+  CONSTRAINT idEstatica_pk PRIMARY KEY (id)
 );

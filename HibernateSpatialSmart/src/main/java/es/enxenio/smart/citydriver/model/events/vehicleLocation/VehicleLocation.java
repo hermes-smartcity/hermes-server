@@ -38,6 +38,10 @@ public class VehicleLocation implements Serializable{
 		@ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuario")
     	private Usuario usuario;
+		
+		@Version
+		@SuppressWarnings("unused")
+		private long version;
         
         public VehicleLocation() {
         }
@@ -86,5 +90,14 @@ public class VehicleLocation implements Serializable{
 
 		public void setUsuario(Usuario usuario) {
 			this.usuario = usuario;
+		}
+
+		public long getVersion() {
+			return version;
+		}
+
+		public void setVersion(long version) {
+			this.version = version;
 		}		
+		
 }

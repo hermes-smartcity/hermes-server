@@ -85,7 +85,7 @@ public class EventProcessor extends Thread {
 				obj = parser.parse(chunk);
 				JSONObject eventoJSON = (JSONObject) obj;
 				System.out.println("eventoJSON: "+eventoJSON);
-				// 				procesarEvento(eventoJSON);				
+				procesarEvento(eventoJSON);				
 			} catch (ParseException e) {
 				logger.error("Error convirtiendo chunk a JSON: "+e);				
 				e.printStackTrace();					
