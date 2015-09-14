@@ -1,88 +1,101 @@
 
 -- p: starting point
 -- h: triangle's height from p
--- a: azimuth of one of the sides from p in grades
--- b: angle between the two sides of p in grades. Negative means counter-clockwise
-CREATE OR REPLACE FUNCTION makeTriangle(p Geometry(Point), h float, a float, b float) RETURNS Geometry AS $$
+-- a: azimuth of height segment
+-- b: angle of the height with the a side
+-- b: angle of the height with the b side
+CREATE OR REPLACE FUNCTION makeTriangle(p Geometry(Point), h float, a float, b float, c float) RETURNS Geometry AS $$
 DECLARE
-	b float := radians(b);
 	a float := -radians(a-90);
-	hi float := h*cos(b/2); -- length of the sides of p, or the hipothenuse of the semi-triangles if divided by its height
+	b float := radians(b);
+	c float := -radians(c);
+	hb float := h/cos(b); -- length of the b side
+	hc float := h/cos(c); -- length of the c side
 BEGIN
-	RETURN ST_MakePolygon(ST_MakeLine(ARRAY[p, ST_Translate(p, hi*cos(a), hi*sin(a)), ST_Translate(p, hi*cos(a+b), hi*sin(a+b))::Geometry, p]));
+	RETURN ST_MakePolygon(ST_MakeLine(ARRAY[p, ST_Translate(p, hb*cos(a+b), hb*sin(a+b)), ST_Translate(p, hc*cos(a+c), hc*sin(a+c))::Geometry, p]));
 END;
 $$ LANGUAGE plpgsql;
 
 
+CREATE OR REPLACE FUNCTION makeSignTriangle(eas es_avi_signs, t varchar) RETURNS Geometry AS $$
+	SELECT CASE
+		WHEN t = 'reverse' THEN makeTriangle(eas.geom, 50, eas.azimut+180, 50, 10)
+		WHEN t = 'forward' THEN makeTriangle(eas.geom, 50, eas.azimut, 20, 50)
+		WHEN t = 'right' THEN makeTriangle(eas.geom, 50, eas.azimut+225, 45, 45)
+		ELSE NULL END;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION mapSign(eas es_avi_signs, t varchar) RETURNS 
+	TABLE(gid int, tipo varchar(7), geom geometry(Point), centroidez double precision, ref_id bigint, ref_pos float, ref_dist float, ref_type varchar(255), ref_score float) AS $$
+DECLARE
+	triangle Geometry := (SELECT CASE
+		WHEN eas.tipo = 'R101' AND t = 'origin' THEN makeSignTriangle(eas, 'reverse')
+		WHEN eas.tipo = 'R302' AND t = 'origin' THEN makeSignTriangle(eas, 'forward')
+		WHEN eas.tipo = 'R302' AND t = 'dest1' THEN makeSignTriangle(eas, 'right')
+		WHEN eas.tipo = 'R301-30' AND t = 'origin' THEN makeSignTriangle(eas, 'reverse')
+		ELSE NULL END);
+BEGIN
+	IF triangle IS NULL THEN RETURN;
+	ELSE
+		RETURN QUERY (
+			SELECT eas.gid,
+				eas.tipo,
+				eas.geom,
+				eas.centroidez, 
+				htl.id ref_id, 
+				ST_LineLocatePoint(htl.centerline_geometry, ST_ClosestPoint(htl.centerline_geometry, eas.geom)) ref_pos,
+				ST_Distance(eas.geom, htl.centerline_geometry) ref_dist, 
+				t ref_type, 
+				CASE
+					WHEN eas.tipo = 'R101' THEN 
+						ST_Distance(eas.geom, htl.centerline_geometry) -- Close
+							+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(htl.centerline_geometry), ST_EndPoint(htl.centerline_geometry))), eas.azimut)) -- With a parallel slope
+							+ abs(normalizeAngle(degrees(ST_Azimuth(eas.geom, ST_ClosestPoint(htl.centerline_geometry, eas.geom))) - eas.azimut) - 90) -- To the right of the sign
+					WHEN eas.tipo = 'R302' AND t = 'origin' THEN 
+						ST_Distance(eas.geom, htl.centerline_geometry) -- Close
+							+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(htl.centerline_geometry), ST_EndPoint(htl.centerline_geometry))), eas.azimut)) -- With a parallel slope
+					WHEN eas.tipo = 'R302' AND t = 'dest1' THEN 
+						ST_Distance(eas.geom, htl.centerline_geometry) -- Close
+							+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(htl.centerline_geometry), ST_EndPoint(htl.centerline_geometry))) - 90, eas.azimut)) -- With a perpendicular slope
+					WHEN eas.tipo = 'R301-30' THEN 
+						ST_Distance(eas.geom, htl.centerline_geometry) -- Close
+							+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(htl.centerline_geometry), ST_EndPoint(htl.centerline_geometry))), eas.azimut)) -- With a parallel slope
+					ELSE NULL END ref_score
+			FROM hermes_transport_link htl
+			WHERE ST_Intersects(triangle, htl.centerline_geometry)
+			ORDER BY ref_score
+			LIMIT 1);
+	END IF;
+END;
+$$ LANGUAGE plpgsql;
+
 -- Traffic signs:
 DROP VIEW IF EXISTS h_traffic_sign;
 CREATE OR REPLACE VIEW h_traffic_sign AS
-	SELECT gid,
-		tipo,
-		geom,
-		centroidez,
-		ref_id, 
-		ref_pos, 
-		ref_dist, 
-		ref_type, 
-		ref_score 
-	FROM es_avi_signs eas,
-		LATERAL (
-			(SELECT id ref_id, 
-				ST_LineLocatePoint(htl.centerline_geometry, ST_ClosestPoint(htl.centerline_geometry, eas.geom)) ref_pos,
-				ST_Distance(eas.geom, htl.centerline_geometry) ref_dist, 
-				'origin' ref_type, 
-				ST_Distance(eas.geom, centerline_geometry) -- Close
-					+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(centerline_geometry), ST_EndPoint(centerline_geometry))), azimut)) -- With a parallel slope
-					+ abs(normalizeAngle(degrees(ST_Azimuth(eas.geom, ST_ClosestPoint(centerline_geometry, eas.geom))) - azimut) - 90) -- To the left of the sign
-					ref_score
-			FROM hermes_transport_link htl
-			WHERE tipo = 'R101' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut+135, 90), centerline_geometry)
-			ORDER BY ref_score
-			LIMIT 1)
-			UNION ALL
-			(SELECT id ref_id, 
-				ST_LineLocatePoint(htl.centerline_geometry, ST_ClosestPoint(htl.centerline_geometry, eas.geom)) ref_pos,
-				ST_Distance(eas.geom, htl.centerline_geometry) ref_dist, 
-				'origin' ref_type, 
-				ST_Distance(eas.geom, centerline_geometry) -- Close
-					+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(centerline_geometry), ST_EndPoint(centerline_geometry))), azimut)) -- With a parallel slope
-					ref_score
-			FROM hermes_transport_link htl
-			WHERE tipo = 'R302' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut-45, 90), centerline_geometry)
-			ORDER BY ref_score
-			LIMIT 1)
-			UNION ALL
-			(SELECT id ref_id, 
-				ST_LineLocatePoint(htl.centerline_geometry, ST_ClosestPoint(htl.centerline_geometry, eas.geom)) ref_pos,
-				ST_Distance(eas.geom, htl.centerline_geometry) ref_dist, 
-				'dest1' ref_type, 
-				ST_Distance(eas.geom, centerline_geometry) -- Close
-					- abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(centerline_geometry), ST_EndPoint(centerline_geometry))), azimut)) -- With a perpendicular slope
-					--+ abs(compareSlope(degrees(ST_Azimuth(eas.geom, ST_Centroid(centerline_geometry))), azimut) - 90) -- To the right of the sign
-					ref_score
-				
-			FROM hermes_transport_link htl
-			WHERE tipo = 'R302' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut+180, 90), centerline_geometry)
-			ORDER BY ref_score
-			LIMIT 1)
-			UNION ALL
-			(SELECT hne.id ref_id, 
-				ST_LineLocatePoint(streets.geom, eas.geom) ref_pos,
-				ST_Distance(eas.geom, htl.centerline_geometry) ref_dist, 
-				'origin' ref_type, 
-				ST_Distance(eas.geom, htl.centerline_geometry) -- Close
-					+ abs(compareSlope(degrees(ST_Azimuth(ST_StartPoint(htl.centerline_geometry), ST_EndPoint(htl.centerline_geometry))), eas.azimut)) -- With a parallel slope
-					ref_score
-				
-			FROM hermes_transport_link htl
-				JOIN hermes_transport_link_sequence_transport_link htlstl ON htlstl.link_id = htl.id
-				JOIN hermes_network_element hne ON hne.id = htlstl.link_sequence_id
-				JOIN es_avi_streets streets ON streets.gid = hne.osm_id
-			WHERE tipo = 'R301-30' AND ST_Intersects(makeTriangle(eas.geom, 50, azimut+135, 90), centerline_geometry)
-			ORDER BY ref_score
-			LIMIT 1)
-		) ref;
+	SELECT (mapSign(eas, 'origin')).*
+	FROM es_avi_signs eas
+	WHERE eas.tipo != 'R301-30'
+	UNION ALL
+	SELECT (mapSign(eas, 'dest1')).*
+	FROM es_avi_signs eas
+	UNION ALL
+	SELECT 
+		m.gid,
+		m.tipo,
+		m.geom,
+		m.centroidez,
+		hne.id ref_id,
+		ST_LineLocatePoint(streets.geom, eas.geom) ref_pos,
+		m.ref_dist,
+		m.ref_type,
+		m.ref_score
+	FROM es_avi_signs eas
+		JOIN mapSign(eas, 'origin') m ON eas.tipo = 'R301-30' AND m.gid = eas.gid
+		JOIN hermes_transport_link_sequence_transport_link htlstl ON htlstl.link_id = m.ref_id
+		JOIN hermes_network_element hne ON hne.id = htlstl.link_sequence_id
+		JOIN es_avi_streets streets ON streets.gid = hne.osm_id;
+
+
 
 CREATE OR REPLACE FUNCTION importTrafficFlow() RETURNS void AS $$
 DECLARE
