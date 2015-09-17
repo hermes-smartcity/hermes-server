@@ -20,7 +20,8 @@ CREATE TABLE hermes_transport_link (
 	centerline_geometry geometry(LineString),
 	ficticious boolean NOT NULL DEFAULT false,
 	start_node bigint,
-	end_node bigint
+	end_node bigint,
+	traffic_direction varchar(255) NOT NULL DEFAULT 'bothDirections'
 );
 
 DROP TABLE IF EXISTS hermes_transport_link_sequence CASCADE;
@@ -51,6 +52,19 @@ CREATE TABLE hermes_transport_link_set_element (
 	link_sequence_id bigint,
 	type varchar(255),
 	"order" integer
+);
+
+-- Turn restrictions table for routing:
+DROP TABLE IF EXISTS hermes_turn_restriction CASCADE;
+CREATE TABLE hermes_turn_restriction (
+	from_link bigint,
+	to_link bigint,
+
+	CONSTRAINT hermes_turn_restriction_pk PRIMARY KEY (from_link, to_link),
+	CONSTRAINT hermes_turn_restriction_fk_from FOREIGN KEY (from_link)
+		REFERENCES hermes_transport_link(id),
+	CONSTRAINT hermes_turn_restriction_fk_to FOREIGN KEY (to_link)
+		REFERENCES hermes_transport_link(id)
 );
 
 -- HERMES TRANSPORT NETWORK PKS: 
@@ -115,6 +129,7 @@ CREATE TABLE hermes_form_of_way (
 	formOfWay varchar(255)
 );
 
+-- Deprecated, use traffic_direction from hermes_transport_link instead
 DROP TABLE IF EXISTS hermes_traffic_flow_direction CASCADE;
 CREATE TABLE hermes_traffic_flow_direction (
 	id bigint NOT NULL,
