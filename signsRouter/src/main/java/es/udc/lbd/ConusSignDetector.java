@@ -34,7 +34,7 @@ public class ConusSignDetector implements SignDetector {
 
 	public Set<TrafficSign> detect(Position p, double heading) {
 		Set<TrafficSign> signs = new HashSet<TrafficSign>();
-		log.debug("Searching for signs from " + p + " heading to " + heading);
+//		log.debug("Searching for signs from " + p + " heading to " + heading);
 		
 		try {
 			statement.setDouble(1, p.x);

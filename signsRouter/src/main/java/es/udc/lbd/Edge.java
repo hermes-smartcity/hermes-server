@@ -19,7 +19,7 @@ public class Edge {
 	}
 	
 	public Edge reverse() {
-		return new Edge(id, dest, origin, posDest, posOrigin);
+		return new Edge(-id, dest, origin, posDest, posOrigin);
 	}
 
 	@Override

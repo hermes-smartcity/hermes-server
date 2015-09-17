@@ -11,7 +11,7 @@ import org.apache.log4j.BasicConfigurator;
 public class RouterMain {
 	
 	private static final String POSTGRESQL_PROPS = "postgresql.properties";
-	private static final int START_NODE = 3109;
+	private static final long START_EDGE = 84670;
 	
     public static void main( String[] args )  {
     	BasicConfigurator.configure();	// Log4J configuration
@@ -34,7 +34,7 @@ public class RouterMain {
     	
     	Graph g = builder.readGraph(connection);
         Navigator navigator = new BreadthFirstNavigator(connection, new ConusSignDetector(connection));
-		navigator.navigate(g, g.nodes[START_NODE]);
+		navigator.navigate(g, g.edges.get(START_EDGE));
 		
 		// TODO insert into database
 		

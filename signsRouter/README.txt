@@ -15,7 +15,6 @@ Usage: Open the project in Eclipse, download any Maven dependencies and launch i
 
 
 TODO:
-	- Load signs data directly from OSM if possible.
 	- Test with more data!
 	- Support for more signs, not just R101 (dir prohibida).
 	- Insert the results from navigation (one way streets, turn restrictions, speed limits, etc...) into the database. Postponed until the schema is updated to properly support all that.

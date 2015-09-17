@@ -37,15 +37,16 @@ public class BreadthFirstNavigator implements Navigator {
 		return normalizeAngle(90 - Math.toDegrees(Math.atan2(e.posOrigin.y - p.y, e.posOrigin.x - p.x)));
 	}
 	
-	private void expand(Graph graph, Node origin, Node lastNode) {
+	private void expand(Graph graph, Edge lastEdge) {
 		Edge e = null;
+		Node origin = lastEdge.dest;
 		Iterator<Edge> edges = origin.outgouingEdges.iterator();
 		Set<TrafficSign> detectedSigns;
 			
 		while (edges.hasNext()) {
 			e = edges.next();
 			
-			if (e.dest.equals(lastNode)) {
+			if (lastEdge != null && e.dest.equals(lastEdge.origin)) {
 				continue;
 			}
 			
@@ -75,10 +76,7 @@ public class BreadthFirstNavigator implements Navigator {
 		}
 	}
 	
-	public void navigate(Graph graph, Node origin) {
-		Node last = null;
-		Edge e = null;
-		
+	public void navigate(Graph graph, Edge e) {
 		long navigatedEdges = 0;
 		int maxFrontierSize = 0;
 		
@@ -93,12 +91,10 @@ public class BreadthFirstNavigator implements Navigator {
 //				log.debug("Navigating " + e);
 				navigatedEdges++;
 				maxFrontierSize = Math.max(maxFrontierSize, frontier.size());
-				
-				origin = e.dest;
-				last = e.origin;
 			}
 			
-			expand(graph, origin, last);
+			expand(graph, e);
+			
 		} while (! frontier.isEmpty());
 		
 		log.info("Navigated " + navigatedEdges + " edges.");

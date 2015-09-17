@@ -1,21 +1,23 @@
 package es.udc.lbd;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Graph {
-	public Set<Edge> edges;
+	public Map<Long, Edge> edges;
 	public Node[] nodes;
 	public Set<Edge> bannedEdges;
 	
 	public Graph(int nodes) {
-		this.edges = new HashSet<Edge>(1000);
+		this.edges = new HashMap<Long, Edge>(1000);
 		this.nodes = new Node[nodes];
 		this.bannedEdges = new HashSet<Edge>();
 	}
 	
 	public Graph(int edges, int nodes) {
-		this.edges = new HashSet<Edge>(edges);
+		this.edges = new HashMap<Long, Edge>(edges);
 		this.nodes = new Node[nodes];
 	}
 	
@@ -30,7 +32,7 @@ public class Graph {
 		e.origin.addOutgoingEdge(e);
 //		e.dest.addIncomingEdge(e);
 		
-		return this.edges.add(e);
+		return this.edges.put(e.id, e) != null;
 	}
 	
 	public boolean banEdge(Edge e) {

@@ -1,5 +1,5 @@
 package es.udc.lbd;
 
 public interface Navigator {
-	public void navigate(Graph graph, Node origin);
+	public void navigate(Graph graph, Edge origin);
 }
