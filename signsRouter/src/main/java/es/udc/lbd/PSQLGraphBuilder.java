@@ -39,9 +39,9 @@ public class PSQLGraphBuilder implements GraphBuilder {
 										" st_x(end_point.p) x2, " +
 										" st_y(end_point.p) y2 " +
 									" FROM hermes_transport_link, " +
-									" LATERAL (SELECT 5/st_length(st_transform(centerline_geometry, 25829))) AS props(five_m), " +	// Calculate what % of this line is 5 meters
-									" LATERAL (SELECT ST_LineInterpolatePoint(centerline_geometry, LEAST(five_m, 0.5))) AS start_point(p), " +	// Add 5 meters from the start
-									" LATERAL (SELECT ST_LineInterpolatePoint(centerline_geometry, GREATEST(1-five_m, 0.5))) AS end_point(p) ");	// Substract 5 meters from the end
+									" LATERAL (SELECT 10/st_length(st_transform(centerline_geometry, 25829))) AS props(ten_m), " +	// Calculate what % of this line is 10 meters
+									" LATERAL (SELECT ST_LineInterpolatePoint(centerline_geometry, LEAST(ten_m, 0.5))) AS start_point(p), " +	// Add 10 meters from the start
+									" LATERAL (SELECT ST_LineInterpolatePoint(centerline_geometry, GREATEST(1-ten_m, 0.5))) AS end_point(p) ");	// Substract 10 meters from the end
 			r = st.executeQuery();
 			
 			while (r.next()) {

@@ -33,9 +33,6 @@ public class RouterMain {
 		}
     	
     	Graph g = builder.readGraph(connection);
-    	
-    	System.out.println(g.nodes[21150].outgouingEdges);
-    	
         Navigator navigator = new BreadthFirstNavigator(connection, new ConusSignDetector(connection));
 		navigator.navigate(g, g.edges.get(START_EDGE));
 		

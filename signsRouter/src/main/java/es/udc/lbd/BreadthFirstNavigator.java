@@ -12,7 +12,7 @@ public class BreadthFirstNavigator implements Navigator {
 
 	private static final Logger log = Logger.getLogger(BreadthFirstNavigator.class);
 	
-	private static final int MAX_ITERATIONS = 10;
+	private static final int MAX_ITERATIONS = 1000;
 	
 	private Queue<Edge> frontier;
 	private Connection connection;
@@ -34,14 +34,16 @@ public class BreadthFirstNavigator implements Navigator {
 	}
 	
 	private static double calculateHeading(Position p1, Position p2) {
-		return normalizeAngle(90 - Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x)));
+		return 90 - Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x));
 	}
 	
 	private void expand(Graph graph, Edge lastEdge) {
 		Edge e = null;
-		Node origin = lastEdge.dest;
-		Iterator<Edge> edges = origin.outgouingEdges.iterator();
+		Node node = lastEdge.dest;
+		Iterator<Edge> edges = node.outgouingEdges.iterator();
 		Set<TrafficSign> detectedSigns;
+		double forwardHeading = calculateHeading(lastEdge.posDest, node.position);
+		double turnHeading;
 			
 		while (edges.hasNext()) {
 			e = edges.next();
@@ -50,10 +52,11 @@ public class BreadthFirstNavigator implements Navigator {
 				continue;
 			}
 			
-			edges.remove();	// TODO mark as seen instead of removing it
+			turnHeading = calculateHeading(lastEdge.posDest, e.posOrigin);
 			
-			// First detect 5 meters away from the end node:
-			detectedSigns = detector.detect(lastEdge.posDest, calculateHeading(lastEdge.posDest, e.posOrigin));
+			// First detect 10 meters away from the end node:
+			// Here I'm looking for signs directly forward from my position
+			detectedSigns = detector.detect(lastEdge.posDest, normalizeAngle(forwardHeading));
 			
 			if (!detectedSigns.isEmpty()) {
 				log.debug("From " + lastEdge + " heading to " + e + " I can see the following signs: ");
@@ -64,31 +67,38 @@ public class BreadthFirstNavigator implements Navigator {
 			}
 			
 			for (TrafficSign sign : detectedSigns) {
-				// TODO turn restrictions
+				if (sign.turnRestriction(turnHeading - forwardHeading)) {
+					log.debug("New turn restriction from " + lastEdge + " to " + e);
+					graph.turnRestrictions.add(new TurnRestriction(lastEdge, e));
+				}
 			}
 			
-			
-			// Then detect from the node itself:
-			detectedSigns = detector.detect(lastEdge.dest.position, calculateHeading(lastEdge.dest.position, e.posOrigin));
-			
-			if (!detectedSigns.isEmpty()) {
-				log.debug("From " + lastEdge.dest + " heading to " + e + " I can see the following signs: ");
+			if (!e.seen) {
+				e.seen = true;
+				
+				// Then detect from the node itself:
+				// Here I'm looking for signs on the direction of the next edge
+				detectedSigns = detector.detect(lastEdge.dest.position, normalizeAngle(calculateHeading(lastEdge.dest.position, e.posOrigin)));
+				
+				if (!detectedSigns.isEmpty()) {
+					log.debug("From " + lastEdge.dest + " heading to " + e + " I can see the following signs: ");
+					
+					for (TrafficSign sign : detectedSigns) {
+						log.debug("\t" + sign);
+					}
+				}
 				
 				for (TrafficSign sign : detectedSigns) {
-					log.debug("\t" + sign);
+					if (sign.noWay()) {
+						log.debug("Banning edge " + e);
+						graph.banEdge(e);
+					}
+				}
+				
+				if (!e.banned) {
+					frontier.add(e);
 				}
 			}
-			
-			for (TrafficSign sign : detectedSigns) {
-				if (sign.noWay()) {
-					log.debug("Banning edge " + e);
-					graph.banEdge(e);
-				}
-			}
-			
-			
-			if (!e.banned)
-				frontier.add(e);
 			
 //			graph.edges.remove(e);
 		}
@@ -118,6 +128,7 @@ public class BreadthFirstNavigator implements Navigator {
 		log.info("Navigated " + navigatedEdges + " edges.");
 		log.debug("Max frontier size: " + maxFrontierSize + " edges.");
 		log.info("Banned " + graph.bannedEdges.size() + " edges.");
+		log.info(graph.turnRestrictions.size() + " turn restricions.");
 	}
 
 }

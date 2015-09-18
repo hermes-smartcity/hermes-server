@@ -8,12 +8,12 @@ import java.util.Set;
 public class Graph {
 	public Map<Long, Edge> edges;
 	public Node[] nodes;
-	public Set<Edge> bannedEdges;
+	public Set<Edge> bannedEdges = new HashSet<Edge>();;
+	public Set<TurnRestriction> turnRestrictions = new HashSet<TurnRestriction>();
 	
 	public Graph(int nodes) {
 		this.edges = new HashMap<Long, Edge>(1000);
 		this.nodes = new Node[nodes];
-		this.bannedEdges = new HashSet<Edge>();
 	}
 	
 	public Graph(int edges, int nodes) {

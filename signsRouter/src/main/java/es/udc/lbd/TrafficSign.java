@@ -9,11 +9,28 @@ public class TrafficSign {
 		super();
 		this.position = position;
 		this.azimut = azimut;
-		this.type = type;
+		this.type = type.toUpperCase();
 	}
 	
 	public boolean noWay() {
-		return type.toUpperCase().equals("R101");
+		return type.equals("R101");
+	}
+	
+	/**
+	 * 
+	 * @param relativeHeading a deviation from -180 to 180 from the original way heading for this turn.
+	 * 	Positive means right.
+	 */
+	public boolean turnRestriction(double relativeHeading) {
+		if (type.equals("R303")) {
+			return relativeHeading < -10 && relativeHeading > -90;
+		}
+		
+		if (type.equals("R302")) {
+			return relativeHeading > 10 && relativeHeading < 90;
+		}
+		
+		return false;
 	}
 
 	@Override
