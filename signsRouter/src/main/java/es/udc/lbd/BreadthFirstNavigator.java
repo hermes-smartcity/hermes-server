@@ -33,8 +33,8 @@ public class BreadthFirstNavigator implements Navigator {
 		return a - turns * 360;
 	}
 	
-	private static double calculateHeading(Position p, Edge e) {
-		return normalizeAngle(90 - Math.toDegrees(Math.atan2(e.posOrigin.y - p.y, e.posOrigin.x - p.x)));
+	private static double calculateHeading(Position p1, Position p2) {
+		return normalizeAngle(90 - Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x)));
 	}
 	
 	private void expand(Graph graph, Edge lastEdge) {
@@ -52,10 +52,27 @@ public class BreadthFirstNavigator implements Navigator {
 			
 			edges.remove();	// TODO mark as seen instead of removing it
 			
-			detectedSigns = detector.detect(origin.position, calculateHeading(origin.position, e));
+			// First detect 5 meters away from the end node:
+			detectedSigns = detector.detect(lastEdge.posDest, calculateHeading(lastEdge.posDest, e.posOrigin));
 			
 			if (!detectedSigns.isEmpty()) {
-				log.debug("From " + origin + " heading to " + e + " I can see the following signs: ");
+				log.debug("From " + lastEdge + " heading to " + e + " I can see the following signs: ");
+				
+				for (TrafficSign sign : detectedSigns) {
+					log.debug("\t" + sign);
+				}
+			}
+			
+			for (TrafficSign sign : detectedSigns) {
+				// TODO turn restrictions
+			}
+			
+			
+			// Then detect from the node itself:
+			detectedSigns = detector.detect(lastEdge.dest.position, calculateHeading(lastEdge.dest.position, e.posOrigin));
+			
+			if (!detectedSigns.isEmpty()) {
+				log.debug("From " + lastEdge.dest + " heading to " + e + " I can see the following signs: ");
 				
 				for (TrafficSign sign : detectedSigns) {
 					log.debug("\t" + sign);
@@ -68,6 +85,7 @@ public class BreadthFirstNavigator implements Navigator {
 					graph.banEdge(e);
 				}
 			}
+			
 			
 			if (!e.banned)
 				frontier.add(e);

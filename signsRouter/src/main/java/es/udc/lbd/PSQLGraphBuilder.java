@@ -26,18 +26,28 @@ public class PSQLGraphBuilder implements GraphBuilder {
 			r.close();
 			st.close();
 			
-			st = c.prepareStatement("SELECT id, "
-					+ " ST_x(ST_PointN(link_geometry, 2)) AS x1, ST_y(ST_PointN(link_geometry, 2)) AS y1, "
-					+ " ST_x(ST_PointN(link_geometry, ST_NPoints(link_geometry) - 1)) AS x2, ST_y(ST_PointN(link_geometry, ST_NPoints(link_geometry) - 1)) AS y2, "
-					+ " s_id, ST_x(s_geometry) AS node_x1, ST_y(s_geometry) AS node_y1, "
-					+ " t_id, ST_x(t_geometry) AS node_x2, ST_y(t_geometry) AS node_y2 "
-					+ " FROM h_link");
+			st = c.prepareStatement(" SELECT  " +
+										" id, " +
+										" start_node, " +
+										" st_x(ST_StartPoint(centerline_geometry)) node_x1, " +
+										" st_y(ST_StartPoint(centerline_geometry)) node_y1, " +
+										" st_x(start_point.p) x1, " +
+										" st_y(start_point.p) y1, " +
+										" end_node, " +
+										" st_x(ST_EndPoint(centerline_geometry)) node_x2, " +
+										" st_y(ST_EndPoint(centerline_geometry)) node_y2, " +
+										" st_x(end_point.p) x2, " +
+										" st_y(end_point.p) y2 " +
+									" FROM hermes_transport_link, " +
+									" LATERAL (SELECT 5/st_length(st_transform(centerline_geometry, 25829))) AS props(five_m), " +	// Calculate what % of this line is 5 meters
+									" LATERAL (SELECT ST_LineInterpolatePoint(centerline_geometry, LEAST(five_m, 0.5))) AS start_point(p), " +	// Add 5 meters from the start
+									" LATERAL (SELECT ST_LineInterpolatePoint(centerline_geometry, GREATEST(1-five_m, 0.5))) AS end_point(p) ");	// Substract 5 meters from the end
 			r = st.executeQuery();
 			
 			while (r.next()) {
 				e = new Edge(r.getLong("id"), 
-						new Node(r.getLong("s_id"), new Position(r.getDouble("node_x1"), r.getDouble("node_y1"))), 
-						new Node(r.getLong("t_id"), new Position(r.getDouble("node_x2"), r.getDouble("node_y2"))),
+						new Node(r.getLong("start_node"), new Position(r.getDouble("node_x1"), r.getDouble("node_y1"))), 
+						new Node(r.getLong("end_node"), new Position(r.getDouble("node_x2"), r.getDouble("node_y2"))),
 						new Position(r.getDouble("x1"), r.getDouble("y1")),
 						new Position(r.getDouble("x2"), r.getDouble("y2")));
 						
