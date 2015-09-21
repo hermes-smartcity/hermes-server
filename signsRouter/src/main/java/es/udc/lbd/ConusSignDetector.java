@@ -24,8 +24,8 @@ public class ConusSignDetector implements SignDetector {
 			// FIXME: This should not be so SRID dependant
 			this.statement = connection.prepareStatement("SELECT ST_x(geom) AS x, ST_y(geom) AS y, azimut, tipo FROM es_cor_signs "
 					+ " WHERE ST_Distance(ST_Transform(geom, 25829), ST_Transform(ST_SetSRID(ST_Point(?, ?), 4326), 25829)) < 10 "
-					+ " AND degrees(ST_Azimuth(ST_SetSRID(ST_Point(?, ?), 4326), geom)) - ? BETWEEN -10 AND 60"
-					+ " AND degrees(ST_Azimuth(geom, ST_SetSRID(ST_Point(?, ?), 4326))) - azimut BETWEEN -80 AND 80");
+					+ " AND degrees(ST_Azimuth(ST_SetSRID(ST_Point(?, ?), 4326), geom)) - ? BETWEEN -10 AND 60 "
+					+ " AND abs(degrees(ST_Azimuth(geom, ST_SetSRID(ST_Point(?, ?), 4326))) - azimut) NOT BETWEEN 80 AND 280 ");	// I hate working with angles...
 		} catch (SQLException e) {
 			// Should never fail
 			e.printStackTrace();

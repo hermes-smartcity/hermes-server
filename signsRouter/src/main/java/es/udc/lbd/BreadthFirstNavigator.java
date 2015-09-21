@@ -107,6 +107,7 @@ public class BreadthFirstNavigator implements Navigator {
 	public void navigate(Graph graph, Edge e) {
 		long navigatedEdges = 0;
 		int maxFrontierSize = 0;
+		e.seen = true;
 		
 		do {
 			if (navigatedEdges >= MAX_ITERATIONS) {
