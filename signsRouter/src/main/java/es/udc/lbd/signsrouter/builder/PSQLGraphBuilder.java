@@ -1,4 +1,4 @@
-package es.udc.lbd;
+package es.udc.lbd.signsrouter.builder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,6 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
+
+import es.udc.lbd.signsrouter.model.Edge;
+import es.udc.lbd.signsrouter.model.Graph;
+import es.udc.lbd.signsrouter.model.Node;
+import es.udc.lbd.signsrouter.model.Position;
 
 public class PSQLGraphBuilder implements GraphBuilder {
 	

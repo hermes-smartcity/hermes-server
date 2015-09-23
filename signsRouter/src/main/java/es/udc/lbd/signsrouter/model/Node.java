@@ -1,4 +1,4 @@
-package es.udc.lbd;
+package es.udc.lbd.signsrouter.model;
 
 import java.util.HashSet;
 import java.util.Set;

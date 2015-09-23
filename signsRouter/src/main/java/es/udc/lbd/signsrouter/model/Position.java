@@ -1,4 +1,4 @@
-package es.udc.lbd;
+package es.udc.lbd.signsrouter.model;
 
 public class Position {
 	public double x;

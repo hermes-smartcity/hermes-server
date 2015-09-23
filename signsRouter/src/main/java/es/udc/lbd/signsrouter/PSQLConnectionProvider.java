@@ -1,4 +1,4 @@
-package es.udc.lbd;
+package es.udc.lbd.signsrouter;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
+
+import es.udc.lbd.signsrouter.builder.PSQLGraphBuilder;
 
 public class PSQLConnectionProvider {
 	private static final Logger log = Logger.getLogger(PSQLGraphBuilder.class);

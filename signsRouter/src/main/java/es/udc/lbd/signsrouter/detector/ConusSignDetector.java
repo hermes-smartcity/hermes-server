@@ -1,4 +1,4 @@
-package es.udc.lbd;
+package es.udc.lbd.signsrouter.detector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+
+import es.udc.lbd.signsrouter.model.Position;
+import es.udc.lbd.signsrouter.model.TrafficSign;
 
 public class ConusSignDetector implements SignDetector {
 

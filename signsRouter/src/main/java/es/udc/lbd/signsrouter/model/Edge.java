@@ -1,18 +1,32 @@
-package es.udc.lbd;
+package es.udc.lbd.signsrouter.model;
 
-public class TurnRestriction {
-	public Edge origin;
-	public Edge dest;
+public class Edge {
+	public Long id;
+	public Node origin;
+	public Node dest;
+	public Position posOrigin;
+	public Position posDest;
+	public boolean seen;
+	public boolean banned;
 	
-	public TurnRestriction(Edge origin, Edge dest) {
+	public Edge(Long id, Node origin, Node dest, Position posOrigin, Position posDest) {
 		super();
+		this.id = id;
 		this.origin = origin;
 		this.dest = dest;
+		this.posOrigin = posOrigin;
+		this.posDest = posDest;
+		this.seen = false;
+		this.banned = false;
+	}
+	
+	public Edge reverse() {
+		return new Edge(-id, dest, origin, posDest, posOrigin);
 	}
 
 	@Override
 	public String toString() {
-		return "TurnRestriction [origin=" + origin + ", dest=" + dest + "]";
+		return "Edge [id=" + id + ", origin=" + origin + ", dest=" + dest + "]";
 	}
 
 	@Override
@@ -20,6 +34,7 @@ public class TurnRestriction {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((dest == null) ? 0 : dest.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((origin == null) ? 0 : origin.hashCode());
 		return result;
 	}
@@ -32,11 +47,16 @@ public class TurnRestriction {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TurnRestriction other = (TurnRestriction) obj;
+		Edge other = (Edge) obj;
 		if (dest == null) {
 			if (other.dest != null)
 				return false;
 		} else if (!dest.equals(other.dest))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (origin == null) {
 			if (other.origin != null)
