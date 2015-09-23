@@ -21,7 +21,8 @@ CREATE TABLE hermes_transport_link (
 	ficticious boolean NOT NULL DEFAULT false,
 	start_node bigint,
 	end_node bigint,
-	traffic_direction varchar(255) NOT NULL DEFAULT 'bothDirections'
+	traffic_direction varchar(255) NOT NULL DEFAULT 'bothDirections',
+	CONSTRAINT hermes_transport_link_pk PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS hermes_transport_link_sequence CASCADE;
@@ -71,7 +72,6 @@ CREATE TABLE hermes_turn_restriction (
 
 ALTER TABLE hermes_network_element ADD CONSTRAINT hermes_network_element_pk PRIMARY KEY(id);
 ALTER TABLE hermes_transport_node ADD CONSTRAINT hermes_transport_node_pk PRIMARY KEY(id);
-ALTER TABLE hermes_transport_link ADD CONSTRAINT hermes_transport_link_pk PRIMARY KEY(id);
 ALTER TABLE hermes_transport_link_sequence ADD CONSTRAINT hermes_transport_link_sequence_pk PRIMARY KEY(id);
 ALTER TABLE hermes_transport_link_sequence_transport_link ADD CONSTRAINT hermes_transport_link_sequence_transport_link_pk PRIMARY KEY(link_sequence_id, link_id);
 ALTER TABLE hermes_transport_link_set ADD CONSTRAINT hermes_transport_link_set_pk PRIMARY KEY(id);
