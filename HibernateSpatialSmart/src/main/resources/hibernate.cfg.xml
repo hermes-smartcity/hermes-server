@@ -16,6 +16,9 @@
 		<mapping class="es.enxenio.smart.citydriver.model.events.dataSection.DataSection" />
 		<mapping class="es.enxenio.smart.citydriver.model.usuario.Usuario" />
 		<mapping class="es.enxenio.smart.citydriver.model.events.eventoProcesado.EventoProcesado" />
+		<mapping class="es.enxenio.smart.citydriver.model.menu.Menu" />
+		<mapping class="es.enxenio.smart.citydriver.model.entradaMenu.EntradaMenu" />
+		<mapping class="es.enxenio.smart.citydriver.model.estatica.Estatica" />
 																
 	</session-factory>
 </hibernate-configuration> 

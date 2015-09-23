@@ -34,5 +34,53 @@
 		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/admin/xestorContidos/submenu.jspx"/>	-->
 	</definition>
 	
+	<!-- Menus -->
+	<definition name="menu/crear" extends="baseAdmin">
+		<put-attribute name="accion" value="crear" />
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/menu/crear.jspx" />
+		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/citydriver/citydriver/menu/submenu.jspx"/>	-->
+	</definition>
+	
+	<definition name="menu/editar" extends="baseAdmin">
+		<put-attribute name="entradaMenu" value="apartado"/> 
+		<put-attribute name="accion" value="editar" />
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/menu/editar.jspx" />
+		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/menu/submenu.jspx"/>	-->
+	</definition>
+	
+	<definition name="menu/listar" extends="baseAdmin">
+		<put-attribute name="entradaMenu" value="apartado"/> 
+		<put-attribute name="accion" value="listar" />
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/menu/listar.jspx" />
+		<!-- <put-attribute name="submenu" value="/WEB-INF/view/jsp/citydriver/menu/submenu.jspx"/>-->
+	</definition>
+	
+	<!-- Estaticas -->
+	
+		<definition name="estatica/crear" extends="baseAdmin">
+		<put-attribute name="accion" value="crear" />
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/estatica/crear.jspx" />
+		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/estatica/submenu.jspx"/>-->
+	</definition>
+	
+	<definition name="estatica/editar" extends="baseAdmin">
+		<put-attribute name="entradaMenu" value="apartado"/> 
+		<put-attribute name="accion" value="editar" />
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/estatica/editar.jspx" />
+		<!--<put-attribute name="submenu" value="/WEB-INF/view/jsp/estatica/submenu.jspx"/>	-->
+	</definition>
+	
+	<definition name="estatica/listar" extends="baseAdmin">
+		<put-attribute name="entradaMenu" value="apartado"/> 
+		<put-attribute name="accion" value="listar" />
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/estatica/listar.jspx" />
+		<!-- <put-attribute name="submenu" value="/WEB-INF/view/jsp/estatica/submenu.jspx"/>-->
+	</definition>
 	
 </tiles-definitions>

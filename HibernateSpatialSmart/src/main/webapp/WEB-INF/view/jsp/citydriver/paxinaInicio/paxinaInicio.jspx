@@ -4,8 +4,8 @@
 	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0">
 
 	<fmt:message var="tituloFmt" key="comun.titulo" />
-	<fmt:message var="arrancarFmt" key="comun.botons.arrancar" />
-	<fmt:message var="pararFmt" key="comun.botons.parar" />
+	<fmt:message var="arrancarFmt" key="comun.botones.arrancar" />
+	<fmt:message var="pararFmt" key="comun.botones.parar" />
 	
 	<p>${tituloFmt}</p>
 	

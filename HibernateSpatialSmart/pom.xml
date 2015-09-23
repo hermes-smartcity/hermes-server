@@ -31,6 +31,10 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
+			<resource>
+				<directory>src/main/jetty</directory>
+				<targetPath>jetty</targetPath>
+			</resource>
 		</resources>
 		<plugins>
 			<!-- Para mvn package con Java 7  -->

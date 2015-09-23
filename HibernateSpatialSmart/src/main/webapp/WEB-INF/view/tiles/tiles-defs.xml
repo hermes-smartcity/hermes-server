@@ -3,18 +3,30 @@
 
 <tiles-definitions>
 
-	<definition name="basePublica" template="/WEB-INF/view/jsp/publica/plantilla.jspx" />
+ <definition name=".Base" template="/WEB-INF/view/jsp/commontiles/plantilla.jspx">
+ 	 	<put-attribute name="bodyId" value="publica"/>
+ 	 	<put-attribute name="bodyClass" value="publica"/>
+ 	 	<put-attribute name="baseUrl" value=""/>	
+ 	 	<put-attribute name="titulo" value="${titulo}"/> 
+    	<put-attribute name="contido" value="${contido}"/> 	
+    	<put-attribute name="quitarMenu" value="false"/>
+    	<put-attribute name="detallePaxina" value=""/>
+    	<put-attribute name="submenu" value=""/>
+     </definition>
+       
+ 	 <definition name=".BaseLogin" template="/WEB-INF/view/jsp/commontiles/plantilla.jspx">
+ 	 	<put-attribute name="bodyId" value="login"/>
+ 	 	<put-attribute name="bodyClass" value="login"/>
+ 	 	<put-attribute name="baseUrl" value=""/>	
+ 	 	<put-attribute name="titulo" value="${titulo}"/> 
+    	<put-attribute name="contido" value="${contido}"/> 	
+    	<put-attribute name="quitarMenu" value="false"/> 
+    	<put-attribute name="detallePaxina" value=""/>
+    	<put-attribute name="submenu" value=""/>
+     </definition>
+ 
+    <definition name="ckeditor/upload" template="/WEB-INF/view/jsp/ckeditor/upload.jspx" />
 
-	<definition name="/login" template="/WEB-INF/view/jsp/login/login.jspx" />
-	
-	<definition name="excepcion" extends="baseAdmin">
-		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/publica/erro/excepcion.jspx" />
-	</definition>
-
-<!-- 	<definition name="inicio" extends="basePublica"> -->
-<!-- 		<put-attribute name="contido" -->
-<!-- 			value="/WEB-INF/view/jsp/publica/inicio.jspx" /> -->
-<!-- 	</definition> -->
+	<definition name="ckeditor/browser" template="/WEB-INF/view/jsp/ckeditor/browser.jspx" />
 		
 </tiles-definitions>

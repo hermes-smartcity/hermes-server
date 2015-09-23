@@ -96,13 +96,27 @@ create sequence menu_id_seq;
 
 CREATE TABLE menu (
   id bigint NOT NULL DEFAULT nextval('menu_id_seq'::regclass),
-  texto TEXT,
+  nombre TEXT NOT NULL, 
+  version bigint not null default 0,
+  CONSTRAINT idMenu_pk PRIMARY KEY (id)
+);
+
+-- entradaMenu --
+drop table if exists entradaMenu cascade;
+drop sequence if exists entradaMenu_id_seq cascade;
+create sequence entradaMenu_id_seq;
+
+CREATE TABLE entradaMenu (
+  id bigint NOT NULL DEFAULT nextval('entradaMenu_id_seq'::regclass),
+  texto TEXT NOT NULL,
   url VARCHAR(255),
   orden integer not null default 0,
-  idPadre bigint,
+  idMenu bigint,
+  idEntradaMenuPadre bigint,
   version bigint not null default 0,
-  CONSTRAINT idMenu_pk PRIMARY KEY (id),
-  CONSTRAINT padre_fk_menu FOREIGN KEY (idPadre) REFERENCES menu(id) ON DELETE CASCADE
+  CONSTRAINT idEntradaMenu_pk PRIMARY KEY (id),
+  CONSTRAINT menu_fk_entradaMenu FOREIGN KEY (idMenu) REFERENCES menu(id) ON DELETE CASCADE,
+   CONSTRAINT padre_fk_entradaMenu FOREIGN KEY (idEntradaMenuPadre) REFERENCES entradaMenu(id) ON DELETE CASCADE
 );
 
 -- estatica --

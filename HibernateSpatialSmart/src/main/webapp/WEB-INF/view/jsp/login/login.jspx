@@ -60,7 +60,7 @@
 								</li>
 							</ol>
 						<div id="botons">
-							<fmt:message var="submitFmt" key="comun.botons.entrar" />
+							<fmt:message var="submitFmt" key="comun.botones.entrar" />
 							<input type="submit" class="boton" value="${submitFmt}" />
 						</div>							
 						</fieldset>

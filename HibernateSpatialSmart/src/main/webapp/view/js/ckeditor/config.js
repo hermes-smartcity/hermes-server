@@ -13,17 +13,17 @@ CKEDITOR.editorConfig = function( config ) {
 	config.indentOffset = 10;
 	
 	// Extra plugins
-	CKEDITOR.plugins.addExternal('autor', 'plugins/enciclopedia/autor/');
-	CKEDITOR.plugins.addExternal('obra', 'plugins/enciclopedia/obra/');
-	CKEDITOR.plugins.addExternal('organismo', 'plugins/enciclopedia/organismo/');
-	CKEDITOR.plugins.addExternal('publicacion', 'plugins/enciclopedia/publicacion/');
-	CKEDITOR.plugins.addExternal('evento', 'plugins/enciclopedia/evento/');
-	CKEDITOR.plugins.addExternal('movemento', 'plugins/enciclopedia/movemento/');
-	CKEDITOR.plugins.addExternal('imaxe', 'plugins/enciclopedia/imaxe/');
-	CKEDITOR.plugins.addExternal('audio', 'plugins/enciclopedia/audio/');
-	CKEDITOR.plugins.addExternal('video', 'plugins/enciclopedia/video/');
-	CKEDITOR.plugins.addExternal('definicion', 'plugins/enciclopedia/definicion/');
-	config.extraPlugins = 'indent,indentlist,indentblock,panel,floatpanel,menu,contextmenu,maximize,sourcedialog,pastefromword,pastetext,specialchar,removeformat,horizontalrule,clipboard,table,blockquote,format,justify,find,liststyle,autor,obra,organismo,publicacion,evento,movemento,imaxe,audio,video,definicion';
+//	CKEDITOR.plugins.addExternal('autor', 'plugins/enciclopedia/autor/');
+//	CKEDITOR.plugins.addExternal('obra', 'plugins/enciclopedia/obra/');
+//	CKEDITOR.plugins.addExternal('organismo', 'plugins/enciclopedia/organismo/');
+//	CKEDITOR.plugins.addExternal('publicacion', 'plugins/enciclopedia/publicacion/');
+//	CKEDITOR.plugins.addExternal('evento', 'plugins/enciclopedia/evento/');
+//	CKEDITOR.plugins.addExternal('movemento', 'plugins/enciclopedia/movemento/');
+//	CKEDITOR.plugins.addExternal('imaxe', 'plugins/enciclopedia/imaxe/');
+//	CKEDITOR.plugins.addExternal('audio', 'plugins/enciclopedia/audio/');
+//	CKEDITOR.plugins.addExternal('video', 'plugins/enciclopedia/video/');
+//	CKEDITOR.plugins.addExternal('definicion', 'plugins/enciclopedia/definicion/');
+	config.extraPlugins = 'indent,indentlist,indentblock,panel,floatpanel,menu,contextmenu,maximize,sourcedialog,pastefromword,pastetext,specialchar,removeformat,horizontalrule,clipboard,table,blockquote,format,justify,find,liststyle';
 	
 	// Make dialogs simpler.
 	config.removePlugins = 'image';

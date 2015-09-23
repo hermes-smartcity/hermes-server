@@ -24,10 +24,6 @@
 			
 			<!-- Prueba Angular  -->
 			
-			
-			
-			
-			
 			<script type="text/javascript" src="${leafletSrcUrl}"><!-- c --></script>
 			<script type="text/javascript" src="${leafletUrl}"><!-- c --></script>
 			<!--  -->			
