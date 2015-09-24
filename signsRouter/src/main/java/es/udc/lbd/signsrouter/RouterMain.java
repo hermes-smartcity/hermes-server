@@ -49,7 +49,7 @@ public class RouterMain {
     	
     	GraphBuilder builder = new PSQLGraphBuilder(connection);
     	Graph g = builder.readGraph();
-    	g.espg = Integer.parseInt(props.getProperty("hermes.espg"));
+    	g.epsg = Integer.parseInt(props.getProperty("hermes.epsg"));
         Navigator navigator = new BreadthFirstNavigator(connection, new ConusSignDetector(connection, g));
 		navigator.navigate(g, g.edges.get(START_EDGE));
 		

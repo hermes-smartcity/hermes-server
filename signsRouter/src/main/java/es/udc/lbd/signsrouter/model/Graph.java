@@ -10,7 +10,7 @@ public class Graph {
 	public Node[] nodes;
 	public Set<Edge> bannedEdges = new HashSet<Edge>();;
 	public Set<TurnRestriction> turnRestrictions = new HashSet<TurnRestriction>();
-	public int espg = 4326;
+	public int epsg = 4326;
 	
 	public Graph(int nodes) {
 		this.edges = new HashMap<Long, Edge>(1000);

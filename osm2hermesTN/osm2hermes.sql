@@ -1,5 +1,5 @@
 
--- ESPG:32629, UTM 29N over WGS84
+-- EPSG:32629, UTM 29N over WGS84
 
 -- Estos inserts dependen totalmente del orden en el que se insertan los datos para conservar correctamente las relaciones.
 CREATE TEMP SEQUENCE tmp_hermes_network_element_id;

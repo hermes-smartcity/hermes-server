@@ -8,7 +8,7 @@ Stuff you need:
 Setup:
 	- I added some traffic signs manually in src/main/sql/es_cor_signs.sql. Execute the file and it should make a new table called es_cor_signs.
 	- Modify the parameters from src/main/resources/postgresql.properties to match your database.
-	- (Optional) Modify the starting node ID constant in RouterMain.START_NODE
+	- (Optional) Modify the starting node ID constant in RouterMain.START_EDGE
 	- (Optional) Modify the maximum number of iterations in BreadthFirstNavigator.MAX_ITERATIONS
 
 Usage: Open the project in Eclipse, download any Maven dependencies and launch it. The main method is located in RouterMain.java.

@@ -52,6 +52,7 @@ public class PSQLGraphWriter implements GraphWriter {
 			connection.commit();
 			
 			connection.setAutoCommit(true);
+			st.close();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
