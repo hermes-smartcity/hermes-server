@@ -49,10 +49,23 @@ public class BreadthFirstNavigator implements Navigator {
 		Edge e = null;
 		Node node = lastEdge.dest;
 		Iterator<Edge> edges = node.outgouingEdges.iterator();
+		Set<TrafficSign> detectedSignsForward;
 		Set<TrafficSign> detectedSigns;
 		double forwardHeading = calculateHeading(lastEdge.posDest, node.position);
 		double turnHeading;
+		
+		// First detect 10 meters away from the end node:
+		// Here I'm looking for signs directly forward from my position
+		detectedSignsForward = detector.detect(lastEdge.posDest, normalizeAngle(forwardHeading));
+		
+		if (!detectedSignsForward.isEmpty()) {
+			log.debug("From " + lastEdge + " heading forward I can see the following signs: ");
 			
+			for (TrafficSign sign : detectedSignsForward) {
+				log.debug("\t" + sign);
+			}
+		}
+		
 		while (edges.hasNext()) {
 			e = edges.next();
 			
@@ -62,19 +75,8 @@ public class BreadthFirstNavigator implements Navigator {
 			
 			turnHeading = calculateHeading(lastEdge.posDest, e.posOrigin);
 			
-			// First detect 10 meters away from the end node:
-			// Here I'm looking for signs directly forward from my position
-			detectedSigns = detector.detect(lastEdge.posDest, normalizeAngle(forwardHeading));
-			
-			if (!detectedSigns.isEmpty()) {
-				log.debug("From " + lastEdge + " heading to " + e + " I can see the following signs: ");
-				
-				for (TrafficSign sign : detectedSigns) {
-					log.debug("\t" + sign);
-				}
-			}
-			
-			for (TrafficSign sign : detectedSigns) {
+			for (TrafficSign sign : detectedSignsForward) {
+				// FIXME may fail in ambiguous cases
 				if (sign.turnRestriction(turnHeading - forwardHeading)) {
 					log.debug("New turn restriction from " + lastEdge + " to " + e);
 					graph.turnRestrictions.add(new TurnRestriction(lastEdge, e));
