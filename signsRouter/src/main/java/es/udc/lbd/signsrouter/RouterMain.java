@@ -14,17 +14,18 @@ import es.udc.lbd.signsrouter.detector.ConusSignDetector;
 import es.udc.lbd.signsrouter.model.Graph;
 import es.udc.lbd.signsrouter.navigator.BreadthFirstNavigator;
 import es.udc.lbd.signsrouter.navigator.Navigator;
+import es.udc.lbd.signsrouter.writer.GraphWriter;
+import es.udc.lbd.signsrouter.writer.PSQLGraphWriter;
 
 public class RouterMain {
 	
 	private static final String POSTGRESQL_PROPS = "postgresql.properties";
-	private static final long START_EDGE = 51325;
+	private static final long START_EDGE = 84670;
 	
     public static void main( String[] args )  {
     	BasicConfigurator.configure();	// Log4J configuration
     	
     	Connection connection = null;
-    	GraphBuilder builder = new PSQLGraphBuilder();
     	Properties props = new Properties();
     	InputStream is = RouterMain.class.getClassLoader().getResourceAsStream(POSTGRESQL_PROPS);
     	
@@ -39,11 +40,13 @@ public class RouterMain {
 			return;
 		}
     	
-    	Graph g = builder.readGraph(connection);
+    	GraphBuilder builder = new PSQLGraphBuilder(connection);
+    	Graph g = builder.readGraph();
         Navigator navigator = new BreadthFirstNavigator(connection, new ConusSignDetector(connection));
 		navigator.navigate(g, g.edges.get(START_EDGE));
 		
-		// TODO insert into database
+		GraphWriter writer = new PSQLGraphWriter(connection);
+		writer.writeGraph(g);
 		
 		try {
 			connection.close();

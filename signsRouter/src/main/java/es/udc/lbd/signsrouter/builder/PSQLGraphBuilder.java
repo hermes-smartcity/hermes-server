@@ -16,8 +16,15 @@ public class PSQLGraphBuilder implements GraphBuilder {
 	
 	private static final Logger log = Logger.getLogger(PSQLGraphBuilder.class);
 	
+	private Connection connection;
+	
+	public PSQLGraphBuilder(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public Graph readGraph(Object... properties) {
-		Connection c = (Connection) properties[0];
+		//Connection c = (Connection) properties[0];
+		Connection c = this.connection;
 		PreparedStatement st;
 		ResultSet r;
         Graph g = null;
