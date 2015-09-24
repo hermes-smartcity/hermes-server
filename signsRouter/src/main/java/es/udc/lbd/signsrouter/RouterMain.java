@@ -20,6 +20,7 @@ import es.udc.lbd.signsrouter.writer.PSQLGraphWriter;
 public class RouterMain {
 	
 	private static final String POSTGRESQL_PROPS = "postgresql.properties";
+	private static final String HERMES_PROPS = "hermes.properties";
 	private static final long START_EDGE = 84670;
 	
     public static void main( String[] args )  {
@@ -32,6 +33,12 @@ public class RouterMain {
     	try {
 			props.load(is);
 			connection = PSQLConnectionProvider.getConnection(props);
+			is.close();
+			
+			is = RouterMain.class.getClassLoader().getResourceAsStream(HERMES_PROPS);
+			props.load(is);
+			is.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
@@ -42,7 +49,8 @@ public class RouterMain {
     	
     	GraphBuilder builder = new PSQLGraphBuilder(connection);
     	Graph g = builder.readGraph();
-        Navigator navigator = new BreadthFirstNavigator(connection, new ConusSignDetector(connection));
+    	g.espg = Integer.parseInt(props.getProperty("hermes.espg"));
+        Navigator navigator = new BreadthFirstNavigator(connection, new ConusSignDetector(connection, g));
 		navigator.navigate(g, g.edges.get(START_EDGE));
 		
 		GraphWriter writer = new PSQLGraphWriter(connection);

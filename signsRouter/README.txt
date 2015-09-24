@@ -17,5 +17,4 @@ Usage: Open the project in Eclipse, download any Maven dependencies and launch i
 TODO:
 	- Test with more data!
 	- Support for more signs, not just R101 (dir prohibida).
-	- Make it independent from SRID, or at least extract it into a configuration.
 	- (Maybe) use actual entities from our model instead of a Node and Edges abstraction.
