@@ -10,6 +10,7 @@ public class Graph {
 	public Node[] nodes;
 	public Set<Edge> bannedEdges = new HashSet<Edge>();;
 	public Set<TurnRestriction> turnRestrictions = new HashSet<TurnRestriction>();
+	public Set<SpeedLimit> speedLimits = new HashSet<SpeedLimit>();
 	public int epsg = 4326;
 	
 	public Graph(int nodes) {
@@ -39,5 +40,12 @@ public class Graph {
 	public boolean banEdge(Edge e) {
 		e.banned = true;
 		return this.bannedEdges.add(e);
+	}
+	
+	public boolean addSpeedLimit(SpeedLimit speedLimit) {
+		if (speedLimit == null)
+			return false;
+		
+		return this.speedLimits.add(speedLimit);
 	}
 }

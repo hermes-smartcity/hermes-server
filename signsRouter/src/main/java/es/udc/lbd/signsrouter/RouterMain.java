@@ -21,7 +21,7 @@ public class RouterMain {
 	
 	private static final String POSTGRESQL_PROPS = "postgresql.properties";
 	private static final String HERMES_PROPS = "hermes.properties";
-	private static final long START_EDGE = 84670;
+	private static final long START_EDGE = 50803;
 	
     public static void main( String[] args )  {
     	BasicConfigurator.configure();	// Log4J configuration
@@ -54,7 +54,7 @@ public class RouterMain {
 		navigator.navigate(g, g.edges.get(START_EDGE));
 		
 		GraphWriter writer = new PSQLGraphWriter(connection);
-		writer.writeGraph(g);
+//		writer.writeGraph(g);
 		
 		try {
 			connection.close();

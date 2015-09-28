@@ -13,6 +13,7 @@ import es.udc.lbd.signsrouter.model.Edge;
 import es.udc.lbd.signsrouter.model.Graph;
 import es.udc.lbd.signsrouter.model.Node;
 import es.udc.lbd.signsrouter.model.Position;
+import es.udc.lbd.signsrouter.model.SpeedLimit;
 import es.udc.lbd.signsrouter.model.TrafficSign;
 import es.udc.lbd.signsrouter.model.TurnRestriction;
 
@@ -20,14 +21,14 @@ public class BreadthFirstNavigator implements Navigator {
 
 	private static final Logger log = Logger.getLogger(BreadthFirstNavigator.class);
 	
-	private static final int MAX_ITERATIONS = 3000000;
+	private static final int MAX_ITERATIONS = 1000;
 	
-	private Queue<Edge> frontier;
+	private Queue<NavigatorState> frontier;
 	private Connection connection;
 	private SignDetector detector;
 	
 	public BreadthFirstNavigator(Connection connection, SignDetector detector) {
-		this.frontier = new LinkedList<Edge>();
+		this.frontier = new LinkedList<NavigatorState>();
 		this.connection = connection;
 		this.detector = detector;
 	}
@@ -45,7 +46,9 @@ public class BreadthFirstNavigator implements Navigator {
 		return normalizeAngle(90 - Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x)));
 	}
 	
-	private void expand(Graph graph, Edge lastEdge) {
+	private void expand(Graph graph, NavigatorState state) {
+		Edge lastEdge = state.edge;
+		SpeedLimit speedLimit = state.speedLimit;
 		Edge e = null;
 		Node node = lastEdge.dest;
 		Iterator<Edge> edges = node.outgouingEdges.iterator();
@@ -53,6 +56,11 @@ public class BreadthFirstNavigator implements Navigator {
 		Set<TrafficSign> detectedSigns;
 		double forwardHeading = calculateHeading(lastEdge.posDest, node.position);
 		double turnHeading;
+		TurnRestriction turnRestriction = null;
+		
+		if (speedLimit != null) {
+			speedLimit.edges.add(lastEdge);
+		}
 		
 		// First detect 10 meters away from the end node:
 		// Here I'm looking for signs directly forward from my position
@@ -66,6 +74,14 @@ public class BreadthFirstNavigator implements Navigator {
 			}
 		}
 		
+		for (TrafficSign sign: detectedSignsForward) {
+			if (sign.interruptsSpeed()) {
+				log.debug("Interrupt speed limit at " + lastEdge);
+				graph.addSpeedLimit(speedLimit);
+				speedLimit = null;
+			}
+		}
+		
 		while (edges.hasNext()) {
 			e = edges.next();
 			
@@ -73,13 +89,15 @@ public class BreadthFirstNavigator implements Navigator {
 				continue;
 			}
 			
+			turnRestriction = null;
 			turnHeading = calculateHeading(lastEdge.posDest, e.posOrigin);
 			
 			for (TrafficSign sign : detectedSignsForward) {
 				// FIXME may fail in ambiguous cases.
 				if (sign.turnRestriction(normalizeAngle(turnHeading - forwardHeading))) {
 					log.debug("New turn restriction from " + lastEdge + " to " + e);
-					graph.turnRestrictions.add(new TurnRestriction(lastEdge, e));
+					turnRestriction = new TurnRestriction(lastEdge, e);
+					graph.turnRestrictions.add(turnRestriction);
 				}
 			}
 			
@@ -103,10 +121,16 @@ public class BreadthFirstNavigator implements Navigator {
 						log.debug("Banning edge " + e);
 						graph.banEdge(e);
 					}
+					
+					if (sign.speedLimit() > 0) {
+						log.debug("New speed limit of " + sign.speedLimit());
+						speedLimit = new SpeedLimit(sign.speedLimit());
+						graph.addSpeedLimit(speedLimit);
+					}
 				}
 				
-				if (!e.banned) {
-					frontier.add(e);
+				if (!e.banned && turnRestriction == null) {
+					frontier.add(new NavigatorState(e, speedLimit));
 				}
 			}
 			
@@ -118,6 +142,7 @@ public class BreadthFirstNavigator implements Navigator {
 		long navigatedEdges = 0;
 		int maxFrontierSize = 0;
 		e.seen = true;
+		NavigatorState state = new NavigatorState(e, null);
 		
 		do {
 			if (navigatedEdges >= MAX_ITERATIONS) {
@@ -125,21 +150,24 @@ public class BreadthFirstNavigator implements Navigator {
 			}
 			
 			if (! frontier.isEmpty()) {
-				e = frontier.remove();
+				state = frontier.remove();
 				
 //				log.debug("Navigating " + e);
 				navigatedEdges++;
 				maxFrontierSize = Math.max(maxFrontierSize, frontier.size());
 			}
 			
-			expand(graph, e);
+			expand(graph, state);
 			
 		} while (! frontier.isEmpty());
 		
-		log.info("Navigated " + navigatedEdges + " edges.");
-		log.debug("Max frontier size: " + maxFrontierSize + " edges.");
+		log.info("Navigated " + navigatedEdges + " states.");
+		log.debug("Max frontier size: " + maxFrontierSize + " states.");
 		log.info("Banned " + graph.bannedEdges.size() + " edges.");
 		log.info(graph.turnRestrictions.size() + " turn restricions.");
+		log.info(graph.speedLimits.size() + " speed limits.");
+		
+		log.debug("Speed limits: " + graph.speedLimits);
 	}
 
 }

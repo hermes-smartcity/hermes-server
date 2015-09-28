@@ -23,14 +23,26 @@ public class TrafficSign {
 	 */
 	public boolean turnRestriction(double relativeHeading) {
 		if (type.equals("R303")) {
-			return relativeHeading < 350 && relativeHeading > 270;
+			return relativeHeading < 350 && relativeHeading > 220;
 		}
 		
 		if (type.equals("R302")) {
-			return relativeHeading > 10 && relativeHeading < 90;
+			return relativeHeading > 10 && relativeHeading < 140;
 		}
 		
 		return false;
+	}
+	
+	public int speedLimit() {
+		if (type.startsWith("R301")) {
+			return Integer.parseInt(type.split("-")[1]);
+		} else {
+			return 0;
+		}
+	}
+	
+	public boolean interruptsSpeed() {
+		return "R1".equals(type);
 	}
 
 	@Override

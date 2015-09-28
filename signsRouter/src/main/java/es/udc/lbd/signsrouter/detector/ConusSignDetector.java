@@ -23,11 +23,11 @@ public class ConusSignDetector implements SignDetector {
 	public ConusSignDetector(Connection connection, Graph g) {
 		this.connection = connection;
 		try {
-			// Make a conus heading to the street we want to go into, a left angle of 10 and a right angle of 60
+			// Make a conus heading to the street we want to go into, a left angle of 15 and a right angle of 60
 			// Also check if the sign is oriented to us so we can see it
 			this.statement = connection.prepareStatement("SELECT ST_x(geom) AS x, ST_y(geom) AS y, azimut, tipo FROM es_cor_signs "
-					+ " WHERE ST_Distance(geom, ST_SetSRID(ST_Point(?, ?), " + g.epsg + ")) < 10 "
-					+ " AND degrees(ST_Azimuth(ST_SetSRID(ST_Point(?, ?), " + g.epsg + "), geom)) - ? BETWEEN -15 AND 60 "
+					+ " WHERE ST_Distance(geom, ST_SetSRID(ST_Point(?, ?), " + g.epsg + ")) < 12 "
+					+ " AND normalizeAngle(degrees(ST_Azimuth(ST_SetSRID(ST_Point(?, ?), " + g.epsg + "), geom)) - ?) NOT BETWEEN 60 AND 345 "
 					+ " AND abs(degrees(ST_Azimuth(geom, ST_SetSRID(ST_Point(?, ?), " + g.epsg + "))) - azimut) NOT BETWEEN 80 AND 280 ");	// I hate working with angles...
 		} catch (SQLException e) {
 			// Should never fail
