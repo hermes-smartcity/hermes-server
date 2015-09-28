@@ -18,12 +18,12 @@ public class TrafficSign {
 	
 	/**
 	 * 
-	 * @param relativeHeading a deviation from -180 to 180 from the original way heading for this turn.
+	 * @param relativeHeading a deviation from 0 to 360 from the original way heading for this turn.
 	 * 	Positive means right.
 	 */
 	public boolean turnRestriction(double relativeHeading) {
 		if (type.equals("R303")) {
-			return relativeHeading < -10 && relativeHeading > -90;
+			return relativeHeading < 350 && relativeHeading > 270;
 		}
 		
 		if (type.equals("R302")) {

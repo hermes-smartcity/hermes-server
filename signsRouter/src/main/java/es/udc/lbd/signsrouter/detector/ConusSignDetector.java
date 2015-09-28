@@ -27,7 +27,7 @@ public class ConusSignDetector implements SignDetector {
 			// Also check if the sign is oriented to us so we can see it
 			this.statement = connection.prepareStatement("SELECT ST_x(geom) AS x, ST_y(geom) AS y, azimut, tipo FROM es_cor_signs "
 					+ " WHERE ST_Distance(geom, ST_SetSRID(ST_Point(?, ?), " + g.epsg + ")) < 10 "
-					+ " AND degrees(ST_Azimuth(ST_SetSRID(ST_Point(?, ?), " + g.epsg + "), geom)) - ? BETWEEN -10 AND 60 "
+					+ " AND degrees(ST_Azimuth(ST_SetSRID(ST_Point(?, ?), " + g.epsg + "), geom)) - ? BETWEEN -15 AND 60 "
 					+ " AND abs(degrees(ST_Azimuth(geom, ST_SetSRID(ST_Point(?, ?), " + g.epsg + "))) - azimut) NOT BETWEEN 80 AND 280 ");	// I hate working with angles...
 		} catch (SQLException e) {
 			// Should never fail

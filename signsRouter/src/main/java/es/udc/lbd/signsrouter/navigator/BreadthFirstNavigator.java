@@ -20,7 +20,7 @@ public class BreadthFirstNavigator implements Navigator {
 
 	private static final Logger log = Logger.getLogger(BreadthFirstNavigator.class);
 	
-	private static final int MAX_ITERATIONS = 1000;
+	private static final int MAX_ITERATIONS = 3000000;
 	
 	private Queue<Edge> frontier;
 	private Connection connection;
@@ -42,7 +42,7 @@ public class BreadthFirstNavigator implements Navigator {
 	}
 	
 	private static double calculateHeading(Position p1, Position p2) {
-		return 90 - Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x));
+		return normalizeAngle(90 - Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x)));
 	}
 	
 	private void expand(Graph graph, Edge lastEdge) {
@@ -56,7 +56,7 @@ public class BreadthFirstNavigator implements Navigator {
 		
 		// First detect 10 meters away from the end node:
 		// Here I'm looking for signs directly forward from my position
-		detectedSignsForward = detector.detect(lastEdge.posDest, normalizeAngle(forwardHeading));
+		detectedSignsForward = detector.detect(lastEdge.posDest, forwardHeading);
 		
 		if (!detectedSignsForward.isEmpty()) {
 			log.debug("From " + lastEdge + " heading forward I can see the following signs: ");
@@ -76,8 +76,8 @@ public class BreadthFirstNavigator implements Navigator {
 			turnHeading = calculateHeading(lastEdge.posDest, e.posOrigin);
 			
 			for (TrafficSign sign : detectedSignsForward) {
-				// FIXME may fail in ambiguous cases
-				if (sign.turnRestriction(turnHeading - forwardHeading)) {
+				// FIXME may fail in ambiguous cases.
+				if (sign.turnRestriction(normalizeAngle(turnHeading - forwardHeading))) {
 					log.debug("New turn restriction from " + lastEdge + " to " + e);
 					graph.turnRestrictions.add(new TurnRestriction(lastEdge, e));
 				}
@@ -88,7 +88,7 @@ public class BreadthFirstNavigator implements Navigator {
 				
 				// Then detect from the node itself:
 				// Here I'm looking for signs on the direction of the next edge
-				detectedSigns = detector.detect(lastEdge.dest.position, normalizeAngle(calculateHeading(lastEdge.dest.position, e.posOrigin)));
+				detectedSigns = detector.detect(lastEdge.dest.position, calculateHeading(lastEdge.dest.position, e.posOrigin));
 				
 				if (!detectedSigns.isEmpty()) {
 					log.debug("From " + lastEdge.dest + " heading to " + e + " I can see the following signs: ");
