@@ -1,32 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
-
+<!DOCTYPE tiles-definitions
+  PUBLIC '-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN'
+  'http://tiles.apache.org/dtds/tiles-config_2_0.dtd'>
 <tiles-definitions>
+	<definition name=".Base"
+		template="/WEB-INF/view/jsp/template/baseTemplate.jspx">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="content" value="${content}" />
+	</definition>
 
- <definition name=".Base" template="/WEB-INF/view/jsp/commontiles/plantilla.jspx">
- 	 	<put-attribute name="bodyId" value="publica"/>
- 	 	<put-attribute name="bodyClass" value="publica"/>
- 	 	<put-attribute name="baseUrl" value=""/>	
- 	 	<put-attribute name="titulo" value="${titulo}"/> 
-    	<put-attribute name="contido" value="${contido}"/> 	
-    	<put-attribute name="quitarMenu" value="false"/>
-    	<put-attribute name="detallePaxina" value=""/>
-    	<put-attribute name="submenu" value=""/>
-     </definition>
-       
- 	 <definition name=".BaseLogin" template="/WEB-INF/view/jsp/commontiles/plantilla.jspx">
- 	 	<put-attribute name="bodyId" value="login"/>
- 	 	<put-attribute name="bodyClass" value="login"/>
- 	 	<put-attribute name="baseUrl" value=""/>	
- 	 	<put-attribute name="titulo" value="${titulo}"/> 
-    	<put-attribute name="contido" value="${contido}"/> 	
-    	<put-attribute name="quitarMenu" value="false"/> 
-    	<put-attribute name="detallePaxina" value=""/>
-    	<put-attribute name="submenu" value=""/>
-     </definition>
- 
-    <definition name="ckeditor/upload" template="/WEB-INF/view/jsp/ckeditor/upload.jspx" />
+	<definition name="" extends=".Base">
+	</definition>
 
-	<definition name="ckeditor/browser" template="/WEB-INF/view/jsp/ckeditor/browser.jspx" />
-		
+	<definition name="error" template="/WEB-INF/view/jsp/error.jspx">
+	</definition>
 </tiles-definitions>

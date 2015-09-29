@@ -35,9 +35,11 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<property name="definitions">
 			<list>
-				<value>/WEB-INF/view/tiles/tiles-defs-events.xml</value>
+				<!-- <value>/WEB-INF/view/tiles/tiles-defs-events.xml</value>
 				<value>/WEB-INF/view/tiles/tiles-defs-admin.xml</value>
-				<value>/WEB-INF/view/tiles/tiles-defs.xml</value>
+				<value>/WEB-INF/view/tiles/tiles-defs.xml</value> -->
+				<value>/WEB-INF/view/tiles/tiles-partials.xml</value>
+				<value>/WEB-INF/view/tiles/tiles-defs.xml</value> 
 			</list>
 		</property>
 		<property name="preparerFactoryClass"
