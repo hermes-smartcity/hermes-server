@@ -1,0 +1,482 @@
+/*************************************************/
+/************ formularioGeneral.css **************/
+/*************************************************/
+
+/************ Estructura principal ****************/
+
+.dropdown-menu{
+	width:300px;
+}
+
+#nuevaEntidad {
+	font-size:14px;
+	margin-bottom:12px;
+	text-align:right;
+}
+
+/************** Tabla *******************/
+/
+.controls {
+	clear: both;
+}
+
+.etiquetaSeparada {
+	margin-right: 15px;
+}
+
+.empty-table {
+	padding: 20px 0;
+	margin: -20px 0 20px;
+	text-align: center;
+	border: 1px solid #ddd;
+	border-top: 0;
+}
+
+.paginacion{
+	text-align:right;
+	margin-top:13px;
+	height:50px;
+}
+
+a.btn, a.btn:active, a.btn:visited {
+	color: #fff;
+}
+
+a.btn {
+	float: left;
+}
+
+a.btn:first-child {
+	/* margin-bottom: 20px; */
+}
+
+.pagination {
+	float: right;
+	margin: 0px 0 !important;
+	padding: 0px !important;
+}
+
+.pagination>.active>a {
+	background-color: #5bb0e6 !important;
+	border-color:#5bb0e6 !important;
+}
+
+/*********** Tabla básica ***********/
+
+.tablaBasica td:hover {
+	cursor: auto !important;
+}
+
+.tablaBasica tr:hover {
+	background-color: #fff !important;
+}
+
+.tablaSeguimientosPai {
+	margin-top: 15px;
+}
+
+/*********** Datos colectivos **************/
+.datosColectivosObservaciones{
+	margin-top: 4px;
+}
+
+/*********** Estilos botones ***********/
+div.acciones {
+    margin-bottom: 5px;
+    margin-right: 15px;
+    padding: 0.3em 0;
+    text-align: right;
+    height: 30px;
+}
+
+div.accionesFloat {
+    float: right;
+    margin-bottom: 15px;
+    margin-top: 3px;
+    text-align: right;
+}
+
+.botonForm {
+	text-align: center;
+    background-color: #4f5557;
+    border: medium none;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 0.3em 0.6em;
+	text-decoration: none;
+	color: #FFFFFF;
+ 	box-shadow: 0 1px 2px #AAAAAA;	
+ 	font-size: 12px;
+ 	cursor: pointer;
+}
+
+.botonFormDentro{
+    background-color: #888888;
+    font-size: 11px;
+}
+.botonForm:hover, .botonForm:focus{
+	color: lightyellow;
+ 	box-shadow: 0 2px 5px #AAAAAA;		
+}
+.botonLeft {
+ 	float: left;	
+}
+
+.botonesForm {
+	float:right;
+	margin-bottom: 5px;
+    margin-right: 15px;
+    padding: 0.3em 0;
+}
+
+#botonEditar {
+	margin-right:15px;
+}
+
+#botonCancelar {
+	margin-right:15px;
+}
+
+.botonCancelar {
+	margin-right:15px;
+}
+
+#botonEliminar {
+   margin-right:15px;
+}
+
+#botonGuardar {
+	margin-right:15px;
+}
+
+.btn-primary{
+	background-color: #5bb0e6;
+	border-color: #5bb0e6;
+}
+
+.botonSeparado {
+	margin-right:15px;
+	float:right;
+	cursor: pointer;
+}
+
+/*********** Estilos ficha / formulario *******/
+
+div.form-group div.valor{
+    clear: left;
+    padding-left: 15px;
+}
+    
+/*********** Mensajes de validación ***********/
+
+.help-block {
+	font-size: 12px;
+}
+
+.form-group .help-block {
+  display: none;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+}
+
+.divError {
+	margin-bottom:5px;
+}
+
+/*********** Estilos generales ***********/
+
+fieldset.bloque{
+	padding: 10px;
+	margin-bottom: 20px;
+    min-height: 80px;
+    clear: both;
+	margin: 15px auto;
+	padding: 5px;
+	/* Bordes redondeados */
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+    background: none repeat scroll 0 0 padding-box #ffffff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e7ebee;    
+}
+
+fieldset.bloque fieldset.bloque{
+	margin: 0px 0px 10px 0px;	
+	padding: 0 10px 10px;
+	box-shadow: none;
+}
+
+fieldset.bloque legend {
+    color: #616161;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 0 5px;
+	width: auto;    
+	margin: 0px;
+	border: medium none;
+}
+
+fieldset.bloque legend.letraPequena{
+	font-size: 13px;
+}
+
+.tituloInterior{
+	color: #616161;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 0 5px; 
+	margin-top: 15px;
+}
+
+fieldset.bloque fieldset.bloque legend,fieldset.bloque fieldset.bloque fieldset.bloque legend  {
+	font-size: 14px;
+}
+.notClickableLabel {
+	cursor:text;
+}
+
+.panel-primary{
+	border-color: gray;
+}
+
+.panel-primary > .panel-heading{
+	background-color: #5bb0e6;
+}
+
+.panelCabeceras {
+	height:35px;
+}
+
+.floatLeft {
+	float:left;
+}
+
+.floatRight {
+	float:right;
+}
+
+.valorCheckLeft{
+	float: left;
+	clear: right;
+	margin-right: 10px;
+		
+}
+.bordefino {
+	border-color:#dadada!important;
+}
+
+#resumen {
+	background-color: #f2f2f2;
+	min-height: 30px;
+    margin-bottom: 10px;
+    padding: 0;	
+    box-shadow: none;
+    border-left: 2px solid #00679e;
+}
+
+
+.textoarea {
+	white-space: pre-line;
+}
+
+/***************** Estilos pestañas (sobreescribimos estilos bootstrap) **************/
+
+.nav-tabs{
+	border-bottom: 1px solid #728ba5;
+  	height: 28px;	
+    margin: 0 0 10px;  	
+}
+
+.nav-tabs > li {
+  background: none repeat scroll 0 0 #ffbe6e;
+  border: 1px solid #728ba5;
+  border-radius: 4px 4px 0 0;	
+  margin-right: 10px;
+}
+
+.nav-tabs > li > a {
+   padding: 3px 15px;
+   line-height: 18px;   
+   width: 100%;
+   cursor:pointer !important;
+}
+
+.nav-tabs > li.active {
+	background: none repeat scroll 0 0 #f9f9f9;
+    border-bottom: 1px solid #f9f9f9;	
+    height: 28px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+	border: medium none;
+	background-color: transparent;
+}
+
+/* Pestañas interiores a un fieldset */
+.nav-interiores{
+	border-bottom: 1px solid #cecece;
+  	height: 28px;	
+    margin: 0 0 10px;  	
+}
+
+
+.nav-interiores  > li {
+  background: none repeat scroll 0 0 #dadada;
+  border: 1px solid #cecece;
+  border-radius: 4px 4px 0 0;	
+  margin-right: 10px;
+}
+
+.nav-interiores > li.active {
+	background: none repeat scroll 0 0 #ffffff;
+    border-bottom: 1px solid #ffffff;	
+    height: 28px;
+}
+
+
+/* Propiedad para que el usuario sepa que se puede hacer click sobre el elemento */
+.cursorEnlace {
+	cursor:pointer;
+}
+
+/* Propiedad para colocar todas las etiquetas de control de un form a la izquierda de su capa */
+.form-horizontal .control-label {
+	text-align:left;
+	color: gray;
+	font-weight:700;
+}
+
+.form-horizontal .form-group{
+	margin: 0px;
+} 
+
+table .form-group {
+	margin: 0px;
+}
+
+/* Coloca el texto de cada elemento alineado verticalmente con su etiqueta */
+.infoElemento {
+	margin-top:7px;
+	font: 1em Arial, Helvetica, sans-serif;
+}
+
+/* Fieldsets */
+
+.bloqueDatos {
+	min-width:100%;
+	border-top:1px solid #428bca;
+	margin:10px;
+	margin-top:0px;
+	margin-right:5px;
+}
+
+.bloqueDatos .col-xs-6{
+	margin-left:-20px;
+	margin-right:20px;
+}
+
+.bloqueDatos .input-sm {
+	margin-top:4px;
+	margin-left:1px;
+}
+
+.bloqueDatos legend{
+	color:#428bca;
+	margin-left:20px;
+	padding-left:10px;
+	padding-right:10px;
+	border-bottom:none;
+	width:auto;
+}
+
+legend h4{
+	font-size:15px;
+}
+
+#wrapper {
+	position:relative;
+	min-height:600px;
+}
+
+.asteriscoCampoRequerido {
+	color: red;
+}
+
+#inputFile[type='file'] {
+  color: transparent;
+  width: 132px;
+  overflow:hidden;
+}
+
+/* TODO Aplicar a un id y no al elemento... */
+input[type=file] {
+	display: inline !important;
+}
+
+.enlaceDesplegarTabla {
+	margin-bottom:10px;
+	margin-left:2px; 
+	float:left;	
+}
+
+/* Evitamos que se pueda cambiar el ancho de las áreas de texto */
+textarea { resize:vertical ; }
+
+.textoDerecha {
+	text-align : right;
+}
+
+.alternable>tbody>tr>td.textoDerecha {
+	padding-right: 10px;
+}
+
+.alternable>tbody>tr>td.acciones{
+	text-align: center;
+}
+.textoCentrado {
+	text-align : center;
+}
+
+.textoCursiva {
+	font-style : italic;
+}
+
+.iconoOculto {
+	visibility:hidden;
+}
+
+/***************** Estilos elementos formularios (sobreescribimos estilos bootstrap) **************/
+
+optgroup option{
+	padding-left: 10px;
+}
+
+.alert-info{
+	margin: 10px 0px;
+}
+
+select.input-sm {
+    height: 26px;
+    line-height: 26px;
+}
+
+.input-sm {
+    padding: 3px;
+    height: 26px;
+}
+
+.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn {
+    height: 26px;
+}
+
+
+.etiquetaTipoPrecio {
+	margin-top: 9px;
+	margin-left: 2px;
+}
+

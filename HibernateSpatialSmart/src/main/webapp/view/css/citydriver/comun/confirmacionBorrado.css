@@ -1,0 +1,20 @@
+/*************************************************/
+/************ ventanasModales.css ****************/
+/*************************************************/
+
+/* Custom dialog/modal headers */
+
+.modal-header{
+	padding: 12px;	
+}
+
+.modal-header{
+	background-color: #eee;
+}
+.dialog-header-confirm { 
+	background-color: #5bb0e6; 
+}
+
+.dialog-header-confirm span, .dialog-header-confirm h4 { 
+	color: #ffffff; 
+}

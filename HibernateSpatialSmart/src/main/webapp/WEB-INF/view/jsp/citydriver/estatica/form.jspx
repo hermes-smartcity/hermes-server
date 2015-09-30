@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:cityDriver="http://www.enxenio.es/tags/cityDriver"		
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+
+	<jsp:include page="form-script.jspx" />
+	
+	<c:url var="ckeditor" value="/view/js/ckeditor/ckeditor.js" />
+	<script type="text/javascript" src="${ckeditor}"><!-- c --></script>
+
+		<fieldset>
+		<legend><fmt:message key="cityDriver.crearEstatica.legend.datosEstatica"/> </legend>
+		
+		<table class="layout">
+			<tr>					
+				<td>
+				<form:label path="titulo">
+					<fmt:message key="cityDriver.estatica.etiqueta.titulo" />*
+				</form:label> <form:input path="titulo"  autofocus="autofocus"
+					size="100" /> <form:errors
+					path="titulo" cssClass="error" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<cityDriver:editor campo="contenido" campoId="contenido" etiqueta="crearEstatica.label.contenido" />
+				</td>
+			</tr> 
+			<tr>
+			
+		</tr>
+		</table>
+
+	</fieldset>
+
+
+</jsp:root>

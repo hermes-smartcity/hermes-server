@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+
+	<c:url var="ckeditor" value="/view/js/ckeditor/ckeditor.js" />
+	<script type="text/javascript" src="${ckeditor}"><!-- c --></script>
+	
+	<script type="text/javascript">
+	<![CDATA[
+  	//<![CDATA[
+
+	 
+		$("document").ready(function() {
+					
+			CKEDITOR.replace("contenido", {
+   				toolbar: [
+   						{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','-','RemoveFormat' ] },
+   						{ name: 'links', items : [ 'Link','Unlink'] },
+   						{ name: 'tools', items: [ 'Maximize'] }
+   					],
+				resize_enabled: false,
+				removePlugins: 'elementspath',
+				bodyClass: "ckeditor",
+				language: "gl",
+				uiColor: "#cccccc",
+				height: 400,
+				width: 930
+			});
+			
+		});
+		
+	
+	//]]>]]&gt;
+	</script>
+
+</jsp:root>

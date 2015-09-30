@@ -1,0 +1,89 @@
+body {
+	background-color: #f4f4f4;
+	color: #171717;
+	font-family: Arial;
+	font-size: 12px;
+}
+body.login #wrapperContedor {
+	border-left: 1px solid #CECECE;
+	border-right: 1px solid #CECECE;
+	border-bottom: 1px solid #CECECE;		
+}
+
+
+body.login #contido {
+    padding: 20px;
+}
+
+#wrapperContedor {
+	background-color: white;
+	margin: 0 auto;
+	width: 1200px;
+	border-left: 1px solid #CECECE;
+	border-right: 1px solid #CECECE;
+	border-bottom: 1px solid #CECECE;		
+}
+
+#cabeceira{
+	background-color: #ffffff;
+	height: 80px;
+	/*height: 50px;*/
+}
+
+#seccionLogoMenu{
+
+	width:100%;
+}
+	
+#contedor {
+}
+
+#contido {
+	background-color: #f9f9f9;
+	padding: 15px 10px;
+	
+}
+
+#footer {
+	clear:both;
+ 	border-top: 1px solid #cecece;	
+}
+
+
+body.login #contido{
+	width: 350px;	
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #4E8FC8;
+    min-height: 0;
+    margin: 80px auto;
+}
+
+body.login h1 {
+	text-align: center;
+}
+
+#logo{
+	width: 300px;
+	float:left;
+}
+
+/*********** Formulario de nova contrasinal ***/
+.formContrasinal{
+	width: 30%;
+	margin: 20px auto;
+	padding: 20px;
+	font-size: 12px;
+	background-color: #fbfbfb;	
+    border-radius: 2px;
+    border: 1px solid gray;
+}
+
+.formContrasinal .form-control{
+	height: 20px;
+	width: 200px;
+}
+
+.btn-info{
+	background-color: #5bb0e6;
+}

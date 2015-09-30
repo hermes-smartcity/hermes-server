@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root version="2.0" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:jsaux="http://www.enxenio.es/tags/jsaux"
+	xmlns:jsp="http://java.sun.com/JSP/Page">
+	<div>
+		<div class="h4 subtitulo">Consulta de todos los eventos "Vehicle
+			Location"</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
+	<div>
+		<div class="h4 subtitulo">Consulta de todos los eventos
+			"Measurement"</div>
+		<div>
+			<p>Tipos: "High Heart Rate", "High Speed", "High Acceleration" y
+				"High Deceleration")</p>
+		</div>
+		<div class="h4 subtitulo">
+			<!--  -->
+		</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
+
+	<div>
+		<div class="h4 subtitulo">Consulta de todos los eventos "Data
+			Section"</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
+	<div>
+		<div class="h4 subtitulo">Arranque de la aplicación: Comenzar y
+			parar de escuchar eventos</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
+	<div>
+		<div class="h4 subtitulo">Creación de menús</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
+	<div>
+		<div class="h4 subtitulo">Creación de páginas estáticas</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
+
+</jsp:root>

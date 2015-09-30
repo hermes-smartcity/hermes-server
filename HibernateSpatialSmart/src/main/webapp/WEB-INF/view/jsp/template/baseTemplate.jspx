@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root version="2.0" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:i18n="http://www.enxenio.es/tags/i18n" xmlns:jsaux="http://www.enxenio.es/tags/jsaux" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="http://www.enxenio.es/tags/menu" xmlns:sec="http://www.springframework.org/security/tags" xmlns:tiles="http://tiles.apache.org/tags-tiles">
+	<html id="ng-app" ng-app="app" xmlns="http://www.w3.org/1999/xhtml">
+		<jsp:directive.page contentType="text/html; charset=UTF-8"/>
+		<head>
+			<title>
+				<tiles:useAttribute id="tilesSectionTitle" name="title" scope="request"/>
+			</title>
+		  	<!-- bower:css -->
+		  	<!-- endbower -->
+		  	<c:url  var="aux" value="/bower_components/bootstrap/dist/css/bootstrap.css" />
+			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
+		  	<c:url  var="aux" value="/bower_components/leaflet/dist/leaflet.css" />
+			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
+		  	<c:url  var="aux" value="/bower_components/font-awesome/css/font-awesome.css" />
+			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
+		  	<c:url  var="aux" value="/bower_components/leaflet.draw/dist/leaflet.draw.css" />
+			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
+		  	<c:url  var="aux" value="/bower_components/sweetalert/lib/sweet-alert.css" />
+			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
+			
+		  	<c:url  var="aux" value="/css/screen.css" />
+			<link href="${aux}" media="screen, projection" rel="StyleSheet" type="text/css"/>
+		  	<c:url  var="aux" value="/css/print.css" />
+			<link href="${aux}" media="print" rel="StyleSheet" type="text/css"/>
+		  	<!--[if IE]>
+		  		<c:url  var="aux" value="/css/ie.css" />
+				<link href="${aux}" media="screen, projection" rel="StyleSheet" type="text/css"/>
+			<![endif]-->
+		  	<c:url  var="aux" value="/css/base.css" />
+			<link href="${aux}" media="screen, projection" rel="StyleSheet" type="text/css"/>
+		</head>
+		<body>
+			<div class="header">
+				<span>City Driver</span>
+			</div>
+			<div class="view" ui-view=""><!-- --></div>
+			<!-- bower:js -->
+			<!-- endbower -->
+			<c:url  var="aux" value="/bower_components/jquery/dist/jquery.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/angular/angular.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/angular-ui-router/release/angular-ui-router.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/angular-sanitize/angular-sanitize.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/angular-resource/angular-resource.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/bootstrap/dist/js/bootstrap.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/leaflet/dist/leaflet.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/leaflet/dist/leaflet-src.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/leaflet.draw/dist/leaflet.draw-src.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/sweetalert/lib/sweet-alert.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/d3/d3.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/graham_scan/graham_scan.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/concavehull/dist/concavehull.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/evispa-timo-jsclipper/clipper.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			<c:url  var="aux" value="/bower_components/leaflet.freedraw/dist/leaflet.freedraw.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+
+			<jsp:include page="angularIncludes.jspx" />
+		</body>
+	</html>
+</jsp:root>

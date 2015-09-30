@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root version="2.0"
+ xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+ xmlns:form="http://www.springframework.org/tags/form" 
+ xmlns:jsaux="http://www.enxenio.es/tags/jsaux"
+ xmlns:jsp="http://java.sun.com/JSP/Page">
+ 
+ <c:url var="addImg" value="/view/imaxes/iconos/add.png"/>
+ 
+	<div class="formulario">
+		<div class="titulo">Datos del menú</div>
+		<form class="form-horizontal">
+			
+		<div class="form-group">
+			<div class="row">
+				<label class="col-sm-2 control-label" for="nombre">Nombre</label>
+				<div class="col-sm-5">
+					<input class="form-control" id="nombre" ng-model="nombre" placeholder="nombre del menú" type="text"/>
+				</div>
+			</div>
+			<div class="row">
+				 <div  style="margin:5px 0px 5px 0px;clear:both">
+				 	<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="f.addNuevoMenuEntrada()" type="submit">Añadir entrada menú</button>
+			 	 </div> 
+			</div>
+			  <script type="text/ng-template" id="categoryTree">
+				
+				<!-- Arreglar para que lo haga con ng-style -->
+				<div style="margin-left: {{entradaMenu.identacion}}px;">
+					
+					<input type="hidden" name="entradasMenu[{{$index}}].id" value="{{entradaMenu.id}}"/>
+					<input type="hidden" name="entradasMenu[{{$index}}].orden" value="{{entradaMenu.orden}}"/>
+					<input type="hidden" name="{{entradaMenu.idMenuEntradaPadre}}" value="{{entradaMenu.idMenuEntradaPadre}}"/>
+					<fieldset>
+					<div class="row"  ng-show="showDetails">
+							<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="f.addNuevoMenuEntradaHermanoArriba(entradaMenu, entradasMenu, $index)" type="submit">Añadir entrada de menú arriba</button>	
+					</div>
+					<div class="row">
+						
+						<div style="float:left; margin-left:300px;">
+							<label class="control-label" for="texto">Texto</label>
+							<div><input type="text"  name="entradasMenu[{{$index}}].texto" ng-model="entradaMenu.texto"/></div>							
+						</div>
+						<div style="float:left; margin-left:10px;">
+							<label class="control-label" for="url">Url</label>
+							<div><input type="text"  name="entradasMenu[{{$index}}].url" ng-model="entradaMenu.url"/></div>
+						</div>
+						<div style="float:left; margin: 22px 0px 0px 10px">
+							<img ng-click="showDetails = ! showDetails" src="${addImg}" style="max-height: 25px;"/>
+						</div>
+					</div>
+					<div class="row"  ng-show="showDetails">
+						<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="f.addNuevoMenuEntradaHermanoAbajo(entradaMenu, entradasMenu, $index)" type="submit">Añadir entrada de menú abajo</button>
+					</div> 
+ 					<div class="row"  ng-show="showDetails">
+						<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="f.addNuevoMenuEntradaHija(entradaMenu)" type="submit">Añadir entrada menú hija</button>
+					</div> 
+					</fieldset>			
+								 
+  					</div> 
+       						 <ul ng-if="entradaMenu.entradasMenu">
+            					<li ng-repeat="entradaMenu in entradaMenu.entradasMenu" ng-include="'categoryTree'">           
+           						</li>
+        					</ul>
+				
+    					</script>
+						   
+						<ul>
+					        <li ng-repeat="entradaMenu in entradasMenu" ng-include="'categoryTree'"></li>
+					    </ul>    
+			
+				 <div id="choicesDisplay">
+					      {{ entradasMenu }}
+				</div> 
+			</div>
+		
+		
+			<div class="row">
+				<div class="col-sm-5 col-sm-offset-1">
+					<!--<block ng-repeat="entradaMenu in entradasMenu" block="entradaMenu">
+					
+					</block>  -->
+				</div>
+				<div class="col-sm-5">
+					
+					
+				</div>
+			</div>
+			<div class="botones">
+				<button class="btn btn-danger" type="submit" ui-sref="inicio">Volver</button>
+				<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="f.enviar()" ng-disabled="!f.validarDatos()" type="submit">Guardar menú</button>
+			</div>
+		</form>
+	</div>
+</jsp:root>

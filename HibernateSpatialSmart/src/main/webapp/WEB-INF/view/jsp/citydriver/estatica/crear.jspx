@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+
+<head>
+
+</head>
+	<form:form id="estaticaForm" commandName="estaticaForm" method="post">
+		<jsp:include page="form.jspx"/>
+		 <div class="botons">
+			<fmt:message var="submitFmt" key="botones.crear"/>
+			<input type="submit" value="${submitFmt}"/>
+			<c:url var="volverUrl" value="/estatica/listar"/>
+			<a href="${volverUrl}"><fmt:message key="comun.volver"/></a>
+		</div> 
+	</form:form>	
+	
+</jsp:root>
