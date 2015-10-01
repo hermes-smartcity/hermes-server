@@ -1,60 +1,44 @@
 package es.udc.lbd.signsrouter.navigator;
 
-import java.sql.Connection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.vividsolutions.jts.geom.Coordinate;
+
 import es.udc.lbd.signsrouter.detector.SignDetector;
 import es.udc.lbd.signsrouter.model.Edge;
 import es.udc.lbd.signsrouter.model.Graph;
 import es.udc.lbd.signsrouter.model.Node;
-import es.udc.lbd.signsrouter.model.Position;
 import es.udc.lbd.signsrouter.model.SpeedLimit;
 import es.udc.lbd.signsrouter.model.TrafficSign;
 import es.udc.lbd.signsrouter.model.TurnRestriction;
+import es.udc.lbd.signsrouter.utils.AngleUtils;
 
 public class BreadthFirstNavigator implements Navigator {
 
 	private static final Logger log = Logger.getLogger(BreadthFirstNavigator.class);
 	
-	private static final int MAX_ITERATIONS = 1000;
+	private static final int MAX_ITERATIONS = 100;
 	
 	private Queue<NavigatorState> frontier;
-	private Connection connection;
 	private SignDetector detector;
 	
-	public BreadthFirstNavigator(Connection connection, SignDetector detector) {
+	public BreadthFirstNavigator(SignDetector detector) {
 		this.frontier = new LinkedList<NavigatorState>();
-		this.connection = connection;
 		this.detector = detector;
-	}
-	
-	private static double normalizeAngle(double a) {
-		int turns = (int) (a / 360);
-		
-		if (a < 0)
-			turns--;
-		
-		return a - turns * 360;
-	}
-	
-	private static double calculateHeading(Position p1, Position p2) {
-		return normalizeAngle(90 - Math.toDegrees(Math.atan2(p2.y - p1.y, p2.x - p1.x)));
 	}
 	
 	private void expand(Graph graph, NavigatorState state) {
 		Edge lastEdge = state.edge;
 		SpeedLimit speedLimit = state.speedLimit;
-		Edge e = null;
-		Node node = lastEdge.dest;
-		Iterator<Edge> edges = node.outgouingEdges.iterator();
+		Node node = (Node) graph.find(lastEdge.getEdge().getCoordinate(3));	// lastEdge destination
+		Coordinate almostDest = lastEdge.getEdge().getCoordinate(2);		// 10m from lastEdge destination
 		Set<TrafficSign> detectedSignsForward;
-		Set<TrafficSign> detectedSigns;
-		double forwardHeading = calculateHeading(lastEdge.posDest, node.position);
+		Set<TrafficSign> detectedSignsTurn;
+		double forwardHeading = AngleUtils.calculateHeading(almostDest, node.getCoordinate());
 		double turnHeading;
 		TurnRestriction turnRestriction = null;
 		
@@ -64,7 +48,7 @@ public class BreadthFirstNavigator implements Navigator {
 		
 		// First detect 10 meters away from the end node:
 		// Here I'm looking for signs directly forward from my position
-		detectedSignsForward = detector.detect(lastEdge.posDest, forwardHeading);
+		detectedSignsForward = detector.detect(almostDest, forwardHeading, 10, 15, 60);
 		
 		if (!detectedSignsForward.isEmpty()) {
 			log.debug("From " + lastEdge + " heading forward I can see the following signs: ");
@@ -82,41 +66,42 @@ public class BreadthFirstNavigator implements Navigator {
 			}
 		}
 		
-		while (edges.hasNext()) {
-			e = edges.next();
+		for (Edge e : node.getOutgoingEdges()) {
+//			log.debug("From " + state.edge + " I can go to " + e);
 			
-			if (lastEdge != null && e.dest.equals(lastEdge.origin)) {
+			if (lastEdge.id == -e.id) {
 				continue;
 			}
 			
 			turnRestriction = null;
-			turnHeading = calculateHeading(lastEdge.posDest, e.posOrigin);
+			Coordinate almostOrigin = e.getEdge().getCoordinate(1);
+			turnHeading = AngleUtils.calculateHeading(almostDest, almostOrigin);
 			
 			for (TrafficSign sign : detectedSignsForward) {
 				// FIXME may fail in ambiguous cases.
-				if (sign.turnRestriction(normalizeAngle(turnHeading - forwardHeading))) {
+				if (sign.turnRestriction(AngleUtils.diffDegrees(turnHeading, forwardHeading))) {
 					log.debug("New turn restriction from " + lastEdge + " to " + e);
 					turnRestriction = new TurnRestriction(lastEdge, e);
 					graph.turnRestrictions.add(turnRestriction);
 				}
 			}
 			
-			if (!e.seen) {
-				e.seen = true;
+			if (!e.isVisited()) {
+				e.setVisited(true);
 				
 				// Then detect from the node itself:
 				// Here I'm looking for signs on the direction of the next edge
-				detectedSigns = detector.detect(lastEdge.dest.position, calculateHeading(lastEdge.dest.position, e.posOrigin));
+				detectedSignsTurn = detector.detect(node.getCoordinate(), AngleUtils.calculateHeading(node.getCoordinate(), almostOrigin), 20, 15, 60);
 				
-				if (!detectedSigns.isEmpty()) {
+				if (!detectedSignsTurn.isEmpty()) {
 					log.debug("From " + lastEdge.dest + " heading to " + e + " I can see the following signs: ");
 					
-					for (TrafficSign sign : detectedSigns) {
+					for (TrafficSign sign : detectedSignsTurn) {
 						log.debug("\t" + sign);
 					}
 				}
 				
-				for (TrafficSign sign : detectedSigns) {
+				for (TrafficSign sign : detectedSignsTurn) {
 					if (sign.noWay()) {
 						log.debug("Banning edge " + e);
 						graph.banEdge(e);
@@ -133,26 +118,24 @@ public class BreadthFirstNavigator implements Navigator {
 					frontier.add(new NavigatorState(e, speedLimit));
 				}
 			}
-			
-//			graph.edges.remove(e);
 		}
 	}
 	
 	public void navigate(Graph graph, Edge e) {
 		long navigatedEdges = 0;
 		int maxFrontierSize = 0;
-		e.seen = true;
+		e.setVisited(true);
 		NavigatorState state = new NavigatorState(e, null);
 		
 		do {
-			if (navigatedEdges >= MAX_ITERATIONS) {
-				break;
-			}
+//			if (navigatedEdges >= MAX_ITERATIONS) {
+//				break;
+//			}
 			
 			if (! frontier.isEmpty()) {
 				state = frontier.remove();
 				
-//				log.debug("Navigating " + e);
+//				log.debug("Navigating " + state.edge);
 				navigatedEdges++;
 				maxFrontierSize = Math.max(maxFrontierSize, frontier.size());
 			}

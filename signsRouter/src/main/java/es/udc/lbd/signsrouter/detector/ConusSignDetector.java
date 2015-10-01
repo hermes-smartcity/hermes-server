@@ -1,63 +1,55 @@
 package es.udc.lbd.signsrouter.detector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import es.udc.lbd.signsrouter.model.Graph;
-import es.udc.lbd.signsrouter.model.Position;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.index.SpatialIndex;
+import com.vividsolutions.jts.index.strtree.STRtree;
+
 import es.udc.lbd.signsrouter.model.TrafficSign;
 
 public class ConusSignDetector implements SignDetector {
 
 	private static final Logger log = Logger.getLogger(ConusSignDetector.class);
 	
-	private Connection connection;
-	private PreparedStatement statement;
+	private SpatialIndex index;
+	private Envelope envelope;
 	
-	public ConusSignDetector(Connection connection, Graph g) {
-		this.connection = connection;
-		try {
-			// Make a conus heading to the street we want to go into, a left angle of 15 and a right angle of 60
-			// Also check if the sign is oriented to us so we can see it
-			this.statement = connection.prepareStatement("SELECT ST_x(geom) AS x, ST_y(geom) AS y, azimut, tipo FROM es_cor_signs "
-					+ " WHERE ST_Distance(geom, ST_SetSRID(ST_Point(?, ?), " + g.epsg + ")) < 12 "
-					+ " AND normalizeAngle(degrees(ST_Azimuth(ST_SetSRID(ST_Point(?, ?), " + g.epsg + "), geom)) - ?) NOT BETWEEN 60 AND 345 "
-					+ " AND abs(degrees(ST_Azimuth(geom, ST_SetSRID(ST_Point(?, ?), " + g.epsg + "))) - azimut) NOT BETWEEN 80 AND 280 ");	// I hate working with angles...
-		} catch (SQLException e) {
-			// Should never fail
-			e.printStackTrace();
+	public ConusSignDetector(Set<TrafficSign> signs) {
+		STRtree tree = new STRtree();
+		this.index = tree;
+		
+		for (TrafficSign sign : signs) {
+			tree.insert(new Envelope(sign.position), sign);
 		}
+		
+		tree.build();
+		log.info("Built a sign index with " + tree.size() + " items.");
+		
+		this.envelope = new Envelope();
 	}
 
-	public Set<TrafficSign> detect(Position p, double heading) {
+	public Set<TrafficSign> detect(final Coordinate p, final double heading, final float radius, final float leftAngle, final float rightAngle) {
 		Set<TrafficSign> signs = new HashSet<TrafficSign>();
+		List<Filter> filters = new ArrayList<Filter>(3) {{
+			add(new RadiusFilter(p, radius));
+			add(new ConusFilter(p, heading, leftAngle, rightAngle));
+			add(new LookAtMeFilter(p));
+		}};
+		
 //		log.debug("Searching for signs from " + p + " heading to " + heading);
 		
-		try {
-			statement.setDouble(1, p.x);
-			statement.setDouble(2, p.y);
-			statement.setDouble(3, p.x);
-			statement.setDouble(4, p.y);
-			statement.setDouble(5, heading);
-			statement.setDouble(6, p.x);
-			statement.setDouble(7, p.y);
-			ResultSet r = statement.executeQuery();
-			
-			while (r.next()) {
-				signs.add(new TrafficSign(new Position(r.getDouble("x"), r.getDouble("y")), r.getFloat("azimut"), r.getString("tipo")));
-			}
-			
-			r.close();
-			
-		} catch (SQLException e) {
-			// Should never fail
-			e.printStackTrace();
+		envelope.init(p.x-radius, p.x+radius, p.y-radius, p.y+radius);
+		signs.addAll(index.query(envelope));
+		
+		for (Filter filter : filters) {
+			filter.filterSigns(signs);
 		}
 		
 		return signs;

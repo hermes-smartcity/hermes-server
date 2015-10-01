@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.BasicConfigurator;
 
@@ -12,6 +13,7 @@ import es.udc.lbd.signsrouter.builder.GraphBuilder;
 import es.udc.lbd.signsrouter.builder.PSQLGraphBuilder;
 import es.udc.lbd.signsrouter.detector.ConusSignDetector;
 import es.udc.lbd.signsrouter.model.Graph;
+import es.udc.lbd.signsrouter.model.TrafficSign;
 import es.udc.lbd.signsrouter.navigator.BreadthFirstNavigator;
 import es.udc.lbd.signsrouter.navigator.Navigator;
 import es.udc.lbd.signsrouter.writer.GraphWriter;
@@ -21,7 +23,7 @@ public class RouterMain {
 	
 	private static final String POSTGRESQL_PROPS = "postgresql.properties";
 	private static final String HERMES_PROPS = "hermes.properties";
-	private static final long START_EDGE = 50803;
+	private static final long START_EDGE = 51231;
 	
     public static void main( String[] args )  {
     	BasicConfigurator.configure();	// Log4J configuration
@@ -50,11 +52,13 @@ public class RouterMain {
     	GraphBuilder builder = new PSQLGraphBuilder(connection);
     	Graph g = builder.readGraph();
     	g.epsg = Integer.parseInt(props.getProperty("hermes.epsg"));
-        Navigator navigator = new BreadthFirstNavigator(connection, new ConusSignDetector(connection, g));
-		navigator.navigate(g, g.edges.get(START_EDGE));
+    	Set<TrafficSign> signs = builder.readTrafficSigns();
+    	
+        Navigator navigator = new BreadthFirstNavigator(new ConusSignDetector(signs));
+		navigator.navigate(g, g.findEdge(START_EDGE));
 		
 		GraphWriter writer = new PSQLGraphWriter(connection);
-//		writer.writeGraph(g);
+		writer.writeGraph(g);
 		
 		try {
 			connection.close();

@@ -1,30 +1,25 @@
 package es.udc.lbd.signsrouter.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-public class Node {
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geomgraph.EdgeEndStar;
+
+public class Node extends com.vividsolutions.jts.geomgraph.Node {
+
+	private static final long serialVersionUID = 1L;
+	
 	public Long id;
-	public Position position;
-	public transient Set<Edge> incomingEdges;
-	public transient Set<Edge> outgouingEdges;
 	
-	public Node(Long id, Position pos) {
-		super();
+	public Node(Long id, Coordinate coord, EdgeEndStar edges) {
+		super(coord, edges);
 		this.id = id;
-		this.position = pos;
-		this.incomingEdges = new HashSet<Edge>(); 
-		this.outgouingEdges = new HashSet<Edge>(); 
 	}
 	
-	public boolean addIncomingEdge(Edge e) {
-		return this.incomingEdges.add(e);
+	public List<Edge> getOutgoingEdges() {
+		return this.edges.getEdges();
 	}
 	
-	public boolean addOutgoingEdge(Edge e) {
-		return this.outgouingEdges.add(e);
-	}
-
 	@Override
 	public String toString() {
 		return "" + id;

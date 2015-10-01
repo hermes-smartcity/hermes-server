@@ -4,13 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
+import com.vividsolutions.jts.index.strtree.STRtree;
 
 import es.udc.lbd.signsrouter.model.Edge;
 import es.udc.lbd.signsrouter.model.Graph;
 import es.udc.lbd.signsrouter.model.Node;
-import es.udc.lbd.signsrouter.model.Position;
+import es.udc.lbd.signsrouter.model.TrafficSign;
 
 public class PSQLGraphBuilder implements GraphBuilder {
 	
@@ -34,7 +41,7 @@ public class PSQLGraphBuilder implements GraphBuilder {
 			st = c.prepareStatement("SELECT COUNT(*) FROM hermes_transport_node");
 			r = st.executeQuery();
 			r.next();
-			g = new Graph(r.getInt(1)+1);
+			g = new Graph();
 			r.close();
 			st.close();
 			
@@ -58,13 +65,13 @@ public class PSQLGraphBuilder implements GraphBuilder {
 			
 			while (r.next()) {
 				e = new Edge(r.getLong("id"), 
-						new Node(r.getLong("start_node"), new Position(r.getDouble("node_x1"), r.getDouble("node_y1"))), 
-						new Node(r.getLong("end_node"), new Position(r.getDouble("node_x2"), r.getDouble("node_y2"))),
-						new Position(r.getDouble("x1"), r.getDouble("y1")),
-						new Position(r.getDouble("x2"), r.getDouble("y2")));
+						new Node(r.getLong("start_node"), new Coordinate(r.getDouble("node_x1"), r.getDouble("node_y1")), null), 
+						new Node(r.getLong("end_node"), new Coordinate(r.getDouble("node_x2"), r.getDouble("node_y2")), null),
+						new Coordinate(r.getDouble("x1"), r.getDouble("y1")),
+						new Coordinate(r.getDouble("x2"), r.getDouble("y2")));
 						
-				g.addEdge(e);
-				g.addEdge(e.reverse());
+				g.add(e);
+				g.add(e.getSym());
 			}
 			
 //			g.calculateTransients();
@@ -73,12 +80,58 @@ public class PSQLGraphBuilder implements GraphBuilder {
 			st.close();
 //			c.close();
 			
-			log.info("Graph size: " + g.edges.size() + " edges, " + g.nodes.length + " nodes.");
+			log.info("Graph size: " + g.getEdgeEnds().size() + " edges, " + g.getNodes().size() + " nodes.");
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 		
+		STRtree tree = new STRtree();
+		
+		for (Object o : g.getNodes()) {
+			com.vividsolutions.jts.geomgraph.Node n = (com.vividsolutions.jts.geomgraph.Node) o;
+			tree.insert(new Envelope(n.getCoordinate()), n);
+		}
+		
+		tree.build();
+		
+		List<com.vividsolutions.jts.geomgraph.Node> foundNodes = tree.query(new Envelope(548635.433, 548642.624, 4802853.873, 4802860.091));
+		
 		return g;
+	}
+
+	public Set<TrafficSign> readTrafficSigns(Object... properties) {
+		Connection c = this.connection;
+		PreparedStatement st;
+		ResultSet r;
+		Set<TrafficSign> signs = new HashSet<TrafficSign>();
+        Edge e = null;
+        
+		try {
+			st = c.prepareStatement("SELECT COUNT(*) FROM hermes_transport_node");
+			r = st.executeQuery();
+			r.next();
+			r.close();
+			st.close();
+			
+			st = c.prepareStatement("SELECT gid, ST_x(geom) x, ST_y(geom) y, azimut, tipo FROM es_cor_signs");
+			r = st.executeQuery();
+			
+			while (r.next()) {
+				signs.add(new TrafficSign(new Coordinate(r.getDouble("x"), r.getDouble("y")), r.getFloat("azimut"), r.getString("tipo")));
+			}
+			
+//			g.calculateTransients();
+			
+			r.close();
+			st.close();
+//			c.close();
+			
+			log.info("Read " + signs.size() + " traffic signs.");
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return signs;
 	}
 
 }
