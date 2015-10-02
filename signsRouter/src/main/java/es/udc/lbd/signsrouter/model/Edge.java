@@ -9,6 +9,7 @@ public class Edge extends com.vividsolutions.jts.geomgraph.DirectedEdge {
 	public Node origin;
 	public Node dest;
 	public boolean banned = false;
+	public SpeedLimit speedLimit;
 	
 	public Edge(Long id, Node origin, Node dest, Coordinate posOrigin, Coordinate posDest) {
 		super(
@@ -21,6 +22,7 @@ public class Edge extends com.vividsolutions.jts.geomgraph.DirectedEdge {
 		this.id = id;
 		this.origin = origin;
 		this.dest = dest;
+		this.speedLimit = SpeedLimit.DEFAULT_SPEED;
 	} 
 
 	@Override

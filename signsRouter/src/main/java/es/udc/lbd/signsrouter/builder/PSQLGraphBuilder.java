@@ -5,14 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Envelope;
-import com.vividsolutions.jts.index.strtree.STRtree;
 
 import es.udc.lbd.signsrouter.model.Edge;
 import es.udc.lbd.signsrouter.model.Graph;
@@ -38,12 +35,7 @@ public class PSQLGraphBuilder implements GraphBuilder {
         Edge e = null;
         
 		try {
-			st = c.prepareStatement("SELECT COUNT(*) FROM hermes_transport_node");
-			r = st.executeQuery();
-			r.next();
 			g = new Graph();
-			r.close();
-			st.close();
 			
 			st = c.prepareStatement(" SELECT  " +
 										" id, " +
@@ -84,17 +76,6 @@ public class PSQLGraphBuilder implements GraphBuilder {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-		
-		STRtree tree = new STRtree();
-		
-		for (Object o : g.getNodes()) {
-			com.vividsolutions.jts.geomgraph.Node n = (com.vividsolutions.jts.geomgraph.Node) o;
-			tree.insert(new Envelope(n.getCoordinate()), n);
-		}
-		
-		tree.build();
-		
-		List<com.vividsolutions.jts.geomgraph.Node> foundNodes = tree.query(new Envelope(548635.433, 548642.624, 4802853.873, 4802860.091));
 		
 		return g;
 	}

@@ -11,7 +11,7 @@ import com.vividsolutions.jts.geomgraph.NodeMap;
 public class Graph extends GeometryGraph {
 	
 	private Map<Long, Edge> edges;
-//	public Node[] nodes;
+//	public Map<Long, Node> nodes;
 	public Set<Edge> bannedEdges = new HashSet<Edge>();;
 	public Set<TurnRestriction> turnRestrictions = new HashSet<TurnRestriction>();
 	public Set<SpeedLimit> speedLimits = new HashSet<SpeedLimit>();
@@ -21,12 +21,14 @@ public class Graph extends GeometryGraph {
 		super(0, null);
 		super.nodes = new NodeMap(new RouterNodeFactory());
 		this.edges = new HashMap<Long, Edge>();
+//		this.nodes = new HashMap<Long, Node>();
 	}
 	
 	public void add(Edge e) {
 		super.add(e);
 		this.edges.put(e.id, e);
 		((Node) e.getNode()).id = e.origin.id;
+		e.origin = ((Node) e.getNode());
 	}
 	
 	public Edge findEdge(Long id) {

@@ -3,7 +3,9 @@ package es.udc.lbd.signsrouter.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpeedLimit {
+public class SpeedLimit implements Comparable<SpeedLimit> {
+	
+	public final static SpeedLimit DEFAULT_SPEED = new SpeedLimit(0); 
 
 	public int speed;
 	public List<Edge> edges;
@@ -17,6 +19,13 @@ public class SpeedLimit {
 	@Override
 	public String toString() {
 		return "SpeedLimit [speed=" + speed + ", edges=" + edges + "]";
+	}
+
+	public int compareTo(SpeedLimit o) {
+		if (this == o) return 0;
+		if (this == DEFAULT_SPEED) return 1;
+		if (o == DEFAULT_SPEED) return -1;
+		return speed - o.speed;
 	}
 
 //	@Override
