@@ -23,24 +23,16 @@ public class BreadthFirstNavigator implements Navigator {
 	
 	private static final int MAX_ITERATIONS = 10;
 	
-	private Queue<NavigatorState> frontier;
+	private Queue<Edge> frontier;
 	private SignDetector detector;
 	
 	public BreadthFirstNavigator(SignDetector detector) {
-		this.frontier = new LinkedList<NavigatorState>();
+		this.frontier = new LinkedList<Edge>();
 		this.detector = detector;
 	}
 	
-	private boolean setSpeedLimit(Edge e, SpeedLimit speedLimit) {
-		e.speedLimit.edges.remove(e);
-		e.speedLimit = speedLimit;
-		speedLimit.edges.add(e);
-		return true;
-	}
-	
-	private void expand(Graph graph, NavigatorState state) {
-		Edge lastEdge = state.edge;
-		SpeedLimit speedLimit = state.speedLimit;
+	private void expand(Graph graph, Edge lastEdge) {
+		SpeedLimit speedLimit = lastEdge.getSpeedLimit();
 		SpeedLimit newSpeedLimit = speedLimit;
 		Node node = (Node) graph.find(lastEdge.getEdge().getCoordinate(3));	// lastEdge destination
 		Coordinate almostDest = lastEdge.getEdge().getCoordinate(2);		// 10m from lastEdge destination
@@ -49,8 +41,6 @@ public class BreadthFirstNavigator implements Navigator {
 		double forwardHeading = AngleUtils.calculateHeading(almostDest, node.getCoordinate());
 		double turnHeading;
 		TurnRestriction turnRestriction = null;
-		
-		setSpeedLimit(lastEdge, state.speedLimit);
 		
 		// First detect 10 meters away from the end node:
 		// Here I'm looking for signs directly forward from my position
@@ -67,7 +57,7 @@ public class BreadthFirstNavigator implements Navigator {
 		for (TrafficSign sign: detectedSignsForward) {
 			if (sign.interruptsSpeed()) {
 				log.debug("Interrupt speed limit at " + lastEdge);
-				graph.addSpeedLimit(state.speedLimit);
+				graph.addSpeedLimit(lastEdge.getSpeedLimit());
 				speedLimit = SpeedLimit.DEFAULT_SPEED;
 			}
 		}
@@ -78,7 +68,7 @@ public class BreadthFirstNavigator implements Navigator {
 				continue;
 			}
 			
-//			log.debug("From " + state.edge + " I can go to " + e);
+//			log.debug("From " + lastEdge + " I can go to " + e);
 			
 			newSpeedLimit = speedLimit;
 			turnRestriction = null;
@@ -94,7 +84,7 @@ public class BreadthFirstNavigator implements Navigator {
 				}
 			}
 			
-			if (!e.isVisited() || speedLimit.compareTo(e.speedLimit) > 0) {
+			if (!e.isVisited() || speedLimit.compareTo(e.getSpeedLimit()) > 0) {
 				e.setVisited(true);
 				
 				// Then detect from the node itself:
@@ -118,7 +108,9 @@ public class BreadthFirstNavigator implements Navigator {
 					if (sign.speedLimit() > 0) {
 						newSpeedLimit = new SpeedLimit(sign.speedLimit());
 						
-						if (newSpeedLimit.compareTo(speedLimit) < 0) {
+						if (newSpeedLimit.compareTo(e.getSpeedLimit()) == 0) {
+							newSpeedLimit = e.getSpeedLimit();
+						} else if (newSpeedLimit.compareTo(speedLimit) < 0) {
 							log.debug("New speed limit of " + sign.speedLimit());
 							graph.addSpeedLimit(newSpeedLimit);
 						} else {
@@ -128,7 +120,8 @@ public class BreadthFirstNavigator implements Navigator {
 				}
 				
 				if (!e.banned && turnRestriction == null) {
-					frontier.add(new NavigatorState(e, newSpeedLimit));
+					e.setSpeedLimit(newSpeedLimit);
+					frontier.add(e);
 				}
 			}
 		}
@@ -138,7 +131,6 @@ public class BreadthFirstNavigator implements Navigator {
 		long navigatedEdges = 0;
 		int maxFrontierSize = 0;
 		e.setVisited(true);
-		NavigatorState state = new NavigatorState(e, SpeedLimit.DEFAULT_SPEED);
 		
 		do {
 //			if (navigatedEdges >= MAX_ITERATIONS) {
@@ -146,19 +138,19 @@ public class BreadthFirstNavigator implements Navigator {
 //			}
 			
 			if (! frontier.isEmpty()) {
-				state = frontier.remove();
+				e = frontier.remove();
 				
-//				log.debug("Navigating " + state.edge);
+//				log.debug("Navigating " + e);
 				navigatedEdges++;
 				maxFrontierSize = Math.max(maxFrontierSize, frontier.size());
 			}
 			
-			expand(graph, state);
+			expand(graph, e);
 			
 		} while (! frontier.isEmpty());
 		
-		log.info("Navigated " + navigatedEdges + " states.");
-		log.debug("Max frontier size: " + maxFrontierSize + " states.");
+		log.info("Navigated " + navigatedEdges + " edges.");
+		log.debug("Max frontier size: " + maxFrontierSize + " edges.");
 		log.info("Banned " + graph.bannedEdges.size() + " edges.");
 		log.info(graph.turnRestrictions.size() + " turn restricions.");
 		log.info(graph.speedLimits.size() + " speed limits.");

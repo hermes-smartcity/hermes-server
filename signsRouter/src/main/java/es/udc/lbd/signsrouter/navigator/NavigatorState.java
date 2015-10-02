@@ -3,6 +3,7 @@ package es.udc.lbd.signsrouter.navigator;
 import es.udc.lbd.signsrouter.model.Edge;
 import es.udc.lbd.signsrouter.model.SpeedLimit;
 
+@Deprecated
 public class NavigatorState {
 
 	public Edge edge;
