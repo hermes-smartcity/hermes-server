@@ -12,6 +12,7 @@ import org.apache.log4j.BasicConfigurator;
 import es.udc.lbd.signsrouter.builder.GraphBuilder;
 import es.udc.lbd.signsrouter.builder.PSQLGraphBuilder;
 import es.udc.lbd.signsrouter.detector.ConusSignDetector;
+import es.udc.lbd.signsrouter.detector.DistanceDetector;
 import es.udc.lbd.signsrouter.model.Graph;
 import es.udc.lbd.signsrouter.model.TrafficSign;
 import es.udc.lbd.signsrouter.navigator.BreadthFirstNavigator;
@@ -54,7 +55,7 @@ public class RouterMain {
     	g.epsg = Integer.parseInt(props.getProperty("hermes.epsg"));
     	Set<TrafficSign> signs = builder.readTrafficSigns();
     	
-        Navigator navigator = new BreadthFirstNavigator(new ConusSignDetector(signs));
+        Navigator navigator = new BreadthFirstNavigator(new DistanceDetector(connection), new ConusSignDetector(signs));
 		navigator.navigate(g, g.findEdge(START_EDGE));
 		
 		GraphWriter writer = new PSQLGraphWriter(connection);

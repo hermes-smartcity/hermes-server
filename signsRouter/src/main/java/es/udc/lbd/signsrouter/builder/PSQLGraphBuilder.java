@@ -26,6 +26,19 @@ public class PSQLGraphBuilder implements GraphBuilder {
 		this.connection = connection;
 	}
 	
+	private Set<TrafficSign> parseTrafficSigns(String str) {
+		Set<TrafficSign> signs = new HashSet<TrafficSign>();
+		
+		if (!"".equals(str)) {
+			for (String signStr : str.split(",")) {
+				String[] contents = signStr.split(" ");
+				signs.add(new TrafficSign(new Coordinate(Double.parseDouble(contents[3]), Double.parseDouble(contents[4])), Float.parseFloat(contents[1]), contents[2]));
+			}
+		}
+		
+		return signs;
+	}
+	
 	public Graph readGraph(Object... properties) {
 		//Connection c = (Connection) properties[0];
 		Connection c = this.connection;
@@ -48,7 +61,8 @@ public class PSQLGraphBuilder implements GraphBuilder {
 										" st_x(ST_EndPoint(centerline_geometry)) node_x2, " +
 										" st_y(ST_EndPoint(centerline_geometry)) node_y2, " +
 										" st_x(end_point.p) x2, " +
-										" st_y(end_point.p) y2 " +
+										" st_y(end_point.p) y2, " +
+										" props.ten_m ten_m " + 
 									" FROM hermes_transport_link, " +
 									" LATERAL (SELECT 10/st_length(centerline_geometry)) AS props(ten_m), " +	// Calculate what % of this line is 10 meters
 									" LATERAL (SELECT ST_LineInterpolatePoint(centerline_geometry, LEAST(ten_m, 0.5))) AS start_point(p), " +	// Add 10 meters from the start
@@ -60,7 +74,8 @@ public class PSQLGraphBuilder implements GraphBuilder {
 						new Node(r.getLong("start_node"), new Coordinate(r.getDouble("node_x1"), r.getDouble("node_y1")), null), 
 						new Node(r.getLong("end_node"), new Coordinate(r.getDouble("node_x2"), r.getDouble("node_y2")), null),
 						new Coordinate(r.getDouble("x1"), r.getDouble("y1")),
-						new Coordinate(r.getDouble("x2"), r.getDouble("y2")));
+						new Coordinate(r.getDouble("x2"), r.getDouble("y2")),
+						r.getDouble("ten_m"));
 						
 				g.add(e);
 				g.add(e.getSym());
@@ -88,12 +103,6 @@ public class PSQLGraphBuilder implements GraphBuilder {
         Edge e = null;
         
 		try {
-			st = c.prepareStatement("SELECT COUNT(*) FROM hermes_transport_node");
-			r = st.executeQuery();
-			r.next();
-			r.close();
-			st.close();
-			
 			st = c.prepareStatement("SELECT gid, ST_x(geom) x, ST_y(geom) y, azimut, tipo FROM es_cor_signs");
 			r = st.executeQuery();
 			

@@ -35,7 +35,13 @@ public class ConusSignDetector implements SignDetector {
 		this.envelope = new Envelope();
 	}
 
-	public Set<TrafficSign> detect(final Coordinate p, final double heading, final float radius, final float leftAngle, final float rightAngle) {
+	public Set<TrafficSign> detect(final Object... parameters) {
+		final Coordinate p = (Coordinate) parameters[0];
+		final double heading = (Double) parameters[1];
+		final float radius = (Float) parameters[2];
+		final float leftAngle = (Float) parameters[3];
+		final float rightAngle = (Float) parameters[4];
+		
 		Set<TrafficSign> signs = new HashSet<TrafficSign>();
 		List<Filter> filters = new ArrayList<Filter>(3) {{
 			add(new RadiusFilter(p, radius));

@@ -20,6 +20,14 @@ public class LookAtMeFilter implements Filter {
 		this.position = position;
 	}
 
+	public Coordinate getPosition() {
+		return position;
+	}
+
+	public void setPosition(Coordinate position) {
+		this.position = position;
+	}
+
 	public void filterSigns(Collection<TrafficSign> signs) {
 		Iterator<TrafficSign> it = signs.iterator();
 		TrafficSign sign;

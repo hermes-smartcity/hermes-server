@@ -10,19 +10,21 @@ public class Edge extends com.vividsolutions.jts.geomgraph.DirectedEdge {
 	public Node dest;
 	public boolean banned = false;
 	private SpeedLimit speedLimit;
+	public double ten_meters;
 	
-	public Edge(Long id, Node origin, Node dest, Coordinate posOrigin, Coordinate posDest) {
+	public Edge(Long id, Node origin, Node dest, Coordinate posOrigin, Coordinate posDest, double ten_meters) {
 		super(
 				new com.vividsolutions.jts.geomgraph.Edge(
 						new Coordinate[] {origin.getCoordinate(), posOrigin, posDest, dest.getCoordinate()}, new Label(Location.NONE)), true);
 		
 		if (id > 0)
-			super.setSym(new Edge(-id, dest, origin, posDest, posOrigin));
+			super.setSym(new Edge(-id, dest, origin, posDest, posOrigin, ten_meters));
 		
 		this.id = id;
 		this.origin = origin;
 		this.dest = dest;
 		this.setSpeedLimit(SpeedLimit.DEFAULT_SPEED);
+		this.ten_meters = ten_meters;
 	}
 	
 	public boolean setSpeedLimit(SpeedLimit limit) {
@@ -36,7 +38,7 @@ public class Edge extends com.vividsolutions.jts.geomgraph.DirectedEdge {
 	public SpeedLimit getSpeedLimit() {
 		return speedLimit;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Edge [id=" + id + ", originId=" + origin.id + ", destId=" + dest.id + "]";
