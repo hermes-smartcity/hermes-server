@@ -1,19 +1,19 @@
 package es.udc.lbd.signsrouter.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SpeedLimit implements Comparable<SpeedLimit> {
 	
 	public final static SpeedLimit DEFAULT_SPEED = new SpeedLimit(0); 
 
 	public int speed;
-	public List<Edge> edges;
+	public Set<Edge> edges;
 	
 	public SpeedLimit(int speed) {
 		super();
 		this.speed = speed;
-		this.edges = new ArrayList<Edge>(10);
+		this.edges = new HashSet<Edge>(10);
 	}
 
 	@Override

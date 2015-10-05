@@ -22,7 +22,7 @@ public class BreadthFirstNavigator implements Navigator {
 
 	private static final Logger log = Logger.getLogger(BreadthFirstNavigator.class);
 	
-	private static final int MAX_ITERATIONS = 10;
+	private static final int MAX_ITERATIONS = 3000;
 	
 	private Queue<Edge> frontier;
 	private SignDetector turnDetector;
@@ -76,6 +76,7 @@ public class BreadthFirstNavigator implements Navigator {
 					speedLimit = lastEdge.getSpeedLimit();
 					signsIterator.remove();
 				} else if (speedLimit.compareTo(lastEdge.getSpeedLimit()) < 0) {
+					// Change current speed limit if it's more restrictive
 					log.debug("New speed limit of " + sign.speedLimit());
 					graph.addSpeedLimit(lastEdge.getSpeedLimit());
 					lastEdge.setSpeedLimit(speedLimit);
@@ -122,7 +123,7 @@ public class BreadthFirstNavigator implements Navigator {
 				}
 			}
 			
-			if (!e.isVisited() || speedLimit.compareTo(e.getSpeedLimit()) > 0) {
+			if (!e.isVisited() || speedLimit.compareTo(e.getSpeedLimit()) < 0) {
 				e.setVisited(true);
 				
 				// Then detect from the node itself:

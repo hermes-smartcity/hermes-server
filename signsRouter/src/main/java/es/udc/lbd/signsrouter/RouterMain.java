@@ -24,7 +24,7 @@ public class RouterMain {
 	
 	private static final String POSTGRESQL_PROPS = "postgresql.properties";
 	private static final String HERMES_PROPS = "hermes.properties";
-	private static final long START_EDGE = 51231;
+	private static final long START_EDGE = 53312;
 	
     public static void main( String[] args )  {
     	BasicConfigurator.configure();	// Log4J configuration
