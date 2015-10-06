@@ -2,6 +2,8 @@ package es.udc.lbd.signsrouter.navigator;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -36,11 +38,9 @@ public class BreadthFirstNavigator implements Navigator {
 	
 	/*
 	 * This algorithm should be better:
-	 * - One sign can apply to only one edge (Pending)
-	 * - Detect all signs first. Could be done with just distance. (Almost done)
-	 * - Apply a likehood score for each (sign, edge) pair. Probably based on distance and orientation (Pending)
-	 * - Take only the most likely pairs for each sign, above a threshold (Pending)
 	 * - Maybe ignore the entire conus detector
+	 * - Assign a edge (more likely a rule) to each seen sign with some likehood score, so it can be changed if needed
+	 * - Refactor the expand method, it's getting too big and ugly
 	 */
 	
 	private void expand(Graph graph, Edge lastEdge) {
@@ -54,6 +54,7 @@ public class BreadthFirstNavigator implements Navigator {
 		TurnRestriction turnRestriction = null;
 		Iterator<TrafficSign> signsIterator = null;
 		TrafficSign sign = null;
+		DetectedSigns detectedSigns = new DetectedSigns();
 		
 		// Here I'm looking for signs directly forward from my position
 		detectedSignsForward = forwardDetector.detect(lastEdge);
@@ -107,28 +108,23 @@ public class BreadthFirstNavigator implements Navigator {
 			
 //			log.debug("From " + lastEdge + " I can go to " + e);
 			
-			turnRestriction = null;
 			Coordinate almostOrigin = e.getEdge().getCoordinate(1);
 			turnHeading = AngleUtils.calculateHeading(almostDest, almostOrigin);
 			
 			for (signsIterator = detectedSignsForward.iterator(); signsIterator.hasNext();) {
 				sign = signsIterator.next();
 				
-				// FIXME may fail in ambiguous cases.
 				if (sign.turnRestriction(AngleUtils.diffDegrees(turnHeading, forwardHeading))) {
-					log.debug("New turn restriction from " + lastEdge + " to " + e);
-					turnRestriction = new TurnRestriction(lastEdge, e);
-					graph.turnRestrictions.add(turnRestriction);
-					signsIterator.remove();
+					detectedSigns.put(sign, e, Math.abs(AngleUtils.diffDegrees(turnHeading, forwardHeading)) - 120);
+//					signsIterator.remove();
 				}
 			}
 			
-			if (!e.isVisited() || speedLimit.compareTo(e.getSpeedLimit()) < 0) {
-				e.setVisited(true);
+			if (!e.isVisited()) {
 				
 				// Then detect from the node itself:
 				// Here I'm looking for signs on the direction of the next edge
-				detectedSignsTurn = turnDetector.detect(node.getCoordinate(), AngleUtils.calculateHeading(node.getCoordinate(), almostOrigin), 20f, 15f, 45f);
+				detectedSignsTurn = turnDetector.detect(node.getCoordinate(), AngleUtils.calculateHeading(node.getCoordinate(), almostOrigin), 20f, 15f, 60f);
 				
 				if (!detectedSignsTurn.isEmpty()) {
 					log.debug("From " + lastEdge.dest + " heading to " + e + " I can see the following signs: ");
@@ -142,15 +138,43 @@ public class BreadthFirstNavigator implements Navigator {
 					sign = signsIterator.next();
 					
 					if (sign.noWay()) {
-						log.debug("Banning edge " + e);
-						graph.banEdge(e);
+						detectedSigns.put(sign, e, Math.abs(AngleUtils.diffDegrees(
+								sign.azimut,
+								AngleUtils.calculateHeading(sign.position, node.getCoordinate()))));
 					}
 				}
-				
-				if (!e.banned && turnRestriction == null) {
-					e.setSpeedLimit(speedLimit);
-					frontier.add(e);
+			}
+		}
+		
+		Map<Edge, List<TrafficSign>> signsByEdge = detectedSigns.getSignsByEdge();
+		
+		for (Edge e : node.getOutgoingEdges()) {
+			if (lastEdge.id == -e.id) {
+				continue;
+			}
+			
+			turnRestriction = null;
+			
+			List<TrafficSign> signsForEdge = signsByEdge.get(e);
+			
+			if (signsForEdge != null) {
+				for (TrafficSign s : signsForEdge) {
+					if (s.turnRestriction(90) || s.turnRestriction(-90)) {
+						log.debug("New turn restriction from " + lastEdge + " to " + e);
+						turnRestriction = new TurnRestriction(lastEdge, e);
+						graph.turnRestrictions.add(turnRestriction);
+					} else if (s.noWay()) {
+						log.debug("Banning edge " + e);
+						graph.banEdge(e);
+						e.setVisited(true);
+					}
 				}
+			}
+			
+			if (!e.banned && turnRestriction == null && (!e.isVisited() || speedLimit.compareTo(e.getSpeedLimit()) < 0)) {
+				e.setVisited(true);
+				e.setSpeedLimit(speedLimit);
+				frontier.add(e);
 			}
 		}
 	}
