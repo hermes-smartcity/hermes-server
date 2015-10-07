@@ -34,7 +34,9 @@
 			<div class="header">
 				<span>City Driver</span>
 			</div>
+			
 			<div class="view" ui-view=""><!-- --></div>
+			
 			<!-- bower:js -->
 			<!-- endbower -->
 			<c:url  var="aux" value="/bower_components/jquery/dist/jquery.js" />

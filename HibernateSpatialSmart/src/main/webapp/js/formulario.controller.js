@@ -7,9 +7,10 @@
 
 	function FormularioController($state, $q, menuService, $scope) {
 		var vm = this;
-		$scope.entradasMenu = [];
+		vm.entradasMenu = [];
+		
 		//TODO cambiar a que valide correctamente!
-		$scope.nombre = '';
+		vm.nombre = '';
 //		vm.menu = {};
 		vm.addNuevoMenuEntrada = addNuevoMenuEntrada;
 		vm.removeChoice = removeChoice;
@@ -18,29 +19,59 @@
 		vm.addNuevoMenuEntradaHija = addNuevoMenuEntradaHija;
 		vm.addNuevoMenuEntradaHermanoArriba = addNuevoMenuEntradaHermanoArriba;
 		vm.addNuevoMenuEntradaHermanoAbajo = addNuevoMenuEntradaHermanoAbajo;
+		vm.onSoltarCompletado = onSoltarCompletado;
+		vm.onArrastrarCompletado = onArrastrarCompletado;
+		vm.onReordenarEntr = onReordenarEntr;
+		vm.aumentarOrdenHermanos = aumentarOrdenHermanos;
+		
+		vm.arrastradoAnteriormente = false;
+		vm.arrayDestinoAux = [];
 		
 		// Entradas Menus		
 		function addNuevoMenuEntrada() {
-			var newItemNo = $scope.entradasMenu.length+1;
+			var newItemNo = vm.entradasMenu.length+1;
 			// "Chapucilla momentánea" falta decidir como se va a hacer
-			$scope.entradasMenu.push({'orden':newItemNo,'entradasMenu':[],'identacion':50});
-//			var menu = {'nombre':$scope.nombre,'entradasMenu':$scope.entradasMenu};
-//			menuService.guardarMenu(menu);
-
+			vm.entradasMenu.push({'orden':newItemNo,'entradasMenu':[],'identacion':50});
 		}
 
 		function removeChoice() {
-			var lastItem = $scope.entradasMenu.length-1;
-			$scope.entradasMenu.splice(lastItem);
+			var lastItem = vm.entradasMenu.length-1;
+			vm.entradasMenu.splice(lastItem);
 		}
 
-		function addNuevoMenuEntradaHermanoArriba(entradaMenu, entradasMenu, indice) {			
-			entradasMenu.splice(indice,0,{'orden':indice,'entradasMenu':[], 'identacion':entradaMenu.identacion})
+		function addNuevoMenuEntradaHermanoArriba(entradaMenu, entradaMenuPadre, indice) {		
+			var entradasMenuDestino = [];
+			var identacion;
+			if(entradaMenuPadre == null){				
+				entradasMenuDestino = vm.entradasMenu;
+				identacion = 50;
+			} else {
+				entradasMenuDestino = entradaMenuPadre.entradasMenu;
+				identacion = entradaMenuPadre.identacion + 50; // Va a ser hija de su menu padre, por lo tanto mas identacion
+			}
+			
+			entradasMenuDestino.splice(indice,0,{'orden':indice,'entradasMenu':[], 'identacion':identacion});
+			// Todas las entradas que le siguen abajo deben aumentar el orden
+			vm.aumentarOrdenHermanos(entradasMenuDestino);
 		};
 		
-		function addNuevoMenuEntradaHermanoAbajo(entradaMenu, entradasMenu, indice) {
-			var i = indice+1;//Recorre el nuevo array
-			entradasMenu.splice(i,0,{'orden':i,'entradasMenu':[], 'identacion':entradaMenu.identacion})
+		function addNuevoMenuEntradaHermanoAbajo(entradaMenu, entradaMenuPadre, indice) {		
+			var entradasMenuDestino = [];
+			var identacion;
+			//TODO hacer funcion
+			if(entradaMenuPadre == null){				
+				entradasMenuDestino = vm.entradasMenu;
+				identacion = 50;
+			} else {
+				entradasMenuDestino = entradaMenuPadre.entradasMenu;
+				identacion = entradaMenuPadre.identacion + 50; // Va a ser hija de su menu padre, por lo tanto mas identacion
+			}
+			
+			var i = indice+1;
+			entradasMenuDestino.splice(i,0,{'orden':i,'entradasMenu':[], 'identacion':identacion});
+			// Todas las entradas que le siguen abajo deben aumentar el orden
+			vm.aumentarOrdenHermanos(entradasMenuDestino);
+  
 		};
 		
 		function addNuevoMenuEntradaHija(entradaMenu) {
@@ -49,34 +80,99 @@
 			entradaMenu.entradasMenu.push({'orden':newItemNo,'entradasMenu':[], 'identacion':identacion});
 		};
 
-		function addHijo(index) {
-			var newItemNo = $scope.entradasMenu[index].entradasMenu.length+1;
-			$scope.entradasMenu[index].entradasMenu.push({'orden':newItemNo,'entradasMenu':[]});
-
-		};
-
+	    // Arrastrar
+		function onArrastrarCompletado (data, event, entradaMenuPadre){
+        	console.log("--- arrastrar completado --------------------------------");
+        	console.log("--- data "+data.texto+" -entradaMenuPadre- "+entradaMenuPadre.texto);
+        	var entradasMenuDestino = [];
+			var identacion;
+			if(entradaMenuPadre == null){				
+				entradasMenuDestino = vm.entradasMenu;				
+			} else {
+				entradasMenuDestino = entradaMenuPadre.entradasMenu;					
+			}
+        	// Para el que arrastro lo elimino de la lista, lo estoy moviendo a otra parte, asi que lo añado a la lista destino
+			var index = entradasMenuDestino.indexOf(data);
+            if (index > -1) {
+            	vm.arrastradoAnteriormente = true;
+            	console.log("-- arrastradoAnteriormente");
+            	vm.arrayDestinoAux = entradasMenuDestino;     	
+            }	           
+	     }
+	  
+		// Soltar en ... Se añade
+		function onSoltarCompletado(data, event, entradaMenuPadre, indice){
+	       	console.log("--- soltar completado  "+data.texto+" -Indice-  "+indice+" -entradaMenuPadre- "+entradaMenuPadre.texto+" --------------------------- ");
+	       	var entradasMenuDestino = [];
+				var identacion;
+				if(entradaMenuPadre == null){	
+					entradasMenuDestino = vm.entradasMenu;		
+					identacion = 50;
+				} else {
+					entradasMenuDestino = entradaMenuPadre.entradasMenu;		
+					identacion = entradaMenuPadre.identacion + 50; // Va a ser hija de su menu padre, por lo tanto mas identacion
+				}
+				
+	       	 var index = entradasMenuDestino.indexOf(data);
+	       	 console.log(" -- index--"+index);
+	       	 // El elemento no existe en la lista destino y por lo tanto se añade y se borra de la lista original. Se decidio crear dos variables auxiliares porque sino se borra antes el elemento
+	       	 // de que se puedan hacer estas comprobaciones, tras el evento que lanza esta funcion
+			 if (index == -1){
+				 data.identacion = identacion;
+				 data.orden = indice;
+				 console.log("-- data.orden -- "+data.orden);
+				 entradasMenuDestino.splice(indice,0,data);
+				 // El elemento no existe en 
+				 if(vm.arrastradoAnteriormente && (vm.arrayDestinoAux.length > 0)){
+					 console.log("borrado");
+					 var indiceAux =  vm.arrayDestinoAux.indexOf(data);
+					 vm.arrayDestinoAux.splice(indiceAux, 1);	  
+				 }
+//				 //Se actualizan los ordenes de los elementos de la lista
+				 vm.aumentarOrdenHermanos(entradasMenuDestino);				
+				 
+			} else {
+				console.log("-------- onDropCompleteEntr -----------");
+				vm.onReordenarEntr(indice, data, entradasMenuDestino);
+			}
+			 //Si ya existe significa que hay que reordenar dentro de la lista
+        }
+	        
 		// Reordenar entradas menu
-		function onDropCompleteEntr(index, obj, evt) {
-			var otherObj = $scope.entradasMenu[index];
-			var otherIndex = $scope.entradasMenu.indexOf(obj);
-			$scope.entradasMenu[index] = obj;
-			$scope.entradasMenu[index].orden = index;
-			$scope.entradasMenu[otherIndex] = otherObj;
-			$scope.entradasMenu[otherIndex].orden = otherIndex;
+		function onReordenarEntr(index, obj, entradasMenuDestino) {
+			
+			var otherObj = entradasMenuDestino[index];
+			var otherIndex = entradasMenuDestino.indexOf(obj);
+			console.log("---- intento reordenar "+index+" --otherIndex--"+otherIndex);
+			entradasMenuDestino[index] = obj;
+			entradasMenuDestino[index].orden = index;
+			entradasMenuDestino[otherIndex] = otherObj;
+			entradasMenuDestino[otherIndex].orden = otherIndex;
 		};
+	    
+        var inArray = function(array, obj) {
+            var index = array.indexOf(obj);
+        }
 
 		function enviar() {
-			//se llama a la funcion menu servicio y se guarda el menu
-			var menu = {'nombre':$scope.nombre,'entradasMenu':$scope.entradasMenu};
+			// Se llama a la funcion menu servicio y se guarda el menu
+			var menu = {'nombre':vm.nombre,'entradasMenu':vm.entradasMenu};
 			menuService.guardarMenu(menu);
 			$state.go('inicio');
 		}
 
 		// Nombre del menu obligatorio 
 		function validarDatos() {
-			if (angular.isUndefinedOrNull($scope.nombre))
+			if (angular.isUndefinedOrNull(vm.nombre))
 				return false;
 			return true;
+		}
+		
+		// Nombre del menu obligatorio 
+		function aumentarOrdenHermanos(entradasMenuAmodificar) {
+			$.each(entradasMenuAmodificar, function(k, v) {
+				v.orden = k;				
+			});     
 		}
 
 	}

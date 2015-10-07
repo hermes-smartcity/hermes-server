@@ -25,5 +25,9 @@
 	<c:url var="aux" value="/js/infiniteTree.directive.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
+	<!-- Proba ngDraggable -->
+	<c:url var="aux" value="/js/ngDraggable.js"/>
+	<script type="text/javascript" src="${aux}"><!-- --></script>
+	
 
 </jsp:root>

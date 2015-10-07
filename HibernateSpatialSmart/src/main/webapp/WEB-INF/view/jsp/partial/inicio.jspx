@@ -38,8 +38,17 @@
 		<div class="h4 subtitulo">Creación de menús</div>
 		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
 	</div>
+	<!-- Desde aquí vamos a poder editarlos haciendo click en uno iremos al estado editar menu, al darle a guardar desde esa página se llamara al metodo del servicio actualizar menú -->
+	<div>
+		<div class="h4 subtitulo">Listar menús</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
 	<div>
 		<div class="h4 subtitulo">Creación de páginas estáticas</div>
+		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+	</div>
+	<div>
+		<div class="h4 subtitulo">Listar estáticas</div>
 		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
 	</div>
 

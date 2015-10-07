@@ -6,7 +6,8 @@
 		'ngResource',
 		'ngSanitize',
 		'ui.bootstrap',
-		'leaflet-directive'
+		'leaflet-directive',
+		'ngDraggable'
 	]).config(routeConfig).run(appRun);
 
 	function obterRuta(ruta) {
