@@ -20,7 +20,9 @@ CREATE TABLE hermes_transport_link (
 	centerline_geometry geometry(LineString),
 	ficticious boolean NOT NULL DEFAULT false,
 	start_node bigint,
-	end_node bigint
+	end_node bigint,
+	traffic_direction varchar(255) NOT NULL DEFAULT 'bothDirections',
+	CONSTRAINT hermes_transport_link_pk PRIMARY KEY(id)
 );
 
 DROP TABLE IF EXISTS hermes_transport_link_sequence CASCADE;
@@ -53,11 +55,23 @@ CREATE TABLE hermes_transport_link_set_element (
 	"order" integer
 );
 
+-- Turn restrictions table for routing:
+DROP TABLE IF EXISTS hermes_turn_restriction CASCADE;
+CREATE TABLE hermes_turn_restriction (
+	from_link bigint,
+	to_link bigint,
+
+	CONSTRAINT hermes_turn_restriction_pk PRIMARY KEY (from_link, to_link),
+	CONSTRAINT hermes_turn_restriction_fk_from FOREIGN KEY (from_link)
+		REFERENCES hermes_transport_link(id),
+	CONSTRAINT hermes_turn_restriction_fk_to FOREIGN KEY (to_link)
+		REFERENCES hermes_transport_link(id)
+);
+
 -- HERMES TRANSPORT NETWORK PKS: 
 
 ALTER TABLE hermes_network_element ADD CONSTRAINT hermes_network_element_pk PRIMARY KEY(id);
 ALTER TABLE hermes_transport_node ADD CONSTRAINT hermes_transport_node_pk PRIMARY KEY(id);
-ALTER TABLE hermes_transport_link ADD CONSTRAINT hermes_transport_link_pk PRIMARY KEY(id);
 ALTER TABLE hermes_transport_link_sequence ADD CONSTRAINT hermes_transport_link_sequence_pk PRIMARY KEY(id);
 ALTER TABLE hermes_transport_link_sequence_transport_link ADD CONSTRAINT hermes_transport_link_sequence_transport_link_pk PRIMARY KEY(link_sequence_id, link_id);
 ALTER TABLE hermes_transport_link_set ADD CONSTRAINT hermes_transport_link_set_pk PRIMARY KEY(id);
@@ -115,6 +129,7 @@ CREATE TABLE hermes_form_of_way (
 	formOfWay varchar(255)
 );
 
+-- Deprecated, use traffic_direction from hermes_transport_link instead
 DROP TABLE IF EXISTS hermes_traffic_flow_direction CASCADE;
 CREATE TABLE hermes_traffic_flow_direction (
 	id bigint NOT NULL,
@@ -278,14 +293,23 @@ CREATE INDEX hermes_network_element_i_osm_id
 CREATE INDEX hermes_network_reference_i_network_element_id 
 	ON hermes_network_reference(network_element_id);
 CREATE INDEX hermes_transport_link_i_centerline_geometry 
-  ON hermes_transport_link USING gist (centerline_geometry);
+	ON hermes_transport_link USING gist (centerline_geometry);
 CREATE INDEX hermes_transport_link_i_start_node 
-  ON hermes_transport_link (start_node);
+	ON hermes_transport_link (start_node);
 CREATE INDEX hermes_transport_link_i_end_node 
-  ON hermes_transport_link (end_node);
+	ON hermes_transport_link (end_node);
 CREATE INDEX hermes_transport_node_i_geometry  
-  ON hermes_transport_node USING gist (geometry);
-
+	ON hermes_transport_node USING gist (geometry);
+CREATE INDEX hnrtp_i_network_reference
+	ON hermes_network_reference_transport_property (network_reference_id);
+CREATE INDEX hnrtp_i_transport_property
+	ON hermes_network_reference_transport_property (transport_property_id);
+CREATE INDEX hermes_transport_link_set_element_i_link_set
+	ON hermes_transport_link_set_element (link_set_id);
+CREATE INDEX hermes_transport_link_set_element_i_link_sequence
+	ON hermes_transport_link_set_element (link_sequence_id);
+CREATE INDEX hermes_transport_link_set_element_i_link
+	ON hermes_transport_link_set_element (link_id);
 
 -- UTILITY FUNCTIONS:
 
@@ -416,7 +440,12 @@ CREATE OR REPLACE VIEW h_link_seq AS
 		(SELECT array_agg(formOfWay) 
 			FROM hermes_form_of_way hfow
 				JOIN hermes_network_reference_transport_property hnrtp ON hnrtp.transport_property_id = hfow.id 
-				JOIN hermes_network_reference hnr ON hnr.network_element_id = hne.id AND hnr.id = hnrtp.network_reference_id) AS formOfWay
+				JOIN hermes_network_reference hnr ON hnr.network_element_id = hne.id AND hnr.id = hnrtp.network_reference_id) AS formOfWay,
+		(SELECT first(SpeedLimitValue) 
+			FROM hermes_speed_limit hsl 
+				JOIN hermes_network_reference_transport_property hnrtp ON hnrtp.transport_property_id = hsl.id 
+				JOIN hermes_transport_link_set_element htlse ON htlse.link_id = h_link.id
+				JOIN hermes_network_reference hnr ON hnr.network_element_id = htlse.link_set_id AND hnr.id = hnrtp.network_reference_id) AS speedLimit
 
 	FROM h_link 
 		JOIN hermes_transport_link_sequence_transport_link htlstl ON htlstl.link_id = h_link.id

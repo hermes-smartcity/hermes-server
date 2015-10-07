@@ -1,4 +1,5 @@
 
+-- EPSG:32629, UTM 29N over WGS84
 
 -- Estos inserts dependen totalmente del orden en el que se insertan los datos para conservar correctamente las relaciones.
 CREATE TEMP SEQUENCE tmp_hermes_network_element_id;
@@ -15,10 +16,10 @@ SELECT setval('tmp_hermes_network_element_id', currval('hermes_network_element_i
 INSERT INTO hermes_network_element (id, osm_id, type) 
 	SELECT id + currval('tmp_hermes_network_element_id'), osm_id, 'TransportLink' FROM es_cor_2po_4pgr;
 
-INSERT INTO hermes_transport_node (id, geometry) SELECT hne.id, n.geom FROM hermes_network_element hne JOIN nodes n ON hne.osm_id = n.id;
+INSERT INTO hermes_transport_node (id, geometry) SELECT hne.id, ST_Transform(n.geom, 32629) FROM hermes_network_element hne JOIN nodes n ON hne.osm_id = n.id;
 
 INSERT INTO hermes_transport_link (id, centerline_geometry, start_node, end_node) 
-	SELECT w.id + currval('tmp_hermes_network_element_id'), w.geom_way, hnes.id, hnet.id 
+	SELECT w.id + currval('tmp_hermes_network_element_id'), ST_Transform(w.geom_way, 32629), hnes.id, hnet.id 
 	FROM es_cor_2po_4pgr w 
 		JOIN hermes_network_element hnes ON hnes.osm_id = w.osm_source_id 
 		JOIN hermes_network_element hnet ON hnet.osm_id = w.osm_target_id;

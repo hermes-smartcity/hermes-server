@@ -1,0 +1,130 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.9
+-- Dumped by pg_dump version 9.4.4
+-- Started on 2015-10-05 15:38:50 CEST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 224 (class 1259 OID 154069)
+-- Name: es_cor_signs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE es_cor_signs (
+    gid integer NOT NULL,
+    azimut double precision,
+    tipo character varying(7),
+    geom geometry(Point,32629)
+);
+
+
+--
+-- TOC entry 225 (class 1259 OID 154075)
+-- Name: es_cor_signs_gid_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE es_cor_signs_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 3473 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: es_cor_signs_gid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE es_cor_signs_gid_seq OWNED BY es_cor_signs.gid;
+
+
+--
+-- TOC entry 3344 (class 2604 OID 154077)
+-- Name: gid; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY es_cor_signs ALTER COLUMN gid SET DEFAULT nextval('es_cor_signs_gid_seq'::regclass);
+
+
+--
+-- TOC entry 3467 (class 0 OID 154069)
+-- Dependencies: 224
+-- Data for Name: es_cor_signs; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+INSERT INTO es_cor_signs VALUES (2, 210, 'R101', '0101000020757F0000B1B6656810BE20418C81D1C83B525241');
+INSERT INTO es_cor_signs VALUES (3, 110, 'R101', '0101000020757F0000273A7F557FBC2041EA31BAB13E525241');
+INSERT INTO es_cor_signs VALUES (4, 190, 'R101', '0101000020757F0000E1CDD06587BC204162DCEE9F3E525241');
+INSERT INTO es_cor_signs VALUES (6, 0, 'R303', '0101000020757F0000C2FBD74918BF204193B8D29F3E525241');
+INSERT INTO es_cor_signs VALUES (7, 0, 'R302', '0101000020757F0000DED0E415E7B320419F895F6887515241');
+INSERT INTO es_cor_signs VALUES (8, 210, 'R101', '0101000020757F00006BD301EFB6BD2041EBB5422721525241');
+INSERT INTO es_cor_signs VALUES (9, 300, 'R101', '0101000020757F0000E3D92628F7BA2041A5BCE07C45525241');
+INSERT INTO es_cor_signs VALUES (10, 120, 'R303', '0101000020757F000023D8461DF8BA20415FE1FD6645525241');
+INSERT INTO es_cor_signs VALUES (13, 250, 'R302', '0101000020757F0000E1AC936DD0BD20413C9570A216525241');
+INSERT INTO es_cor_signs VALUES (15, 170, 'R301-50', '0101000020757F000066C77E4605B820410E697D28E1525241');
+INSERT INTO es_cor_signs VALUES (17, 0, 'R1', '0101000020757F00005E510CCEB2B7204111B2839BDE525241');
+INSERT INTO es_cor_signs VALUES (16, 270, 'R1', '0101000020757F0000E0F32439B5BC204155FADE2AEA525241');
+INSERT INTO es_cor_signs VALUES (18, 180, 'R302', '0101000020757F00006C539EB709BD204146EEEDE9F0525241');
+INSERT INTO es_cor_signs VALUES (20, 0, 'R302', '0101000020757F00004D90AD93B4BC20415431BFDBEA525241');
+INSERT INTO es_cor_signs VALUES (1, 120, 'R101', '0101000020757F000038FE8D4FFABD2041F0909C023D525241');
+INSERT INTO es_cor_signs VALUES (5, 300, 'R101', '0101000020757F0000C3F3A9EBB0BD204175AC6FE51F525241');
+INSERT INTO es_cor_signs VALUES (11, 350, 'R101', '0101000020757F000090CF0A3F3DBC2041FB3E643AD0515241');
+INSERT INTO es_cor_signs VALUES (12, 330, 'R101', '0101000020757F0000183E2F7DE6BD2041C9FFD32916525241');
+INSERT INTO es_cor_signs VALUES (14, 110, 'R301-50', '0101000020757F00000343B20037BE20416591A1ECCB525241');
+INSERT INTO es_cor_signs VALUES (21, 0, 'R301-30', '0101000020757F00000F6BA1ADF2B920419A7ADC70E94F5241');
+INSERT INTO es_cor_signs VALUES (19, 270, 'R1', '0101000020757F0000B46CDC8311BD2041FD65E740E8525241');
+INSERT INTO es_cor_signs VALUES (22, 0, 'R1', '0101000020757F00006C1C2E1A08B82041EBE6CDD2E7525241');
+INSERT INTO es_cor_signs VALUES (23, 300, 'R101', '0101000020757F0000AD31964C34BD20417BA885B6ED525241');
+INSERT INTO es_cor_signs VALUES (24, 120, 'R101', '0101000020757F0000460ED42560B92041793AEE24CA4F5241');
+INSERT INTO es_cor_signs VALUES (25, 90, 'R1', '0101000020757F0000F1BEE77FE6B820414E3674BBB54F5241');
+INSERT INTO es_cor_signs VALUES (26, 160, 'R101', '0101000020757F0000FD44040BB4B9204181145604D64F5241');
+
+
+--
+-- TOC entry 3474 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: es_cor_signs_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('es_cor_signs_gid_seq', 26, true);
+
+
+--
+-- TOC entry 3346 (class 2606 OID 154079)
+-- Name: es_avi_signs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY es_cor_signs
+    ADD CONSTRAINT es_avi_signs_pkey PRIMARY KEY (gid);
+
+
+--
+-- TOC entry 3347 (class 1259 OID 154080)
+-- Name: es_cor_signs_geom_idx; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX es_cor_signs_geom_idx ON es_cor_signs USING gist (geom);
+
+
+-- Completed on 2015-10-05 15:38:50 CEST
+
+--
+-- PostgreSQL database dump complete
+--
+

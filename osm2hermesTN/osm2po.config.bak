@@ -111,7 +111,7 @@ wtr.flagList = car, bike, foot, rail, ferry, poly
 
 # only convert ways containing one of these flags
 
-wtr.finalMask = car
+#wtr.finalMask = car
 #wtr.finalMask = car|bike
 #wtr.finalMask = bike|foot
 
@@ -143,14 +143,14 @@ wtr.tag.highway.residential =    1,  41, 40,  car|bike
 wtr.tag.highway.road =           1,  42, 50,  car|bike
 wtr.tag.highway.unclassified =   1,  43, 50,  car|bike
 
-#wtr.tag.highway.service =        1,  51, 5,   car|bike
-#wtr.tag.highway.living_street =  1,  63, 7,   car|bike|foot   
-#wtr.tag.highway.pedestrian =     1,  62, 5,   bike|foot
-#wtr.tag.highway.track =          1,  71, 10,  bike|foot
-#wtr.tag.highway.path =           1,  72, 10,  bike|foot
-#wtr.tag.highway.cycleway =       1,  81, 15,  bike
-#wtr.tag.highway.footway =        2,  91, 5,   foot
-#wtr.tag.highway.steps =          2,  92, 5,   foot
+wtr.tag.highway.service =        1,  51, 5,   car|bike
+wtr.tag.highway.living_street =  1,  63, 7,   car|bike|foot   
+wtr.tag.highway.pedestrian =     1,  62, 5,   bike|foot
+wtr.tag.highway.track =          1,  71, 10,  bike|foot
+wtr.tag.highway.path =           1,  72, 10,  bike|foot
+wtr.tag.highway.cycleway =       1,  81, 15,  bike
+wtr.tag.highway.footway =        2,  91, 5,   foot
+wtr.tag.highway.steps =          2,  92, 5,   foot
 #wtr.tag.route.ferry =            2,   1, 10,  ferry
 #wtr.tag.route.shuttle_train =    2,   2, 50,  rail|car
 #wtr.tag.railway.rail =           3,   3, 50,  rail
@@ -159,6 +159,7 @@ wtr.tag.highway.unclassified =   1,  43, 50,  car|bike
 #wtr.tag.building =               1, 101, 0,   poly
 #wtr.tag.leisure =                1, 102, 0,   poly
 #wtr.tag.waterway.riverbank       1, 103, 0,   poly
+wtr.tag.highway = 4, 24, 10, car|bike|foot
 
 # Other tags may overwrite the transportion type definition above.
 # They allow or explicitly deny things, so the finalMask can
