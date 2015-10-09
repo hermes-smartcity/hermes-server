@@ -13,8 +13,8 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
  
 	<div class="formulario">
 		<div class="titulo">Datos del menú</div>
+		 
 		<form class="form-horizontal">
-
 		<div class="form-group">
 			<div class="row">
 				<label class="col-sm-2 control-label" for="nombre">Nombre</label>
@@ -34,16 +34,19 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 		
 			<!-- Formulario editar crear entradas de menu -->
 			<div ng-show="! showDetailsOrdenarEditar" id="formularioEditarCrear">
-			  <script type="text/ng-template" id="categoryTree">
+				 <!-- <script type="text/ng-template" id="categoryTree">
 				
 			
 			
 				
-    					</script>
+    					</script> -->
 						   
 						<ul>
 							
-					        <div ng-repeat="entradaMenu in f.entradasMenu"  ng-include="'categoryTree'"></div>
+					        <div ng-repeat="entradaMenu in f.entradasMenu" >
+					        		HOLA
+					       		 <entradaMenuDirect entradaMenuParam="entradaMenu"></entradaMenuDirect>
+					        </div>
 					    </ul>    
 			
 			</div>
@@ -52,83 +55,23 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 		
 			<div class="row">
 				
-				<div ng-show="showDetailsOrdenarEditar" id="formularioReordenar">
+				<!-- <div ng-show="showDetailsOrdenarEditar" id="formularioReordenar">
 					<fieldset>
 						<legend>
 							Entradas del menú
 						</legend>
-							
-								<script type="text/ng-template" id="categoryTreeReordenar">
-				
-									<!-- Contiene una entrada: Se puede arrastrar -->
-									<div style="margin-left: {{entradaMenu.identacion}}px;" ng-drag="true" ng-drag-data="entradaMenu" ng-drag-success="f.onArrastrarCompletado($data, $event, entradaMenuPadre)">
-									
-									<input type="hidden" name="f.entradasMenu[{{$index}}].id" value="{{entradaMenu.id}}"/>
-									<input type="hidden" name="f.entradasMenu[{{$index}}].orden" value="{{entradaMenu.orden}}"/>
-									<input type="hidden" name="{{entradaMenu.idMenuEntradaPadre}}" value="{{entradaMenu.idMenuEntradaPadre}}"/>
-									<fieldset>
-										
-										<div class="row">
-							
-											<div style="float:left; margin-left:300px;">
-												<label class="control-label" for="texto">Texto</label>
-											<div><input type="text"  name="f.entradasMenu[{{$index}}].texto" ng-model="entradaMenu.texto"/></div>							
-											</div>
-										<div style="float:left; margin-left:10px;">
-												<label class="control-label" for="url">Url</label>
-										<div><input type="text"  name="f.entradasMenu[{{$index}}].url" ng-model="entradaMenu.url"/></div>
-										</div>
-									
-									</div>
-					 
-									</fieldset>			
-								 
-  									</div>
-						
-       						 	<ul ng-if="entradaMenu.entradasMenu" ng-init="entradaMenuPadre = entradaMenu">
-										<!-- Contiene el bloque de una  entrada y sus hijas dentro de una lista: Se puede arrastrar y soltar en este bloque otra entradaMenu con o sin hijas -->																	
-            							<li ng-repeat="entradaMenu in entradaMenu.entradasMenu"  ng-drop="true"  ng-drop-success="f.onSoltarCompletado($data, $event, entradaMenuPadre,  $index)" ng-include="'categoryTreeReordenar'">           
-           								</li>
-										
-        						</ul>
-							
-    					</script>
-								   
+															   
 								<ul>
-									<!-- Contiene todo el bloque de entradas -->
-							        <div ng-repeat="entradaMenu in f.entradasMenu" ng-include="'categoryTreeReordenar'"></div>
+									<div ng-repeat="entradaMenu in f.entradasMenu" >
+					       		 		<blockReordenar blockReordenar="entradaMenu"></blockReordenar>
+					        		</div>
 							    </ul>   
 						 
 						
 					</fieldset>
 					{{f.entradasMenu}}
-				</div>
-			</div>
-		<!--
-			<fieldset>
-			PROBA
-			<DIV class="row">
-			
-				<div ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
-		          <span class="title">Drop area #1</span>
-		
-		          <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}">
-		              {{obj.name}}
-		          </div>
-		
-		     	 </div>
-		     	 
-		     	 <div ng-drop="true" ng-drop-success="onDropComplete2($data,$event)">
-			          <span class="title">Drop area #2</span>
-			
-			          <div ng-repeat="obj in droppedObjects2" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess2($data,$event)" ng-center-anchor="{{centerAnchor}}">
-			              {{obj.name}}
-			          </div>
-			
-			      </div>
-			</DIV>
-			</fieldset>
-				-->
+				</div> -->
+			</div>		
 			<div class="botones">
 				<button class="btn btn-danger" type="submit" ui-sref="inicio">Volver</button>
 				<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="f.enviar()" ng-disabled="!f.validarDatos()" type="submit">Guardar menú</button>

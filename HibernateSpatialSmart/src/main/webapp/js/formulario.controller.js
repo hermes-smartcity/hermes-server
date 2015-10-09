@@ -16,13 +16,10 @@
 		vm.removeChoice = removeChoice;
 		vm.validarDatos = validarDatos;
 		vm.enviar = enviar;
-		vm.addNuevoMenuEntradaHija = addNuevoMenuEntradaHija;
-		vm.addNuevoMenuEntradaHermanoArriba = addNuevoMenuEntradaHermanoArriba;
-		vm.addNuevoMenuEntradaHermanoAbajo = addNuevoMenuEntradaHermanoAbajo;
+		
 		vm.onSoltarCompletado = onSoltarCompletado;
 		vm.onArrastrarCompletado = onArrastrarCompletado;
-		vm.onReordenarEntr = onReordenarEntr;
-		vm.aumentarOrdenHermanos = aumentarOrdenHermanos;
+		vm.onReordenarEntr = onReordenarEntr;		
 		
 		vm.arrastradoAnteriormente = false;
 		vm.arrayDestinoAux = [];
@@ -39,46 +36,7 @@
 			vm.entradasMenu.splice(lastItem);
 		}
 
-		function addNuevoMenuEntradaHermanoArriba(entradaMenu, entradaMenuPadre, indice) {		
-			var entradasMenuDestino = [];
-			var identacion;
-			if(entradaMenuPadre == null){				
-				entradasMenuDestino = vm.entradasMenu;
-				identacion = 50;
-			} else {
-				entradasMenuDestino = entradaMenuPadre.entradasMenu;
-				identacion = entradaMenuPadre.identacion + 50; // Va a ser hija de su menu padre, por lo tanto mas identacion
-			}
-			
-			entradasMenuDestino.splice(indice,0,{'orden':indice,'entradasMenu':[], 'identacion':identacion});
-			// Todas las entradas que le siguen abajo deben aumentar el orden
-			vm.aumentarOrdenHermanos(entradasMenuDestino);
-		};
 		
-		function addNuevoMenuEntradaHermanoAbajo(entradaMenu, entradaMenuPadre, indice) {		
-			var entradasMenuDestino = [];
-			var identacion;
-			//TODO hacer funcion
-			if(entradaMenuPadre == null){				
-				entradasMenuDestino = vm.entradasMenu;
-				identacion = 50;
-			} else {
-				entradasMenuDestino = entradaMenuPadre.entradasMenu;
-				identacion = entradaMenuPadre.identacion + 50; // Va a ser hija de su menu padre, por lo tanto mas identacion
-			}
-			
-			var i = indice+1;
-			entradasMenuDestino.splice(i,0,{'orden':i,'entradasMenu':[], 'identacion':identacion});
-			// Todas las entradas que le siguen abajo deben aumentar el orden
-			vm.aumentarOrdenHermanos(entradasMenuDestino);
-  
-		};
-		
-		function addNuevoMenuEntradaHija(entradaMenu) {
-			var newItemNo = entradaMenu.entradasMenu.length+1;
-			var identacion = entradaMenu.identacion + 50;
-			entradaMenu.entradasMenu.push({'orden':newItemNo,'entradasMenu':[], 'identacion':identacion});
-		};
 
 	    // Arrastrar
 		function onArrastrarCompletado (data, event, entradaMenuPadre){
@@ -167,13 +125,5 @@
 				return false;
 			return true;
 		}
-		
-		// Nombre del menu obligatorio 
-		function aumentarOrdenHermanos(entradasMenuAmodificar) {
-			$.each(entradasMenuAmodificar, function(k, v) {
-				v.orden = k;				
-			});     
-		}
-
-	}
+			}
 })();
