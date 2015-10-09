@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root version="2.0" xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:c="http://java.sun.com/jsp/jstl/core" 
+xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+xmlns:form="http://www.springframework.org/tags/form"
+xmlns:jsaux="http://www.enxenio.es/tags/jsaux"
+xmlns:jsp="http://java.sun.com/JSP/Page">
+	
+		<!-- Contiene una entrada: Se puede arrastrar -->
+		<div style="margin-left: {{entradaMenu.identacion}}px;" ng-drag="true" ng-drag-data="entradaMenu" ng-drag-success="onArrastrarCompletado($data, $event, entradaMenuPadre)">
+									
+				<input type="hidden" name="f.entradasMenu[{{$index}}].id" value="{{entradaMenu.id}}"/>
+				<input type="hidden" name="f.entradasMenu[{{$index}}].orden" value="{{entradaMenu.orden}}"/>
+				<input type="hidden" name="{{entradaMenu.idMenuEntradaPadre}}" value="{{entradaMenu.idMenuEntradaPadre}}"/>
+				<fieldset>
+					
+					<div class="row">
+		
+						<div style="float:left; margin-left:300px;">
+							<label class="control-label" for="texto">Texto</label>
+						<div><input type="text"  name="entradasMenu[{{$index}}].texto" ng-model="entradaMenu.texto"/></div>							
+						</div>
+					<div style="float:left; margin-left:10px;">
+							<label class="control-label" for="url">Url</label>
+					<div><input type="text"  name="entradasMenu[{{$index}}].url" ng-model="entradaMenu.url"/></div>
+					</div>
+				
+				</div>
+ 
+				</fieldset>			
+								 
+  		</div>
+  				
+</jsp:root>

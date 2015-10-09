@@ -1,42 +1,47 @@
 (function() {
 	'use strict';
 
-	angular.module('app').directive('entradaMenuDirect', entradaMenuDirect);
+	angular.module('app').directive('block', block);
 
-	entradaMenuDirect.$inject = ['$compile'];
+	block.$inject = ['$compile'];
 
-	function entradaMenuDirect($compile) {
+	function block($compile) {
 		return {
 			templateUrl: 'partials/entradaMenuTree.htm',
 			 restrict: 'E',
 			    replace: true,
-			    require: '^entradaMenuDirect',
 			    scope: {
-			      // Variable de este scope que utilizo en la directiva. Lado derecho el atributo desde donde llama a la directiva, el nombre que debe tener 	
-			    	entradaMenuParam: '=entradaMenuParam'
-			    },			    
-			    link: function($scope, $element, controller) {
-			    	 console.log("entro por aki????'");
-			    	this.entradasMenu = $scope.entradasMenu;
-			    	this.addNuevoMenuEntrada =  $scope.addNuevoMenuEntrada;
-			    	this.removeChoice =  $scope.removeChoice;
-			    	this.validarDatos =  $scope.validarDatos;
+			      block: '='
+			    },			   
+			    link: function($scope, $element, attrs, controller) {
+			    					
+			    	$scope.addNuevoMenuEntradaHermanoArriba = addNuevoMenuEntradaHermanoArriba;
+			 				
+			    	$scope.addNuevoMenuEntradaHija = addNuevoMenuEntradaHija;
+			    
+			    	$scope.addNuevoMenuEntradaHermanoAbajo = addNuevoMenuEntradaHermanoAbajo;
+			    	$scope.aumentarOrdenHermanos = aumentarOrdenHermanos;
 					
-			    	this.addNuevoMenuEntradaHija =  addNuevoMenuEntradaHija;
-			    	this.addNuevoMenuEntradaHermanoArriba =  addNuevoMenuEntradaHermanoArriba;
-			    	this.addNuevoMenuEntradaHermanoAbajo =  addNuevoMenuEntradaHermanoAbajo;
-			
-			    	this.aumentarOrdenHermanos =  aumentarOrdenHermanos;
-										
-			    	this.arrastradoAnteriormente = false;
-			    	this.arrayDestinoAux = [];
+			    	$scope.arrayDestinoAux = [];
 			    	
-			    	function addNuevoMenuEntradaHermanoArriba(entradaMenu, entradaMenuPadre, indice) {		
-						console.log("---addNuevoMenuEntradaHermanoArriba "+addNuevoMenuEntradaHermanoArriba);
+			    	// TODO DUDA IMPORTANTE EL SCOPE QUE ME PASAN POR PARAMETRO ES EL GENERAL??
+					function validarDatos() {
+						if (angular.isUndefinedOrNull(hija.nombre))
+							return false;
+						return true;
+					}
+		
+//					function removeChoice() {
+//						var lastItem = hija.entradasMenu.length-1;
+//						hija.entradasMenu.splice(lastItem);
+//					}
+
+					function addNuevoMenuEntradaHermanoArriba(entradaMenu, entradaMenuPadre, indice) {		
+						console.log("-----addNuevoMenuEntradaHermanoArriba------- "+controller.entradasMenu.length);
 						var entradasMenuDestino = [];
 						var identacion;
 						if(entradaMenuPadre == null){				
-							entradasMenuDestino = this.entradasMenu;
+							entradasMenuDestino = hija.entradasMenu;
 							identacion = 50;
 						} else {
 							entradasMenuDestino = entradaMenuPadre.entradasMenu;
@@ -45,15 +50,16 @@
 						
 						entradasMenuDestino.splice(indice,0,{'orden':indice,'entradasMenu':[], 'identacion':identacion});
 						// Todas las entradas que le siguen abajo deben aumentar el orden
-						this.aumentarOrdenHermanos(entradasMenuDestino);
+						hija.aumentarOrdenHermanos(entradasMenuDestino);
 					};
 					
 					function addNuevoMenuEntradaHermanoAbajo(entradaMenu, entradaMenuPadre, indice) {		
+						console.log("----addNuevoMenuEntradaHermanoAbajo-------- "+controller.length);
 						var entradasMenuDestino = [];
 						var identacion;
 						//TODO hacer funcion
 						if(entradaMenuPadre == null){				
-							entradasMenuDestino = this.entradasMenu;
+							entradasMenuDestino = hija.entradasMenu;
 							identacion = 50;
 						} else {
 							entradasMenuDestino = entradaMenuPadre.entradasMenu;
@@ -63,7 +69,7 @@
 						var i = indice+1;
 						entradasMenuDestino.splice(i,0,{'orden':i,'entradasMenu':[], 'identacion':identacion});
 						// Todas las entradas que le siguen abajo deben aumentar el orden
-						this.aumentarOrdenHermanos(entradasMenuDestino);
+						hija.aumentarOrdenHermanos(entradasMenuDestino);
 			  
 					};
 					
@@ -79,9 +85,10 @@
 							v.orden = k;				
 						});     
 					}
+					
 			      if (angular.isArray($element.entradasMenu) && $element.entradasMenu.length > 0) {
 			    	  console.log("entro por aki?");
-			        $element.append('<entradaMenuDirect ng-repeat="entradasMenu in entradaMenu.entradasMenu" entradaMenuParam="entradasMenu"></entradaMenuDirect>');
+			        $element.append('<block ng-repeat="entradasMenu in entradaMenu.entradasMenu" block="entradasMenu"></block>');
 			        $compile($element.contents().last())($scope);
 			      }
 			    }

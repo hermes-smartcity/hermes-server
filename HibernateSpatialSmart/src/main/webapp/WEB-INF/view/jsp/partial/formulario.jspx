@@ -45,7 +45,7 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 							
 					        <div ng-repeat="entradaMenu in f.entradasMenu" >
 					        		HOLA
-					       		 <entradaMenuDirect entradaMenuParam="entradaMenu"></entradaMenuDirect>
+					       		 <block block="entradaMenu"></block>
 					        </div>
 					    </ul>    
 			
