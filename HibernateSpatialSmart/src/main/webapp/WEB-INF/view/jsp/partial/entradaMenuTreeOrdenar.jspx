@@ -6,14 +6,12 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
  xmlns:form="http://www.springframework.org/tags/form" xmlns:jsaux="http://www.enxenio.es/tags/jsaux" xmlns:jsp="http://java.sun.com/JSP/Page">
 
 		
-		<div style="margin-left: {{block.identacion}}px;">
+		<div style="margin-left: {{block.identacion}}px;" ng-drag="true" ng-drag-data="entradaMenu" ng-drag-success="onArrastrarCompletado($data, $event, entradaMenuPadre)">
 					<input type="hidden" name="blocks[{{$index}}].id" value="{{block.id}}"/>
 					<input type="hidden" name="blocks[{{$index}}].orden" value="{{block.orden}}"/>
 					<input type="hidden" name="{{block.idMenuEntradaPadre}}" value="{{block.idMenuEntradaPadre}}"/>
 					<fieldset>
-					<div class="row">
-							<button class="btn btn-success" ng-class="{'btn-danger' : !validarDatos()}" ng-click="addNuevoMenuEntradaHermanoArriba()" type="submit">Añadir entrada de menú arriba</button>	
-					</div>
+					
 					<div class="row">
 						
 						<div style="float:left; margin-left:300px;">
@@ -26,20 +24,15 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 						</div>
 						
 					</div>
-					<div class="row">
-						<button class="btn btn-success" ng-class="{'btn-danger' : !validarDatos()}" ng-click="addNuevoMenuEntradaHermanoAbajo()" type="submit">Añadir entrada de menú abajo</button>
-					</div> 
- 					<div class="row">
-						<button class="btn btn-success" ng-class="{'btn-danger' : !validarDatos()}" ng-click="addNuevoMenuEntradaHija(block)" type="submit">Añadir entrada menú hija</button>
-					</div> 
+					
 					</fieldset>			
 								 
   					</div>
   					
   					<div>
-	  					<li ng-repeat="entradaMenu in block.entradasMenu"> 
+	  					<li ng-repeat="entradaMenu in block.entradasMenu"  ng-drop="true"  ng-drop-success="onSoltarCompletado($data, $event, entradaMenuPadre,  $index)"> 
 	  						
-		                    <tree block="entradaMenu" blocks="block.entradasMenu" indice="$index"></tree>
+		                    <tree-order block="entradaMenu" blocks="block.entradasMenu" indice="$index"></tree-order>
 		                </li>
     				</div>
 </jsp:root>

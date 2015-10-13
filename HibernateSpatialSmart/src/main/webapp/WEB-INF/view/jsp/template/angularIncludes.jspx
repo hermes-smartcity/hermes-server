@@ -9,7 +9,7 @@
 	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
 
 	<c:url var="aux" value="/js/app.constants.js" />
-	<script type="text/javascript" src="${aux}"><!-- --></script>
+	<script type="text/javascript" src="${aux}"><!-- --></script>	
 	
 	<c:url var="aux" value="/js/app.module.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
@@ -21,14 +21,23 @@
 	<c:url var="aux" value="/js/menu.service.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
-	<!-- Proba directive -->
+	<!-- Proba angular recursion -->
+	<c:url var="aux" value="/js/angular-recursion.js" />
+	<script type="text/javascript" src="${aux}"><!-- --></script>
+	
+	<!-- infiniteTree directive -->
 	<c:url var="aux" value="/js/infiniteTree.directive.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
-	<!-- Proba directive -->
-	<c:url var="aux" value="/js/infiniteTreeReodenar.directive.js" />
+	<!-- entradaMenuDirec directive -->
+	<c:url var="aux" value="/js/entradaMenuDirec.directive.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
+	<!-- entradaMenuDirec directive -->
+	<c:url var="aux" value="/js/entradaMenuDirecOrder.directive.js" />
+	<script type="text/javascript" src="${aux}"><!-- --></script>
+	
+		
 	<!-- Proba ngDraggable -->
 	<c:url var="aux" value="/js/ngDraggable.js"/>
 	<script type="text/javascript" src="${aux}"><!-- --></script>

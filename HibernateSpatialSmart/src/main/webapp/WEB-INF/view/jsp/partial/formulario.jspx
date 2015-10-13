@@ -31,47 +31,34 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 				 	<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="showDetailsOrdenarEditar = ! showDetailsOrdenarEditar" >Reordenar</button>
 			 	 </div> 
 			</div>
-		
+			
 			<!-- Formulario editar crear entradas de menu -->
-			<div ng-show="! showDetailsOrdenarEditar" id="formularioEditarCrear">
-				 <!-- <script type="text/ng-template" id="categoryTree">
-				
-			
-			
-				
-    					</script> -->
-						   
-						<ul>
-							
-					        <div ng-repeat="entradaMenu in f.entradasMenu" >
-					        		HOLA
-					       		 <block block="entradaMenu"></block>
-					        </div>
-					    </ul>    
-			
+			<div ng-show="! showDetailsOrdenarEditar" id="formularioEditarCrear">			 
+				<ul ng-if="entradasMenu">
+					<!-- Son las primeras entradas de menu, las de primer nivel, no tienen padre -->
+					<div ng-repeat="entradaMenu in entradasMenu">
+			        	  <tree block="entradaMenu" blocks="entradasMenu" indice="$index"></tree>
+			        </div>
+					    
+			    </ul>    
 			</div>
+			<!-- Formulario reordenar entradas de menu -->
+			<div ng-show="showDetailsOrdenarEditar" id="formularioOrdenar">			 
+				<ul ng-if="entradasMenu">
+					<!-- Son las primeras entradas de menu, las de primer nivel, no tienen padre -->
+					<div ng-repeat="entradaMenu in entradasMenu">
+			        	  <tree-order block="entradaMenu" blocks="entradasMenu" indice="$index"></tree-order>			       		
+			        </div>
+					    
+			    </ul>    
+			</div>
+			{{entradasMenu}}
 		</div>
 		
 		
-			<div class="row">
-				
-				<!-- <div ng-show="showDetailsOrdenarEditar" id="formularioReordenar">
-					<fieldset>
-						<legend>
-							Entradas del menú
-						</legend>
-															   
-								<ul>
-									<div ng-repeat="entradaMenu in f.entradasMenu" >
-					       		 		<blockReordenar blockReordenar="entradaMenu"></blockReordenar>
-					        		</div>
-							    </ul>   
-						 
-						
-					</fieldset>
-					{{f.entradasMenu}}
-				</div> -->
-			</div>		
+			<!-- <div class="row">
+				  <tree blocks="entradasMenu"></tree>
+			</div> -->		
 			<div class="botones">
 				<button class="btn btn-danger" type="submit" ui-sref="inicio">Volver</button>
 				<button class="btn btn-success" ng-class="{'btn-danger' : !f.validarDatos()}" ng-click="f.enviar()" ng-disabled="!f.validarDatos()" type="submit">Guardar menú</button>

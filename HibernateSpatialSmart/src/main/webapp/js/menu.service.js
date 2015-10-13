@@ -13,8 +13,7 @@
 
 		return service;
 
-		function guardarMenu(menu) {
-			
+		function guardarMenu(menu) {			
 		       var deferred = $q.defer();
 
                $http({
