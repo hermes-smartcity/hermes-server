@@ -33,6 +33,7 @@ angular.module("ngDraggable", [])
 
                 // to identify the element in order to prevent getting superflous events when a single element has both drag and drop directives on it.
                 var _myid = scope.$id;
+                console.log("ndDraggable - Directiva "+_myid)
                 var _data = null;
 
                 var _dragOffset = null;
@@ -56,6 +57,7 @@ angular.module("ngDraggable", [])
                     // check to see if drag handle(s) was specified
                     // if querySelectorAll is available, we use this instead of find
                     // as JQLite find is limited to tagnames
+                    console.log("Pasa por aki?");
                     if (element[0].querySelectorAll) {
                         var dragHandles = angular.element(element[0].querySelectorAll('[ng-drag-handle]'));
                     } else {
@@ -334,6 +336,7 @@ angular.module("ngDraggable", [])
                     }
                     if (isTouching(obj.x, obj.y, obj.element)) {
                         // call the ngDraggable ngDragSuccess element callback
+                    	console.log("--- Directiva ng-drag-success");
                         if(obj.callback){
                             obj.callback(obj);
                         }

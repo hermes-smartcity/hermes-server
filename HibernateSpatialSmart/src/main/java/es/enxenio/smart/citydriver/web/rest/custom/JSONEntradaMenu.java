@@ -9,6 +9,8 @@ public class JSONEntradaMenu {
 	private String url;
 	private Integer orden;
 	//TODO "Chapucilla momentánea" para identar las entradas del menú
+	private Integer id;
+	//TODO "Chapucilla momentánea" para identificar que entradas se estan arrastrando y soltando 
 	private String identacion;
 	private List<JSONEntradaMenu>entradasMenu;
 	//TODO falta entradaMenuPadre y Menu padre?¿
@@ -51,6 +53,14 @@ public class JSONEntradaMenu {
 
 	public void setIdentacion(String identacion) {
 		this.identacion = identacion;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override
