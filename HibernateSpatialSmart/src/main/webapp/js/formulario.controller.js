@@ -17,7 +17,44 @@
 		vm.addNuevoMenuEntrada = addNuevoMenuEntrada;
 		$rootScope.calcularid = calcularid;
 		
-		
+		$scope.tieneHijos = function (scope) {
+			  var nodeData = scope.$modelValue;
+	        if(nodeData.entradasMenu && nodeData.entradasMenu.length > 0){
+	        	return true;
+	        } else false;
+	      };
+	          
+	    	
+	      $scope.remove = function (scope) {
+	        scope.remove();
+	      };
+
+	      $scope.toggle = function (scope) {
+	        scope.toggle();
+	      };
+
+	      $scope.moveLastToTheBeginning = function () {
+	        var a = $scope.entradasMenu.pop();
+	        $scope.entradasMenu.splice(0, 0, a);
+	      };
+
+	      $scope.newSubItem = function (scope) {
+	        var nodeData = scope.$modelValue;
+	        nodeData.entradasMenu.push({
+	          id: nodeData.id * 10 + nodeData.entradasMenu.length,
+	          title: nodeData.title + '.' + (nodeData.entradasMenu.length + 1),
+	          entradasMenu: []
+	        });
+	      };
+
+	      $scope.collapseAll = function () {
+	        $scope.$broadcast('collapseAll');
+	      };
+
+	      $scope.expandAll = function () {
+	        $scope.$broadcast('expandAll');
+	      };
+	    	
 		function addNuevoMenuEntrada() {
 			var newItemNo = $scope.entradasMenu.length+1;
 			var id = $rootScope.calcularid();

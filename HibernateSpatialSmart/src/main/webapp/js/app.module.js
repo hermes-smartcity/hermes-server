@@ -7,7 +7,7 @@
 		'ngSanitize',
 		'ui.bootstrap',
 		'leaflet-directive',
-		'ngDraggable'
+		'ngDraggable', 'ui.tree'
 	]).config(routeConfig).run(appRun);
 
 	function obterRuta(ruta) {
@@ -26,9 +26,9 @@
 			templateUrl: 'partials/inicio.htm'			
 		}).state('formulario', {
 			url: obterRuta('formulario'),
-			templateUrl: 'partials/formulario.htm',
-			controller: 'FormularioController',
-			controllerAs: 'f'
+			templateUrl: 'partials/formularioCl.htm',
+			controller: 'CloningCtrl',
+			controllerAs: 'cl'
 		});
 	}
 

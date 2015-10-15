@@ -6,11 +6,12 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
  xmlns:form="http://www.springframework.org/tags/form" xmlns:jsaux="http://www.enxenio.es/tags/jsaux" xmlns:jsp="http://java.sun.com/JSP/Page">
 
 		
-		<div style="margin-left: {{block.identacion}}px;" ng-drag="true" ng-drag-data="block" ng-drag-success="onArrastrarCompletado($data, $event, block.id)">
+		<div style="margin-left: {{block.identacion}}px;" 			
+				 ng-drag="true" ng-drag-data="block" ng-drag-success="onArrastrarCompletado($data, $event, block.id)">
 					<input type="hidden" name="blocks[{{$index}}].id" value="{{block.id}}"/>
 					<input type="hidden" name="blocks[{{$index}}].orden" value="{{block.orden}}"/>
 					<input type="hidden" name="{{block.idMenuEntradaPadre}}" value="{{block.idMenuEntradaPadre}}"/>
-					<fieldset>
+					<fieldset ng-mouseleave="desactivarClase()" ng-mouseover="activarClase()" ng-class="{activada : isActivada}">
 					
 					<div class="row">
 						

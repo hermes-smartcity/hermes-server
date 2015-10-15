@@ -20,7 +20,7 @@
 			    	scope.addNuevoMenuEntradaHija = addNuevoMenuEntradaHija;			    
 			    	scope.addNuevoMenuEntradaHermanoAbajo = addNuevoMenuEntradaHermanoAbajo;
 			    	scope.aumentarOrdenHermanos = aumentarOrdenHermanos;
-			    	scope.arrayDestinoAux = [];
+			    	scope.arrayDestinoAux = [];			    	
 					    	
 			    	function validarDatos() {
 						if (angular.isUndefinedOrNull(scope.nombre))

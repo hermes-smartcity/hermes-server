@@ -43,14 +43,50 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 			    </ul>    
 			</div>
 			<!-- Formulario reordenar entradas de menu -->
-			<div ng-show="showDetailsOrdenarEditar" id="formularioOrdenar">			 
-				<ul ng-if="entradasMenu">
-					<!-- Son las primeras entradas de menu, las de primer nivel, no tienen padre -->
-					<div ng-repeat="entradaMenu in entradasMenu">
-			        	  <tree-order block="entradaMenu" blocks="entradasMenu" indice="$index"></tree-order>			       		
-			        </div>
-					    
-			    </ul>    
+			<div ng-show="showDetailsOrdenarEditar" id="formularioOrdenar">			 						 
+					<!-- Nested node template -->
+					<script type="text/ng-template" id="nodes_renderer.html">
+  						<div ui-tree-handle="" class="tree-node tree-node-content">
+    						<a class="btn btn-success btn-xs" ng-if="tieneHijos(this)" data-nodrag="" ng-click="toggle(this)"><span
+        					class="glyphicon"
+        					ng-class="{
+          					'glyphicon-chevron-right': collapsed,
+          					'glyphicon-chevron-down': !collapsed
+        					}"></span></a>
+    							{{node.texto}}
+    						<a class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="remove(this)"><span
+        					class="glyphicon glyphicon-remove"></span></a>
+    						<a class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="newSubItem(this)" style="margin-right: 8px;"><span
+        					class="glyphicon glyphicon-plus"></span></a>
+  						</div>
+  						<ol ui-tree-nodes="" ng-model="node.entradasMenu" ng-class="{hidden: collapsed}">
+    						<li ng-repeat="node in node.entradasMenu" ui-tree-node="" ng-include="'nodes_renderer.html'">
+    						</li>
+  						</ol>
+				</script>
+					
+					<div class="row">
+					  <div class="col-sm-12">
+					    <h3>Basic Example</h3>
+					  </div>
+					</div>
+					
+					<div class="row">
+					  <div class="col-sm-6">
+					    <div ui-tree="" id="tree-root">
+					      <ol ui-tree-nodes="" ng-model="entradasMenu">
+					        <li ng-repeat="node in entradasMenu" ui-tree-node="" ng-include="'nodes_renderer.html'"></li>
+					      </ol>
+					    </div>
+					  </div>
+					
+					  <div class="col-sm-6">
+					    <div class="info">
+					      {{info}}
+					    </div>
+					    <pre class="code">{{ data | json }}</pre>
+					  </div>
+					</div>		
 			</div>
 			{{entradasMenu}}
 		</div>

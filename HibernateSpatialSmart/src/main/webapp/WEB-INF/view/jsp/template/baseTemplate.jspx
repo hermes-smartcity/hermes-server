@@ -8,8 +8,6 @@
 			</title>
 		  	<!-- bower:css -->
 		  	<!-- endbower -->
-		  	<c:url  var="aux" value="/bower_components/bootstrap/dist/css/bootstrap.css" />
-			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
 		  	<c:url  var="aux" value="/bower_components/leaflet/dist/leaflet.css" />
 			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
 		  	<c:url  var="aux" value="/bower_components/font-awesome/css/font-awesome.css" />
@@ -18,11 +16,16 @@
 			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
 		  	<c:url  var="aux" value="/bower_components/sweetalert/lib/sweet-alert.css" />
 			<link href="${aux}" media="all" rel="StyleSheet" type="text/css"/>
+					
+			<c:url  var="aux" value="/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
+			<link href="${aux}"  media="all"  rel="StyleSheet" type="text/css"/>
 			
-		  	<c:url  var="aux" value="/css/screen.css" />
-			<link href="${aux}" media="screen, projection" rel="StyleSheet" type="text/css"/>
-		  	<c:url  var="aux" value="/css/print.css" />
-			<link href="${aux}" media="print" rel="StyleSheet" type="text/css"/>
+			<c:url  var="aux" value="/bower_components/bootstrap-css/css/bootstrap.min.css" />
+			<link href="${aux}"  media="all"  rel="StyleSheet" type="text/css"/>
+			
+			<c:url  var="aux" value="/css/app.css" />
+			<link href="${aux}" media="all"  rel="StyleSheet" type="text/css"/>
+
 		  	<!--[if IE]>
 		  		<c:url  var="aux" value="/css/ie.css" />
 				<link href="${aux}" media="screen, projection" rel="StyleSheet" type="text/css"/>
@@ -73,6 +76,41 @@
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 			<c:url  var="aux" value="/bower_components/leaflet.freedraw/dist/leaflet.freedraw.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/bower_components/angular-ui-tree/dist/angular-ui-tree.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/main.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/controllers/handleCtrl.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/controllers/nodeCtrl.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/controllers/nodesCtrl.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+						
+			<c:url  var="aux" value="/source/controllers/treeCtrl.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/directives/uiTree.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/directives/uiTreeHandle.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/directives/uiTreeNode.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/directives/uiTreeNodes.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/source/services/helper.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+
 
 			<jsp:include page="angularIncludes.jspx" />
 		</body>

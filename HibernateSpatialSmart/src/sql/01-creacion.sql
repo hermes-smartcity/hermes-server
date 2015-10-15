@@ -110,7 +110,7 @@ CREATE TABLE entradaMenu (
   id bigint NOT NULL DEFAULT nextval('entradaMenu_id_seq'::regclass),
   texto TEXT NOT NULL,
   url VARCHAR(255),
-  orden integer not null default 0,
+  orden integer,
   idMenu bigint,
   idEntradaMenuPadre bigint,
   version bigint not null default 0,

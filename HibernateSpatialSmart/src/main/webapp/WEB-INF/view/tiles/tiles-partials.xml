@@ -5,6 +5,8 @@
 <tiles-definitions>
 	<definition name="partials/inicio" template="/WEB-INF/view/jsp/partial/inicio.jspx"/>
 	<definition name="partials/formulario" template="/WEB-INF/view/jsp/partial/formulario.jspx"/>
+	<definition name="partials/formularioCl" template="/WEB-INF/view/jsp/partial/formularioCl.jspx"/>
+	<definition name="partials/formularioTree" template="/WEB-INF/view/jsp/partial/formularioTree.jspx"/>
 	<definition name="partials/formularioEntradasMenu" template="/WEB-INF/view/jsp/partial/formularioEntradasMenu.jspx"/>	
 	<definition name="partials/entradaMenu" template="/WEB-INF/view/jsp/partial/entradaMenu.jspx"/>
 	<definition name="partials/entradaMenuTree" template="/WEB-INF/view/jsp/partial/entradaMenuTree.jspx"/>

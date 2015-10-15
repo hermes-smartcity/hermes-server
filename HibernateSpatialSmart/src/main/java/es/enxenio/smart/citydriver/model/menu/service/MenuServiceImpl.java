@@ -82,15 +82,17 @@ public class MenuServiceImpl implements MenuService {
 		// TODO no estoy segura de que sea la mejor forma de hacerlo, primero lo creo con los datos básicos, luego le asigno las relaciones con las demás entidades, una vez creado
 		menuDao.create(menu);
 		// Le asigno las entradas guardadas en el JSON
+		Integer orden = 0;
 		for(JSONEntradaMenu jsonE:menuJSON.getEntradasMenu()){			
-			guardarEntradaMenu(jsonE, menu);
+			guardarEntradaMenu(jsonE, menu, orden);
+			orden++;
 		}
 
 		return menu;
 	}
 
-	public EntradaMenu guardarEntradaMenu(JSONEntradaMenu entradaMenuJSON, Menu menu){
-		EntradaMenu entradaMenu = setearValoresEntradaMenuJSON(entradaMenuJSON);
+	public EntradaMenu guardarEntradaMenu(JSONEntradaMenu entradaMenuJSON, Menu menu, Integer orden){
+		EntradaMenu entradaMenu = setearValoresEntradaMenuJSON(entradaMenuJSON, orden);
 	
 		// Estamos creando las entradas del primer nivel por lo tanto no tienen entrada padre
 		entradaMenuDao.create(entradaMenu, menu, null);
@@ -103,16 +105,18 @@ public class MenuServiceImpl implements MenuService {
 
 	public void guardaEntradasMenuHijas(Menu menu, EntradaMenu entradaMenuPadre, List<JSONEntradaMenu> entradasMenuHijas){
 		List<EntradaMenu> entradasMenu = new ArrayList<EntradaMenu>();
+		Integer ordenHija = 0;
 		// Tengo que crear sus entradasMenu, asi como sus hijas -> recursivo
 		for(JSONEntradaMenu entradaHija:entradasMenuHijas){
 			EntradaMenu e = new EntradaMenu();
 			e.setTexto(entradaHija.getTexto());
 			e.setUrl(entradaHija.getUrl());
-			e.setOrden(entradaHija.getOrden());
+			e.setOrden(ordenHija);
 			e.setEntradaMenuPadre(entradaMenuPadre);
 			entradaMenuDao.create(e);
 			guardaEntradasMenuHijas(menu,e,entradaHija.getEntradasMenu());
 			entradasMenu.add(e);
+			ordenHija++;
 
 		}
 		
@@ -121,11 +125,11 @@ public class MenuServiceImpl implements MenuService {
 		return;
 	}
 	
-	public EntradaMenu setearValoresEntradaMenuJSON(JSONEntradaMenu entradaMenuJSON){
+	public EntradaMenu setearValoresEntradaMenuJSON(JSONEntradaMenu entradaMenuJSON, Integer orden){
 		EntradaMenu entradaMenu = new EntradaMenu();
 		entradaMenu.setTexto(entradaMenuJSON.getTexto());
 		entradaMenu.setUrl(entradaMenuJSON.getUrl());
-		entradaMenu.setOrden(entradaMenuJSON.getOrden());
+		entradaMenu.setOrden(orden);
 		return entradaMenu;
 		
 	}
