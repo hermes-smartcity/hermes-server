@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app')
-    .controller('CloningCtrl', ['$scope', 'menuService','$state', function ($scope, menuService, $state) {
+    .controller('EditarMenuCtrl', ['$scope', 'menuService','$state', '$http','$stateParams', function ($scope, menuService, $state, $http, $stateParams) {
       $scope.remove = function (scope) {
         scope.remove();
       };
@@ -35,25 +35,20 @@
 			return true;
       }
       
-      $scope.nombre = '';
-     
-      $scope.entradasMenu = [{
-        'texto': 'item1',
-        'url': 'url - item2',
-        'entradasMenu': []
-      }, {
-        'texto': 'item2',
-        'url': 'url - item2',
-        'entradasMenu': []
-      }, {
-        'texto': 'item3',
-        'url': 'url - item3',
-        'entradasMenu': []
-      }, {
-        'texto': 'item4',
-        'url': 'url - item4',
-        'entradasMenu': []
-      }];
+  	 // get the id
+      $scope.idMenu = $stateParams.idMenu;
+      var urlGet = "menu/json/getMenu?idMenu="+$scope.idMenu;
+      $http.get(urlGet).success(function(data) {
+			$scope.menu = data;
+			$scope.nombre = $scope.menu.nombre;
+			$scope.entradasMenu = $scope.menu.entradasMenu;
+			console.log("--- "+$scope.entradasMenu.lenght);
+      });
+      
+//      var urlGet = "menu/json/entradasMenu?idMenu="+$scope.idMenu;
+//      $http.get(urlGet).success(function(data) {
+//			$scope.entradasMenu = data;
+//      });
     }]);
 
 }());

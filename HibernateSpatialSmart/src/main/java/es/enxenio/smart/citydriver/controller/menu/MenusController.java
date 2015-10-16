@@ -39,7 +39,14 @@ public class MenusController extends MainResource {
 	
 	@RequestMapping(value="/json/menus", method = RequestMethod.GET)
 	public List<Menu> getMenus() {
+		System.out.println("------------ "+menuService.obterMenus().size());
 		return menuService.obterMenus();
+
+	}
+	
+	@RequestMapping(value="/json/getMenu", method = RequestMethod.GET)
+	public Menu getMenu(@RequestParam(required = true) Long idMenu) {		
+		return menuService.get(idMenu);
 
 	}
 	
@@ -58,7 +65,6 @@ public class MenusController extends MainResource {
 	@RequestMapping(value = "/guardarMenu", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void guardarMenus(
-//			@RequestBody(required = false) List<JSONEntradaMenu> entradasMenu,
 			@RequestBody(required = false) JSONMenu menu,
 			HttpServletRequest request) throws InstanceNotFoundException {
 

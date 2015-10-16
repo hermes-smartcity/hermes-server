@@ -117,7 +117,6 @@ public class MenuServiceImpl implements MenuService {
 			guardaEntradasMenuHijas(menu,e,entradaHija.getEntradasMenu());
 			entradasMenu.add(e);
 			ordenHija++;
-
 		}
 		
 		entradaMenuPadre.setEntradasMenu(entradasMenu);

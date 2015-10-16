@@ -29,6 +29,17 @@
 			templateUrl: 'partials/formularioCl.htm',
 			controller: 'CloningCtrl',
 			controllerAs: 'cl'
+		}).state('editarMenu', {
+			url: obterRuta('editarMenu'),
+			url: '/editarMenu/idMenu/:idMenu',
+			templateUrl: 'partials/formularioCl.htm',
+			controller: 'EditarMenuCtrl',
+			controllerAs: 'em'
+		}).state('listarMenus', {
+			url: obterRuta('listarMenus'),
+			templateUrl: 'partials/listarMenus.htm',
+			controller: 'ListarMenusCtrl',
+			controllerAs: 'lm'
 		});
 	}
 
