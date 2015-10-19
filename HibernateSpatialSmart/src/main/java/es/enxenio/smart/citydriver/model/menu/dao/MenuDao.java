@@ -8,5 +8,4 @@ import es.enxenio.smart.citydriver.model.util.dao.GenericDao;
 
 public interface MenuDao extends GenericDao<Menu, Long> {	
 	public List<Menu> obterMenus();
-	public Long obtenerSiguienteId();
 }

@@ -17,46 +17,11 @@ MenuDao {
 	
 	@Override
 	public List<Menu> obterMenus() {		
-		return getSession().createCriteria(this.entityClass).list();
-	}
-	
-	@Override
-	public Long obtenerSiguienteId() {
-		return (Long) getSession()
-				.createSQLQuery("select nextval('id') as id")
-				.addScalar("id", LongType.INSTANCE).uniqueResult();
+		Order order = Order.asc("nombre");
+		Criteria criteria = getSession().createCriteria(this.entityClass);
+		criteria.addOrder(order);
+		return criteria.list();
 	}
 
-//	@Override
-//	public void subir(long idMenu) {
-//		Menu menu = get(idMenu);
-//		Menu outro = (Menu) getSession()
-//				.createQuery("from Menu where (capitulo = :capitulo and orde < :orde and idMenuPai is null) order by orde desc")
-//				.setParameter("capitulo", menu.getCapitulo())
-//				.setParameter("orde", menu.getOrden())
-//				.setMaxResults(1)
-//				.uniqueResult();
-//		intercambiarOrde(menu, outro);
-//	}
-//
-//	@Override
-//	public void baixar(long idMenu) {
-//		Menu menu = get(idMenu);
-//		Menu outro = (Menu) getSession()
-//				.createQuery("from Menu where (capitulo = :capitulo and orde > :orde and idMenuPai is null) order by orde asc")
-//				.setParameter("capitulo", menu.getCapitulo())
-//				.setParameter("orde", menu.getOrden())
-//				.setMaxResults(1)
-//				.uniqueResult();
-//		intercambiarOrde(menu, outro);
-//	}
-//	
-//	//para menu y submenu
-//	private void intercambiarOrde(Menu menu, Menu outro) {
-//		int outraOrde = outro.getOrden();
-//		outro.setOrden(menu.getOrden());
-//		menu.setOrden(0);
-//		getSession().flush();
-//		menu.setOrden(outraOrde);
-//	}
+
 }

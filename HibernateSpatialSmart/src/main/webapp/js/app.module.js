@@ -7,7 +7,7 @@
 		'ngSanitize',
 		'ui.bootstrap',
 		'leaflet-directive',
-		'ngDraggable', 'ui.tree'
+		'ui.tree','textAngular'
 	]).config(routeConfig).run(appRun);
 
 	function obterRuta(ruta) {
@@ -24,13 +24,27 @@
 		$stateProvider.state('inicio', {
 			url: obterRuta('inicio'),
 			templateUrl: 'partials/inicio.htm'			
+		}).state('crearEstatica', {
+			url: obterRuta('crearEstatica'),
+			templateUrl: 'partials/formularioEstatica.htm',
+			controller: 'CrearEstaticaCtrl',
+			controllerAs: 'ce'
+		}).state('editarEstatica', {
+			url: '/editarEstatica/idEstatica/:idEstatica',
+			templateUrl: 'partials/formularioEstatica.htm',
+			controller: 'EditarEstaticaCtrl',
+			controllerAs: 'ee'
+		}).state('listarEstaticas', {
+			url: obterRuta('listarEstaticas'),
+			templateUrl: 'partials/listarEstaticas.htm',
+			controller: 'ListarEstaticasCtrl',
+			controllerAs: 'le'
 		}).state('formulario', {
 			url: obterRuta('formulario'),
 			templateUrl: 'partials/formularioCl.htm',
 			controller: 'CloningCtrl',
 			controllerAs: 'cl'
-		}).state('editarMenu', {
-			url: obterRuta('editarMenu'),
+		}).state('editarMenu', {			
 			url: '/editarMenu/idMenu/:idMenu',
 			templateUrl: 'partials/formularioCl.htm',
 			controller: 'EditarMenuCtrl',

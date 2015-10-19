@@ -48,9 +48,12 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public void delete(Long id) {
-		Menu menu = menuDao.get(id);
-		if (menu != null) {
-			menuDao.delete(id);
+		// Se controla en angular, pero por si nos mandan algo con inpeccionar y empezamos a borrar cosas que no se deben o nos mandan null y casca
+		if(id!=null){
+			Menu menu = menuDao.get(id);
+			if (menu != null) {
+				menuDao.delete(id);
+			}
 		}
 	}
 
@@ -58,12 +61,6 @@ public class MenuServiceImpl implements MenuService {
 	public List<Menu> obterMenus() {
 		List<Menu> menus = menuDao.obterMenus();
 		return menus;
-	}
-
-	@Override
-	@Transactional(readOnly = false)
-	public Long obtenerSiguienteId() {
-		return menuDao.obtenerSiguienteId();
 	}
 
 	@Override
@@ -92,7 +89,8 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	public EntradaMenu guardarEntradaMenu(JSONEntradaMenu entradaMenuJSON, Menu menu, Integer orden){
-		EntradaMenu entradaMenu = setearValoresEntradaMenuJSON(entradaMenuJSON, orden);
+		EntradaMenu entradaMenu = new EntradaMenu();
+		setearValoresEntradaMenuJSON(entradaMenu, entradaMenuJSON, orden);
 	
 		// Estamos creando las entradas del primer nivel por lo tanto no tienen entrada padre
 		entradaMenuDao.create(entradaMenu, menu, null);
@@ -124,14 +122,94 @@ public class MenuServiceImpl implements MenuService {
 		return;
 	}
 	
-	public EntradaMenu setearValoresEntradaMenuJSON(JSONEntradaMenu entradaMenuJSON, Integer orden){
-		EntradaMenu entradaMenu = new EntradaMenu();
+	public void setearValoresEntradaMenuJSON(EntradaMenu entradaMenu, JSONEntradaMenu entradaMenuJSON, Integer orden){		
 		entradaMenu.setTexto(entradaMenuJSON.getTexto());
 		entradaMenu.setUrl(entradaMenuJSON.getUrl());
 		entradaMenu.setOrden(orden);
-		return entradaMenu;
 		
 	}
 	
+	public void actualizarNombresDeMenus(List<JSONMenu> menus){
+		for(JSONMenu menuJSON:menus){
+			Menu menu = menuDao.get(menuJSON.getId());
+			menu.setNombre(menuJSON.getNombre());
+		}
+	}
+	
+	public void editarMenu(JSONMenu menuJson) throws InstanceNotFoundException{		
+		Menu menu = menuDao.get(menuJson.getId());
+		// Por si modifican con el inspeccionar o algo el id y me mandan algo erróneo...
+		if(menu!=null){
+			menu.setNombre(menuJson.getNombre());			
+			// Actualizamos sus entradas de menu
+			actualizarEntradasMenu(menuJson.getEntradasMenu(), menu);
+		}
+	}
+	
+	public void actualizarEntradasMenu(List<JSONEntradaMenu> entradasMenu, Menu menu){
+		// Le asigno las entradas guardadas en el JSON
+		Integer orden = 0;
+		for(JSONEntradaMenu jsonE:entradasMenu){			
+			actualizarEntradaMenu(jsonE, menu, orden);
+			orden++;
+		}
 
+	}
+	
+	public EntradaMenu actualizarEntradaMenu(JSONEntradaMenu entradaMenuJSON, Menu menu, Integer orden){
+		boolean crearEntradaNueva = false;
+		EntradaMenu entradaMenu = null;
+		 
+		if(entradaMenuJSON.getId()!=null)
+			entradaMenu = entradaMenuDao.get(entradaMenuJSON.getId());
+		
+		// La entrada de menu se ha creado nueva
+		if(entradaMenu == null){
+			entradaMenu = new EntradaMenu();
+			crearEntradaNueva = true;
+		}		
+		
+		setearValoresEntradaMenuJSON(entradaMenu, entradaMenuJSON, orden);
+	
+		// Estamos creando las entradas del primer nivel por lo tanto no tienen entrada padre
+		if(crearEntradaNueva)
+			entradaMenuDao.create(entradaMenu, menu, null);
+		
+		// Ahora cada una de las hijas de la entrada menu, tendra como padre esta y asi recursivamente
+		actualizarEntradasMenuHijas(menu, entradaMenu, entradaMenuJSON.getEntradasMenu());		
+		
+		return entradaMenu;
+	}
+
+	public void actualizarEntradasMenuHijas(Menu menu, EntradaMenu entradaMenuPadre, List<JSONEntradaMenu> entradasMenuHijas){
+		List<EntradaMenu> entradasMenu = new ArrayList<EntradaMenu>();
+		Integer ordenHija = 0;
+		// Tengo que crear sus entradasMenu, asi como sus hijas -> recursivo
+		for(JSONEntradaMenu entradaHija:entradasMenuHijas){
+			boolean crearEntradaNueva = false;
+			EntradaMenu e = null;
+			if(entradaHija.getId()!=null)
+				e = entradaMenuDao.get(entradaHija.getId());
+			// La entrada de menu se ha creado nueva 			
+			if(e == null){
+				e = new EntradaMenu();
+				crearEntradaNueva = true;
+			}		
+			e.setTexto(entradaHija.getTexto());
+			e.setUrl(entradaHija.getUrl());
+			e.setOrden(ordenHija);
+			e.setEntradaMenuPadre(entradaMenuPadre);
+			if(crearEntradaNueva)
+				entradaMenuDao.create(e);
+			actualizarEntradasMenuHijas(menu,e,entradaHija.getEntradasMenu());
+			entradasMenu.add(e);
+			ordenHija++;
+		}
+		
+		entradaMenuPadre.setEntradasMenu(entradasMenu);
+		entradaMenuDao.save(entradaMenuPadre);
+		return;
+	}
+	
+	
 }

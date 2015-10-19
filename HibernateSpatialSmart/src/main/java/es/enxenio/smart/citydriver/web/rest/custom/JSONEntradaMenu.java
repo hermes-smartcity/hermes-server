@@ -5,15 +5,12 @@ import java.util.List;
 import es.enxenio.smart.citydriver.model.entradaMenu.EntradaMenu;
 
 public class JSONEntradaMenu {
+	private Long id;
 	private String texto;
 	private String url;
 	private Integer orden;
-	//TODO "Chapucilla momentánea" para identar las entradas del menú
-	private Integer id;
-	//TODO "Chapucilla momentánea" para identificar que entradas se estan arrastrando y soltando 
-	private String identacion;
 	private List<JSONEntradaMenu>entradasMenu;
-	//TODO falta entradaMenuPadre y Menu padre?¿
+	private Long version;
 
 	public String getTexto() {
 		return texto;
@@ -47,19 +44,19 @@ public class JSONEntradaMenu {
 		this.entradasMenu = entradasMenu;
 	}
 
-	public String getIdentacion() {
-		return identacion;
+	public Long getVersion() {
+		return version;
 	}
 
-	public void setIdentacion(String identacion) {
-		this.identacion = identacion;
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -8,7 +8,9 @@
 		<put-attribute name="title" value="${title}" />
 		<put-attribute name="content" value="${content}" />
 	</definition>
-
+	
+	<definition name="baseAdmin" template="/WEB-INF/view/jsp/citydriver/plantilla.jspx" />
+	
 	<definition name="" extends=".Base">
 	</definition>
 

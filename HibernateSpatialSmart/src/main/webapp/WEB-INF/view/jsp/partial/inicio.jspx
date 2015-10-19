@@ -6,50 +6,71 @@
 	xmlns:form="http://www.springframework.org/tags/form"
 	xmlns:jsaux="http://www.enxenio.es/tags/jsaux"
 	xmlns:jsp="http://java.sun.com/JSP/Page">
-	<div>
-		<div class="h4 subtitulo">Consulta de todos los eventos "Vehicle
-			Location"</div>
-		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
-	</div>
-	<div>
-		<div class="h4 subtitulo">Consulta de todos los eventos
-			"Measurement"</div>
+	
+	<fmt:message key="cityDriver.tituloPrincipal" var="tituloPrincipal"/>
+	<fmt:message key="cityDriver.descPrincipal" var="descPrincipal"/>
+	<fmt:message key="cityDriver.crearMenu" var="textoBotonListarMenu"/>
+	<fmt:message key="cityDriver.listarMenu" var="textoBotonCrearMenu"/>
+	<fmt:message key="cityDriver.crearEstatica" var="textoBotonListarEstaticas"/>
+	<fmt:message key="cityDriver.listarEstáticas" var="textoBotonCrearEstatica"/>
+	
+	<div id="botonesInicio">
 		<div>
-			<p>Tipos: "High Heart Rate", "High Speed", "High Acceleration" y
-				"High Deceleration")</p>
+				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="listarMenus">${textoBotonListarMenu}</a></div>
 		</div>
-		<div class="h4 subtitulo">
-			<!--  -->
+		<div>		
+				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="formulario">${textoBotonCrearMenu}</a></div>
 		</div>
-		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+		<div>		
+				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="listarEstaticas">${textoBotonListarEstaticas}</a></div>
+		</div>
+		<div>		
+				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="crearEstatica">${textoBotonCrearEstatica}</a></div>
+		</div>		
+				
+			<p></p>
 	</div>
-
-	<div>
-		<div class="h4 subtitulo">Consulta de todos los eventos "Data
-			Section"</div>
-		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
-	</div>
-	<div>
-		<div class="h4 subtitulo">Arranque de la aplicación: Comenzar y
-			parar de escuchar eventos</div>
-		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
-	</div>
+		
+	<div id="banner">
+			<div id="tituloBanner">
+			<h1>${tituloPrincipal}</h1>
+			<h2>${descPrincipal}</h2>
+			</div>
+		</div>	
+		
+						
+		<!-- <div id="slogan">
+			<p id="descXeral">${infoCigesad}</p>
+		</div> -->
+	
+		
+		<div class="col">			
+			<p></p>
+		</div>
+		
+			
+		
+		
+		<div class="col last">			
+			<p></p>
+		</div>
+	<!--	
 	<div>
 		<div class="h4 subtitulo">Creación de menús</div>
 		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
 	</div>
-	<!-- Desde aquí vamos a poder editarlos haciendo click en uno iremos al estado editar menu, al darle a guardar desde esa página se llamara al metodo del servicio actualizar menú -->
+	
 	<div>
 		<div class="h4 subtitulo">Listar menús</div>
 		<span><a ui-sref="listarMenus" class="btn btn-success">Comenzar</a></span>
 	</div>
 	<div>
 		<div class="h4 subtitulo">Creación de páginas estáticas</div>
-		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+		<span><a ui-sref="crearEstatica" class="btn btn-success">Comenzar</a></span>
 	</div>
 	<div>
 		<div class="h4 subtitulo">Listar estáticas</div>
-		<span><a ui-sref="formulario" class="btn btn-success">Comenzar</a></span>
+		<span><a ui-sref="listarEstaticas" class="btn btn-success">Comenzar</a></span>
 	</div>
-
+ -->
 </jsp:root>

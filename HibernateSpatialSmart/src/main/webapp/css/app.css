@@ -1,3 +1,49 @@
+body {
+	background-image: url(../view/imaxes/fondo.png);
+	font-family: "Roboto", sans-serif;
+}
+
+.header{
+	text-align: -webkit-left;
+	margin: 10px;
+}
+
+.view{
+	text-align: center;
+}
+
+.campoFormulario{
+	width: 90%;
+}
+
+.labelForm{	
+    display: block;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 3px 0;
+}
+
+
+#contenidoHTML{
+	margin: 25px;
+	width: 90%;
+}
+
+footer {
+	margin-top: 20px;
+}
+
+.text-red {
+	color:#E52A3A;
+}
+
+.text-gray {
+	color:#5f5f5f;
+}
+
+.text-center {
+	text-align: center;
+}
 
 .btn {
     margin-right: 8px;
@@ -60,4 +106,80 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+
+/* Editor styling */
+
+.ta-toolbar {
+	background-color: #F0F0F0;
+	padding: 10px 10px 5px;
+	margin-left: 0px; /* Override bootstrap */
+	border: 1px solid #EEE;
+}
+
+.ta-toolbar .btn-group {
+	margin-bottom: 5px;
+}
+
+.ta-editor, .white-box {
+	padding: 10px;
+	background-color: #FFF;
+	border: 1px solid #EEE;
+}
+
+textarea.ta-bind {
+	width: 100%;
+}
+
+#botonesInicio {
+	margin: 10px;
+    padding: 0;
+}
+
+.botonesInicioEst {
+	font-size: 1.25em;
+    background: #00669d;
+    padding: 6px 8px;
+    color: #fff;
+    font-weight: normal;
+    margin-bottom: 12px;
+    float: left;
+   margin: 10px;
+}
+
+#botonAcceso{
+	padding-left: inherit;
+ 	color: #ffffff;
+ 	text-align: center;
+ 	text-decoration: none;
+}
+
+#banner { 
+	background: url(../view/imaxes/herramienta.jpg) no-repeat right; 
+    padding: 195px 98px 58px 166px;
+    clear: both;
+    height: 340px;
+    /* margin-top: -17px; */
+    /* margin-bottom: 40px; */
+    float: left;
+    width: 657px;
+}
+
+#tituloBanner{
+	width: 450px;
+	clear: both;
+	float: none;
+}
+#banner h1 { 
+	font-size: 2.6em;
+	line-height: 1.4em;
+	color: #333; 
+	margin: 30px 0 10px 0;	
+}
+#banner h2 { 
+	font-weight: normal;
+	color: #555;
+	font-size: 1.5em;
+	line-height: 1.6em; 	
 }

@@ -30,9 +30,8 @@ public class Menu implements Serializable{
 		@GeneratedValue(strategy = GenerationType.AUTO, generator = "xeradorId")
         private Long id;
 		
-		private String nombre;
-		
-		@JsonIgnore
+		private String nombre;		
+	
 		@LazyCollection(LazyCollectionOption.FALSE)
 		@OneToMany( mappedBy = "menu", cascade={CascadeType.REMOVE, CascadeType.PERSIST})
 		@OrderBy("orden")

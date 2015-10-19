@@ -16,6 +16,4 @@ public interface EntradaMenuService {
 	public List<EntradaMenu> obterEntradaMenus();
 	
 	public List<EntradaMenu> obterEntradaMenusByMenuId(Long menuId);
-
-	public Long obtenerSiguienteId();
 }

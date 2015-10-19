@@ -14,43 +14,43 @@
 	<c:url var="aux" value="/js/app.module.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
-	<c:url var="aux" value="/js/formulario.controller.js" />	
+	<c:url var="aux" value="/js/menu/menu.service.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
-	<!-- Proba menu service -->
-	<c:url var="aux" value="/js/menu.service.js" />
+	<!-- Proba angular recursion 
+	<c:url var="aux" value="/js/angular-recursion.js" />-->
+	
+	<!-- infiniteTree directive
+	<c:url var="aux" value="/js/infiniteTree.directive.js" /> -->
+	
+	<!-- entradaMenuDirec directive 
+	<c:url var="aux" value="/js/entradaMenuDirec.directive.js" />-->
+	
+	<!-- entradaMenuDirec directive 
+	<c:url var="aux" value="/js/entradaMenuDirecOrder.directive.js" />-->	
+	
+	<!-- Menus -->
+	<c:url  var="aux" value="/js/menu/cloning.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
-	<!-- Proba angular recursion -->
-	<c:url var="aux" value="/js/angular-recursion.js" />
+	<c:url  var="aux" value="/js/menu/listarMenus.controller.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>
 	
-	<!-- infiniteTree directive -->
-	<c:url var="aux" value="/js/infiniteTree.directive.js" />
-	<script type="text/javascript" src="${aux}"><!-- --></script>
-	
-	<!-- entradaMenuDirec directive -->
-	<c:url var="aux" value="/js/entradaMenuDirec.directive.js" />
-	<script type="text/javascript" src="${aux}"><!-- --></script>
-	
-	<!-- entradaMenuDirec directive -->
-	<c:url var="aux" value="/js/entradaMenuDirecOrder.directive.js" />
-	<script type="text/javascript" src="${aux}"><!-- --></script>	
-		
-	<!-- Proba ngDraggable -->
-	<c:url var="aux" value="/js/ngDraggable.js"/>
+	<c:url  var="aux" value="/js/menu/editarMenu.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>	
 	
-	<c:url  var="aux" value="/js/basic-example.js" />
-	<script type="text/javascript" src="${aux}"><!-- --></script>
-	
-	<c:url  var="aux" value="/js/cloning.js" />
-	<script type="text/javascript" src="${aux}"><!-- --></script>
-	
-	<c:url  var="aux" value="/js/listarMenus.controller.js" />
-	<script type="text/javascript" src="${aux}"><!-- --></script>
-	
-	<c:url  var="aux" value="/js/editarMenu.js" />
+	<!-- Estaticas -->
+	<c:url  var="aux" value="/js/estatica/estatica.service.js" />
 	<script type="text/javascript" src="${aux}"><!-- --></script>	
+	
+	<c:url  var="aux" value="/js/estatica/crearEstatica.controller.js" />
+	<script type="text/javascript" src="${aux}"><!-- --></script>	
+	
+	<c:url  var="aux" value="/js/estatica/editarEstatica.controller.js" />
+	<script type="text/javascript" src="${aux}"><!-- --></script>		
+	
+	<c:url  var="aux" value="/js/estatica/listarEstaticas.controller.js" />
+	<script type="text/javascript" src="${aux}"><!-- --></script>	
+	
 
 </jsp:root>

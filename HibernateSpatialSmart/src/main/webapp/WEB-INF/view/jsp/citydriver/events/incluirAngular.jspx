@@ -9,6 +9,8 @@
 	xmlns:sec="http://www.springframework.org/security/tags"
 	version="2.0">
 
+	<c:url var="utilJs" value="/view/js/util.js" />
+	<script type="text/javascript" src="${utilJs}"><!--  --></script>	
 	
 	<!-- Includes de angular -->
 	<c:url var="jsAngular" value="/view/js/angular.min.1.2.1.js"/>

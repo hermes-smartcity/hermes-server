@@ -21,7 +21,7 @@
 <!--<jsp:include page="incluirJS.jspx"/>
 		<jsp:include page="incluirCSS.jspx"/>
 		<jsp:include page="incluirAngular.jspx"/>-->
-<jsp:include page="../../incluirAngular.jspx"/>
+<jsp:include page="../incluirAngular.jspx"/>
 <jsp:include page="../form-script.jspx" />
 </head>
 		<fmt:message var="mapaFmt" key="citydriver.measurement.pestanas.mapa" />

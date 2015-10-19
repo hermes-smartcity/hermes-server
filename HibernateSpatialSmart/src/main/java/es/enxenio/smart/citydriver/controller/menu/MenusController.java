@@ -39,7 +39,6 @@ public class MenusController extends MainResource {
 	
 	@RequestMapping(value="/json/menus", method = RequestMethod.GET)
 	public List<Menu> getMenus() {
-		System.out.println("------------ "+menuService.obterMenus().size());
 		return menuService.obterMenus();
 
 	}
@@ -57,22 +56,72 @@ public class MenusController extends MainResource {
 
 	}
 	
-	@RequestMapping(value = "/menus/siguienteid", method = RequestMethod.GET)
-	public Long obtenerSiguienteId() {
-		return menuService.obtenerSiguienteId();
-	}
-	
 	@RequestMapping(value = "/guardarMenu", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void guardarMenus(
-			@RequestBody(required = false) JSONMenu menu,
+			@RequestBody(required = true) JSONMenu menu,
 			HttpServletRequest request) throws InstanceNotFoundException {
 
 		try {
 			menuService.guardarMenu(menu);
 		} catch (Exception e) {
 			log.error("Error al guardar menu: ", e);
-//			log.error("JSONMenu = {}", menu.toString());
+			throw e;
+		}
+	}
+	
+	@RequestMapping(value = "/actualizarNombresDeMenus", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void actualizarNombresDeMenus(
+			@RequestBody(required = false) List<JSONMenu> menus,
+			HttpServletRequest request) throws InstanceNotFoundException {
+
+		try {			
+			menuService.actualizarNombresDeMenus(menus);
+		} catch (Exception e) {
+			log.error("Error al actualizar nombres de menus : ", e);
+			throw e;
+		}
+	}
+	
+	@RequestMapping(value = "/borrarMenu", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void borrarMenu(
+			@RequestBody(required = true) Long id,
+			HttpServletRequest request) throws InstanceNotFoundException {
+
+		try {
+			menuService.delete(id);
+		} catch (Exception e) {
+			log.error("Error al borrar menu: ", e);
+			throw e;
+		}
+	}
+	
+	@RequestMapping(value = "/editarMenu", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void editarMenu(
+			@RequestBody(required = true)JSONMenu menu,
+			HttpServletRequest request) throws InstanceNotFoundException {
+
+		try {			
+			menuService.editarMenu(menu);
+		} catch (Exception e) {
+			log.error("Error al editar menu : ", e);
+			throw e;
+		}
+	}
+	
+	@RequestMapping(value = "/borrarEntradaMenu", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void borrarEntradaMenu(
+			@RequestBody(required = true) Long id,
+			HttpServletRequest request) throws InstanceNotFoundException {
+
+		try {
+			entradaMenuService.delete(id);
+		} catch (Exception e) {
+			log.error("Error al borrar entrada menu: ", e);
 			throw e;
 		}
 	}

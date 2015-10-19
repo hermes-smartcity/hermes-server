@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root version="2.0"
+ xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" 
+xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+ xmlns:form="http://www.springframework.org/tags/form" 
+ xmlns:jsaux="http://www.enxenio.es/tags/jsaux"
+ xmlns:jsp="http://java.sun.com/JSP/Page">
+ 
+  <!-- Nested node template -->
+<c:url var="playImg" value="/view/imaxes/iconos/edit.png" />
+
+<script type="text/ng-template" id="nodes_renderer2.html">
+  <div class="tree-node">
+    <div class="pull-left tree-handle" >
+      <span class="glyphicon glyphicon-list"></span>
+    </div>
+    <div class="tree-node-content">
+    
+      <input type="text" ng-model="node.titulo"/>
+		<a class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="borrarEstatica(node.id, this)"><span class="glyphicon glyphicon-remove"></span></a>
+		<a class="pull-right btn  btn-xs" data-nodrag="" ui-sref="editarEstatica({ idEstatica: node.id})"><img style="max-height: 17px;" src="${playImg}" alt="${arrancarFmt}" /></a>
+		
+      
+    </div>
+  </div>
+ 
+</script>
+ <div class="col-sm-1">
+   </div>
+  <div class="col-sm-6">
+    <h3>Lista de páginas estáticas</h3>
+    <div ui-tree="" id="estaticas-root" data-nodrop-enabled="false" data-drag-enabled="false">
+      <ol ui-tree-nodes="" ng-model="estaticas">
+        <li ng-repeat="node in estaticas" ui-tree-node="" ng-include="'nodes_renderer2.html'"></li>
+      </ol>
+    </div>
+    <button style="margin: 25px;text-aling:center;" class="btn btn-success" ng-click="enviar()"  type="submit">Guardar cambios</button>
+  </div>
+  <div class="col-sm-5">
+  </div>
+   
+
+</jsp:root>

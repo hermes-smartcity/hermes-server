@@ -2,6 +2,8 @@ package es.enxenio.smart.citydriver.model.estatica.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import es.enxenio.smart.citydriver.model.estatica.Estatica;
@@ -13,7 +15,10 @@ EstaticaDao {
 	
 	@Override
 	public List<Estatica> obterEstaticas() {
-		return getSession().createCriteria(this.entityClass).list();
+		Order order = Order.asc("titulo");
+		Criteria criteria = getSession().createCriteria(this.entityClass);
+		criteria.addOrder(order);
+		return criteria.list();
 	}
 	
 }

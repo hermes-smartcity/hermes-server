@@ -1,0 +1,322 @@
+
+*{margin: 10px;;padding:0}:focus,:active {outline:0}img{border: 0}
+
+/*a { text-decoration: none; color: #555; }*/
+h1 { font-size: 1.4em; font-weight: normal; }
+h1 a { color: #fff; font-size: 1.6em; }
+h2 { font-size: 1.2em; }
+h3 { 
+	font-size: 1.25em; 
+	background: #00669d; 
+	padding: 6px 8px; 
+	color: #fff; 
+	font-weight: normal; 
+	margin-bottom: 12px; 
+	float: left; 
+}
+h4 { margin: 0 0 15px; color: #555; font-weight: normal; font-size: 1.6em; font-weight: normal; }
+p { clear: both; line-height: 1.5em; margin: 0 0 15px; }
+
+.line { clear: both; border-bottom: 1px solid #eee; margin: 10px 30px; }
+.clear { clear: both; }
+
+#top { 
+	background: #000; 
+	height: 15px; 
+	margin-bottom: 10px;
+}
+
+#content { 
+	width: 970px; 
+	margin: 0 auto;
+}
+/*	
+#logo { 
+	float: left;
+	width: 250px;
+}
+#logo img { width: 250px; }*/
+
+#fill_header {
+	float: left;
+	background: url(../img/bg_linea_header.png) repeat-x bottom;
+	width: 720px;
+	height: 102px;
+}
+
+#menu { 
+	float: right; 
+	margin: -35px 0px 10px 0;
+	height: 33px;
+	background: url(../img/bg_menu_off.png);
+}
+#menu li { 
+	display: inline; 
+	font-size: 1.3em;
+	line-height: 33px;
+}
+
+#menu li a { 
+	float: left; 
+	padding: 0 25px;
+	text-align: center;
+	color: #fff;
+	text-shadow: #333 0.1em 0.1em 0.2em;
+}
+
+#menu li a:hover, #menu li.current a, #menu li a:focus { 
+	color: #fff; 
+	background: url(../img/bg_menu_on.png);
+}
+
+
+#banner { 
+	background: url(../view/imaxes/herramienta.jpg) no-repeat right; 
+    padding: 195px 98px 58px 166px;
+    clear: both;
+    height: 340px;
+    /* margin-top: -17px; */
+    /* margin-bottom: 40px; */
+    float: left;
+    width: 657px;
+}
+
+#tituloBanner{
+	width: 450px;
+	clear: both;
+	float: none;
+}
+#banner h1 { 
+	font-size: 2.6em;
+	line-height: 1.4em;
+	color: #333; 
+	margin: 30px 0 10px 0;	
+}
+#banner h2 { 
+	font-weight: normal;
+	color: #555;
+	font-size: 1.5em;
+	line-height: 1.6em; 	
+}
+
+.col { float: left;  margin: -9px 165px 20px 0; }
+.last { margin-right: 0; }
+.col  p { text-align: justify; font-size: 1.2em; }
+
+#slogan { font-size: 1.6em; font-style: italic; margin: 20px 30px 30px 30px; text-align: center;}
+
+#footer { 
+	clear: both;
+	float: left;
+	width: 100%;
+	text-align: center;
+	font-size: 0.75em; 
+	border-top: 1px solid #ddd; 
+	padding-top: 10px;
+}
+
+#inner_content {
+	clear: both;
+	float: left;
+	min-height: 550px;
+	width: 100%;
+	margin: 20px 0;	
+	background: url(../img/bg_caracteristicas.png) no-repeat right;	
+}
+#inner_content h1 { 
+	color: #333; 
+	font-size: 2em;
+	color: #333;	
+	margin: 0 30px 10px 30px;
+}
+
+#inner_content .info {
+	font-size: 1.3em;
+	margin: 20px 30px;
+	line-height: 1.75em;
+	text-indent: 1em;
+}
+
+#inner_content .item {
+	margin: 30px 30px 30px 50px;
+	border-left: solid #B2C9D6 10px;	
+	padding-left: 5px;
+}
+
+#inner_content .item h2 {
+	padding: 3px;
+	color: #555;
+	font-size: 1.2em;
+}
+
+#inner_content .item .description {
+	margin: 0px 3px;
+	font-size: 1.1em;
+	font-style: italic;	
+}
+#inner_content .item  ul {
+	list-style: inside;
+	margin-left: 20px;
+}
+#inner_content .item  ul li{
+	margin: 10px 0px;
+	font-size: 1.1em;
+}
+/* P�gina de Caracter�sticas */
+.caracteristicas {}
+.caracteristicas h1 {}
+.caracteristicas .item {}
+.caracteristicas .item h2 {}
+.caracteristicas .item .description {}
+
+#caracteristicas_destacadas {
+	float: left;
+	margin: 10px 30px 50px 30px;
+}
+
+#caracteristicas_destacadas .caracteristica {
+	line-height: 25px;
+	padding-left: 35px;
+	float: left;
+	margin-left: 50px;
+	font-size: 1.3em;
+	margin: 0px 20px 20px 30px;
+	background: url(../img/dot.png) no-repeat top left;
+	width: 520px;
+}
+#caracteristicas_destacadas .img_caracteristicas {
+	float: right;
+	width: 303px;
+}
+
+#listas_caracteristicas  {
+	float: left;
+	margin: 10px 30px 20px 30px;
+}
+
+ul.lista {
+	float: left;
+	margin-right: 30px;
+	margin-left: 60px;
+	width: 440px;
+}
+
+ul.final { 
+	margin: 0px;
+	width: 380px;
+}
+
+ul.lista h2 {
+	font-size: 1.5em;
+	color: #333;
+	margin-bottom: 15px;
+}
+
+ul.lista li {
+	list-style: inside;
+	font-size: 1.2em;
+	margin: 10px 0px;
+}
+/* Fin p�gina de Caracter�sticas */
+
+/* P�gina de Ventajas */
+.ventajas {}
+.ventajas h1 {}
+.ventajas .item {}
+.ventajas .item h2 {}
+.ventajas .item .description {}
+.ventajas ul.lista {
+	margin-top: 20px;
+	margin-left: 50px;
+	width: 890px;
+}
+.ventajas ul.lista li{
+	margin-left: 5px;
+	line-height: 1.6em;
+}
+/* Fin p�gina de Ventajas */
+
+/* P�gina de Navegaci�n */
+.navegacion {}
+.navegacion h1 {}
+.navegacion .item { 
+	border: none !important; 
+	margin-left: 30px !important;
+	margin-bottom: 0px !important;
+	margin-top: 30px !important;
+	clear: both;
+	float: left;
+	width: 920px;
+}
+
+.navegacion .item .item_textual { 
+	width: 600px;
+	float: left;
+}
+
+.navegacion .item .numero {
+	background: #B2C9D6;
+	border: solid #8EB8CF 1px;
+	color: #fff;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	line-height: 24px;
+	float: left;
+	margin: 0px 5px;
+	font-size: 1.2em;
+	font-weight: bold;
+	text-shadow: #8EB8CF 0.1em 0.1em 0.2em;	
+}
+
+.navegacion .item h2 { line-height: 22px; }
+.navegacion .item .description {
+	padding-left: 35px;
+}
+.navegacion .item .imagen {
+	text-align: center;
+	margin-left: 10px;
+	width: 300px;
+	float: left;
+}
+.navegacion .item .imagen img {
+	width: 300px;
+}
+/* Fin p�gina de Navegaci�n */
+
+/* P�gina de Contacto */
+.contacto {}
+.contacto h1 {}
+#info_contacto {
+	width: 275px;
+	margin: 40px 80px;
+}
+#info_contacto .linea_contacto { 
+	font-size: 1.6em;
+	margin: 20px 0;
+	color: #555;
+}
+#info_contacto .linea_contacto  a {
+	color: #555;	
+}
+#info_contacto .linea_contacto img{ 
+	vertical-align: top;
+	margin-right: 10px;
+}
+#descXeral{
+	padding-top: 0px;
+	text-align: center;
+}
+
+#botonAcceso{
+	padding-left: inherit;
+ 	color: #ffffff;
+ 	text-align: center;
+ 	text-decoration: none;
+}
+
+
+/* Fin p�gina de Contacto */

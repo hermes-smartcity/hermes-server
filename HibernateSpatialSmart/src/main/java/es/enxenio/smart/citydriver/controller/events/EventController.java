@@ -44,11 +44,12 @@ public class EventController {
 			SessionManager.addMensaxePendente(session, new MensaxePendente("erros.citydriver.arrancando", TipoMensaxe.ERRO));
 			log.error("Excepción arrancando Event Manager : InterruptedException");
 		} 
-		return "redirect:/paxinaInicio/inicio";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/parar")
 	public String parar(HttpSession session) {
+		
 		EventManager eventManager = (EventManager) servletContext.getAttribute(EVENT_MANAGER);
 		try {
 			eventServicio.stopEventManager(eventManager);
@@ -63,6 +64,6 @@ public class EventController {
 			SessionManager.addMensaxePendente(session, new MensaxePendente("erros.citydriver.parando", TipoMensaxe.ERRO));
 			log.error("Excepción arrancando Event Manager : InterruptedException");
 		} 
-		return "redirect:/paxinaInicio/inicio";
+		return "redirect:/";
 	}
 }

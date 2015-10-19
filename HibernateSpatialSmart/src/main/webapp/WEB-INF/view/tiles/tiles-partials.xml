@@ -4,8 +4,10 @@
   'http://tiles.apache.org/dtds/tiles-config_2_0.dtd'>
 <tiles-definitions>
 	<definition name="partials/inicio" template="/WEB-INF/view/jsp/partial/inicio.jspx"/>
-	<definition name="partials/formularioCl" template="/WEB-INF/view/jsp/partial/formularioCl.jspx"/>
-	<definition name="partials/listarMenus" template="/WEB-INF/view/jsp/partial/listarMenus.jspx"/>
+	<definition name="partials/formularioCl" template="/WEB-INF/view/jsp/partial/menu/formularioCl.jspx"/>
+	<definition name="partials/listarMenus" template="/WEB-INF/view/jsp/partial/menu/listarMenus.jspx"/>
+	<definition name="partials/formularioEstatica" template="/WEB-INF/view/jsp/partial/estatica/formularioEstatica.jspx"/>
+	<definition name="partials/listarEstaticas" template="/WEB-INF/view/jsp/partial/estatica/listarEstaticas.jspx"/>
 	
 	<!-- <definition name="partials/entradaMenuTree" template="/WEB-INF/view/jsp/partial/entradaMenuTree.jspx"/>
 	<definition name="partials/entradaMenuTreeOrdenar" template="/WEB-INF/view/jsp/partial/entradaMenuTreeOrdenar.jspx"/> -->

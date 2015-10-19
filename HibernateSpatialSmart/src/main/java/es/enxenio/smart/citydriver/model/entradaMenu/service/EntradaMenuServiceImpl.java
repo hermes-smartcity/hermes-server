@@ -34,9 +34,12 @@ public class EntradaMenuServiceImpl implements EntradaMenuService {
 
 	@Override
 	public void delete(Long id) {
-		EntradaMenu entradaMenu = entradaMenuDao.get(id);
-		if (entradaMenu != null) {
-			entradaMenuDao.delete(id);
+		// Se controla en angular, pero por si nos mandan algo con inpeccionar y empezamos a borrar cosas que no se deben o nos mandan null y casca
+		if(id!=null){
+			EntradaMenu entradaMenu = entradaMenuDao.get(id);
+			if (entradaMenu != null) {
+				entradaMenuDao.delete(id);
+			}
 		}
 	}
 	
@@ -50,12 +53,6 @@ public class EntradaMenuServiceImpl implements EntradaMenuService {
 	public List<EntradaMenu> obterEntradaMenusByMenuId(Long menuId) {
 		List<EntradaMenu> entradaMenus = entradaMenuDao.obterEntradaMenusByMenuId(menuId);
 		return entradaMenus;
-	}
-	
-	@Override
-	@Transactional(readOnly = false)
-	public Long obtenerSiguienteId() {
-		return entradaMenuDao.obtenerSiguienteId();
 	}
 	
 }

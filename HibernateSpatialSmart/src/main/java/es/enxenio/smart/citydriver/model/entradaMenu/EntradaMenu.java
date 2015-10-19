@@ -1,5 +1,6 @@
 package es.enxenio.smart.citydriver.model.entradaMenu;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.LineString;
@@ -36,17 +37,19 @@ public class EntradaMenu implements Serializable{
 		
 		private Integer orden;
 		
+		
 		@LazyCollection(LazyCollectionOption.FALSE)
 		@OneToMany( mappedBy = "entradaMenuPadre", cascade={CascadeType.REMOVE, CascadeType.PERSIST})
 		@OrderBy("orden")
 		private List<EntradaMenu> entradasMenu = new ArrayList<EntradaMenu>();
         
-		
-		@ManyToOne(fetch = FetchType.EAGER)
+		@JsonIgnore
+		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "idEntradaMenuPadre")
 		private EntradaMenu entradaMenuPadre;
 		
-		@ManyToOne(fetch = FetchType.EAGER)
+		@JsonIgnore
+		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "idMenu")
 		private Menu menu;
 		

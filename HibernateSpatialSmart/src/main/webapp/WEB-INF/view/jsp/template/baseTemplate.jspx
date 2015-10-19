@@ -25,17 +25,22 @@
 			
 			<c:url  var="aux" value="/css/app.css" />
 			<link href="${aux}" media="all"  rel="StyleSheet" type="text/css"/>
+			
+			<!-- editor angular -->			
+			<c:url  var="aux" value="/bower_components/textAngular/dist/textAngular.css" />
+			<link href="${aux}" media="all"  rel="StyleSheet" type="text/css"/>
 
+		
+	
 		  	<!--[if IE]>
 		  		<c:url  var="aux" value="/css/ie.css" />
 				<link href="${aux}" media="screen, projection" rel="StyleSheet" type="text/css"/>
 			<![endif]-->
-		  	<c:url  var="aux" value="/css/base.css" />
-			<link href="${aux}" media="screen, projection" rel="StyleSheet" type="text/css"/>
+		  	
 		</head>
 		<body>
 			<div class="header">
-				<span>City Driver</span>
+				<h3>City Driver</h3>
 			</div>
 			
 			<div class="view" ui-view=""><!-- --></div>
@@ -110,7 +115,15 @@
 			<c:url  var="aux" value="/source/services/helper.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 			
-
+			<!-- editor angular -->	
+			<c:url  var="aux" value="/bower_components/textAngular/dist/textAngular-rangy.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/bower_components/textAngular/dist/textAngular-sanitize.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/bower_components/textAngular/dist/textAngular.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
 
 			<jsp:include page="angularIncludes.jspx" />
 		</body>
