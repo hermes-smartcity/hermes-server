@@ -11,7 +11,7 @@
 	      
 	      $scope.enviar = function enviar() {			
 				menuService.actualizarNombresDeMenus($scope.menus);
-				$state.go('listarMenus');
+				$state.go('inicio');
 	      };
 	      
 	      $scope.borrarMenu = function borrarMenu(id, scope) {			

@@ -39,10 +39,30 @@
 		  	
 		</head>
 		<body>
+			<fmt:message key="cityDriver.crearMenu" var="textoBotonCrearMenu"/>
+			<fmt:message key="cityDriver.listarMenu" var="textoBotonListarMenu"/>
+			<fmt:message key="cityDriver.crearEstatica" var="textoBotonCrearEstatica"/>
+			<fmt:message key="cityDriver.listarEstáticas" var="textoBotonListarEstaticas"/>
 			<div class="header">
-				<h3>City Driver</h3>
+				<h3>Configurador</h3>
 			</div>
 			
+			<div id="botonesInicio">
+				<div>
+						<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="listarMenus">${textoBotonListarMenu}</a></div>
+				</div>
+				<div>		
+						<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="formulario">${textoBotonCrearMenu}</a></div>
+				</div>
+				<div>		
+						<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="listarEstaticas">${textoBotonListarEstaticas}</a></div>
+				</div>
+				<div>		
+						<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="crearEstatica">${textoBotonCrearEstatica}</a></div>
+				</div>		
+						
+					<p></p>
+			</div>
 			<div class="view" ui-view=""><!-- --></div>
 			
 			<!-- bower:js -->

@@ -27,9 +27,9 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       <span style="margin-right: 32px;"><input type="text" ng-model="node.texto"/></span>
 	  <span style="margin-right: 32px;"><input type="text" ng-model="node.url"/></span>
 
-      <a ng-hide="controladorEditar" class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-	  <a ng-show="controladorEditar" class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="borrarEntradaMenu(node.id, this)"><span class="glyphicon glyphicon-remove"></span></a>
-      <a class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+      <a style="margin-right: 8px;min-height: 18px;" ng-hide="controladorEditar" class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+	  <a style="margin-right: 8px;min-height: 18px;" ng-show="controladorEditar" class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="borrarEntradaMenu(node.id, this)"><span class="glyphicon glyphicon-remove"></span></a>
+      <a style="margin-right: 8px;min-height: 18px;margin-right: 8px;" class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="newSubItem(this)"><span class="glyphicon glyphicon-plus"></span></a>
     </div>
   </div>
   <ol ui-tree-nodes="" ng-model="node.entradasMenu" ng-class="{hidden: collapsed}">
@@ -38,31 +38,67 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
   </ol>
 </script>
 
-<div class="col-sm-12">
-	<label class="col-sm-2 control-label" for="nombre">Nombre</label>
-	<div class="col-sm-5">
-		<input class="form-control" id="nombre" ng-model="nombre" placeholder="nombre del menú" type="text"/>
-	</div>
+<script type="text/ng-template" id="nodes_rendererPadre.html">
+  <div class="tree-node">
+    <div class="pull-left tree-handle" >
+      <span class="glyphicon glyphicon-list"></span>
+    </div>
+    <div class="tree-node-content">
+      <a class="btn btn-success btn-xs" data-nodrag="" ng-click="toggle(this)">
+        <span class="glyphicon" ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+          }">
+        </span>
+      </a>
+
+      <span style="margin-right: 32px;"><input type="text" ng-model="node.texto"/></span>
+	  <span style="margin-right: 32px;"><input type="text" ng-model="node.url"/></span>
+
+      <a style="margin-right: 8px;min-height: 18px;" ng-hide="controladorEditar" class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+	  <a style="margin-right: 8px;min-height: 18px;" ng-show="controladorEditar" class="pull-right btn btn-danger btn-xs" data-nodrag="" ng-click="borrarEntradaMenu(node.id, this)"><span class="glyphicon glyphicon-remove"></span></a>
+      <a style="margin-right: 8px;min-height: 18px;margin-right: 8px;" class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="newSubItem(this)"><span class="glyphicon glyphicon-plus"></span></a>
+    </div>
+  </div>
+  <ol ui-tree-nodes="" ng-model="node.entradasMenu" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.entradasMenu" ui-tree-node="" ng-include="'nodes_renderer2.html'">
+    </li>
+  </ol>
+</script>
+
+
+
+<div style="margin-top: 12px;" class="col-sm-7 campoFormulario">
+	<label class="col-sm-1 control-label labelForm" for="nombre">Nombre</label>
+	<input  class="col-sm-6 inputForm" id="nombre" ng-model="nombre" placeholder="Nombre del menú" type="text"/>
+	
 </div>
 
+<div class="col-sm-7" id="anadirEntradaPadre">
+	 <a style="min-height:19px;min-width: 0px;background-color: #5cb85c;margin-top: 25px;border-color: #5cb85c;" 
+	 class="pull-right btn btn-primary btn-xs" data-nodrag="" ng-click="addEntradaMenuPadre()"><span class="glyphicon glyphicon-plus"></span></a>
+</div>
 
-  <div class="col-sm-12">
-    <h3>Formulario menú</h3>
+  <div  id="entradasMenu"  class="col-sm-7">
+    <div class="tituloPagina">Entradas de menú</div>
+   
+    
     <div ui-tree="" id="entradasMenu-root">
       <ol ui-tree-nodes="" ng-model="entradasMenu">
         <li ng-repeat="node in entradasMenu" ui-tree-node="" ng-include="'nodes_renderer2.html'"></li>
       </ol>
     </div>
+    
+     <div class="botones">
+	    <button class="btn btn-success" ui-sref="inicio" type="submit">Volver</button>
+	    <button class="btn btn-success" ng-click="enviar()"  type="submit">Guardar cambios</button>
+	</div>
   </div>
-  
-  <div class="col-sm-12">
-	<button class="btn btn-success" ng-class="{'btn-danger' : !validarDatos()}" ng-click="enviar()" ng-disabled="!validarDatos()" type="submit">Guardar menú</button>
- </div>
-	
-<h3>Data binding</h3>
  
-  <div class="col-sm-12">
-    <pre class="code">{{ entradasMenu | json }}</pre>
-  </div>
+ <div class="col-sm-5">
+</div>
+  
+
+	
 
 </jsp:root>

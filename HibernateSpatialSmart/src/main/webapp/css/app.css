@@ -3,17 +3,27 @@ body {
 	font-family: "Roboto", sans-serif;
 }
 
+#anadirEntradaPadre{
+	    width: 59.9%;
+}
+
 .header{
 	text-align: -webkit-left;
 	margin: 10px;
 }
 
 .view{
+	margin-top: 75px;
+	clear: both;
 	text-align: center;
 }
 
 .campoFormulario{
 	width: 90%;
+}
+
+.inputForm{
+	width: 57%;
 }
 
 .labelForm{	
@@ -24,9 +34,22 @@ body {
 }
 
 
-#contenidoHTML{
+#contenidoHTML, #entradasMenu{
 	margin: 25px;
+}
+
+#contenidoHTML{
 	width: 90%;
+}
+
+.tituloPagina{
+	margin-left: 5px;
+	font-size: 18px;
+    text-align: -webkit-left;
+}
+
+.iconoAnadir {
+	float:right;
 }
 
 footer {
@@ -182,4 +205,8 @@ textarea.ta-bind {
 	color: #555;
 	font-size: 1.5em;
 	line-height: 1.6em; 	
+}
+
+.botones{
+	margin: 30px;
 }

@@ -11,7 +11,7 @@
 	      
 	      $scope.enviar = function enviar() {			
 				estaticaService.actualizarTitulosDeEstaticas($scope.estaticas);
-				$state.go('listarEstaticas');
+				$state.go('inicio');
 	      };
 	      
 	      $scope.borrarEstatica = function borrarEstatica(id, scope) {			

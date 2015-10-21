@@ -20,6 +20,14 @@
         });
       };
 
+      $scope.addEntradaMenuPadre = function () {
+    	  var tam = $scope.entradasMenu.length+1;
+    	  $scope.entradasMenu.push({
+            texto: 'item'+tam,
+            url: 'url - item'+tam,
+            entradasMenu: []
+          });
+        };
       
       $scope.enviar = function enviar() {
 			// Se llama a la funcion menu servicio y se guarda el menu

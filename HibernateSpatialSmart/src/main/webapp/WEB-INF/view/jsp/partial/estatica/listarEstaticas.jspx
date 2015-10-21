@@ -27,18 +27,20 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
   </div>
  
 </script>
- <div class="col-sm-1">
-   </div>
+
   <div class="col-sm-6">
-    <h3>Lista de páginas estáticas</h3>
+   <div class="tituloPagina">Lista de páginas estáticas</div>
     <div ui-tree="" id="estaticas-root" data-nodrop-enabled="false" data-drag-enabled="false">
       <ol ui-tree-nodes="" ng-model="estaticas">
         <li ng-repeat="node in estaticas" ui-tree-node="" ng-include="'nodes_renderer2.html'"></li>
       </ol>
     </div>
-    <button style="margin: 25px;text-aling:center;" class="btn btn-success" ng-click="enviar()"  type="submit">Guardar cambios</button>
+    <div class="botones">
+	    <button class="btn btn-success" ui-sref="inicio" type="submit">Volver</button>
+	    <button class="btn btn-success" ng-click="enviar()"  type="submit">Guardar cambios</button>
+	</div>
   </div>
-  <div class="col-sm-5">
+  <div class="col-sm-6">
   </div>
    
 

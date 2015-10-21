@@ -7,30 +7,9 @@
 	xmlns:jsaux="http://www.enxenio.es/tags/jsaux"
 	xmlns:jsp="http://java.sun.com/JSP/Page">
 	
-	<fmt:message key="cityDriver.tituloPrincipal" var="tituloPrincipal"/>
 	<fmt:message key="cityDriver.descPrincipal" var="descPrincipal"/>
-	<fmt:message key="cityDriver.crearMenu" var="textoBotonListarMenu"/>
-	<fmt:message key="cityDriver.listarMenu" var="textoBotonCrearMenu"/>
-	<fmt:message key="cityDriver.crearEstatica" var="textoBotonListarEstaticas"/>
-	<fmt:message key="cityDriver.listarEstáticas" var="textoBotonCrearEstatica"/>
+	<fmt:message key="cityDriver.tituloPrincipal" var="tituloPrincipal"/>
 	
-	<div id="botonesInicio">
-		<div>
-				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="listarMenus">${textoBotonListarMenu}</a></div>
-		</div>
-		<div>		
-				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="formulario">${textoBotonCrearMenu}</a></div>
-		</div>
-		<div>		
-				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="listarEstaticas">${textoBotonListarEstaticas}</a></div>
-		</div>
-		<div>		
-				<div class="botonesInicioEst"><a id="botonAcceso" ui-sref="crearEstatica">${textoBotonCrearEstatica}</a></div>
-		</div>		
-				
-			<p></p>
-	</div>
-		
 	<div id="banner">
 			<div id="tituloBanner">
 			<h1>${tituloPrincipal}</h1>
