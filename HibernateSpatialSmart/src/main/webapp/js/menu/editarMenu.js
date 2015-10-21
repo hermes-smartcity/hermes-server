@@ -19,7 +19,15 @@
         });
       };
 
-      
+      $scope.addEntradaMenuPadre = function () {
+    	  var tam = $scope.entradasMenu.length+1;
+    	  $scope.entradasMenu.push({
+            texto: 'item'+tam,
+            url: 'url - item'+tam,
+            entradasMenu: []
+          });
+       };
+        
       $scope.enviar = function enviar() {		
     	  	// Actualizo el valor del nombre del menu segun el introducido en el formulario
     	  	$scope.menu.nombre = $scope.nombre;
