@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name="baseAdmin" template="/WEB-INF/view/jsp/citydriver/plantilla.jspx" />
+	
+	<definition name="login" template="/WEB-INF/view/jsp/login/login.jspx" />
+	    
+	<definition name="citydriver/excepcion" extends="baseAdmin">
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/erro/excepcion.jspx" />
+	</definition>
+
+	<!--<definition name="citydriver/inicio" extends="baseAdmin">
+		 <put-attribute name="entradaMenu" value="principal" />
+		 <put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/inicio.jspx" />
+	</definition>-->
+	
+	<!-- Paxina de inicio -->
+	<definition name="paxinaInicio/inicio" extends="baseAdmin">
+		 <put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/paxinaInicio/paxinaInicio.jspx" />
+	</definition>
+	
+	<!-- Usuarios -->
+	<definition name="usuario/listar" extends="baseAdmin">
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/citydriver/usuario/listar.jspx" />
+	</definition>
+	
+	
+</tiles-definitions>

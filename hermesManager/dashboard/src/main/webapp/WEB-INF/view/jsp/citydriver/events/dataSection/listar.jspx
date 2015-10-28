@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:contido="http://www.enxenio.es/tags/contido"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="${localeActual}" >
+	<jsp:output doctype-root-element="html"
+	    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+	    
+	<jsp:directive.page contentType="text/html; charset=UTF-8"/> 
+	
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	
+		<!--<jsp:include page="incluirJS.jspx"/>
+		<jsp:include page="incluirCSS.jspx"/>
+		<jsp:include page="incluirAngular.jspx"/>-->
+		<jsp:include page="../incluirAngular.jspx"/>		
+		<jsp:include page="../form-script.jspx" />
+	</head>
+	
+	<fmt:message var="mapaFmt" key="citydriver.dataSection.pestanas.mapa" />
+	<fmt:message var="tablaFmt" key="citydriver.dataSection.pestanas.tabla" />
+	<fmt:message var="eventosFmt" key="citydriver.dataSection.tabla.titulo.eventos" />
+	<fmt:message var="idEventoFmt" key="citydriver.dataSection.tabla.columnas.idEvento" />
+	<fmt:message var="timestampFmt" key="citydriver.dataSection.tabla.columnas.timestamp" />
+	<fmt:message var="posicionFmt" key="citydriver.dataSection.tabla.columnas.posicion" />
+	
+	<!-- Gestión de angular -->
+ 
+	<body  ng-app="dataSectionApp" ng-cloak="">
+	
+		<div id="wrapperContedor"  ng-controller="DataSectionsController" ng-init="getDataSections()">
+		
+			<div id="contedor">
+			
+			<!-- Configurar pestanas -->
+			<li class="pestanasFormulario">
+				<ol class="selectoresFormulario">
+					<li class="selector activa">${mapaFmt}</li>
+					<li class="selector" id="selectorF">${tablaFmt}</li>
+
+				</ol>
+				<ol class="fichas">
+					<li class="ficha activa">
+						<ol>
+							<!-- 
+										<div class="film-info-bottom" ng-repeat="vehicleLocation in vehicleLocations">
+											<h4><span> {{vehicleLocation.position}} </span></h4>
+										</div>
+									
+								 -->
+
+							<div style="height: 300px;" id="map"></div>
+
+
+						</ol>
+					</li>
+					<li class="ficha" id="pestanaF">
+						<ol>
+							<br></br>
+							<h3 style="font-weight: bold;">${eventosFmt}</h3>
+							<br></br>
+							<table class="film-info-bottom"
+								ng-repeat="dataSection in dataSections">
+										<tr>
+										<td>
+											<div class="campoFicha">
+												<div class="etiqueta">
+													${idEventoFmt}
+												</div>
+												<div class="valor">
+													{{dataSection.eventId}}
+												</div>
+											</div>
+										</td>
+										<td>
+											<div class="campoFicha">
+												<div class="etiqueta">
+													${timestampFmt}
+												</div>
+												<div class="valor">
+													{{ dataSection.timestamp  | date : format : timezone}}
+																
+												</div>
+											</div>
+										</td>
+									
+										<td>
+											<div class="campoFicha">
+												<div class="etiqueta">
+													${posicionFmt}
+												</div>
+												 <div class="valor">
+													{{dataSection.roadSection.coordinates}}
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+						</ol>
+					</li>
+				</ol>
+			</li>
+
+		</div>
+				
+		</div>
+	</body>
+
+</html>	
+</jsp:root>
