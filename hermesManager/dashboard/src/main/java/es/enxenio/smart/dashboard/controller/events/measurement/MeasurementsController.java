@@ -1,6 +1,5 @@
 package es.enxenio.smart.dashboard.controller.events.measurement;
 
-import java.awt.TrayIcon.MessageType;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.enxenio.smart.dashboard.web.rest.events.MainResource;
 import es.enxenio.smart.model.events.measurement.Measurement;
-import es.enxenio.smart.model.events.measurement.service.MeasurementService;
-import es.enxenio.smart.model.events.measurement.MeasurementType;;
+import es.enxenio.smart.model.events.measurement.MeasurementType;
+import es.enxenio.smart.model.events.measurement.service.MeasurementService;;
 
 @RestController
 @RequestMapping(value = "/events/measurement")

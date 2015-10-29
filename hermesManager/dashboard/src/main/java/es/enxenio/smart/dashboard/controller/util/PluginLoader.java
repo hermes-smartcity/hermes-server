@@ -1,7 +1,5 @@
 package es.enxenio.smart.dashboard.controller.util;
 
-import java.util.Locale;
-
 import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;

@@ -1,11 +1,5 @@
 package es.enxenio.smart.dashboard.controller.util.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 //
 ///* Esta clase usase para cando unha persoa autenticada nunha parte da aplicacion accede a outra,
 // * non se lle presente o aviso de que non ten permisos, senon que se cancele a sua sesion e vaia

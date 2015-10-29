@@ -2,10 +2,6 @@ package es.enxenio.smart.eventManager.strategy;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
-import com.vividsolutions.jts.geom.Geometry;
 
 import es.enxenio.smart.model.events.EventType;
 import es.enxenio.smart.model.events.dataSection.DataSection;

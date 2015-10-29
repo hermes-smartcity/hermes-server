@@ -2,8 +2,6 @@ package es.enxenio.smart.eventManager;
 
 import java.util.concurrent.Semaphore;
 
-import es.enxenio.smart.model.events.service.EventService;
-
 
 // Singleton . Sera guardado en session. Desde aqui se llamara a eventProcessor, que escuchará y almacenará los eventos
 public class EventManager{

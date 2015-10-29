@@ -3,7 +3,6 @@ package es.enxenio.smart.model.usuario.dao;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;

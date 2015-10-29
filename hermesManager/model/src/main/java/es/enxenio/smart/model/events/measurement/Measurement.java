@@ -1,5 +1,22 @@
 package es.enxenio.smart.model.events.measurement;
 
+import java.io.Serializable;
+import java.util.Calendar;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Point;
@@ -7,13 +24,6 @@ import com.vividsolutions.jts.geom.Point;
 import es.enxenio.smart.model.usuario.Usuario;
 import es.enxenio.smart.model.util.jackson.CustomGeometrySerializer;
 import es.enxenio.smart.model.util.jackson.CustomPointDeserializer;
-
-import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-
-import java.io.Serializable;
-import java.util.Calendar;
 
 @Entity
 @SequenceGenerator(name = "xeradorId", sequenceName = "measurement_id_seq")

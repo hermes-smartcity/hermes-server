@@ -1,6 +1,7 @@
 package es.enxenio.smart.dashboard.controller.events;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +14,6 @@ import es.enxenio.smart.dashboard.controller.session.MensaxePendente.TipoMensaxe
 import es.enxenio.smart.dashboard.controller.session.SessionManager;
 import es.enxenio.smart.eventManager.EventManager;
 import es.enxenio.smart.eventManager.HelperEventManager;
-import es.enxenio.smart.model.events.service.EventService;
-
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/events")

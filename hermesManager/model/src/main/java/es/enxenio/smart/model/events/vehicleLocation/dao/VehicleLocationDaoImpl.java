@@ -2,21 +2,10 @@ package es.enxenio.smart.model.events.vehicleLocation.dao;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.spatial.criterion.SpatialRestrictions;
-import org.hibernate.transform.Transformers;
-import org.hibernate.type.StringType;
-import org.json.simple.JSONObject;
-import org.postgis.Geometry;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
-
-import com.vividsolutions.jts.io.WKTReader;
 
 import es.enxenio.smart.model.events.vehicleLocation.VehicleLocation;
 import es.enxenio.smart.model.util.dao.GenericDaoHibernate;

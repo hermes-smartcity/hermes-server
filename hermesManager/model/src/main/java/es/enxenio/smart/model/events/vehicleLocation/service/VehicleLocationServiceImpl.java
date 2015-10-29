@@ -2,7 +2,6 @@ package es.enxenio.smart.model.events.vehicleLocation.service;
 
 import java.util.List;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,11 +2,8 @@ package es.enxenio.smart.eventManager.strategy;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import es.enxenio.smart.model.events.EventType;
-import es.enxenio.smart.model.events.dataSection.service.DataSectionService;
 import es.enxenio.smart.model.events.eventoProcesado.EventoProcesado;
 import es.enxenio.smart.model.events.measurement.Measurement;
 import es.enxenio.smart.model.events.measurement.service.MeasurementService;

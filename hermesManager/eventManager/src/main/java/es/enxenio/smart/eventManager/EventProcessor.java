@@ -1,12 +1,12 @@
 package es.enxenio.smart.eventManager;
 
 
-import org.glassfish.jersey.client.ChunkedInput;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

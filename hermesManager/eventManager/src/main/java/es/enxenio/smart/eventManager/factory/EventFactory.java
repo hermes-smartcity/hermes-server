@@ -1,10 +1,6 @@
 package es.enxenio.smart.eventManager.factory;
 
 
-import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import es.enxenio.smart.eventManager.strategy.DataSectionEventStrategy;
 import es.enxenio.smart.eventManager.strategy.EventStrategy;
 import es.enxenio.smart.eventManager.strategy.MeasurementEventStrategy;

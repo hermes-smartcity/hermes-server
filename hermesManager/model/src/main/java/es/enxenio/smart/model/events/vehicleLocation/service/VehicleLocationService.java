@@ -2,8 +2,6 @@ package es.enxenio.smart.model.events.vehicleLocation.service;
 
 import java.util.List;
 
-import org.json.simple.JSONObject;
-
 import es.enxenio.smart.model.events.vehicleLocation.VehicleLocation;
 
 

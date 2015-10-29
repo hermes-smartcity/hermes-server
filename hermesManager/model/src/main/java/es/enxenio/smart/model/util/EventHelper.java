@@ -2,6 +2,10 @@ package es.enxenio.smart.model.util;
 
 import java.util.Calendar;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
@@ -10,11 +14,6 @@ import es.enxenio.smart.model.events.EventType;
 import es.enxenio.smart.model.events.measurement.MeasurementType;
 import es.enxenio.smart.model.usuario.Usuario;
 import es.enxenio.smart.model.usuario.service.UsuarioService;
-
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class EventHelper {
