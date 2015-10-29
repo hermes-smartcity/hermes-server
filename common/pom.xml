@@ -1,0 +1,161 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>es.udc.lbs.hermes</groupId>
+  <artifactId>hermes-common</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <name>hermes-common</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- database.properties -->
+		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5432/postgres</development.datasource.jdbcUrlPostgres>		
+		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5432/meco1401_dev</development.datasource.jdbcUrl>
+		<development.datasource.dataBaseName>meco1401_dev</development.datasource.dataBaseName>
+		<development.datasource.user>postgres</development.datasource.user>
+		<development.datasource.password>postgres</development.datasource.password>
+		<development.jdbcDriver.groupId>org.postgresql</development.jdbcDriver.groupId>
+		<development.jdbcDriver.artifactId>postgresql</development.jdbcDriver.artifactId>
+		<development.jdbcDriver.version>9.3-1100-jdbc4</development.jdbcDriver.version>
+		<development.jdbcDriver.className>org.postgresql.Driver</development.jdbcDriver.className>
+		
+
+		<version.sql-maven-plugin>1.4</version.sql-maven-plugin>
+		
+		<datasource.setupDBScript>01-PSQL-SetupDatabase.sql</datasource.setupDBScript>	
+		<datasource.createTNUtilityScript>02-PSQL-CreateTNUtility.sql</datasource.createTNUtilityScript>	
+		<datasource.createTNSchemaScript>03-PSQL-CreateTNSchema.sql</datasource.createTNSchemaScript>	
+		<datasource.createEventsSchemaScript>04-PSQL-CreateEventsSchema.sql</datasource.createEventsSchemaScript>
+		<datasource.createEventsDataScript>05-PSQL-CreateEventsData.sql</datasource.createEventsDataScript>
+	</properties>
+
+  <profiles>
+		<profile>
+			<id>development</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- database.properties -->
+				<datasource.jdbcUrl>${development.datasource.jdbcUrl}</datasource.jdbcUrl>
+				<datasource.jdbcUrlPostgres>${development.datasource.jdbcUrlPostgres}</datasource.jdbcUrlPostgres>
+				<datasource.dataBaseName>${development.datasource.dataBaseName}</datasource.dataBaseName>
+				<datasource.user>${development.datasource.user}</datasource.user>
+				<datasource.password>${development.datasource.password}</datasource.password>
+				<datasource.createTablesScript>${development.datasource.createTablesScript}</datasource.createTablesScript>
+				<datasource.createDataScript>${development.datasource.createDataScript}</datasource.createDataScript>
+				<datasource.jndiName>${development.datasource.jndiName}</datasource.jndiName>
+
+				<!-- JDBC driver properties -->
+				<jdbcDriver.groupId>${development.jdbcDriver.groupId}</jdbcDriver.groupId>
+				<jdbcDriver.artifactId>${development.jdbcDriver.artifactId}</jdbcDriver.artifactId>
+				<jdbcDriver.version>${development.jdbcDriver.version}</jdbcDriver.version>
+				<jdbcDriver.className>${development.jdbcDriver.className}</jdbcDriver.className>
+			</properties>
+		</profile>
+	</profiles>
+  	
+   <build>
+		<plugins>
+			<!-- ========================================================== -->
+			<!-- Setting SQL Plugin -->
+			<!-- - Configuartion specifies onError="continue" since SQL scripts try to drop tables before creating them (which causes 
+				errors if such tables do not exist yet). - Configuartion specifies autocommit="true" since some drivers (e.g the PostgreSQL 
+				JDBC 2 driver) do not commit changes if some error ocurrs. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>${version.sql-maven-plugin}</version>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbcDriver.groupId}</groupId>
+						<artifactId>${jdbcDriver.artifactId}</artifactId>
+						<version>${jdbcDriver.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<driver>${jdbcDriver.className}</driver>
+					<url>${datasource.jdbcUrl}</url>
+					<username>${datasource.user}</username>
+					<password>${datasource.password}</password>
+					<autocommit>true</autocommit>
+					<onError>continue</onError>
+					<orderFile>ascending</orderFile>
+				</configuration>
+				<executions>
+					<execution>
+						<id>dropDB</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>						
+						<configuration>
+							<url>${datasource.jdbcUrlPostgres}</url>	
+							<sqlCommand>drop database ${datasource.dataBaseName}</sqlCommand>
+						</configuration>
+					</execution>
+					<execution>
+						<id>createDB</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>						
+						<configuration>
+							<url>${datasource.jdbcUrlPostgres}</url>	
+							<sqlCommand>create database ${datasource.dataBaseName}</sqlCommand>
+						</configuration>
+					</execution>
+					<execution>
+						<id>setupDBScript</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>						
+						<configuration>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/sql/${datasource.setupDBScript}</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+					<execution>
+						<id>createTNUtilityScript</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>						
+						<configuration>
+							<delimiterType>row</delimiterType>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/sql/${datasource.createTNUtilityScript}</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+					<execution>
+						<id>createSchemas</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>						
+						<configuration>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/sql/${datasource.createTNSchemaScript}</include>
+									<include>src/sql/${datasource.createEventsSchemaScript}</include>
+									<include>src/sql/${datasource.createEventsDataScript}</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+  </build>
+
+
+</project>
