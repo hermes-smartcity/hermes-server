@@ -41,8 +41,6 @@
 				<datasource.dataBaseName>${development.datasource.dataBaseName}</datasource.dataBaseName>
 				<datasource.user>${development.datasource.user}</datasource.user>
 				<datasource.password>${development.datasource.password}</datasource.password>
-				<datasource.createTablesScript>${development.datasource.createTablesScript}</datasource.createTablesScript>
-				<datasource.createDataScript>${development.datasource.createDataScript}</datasource.createDataScript>
 				<datasource.jndiName>${development.datasource.jndiName}</datasource.jndiName>
 
 				<!-- JDBC driver properties -->

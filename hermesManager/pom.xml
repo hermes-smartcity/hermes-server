@@ -19,8 +19,42 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- use the latest snapshot -->
         <geotools.version>14.0</geotools.version>
+		<version.sql-maven-plugin>1.4</version.sql-maven-plugin>
+
+		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5432/postgres</development.datasource.jdbcUrlPostgres>		
+		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5432/meco1401_dev</development.datasource.jdbcUrl>
+		<development.datasource.dataBaseName>meco1401_dev</development.datasource.dataBaseName>
+		<development.datasource.user>postgres</development.datasource.user>
+		<development.datasource.password>postgres</development.datasource.password>
+		<development.jdbcDriver.groupId>org.postgresql</development.jdbcDriver.groupId>
+		<development.jdbcDriver.artifactId>postgresql</development.jdbcDriver.artifactId>
+		<development.jdbcDriver.version>9.3-1100-jdbc4</development.jdbcDriver.version>
+		<development.jdbcDriver.className>org.postgresql.Driver</development.jdbcDriver.className>
 	</properties>
-	
+
+<profiles>
+		<profile>
+			<id>development</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- database.properties -->
+				<datasource.jdbcUrl>${development.datasource.jdbcUrl}</datasource.jdbcUrl>
+				<datasource.jdbcUrlPostgres>${development.datasource.jdbcUrlPostgres}</datasource.jdbcUrlPostgres>
+				<datasource.dataBaseName>${development.datasource.dataBaseName}</datasource.dataBaseName>
+				<datasource.user>${development.datasource.user}</datasource.user>
+				<datasource.password>${development.datasource.password}</datasource.password>
+				<datasource.jndiName>${development.datasource.jndiName}</datasource.jndiName>
+
+				<!-- JDBC driver properties -->
+				<jdbcDriver.groupId>${development.jdbcDriver.groupId}</jdbcDriver.groupId>
+				<jdbcDriver.artifactId>${development.jdbcDriver.artifactId}</jdbcDriver.artifactId>
+				<jdbcDriver.version>${development.jdbcDriver.version}</jdbcDriver.version>
+				<jdbcDriver.className>${development.jdbcDriver.className}</jdbcDriver.className>
+			</properties>
+		</profile>
+	</profiles>	
    <build>
     <pluginManagement>
       <plugins>
@@ -327,4 +361,5 @@
         </repository>
     </repositories>
   
+    <name>hermes-manager</name>
 </project>
