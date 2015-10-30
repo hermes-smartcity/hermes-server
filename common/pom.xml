@@ -83,7 +83,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>dropDB</id>
+						<id>drop-db</id>
 						<phase>clean</phase>
 						<goals>
 							<goal>execute</goal>
@@ -94,8 +94,8 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>createDB</id>
-						<phase>initialize</phase>
+						<id>create-db</id>
+						<phase>install</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>						
@@ -105,8 +105,8 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>setupDBScript</id>
-						<phase>initialize</phase>
+						<id>setup-db</id>
+						<phase>install</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>						
@@ -120,8 +120,8 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>createTNUtilityScript</id>
-						<phase>initialize</phase>
+						<id>create-utility</id>
+						<phase>install</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>						
@@ -136,8 +136,8 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>createSchemas</id>
-						<phase>initialize</phase>
+						<id>create-schemas</id>
+						<phase>install</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>						
