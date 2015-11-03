@@ -3,6 +3,7 @@ insert into usuario (sourceid) values ('28d2e88199505cc99d1545b1194fbbafa3f754d1
 insert into usuario (sourceid) values ('48e2e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530cc0');
 insert into usuario (sourceid) values ('88y5e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530dd1');
 insert into usuario (sourceid) values ('6a4708d3bc8612d7c1c84a8a13df580902f43c0623c765f3acec9d9db88669e9');
+insert into usuario (sourceid) values ('302bbbdc9b4f2419f12e6cc5655bf0bd11ab123e01d24023a3dea43e1b6c74de');
 
 
 -- vehicleLocation --
