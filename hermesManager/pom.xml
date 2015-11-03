@@ -30,8 +30,17 @@
 		<development.jdbcDriver.artifactId>postgresql</development.jdbcDriver.artifactId>
 		<development.jdbcDriver.version>9.3-1100-jdbc4</development.jdbcDriver.version>
 		<development.jdbcDriver.className>org.postgresql.Driver</development.jdbcDriver.className>
+		
+		<production.datasource.jdbcUrlPostgres>jdbc:postgresql://cronos.lbd.org.es:5432/postgres</production.datasource.jdbcUrlPostgres>		
+		<production.datasource.jdbcUrl>jdbc:postgresql://cronos.lbd.org.es:5432/meco1401_prod</production.datasource.jdbcUrl>
+		<production.datasource.dataBaseName>meco1401_prod</production.datasource.dataBaseName>
+		<production.datasource.user>***REMOVED***</production.datasource.user>
+		<production.datasource.password>***REMOVED***</production.datasource.password>
+		<production.jdbcDriver.groupId>org.postgresql</production.jdbcDriver.groupId>
+		<production.jdbcDriver.artifactId>postgresql</production.jdbcDriver.artifactId>
+		<production.jdbcDriver.version>9.3-1100-jdbc4</production.jdbcDriver.version>
+		<production.jdbcDriver.className>org.postgresql.Driver</production.jdbcDriver.className>
 	</properties>
-
 <profiles>
 		<profile>
 			<id>development</id>
@@ -52,6 +61,27 @@
 				<jdbcDriver.artifactId>${development.jdbcDriver.artifactId}</jdbcDriver.artifactId>
 				<jdbcDriver.version>${development.jdbcDriver.version}</jdbcDriver.version>
 				<jdbcDriver.className>${development.jdbcDriver.className}</jdbcDriver.className>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<!-- database.properties -->
+				<datasource.jdbcUrl>${production.datasource.jdbcUrl}</datasource.jdbcUrl>
+				<datasource.jdbcUrlPostgres>${production.datasource.jdbcUrlPostgres}</datasource.jdbcUrlPostgres>
+				<datasource.dataBaseName>${production.datasource.dataBaseName}</datasource.dataBaseName>
+				<datasource.user>${production.datasource.user}</datasource.user>
+				<datasource.password>${production.datasource.password}</datasource.password>
+				<datasource.jndiName>${production.datasource.jndiName}</datasource.jndiName>
+
+				<!-- JDBC driver properties -->
+				<jdbcDriver.groupId>${production.jdbcDriver.groupId}</jdbcDriver.groupId>
+				<jdbcDriver.artifactId>${production.jdbcDriver.artifactId}</jdbcDriver.artifactId>
+				<jdbcDriver.version>${production.jdbcDriver.version}</jdbcDriver.version>
+				<jdbcDriver.className>${production.jdbcDriver.className}</jdbcDriver.className>
 			</properties>
 		</profile>
 	</profiles>	
