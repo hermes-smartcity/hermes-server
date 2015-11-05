@@ -20,7 +20,7 @@ create sequence measurement_id_seq;
 CREATE TABLE measurement (
   id bigint NOT NULL DEFAULT nextval('measurement_id_seq'::regclass),
   timestamp timestamp without time zone,
-  position geometry(POINT, 4258),
+  position geometry(POINT, 4326),
   eventId VARCHAR(50) NOT NULL,
   tipo VARCHAR(20) NOT NULL,
   value integer NOT NULL,
@@ -38,7 +38,7 @@ create sequence vehicleLocation_id_seq;
 CREATE TABLE vehicleLocation (
   id bigint NOT NULL DEFAULT nextval('vehicleLocation_id_seq'::regclass),
   timestamp timestamp without time zone,
-  position geometry(POINT, 4258),
+  position geometry(POINT, 4326),
   eventId VARCHAR(50) NOT NULL,
   idUsuario BIGINT,
   CONSTRAINT idvehicleLocation_pk PRIMARY KEY (id),
@@ -54,7 +54,7 @@ create sequence dataSection_id_seq;
 CREATE TABLE dataSection (
   id bigint NOT NULL DEFAULT nextval('dataSection_id_seq'::regclass),
   timestamp timestamp without time zone,
-  roadSection geometry(LineString,4258), 
+  roadSection geometry(LineString,4326), 
   eventId VARCHAR(50) NOT NULL,
    minHeartRate integer,
    maxBeatBeat integer,
