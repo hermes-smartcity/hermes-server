@@ -21,9 +21,9 @@
         <geotools.version>14.0</geotools.version>
 		<version.sql-maven-plugin>1.4</version.sql-maven-plugin>
 
-		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5432/postgres</development.datasource.jdbcUrlPostgres>		
-		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5432/meco1401_dev</development.datasource.jdbcUrl>
-		<development.datasource.dataBaseName>meco1401_dev</development.datasource.dataBaseName>
+		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5432/smartcity</development.datasource.jdbcUrlPostgres>		
+		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5432/smartcity</development.datasource.jdbcUrl>
+		<development.datasource.dataBaseName>smartcity</development.datasource.dataBaseName>
 		<development.datasource.user>postgres</development.datasource.user>
 		<development.datasource.password>postgres</development.datasource.password>
 		<development.jdbcDriver.groupId>org.postgresql</development.jdbcDriver.groupId>
@@ -40,6 +40,13 @@
 		<production.jdbcDriver.artifactId>postgresql</production.jdbcDriver.artifactId>
 		<production.jdbcDriver.version>9.3-1100-jdbc4</production.jdbcDriver.version>
 		<production.jdbcDriver.className>org.postgresql.Driver</production.jdbcDriver.className>
+		
+		<production.url.eventosPasados>http://hermes1.gast.it.uc3m.es:9102/dbfeed/long-polling?last-seen=</production.url.eventosPasados>
+		<development.url.eventosPasados>http://hermes1.gast.it.uc3m.es:9102/dbfeed-test/long-polling?last-seen=</development.url.eventosPasados>
+		
+		<production.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream</production.url.eventos>
+		<development.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed-test/stream</development.url.eventos>
+		
 	</properties>
 <profiles>
 		<profile>
@@ -61,6 +68,11 @@
 				<jdbcDriver.artifactId>${development.jdbcDriver.artifactId}</jdbcDriver.artifactId>
 				<jdbcDriver.version>${development.jdbcDriver.version}</jdbcDriver.version>
 				<jdbcDriver.className>${development.jdbcDriver.className}</jdbcDriver.className>
+				
+				<!-- Lectura de eventos eventManager properties -->
+				<url.eventosPasados>${development.url.eventosPasados}</url.eventosPasados>
+				<url.eventos>${development.url.eventos}</url.eventos>
+				
 			</properties>
 		</profile>
 		<profile>
@@ -82,6 +94,11 @@
 				<jdbcDriver.artifactId>${production.jdbcDriver.artifactId}</jdbcDriver.artifactId>
 				<jdbcDriver.version>${production.jdbcDriver.version}</jdbcDriver.version>
 				<jdbcDriver.className>${production.jdbcDriver.className}</jdbcDriver.className>
+				
+				<!-- Lectura de eventos eventManager properties -->
+				<url.eventosPasados>${production.url.eventosPasados}</url.eventosPasados>
+				<url.eventos>${production.url.eventos}</url.eventos>
+				
 			</properties>
 		</profile>
 	</profiles>	

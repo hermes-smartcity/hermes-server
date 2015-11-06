@@ -20,6 +20,8 @@ public class Helpers {
 		Geometry geom = null;
 		try {
 			geom = fromText.read(wktPoint);
+			// TODO cambiado porque en la BD está asignado ese SRID. Habrá que decidir cual va a ser y ponerlo según eso
+			geom.setSRID(4326);
 		} catch (ParseException e) {
 			throw new RuntimeException("Not a WKT string:" + wktPoint);
 		}

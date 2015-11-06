@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -14,13 +14,12 @@ import es.enxenio.smart.model.events.EventType;
 import es.enxenio.smart.model.events.measurement.MeasurementType;
 import es.enxenio.smart.model.usuario.Usuario;
 import es.enxenio.smart.model.usuario.service.UsuarioService;
+import es.enxenio.smart.model.util.ApplicationContextProvider;
 
-
+//TODO provisional, esta clase a lo mejor desaparece después de incluir Jackson, no sé como va a quedar
+@Component
 public class EventHelper {
 	
-	@Autowired
-	private UsuarioService usuarioService;
-
 	private Long idAutor;
 
 	private Calendar timestamp;
@@ -287,6 +286,8 @@ public class EventHelper {
 		this.setTimestamp(Helpers.getFecha((String) evento.get("Timestamp")));
 		this.setEventId((String) evento.get("Event-Id"));
 		String sourceId = (String) evento.get("Source-Id");
+		UsuarioService usuarioService = ApplicationContextProvider.getApplicationContext().getBean("usuarioService", UsuarioService.class);
+		
 		if(usuarioService.getBySourceId(sourceId)==null){
 			Usuario usuario = new Usuario();
 			usuario.setSourceId(sourceId);
@@ -301,72 +302,72 @@ public class EventHelper {
 			break;
 		case HIGH_SPEED: case HIGH_ACCELERATION: case HIGH_DECELERATION:
 			this.setPosition((Point) prepararPunto(infoEvento));
-			this.setValue((Double) infoEvento.get("value"));
+//			this.setValue((Double) infoEvento.get("value"));
 			this.setTipo(MeasurementType.getTipo(tipoEvento.getName()));
 
 			break;
 		case HIGH_HEART_RATE:
 			this.setPosition((Point) prepararPunto(infoEvento));
-			this.setValue((Double) infoEvento.get("value"));
-			this.setOrientation((String) infoEvento.get("orientation"));
+//			this.setValue((Double) infoEvento.get("value"));
+//			this.setOrientation((String) infoEvento.get("orientation"));
 			this.setTipo(MeasurementType.HIGH_HEART_RATE);
 
 			break;
 		case DATA_SECTION:
-			JSONObject valorObj = (JSONObject) infoEvento.get("Min Heart Rate");
-			this.setMinHeartRate((int) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Max Beat-Beat");
-			this.setMaxBeatBeat((int) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Standard Deviation Speed");
-			this.setStandardDeviationSpeed((Double) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Min Beat-Beat");
-			this.setMinBeatBeat((int) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Max Heart Rate");
-			this.setMaxHeartRate((int) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Min Speed");
-			this.setMinSpeed((Double) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Average Speed");
-			this.setAverageSpeed((Double) valorObj.get("value"));		
-
-			valorObj = (JSONObject) infoEvento.get("Standard Deviation Beat-Beat");
-			this.setStandardDeviationBeatBeat((Double) valorObj.get("value"));		
-
-			valorObj = (JSONObject) infoEvento.get("Heart Rate");
-			this.setHeartRate((Double) valorObj.get("value")); 		
-
-			valorObj = (JSONObject) infoEvento.get("Median Speed");
-			this.setMedianSpeed((Double) valorObj.get("value"));	
-
-			valorObj = (JSONObject) infoEvento.get("Standard Deviation Heart Rate");
-			this.setStandardDeviationHeartRate((Double) valorObj.get("value"));	
-
-			valorObj = (JSONObject) infoEvento.get("Max Speed");
-			this.setMaxSpeed((Double) valorObj.get("value"));		
-
-			valorObj = (JSONObject) infoEvento.get("PKE");
-			this.setPke((Double) valorObj.get("value"));
+//			JSONObject valorObj = (JSONObject) infoEvento.get("Min Heart Rate");
+//			this.setMinHeartRate((int) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Max Beat-Beat");
+//			this.setMaxBeatBeat((int) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Standard Deviation Speed");
+//			this.setStandardDeviationSpeed((Double) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Min Beat-Beat");
+//			this.setMinBeatBeat((int) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Max Heart Rate");
+//			this.setMaxHeartRate((int) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Min Speed");
+//			this.setMinSpeed((Double) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Average Speed");
+//			this.setAverageSpeed((Double) valorObj.get("value"));		
+//
+//			valorObj = (JSONObject) infoEvento.get("Standard Deviation Beat-Beat");
+//			this.setStandardDeviationBeatBeat((Double) valorObj.get("value"));		
+//
+//			valorObj = (JSONObject) infoEvento.get("Heart Rate");
+//			this.setHeartRate((Double) valorObj.get("value")); 		
+//
+//			valorObj = (JSONObject) infoEvento.get("Median Speed");
+//			this.setMedianSpeed((Double) valorObj.get("value"));	
+//
+//			valorObj = (JSONObject) infoEvento.get("Standard Deviation Heart Rate");
+//			this.setStandardDeviationHeartRate((Double) valorObj.get("value"));	
+//
+//			valorObj = (JSONObject) infoEvento.get("Max Speed");
+//			this.setMaxSpeed((Double) valorObj.get("value"));		
+//
+//			valorObj = (JSONObject) infoEvento.get("PKE");
+//			this.setPke((Double) valorObj.get("value"));
 
 			// El atributo "Road Section" contiene el array con los distintos puntos por los que pasa
-			JSONObject objectoRoad = (JSONObject) infoEvento.get("Road Section ");
+//			JSONObject objectoRoad = (JSONObject) infoEvento.get("Road Section ");
 			// Recuperamos el array con los puntos
-			JSONObject infoRoadSection = (JSONObject) objectoRoad.get("Road Section");
-			JSONArray arrayPuntos = (JSONArray) infoRoadSection.get("roadSection");				
-			this.setRoadSection((LineString) prepararRuta(arrayPuntos));
+//			JSONObject infoRoadSection = (JSONObject) objectoRoad.get("Road Section");
+//			JSONArray arrayPuntos = (JSONArray) infoRoadSection.get("roadSection");				
+//			this.setRoadSection((LineString) prepararRuta(arrayPuntos));
 
-			valorObj = (JSONObject) infoEvento.get("Median Heart Rate");
-			this.setMedianHeartRate((int) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Mean Beat-Beat");
-			this.setMeanBeatBeat((Double) valorObj.get("value"));
-
-			valorObj = (JSONObject) infoEvento.get("Median Beat-Beat");
-			this.setMedianBeatBeat((int) valorObj.get("value"));
+//			valorObj = (JSONObject) infoEvento.get("Median Heart Rate");
+//			this.setMedianHeartRate((int) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Mean Beat-Beat");
+//			this.setMeanBeatBeat((Double) valorObj.get("value"));
+//
+//			valorObj = (JSONObject) infoEvento.get("Median Beat-Beat");
+//			this.setMedianBeatBeat((int) valorObj.get("value"));
 			break;
 		default:
 			break;

@@ -25,8 +25,11 @@
 	</context:component-scan>
  -->
  
-  <context:component-scan base-package="es.enxenio.smart.model"/>
- 
+ 	<!-- Para poder acceder a los beans del contexto -->
+  	<bean id="applicationContextProvder"  class="es.enxenio.smart.model.util.ApplicationContextProvider"/>
+  
+  	<context:component-scan base-package="es.enxenio.smart.model"/>
+  
 	<context:property-placeholder
 		location="classpath:jdbc.properties, classpath:javamail.properties" />
 

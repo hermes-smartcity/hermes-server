@@ -1,12 +1,17 @@
 package es.enxenio.smart.eventManager;
 
 
+import org.glassfish.jersey.client.ChunkedInput;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-
-import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,40 +19,40 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import es.enxenio.smart.eventManager.factory.EventFactory;
 import es.enxenio.smart.eventManager.strategy.EventStrategy;
+import es.enxenio.smart.eventManager.util.ReadPropertiesFile;
+import es.enxenio.smart.model.util.ApplicationContextProvider;
 import es.enxenio.smart.model.events.EventType;
 import es.enxenio.smart.model.events.eventoProcesado.EventoProcesado;
 import es.enxenio.smart.model.events.service.EventService;
 
-
-
 //Contexto para el patron strategy
+@Component
 public class EventProcessor extends Thread {
 	
-	@Autowired private EventService eventService;
-	
-	private static final String URI = "http://hermes1.gast.it.uc3m.es:9102/dbfeed-test/stream";
-	private static final String URI_RECUPERAR_EVENTOS_PASADOS = "http://hermes1.gast.it.uc3m.es:9102/dbfeed/long-polling?last-seen=";
-	
+	private static final String URI = ReadPropertiesFile.getUrlEventos();
+	private static final String URI_RECUPERAR_EVENTOS_PASADOS = ReadPropertiesFile.getUrlEventosPasados();
 	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 
 	// Escucha los eventos pasados, le envian en un buffer todos los eventos durante el tiempo de desconexión
 	public void escucharEventosPasados(){
-
+		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
 		EventoProcesado eventoProcesado = eventService.obterEventoProcesado();
-		
 		if(eventoProcesado!=null){
 			logger.info("Escuchando eventos pasados");			
 			final Response response = establecerConexion(URI_RECUPERAR_EVENTOS_PASADOS+eventoProcesado.getEventId(), "application/json");	
 			procesarEventosEnviadosPasados(response);
-		}	
+		}
 	}
 
 	// Escucha los eventos que se le envían en tiempo real
 	public void escucharEventos(){
+		String uri = ReadPropertiesFile.getUrlEventos();
+		
 		final Response response = establecerConexion(URI, "application/x-ldjson");
 		logger.info("Escuchando eventos en tiempo real");	
 		procesarEventosEnviados(response);
@@ -55,8 +60,9 @@ public class EventProcessor extends Thread {
 
 	// Comportamiento del thread
 	public void run() {	
-//		escucharEventosPasados();
+//		escucharEventosPasados();	
 		escucharEventos();
+		
 	}
 
 	//Establecemos conexion con el cliente que nos envía los eventos
@@ -86,8 +92,7 @@ public class EventProcessor extends Thread {
 			try {				
 				obj = parser.parse(chunk);
 				JSONObject eventoJSON = (JSONObject) obj;
-				System.out.println("eventoJSON: "+eventoJSON);
-				// 				procesarEvento(eventoJSON);				
+				procesarEvento(eventoJSON);				
 			} catch (ParseException e) {
 				logger.error("Error convirtiendo chunk a JSON: "+e);				
 				e.printStackTrace();					
@@ -116,8 +121,7 @@ public class EventProcessor extends Thread {
 			
 			for(int i=0;i<eventosArray.size();i++){
 				JSONObject eventoJSON = (JSONObject) eventosArray.get(i);
-				System.out.println("--eventoJSON: "+eventoJSON);
-				//			procesarEvento(eventoJSON);
+				procesarEvento(eventoJSON);
 			}
 		} catch (ParseException e) {
 			logger.error("Error convirtiendo chunk a JSON: "+e);				
@@ -131,17 +135,13 @@ public class EventProcessor extends Thread {
 		// Almacenamos los diferentes tipos de eventos en la BD
 		private void procesarEvento(JSONObject eventoJSON){
 			EventType tipoEvento = null;
-			//		try {
-			System.out.println("-------------- "+eventoJSON);
+			
 			tipoEvento = EventType.getTipo((String) eventoJSON.get("Event-Type"));
-			System.out.println(" "+tipoEvento);
+			
 			EventStrategy estrategia = EventFactory.getEvent(tipoEvento);
 			estrategia.processEvent(eventoJSON);
 			logger.info("Guardado el evento con Event-Type: "+tipoEvento.getName());
-			//		} catch (NullPointerException e) {
-			//			logger.error("Excepción recuperando tipo de evento "+ e);	
-			//		}		
+			
 
 		}
-				
 	}

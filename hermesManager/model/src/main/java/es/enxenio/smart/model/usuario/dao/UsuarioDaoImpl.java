@@ -27,13 +27,9 @@ UsuarioDao {
 
 	public Usuario findBySourceId(String sourceId) {
 
-		Usuario usuario = null;
 		try {
-			return (Usuario) getSession().createCriteria(this.entityClass).add(Restrictions.eq("usuario.sourceId", sourceId)).setMaxResults(1).uniqueResult();
-//			return (Usuario) getSession().createCriteria(this.entityClass).setMaxResults(1).uniqueResult();
-//			usuario = (Usuario) getSession()
-//					.createQuery("from Usuario x where sourceId = :sourceId")
-//					.setString("sourceId", sourceId).uniqueResult();
+			return (Usuario) getSession().createCriteria(this.entityClass).add(Restrictions.eq("sourceId", sourceId)).setMaxResults(1).uniqueResult();
+
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
 		}

@@ -1,8 +1,9 @@
 package es.enxenio.smart.eventManager.strategy;
 
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import es.enxenio.smart.model.util.ApplicationContextProvider;
 import es.enxenio.smart.model.events.EventType;
 import es.enxenio.smart.model.events.eventoProcesado.EventoProcesado;
 import es.enxenio.smart.model.events.measurement.Measurement;
@@ -12,16 +13,16 @@ import es.enxenio.smart.model.util.EventHelper;
 import es.enxenio.smart.model.util.Helpers;
 
 
-public class MeasurementEventStrategy extends EventStrategy {
 
-	@Autowired
-	private MeasurementService measurementService;
-	@Autowired
-	private EventService eventService;
-	
+@Component
+public class MeasurementEventStrategy extends EventStrategy {
+		
 	@Override
 	public void processEvent(JSONObject evento) {
 		
+		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		MeasurementService measurementService = ApplicationContextProvider.getApplicationContext().getBean("measurementService", MeasurementService.class);
+				
 		EventType tipoEvento = EventType.getTipo((String) evento.get("Event-Type"));
 	
 		JSONObject datosBodyJSON = (JSONObject) evento.get("Body");

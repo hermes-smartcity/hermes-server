@@ -30,8 +30,7 @@ public class EventFactory {
 				System.out.println("No está llegando ningún evento que especifique su Event-Type");
 			}
 		} catch (NullPointerException e) {
-//			 logger.error("Excepción recuperando tipo de evento ",e);
-			System.out.println("Excepción recuperando tipo de evento " + e );			
+//			 logger.error("Excepción recuperando tipo de evento ",e);	
 		}
 		return null;
 		
