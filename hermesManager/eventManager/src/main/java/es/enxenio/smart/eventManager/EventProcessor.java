@@ -3,11 +3,6 @@ package es.enxenio.smart.eventManager;
 
 import org.glassfish.jersey.client.ChunkedInput;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
@@ -50,9 +45,7 @@ public class EventProcessor extends Thread {
 	}
 
 	// Escucha los eventos que se le envían en tiempo real
-	public void escucharEventos(){
-		String uri = ReadPropertiesFile.getUrlEventos();
-		
+	public void escucharEventos(){		
 		final Response response = establecerConexion(URI, "application/x-ldjson");
 		logger.info("Escuchando eventos en tiempo real");	
 		procesarEventosEnviados(response);

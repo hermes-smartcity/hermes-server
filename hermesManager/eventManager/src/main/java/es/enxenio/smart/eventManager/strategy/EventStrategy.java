@@ -1,8 +1,6 @@
 package es.enxenio.smart.eventManager.strategy;
 
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 
 
 public abstract class EventStrategy {
