@@ -25,7 +25,7 @@
 	</beans:bean>
 
 	<beans:bean id="accessDeniedHandler"
-		class="es.enxenio.smart.citydriver.controller.util.security.AccessDeniedHandler" />-->
+		class="es.udc.lbd.hermes.dashboard.controller.util.security.AccessDeniedHandler" />-->
 
 
 </beans:beans>

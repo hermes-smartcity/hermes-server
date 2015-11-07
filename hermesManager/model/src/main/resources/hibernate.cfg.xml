@@ -10,11 +10,11 @@
 		<property name="hibernate.format_sql">true</property>
 		<property name="hibernate.use_sql_comments">false</property>
 		<!-- Entidades -->
-		<mapping class="es.enxenio.smart.model.events.measurement.Measurement" />
-		<mapping class="es.enxenio.smart.model.events.vehicleLocation.VehicleLocation" />
-		<mapping class="es.enxenio.smart.model.events.dataSection.DataSection" />
-		<mapping class="es.enxenio.smart.model.usuario.Usuario" />
-		<mapping class="es.enxenio.smart.model.events.eventoProcesado.EventoProcesado" />
+		<mapping class="es.udc.lbd.hermes.model.events.measurement.Measurement" />
+		<mapping class="es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation" />
+		<mapping class="es.udc.lbd.hermes.model.events.dataSection.DataSection" />
+		<mapping class="es.udc.lbd.hermes.model.usuario.Usuario" />
+		<mapping class="es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado" />
 																
 	</session-factory>
 </hibernate-configuration> 

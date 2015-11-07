@@ -18,17 +18,11 @@
 			<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-	<!-- 
-	<context:component-scan base-package="es.enxenio.aspg.enciclopedia">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
- -->
- 
+
  	<!-- Para poder acceder a los beans del contexto -->
-  	<bean id="applicationContextProvder"  class="es.enxenio.smart.model.util.ApplicationContextProvider"/>
+  	<bean id="applicationContextProvder"  class="es.udc.lbd.hermes.model.util.ApplicationContextProvider"/>
   
-  	<context:component-scan base-package="es.enxenio.smart.model"/>
+  	<context:component-scan base-package="es.udc.lbd.hermes.model"/>
   
 	<context:property-placeholder
 		location="classpath:jdbc.properties, classpath:javamail.properties" />
