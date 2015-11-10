@@ -20,7 +20,9 @@
 	    <jsp:directive.page contentType="text/html; charset=UTF-8" />
 		<head>
 			<meta charset="UTF-8" />
-	
+				<c:url var="estilosUrl" value="/view/css/hermes/estilos.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+				
 			    <!-- Bootstrap Core CSS -->
 			    <c:url var="estilosUrl" value="/view/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>

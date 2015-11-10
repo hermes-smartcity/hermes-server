@@ -18,9 +18,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<!--<jsp:include page="incluirJS.jspx"/>
-		<jsp:include page="incluirCSS.jspx"/>
-		<jsp:include page="incluirAngular.jspx"/>-->
 <jsp:include page="../incluirAngular.jspx" />
 <jsp:include page="../form-script.jspx" />
 </head>
@@ -34,13 +31,10 @@
 	
 
 <!-- Gestión de angular -->
-<body ng-app="vehicleLocationApp" ng-cloak="">
+<div class="col-lg-8" ng-app="vehicleLocationApp">
 
-	<div id="wrapperContedor" ng-controller="VehicleLocationsController" ng-init="getVehicleLocations()">
+	<div class="panel panel-default" ng-controller="VehicleLocationsController" ng-init="getVehicleLocations()">
 
-		<div id="contedor">
-
-			<!-- Configurar pestanas -->
 			<li class="pestanasFormulario">
 				<ol class="selectoresFormulario">
 					<li class="selector activa">${mapaFmt}</li>
@@ -50,12 +44,6 @@
 				<ol class="fichas">
 					<li class="ficha activa">
 						<ol>
-							<!-- 
-										<div class="film-info-bottom" ng-repeat="vehicleLocation in vehicleLocations">
-											<h4><span> {{vehicleLocation.position}} </span></h4>
-										</div>
-									
-								 -->
 
 							<div style="height: 300px;" id="map"></div>
 
@@ -109,9 +97,8 @@
 				</ol>
 			</li>
 
-		</div>
 	</div>
-</body>
+</div>
 
 	</html>
 </jsp:root>

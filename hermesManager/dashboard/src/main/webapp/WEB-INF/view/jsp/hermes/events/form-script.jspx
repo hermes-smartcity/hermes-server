@@ -5,10 +5,6 @@
 	xmlns:form="http://www.springframework.org/tags/form"
 	xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
 
-	<c:url var="ckeditor" value="/view/js/ckeditor/ckeditor.js" />
-	<script type="text/javascript" src="${ckeditor}"><!-- c --></script>
-	<fmt:message var="confirmarProcesoFmt" key="admin.comun.confirmarPrevisualizacionParcial" />
-	<c:url value="/usuarioXestor/literatura" var="rutaLiteratura" />
 	
 	<script type="text/javascript">
 	
