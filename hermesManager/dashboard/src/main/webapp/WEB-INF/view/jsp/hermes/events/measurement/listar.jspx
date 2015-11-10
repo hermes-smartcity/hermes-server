@@ -33,34 +33,26 @@
 <!-- Gestión de angular -->
 <div class="col-lg-8" ng-app="measurementApp" ng-cloak="">
 
-	<div class="panel panel-default" ng-controller="MeasurementsController" ng-init="getMeasurements()">		
+	<div  ng-controller="MeasurementsController" ng-init="getMeasurements()">		
 	
-		<div id="contedor">
-
-			<!-- Configurar pestanas -->
-			<li class="pestanasFormulario">
-				<ol class="selectoresFormulario">
-					<li class="selector activa">${mapaFmt}</li>
-					<li class="selector" id="selectorF">${tablaFmt}</li>
+		<!-- Configurar pestanas -->
+			<li class="pestanas pestanasFormulario">
+				<ol class="pestanas selectoresFormulario">
+					<li class="pestanas selector activa">${mapaFmt}</li>
+					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
 
 				</ol>
-				<ol class="fichas">
-					<li class="ficha activa">
-						<ol>
-							<!-- 
-										<div class="film-info-bottom" ng-repeat="measurement in measurements">
-											<h4><span> {{measurement.position}} </span></h4>
-										</div>
-									
-								 -->
+				<ol class="pestanas fichas">
+					<li class="pestanas ficha activa">
+						<ol class="pestanas">
 
 							<div style="height: 300px;" id="map"></div>
 
 
 						</ol>
 					</li>
-					<li class="ficha" id="pestanaF">
-						<ol>
+					<li class="pestanas ficha" id="pestanaF">
+						<ol class="pestanas">
 							<br></br>
 							<h3 style="font-weight: bold;">${eventosFmt}</h3>
 							<br></br>
@@ -128,7 +120,6 @@
 				</ol>
 			</li>
 
-		</div>
 	</div>
 </div>
 

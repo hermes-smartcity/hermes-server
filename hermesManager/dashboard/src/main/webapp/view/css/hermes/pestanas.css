@@ -109,3 +109,7 @@ li.pestanasFormulario ol.fichas li.ficha ol {
 li.pestanasFormulario ol.fichas li.ficha.activa {
 	display: block;
 }
+
+ol.pestanas, li.pestanas {
+	list-style-type: none;
+}

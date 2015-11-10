@@ -33,16 +33,16 @@
 <!-- Gestión de angular -->
 <div class="col-lg-8" ng-app="vehicleLocationApp">
 
-	<div class="panel panel-default" ng-controller="VehicleLocationsController" ng-init="getVehicleLocations()">
+	<div ng-controller="VehicleLocationsController" ng-init="getVehicleLocations()">
 
-			<li class="pestanasFormulario">
-				<ol class="selectoresFormulario">
-					<li class="selector activa">${mapaFmt}</li>
-					<li class="selector" id="selectorF">${tablaFmt}</li>
+			<li class="pestanas pestanasFormulario">
+				<ol class="pestanas selectoresFormulario">
+					<li class="pestanas selector activa">${mapaFmt}</li>
+					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
 
 				</ol>
-				<ol class="fichas">
-					<li class="ficha activa">
+				<ol class="pestanas fichas">
+					<li class="pestanas ficha activa">
 						<ol>
 
 							<div style="height: 300px;" id="map"></div>
@@ -50,8 +50,8 @@
 
 						</ol>
 					</li>
-					<li class="ficha" id="pestanaF">
-						<ol>
+					<li class="pestanas ficha" id="pestanaF">
+						<ol class="pestanas">
 							<br></br>
 							<h3 style="font-weight: bold;">${eventosFmt}</h3>
 							<br></br>

@@ -32,7 +32,6 @@ public class VehicleLocationsController extends MainResource {
 	
 	@RequestMapping(value="/json/vehicleLocations", method = RequestMethod.GET)
 	public List<VehicleLocation> getVehicleLocations() {
-		System.out.println("llamo a vehicle a locations json");
 		return vehicleLocationServicio.obterVehicleLocations();
 
 	}
