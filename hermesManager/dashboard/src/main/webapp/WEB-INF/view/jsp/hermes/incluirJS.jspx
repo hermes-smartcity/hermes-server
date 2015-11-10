@@ -18,7 +18,7 @@
 			
 			<c:url var="utilJs" value="/view/js/util.js" />
 			
-			<!-- Prueba leaflet  -->
+			<!-- Leaflet  -->
 			<c:url var="leafletSrcUrl" value="/view/js/leaflet-0.7.3/leaflet-src.js"/>
 			<c:url var="leafletUrl" value="/view/js/leaflet-0.7.3/leaflet.js"/>	
 			
@@ -48,18 +48,16 @@
 		   	<c:url var="aux" value="/view/bower_components/raphael/raphael-min.js"/>
 			<script type="text/javascript" src="${aux}"><!-- c --></script>
 			
-		     <c:url var="aux" value="/view/bower_components/morrisjs/morris.min.js"/>
-		     <script type="text/javascript" src="${aux}"><!-- c --></script>
+		     <!-- <c:url var="aux" value="/view/bower_components/morrisjs/morris.min.js"/> -->
 
-		    <c:url var="aux" value="/view/js/morris-data.js"/>
-		    <script type="text/javascript" src="${aux}"><!-- c --></script> 
+		    <!-- <c:url var="aux" value="/view/js/morris-data.js"/> -->
 		    
 		     <c:url var="aux" value="/view/dist/js/sb-admin-2.js"/>
 			 <script type="text/javascript" src="${aux}"><!-- c --></script> 
 			   
 			<!-- Morris - data JavaScript -->
-		    <c:url var="aux" value="/view/js/flot-data.js"/>
-		    <script type="text/javascript" src="${aux}"><!-- c --></script> 
+		    <!-- <c:url var="aux" value="/view/js/flot-data.js"/> -->
+		    
 			
 		
 </jsp:root>			
