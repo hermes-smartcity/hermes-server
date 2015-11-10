@@ -17,12 +17,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<mvc:default-servlet-handler />
 	
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator"/>
-
-	<!-- <mvc:interceptors> -->
-	<!-- <bean class="es.udc.lbd.hermes.citydriver.controller.util.urlactual.UrlActualInterceptor"> -->
-	<!-- <property name="eliminarParametro" value="locale" /> -->
-	<!-- </bean> -->
-	<!-- </mvc:interceptors> -->
  
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -46,16 +40,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 	<bean id="exceptionResolver"
 		class="es.udc.lbd.hermes.dashboard.controller.util.exceptionresolver.ExceptionResolver" />
-
-	<!--<bean id="formattingFactory"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="formatterRegistrars">
-			<list>
-				<bean
-					class="es.udc.lbd.hermes.citydriver.controller.util.formatter.RexistroFormatters" />
-			</list>
-		</property>
-	</bean> -->
 	
 	<bean id="formattingFactory"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">

@@ -30,8 +30,7 @@ public class EventManager{
 	}
 
 	public void stopEventProcessor() /*throws PararEventManagerException */{
-		this.eventProcessor.interrupt();			
-		this.eventProcessor = null;
+		this.eventProcessor.interrupt();		
 	
 	}
 

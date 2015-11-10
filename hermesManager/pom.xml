@@ -138,7 +138,7 @@
 				</dependencies>
 <!-- 				<configuration>				 -->
 <!-- 					<webAppConfig> -->
-<!-- 						<contextPath>/citydriver</contextPath> -->
+<!-- 						<contextPath>/hermes</contextPath> -->
 <!-- 						<defaultsDescriptor>webdefault.xml</defaultsDescriptor> -->
 <!-- 					</webAppConfig> -->
 <!-- 				</configuration> -->

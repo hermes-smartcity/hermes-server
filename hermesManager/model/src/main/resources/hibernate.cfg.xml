@@ -13,6 +13,7 @@
 		<mapping class="es.udc.lbd.hermes.model.events.measurement.Measurement" />
 		<mapping class="es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation" />
 		<mapping class="es.udc.lbd.hermes.model.events.dataSection.DataSection" />
+		<mapping class="es.udc.lbd.hermes.model.events.driverFeatures.DriverFeatures" />
 		<mapping class="es.udc.lbd.hermes.model.usuario.Usuario" />
 		<mapping class="es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado" />
 																

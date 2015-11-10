@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:i18n="http://www.enxenio.es/tags/i18n"
+	xmlns:menu="http://www.enxenio.es/tags/menu"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	version="2.0">
+
+	
+	<!-- Includes de angular -->
+	<c:url var="jsAngular" value="/view/js/angular.min.1.2.1.js"/>
+	<c:url var="jsDirectives" value="/view/js/angular/directives.js"/>	
+	<!-- vehicle location -->
+	<c:url var="jsVehicleLocationApp" value="/view/js/angular/vehicleLocationApp.js"/>
+	<c:url var="jsVehicleLocationCtrl" value="/view/js/angular/vehicleLocationCtrl.js"/>
+	<!-- data section -->
+	<c:url var="jsDataSectionApp" value="/view/js/angular/dataSectionApp.js"/>
+	<c:url var="jsDataSectionCtrl" value="/view/js/angular/dataSectionCtrl.js"/>
+	<!-- measurement -->
+	<c:url var="jsMeasurementApp" value="/view/js/angular/measurementApp.js"/>
+	<c:url var="jsMeasurementCtrl" value="/view/js/angular/measurementCtrl.js"/>
+	<!-- driverFeatures -->
+	<c:url var="jsDriverFeaturesApp" value="/view/js/angular/driverFeaturesApp.js"/>
+	<c:url var="jsDriverFeaturesCtrl" value="/view/js/angular/driverFeaturesCtrl.js"/>
+ 	
+ 	<script type="text/javascript" src="${jsAngular}"><!-- --></script>
+ 	<script type="text/javascript" src="${jsDirectives}"><!-- --></script>
+ 	<!-- vehicle location -->
+	<script type="text/javascript" src="${jsVehicleLocationApp}"><!-- --></script>
+	<script type="text/javascript" src="${jsVehicleLocationCtrl}"><!-- --></script>
+	<!-- data section -->		
+ 	<script type="text/javascript" src="${jsDataSectionApp}"><!-- --></script>
+	<script type="text/javascript" src="${jsDataSectionCtrl}"><!-- --></script>
+ 	<!-- measurement -->		
+ 	<script type="text/javascript" src="${jsMeasurementApp}"><!-- --></script>
+	<script type="text/javascript" src="${jsMeasurementCtrl}"><!-- --></script>
+ 	<!-- driverFeatures -->		
+ 	<script type="text/javascript" src="${jsDriverFeaturesApp}"><!-- --></script>
+	<script type="text/javascript" src="${jsDriverFeaturesCtrl}"><!-- --></script>
+	
+
+
+</jsp:root>
+

@@ -77,7 +77,7 @@
 		<property name="basenames">
 			<list>
 				<value>classpath:/mensaxes/comun</value>
-				<value>classpath:/mensaxes/citydriver</value>
+				<value>classpath:/mensaxes/hermes</value>
 				<value>classpath:/mensaxes/publica</value>
 			</list>
 		</property>

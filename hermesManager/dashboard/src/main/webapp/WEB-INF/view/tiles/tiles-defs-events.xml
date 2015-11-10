@@ -5,17 +5,22 @@
 	
 	<definition name="events/dataSection/listar" extends="baseAdmin">
 		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/citydriver/events/dataSection/listar.jspx" />
+			value="/WEB-INF/view/jsp/hermes/events/dataSection/listar.jspx" />
 	</definition>
 	
 	<definition name="events/measurement/listar" extends="baseAdmin">
 		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/citydriver/events/measurement/listar.jspx" />
+			value="/WEB-INF/view/jsp/hermes/events/measurement/listar.jspx" />
 	</definition>
 	
 	<definition name="events/vehicleLocation/listar" extends="baseAdmin">
 		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/citydriver/events/vehicleLocation/listar.jspx" />
+			value="/WEB-INF/view/jsp/hermes/events/vehicleLocation/listar.jspx" />
 	</definition>
 	
+	<definition name="events/driverFeatures/listar" extends="baseAdmin">
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/hermes/events/driverFeatures/listar.jspx" />
+	</definition>
+
 </tiles-definitions>

@@ -77,10 +77,28 @@ CREATE TABLE dataSection (
   CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
+-- driverFeatures --
+
+drop table if exists driverFeatures cascade;
+drop sequence if exists driverFeatures_id_seq cascade;
+create sequence driverFeatures_id_seq;
+
+CREATE TABLE driverFeatures (
+  id bigint NOT NULL DEFAULT nextval('driverFeatures_id_seq'::regclass),
+  awakeFor integer,
+  inBed integer,
+  workingTime integer,
+  lightSleep integer,
+  deepSleep integer,
+  idUsuario BIGINT,
+  CONSTRAINT idDriverFeatures_pk PRIMARY KEY (id),
+  CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+);
+
 -- eventoProcesado --
 
 drop table if exists eventoProcesado cascade;
-drop sequence if exists eventoProcesado_id_seq cascade;
+drop sequence if exists eventoProcesado cascade;
 create sequence eventoProcesado_id_seq;
 
 CREATE TABLE eventoProcesado (

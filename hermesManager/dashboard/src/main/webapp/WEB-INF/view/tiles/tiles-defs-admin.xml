@@ -3,31 +3,31 @@
 
 <tiles-definitions>
 
-	<definition name="baseAdmin" template="/WEB-INF/view/jsp/citydriver/plantilla.jspx" />
+	<definition name="baseAdmin" template="/WEB-INF/view/jsp/hermes/plantilla.jspx" />
 	
 	<definition name="login" template="/WEB-INF/view/jsp/login/login.jspx" />
 	    
-	<definition name="citydriver/excepcion" extends="baseAdmin">
+	<definition name="hermes/excepcion" extends="baseAdmin">
 		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/citydriver/erro/excepcion.jspx" />
+			value="/WEB-INF/view/jsp/hermes/erro/excepcion.jspx" />
 	</definition>
 
-	<!--<definition name="citydriver/inicio" extends="baseAdmin">
+	<!--<definition name="hermes/inicio" extends="baseAdmin">
 		 <put-attribute name="entradaMenu" value="principal" />
 		 <put-attribute name="contido"
-			value="/WEB-INF/view/jsp/citydriver/inicio.jspx" />
+			value="/WEB-INF/view/jsp/hermes/inicio.jspx" />
 	</definition>-->
 	
 	<!-- Paxina de inicio -->
 	<definition name="paxinaInicio/inicio" extends="baseAdmin">
 		 <put-attribute name="contido"
-			value="/WEB-INF/view/jsp/citydriver/paxinaInicio/paxinaInicio.jspx" />
+			value="/WEB-INF/view/jsp/hermes/paxinaInicio/paxinaInicio.jspx" />
 	</definition>
 	
 	<!-- Usuarios -->
 	<definition name="usuario/listar" extends="baseAdmin">
 		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/citydriver/usuario/listar.jspx" />
+			value="/WEB-INF/view/jsp/hermes/usuario/listar.jspx" />
 	</definition>
 	
 	

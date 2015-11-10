@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:security="http://www.springframework.org/security/tags"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles" version="2.0">
+
+	<tiles:useAttribute name="accion" ignore="true" scope="request"/>
+	<tiles:useAttribute name="entradaMenu" ignore="true" scope="request"/>
+
+
+	<tiles:useAttribute name="accion" ignore="true" scope="request" />
+	<tiles:useAttribute name="entradaMenu" ignore="true" scope="request" />
+	<tiles:useAttribute name="entradaSubMenu" ignore="true" scope="request" />
+
+	<html lang="en">
+		<jsp:output doctype-root-element="html" doctype-system="about:legacy-compat" />
+	    <jsp:directive.page contentType="text/html; charset=UTF-8" />
+		<head>
+			<meta charset="UTF-8" />
+	
+			    <!-- Bootstrap Core CSS -->
+			    <c:url var="estilosUrl" value="/view/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+			
+			    <!-- MetisMenu CSS -->
+			    <c:url var="estilosUrl" value="/view/bower_components/metisMenu/dist/metisMenu.min.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+			
+			    <!-- Timeline CSS -->
+			    <c:url var="estilosUrl" value="/view/dist/css/timeline.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+			
+			    <!-- Custom CSS -->
+			    <c:url var="estilosUrl" value="/view/dist/css/sb-admin-2.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+			
+			    <!-- Morris Charts CSS -->
+			    <c:url var="estilosUrl" value="/view/bower_components/morrisjs/morris.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/> 
+			
+			    <!-- Custom Fonts -->
+			    <c:url var="estilosUrl" value="/view/bower_components/font-awesome/css/font-awesome.min.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+			
+				<jsp:include page="incluirJS.jspx"/>
+			
+				
+				<tiles:insertAttribute name="head" ignore="true" />
+		</head>
+		<body>
+	
+		<div id="wrapper">
+
+	        <!-- Navigation -->
+	        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+	            <div class="navbar-header">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"><!--  --></span>
+	                    <span class="icon-bar"><!--  --></span>
+	                    <span class="icon-bar"><!--  --></span>
+	                </button>
+	                <a class="navbar-brand" href="index.html">Hermes Manager</a>
+	            </div>
+	            <!-- /.navbar-header -->
+	
+	            <ul class="nav navbar-top-links navbar-right">
+	                <li class="dropdown">
+	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	                        <span class="fa fa-envelope fa-fw"><!--  --></span>  <span class="fa fa-caret-down"><!--  --></span>
+	                    </a>
+	                    <ul class="dropdown-menu dropdown-messages">
+	                        <li>
+	                            <a href="#">
+	                                <div>
+	                                    <strong>John Smith</strong>
+	                                    <span class="pull-right text-muted">
+	                                        <em>Yesterday</em>
+	                                    </span>
+	                                </div>
+	                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+	                            </a>
+	                        </li>
+	                        <li class="divider"><!--  --></li>
+	                        <li>
+	                            <a href="#">
+	                                <div>
+	                                    <strong>John Smith</strong>
+	                                    <span class="pull-right text-muted">
+	                                        <em>Yesterday</em>
+	                                    </span>
+	                                </div>
+	                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+	                            </a>
+	                        </li>
+	                        <li class="divider"></li>
+	                        <li>
+	                            <a href="#">
+	                                <div>
+	                                    <strong>John Smith</strong>
+	                                    <span class="pull-right text-muted">
+	                                        <em>Yesterday</em>
+	                                    </span>
+	                                </div>
+	                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+	                            </a>
+	                        </li>
+	                        <li class="divider"><!--  --></li>
+	                        <li>
+	                            <a class="text-center" href="#">
+	                                <strong>Read All Messages</strong>
+	                                <i class="fa fa-angle-right"><!--  --></i>
+	                            </a>
+	                        </li>
+	                    </ul>
+	                    <!-- /.dropdown-messages -->
+	                </li>
+	                
+	                
+	            </ul>
+	            <!-- /.navbar-top-links -->
+	
+	            <div class="navbar-default sidebar" role="navigation">
+	                <div class="sidebar-nav navbar-collapse">
+	                    <ul class="nav in" id="side-menu"> 	                        
+	                       <li><!--  -->
+	                       <c:url var="listarVehicleLocationsUrl" value="/events/vehicleLocation/listar"/>		
+	                            <a href="${listarVehicleLocationsUrl}">
+		                            <i class="fa fa-dashboard fa-fw"><!--  --></i>
+		                            <span>Vehicle Locations</span>
+	                            </a>
+	                        </li>
+	                        
+	                         <li>
+	                            <a href="#">
+	                            	<i class="fa fa-bar-chart-o fa-fw">
+	                            		<!--  -->
+	                            	</i> Measurements<span class="fa arrow"><!--  --></span>
+	                            </a>
+	                            <ul class="nav nav-second-level">
+	                                <li>
+	                                	<c:url var="highSpeedUrl" value="/events/measurement/listar">
+											<c:param name="tipo" value="HighSpeed" />
+										</c:url>
+	                                    <a href="${highSpeedUrl}">High Speed</a>
+	                                </li>
+	                                <li>
+	                               		 <c:url var="highAccelerationUrl" value="/events/measurement/listar">
+											<c:param name="tipo" value="HighAcceleration" />
+										</c:url>
+	                                    <a href="${highAccelerationUrl}">High Acceleration</a>
+	                                </li>
+	                                <li>
+	                                	<c:url var="highDecelerationUrl" value="/events/measurement/listar">
+											<c:param name="tipo" value="HighDeceleration" />
+										</c:url>
+	                                    <a href="${highDecelerationUrl}">High Deceleration</a>
+	                                </li>
+	                                <li>
+	                                	<c:url var="highHeartRateUrl" value="/events/measurement/listar">
+											<c:param name="tipo" value="HighHeartRate" />
+										</c:url>
+	                                    <a href="${highHeartRateUrl}">High Heart Rate</a>
+	                                </li>
+	                            </ul>
+	                            <!-- /.nav-second-level -->
+	                        </li>
+		                   <li><!--  -->
+		                       <c:url var="listarDataSectionsUrl" value="/events/dataSection/listar"/>		
+		                            <a href="${listarDataSectionsUrl}">
+			                            <i class="fa fa-wrench fa-fw"><!--  --></i>
+			                            <span>Data Sections</span>
+		                            </a>
+	                       </li>
+	                       <li><!--  -->
+		                       <c:url var="listarUsuariosUrl" value="/usuario/listar"/>		
+		                            <a href="${listarUsuariosUrl}">
+			                            <i class="fa fa-edit fa-fw"><!--  --></i>
+			                            <span>Usuarios</span>
+		                            </a>
+	                       </li>
+	                        
+	                        
+	                        
+	                    </ul>
+	                </div>
+	                <!-- /.sidebar-collapse -->
+	            </div>
+	            <!-- /.navbar-static-side -->
+	        </nav>
+	
+	
+			
+	         <div id="page-wrapper"> <!-- TODO no sé porque al anadirle esta parte deja de funcionar el desplegable ?¿ FALTA por revisar -->
+		         <div class="row"> <!--  -->
+		                <div class="col-lg-12"> <!--  -->
+		                    <h1 class="page-header">Dashboard</h1>
+		                </div>
+		    	</div>
+		    	<div  id="contido" class="row">
+			      	<tiles:insertAttribute name="contido"/>
+				</div>
+	            <!-- /.row -->
+	        </div>
+	        <!-- /#page-wrapper -->
+	        <!-- /#page-wrapper -->
+
+    </div>
+	</body>
+	</html>
+	
+</jsp:root>
