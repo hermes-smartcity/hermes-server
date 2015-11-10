@@ -1,0 +1,16 @@
+{
+    "Body": {
+    "High Acceleration": {
+        "latitude": 43.49828428,
+        "value": 101.7,
+        "longitude": -8.21510772
+    }
+},
+    "Timestamp": "2015-06-08T18:21:16+02:00",
+    "Application-Id": "SmartDriver",
+    "Syntax": "application/json",
+    "Event-Type": "High Acceleration",
+    "Event-Id": "895a71f7-079d-4f92-96d8-8394b7327ed0",
+    "Aggregator-Ids": ["d0d3cae9-772b-4bfe-8cb8-1f3b63629a99"],
+    "Source-Id": "950148977f923ae378fd573cfc96add7d51c965c9559b40cf531997d0ac6978f"
+}
