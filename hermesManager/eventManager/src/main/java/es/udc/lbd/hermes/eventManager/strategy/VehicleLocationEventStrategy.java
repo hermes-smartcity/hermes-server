@@ -24,7 +24,7 @@ public class VehicleLocationEventStrategy extends EventStrategy {
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyVehicleLocation ztreamyVehicleLocation = (ZtreamyVehicleLocation) event.getEventData();
 		VehicleLocation vehicleLocation = new VehicleLocation();	
-		Geometry punto = Helpers.prepararPunto(ztreamyVehicleLocation.getLatitude(),ztreamyVehicleLocation.getLongitude());
+		Geometry punto = Helpers.prepararPunto(ztreamyVehicleLocation.getLatitude(), ztreamyVehicleLocation.getLongitude());
 		vehicleLocation.setPosition((Point)punto);
 		vehicleLocation.setEventId(event.getEventId());
 		

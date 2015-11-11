@@ -9,6 +9,7 @@ import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHighHeartRate;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -27,7 +28,7 @@ public class HighHeartRateEventStrategy extends EventStrategy {
 		Geometry punto = Helpers.prepararPunto(ztreamyHighHeartRate.getLatitude(),ztreamyHighHeartRate.getLongitude());
 		measurement.setPosition((Point)punto);
 		measurement.setValue(ztreamyHighHeartRate.getValue());
-		measurement.setTipo("High Heart Rate");
+		measurement.setTipo(MeasurementType.HIGH_HEART_RATE);
 		measurement.setEventId(event.getEventId());
 
 		measurement.setTimestamp(event.getTimestamp());

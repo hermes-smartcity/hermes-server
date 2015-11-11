@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,8 +47,8 @@ public class Measurement implements Serializable{
         @JsonDeserialize(using = CustomPointDeserializer.class)		
         private Point position;
         
-//      @Enumerated(EnumType.STRING)
-        private String tipo;
+		@Enumerated(EnumType.STRING)
+        private MeasurementType tipo;
         
         private Double value;
 
@@ -89,11 +91,11 @@ public class Measurement implements Serializable{
 			this.eventId = eventId;
 		}
 
-		public String getTipo() {
+		public MeasurementType getTipo() {
 			return tipo;
 		}
 
-		public void setTipo(String tipo) {
+		public void setTipo(MeasurementType tipo) {
 			this.tipo = tipo;
 		}
 

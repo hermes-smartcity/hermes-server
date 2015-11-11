@@ -9,6 +9,7 @@ import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHighDeceleration;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -27,7 +28,7 @@ public class HighDecelerationEventStrategy extends EventStrategy {
 		Geometry punto = Helpers.prepararPunto(ztreamyHighDeceleration.getLatitude(),ztreamyHighDeceleration.getLongitude());
 		measurement.setPosition((Point)punto);
 		measurement.setValue(ztreamyHighDeceleration.getValue());
-//		measurement.setTipo("High Deceleration");
+		measurement.setTipo(MeasurementType.HIGH_DECELERATION);
 		measurement.setEventId(event.getEventId());
 
 		measurement.setTimestamp(event.getTimestamp());

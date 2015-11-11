@@ -67,7 +67,6 @@ public class EventProcessor extends Thread {
 	// Procesamos los eventos enviamos en formato JSON
 	private void procesarEventosEnviados(Response response){
 		String chunk;
-//		JSONParser parser = new JSONParser();
 
 		final ChunkedInput<String> chunkedInput = response
 				.readEntity(new GenericType<ChunkedInput<String>>() {

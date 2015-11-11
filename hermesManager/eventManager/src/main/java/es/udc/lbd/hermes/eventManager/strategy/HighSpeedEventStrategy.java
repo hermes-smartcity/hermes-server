@@ -9,6 +9,7 @@ import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHighSpeed;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -27,9 +28,9 @@ public class HighSpeedEventStrategy extends EventStrategy {
 		Geometry punto = Helpers.prepararPunto(ztreamyHighSpeed.getLatitude(),ztreamyHighSpeed.getLongitude());
 		measurement.setPosition((Point)punto);
 		measurement.setValue(ztreamyHighSpeed.getValue());
-		measurement.setTipo("High Speed");
+		measurement.setTipo(MeasurementType.HIGH_SPEED);
 		measurement.setEventId(event.getEventId());
-;
+
 		measurement.setTimestamp(event.getTimestamp());
 		measurementService.create(measurement, event.getSourceId());
 		// Ultimo evento procesado
