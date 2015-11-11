@@ -8,7 +8,7 @@ public interface VehicleLocationService {
 
 	public VehicleLocation get(Long id);
 	
-	public void create(VehicleLocation vehicleLocation);
+	public void create(VehicleLocation vehicleLocation, String sourceId);
 	
 	public void update(VehicleLocation vehicleLocation);
 	

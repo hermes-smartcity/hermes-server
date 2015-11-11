@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.driverFeatures.DriverFeatures;
 import es.udc.lbd.hermes.model.events.driverFeatures.dao.DriverFeaturesDao;
+import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 
 
@@ -28,7 +29,13 @@ public class DriverFeaturesServiceImpl implements DriverFeaturesService {
 	}
 
 	@Override
-	public void create(DriverFeatures driverFeatures) {			
+	public void create(DriverFeatures driverFeatures, String sourceId) {	
+		Usuario usuario = usuarioDao.findBySourceId(sourceId);
+		if(usuario == null){
+			usuario = new Usuario();
+			usuario.setSourceId(sourceId);
+			usuarioDao.create(usuario);
+		}		
 		driverFeaturesDao.create(driverFeatures);		
 	}
 

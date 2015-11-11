@@ -41,7 +41,7 @@ public class DataSectionEventStrategy extends EventStrategy {
 		// Falta decidir como se va a hacer y donde usuarioId
 		// vehicleLocation.setEventId(event.getSourceId());
 		dataSection.setTimestamp(event.getTimestamp());
-		dataSectionService.create(dataSection);
+		dataSectionService.create(dataSection, event.getSourceId());
 		eventService.create(event.getTimestamp(),event.getEventId());		
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.dao.DataSectionDao;
+import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 
 
@@ -28,7 +29,13 @@ public class DataSectionServiceImpl implements DataSectionService {
 	}
 
 	@Override
-	public void create(DataSection dataSection) {			
+	public void create(DataSection dataSection, String sourceId) {	
+		Usuario usuario = usuarioDao.findBySourceId(sourceId);
+		if(usuario == null){
+			usuario = new Usuario();
+			usuario.setSourceId(sourceId);
+			usuarioDao.create(usuario);
+		}		
 		dataSectionDao.create(dataSection);		
 	}
 

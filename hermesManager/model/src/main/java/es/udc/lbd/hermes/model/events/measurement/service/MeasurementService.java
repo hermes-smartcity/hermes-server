@@ -9,7 +9,7 @@ public interface MeasurementService {
 
 	public Measurement get(Long id);
 	
-	public void create(Measurement measurement);
+	public void create(Measurement measurement, String sourceId);
 	
 	public void update(Measurement measurement);
 	

@@ -30,7 +30,7 @@ public class VehicleLocationEventStrategy extends EventStrategy {
 		// Falta decidir como se va a hacer y donde usuarioId
 		// vehicleLocation.setEventId(event.getSourceId());
 		vehicleLocation.setTimestamp(event.getTimestamp());
-		vehicleLocationService.create(vehicleLocation);
+		vehicleLocationService.create(vehicleLocation, event.getSourceId());
 		// Ultimo evento procesado
 		eventService.create(event.getTimestamp(),event.getEventId());
 	}

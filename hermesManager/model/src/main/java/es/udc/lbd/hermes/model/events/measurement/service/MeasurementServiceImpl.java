@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.dao.MeasurementDao;
+import es.udc.lbd.hermes.model.usuario.Usuario;
+import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 
 
 @Service("measurementService")
@@ -18,6 +20,9 @@ public class MeasurementServiceImpl implements MeasurementService {
 	@Autowired
 	private MeasurementDao measurementDao;
 	
+	@Autowired
+	private UsuarioDao usuarioDao;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Measurement get(Long id) {
@@ -25,7 +30,13 @@ public class MeasurementServiceImpl implements MeasurementService {
 	}
 
 	@Override
-	public void create(Measurement measurement) {
+	public void create(Measurement measurement, String sourceId) {	
+		Usuario usuario = usuarioDao.findBySourceId(sourceId);
+		if(usuario == null){
+			usuario = new Usuario();
+			usuario.setSourceId(sourceId);
+			usuarioDao.create(usuario);
+		}
 		measurementDao.create(measurement);
 		
 	}

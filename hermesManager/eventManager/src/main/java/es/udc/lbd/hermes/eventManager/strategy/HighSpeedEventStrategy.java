@@ -32,7 +32,7 @@ public class HighSpeedEventStrategy extends EventStrategy {
 		// Falta decidir como se va a hacer y donde usuarioId
 		// measurement.setEventId(event.getSourceId());
 		measurement.setTimestamp(event.getTimestamp());
-		measurementService.create(measurement);
+		measurementService.create(measurement, event.getSourceId());
 		// Ultimo evento procesado
 		eventService.create(event.getTimestamp(),event.getEventId());
 	}

@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
+import es.udc.lbd.hermes.model.usuario.Usuario;
+import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 
 
 
@@ -19,6 +21,9 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	@Autowired
 	private VehicleLocationDao vehicleLocationDao;
 	
+	@Autowired
+	private UsuarioDao usuarioDao;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public VehicleLocation get(Long id) {
@@ -26,7 +31,13 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	}
 
 	@Override
-	public void create(VehicleLocation vehicleLocation) {
+	public void create(VehicleLocation vehicleLocation, String sourceId) {	
+		Usuario usuario = usuarioDao.findBySourceId(sourceId);
+		if(usuario == null){
+			usuario = new Usuario();
+			usuario.setSourceId(sourceId);
+			usuarioDao.create(usuario);
+		}
 		vehicleLocationDao.create(vehicleLocation);
 		
 	}
