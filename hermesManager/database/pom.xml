@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>es.udc.lbd.hermes</groupId>
+		<artifactId>hermesManager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+  <artifactId>hermes-database</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <name>hermes-database</name>
+	<properties>
+		<version.sql-maven-plugin>1.4</version.sql-maven-plugin>
+		<datasource.setupDBScript>01-PSQL-SetupDatabase.sql</datasource.setupDBScript>	
+		<datasource.createTNUtilityScript>02-PSQL-CreateTNUtility.sql</datasource.createTNUtilityScript>	
+		<datasource.createTNSchemaScript>03-PSQL-CreateTNSchema.sql</datasource.createTNSchemaScript>	
+		<datasource.createEventsSchemaScript>04-PSQL-CreateEventsSchema.sql</datasource.createEventsSchemaScript>
+		<datasource.createEventsDataScript>05-PSQL-CreateEventsData.sql</datasource.createEventsDataScript>
+	</properties>
+  	
+   <build>
+		<plugins>
+			<!-- ========================================================== -->
+			<!-- Setting SQL Plugin -->
+			<!-- - Configuartion specifies onError="continue" since SQL scripts try to drop tables before creating them (which causes 
+				errors if such tables do not exist yet). - Configuartion specifies autocommit="true" since some drivers (e.g the PostgreSQL 
+				JDBC 2 driver) do not commit changes if some error ocurrs. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>${version.sql-maven-plugin}</version>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbcDriver.groupId}</groupId>
+						<artifactId>${jdbcDriver.artifactId}</artifactId>
+						<version>${jdbcDriver.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<driver>${jdbcDriver.className}</driver>
+					<url>${datasource.jdbcUrl}</url>
+					<username>${datasource.user}</username>
+					<password>${datasource.password}</password>
+					<autocommit>true</autocommit>
+					<onError>continue</onError>
+					<delimiterType>normal</delimiterType>
+					<orderFile>ascending</orderFile>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/sql/${datasource.setupDBScript}</include>
+									<include>src/sql/${datasource.createTNUtilityScript}</include>
+									<include>src/sql/${datasource.createTNSchemaScript}</include>
+									<include>src/sql/${datasource.createEventsSchemaScript}</include>
+									<include>src/sql/${datasource.createEventsDataScript}</include>
+								</includes>
+							</fileset>
+				</configuration>
+			</plugin>
+		</plugins>
+  </build>
+
+
+</project>
