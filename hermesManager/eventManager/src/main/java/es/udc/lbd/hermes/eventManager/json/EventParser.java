@@ -27,6 +27,10 @@ public class EventParser {
 		return mapper.readValue(in, Event.class);
 	}
 	
+	public Event parse(String str) throws JsonMappingException, JsonParseException, IOException {
+		return mapper.readValue(str, Event.class);
+	}
+	
 	public String prettyPrint(Event event) throws JsonProcessingException {
 		return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);		
 	}

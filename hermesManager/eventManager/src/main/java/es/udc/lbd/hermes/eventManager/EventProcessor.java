@@ -67,25 +67,20 @@ public class EventProcessor extends Thread {
 	// Procesamos los eventos enviamos en formato JSON
 	private void procesarEventosEnviados(Response response){
 		String chunk;
-		JSONParser parser = new JSONParser();
+//		JSONParser parser = new JSONParser();
 
 		final ChunkedInput<String> chunkedInput = response
 				.readEntity(new GenericType<ChunkedInput<String>>() {
 				});
-
 		logger.info("Procesando eventos");
 		EventParser eventParser = new EventParser();
 		
 		while ((chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {					
-			chunk = chunkedInput.read();
-			Object obj;
-			try {				
-				obj = parser.parse(chunk);
-				JSONObject eventoJSON = (JSONObject) obj;
-				InputStream is = new ByteArrayInputStream(eventoJSON.toString().getBytes());				
-				Event event = eventParser.parse(is);				
+		
+			try {							
+				Event event = eventParser.parse(chunk);				
 				procesarEvento(event);				
-			} catch (ParseException | IOException e) {
+			} catch (IOException e) {
 				logger.error("Error convirtiendo chunk a JSON: "+e);				
 				e.printStackTrace();					
 			}	
