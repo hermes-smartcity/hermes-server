@@ -36,6 +36,7 @@ public class DataSectionServiceImpl implements DataSectionService {
 			usuario.setSourceId(sourceId);
 			usuarioDao.create(usuario);
 		}		
+		dataSection.setUsuario(usuario);
 		dataSectionDao.create(dataSection);		
 	}
 

@@ -38,6 +38,7 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 			usuario.setSourceId(sourceId);
 			usuarioDao.create(usuario);
 		}
+		vehicleLocation.setUsuario(usuario);
 		vehicleLocationDao.create(vehicleLocation);
 		
 	}

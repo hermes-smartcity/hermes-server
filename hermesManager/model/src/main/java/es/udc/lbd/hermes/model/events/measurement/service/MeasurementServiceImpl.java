@@ -37,6 +37,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 			usuario.setSourceId(sourceId);
 			usuarioDao.create(usuario);
 		}
+		measurement.setUsuario(usuario);
 		measurementDao.create(measurement);
 		
 	}

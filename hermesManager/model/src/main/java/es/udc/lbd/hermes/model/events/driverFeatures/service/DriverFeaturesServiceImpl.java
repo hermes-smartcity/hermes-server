@@ -36,6 +36,7 @@ public class DriverFeaturesServiceImpl implements DriverFeaturesService {
 			usuario.setSourceId(sourceId);
 			usuarioDao.create(usuario);
 		}		
+		driverFeatures.setUsuario(usuario);
 		driverFeaturesDao.create(driverFeatures);		
 	}
 
