@@ -37,7 +37,7 @@
 			
 			    <!-- Custom CSS -->
 			    <c:url var="estilosUrl" value="/view/dist/css/sb-admin-2.css"/>
-				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+			<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
 			
 			    <!-- Morris Charts CSS -->
 			    <c:url var="estilosUrl" value="/view/bower_components/morrisjs/morris.css"/>
@@ -154,7 +154,7 @@
 	                               		 <c:url var="highAccelerationUrl" value="/events/measurement/listar">
 											<c:param name="tipo" value="High Acceleration" />
 										</c:url>
-	                                    <a href="${highAccelerationUrl}">High Acceleration</a>
+	                                    <a href="${fn:escapeXml(highAccelerationUrl)}">High Acceleration</a>
 	                                </li>
 	                                <li>
 	                                	<c:url var="highDecelerationUrl" value="/events/measurement/listar">

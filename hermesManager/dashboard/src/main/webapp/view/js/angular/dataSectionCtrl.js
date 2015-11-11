@@ -27,14 +27,13 @@ dataSectionApp.controller('DataSectionsController', [ '$scope', '$http',
 					$scope.bdatetime = datevalues;
 					//Almaceno array de puntos 
 					var myLines = value.roadSection;
-//					console.log("--arrayPoints- "+arrayPoints.type);
-//					
+					console.log("myLines --- "+myLines);
 					var myStyle = {
 						    "color": "#ff7800",
 						    "weight": 5,
 						    "opacity": 0.65
 						};
-					var myLayer = L.geoJson().addTo(map);
+//					var myLayer = L.geoJson().addTo(map);
 					L.geoJson(myLines, {
 					    style: myStyle
 					}).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime).openPopup();;
