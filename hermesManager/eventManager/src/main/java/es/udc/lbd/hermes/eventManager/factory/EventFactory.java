@@ -16,9 +16,9 @@ import es.udc.lbd.hermes.model.events.EventType;
 public class EventFactory {
 
 //	private Logger logger = LoggerFactory.getLogger(getClass());
-	private static Map<EventType, EventStrategy> registry = new HashMap<EventType, EventStrategy>();
-
-	private EventFactory() {
+	private static Map<EventType, EventStrategy> registry;
+	static {
+		registry = new HashMap<EventType, EventStrategy>();
 		registry.put(EventType.VEHICLE_LOCATION, new VehicleLocationEventStrategy());
 		registry.put(EventType.HIGH_SPEED, new HighSpeedEventStrategy());
 		registry.put(EventType.HIGH_ACCELERATION, new HighAccelerationEventStrategy());
@@ -26,6 +26,9 @@ public class EventFactory {
 		registry.put(EventType.HIGH_HEART_RATE, new HighHeartRateEventStrategy());
 		registry.put(EventType.DRIVER_FEATURES, new DriverFeaturesEventStrategy());
 		registry.put(EventType.DATA_SECTION, new DataSectionEventStrategy());
+	}
+
+	private EventFactory() {
 	}
 	
 	public static EventStrategy getStrategy(EventType tipoEvento) {
