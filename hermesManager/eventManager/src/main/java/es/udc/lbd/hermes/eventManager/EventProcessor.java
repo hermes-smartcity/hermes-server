@@ -158,7 +158,7 @@ public class EventProcessor extends Thread {
 			
 			EventType tipoEvento = EventType.getTipo((String) event.getEventType());
 			
-			EventStrategy estrategia = EventFactory.getEvent(tipoEvento);
+			EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
 			estrategia.processEvent(event);
 			logger.info("Guardado el evento con Event-Type: "+tipoEvento.getName());
 			

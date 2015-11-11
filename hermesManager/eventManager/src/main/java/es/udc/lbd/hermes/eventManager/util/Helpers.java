@@ -53,82 +53,6 @@ public class Helpers {
 		return builder.toString();
 	}
 
-	public static DataSection procesaEvento(ZtreamyDataSection ztreamyDataSection) {
-		DataSection dataSection = new DataSection();
-		dataSection.setMinSpeed(ztreamyDataSection.getMedianSpeed());
-		dataSection.setMaxSpeed(ztreamyDataSection.getMaxSpeed());
-		dataSection.setMedianSpeed(ztreamyDataSection.getMedianSpeed());
-		dataSection.setAverageSpeed(ztreamyDataSection.getAverageSpeed());
-		dataSection.setAverageRR(ztreamyDataSection.getAverageRR());
-		dataSection.setAverageHeartRate(ztreamyDataSection.getAverageHeartRate());
-		dataSection.setStandardDeviationSpeed(ztreamyDataSection.getStandardDeviationSpeed());
-		dataSection.setStandardDeviationRR(ztreamyDataSection.getStandardDeviationRR());
-		dataSection.setStandardDeviationHeartRate(ztreamyDataSection.getStandardDeviationHeartRate());
-		dataSection.setPke(ztreamyDataSection.getPke());
-		// TODO Falta decidir como se va a hacer
-		dataSection.setRoadSection((LineString) prepararRuta(ztreamyDataSection.getRoadSection()));
-		return dataSection;
-			
-	}
-		
-	public static VehicleLocation procesaEvento(ZtreamyVehicleLocation ztreamyVehicleLocation) {
-		VehicleLocation vehicleLocation = new VehicleLocation();	
-		Geometry punto = prepararPunto(ztreamyVehicleLocation.getLatitude(),ztreamyVehicleLocation.getLongitude());
-		vehicleLocation.setPosition((Point)punto);
-		return vehicleLocation;
-	}
-	
-	public static Measurement procesaEvento(ZtreamyHighAcceleration ztreamyHighAcceleration){
-		Measurement measurement = new Measurement();
-		Geometry punto = prepararPunto(ztreamyHighAcceleration.getLatitude(),ztreamyHighAcceleration.getLongitude());
-		measurement.setPosition((Point)punto);
-		measurement.setValue(ztreamyHighAcceleration.getValue());
-		// TODO hacer fuera
-//		measurement.setTipo("High Acceleration");
-		return measurement;
-	}
-	
-	public static Measurement procesaEvento(ZtreamyHighDeceleration ztreamyHighDeceleration){
-		Measurement measurement = new Measurement();
-		Geometry punto = prepararPunto(ztreamyHighDeceleration.getLatitude(),ztreamyHighDeceleration.getLongitude());
-		measurement.setPosition((Point)punto);
-		measurement.setValue(ztreamyHighDeceleration.getValue());
-		// TODO hacer fuera
-//		measurement.setTipo(High Deceleration");
-		return measurement;
-	}
-	
-	public static Measurement procesaEvento(ZtreamyHighHeartRate ztreamyHighHeartRate){
-		Measurement measurement = new Measurement();
-		Geometry punto = prepararPunto(ztreamyHighHeartRate.getLatitude(),ztreamyHighHeartRate.getLongitude());
-		measurement.setPosition((Point)punto);
-		measurement.setValue(ztreamyHighHeartRate.getValue());
-		// TODO hacer fuera
-//		measurement.setTipo(High Heart Rate");
-		return measurement;
-	}
-	
-	public static Measurement procesaEvento(ZtreamyHighSpeed ztreamyHighSpeed){
-		Measurement measurement = new Measurement();
-		Geometry punto = prepararPunto(ztreamyHighSpeed.getLatitude(),ztreamyHighSpeed.getLongitude());
-		measurement.setPosition((Point)punto);
-		measurement.setValue(ztreamyHighSpeed.getValue());
-		// TODO hacer fuera
-//		measurement.setTipo(High Speed");
-		return measurement;
-	}
-	
-	public static DriverFeatures procesaEvento(ZtreamyDriverFeatures ztreamyDriverFeatures){
-		DriverFeatures driverFeatures = new DriverFeatures();
-		driverFeatures.setAwakeFor(ztreamyDriverFeatures.getAwakeFor());		
-		driverFeatures.setInBed(ztreamyDriverFeatures.getInBed()); 
-		driverFeatures.setWorkingTime(ztreamyDriverFeatures.getWorkingTime()); 
-		driverFeatures.setLightSleep(ztreamyDriverFeatures.getLightSleep());
-		driverFeatures.setDeepSleep(ztreamyDriverFeatures.getDeepSleep());
-		driverFeatures.setPreviousStress(ztreamyDriverFeatures.getPreviousStress());
-		return driverFeatures;
-	}
-
 	public static Calendar getFecha(String fecha) {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -142,11 +66,11 @@ public class Helpers {
 		return cal;
 	}
 	
-	private static Geometry prepararPunto(Double latitude, Double longitude){
+	public static Geometry prepararPunto(Double latitude, Double longitude){
 		return Helpers.wktToGeometry("POINT("+ latitude.toString() + " "+ longitude.toString() + ")");
 	}
 	
-	private static Geometry prepararRuta(List<RoadSectionPoint> roadSection){
+	public static Geometry prepararRuta(List<RoadSectionPoint> roadSection){
 		Geometry ruta = null; 
 		// Contruimos el array de puntos con linestring, primero el string con cada uno de los puntos (coordenadas latitud y longitud) que sacamos del objeto json
 		String rutaStr="LINESTRING(";
