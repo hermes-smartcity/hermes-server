@@ -32,7 +32,7 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 					var datevalues = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
 					$scope.bdatetime = datevalues;
 					//Convierto el punto que quiero pintar para tener su lat y log
-					var latlng = L.latLng(value.position.coordinates);
+					var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 					//Añado al mapa el punto
 					L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime).openPopup();
 				});
