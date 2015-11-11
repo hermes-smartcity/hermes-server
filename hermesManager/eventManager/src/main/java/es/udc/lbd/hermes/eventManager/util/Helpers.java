@@ -67,7 +67,7 @@ public class Helpers {
 	}
 	
 	public static Geometry prepararPunto(Double latitude, Double longitude){
-		return Helpers.wktToGeometry("POINT("+ latitude.toString() + " "+ longitude.toString() + ")");
+		return Helpers.wktToGeometry("POINT("+ longitude.toString() + " "+ latitude.toString() + ")");
 	}
 	
 	public static Geometry prepararRuta(List<RoadSectionPoint> roadSection){
@@ -76,7 +76,7 @@ public class Helpers {
 		String rutaStr="LINESTRING(";
 		for(int i=0;i<roadSection.size();i++){
 			RoadSectionPoint puntoRuta = roadSection.get(i);
-			rutaStr+=puntoRuta.getLatitude() + " " + puntoRuta.getLongitude() +" , ";
+			rutaStr+=puntoRuta.getLongitude() + " " + puntoRuta.getLatitude() +" , ";
 		}
 		rutaStr = rutaStr.substring(0,rutaStr.length()-3)+")";
 		// Lo convertimos a GIS
