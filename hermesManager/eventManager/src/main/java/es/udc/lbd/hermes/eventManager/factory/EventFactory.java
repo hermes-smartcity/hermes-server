@@ -40,6 +40,6 @@ public class EventFactory {
 		} catch (NullPointerException e) {
 //			 logger.error("Excepción recuperando tipo de evento ",e);	
 		}
-		return null;		
+		return result;		
 	}
 }
