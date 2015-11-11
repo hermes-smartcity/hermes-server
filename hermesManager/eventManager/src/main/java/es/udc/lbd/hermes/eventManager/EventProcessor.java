@@ -92,26 +92,9 @@ public class EventProcessor extends Thread {
 	// Almacenamos los diferentes tipos de eventos en la BD
 	private void procesarEvento(Event event){					
 		EventType tipoEvento = EventType.getTipo((String) event.getEventType());
-		
-		EventStrategy estrategia = EventFactory.getEvent(tipoEvento);
+		EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
 		estrategia.processEvent(event);
 		logger.info("Guardado el evento con Event-Type: "+tipoEvento.getName());
-		
-<<<<<<< HEAD
-				return;
-		}
-
-		// Almacenamos los diferentes tipos de eventos en la BD
-		private void procesarEvento(Event event){			
-			
-			EventType tipoEvento = EventType.getTipo((String) event.getEventType());
-			
-			EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
-			estrategia.processEvent(event);
-			logger.info("Guardado el evento con Event-Type: "+tipoEvento.getName());
-			
-=======
->>>>>>> c9ecb011e0324c95facbd04a2dc6b6ba83bb9a19
-
+		return;
 	}
 	}
