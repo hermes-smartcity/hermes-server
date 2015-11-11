@@ -1,6 +1,6 @@
-package es.udc.lbd.hermes.model.events.json;
+package es.udc.lbd.hermes.eventManager.json;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +15,7 @@ public class Event {
 	@JsonProperty("Source-Id")
 	private String sourceId;
 	@JsonProperty("Timestamp")
-	private Date timestamp;
+	private Calendar timestamp;
 	@JsonProperty("Event-Type")
 	private String eventType;
 	@JsonProperty("Body")
@@ -45,11 +45,11 @@ public class Event {
 		this.sourceId = sourceId;
 	}
 
-	public Date getTimestamp() {
+	public Calendar getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(Calendar timestamp) {
 		this.timestamp = timestamp;
 	}
 

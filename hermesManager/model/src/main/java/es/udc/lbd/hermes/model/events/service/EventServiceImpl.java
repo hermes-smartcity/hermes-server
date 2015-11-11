@@ -1,5 +1,8 @@
 package es.udc.lbd.hermes.model.events.service;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +25,11 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void create(EventoProcesado eventoProcesado) {
+	public void create(Calendar timestamp, String eventId) {
+		eventoProcesadoDao.eliminarEventosProcesados();
+		EventoProcesado eventoProcesado = new EventoProcesado();
+		eventoProcesado.setEventId(eventId);
+		eventoProcesado.setTimestamp(timestamp);
 		eventoProcesadoDao.create(eventoProcesado);
 		
 	}

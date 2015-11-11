@@ -1,11 +1,11 @@
 {
     "Body": {
         "Driver Features": {
-    		"AwakeFor": "2",
-    		"In bed": "1",
-    		"Working Time": "5",
-    		"Light Sleep": "4",
-    		"Deep Sleep": "3"
+    		"awake": "2",
+    		"inbed": "1",
+    		"workingTime": "5",
+    		"lightSleep": "4",
+    		"deepSleep": "3"
 		}
     },
     "Timestamp": "2015-06-08T18:21:16+02:00",

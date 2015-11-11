@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.model.events.json;
+package es.udc.lbd.hermes.eventManager.events.json;
 
 import java.io.IOException;
 
@@ -7,6 +7,9 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+
+import es.udc.lbd.hermes.eventManager.json.Event;
+import es.udc.lbd.hermes.eventManager.json.EventParser;
 
 public class EventParserTest {
 

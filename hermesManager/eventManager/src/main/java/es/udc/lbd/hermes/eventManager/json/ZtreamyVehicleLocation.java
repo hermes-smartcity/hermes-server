@@ -1,17 +1,16 @@
-package es.udc.lbd.hermes.model.events.json;
+package es.udc.lbd.hermes.eventManager.json;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RoadSectionPoint {
-
+public class ZtreamyVehicleLocation extends EventData {
 	@JsonProperty("latitude")
 	private Double latitude;
 	@JsonProperty("longitude")
 	private Double longitude;
 	@JsonProperty("timeStamp")
-	private Date timestamp;
+	private Calendar timeStamp;
 	
 	public Double getLatitude() {
 		return latitude;
@@ -25,12 +24,11 @@ public class RoadSectionPoint {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	public Date getTimestamp() {
-		return timestamp;
+	public Calendar getTimeStamp() {
+		return timeStamp;
 	}
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setTimeStamp(Calendar timeStamp) {
+		this.timeStamp = timeStamp;
 	}
-
 	
 }

@@ -10,13 +10,13 @@ public enum MeasurementType {
 
 	public static MeasurementType getTipo(String tipo){
 		switch (tipo){
-		case "HighSpeed":
+		case "High Speed":
 			return HIGH_SPEED;
-		case "HighAcceleration":
+		case "High Acceleration":
 			return HIGH_ACCELERATION;
-		case "HighDeceleration":
+		case "High Deceleration":
 			return HIGH_DECELERATION;
-		case "HighHeartRate":
+		case "High Heart Rate":
 			return HIGH_HEART_RATE;
 		default:
 			return null;

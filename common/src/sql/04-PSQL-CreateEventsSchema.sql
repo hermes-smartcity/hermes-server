@@ -10,8 +10,6 @@ CREATE TABLE usuario (
   CONSTRAINT usuario_id_pk PRIMARY KEY (id)
 );
 
-
-
 -- measurement --
 drop table if exists measurement cascade;
 drop sequence if exists measurement_id_seq cascade;
@@ -23,7 +21,7 @@ CREATE TABLE measurement (
   position geometry(POINT, 4326),
   eventId VARCHAR(50) NOT NULL,
   tipo VARCHAR(20) NOT NULL,
-  value integer NOT NULL,
+  value double precision,
   idUsuario BIGINT,
   CONSTRAINT idmeasurement_pk PRIMARY KEY (id),
   CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
@@ -56,22 +54,16 @@ CREATE TABLE dataSection (
   timestamp timestamp without time zone,
   roadSection geometry(LineString,4326), 
   eventId VARCHAR(50) NOT NULL,
-   minHeartRate integer,
-   maxBeatBeat integer,
-   maxHeartRate integer,
-   standardDeviationSpeed double precision,
-   minBeatBeat integer,
    minSpeed double precision,
-   averageSpeed  double precision,
-   standardDeviationBeatBeat  double precision,
-   heartRate double precision,
-   medianSpeed  double precision,
-   standardDeviationHeartRate double precision,
    maxSpeed double precision,
+   medianSpeed  double precision,
+   averageSpeed double precision,
+   averageRR double precision,
+   averageHeartRate  double precision,
+   standardDeviationSpeed  double precision,
+   standardDeviationRR double precision,
+   standardDeviationHeartRate double precision,   
    pke double precision,
-   medianHeartRate integer,
-   meanBeatBeat double precision,
-   medianBeatBeat integer,
    idUsuario BIGINT,
   CONSTRAINT iddataSection_pk PRIMARY KEY (id),
   CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
@@ -90,6 +82,7 @@ CREATE TABLE driverFeatures (
   workingTime integer,
   lightSleep integer,
   deepSleep integer,
+  previousStress integer,
   idUsuario BIGINT,
   CONSTRAINT idDriverFeatures_pk PRIMARY KEY (id),
   CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE

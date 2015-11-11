@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.LineString;
@@ -39,43 +40,31 @@ public class DataSection implements Serializable{
 		private Calendar timestamp;
         
 		private String eventId;
-
-        private int minHeartRate;
-        
-        private int maxBeatBeat;
-        
-        private int maxHeartRate;
-
-        private Double standardDeviationSpeed;
-        
-        private int  minBeatBeat;
-        
-        private Double minSpeed;
-        
-        private Double averageSpeed;
-        
-        private Double standardDeviationBeatBeat;
-        
-        private Double heartRate;
-        
-        private Double medianSpeed;
-        
-        private Double standardDeviationHeartRate;
-        
-        private Double maxSpeed;
-        
-        private Double pke;
+		
+		private Double minSpeed;
+		
+		private Double maxSpeed;
+		
+		private Double medianSpeed;
+		
+		private Double averageSpeed;
+		
+		private Double averageRR;
+		
+		private Double averageHeartRate;
+		
+		private Double standardDeviationSpeed;
+		
+		private Double standardDeviationRR;
+		
+		private Double standardDeviationHeartRate;
+		
+		private Double pke;
         
         @Type(type="org.hibernate.spatial.GeometryType")
         @JsonSerialize(using = CustomGeometrySerializer.class)
         @JsonDeserialize(using = CustomMultiLineStringDeserializer.class)       
         private LineString roadSection;
-        
-        private int medianHeartRate;
-        
-        private Double meanBeatBeat;
-        
-        private int medianBeatBeat;
         
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuario")
@@ -112,47 +101,7 @@ public class DataSection implements Serializable{
 		public void setEventId(String eventId) {
 			this.eventId = eventId;
 		}
-
-		public int getMinHeartRate() {
-			return minHeartRate;
-		}
-
-		public void setMinHeartRate(int minHeartRate) {
-			this.minHeartRate = minHeartRate;
-		}
-
-		public int getMaxBeatBeat() {
-			return maxBeatBeat;
-		}
-
-		public void setMaxBeatBeat(int maxBeatBeat) {
-			this.maxBeatBeat = maxBeatBeat;
-		}
-
-		public int getMaxHeartRate() {
-			return maxHeartRate;
-		}
-
-		public void setMaxHeartRate(int maxHeartRate) {
-			this.maxHeartRate = maxHeartRate;
-		}
-
-		public Double getStandardDeviationSpeed() {
-			return standardDeviationSpeed;
-		}
-
-		public void setStandardDeviationSpeed(Double standardDeviationSpeed) {
-			this.standardDeviationSpeed = standardDeviationSpeed;
-		}
-
-		public int getMinBeatBeat() {
-			return minBeatBeat;
-		}
-
-		public void setMinBeatBeat(int minBeatBeat) {
-			this.minBeatBeat = minBeatBeat;
-		}
-
+		
 		public Double getMinSpeed() {
 			return minSpeed;
 		}
@@ -161,28 +110,12 @@ public class DataSection implements Serializable{
 			this.minSpeed = minSpeed;
 		}
 
-		public Double getAverageSpeed() {
-			return averageSpeed;
+		public Double getMaxSpeed() {
+			return maxSpeed;
 		}
 
-		public void setAverageSpeed(Double averageSpeed) {
-			this.averageSpeed = averageSpeed;
-		}
-
-		public Double getStandardDeviationBeatBeat() {
-			return standardDeviationBeatBeat;
-		}
-
-		public void setStandardDeviationBeatBeat(Double standardDeviationBeatBeat) {
-			this.standardDeviationBeatBeat = standardDeviationBeatBeat;
-		}
-
-		public Double getHeartRate() {
-			return heartRate;
-		}
-
-		public void setHeartRate(Double heartRate) {
-			this.heartRate = heartRate;
+		public void setMaxSpeed(Double maxSpeed) {
+			this.maxSpeed = maxSpeed;
 		}
 
 		public Double getMedianSpeed() {
@@ -193,20 +126,52 @@ public class DataSection implements Serializable{
 			this.medianSpeed = medianSpeed;
 		}
 
+		public Double getAverageSpeed() {
+			return averageSpeed;
+		}
+
+		public void setAverageSpeed(Double averageSpeed) {
+			this.averageSpeed = averageSpeed;
+		}
+
+		public Double getAverageRR() {
+			return averageRR;
+		}
+
+		public void setAverageRR(Double averageRR) {
+			this.averageRR = averageRR;
+		}
+
+		public Double getAverageHeartRate() {
+			return averageHeartRate;
+		}
+
+		public void setAverageHeartRate(Double averageHeartRate) {
+			this.averageHeartRate = averageHeartRate;
+		}
+
+		public Double getStandardDeviationSpeed() {
+			return standardDeviationSpeed;
+		}
+
+		public void setStandardDeviationSpeed(Double standardDeviationSpeed) {
+			this.standardDeviationSpeed = standardDeviationSpeed;
+		}
+
+		public Double getStandardDeviationRR() {
+			return standardDeviationRR;
+		}
+
+		public void setStandardDeviationRR(Double standardDeviationRR) {
+			this.standardDeviationRR = standardDeviationRR;
+		}
+
 		public Double getStandardDeviationHeartRate() {
 			return standardDeviationHeartRate;
 		}
 
 		public void setStandardDeviationHeartRate(Double standardDeviationHeartRate) {
 			this.standardDeviationHeartRate = standardDeviationHeartRate;
-		}
-
-		public Double getMaxSpeed() {
-			return maxSpeed;
-		}
-
-		public void setMaxSpeed(Double maxSpeed) {
-			maxSpeed = maxSpeed;
 		}
 
 		public Double getPke() {
@@ -224,31 +189,7 @@ public class DataSection implements Serializable{
 		public void setRoadSection(LineString roadSection) {
 			this.roadSection = roadSection;
 		}
-
-		public int getMedianHeartRate() {
-			return medianHeartRate;
-		}
-
-		public void setMedianHeartRate(int medianHeartRate) {
-			this.medianHeartRate = medianHeartRate;
-		}
-
-		public Double getMeanBeatBeat() {
-			return meanBeatBeat;
-		}
-
-		public void setMeanBeatBeat(Double meanBeatBeat) {
-			this.meanBeatBeat = meanBeatBeat;
-		}
-
-		public int getMedianBeatBeat() {
-			return medianBeatBeat;
-		}
-
-		public void setMedianBeatBeat(int medianBeatBeat) {
-			this.medianBeatBeat = medianBeatBeat;
-		}
-
+		
 		public Usuario getUsuario() {
 			return usuario;
 		}

@@ -1,19 +1,21 @@
-package es.udc.lbd.hermes.model.events.json;
+package es.udc.lbd.hermes.eventManager.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DriverFeatures extends EventData {
+public class ZtreamyDriverFeatures extends EventData {
 
-	@JsonProperty("AwakeFor")
+	@JsonProperty("awake")
 	private Integer awakeFor;
-	@JsonProperty("In bed")
+	@JsonProperty("inbed")
 	private Integer inBed;
-	@JsonProperty("Working Time")
+	@JsonProperty("workingTime")
 	private Integer workingTime;
-	@JsonProperty("Light Sleep")
+	@JsonProperty("lightSleep")
 	private Integer lightSleep;
-	@JsonProperty("Deep Sleep")
+	@JsonProperty("deepSleep")
 	private Integer deepSleep;
+	@JsonProperty("previousStress")
+	private Integer previousStress;
 	
 	public Integer getAwakeFor() {
 		return awakeFor;
@@ -45,6 +47,11 @@ public class DriverFeatures extends EventData {
 	public void setDeepSleep(Integer deepSleep) {
 		this.deepSleep = deepSleep;
 	}
-	
+	public Integer getPreviousStress() {
+		return previousStress;
+	}
+	public void setPreviousStress(Integer previousStress) {
+		this.previousStress = previousStress;
+	}
 	
 }

@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.model.events.json;
+package es.udc.lbd.hermes.eventManager.json;
 
 import java.io.IOException;
 import java.io.InputStream;

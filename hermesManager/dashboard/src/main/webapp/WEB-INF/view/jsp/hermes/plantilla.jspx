@@ -145,25 +145,25 @@
 	                            <ul class="nav nav-second-level">
 	                                <li>
 	                                	<c:url var="highSpeedUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HighSpeed" />
+											<c:param name="tipo" value="High Speed" />
 										</c:url>
 	                                    <a href="${highSpeedUrl}">High Speed</a>
 	                                </li>
 	                                <li>
 	                               		 <c:url var="highAccelerationUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HighAcceleration" />
+											<c:param name="tipo" value="High Acceleration" />
 										</c:url>
 	                                    <a href="${highAccelerationUrl}">High Acceleration</a>
 	                                </li>
 	                                <li>
 	                                	<c:url var="highDecelerationUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HighDeceleration" />
+											<c:param name="tipo" value="High Deceleration" />
 										</c:url>
 	                                    <a href="${highDecelerationUrl}">High Deceleration</a>
 	                                </li>
 	                                <li>
 	                                	<c:url var="highHeartRateUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HighHeartRate" />
+											<c:param name="tipo" value="High Heart Rate" />
 										</c:url>
 	                                    <a href="${highHeartRateUrl}">High Heart Rate</a>
 	                                </li>

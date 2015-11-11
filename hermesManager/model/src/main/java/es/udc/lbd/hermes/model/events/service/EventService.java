@@ -1,12 +1,14 @@
 package es.udc.lbd.hermes.model.events.service;
 
+import java.util.Calendar;
+
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
 
 public interface EventService {
 	
 	public EventoProcesado get(Long id);
 	
-	public void create(EventoProcesado eventoProcesado);
+	public void create(Calendar timestamp, String eventId);
 	
 	public void update(EventoProcesado eventoProcesado);
 	

@@ -41,10 +41,10 @@
 		<production.jdbcDriver.version>9.3-1100-jdbc4</production.jdbcDriver.version>
 		<production.jdbcDriver.className>org.postgresql.Driver</production.jdbcDriver.className>
 		
-		<production.url.eventosPasados>http://hermes1.gast.it.uc3m.es:9102/dbfeed/long-polling?last-seen=</production.url.eventosPasados>
-		<development.url.eventosPasados>http://hermes1.gast.it.uc3m.es:9102/dbfeed-test/long-polling?last-seen=</development.url.eventosPasados>
+		<production.url.eventosPasados> http://hermes1.gast.it.uc3m.es:9102/dbfeed/long-polling?last-seen=</production.url.eventosPasados>
+		<development.url.eventosPasados> http://hermes1.gast.it.uc3m.es:9102/dbfeed-test/long-polling?last-seen=</development.url.eventosPasados>
 		
-		<production.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream</production.url.eventos>
+		<production.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream?last-seen=</production.url.eventos>
 		<development.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed-test/stream</development.url.eventos>
 		
 	</properties>
@@ -70,8 +70,8 @@
 				<jdbcDriver.className>${development.jdbcDriver.className}</jdbcDriver.className>
 				
 				<!-- Lectura de eventos eventManager properties -->
-				<url.eventosPasados>${development.url.eventosPasados}</url.eventosPasados>
-				<url.eventos>${development.url.eventos}</url.eventos>
+				<url.eventosPasados>${production.url.eventosPasados}</url.eventosPasados>
+				<url.eventos>${production.url.eventos}</url.eventos>
 				
 			</properties>
 		</profile>

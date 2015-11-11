@@ -86,7 +86,11 @@
 		    <groupId>org.glassfish.jersey.connectors</groupId>
 		    <artifactId>jersey-jetty-connector</artifactId>
 		</dependency>
-			
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>	
 	</dependencies>
 	
 	 

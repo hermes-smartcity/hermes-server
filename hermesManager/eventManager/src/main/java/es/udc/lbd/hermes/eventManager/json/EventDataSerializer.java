@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.model.events.json;
+package es.udc.lbd.hermes.eventManager.json;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,13 +16,13 @@ public class EventDataSerializer extends StdSerializer<EventData> {
 	
 	public EventDataSerializer() {
 		super(EventData.class);
-		registerEventType(VehicleLocation.class, "Location");  
-		registerEventType(HighSpeed.class, "High Speed");  
-		registerEventType(HighAcceleration.class, "High Acceleration");  		
-		registerEventType(HighDeceleration.class, "High Deceleration");  		
-		registerEventType(HighHeartRate.class, "High Heart Rate");
-		registerEventType(DriverFeatures.class, "Driver Features");
-		registerEventType(DataSection.class, "Data Section");
+		registerEventType(ZtreamyVehicleLocation.class, "Location");  
+		registerEventType(ZtreamyHighSpeed.class, "High Speed");  
+		registerEventType(ZtreamyHighAcceleration.class, "High Acceleration");  		
+		registerEventType(ZtreamyHighDeceleration.class, "High Deceleration");  		
+		registerEventType(ZtreamyHighHeartRate.class, "High Heart Rate");
+		registerEventType(ZtreamyDriverFeatures.class, "Driver Features");
+		registerEventType(ZtreamyDataSection.class, "Data Section");
 	}
 	
 	void registerEventType(Class<? extends EventData> eventTypeClass, String uniqueName) {

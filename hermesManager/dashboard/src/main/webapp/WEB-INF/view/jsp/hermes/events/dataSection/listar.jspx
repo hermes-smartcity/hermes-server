@@ -33,7 +33,7 @@
  
 	<div class="col-lg-8"  ng-app="dataSectionApp" ng-cloak="">
 	
-		<div class="panel panel-default"  ng-controller="DataSectionsController" ng-init="getDataSections()">
+		<div  ng-controller="DataSectionsController" ng-init="getDataSections()">
 
 			
 			<!-- Configurar pestanas -->

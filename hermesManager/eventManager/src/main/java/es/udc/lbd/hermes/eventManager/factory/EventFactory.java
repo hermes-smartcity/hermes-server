@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.eventManager.factory;
 
 import es.udc.lbd.hermes.eventManager.strategy.DataSectionEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.DriverFeaturesEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.EventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.MeasurementEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.VehicleLocationEventStrategy;
@@ -20,7 +21,9 @@ public class EventFactory {
 				case HIGH_SPEED: case HIGH_ACCELERATION: case HIGH_DECELERATION: case HIGH_HEART_RATE:
 					return new MeasurementEventStrategy();				
 				case DATA_SECTION:
-					return new DataSectionEventStrategy();		
+					return new DataSectionEventStrategy();	
+				case DRIVER_FEATURES:
+					return new DriverFeaturesEventStrategy();	
 				default:
 					break;
 				}

@@ -1,8 +1,13 @@
-package es.udc.lbd.hermes.model.events.json;
+package es.udc.lbd.hermes.eventManager.json;
 
-public class HighHeartRate extends EventData {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class ZtreamyHighHeartRate extends EventData {
+	@JsonProperty("latitude")
 	private Double latitude;
+	@JsonProperty("longitude")
 	private Double longitude;
+	@JsonProperty("value")
 	private Double value;
 
 	public Double getLatitude() {

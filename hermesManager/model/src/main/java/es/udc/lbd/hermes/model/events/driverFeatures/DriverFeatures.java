@@ -35,14 +35,17 @@ public class DriverFeatures implements Serializable{
 		@GeneratedValue(strategy = GenerationType.AUTO, generator = "xeradorId")
         private Long id;
         
-        private int awakefor;
+        private Integer awakeFor;
         
-        private int inBed ;
+        private Integer inBed ;
         
-        private int workingTime;
+        private Integer workingTime;
 
-        private int deepSleep;
+        private Integer deepSleep;
         
+        private Integer previousStress;        
+        
+        private Integer lightSleep;
         
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuario")
@@ -51,11 +54,12 @@ public class DriverFeatures implements Serializable{
         public DriverFeatures() {
         }
 
-        public DriverFeatures(int awakefor, int inBed, int workingTime, int deepSleep) {
-        	this.awakefor= awakefor;
+        public DriverFeatures(Integer awakeFor, Integer inBed, Integer workingTime, Integer deepSleep,Integer lightSleep) {
+        	this.awakeFor= awakeFor;
         	this.inBed= inBed;
         	this.workingTime= workingTime;
         	this.deepSleep= deepSleep;
+        	this.lightSleep= lightSleep;
         }
        
 		public Long getId() {
@@ -66,36 +70,52 @@ public class DriverFeatures implements Serializable{
 			this.id = id;
 		}
 
-		public int getAwakefor() {
-			return awakefor;
+		public Integer getAwakeFor() {
+			return awakeFor;
 		}
 
-		public void setAwakefor(int awakefor) {
-			this.awakefor = awakefor;
+		public void setAwakeFor(Integer awakeFor) {
+			this.awakeFor = awakeFor;
 		}
 
-		public int getInBed() {
+		public Integer getInBed() {
 			return inBed;
 		}
 
-		public void setInBed(int inBed) {
+		public void setInBed(Integer inBed) {
 			this.inBed = inBed;
 		}
 
-		public int getWorkingTime() {
+		public Integer getWorkingTime() {
 			return workingTime;
 		}
 
-		public void setWorkingTime(int workingTime) {
+		public void setWorkingTime(Integer workingTime) {
 			this.workingTime = workingTime;
 		}
 
-		public int getDeepSleep() {
+		public Integer getDeepSleep() {
 			return deepSleep;
 		}
 
-		public void setDeepSleep(int deepSleep) {
+		public void setDeepSleep(Integer deepSleep) {
 			this.deepSleep = deepSleep;
+		}
+
+		public Integer getLightSleep() {
+			return lightSleep;
+		}
+
+		public void setLightSleep(Integer lightSleep) {
+			this.lightSleep = lightSleep;
+		}
+
+		public Integer getPreviousStress() {
+			return previousStress;
+		}
+
+		public void setPreviousStress(Integer previousStress) {
+			this.previousStress = previousStress;
 		}
 
 		public Usuario getUsuario() {

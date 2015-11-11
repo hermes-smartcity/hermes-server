@@ -1,39 +1,32 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
-import org.json.simple.JSONObject;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.model.events.EventType;
+import es.udc.lbd.hermes.eventManager.json.Event;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyDataSection;
+import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
-import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
-import es.udc.lbd.hermes.model.util.EventHelper;
-import es.udc.lbd.hermes.model.util.Helpers;
-
 
 @Component
 public class DataSectionEventStrategy extends EventStrategy {
 
 	@Override
-	public void processEvent(JSONObject evento) {
+	public void processEvent(Event event) {
 		
 		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
 		DataSectionService dataSectionService = ApplicationContextProvider.getApplicationContext().getBean("dataSectionService", DataSectionService.class);
 
-		JSONObject datosBodyJSON = (JSONObject) evento.get("Body");		
-		
-		EventHelper eventHelper = new EventHelper();
-		eventHelper.prepararEventHelper(evento, EventType.DATA_SECTION, datosBodyJSON);
-		
-		DataSection dataSection = Helpers.prepararDataSection(eventHelper);
-		EventoProcesado eventoProcesado = Helpers.prepararEventoProcesado(eventHelper);
-				
+		DataSection dataSection = Helpers.procesaEvento((ZtreamyDataSection) event.getEventData());
+		dataSection.setEventId(event.getEventId());
+		// Falta decidir como se va a hacer y donde usuarioId
+		// vehicleLocation.setEventId(event.getSourceId());
+		dataSection.setTimestamp(event.getTimestamp());
 		dataSectionService.create(dataSection);
-		eventService.eliminarEventosProcesados();
-		eventService.create(eventoProcesado);
+		eventService.create(event.getTimestamp(),event.getEventId());
 		
 	}
 

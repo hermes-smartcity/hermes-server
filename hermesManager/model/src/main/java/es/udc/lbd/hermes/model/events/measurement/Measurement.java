@@ -48,7 +48,7 @@ public class Measurement implements Serializable{
 //      @Enumerated(EnumType.STRING)
         private String tipo;
         
-        private int value;
+        private Double value;
 
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuario")
@@ -97,11 +97,11 @@ public class Measurement implements Serializable{
 			this.tipo = tipo;
 		}
 
-		public int getValue() {
+		public Double getValue() {
 			return value;
 		}
 
-		public void setValue(int value) {
+		public void setValue(Double value) {
 			this.value = value;
 		}
 
