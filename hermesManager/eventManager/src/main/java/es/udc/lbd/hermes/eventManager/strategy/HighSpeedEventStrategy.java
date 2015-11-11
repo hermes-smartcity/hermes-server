@@ -29,8 +29,7 @@ public class HighSpeedEventStrategy extends EventStrategy {
 		measurement.setValue(ztreamyHighSpeed.getValue());
 		measurement.setTipo("High Speed");
 		measurement.setEventId(event.getEventId());
-		// Falta decidir como se va a hacer y donde usuarioId
-		// measurement.setEventId(event.getSourceId());
+;
 		measurement.setTimestamp(event.getTimestamp());
 		measurementService.create(measurement, event.getSourceId());
 		// Ultimo evento procesado

@@ -7,7 +7,6 @@ import com.vividsolutions.jts.geom.LineString;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyDataSection;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyDriverFeatures;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
@@ -38,8 +37,7 @@ public class DataSectionEventStrategy extends EventStrategy {
 		// TODO Falta decidir como se va a hacer
 		dataSection.setRoadSection((LineString) Helpers.prepararRuta(ztreamyDataSection.getRoadSection()));
 		dataSection.setEventId(event.getEventId());
-		// Falta decidir como se va a hacer y donde usuarioId
-		// vehicleLocation.setEventId(event.getSourceId());
+
 		dataSection.setTimestamp(event.getTimestamp());
 		dataSectionService.create(dataSection, event.getSourceId());
 		eventService.create(event.getTimestamp(),event.getEventId());		

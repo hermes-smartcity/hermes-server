@@ -29,8 +29,7 @@ public class HighAccelerationEventStrategy extends EventStrategy {
 		measurement.setValue(ztreamyHighAcceleration.getValue());
 		measurement.setTipo("High Acceleration");
 		measurement.setEventId(event.getEventId());
-		// Falta decidir como se va a hacer y donde usuarioId
-		// vehicleLocation.setEventId(event.getSourceId());
+
 		measurement.setTimestamp(event.getTimestamp());
 		measurementService.create(measurement, event.getSourceId());
 		// Ultimo evento procesado

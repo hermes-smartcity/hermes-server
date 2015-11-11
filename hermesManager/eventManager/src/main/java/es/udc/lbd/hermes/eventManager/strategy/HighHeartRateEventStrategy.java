@@ -29,8 +29,7 @@ public class HighHeartRateEventStrategy extends EventStrategy {
 		measurement.setValue(ztreamyHighHeartRate.getValue());
 		measurement.setTipo("High Heart Rate");
 		measurement.setEventId(event.getEventId());
-		// Falta decidir como se va a hacer y donde usuarioId
-		// vehicleLocation.setEventId(event.getSourceId());
+
 		measurement.setTimestamp(event.getTimestamp());
 		measurementService.create(measurement, event.getSourceId());
 		// Ultimo evento procesado

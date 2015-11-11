@@ -29,8 +29,7 @@ public class HighDecelerationEventStrategy extends EventStrategy {
 		measurement.setValue(ztreamyHighDeceleration.getValue());
 //		measurement.setTipo("High Deceleration");
 		measurement.setEventId(event.getEventId());
-		// Falta decidir como se va a hacer y donde usuarioId
-		// vehicleLocation.setEventId(event.getSourceId());
+
 		measurement.setTimestamp(event.getTimestamp());
 		measurementService.create(measurement, event.getSourceId());
 		// Ultimo evento procesado
