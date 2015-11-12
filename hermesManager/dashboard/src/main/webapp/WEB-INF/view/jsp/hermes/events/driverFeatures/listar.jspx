@@ -25,6 +25,9 @@
 	<fmt:message var="mapaFmt" key="hermes.driverFeatures.pestanas.mapa" />
 	<fmt:message var="tablaFmt" key="hermes.driverFeatures.pestanas.tabla" />
 	<fmt:message var="eventosFmt" key="hermes.driverFeatures.tabla.titulo.eventos" />
+	<fmt:message var="eventosFmt" key="hermes.driverFeatures.tabla.titulo.eventos" />
+	<fmt:message var="eventosFmt" key="hermes.driverFeatures.tabla.columnas.posicion" />
+
 	
 	<!-- Gestión de angular -->
  

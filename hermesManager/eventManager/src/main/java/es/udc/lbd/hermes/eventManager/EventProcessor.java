@@ -89,16 +89,18 @@ public class EventProcessor extends Thread {
 	}
 
 	// Almacenamos los diferentes tipos de eventos en la BD
-	private void procesarEvento(Event event){					
-		try{
+	private void procesarEvento(Event event){	
+		
+		if(event.getEventType()!=null){
 			EventType tipoEvento = EventType.getTipo((String) event.getEventType());
 			EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
 			estrategia.processEvent(event);
 			logger.info("Guardado el evento con Event-Type: "+tipoEvento.getName());
-		} catch (NullPointerException e) {
-			logger.error("Error Event-Type a null: "+e);				
-			e.printStackTrace();					
-		}	
+		}else{
+			logger.info("EventType is null");
+		}
+			
+	
 		return;
 	}
 	}
