@@ -9,7 +9,8 @@ $$
 ;
  
 -- And then wrap an aggregate around it
-DROP AGGREGATE IF EXISTS public.FIRST(anyelement);
+DROP AGGREGATE IF EXISTS public.FIRST(anyelement)
+;
 CREATE AGGREGATE public.FIRST (
         sfunc    = public.first_agg,
         basetype = anyelement,
@@ -25,8 +26,8 @@ $$
 ;
  
 -- And then wrap an aggregate around it
-DROP AGGREGATE IF EXISTS public.LAST(anyelement);
-
+DROP AGGREGATE IF EXISTS public.LAST(anyelement)
+;
 CREATE AGGREGATE public.LAST (
         sfunc    = public.last_agg,
         basetype = anyelement,
@@ -45,8 +46,8 @@ END;
 $$ LANGUAGE plpgsql immutable
 ;
 
-DROP CAST IF EXISTS (text AS integer);
-
+DROP CAST IF EXISTS (text AS integer)
+;
 CREATE cast (text AS integer) WITH FUNCTION castToInt(text)
 ;
 

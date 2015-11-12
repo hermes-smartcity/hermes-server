@@ -43,7 +43,7 @@
 					<password>${datasource.password}</password>
 					<autocommit>true</autocommit>
 					<onError>continue</onError>
-					<delimiterType>normal</delimiterType>
+					<delimiterType>row</delimiterType>
 					<orderFile>ascending</orderFile>
 							<fileset>
 								<basedir>${basedir}</basedir>

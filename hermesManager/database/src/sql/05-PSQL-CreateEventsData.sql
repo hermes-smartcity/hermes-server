@@ -1,12 +1,18 @@
 -- usuario --
-insert into usuario (sourceid) values ('28d2e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530ba7');
-insert into usuario (sourceid) values ('48e2e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530cc0');
-insert into usuario (sourceid) values ('88y5e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530dd1');
-insert into usuario (sourceid) values ('6a4708d3bc8612d7c1c84a8a13df580902f43c0623c765f3acec9d9db88669e9');
-insert into usuario (sourceid) values ('302bbbdc9b4f2419f12e6cc5655bf0bd11ab123e01d24023a3dea43e1b6c74de');
+insert into usuario (sourceid) values ('28d2e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530ba7')
+;
+insert into usuario (sourceid) values ('48e2e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530cc0')
+;
+insert into usuario (sourceid) values ('88y5e88199505cc99d1545b1194fbbafa3f754d1f7b27c186a88e22703530dd1')
+;
+insert into usuario (sourceid) values ('6a4708d3bc8612d7c1c84a8a13df580902f43c0623c765f3acec9d9db88669e9')
+;
+insert into usuario (sourceid) values ('302bbbdc9b4f2419f12e6cc5655bf0bd11ab123e01d24023a3dea43e1b6c74de')
+;
 
 -- eventoProcesado --
-insert into eventoProcesado (timestamp, eventid) values ('2015-09-10 11:13:00','b201c340-6afb-4035-a5a4-1a037eaa7b89');
+insert into eventoProcesado (timestamp, eventid) values ('2015-09-10 11:13:00','b201c340-6afb-4035-a5a4-1a037eaa7b89')
+;
 
 -- vehicleLocation --
 --insert into vehicleLocation (timestamp, position, eventid, idusuario) values ('2015-06-07 00:00:00',ST_PointFromText('POINT(42.33179424 -4.76399282)', 4326),'84b995d5-7136-4084-b405-8075bf1ddabf',3);
