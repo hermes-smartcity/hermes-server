@@ -15,7 +15,7 @@ dataSectionApp.controller('DataSectionsController', [ '$scope', '$http',
 			$http.get(urlGet).success(function(data) {
 				$scope.dataSections = data;
 				
-				var map = L.map('map').setView([51.505, -0.09], 13);
+				var map = L.map('map').setView([51.505, -0.09], 5);
 				L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
 
 				//Recorro el array geojson de cada uno de los dataSections
@@ -27,13 +27,12 @@ dataSectionApp.controller('DataSectionsController', [ '$scope', '$http',
 					$scope.bdatetime = datevalues;
 					//Almaceno array de puntos 
 					var myLines = value.roadSection;
-					console.log("myLines --- "+myLines);
 					var myStyle = {
 						    "color": "#ff7800",
-						    "weight": 5,
+						    "weight": 4,
 						    "opacity": 0.65
 						};
-//					var myLayer = L.geoJson().addTo(map);
+					var myLayer = L.geoJson().addTo(map);
 					L.geoJson(myLines, {
 					    style: myStyle
 					}).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime).openPopup();;

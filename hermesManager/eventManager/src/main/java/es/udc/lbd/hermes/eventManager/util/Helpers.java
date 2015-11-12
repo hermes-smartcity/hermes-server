@@ -79,6 +79,7 @@ public class Helpers {
 			rutaStr+=puntoRuta.getLongitude() + " " + puntoRuta.getLatitude() +" , ";
 		}
 		rutaStr = rutaStr.substring(0,rutaStr.length()-3)+")";
+		System.out.println("RUTA --- "+rutaStr);
 		// Lo convertimos a GIS
 		ruta = Helpers.wktToGeometry(rutaStr);
 		return ruta;

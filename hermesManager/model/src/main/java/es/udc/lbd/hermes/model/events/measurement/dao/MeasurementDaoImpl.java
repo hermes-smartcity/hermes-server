@@ -17,7 +17,7 @@ MeasurementDao {
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo) {
 
 		try {
-			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("tipo", tipo.getName())).list();
+			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("tipo", tipo)).list();
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
 		}
@@ -28,7 +28,7 @@ MeasurementDao {
 	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario) {
 
 		try {
-			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("tipo", tipo.getName())).add(Restrictions.eq("usuario.id", idUsuario)).list();
+			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("tipo", tipo)).add(Restrictions.eq("usuario.id", idUsuario)).list();
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
 		}

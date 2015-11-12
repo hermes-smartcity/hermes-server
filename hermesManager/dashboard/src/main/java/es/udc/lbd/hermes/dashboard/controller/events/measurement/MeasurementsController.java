@@ -25,15 +25,15 @@ public class MeasurementsController extends MainResource {
 	private MeasurementService measurementServicio;
 
 	@RequestMapping(value="/json/measurementsByUsuario", method = RequestMethod.GET)
-	public List<Measurement> getMeasurements(@RequestParam(required = true) String tipo,
+	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo,
 			@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
-		return  measurementServicio.obterMeasurementsSegunTipoEusuario(MeasurementType.getTipo(tipo), idUsuario);
+		return  measurementServicio.obterMeasurementsSegunTipoEusuario(tipo, idUsuario);
 
 	}
 	
 	@RequestMapping(value="/json/measurements", method = RequestMethod.GET)
-	public List<Measurement> getMeasurements(@RequestParam(required = true) String tipo) {
-		return measurementServicio.obterMeasurementsSegunTipo(MeasurementType.getTipo(tipo));
+	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo) {
+		return measurementServicio.obterMeasurementsSegunTipo(tipo);
 
 	}
 
