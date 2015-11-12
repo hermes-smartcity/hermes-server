@@ -112,7 +112,7 @@ CREATE TABLE driverFeatures (
 
 drop table if exists eventoProcesado cascade
 ;
-drop sequence if exists eventoProcesado cascade
+drop sequence if exists eventoProcesado_id_seq cascade
 ;
 create sequence eventoProcesado_id_seq
 ;
