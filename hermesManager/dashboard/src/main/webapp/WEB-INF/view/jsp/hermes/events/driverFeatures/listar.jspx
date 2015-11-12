@@ -25,91 +25,68 @@
 	<fmt:message var="mapaFmt" key="hermes.driverFeatures.pestanas.mapa" />
 	<fmt:message var="tablaFmt" key="hermes.driverFeatures.pestanas.tabla" />
 	<fmt:message var="eventosFmt" key="hermes.driverFeatures.tabla.titulo.eventos" />
-	<fmt:message var="eventosFmt" key="hermes.driverFeatures.tabla.titulo.eventos" />
-	<fmt:message var="eventosFmt" key="hermes.driverFeatures.tabla.columnas.posicion" />
-
+	<fmt:message var="awakeFmt" key="hermes.driverFeatures.tabla.columnas.awakeFor" />
+	<fmt:message var="inBedFmt" key="hermes.driverFeatures.tabla.columnas.inBed" />
+	<fmt:message var="workingTimeFmt" key="hermes.driverFeatures.tabla.columnas.workingTime" />
+	<fmt:message var="deepSleepFmt" key="hermes.driverFeatures.tabla.columnas.deepSleep" />
 	
 	<!-- Gestión de angular -->
  
 	<div class="col-lg-8"  ng-app="driverFeaturesApp" ng-cloak="">
 	
-		<div ng-controller="DriversFeaturesController" ng-init="getDriverFeaturess()">
+		<div ng-controller="DriversFeaturesController" ng-init="getDriversFeatures()">
 			
-			
-			<!-- Configurar pestanas -->
-			<li class="pestanas pestanasFormulario">
-				<ol class="pestanas selectoresFormulario">
-					<li class="pestanas selector activa">${mapaFmt}</li>
-					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
-
-				</ol>
-				<ol class="pestanas fichas">
-					<li class="pestanas ficha activa">
-						<ol class="pestanas">
-							<div style="height: 300px;" id="map"></div>
-						</ol>
-					</li>
-					<li class="pestanas ficha" id="pestanaF">
-						<ol>
-							<br></br>
-							<h3 style="font-weight: bold;">${eventosFmt}</h3>
-							<br></br>
-							<table class="film-info-bottom"
-								ng-repeat="driverFeatures in driversFeatures">
-										<tr>
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${awakeforFmt}
-												</div>
-												<div class="valor">
-													{{driverFeatures.awakefor}}
-												</div>
-											</div>
-										</td>
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${inBedFmt}
-												</div>
-												<div class="valor">
-													{{ driverFeatures.inBed}}
-																
-												</div>
-											</div>
-										</td>
-									
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${workingTimeFmt}
-												</div>
-												 <div class="valor">
-													{{driverFeatures.workingTime}}
-												</div>
-											</div>
-										</td>
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${deepSleepFmt}
-												</div>
-												 <div class="valor">
-													{{driverFeatures.deepSleep}}
-												</div>
-											</div>
-										</td>
-									</tr>
-								</table>
-						</ol>
-					</li>
-				</ol>
-			</li>
-
-		</div>
+			<table class="film-info-bottom"
+				ng-repeat="driverFeatures in driversFeatures">
+						<tr>
+						<td>
+							<div class="campoFicha">
+								<div class="etiqueta">
+									${awakeFmt}
+								</div>
+								<div class="valor">
+									{{driverFeatures.awakefor}}
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="campoFicha">
+								<div class="etiqueta">
+									${inBedFmt}
+								</div>
+								<div class="valor">
+									{{ driverFeatures.inBed}}
+												
+								</div>
+							</div>
+						</td>
+					
+						<td>
+							<div class="campoFicha">
+								<div class="etiqueta">
+									${workingTimeFmt}
+								</div>
+								 <div class="valor">
+									{{driverFeatures.workingTime}}
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="campoFicha">
+								<div class="etiqueta">
+									${deepSleepFmt}
+								</div>
+								 <div class="valor">
+									{{driverFeatures.deepSleep}}
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+				
 				
 		</div>
-	
+	</div>
 
 </html>	
 </jsp:root>

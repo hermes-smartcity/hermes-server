@@ -178,6 +178,13 @@
 			                            <span>Data Sections</span>
 		                            </a>
 	                       </li>
+	                         <li><!--  -->
+		                       <c:url var="driverFeaturesUrl" value="/events/driverFeatures/listar"/>		
+		                            <a href="${driverFeaturesUrl}">
+			                            <i class="fa fa-files-o fa-fw"><!--  --></i>
+			                            <span>Driver Features</span>
+		                            </a>
+	                       </li>
 	                       <li><!--  -->
 		                       <c:url var="listarUsuariosUrl" value="/usuario/listar"/>		
 		                            <a href="${listarUsuariosUrl}">

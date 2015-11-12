@@ -16,12 +16,6 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 				var map = L.map('map').setView([51.505, -0.09], 13);
 				L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
 				
-				//Este es sincrono espera a q se cargue uno para que cargue el otro
-//				$scope.vehicleLocations.forEach(function(value) {
-//					console.log(' --------- '+value.position);
-//					L.marker(value).addTo(map).bindPopup('A pretty CSS3 popup.Easily customizable.').openPopup();
-//				});
-				
 				var i = 0;
 //				//Este es asincrono, se cargan a la vez, no espera q se cargue el anterior
 				//Recorro el array geojson de cada uno de los vehicleLocations
@@ -33,36 +27,7 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 					$scope.bdatetime = datevalues;
 					//Convierto el punto que quiero pintar para tener su lat y log
 					var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
-					/* * * * * */
-					var geojsonMarkerOptions = {
-						    radius: 8,
-						    fillColor: "#ff7800",
-						    color: "#000",
-						    weight: 1,
-						    opacity: 1,
-						    fillOpacity: 0.8
-					};
 					
-					// Prueba, aquí tendría que ir los datos del punto
-					var geojsonFeature = {
-						    "type": "Feature",
-						    "properties": {
-						        "name": "Coors Field",
-						        "amenity": "Baseball Stadium",
-						        "popupContent": "This is where the Rockies play!"
-						    },
-						    "geometry": {
-						        "type": "Point",
-						        "coordinates": [-104.99404, 39.75621]
-						    }
-					};
-					
-					L.geoJson(someGeojsonFeature, {
-					    pointToLayer: function (feature, latlng) {
-					        return L.circleMarker(latlng, geojsonMarkerOptions);
-					    }
-					}).addTo(map);
-					/* * * * * */
 					//Añado al mapa el punto
 					L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime).openPopup();
 				});
