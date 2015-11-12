@@ -47,11 +47,11 @@
 				<tbody>
 					<c:forEach var="usuario" items="${usuarios}" varStatus="counter">
 						<tr>
-						<td colspan="12">${usuario.sourceId}" </td>
+						<td colspan="12">${usuario.sourceId} </td>
 						<!-- Acciones -->	
 							<td colspan="2">
 								<c:url var="listarHighSpeedUrl" value="/events/measurement/listar">
-										<c:param name="tipo" value="HighSpeed" />
+										<c:param name="tipo" value="HIGH_SPEED" />
 										<c:param name="id" value="${usuario.id}" />
 									</c:url> <a href="${listarHighSpeedUrl}" title="Listar High Speed">Listar High Speed 
 								</a>
@@ -59,7 +59,7 @@
 							
 							<td colspan="2">
 								<c:url var="listarHighAccelerationUrl" value="/events/measurement/listar">
-									<c:param name="tipo" value="HighAcceleration" />
+									<c:param name="tipo" value="HIGH_ACCELERATION" />
 									<c:param name="id" value="${usuario.id}" />
 								</c:url> <a href="${listarHighAccelerationUrl}" title="Listar High Acceleration">Listar High Acceleration 
 								</a>
@@ -67,14 +67,14 @@
 							
 							<td colspan="2">
 								<c:url var="listarHighDecelerationUrl" value="/events/measurement/listar">
-									<c:param name="tipo" value="HighDeceleration" />
+									<c:param name="tipo" value="HIGH_DECELERATION" />
 									<c:param name="id" value="${usuario.id}" />
 								</c:url> <a href="${listarHighDecelerationUrl}" title="Listar High Deceleration">Listar High Deceleration 
 							</a></td>
 							
 							<td colspan="2">
 								<c:url var="listarHighHeartRateUrl" value="/events/measurement/listar">
-									<c:param name="tipo" value="HighHeartRate" />
+									<c:param name="tipo" value="HIGH_HEART_RATE" />
 									<c:param name="id" value="${usuario.id}" />
 								</c:url> <a href="${listarHighHeartRateUrl}" title="Listar High Heart Rate">Listar High Heart Rate 
 							</a></td>
