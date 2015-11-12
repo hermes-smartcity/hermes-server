@@ -16,7 +16,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 public class CustomGeometrySerializer extends JsonSerializer<Geometry> /*implements Loggable*/ {
 
-	private static GeometryJSON gjson = new GeometryJSON();
+	private static GeometryJSON gjson = new GeometryJSON(8);
 
 	public String serialize(Geometry value) {
 
