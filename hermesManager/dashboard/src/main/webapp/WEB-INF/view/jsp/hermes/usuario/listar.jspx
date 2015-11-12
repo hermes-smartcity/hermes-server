@@ -42,6 +42,9 @@
 						<th colspan="2">
 							<!-- c -->
 						</th>
+						<th colspan="2">
+							<!-- c -->
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -90,6 +93,13 @@
 									<c:param name="id" value="${usuario.id}" />
 								</c:url> <a href="${listarDataSectionUrl}" title="Listar Data Section">Listar Data Section
 							</a></td>
+							
+							<td colspan="2">								
+								<c:url var="listarDriverFeaturesUrl" value="/events/driverFeatures/listar">
+									<c:param name="id" value="${usuario.id}" />
+								</c:url> <a href="${listarDriverFeaturesUrl}" title="Listar Data Section">Listar Driver Features
+							</a></td>
+						
 						
 							</tr>
 					</c:forEach>

@@ -30,7 +30,7 @@
  
 	<div class="col-lg-8"  ng-app="driverFeaturesApp" ng-cloak="">
 	
-		<div ng-controller="DriverFeaturessController" ng-init="getDriverFeaturess()">
+		<div ng-controller="DriversFeaturesController" ng-init="getDriverFeaturess()">
 			
 			
 			<!-- Configurar pestanas -->
