@@ -69,7 +69,7 @@
 				
 				<!-- Lectura de eventos eventManager properties -->
 				<url.eventos>${production.url.eventos}</url.eventos>
-				
+				<log4j.appender.logfile.File>hermes-dashboard.log</log4j.appender.logfile.File>
 			</properties>
 		</profile>
 		<profile>
@@ -94,6 +94,7 @@
 				
 				<!-- Lectura de eventos eventManager properties -->
 				<url.eventos>${production.url.eventos}</url.eventos>
+				<log4j.appender.logfile.File>/var/log/tomcat7/hermes-dashboard.log</log4j.appender.logfile.File>
 				
 			</properties>
 		</profile>
