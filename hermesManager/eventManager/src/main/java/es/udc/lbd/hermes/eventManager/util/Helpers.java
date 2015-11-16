@@ -4,29 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 
 import es.udc.lbd.hermes.eventManager.json.RoadSectionPoint;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyDataSection;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyDriverFeatures;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyHighAcceleration;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyHighDeceleration;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyHighHeartRate;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyHighSpeed;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyVehicleLocation;
-import es.udc.lbd.hermes.model.events.EventType;
-import es.udc.lbd.hermes.model.events.dataSection.DataSection;
-import es.udc.lbd.hermes.model.events.driverFeatures.DriverFeatures;
-import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
-import es.udc.lbd.hermes.model.events.measurement.Measurement;
-import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 
 public class Helpers {
 	public static Geometry wktToGeometry(String wktPoint) {

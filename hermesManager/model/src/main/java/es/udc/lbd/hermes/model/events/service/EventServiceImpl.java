@@ -1,6 +1,5 @@
 package es.udc.lbd.hermes.model.events.service;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;

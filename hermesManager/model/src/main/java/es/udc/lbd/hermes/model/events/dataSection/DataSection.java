@@ -17,7 +17,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.LineString;

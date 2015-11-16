@@ -1,7 +1,6 @@
 package es.udc.lbd.hermes.model.events.driverFeatures;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,18 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Type;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.vividsolutions.jts.geom.LineString;
-
 import es.udc.lbd.hermes.model.usuario.Usuario;
-import es.udc.lbd.hermes.model.util.jackson.CustomGeometrySerializer;
-import es.udc.lbd.hermes.model.util.jackson.CustomMultiLineStringDeserializer;
 
 @Entity
 @SequenceGenerator(name = "xeradorId", sequenceName = "driverFeatures_id_seq")
