@@ -1,5 +1,8 @@
 package es.udc.lbd.hermes.model.usuario.service;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public Usuario getBySourceId(String sourceId) {
+		System.out.println(" --------------------------- " +xerarHash("cristinacmp1988@gmail.com"));
 		return usuarioDao.findBySourceId(sourceId);
 	}
+	
+	private String xerarHash(String cadea){
+		try {
+			cadea = "cristinacmp1988@gmail.com";
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(cadea.getBytes("UTF-8"));
+
+			String sret = "";
+			for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xFF & hash[i]);
+                if (hex.length() == 1) {
+                    sret += "0";
+                }
+                sret += hex;
+            }			
+			return sret;
+		} catch (Exception e) {
+//			logger.error("Excepción xerarHash ",e);
+			return null;
+		}
+	}
+	
 }
