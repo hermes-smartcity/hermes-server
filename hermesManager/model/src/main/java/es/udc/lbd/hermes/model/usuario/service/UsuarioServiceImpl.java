@@ -54,15 +54,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public Usuario getBySourceId(String sourceId) {
-		System.out.println(" --------------------------- " +xerarHash("cristinacmp1988@gmail.com"));
+		System.out.println(" --------------------------- " +generarHash("cristinacmp1988@gmail.com"));
 		return usuarioDao.findBySourceId(sourceId);
 	}
 	
-	private String xerarHash(String cadea){
+	private String generarHash(String cadena){
 		try {
-			cadea = "cristinacmp1988@gmail.com";
+			cadena = "cristinacmp1988@gmail.com";
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] hash = digest.digest(cadea.getBytes("UTF-8"));
+			byte[] hash = digest.digest(cadena.getBytes("UTF-8"));
 
 			String sret = "";
 			for (int i = 0; i < hash.length; i++) {
