@@ -74,8 +74,7 @@ public class EventProcessor extends Thread {
 		logger.info("Procesando eventos");
 		EventParser eventParser = new EventParser();
 		
-		while ((chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {					
-		
+		while ((chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {				
 			try {							
 				Event event = eventParser.parse(chunk);				
 				procesarEvento(event);				
@@ -91,7 +90,7 @@ public class EventProcessor extends Thread {
 	// Almacenamos los diferentes tipos de eventos en la BD
 	private void procesarEvento(Event event){	
 		
-		if(event.getEventType()!=null){
+		if(event.getEventType()!=null && EventType.getTipo((String) event.getEventType())!=null){			
 			EventType tipoEvento = EventType.getTipo((String) event.getEventType());
 			EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
 			estrategia.processEvent(event);
