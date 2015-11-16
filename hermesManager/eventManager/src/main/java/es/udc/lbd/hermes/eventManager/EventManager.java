@@ -5,7 +5,6 @@ import java.util.concurrent.Semaphore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 
 

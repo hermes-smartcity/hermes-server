@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vividsolutions.jts.geom.LineString;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
@@ -49,13 +48,7 @@ public class DataSectionEventStrategy extends EventStrategy {
 			dataSectionService.create(dataSection, event.getSourceId());
 		} else {
 			EventParser parser = new EventParser();
-			String eventAsString;
-			try {
-				eventAsString= parser.prettyPrint(event);
-			} catch (JsonProcessingException e) {
-				eventAsString = event.toString();
-				logger.error(e.getLocalizedMessage(), e);
-			}
+			String eventAsString = parser.prettyPrint(event);
 			logger.warn("Evento descartado. DataSection con un único punto." + eventAsString);
 		}
 		eventService.create(event.getTimestamp(),event.getEventId());		

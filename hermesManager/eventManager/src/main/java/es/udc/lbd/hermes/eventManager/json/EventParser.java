@@ -3,6 +3,9 @@ package es.udc.lbd.hermes.eventManager.json;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
@@ -11,7 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 public class EventParser {
-	ObjectMapper mapper;		
+	private ObjectMapper mapper;
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	public EventParser() {
 		mapper = new ObjectMapper();
@@ -31,7 +35,14 @@ public class EventParser {
 		return mapper.readValue(str, Event.class);
 	}
 	
-	public String prettyPrint(Event event) throws JsonProcessingException {
-		return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);		
+	public String prettyPrint(Event event) {
+		String eventAsString;
+		try {
+			eventAsString= mapper.writerWithDefaultPrettyPrinter().writeValueAsString(event);
+		} catch (JsonProcessingException e) {
+			logger.error(e.getLocalizedMessage(), e);
+			eventAsString = event.toString();
+		}
+		return eventAsString;		
 	}
 }
