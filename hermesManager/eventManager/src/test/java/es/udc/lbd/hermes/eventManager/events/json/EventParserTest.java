@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.EventParser;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyStepsData;
 
 public class EventParserTest {
 
@@ -134,6 +135,24 @@ public class EventParserTest {
 			Event event = parser.parse(this.getClass().getResourceAsStream("/datasection.json"));
 			String prettyEvent = parser.prettyPrint(event);
 			System.out.println(prettyEvent);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+
+	@Test
+	public void testStepsData() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/stepsdata.json"));			
+			System.out.println("ZtreamyStepsData. Number of steps: "+((ZtreamyStepsData)event.getEventData()).getStepsList().size());
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());

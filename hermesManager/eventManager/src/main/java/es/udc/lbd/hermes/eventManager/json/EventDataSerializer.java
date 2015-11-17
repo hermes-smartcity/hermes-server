@@ -23,6 +23,8 @@ public class EventDataSerializer extends StdSerializer<EventData> {
 		registerEventType(ZtreamyHighHeartRate.class, "High Heart Rate");
 		registerEventType(ZtreamyDriverFeatures.class, "Driver Features");
 		registerEventType(ZtreamyDataSection.class, "Data Section");
+		// TODO: Uncomment when the data in the stream is correct		
+		//registerEventType(ZtreamyStepsData.class, "Steps Data");
 	}
 	
 	void registerEventType(Class<? extends EventData> eventTypeClass, String uniqueName) {
