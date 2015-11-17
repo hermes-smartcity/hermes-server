@@ -40,6 +40,10 @@ measurementApp.controller('MeasurementsController', [ '$scope', '$http',
 		
 		
 		function recuperarEventos(urlGet){
+			var mystyles = {
+				    color: 'red',
+				    fillOpacity: 0.1
+				};
 			$http.get(urlGet).success(function(data) {
 				$scope.measurements = data;
 				
@@ -53,7 +57,8 @@ measurementApp.controller('MeasurementsController', [ '$scope', '$http',
 					///Convierto el punto que quiero pintar para tener su lat y log
 					var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 					//Añado al mapa el punto
-					L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
+					var circle = L.circle(latlng, 5, mystyles).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
+//					L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 				});
 			});
 		}

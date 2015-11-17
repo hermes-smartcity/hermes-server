@@ -53,13 +53,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public Usuario getBySourceId(String sourceId) {
-		System.out.println(" -----********" +generarHash("cristinacmp1988@gmail.com"));
 		return usuarioDao.findBySourceId(sourceId);
 	}
 	
 	private String generarHash(String cadena){
 	
-			cadena = "cristinacmp1988@gmail.com";
+			cadena = "cristinacmp1988";
 			String hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
 			return hash;
 	}

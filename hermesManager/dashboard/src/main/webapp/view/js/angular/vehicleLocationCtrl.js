@@ -36,9 +36,14 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 			}
 			
 			function recuperarEventos(urlGet) {
+				var mystyles = {
+					    color: 'red',
+					    fillOpacity: 0.1
+					};
+				
 				$http.get(urlGet).success(function(data) {
 					$scope.vehicleLocations = data;
-					
+										
 					var i = 0;
 //					//Este es asincrono, se cargan a la vez, no espera q se cargue el anterior
 					//Recorro el array geojson de cada uno de los vehicleLocations
@@ -52,7 +57,8 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 						var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 						
 						//Añado al mapa el punto
-						L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
+						var circle = L.circle(latlng, 5, mystyles).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
+//						L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 					});
 				});
 			}
