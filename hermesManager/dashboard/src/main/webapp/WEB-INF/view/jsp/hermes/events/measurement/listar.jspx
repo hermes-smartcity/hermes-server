@@ -46,7 +46,7 @@
 					<li class="pestanas ficha activa">
 						<ol class="pestanas">
 
-							<div style="height: 300px;" id="map"></div>
+							<div id="map"></div>
 
 
 						</ol>

@@ -1,7 +1,6 @@
 @import url("pestanas.css");
 @import url("tablas.css");
 @import url("../jquery-ui.min.css");
-@import url("mensaxesPendentes.css");
 
 /* Leaftlet */
 @import url("../leaflet.css");
@@ -125,6 +124,11 @@ td.categoriaver a{
 fieldset table.alternable {
 	margin: 10px;
 	width: 98%;
+}
+
+#map{
+	height:750px;
+	width: 100%;
 }
  
 
