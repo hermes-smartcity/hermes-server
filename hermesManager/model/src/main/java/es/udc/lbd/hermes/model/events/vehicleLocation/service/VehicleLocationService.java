@@ -2,6 +2,8 @@ package es.udc.lbd.hermes.model.events.vehicleLocation.service;
 
 import java.util.List;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 
 public interface VehicleLocationService {
@@ -15,6 +17,8 @@ public interface VehicleLocationService {
 	public void delete(Long id);
 	
 	public List<VehicleLocation> obterVehicleLocations();
+	
+	public List<VehicleLocation> obterVehicleLocationsByBounds(Geometry bounds);
 	
 	public List<VehicleLocation> obterVehicleLocationsSegunUsuario(Long idUsuario);
 }
