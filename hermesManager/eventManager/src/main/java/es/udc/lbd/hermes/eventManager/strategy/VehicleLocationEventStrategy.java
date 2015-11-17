@@ -7,11 +7,11 @@ import com.vividsolutions.jts.geom.Point;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyVehicleLocation;
-import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
+import es.udc.lbd.hermes.model.util.HelpersModel;
 
 @Component
 public class VehicleLocationEventStrategy extends EventStrategy {
@@ -24,12 +24,13 @@ public class VehicleLocationEventStrategy extends EventStrategy {
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyVehicleLocation ztreamyVehicleLocation = (ZtreamyVehicleLocation) event.getEventData();
 		VehicleLocation vehicleLocation = new VehicleLocation();	
-		Geometry punto = Helpers.prepararPunto(ztreamyVehicleLocation.getLatitude(), ztreamyVehicleLocation.getLongitude());
+		Geometry punto = HelpersModel.prepararPunto(ztreamyVehicleLocation.getLatitude(), ztreamyVehicleLocation.getLongitude());
 		vehicleLocation.setPosition((Point)punto);
 		vehicleLocation.setEventId(event.getEventId());
 		
 		vehicleLocation.setTimestamp(event.getTimestamp());
 		vehicleLocationService.create(vehicleLocation, event.getSourceId());
+		
 		// Ultimo evento procesado
 		eventService.create(event.getTimestamp(),event.getEventId());
 	}

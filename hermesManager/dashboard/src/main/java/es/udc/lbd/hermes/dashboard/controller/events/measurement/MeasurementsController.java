@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 
 @RestController
@@ -34,6 +35,17 @@ public class MeasurementsController extends MainResource {
 	@RequestMapping(value="/json/measurements", method = RequestMethod.GET)
 	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo) {
 		return measurementServicio.obterMeasurementsSegunTipo(tipo);
+
+	}
+	
+	@RequestMapping(value="/json/measurementsByBounds", method = RequestMethod.GET)
+	public List<Measurement> getMeasurementsByBounds(
+			@RequestParam(required = true) MeasurementType tipo,
+			@RequestParam(value = "wnLng", required = true) Double wnLng,
+			@RequestParam(value = "wnLat", required = true) Double wnLat,
+			@RequestParam(value = "esLng", required = true) Double esLng, 
+			@RequestParam(value = "esLat", required = true) Double esLat) {
+		return measurementServicio.obterMeasurementsSegunTipoByBounds(tipo, wnLng, wnLat, esLng, esLat);
 
 	}
 

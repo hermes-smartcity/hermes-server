@@ -1,19 +1,26 @@
 package es.udc.lbd.hermes.model.events.vehicleLocation.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.geotools.geometry.jts.JTSFactoryFinder;
+import org.hibernate.ejb.criteria.ParameterContainer.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
 
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
-
+import es.udc.lbd.hermes.model.util.HelpersModel;
 
 
 
@@ -72,8 +79,11 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<VehicleLocation> obterVehicleLocationsByBounds(Geometry bounds) {
-		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsByBounds(bounds);
+	public List<VehicleLocation> obterVehicleLocationsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat) {
+		List<VehicleLocation> vehicleLocations = new ArrayList<>();
+			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+			vehicleLocations = vehicleLocationDao.obterVehicleLocationsByBounds(polygon);
+		
 		return vehicleLocations;
 	}
 	

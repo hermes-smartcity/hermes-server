@@ -1,15 +1,20 @@
 package es.udc.lbd.hermes.model.events.dataSection.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.dao.DataSectionDao;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
+import es.udc.lbd.hermes.model.util.HelpersModel;
 
 
 @Service("dataSectionService")
@@ -56,6 +61,15 @@ public class DataSectionServiceImpl implements DataSectionService {
 	@Transactional(readOnly = true)
 	public List<DataSection> obterDataSections() {
 		List<DataSection> dataSections = dataSectionDao.obterDataSections();
+		return dataSections;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<DataSection> obterDataSectionsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat) {
+		List<DataSection> dataSections = new ArrayList<>();
+			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+			dataSections = dataSectionDao.obterDataSectionsByBounds(polygon);
+		
 		return dataSections;
 	}
 	

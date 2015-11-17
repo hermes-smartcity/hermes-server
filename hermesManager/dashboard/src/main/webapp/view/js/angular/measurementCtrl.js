@@ -7,18 +7,43 @@ measurementApp.controller('MeasurementsController', [ '$scope', '$http',
 	function($scope, $http) {
 		$scope.getMeasurements = function() {
 			var tipoMeasurement = getUrlParameter("tipo");
+
 			var idUsuario = getUrlParameter("idUsuario");
 			var urlGet = "json/measurements?tipo="+tipoMeasurement;
 			if(idUsuario != null)
 				urlGet = "json/measurementsByUsuario?tipo="+tipoMeasurement+"&idUsuario="+idUsuario;
 				
+			var map = L.map('map');
+			map.fitBounds([
+			               [ -43.334162, -8.413220],
+			               [-43.334162, -8.413220]
+			           ]);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
+			
+			recuperarEventos(urlGet);
+			map.on('dragend', onChangeBounds);
+			map.on('zoomend', onChangeBounds);
+			
+			function onChangeBounds(e) {
+				var bounds = map.getBounds();				
+				var esLng = bounds.getSouthEast().lng;
+				var esLat = bounds.getSouthEast().lat;
+				var wnLng = bounds.getNorthWest().lng;
+				var wnLat = bounds.getNorthWest().lat;
+			
+				var urlGet = "json/measurementsByBounds?tipo="+tipoMeasurement+"&wnLng="+wnLng+"&wnLat="+wnLat+"&esLng="+esLng+"&esLat="+esLat;
+				if(idUsuario != null)
+					urlGet = "json/measurementsByUsuarioByBounds&bounds="+poligono+"?idUsuario="+idUsuario;
+				
+				recuperarEventos(urlGet);
+			}
 		
+		
+		function recuperarEventos(urlGet){
 			$http.get(urlGet).success(function(data) {
 				$scope.measurements = data;
 				
-				var map = L.map('map').setView([51.505, -0.09], 13);
-				L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
-			
+				
 				angular.forEach($scope.measurements, function(value, key) {
 					//Parseo la fecha
 					var timestamp = value.timestamp;
@@ -32,5 +57,5 @@ measurementApp.controller('MeasurementsController', [ '$scope', '$http',
 				});
 			});
 		}
-		
+		}
 	} ]);

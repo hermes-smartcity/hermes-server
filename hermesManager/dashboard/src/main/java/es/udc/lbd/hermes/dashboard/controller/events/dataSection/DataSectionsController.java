@@ -36,5 +36,15 @@ public class DataSectionsController extends MainResource {
 		return dataSectionServicio.obterDataSections();
 
 	}
+	
+	@RequestMapping(value="/json/dataSectionsByBounds", method = RequestMethod.GET)
+	public List<DataSection> getVehicleLocationsByBounds(
+			@RequestParam(value = "wnLng", required = true) Double wnLng,
+			@RequestParam(value = "wnLat", required = true) Double wnLat,
+			@RequestParam(value = "esLng", required = true) Double esLng, 
+			@RequestParam(value = "esLat", required = true) Double esLat) {
+		return dataSectionServicio.obterDataSectionsByBounds(wnLng, wnLat, esLng, esLat);
+
+	}
 
 }

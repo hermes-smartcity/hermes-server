@@ -1,16 +1,21 @@
 package es.udc.lbd.hermes.model.events.measurement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.dao.MeasurementDao;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
+import es.udc.lbd.hermes.model.util.HelpersModel;
 
 
 @Service("measurementService")
@@ -59,6 +64,15 @@ public class MeasurementServiceImpl implements MeasurementService {
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo) {
 		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipo(tipo);
 		return measurements;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Measurement> obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Double wnLng, Double wnLat, Double esLng, Double esLat) {
+		List<Measurement> vehicleLocations = new ArrayList<>();
+			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+			vehicleLocations = measurementDao.obterMeasurementsSegunTipoByBounds(tipo, polygon);
+		
+		return vehicleLocations;
 	}
 	
 	@Transactional(readOnly = true)

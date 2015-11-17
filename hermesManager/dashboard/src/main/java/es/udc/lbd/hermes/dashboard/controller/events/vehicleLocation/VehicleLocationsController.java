@@ -1,7 +1,6 @@
 package es.udc.lbd.hermes.dashboard.controller.events.vehicleLocation;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,18 @@ public class VehicleLocationsController extends MainResource {
 	}
 	
 	@RequestMapping(value="/json/vehicleLocations", method = RequestMethod.GET)
-	public List<VehicleLocation> getVehicleLocations() {
+	public List<VehicleLocation> getVehicleLocations() {      
 		return vehicleLocationServicio.obterVehicleLocations();
+
+	}
+	
+	@RequestMapping(value="/json/vehicleLocationsByBounds", method = RequestMethod.GET)
+	public List<VehicleLocation> getVehicleLocationsByBounds(
+			@RequestParam(value = "wnLng", required = true) Double wnLng,
+			@RequestParam(value = "wnLat", required = true) Double wnLat,
+			@RequestParam(value = "esLng", required = true) Double esLng, 
+			@RequestParam(value = "esLat", required = true) Double esLat) {
+		return vehicleLocationServicio.obterVehicleLocationsByBounds(wnLng, wnLat, esLng, esLat);
 
 	}
 

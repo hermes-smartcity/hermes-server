@@ -3,6 +3,7 @@ package es.udc.lbd.hermes.model.events.dataSection.service;
 import java.util.List;
 
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 
 public interface DataSectionService {
 
@@ -15,6 +16,8 @@ public interface DataSectionService {
 	public void delete(Long id);
 
 	public List<DataSection> obterDataSections();
+	
+	public List<DataSection> obterDataSectionsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat);
 	
 	public List<DataSection> obterDataSectionsSegunUsuario(Long idUsuario);
 }

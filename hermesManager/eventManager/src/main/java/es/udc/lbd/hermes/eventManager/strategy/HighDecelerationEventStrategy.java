@@ -7,12 +7,12 @@ import com.vividsolutions.jts.geom.Point;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHighDeceleration;
-import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
+import es.udc.lbd.hermes.model.util.HelpersModel;
 
 @Component
 public class HighDecelerationEventStrategy extends EventStrategy {
@@ -25,7 +25,7 @@ public class HighDecelerationEventStrategy extends EventStrategy {
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyHighDeceleration ztreamyHighDeceleration = (ZtreamyHighDeceleration) event.getEventData();
 		Measurement measurement = new Measurement();
-		Geometry punto = Helpers.prepararPunto(ztreamyHighDeceleration.getLatitude(),ztreamyHighDeceleration.getLongitude());
+		Geometry punto = HelpersModel.prepararPunto(ztreamyHighDeceleration.getLatitude(),ztreamyHighDeceleration.getLongitude());
 		measurement.setPosition((Point)punto);
 		measurement.setValue(ztreamyHighDeceleration.getValue());
 		measurement.setTipo(MeasurementType.HIGH_DECELERATION);
