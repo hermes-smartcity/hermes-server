@@ -1,10 +1,9 @@
 package es.udc.lbd.hermes.model.usuario.service;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,29 +53,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public Usuario getBySourceId(String sourceId) {
-		System.out.println(" --------------------------- " +generarHash("cristinacmp1988@gmail.com"));
+		System.out.println(" -----********" +generarHash("cristinacmp1988@gmail.com"));
 		return usuarioDao.findBySourceId(sourceId);
 	}
 	
 	private String generarHash(String cadena){
-		try {
+	
 			cadena = "cristinacmp1988@gmail.com";
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] hash = digest.digest(cadena.getBytes("UTF-8"));
-
-			String sret = "";
-			for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xFF & hash[i]);
-                if (hex.length() == 1) {
-                    sret += "0";
-                }
-                sret += hex;
-            }			
-			return sret;
-		} catch (Exception e) {
-//			logger.error("Excepción xerarHash ",e);
-			return null;
-		}
+			String hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
+			return hash;
 	}
 	
 }

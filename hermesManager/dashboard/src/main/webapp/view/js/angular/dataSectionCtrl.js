@@ -58,7 +58,7 @@ dataSectionApp.controller('DataSectionsController', [ '$scope', '$http',
 						var myLayer = L.geoJson().addTo(map);
 						L.geoJson(myLines, {
 						    style: myStyle
-						}).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime).openPopup();;
+						}).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 						/**/
 					});
 				});
