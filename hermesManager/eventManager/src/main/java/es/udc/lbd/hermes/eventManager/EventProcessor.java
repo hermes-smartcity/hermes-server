@@ -12,7 +12,6 @@ import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import es.udc.lbd.hermes.eventManager.factory.EventFactory;
 import es.udc.lbd.hermes.eventManager.json.Event;
@@ -29,6 +28,7 @@ public class EventProcessor extends Thread {
 	private static final String URI = ReadPropertiesFile.getUrlEventos();
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private Client client;
+	private EventParser eventParser = new EventParser();
 
 	// Comportamiento del thread
 	public void run() {
@@ -75,7 +75,6 @@ public class EventProcessor extends Thread {
 	
 	// Almacenamos los diferentes tipos de eventos en la BD
 	private void procesaUnEvento(String chunk) {
-		EventParser eventParser = new EventParser();
 		
 		try {
 			Event event = eventParser.parse(chunk);
