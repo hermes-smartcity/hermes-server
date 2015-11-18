@@ -58,8 +58,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
   	
   	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
   	
-	<!-- Bean para cargar os obxectos a nivel de aplicación -->
-     <bean id="pluginLoader" class="es.udc.lbd.hermes.dashboard.controller.util.PluginLoader"/>	
      
 	<!-- Subida de ficheiros. Hai que activar a dependencia commons-fileupload 
 		no pom 

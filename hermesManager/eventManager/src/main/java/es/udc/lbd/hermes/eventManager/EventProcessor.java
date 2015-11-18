@@ -23,13 +23,14 @@ import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 
-//Contexto para el patron strategy
-@Component
 public class EventProcessor extends Thread {
 
 	private static final String URI = ReadPropertiesFile.getUrlEventos();
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
+	public EventProcessor () {
+		logger.warn("EventProcessor created");
+	}
 	// Escucha los eventos que se le envían en tiempo real
 	public void escucharEventos() {
 		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
