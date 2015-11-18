@@ -37,8 +37,6 @@ public class EventFactory {
 		try {
 			if (tipoEvento!= null) {
 				result = registry.get(tipoEvento);
-			} else {
-				System.out.println("No está llegando ningún evento que especifique su Event-Type");
 			}
 		} catch (NullPointerException e) {
 //			 logger.error("Excepción recuperando tipo de evento ",e);	

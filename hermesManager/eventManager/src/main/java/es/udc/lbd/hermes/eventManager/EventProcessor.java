@@ -2,6 +2,7 @@ package es.udc.lbd.hermes.eventManager;
 
 import java.io.IOException;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
@@ -27,6 +28,7 @@ public class EventProcessor extends Thread {
 
 	private static final String URI = ReadPropertiesFile.getUrlEventos();
 	private Logger logger = LoggerFactory.getLogger(getClass());
+	private Client client;
 
 	// Comportamiento del thread
 	public void run() {
@@ -35,43 +37,73 @@ public class EventProcessor extends Thread {
 
 	// Escucha los eventos que se le envían en tiempo real
 	public void escucharEventos() {
-		String chunk;
+		long timeToWait = 10000;
 		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
-		EventoProcesado eventoProcesado = eventService.obterEventoProcesado();
-		final Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
-		final Response response = client.target(URI + eventoProcesado.getEventId()).request().accept("application/x-ldjson").get();
-		logger.info("Escuchando eventos en tiempo real");
-		final ChunkedInput<String> chunkedInput = response.readEntity(new GenericType<ChunkedInput<String>>() {});
-		logger.info("Procesando eventos");
-		EventParser eventParser = new EventParser();
-		while ((chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {
-			try {
-				Event event = eventParser.parse(chunk);
-				if (event.getEventType() != null) {
-					procesarEvento(event);
-				} else {
-					logger.warn("EventType is null", chunk);
-				}
-			} catch (IOException e) {
-				logger.error("Error convirtiendo chunk a JSON", e);
-				e.printStackTrace();
+		client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+		do {
+			EventoProcesado eventoProcesado = eventService.obterEventoProcesado();
+			Response response = establecerConexion(eventoProcesado.getEventId());			
+			if (response != null) {
+				logger.warn("Connection acquired!");
+				timeToWait = 10000;
+				procesaEventos(response);				
 			}
+			if (!Thread.currentThread().isInterrupted()) {
+				waitBeforeReconnect(timeToWait);
+				timeToWait *= 2;
+			}
+		} while (!Thread.currentThread().isInterrupted());
+	}
+	
+	private Response establecerConexion(String lastEventId) {
+		Response result = null;
+		try {
+			result = client.target(URI + lastEventId).request().accept("application/x-ldjson").get();
+		} catch (ProcessingException e) {
+			logger.warn(e.getLocalizedMessage(), e);
 		}
+		return result;
+	}
+	
+	private void procesaEventos(Response response) {
+		String chunk;		
+		ChunkedInput<String> chunkedInput = response.readEntity(new GenericType<ChunkedInput<String>>() {});
+		while ((chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {
+				procesaUnEvento(chunk);
+		}		
 	}
 	
 	// Almacenamos los diferentes tipos de eventos en la BD
-	private void procesarEvento(Event event) {
-
-		EventType tipoEvento = EventType.getTipo((String) event.getEventType());
-		EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
-		if (estrategia != null) {
-			estrategia.processEvent(event);
-			logger.info("Guardado el evento con Event-Type: " + tipoEvento.getName());
-		} else {
-			EventParser parser = new EventParser();
-			String eventAsString = parser.prettyPrint(event);
-			logger.warn("EventType desconocido\n", eventAsString);
+	private void procesaUnEvento(String chunk) {
+		EventParser eventParser = new EventParser();
+		
+		try {
+			Event event = eventParser.parse(chunk);
+			if (event.getEventType() != null) {
+				EventType tipoEvento = EventType.getTipo((String) event.getEventType());
+				EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
+				if (estrategia != null) {
+					estrategia.processEvent(event);
+					logger.info("Guardado el evento con Event-Type: " + tipoEvento.getName());
+				} else {
+					logger.warn("EventType desconocido: " + chunk);
+				}
+			} else {
+				logger.warn("EventType is null: " + chunk);
+			}
+		} catch (IOException e) {
+			logger.error("Error convirtiendo chunk a JSON", e);
+			e.printStackTrace();
 		}
-		return;
 	}
+	
+	private void waitBeforeReconnect(long timeToWait) {
+		try {
+			logger.warn("Connection failed. Trying again in " + timeToWait/1000.0 + " s");
+			sleep(timeToWait);
+		} catch (InterruptedException e) {
+			// Interrupted. Do nothing
+		}		
+	}
+	
 }
