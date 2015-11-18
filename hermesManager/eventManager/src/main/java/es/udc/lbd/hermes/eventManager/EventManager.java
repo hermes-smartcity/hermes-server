@@ -15,10 +15,6 @@ public class EventManager{
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private final Semaphore semaphore = new Semaphore(1, true);
 	private EventProcessor eventProcessor;
-
-	public EventManager(){
-		logger.warn("EventManager created");
-	}
 	
 	public void startEventProcessor() {
 		
