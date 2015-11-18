@@ -11,9 +11,13 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 			if(idUsuario != null)
 				urlGet = "json/vehicleLocationsByUsuario?"+"idUsuario="+idUsuario;
 			var map = L.map('map');
+			
+			var locations = L.layerGroup([]);
+			map.addLayer(locations);
+			
 			map.fitBounds([
-			               [ -8.413220, -43.334162],
-			               [-8.513220,  -43.454162]
+			               [ -180, -90],
+			               [180,  90]
 			           ]);
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
 			recuperarEventos(urlGet);
@@ -40,7 +44,7 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 					    color: 'red',
 					    fillOpacity: 0.1
 					};
-				
+				locations.clearLayers();
 				$http.get(urlGet).success(function(data) {
 					$scope.vehicleLocations = data;
 										
@@ -55,9 +59,9 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 						$scope.bdatetime = datevalues;
 						//Convierto el punto que quiero pintar para tener su lat y log
 						var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
-						
+
 						//Añado al mapa el punto
-						var circle = L.circle(latlng, 5, mystyles).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
+						var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 //						L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 					});
 				});
