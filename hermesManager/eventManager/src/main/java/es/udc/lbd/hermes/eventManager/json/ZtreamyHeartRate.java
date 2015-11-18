@@ -5,12 +5,12 @@ import java.util.Calendar;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ZtreamySteps {
+public class ZtreamyHeartRate {
 	@JsonProperty("timeLog")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
 	private Calendar timeLog;
-	@JsonProperty("steps")
-	private Integer steps;
+	@JsonProperty("heartRate")
+	private Integer heartRate;
 
 	public Calendar getTimeLog() {
 		return timeLog;
@@ -20,12 +20,11 @@ public class ZtreamySteps {
 		this.timeLog = timeLog;
 	}
 
-	public Integer getSteps() {
-		return steps;
+	public Integer getHeartRate() {
+		return heartRate;
 	}
 
-	public void setSteps(Integer steps) {
-		this.steps = steps;
+	public void setHeartRate(Integer heartRate) {
+		this.heartRate = heartRate;
 	}
-
 }

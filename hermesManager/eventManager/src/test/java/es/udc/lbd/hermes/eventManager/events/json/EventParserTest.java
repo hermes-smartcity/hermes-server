@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.EventParser;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyHeartRateData;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyStepsData;
 
 public class EventParserTest {
@@ -19,8 +20,6 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/vehiclelocation.json"));
-			String prettyEvent = parser.prettyPrint(event);
-			System.out.println(prettyEvent);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
@@ -38,8 +37,6 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/highspeed.json"));
-			String prettyEvent = parser.prettyPrint(event);
-			System.out.println(prettyEvent);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
@@ -57,8 +54,6 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/highacceleration.json"));
-			String prettyEvent = parser.prettyPrint(event);
-			System.out.println(prettyEvent);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
@@ -76,8 +71,6 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/highdeceleration.json"));
-			String prettyEvent = parser.prettyPrint(event);
-			System.out.println(prettyEvent);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
@@ -95,8 +88,6 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/highheartrate.json"));
-			String prettyEvent = parser.prettyPrint(event);
-			System.out.println(prettyEvent);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
@@ -114,8 +105,6 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/driverfeatures.json"));
-			String prettyEvent = parser.prettyPrint(event);
-			System.out.println(prettyEvent);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
@@ -133,8 +122,6 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/datasection.json"));
-			String prettyEvent = parser.prettyPrint(event);
-			System.out.println(prettyEvent);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
@@ -152,11 +139,40 @@ public class EventParserTest {
 		try {
 			EventParser parser = new EventParser();
 			Event event = parser.parse(this.getClass().getResourceAsStream("/stepsdata.json"));
-			if (event.getEventData() != null) {
-				System.out.println("ZtreamyStepsData. Number of steps: "+((ZtreamyStepsData)event.getEventData()).getStepsList().size());
-			} else {
-				System.out.println("ZtreamyStepsData. Not working");
-			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+
+	@Test
+	public void testSleepData() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/sleepdata.json"));
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+
+	@Test
+	public void testHeartRateData() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/heartratedata.json"));
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 			Assert.fail(e.getLocalizedMessage());
