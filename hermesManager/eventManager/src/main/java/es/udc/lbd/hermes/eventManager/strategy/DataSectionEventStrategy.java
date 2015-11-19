@@ -28,7 +28,7 @@ public class DataSectionEventStrategy extends EventStrategy {
 		DataSectionService dataSectionService = ApplicationContextProvider.getApplicationContext().getBean("dataSectionService", DataSectionService.class);		
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyDataSection ztreamyDataSection = (ZtreamyDataSection) event.getEventData();
-		if (ztreamyDataSection.getRoadSection().size() > 2) {
+		if (ztreamyDataSection.getRoadSection().size() >= 2) {
 			DataSection dataSection = new DataSection();
 			dataSection.setMinSpeed(ztreamyDataSection.getMedianSpeed());
 			dataSection.setMaxSpeed(ztreamyDataSection.getMaxSpeed());
