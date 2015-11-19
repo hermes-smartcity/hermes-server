@@ -8,9 +8,9 @@ public interface StepsDataService {
 
 	public StepsData get(Long id);
 	
-	public void create(StepsData sleepData, String sourceId);
+	public void create(StepsData stepsData, String sourceId);
 	
-	public void update(StepsData sleepData);
+	public void update(StepsData stepsData);
 	
 	public void delete(Long id);
 	
