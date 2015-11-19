@@ -2,7 +2,7 @@ package es.udc.lbd.hermes.model.events;
 
 public enum EventType {
 
-	VEHICLE_LOCATION, HIGH_SPEED, HIGH_ACCELERATION, HIGH_DECELERATION, HIGH_HEART_RATE, DATA_SECTION, DRIVER_FEATURES;
+	VEHICLE_LOCATION, HIGH_SPEED, HIGH_ACCELERATION, HIGH_DECELERATION, HIGH_HEART_RATE, DATA_SECTION, DRIVER_FEATURES, SLEEP_DATA, STEPS_DATA, HEART_RATE_DATA;
 
 	public String getName(){		
 		return this.name();
@@ -24,6 +24,12 @@ public enum EventType {
 			return DATA_SECTION;
 		case "Driver Features":
 			return DRIVER_FEATURES;
+		case "Sleep Data":
+			return SLEEP_DATA;
+		case "Steps Data":
+			return STEPS_DATA;
+		case "Heart Rate Data":
+			return HEART_RATE_DATA;
 		default:
 			return null;
 		}

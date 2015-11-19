@@ -6,10 +6,13 @@ import java.util.Map;
 import es.udc.lbd.hermes.eventManager.strategy.DataSectionEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.DriverFeaturesEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.EventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.HeartRateDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HighAccelerationEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HighDecelerationEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HighHeartRateEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HighSpeedEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.SleepDataEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.StepsDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.VehicleLocationEventStrategy;
 import es.udc.lbd.hermes.model.events.EventType;
 
@@ -26,6 +29,9 @@ public class EventFactory {
 		registry.put(EventType.HIGH_HEART_RATE, new HighHeartRateEventStrategy());
 		registry.put(EventType.DRIVER_FEATURES, new DriverFeaturesEventStrategy());
 		registry.put(EventType.DATA_SECTION, new DataSectionEventStrategy());
+		registry.put(EventType.SLEEP_DATA, new SleepDataEventStrategy());
+		registry.put(EventType.STEPS_DATA, new StepsDataEventStrategy());
+		registry.put(EventType.HEART_RATE_DATA, new HeartRateDataEventStrategy());
 	}
 
 	private EventFactory() {
@@ -34,12 +40,8 @@ public class EventFactory {
 	public static EventStrategy getStrategy(EventType tipoEvento) {
 		
 		EventStrategy result = null;
-		try {
-			if (tipoEvento!= null) {
-				result = registry.get(tipoEvento);
-			}
-		} catch (NullPointerException e) {
-//			 logger.error("Excepción recuperando tipo de evento ",e);	
+		if (tipoEvento!= null) {
+			result = registry.get(tipoEvento);
 		}
 		return result;		
 	}
