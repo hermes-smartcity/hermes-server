@@ -29,11 +29,11 @@ public class VehicleLocationsController extends MainResource {
 
 	}
 	
-	@RequestMapping(value="/json/vehicleLocations", method = RequestMethod.GET)
-	public List<VehicleLocation> getVehicleLocations() {      
-		return vehicleLocationServicio.obterVehicleLocations();
-
-	}
+//	@RequestMapping(value="/json/vehicleLocations", method = RequestMethod.GET)
+//	public List<VehicleLocation> getVehicleLocations() {    
+//		return vehicleLocationServicio.obterVehicleLocations();
+//
+//	}
 	
 	@RequestMapping(value="/json/vehicleLocationsByBounds", method = RequestMethod.GET)
 	public List<VehicleLocation> getVehicleLocationsByBounds(

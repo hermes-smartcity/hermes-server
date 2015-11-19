@@ -8,23 +8,28 @@ dataSectionApp.controller('DataSectionsController', [ '$scope', '$http',
 	
 		$scope.getDataSections = function() {
 			var idUsuario = getUrlParameter("idUsuario");
-			var urlGet = "json/dataSections";
-			if(idUsuario != null)
-				urlGet = "json/dataSectionsByUsuario?"+"idUsuario="+idUsuario;
+//			var urlGet = "json/dataSections";
+//			if(idUsuario != null)
+//				urlGet = "json/dataSectionsByUsuario?"+"idUsuario="+idUsuario;
 
 			var map = L.map('map');
+			var locations = L.layerGroup([]);
+			map.addLayer(locations);
+			
 			map.fitBounds([
-			               [-8.41167362, 43.33261859],
-			               [-10.41167362, 45.33261859]
+			               [ -180, -90],
+			               [180,  90]
 			           ]);
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
 			
-			recuperarEventos(urlGet);
-			
+//			recuperarEventos(urlGet);
+			onChangeBounds();
 			map.on('dragend', onChangeBounds);
 			map.on('zoomend', onChangeBounds);
 			
-			function onChangeBounds(e) {
+			function onChangeBounds() {
+				// Borramos los puntos cargamos con anterioridad
+				locations.clearLayers();
 				var bounds = map.getBounds();				
 				var esLng = bounds.getSouthEast().lng;
 				var esLat = bounds.getSouthEast().lat;
@@ -58,7 +63,7 @@ dataSectionApp.controller('DataSectionsController', [ '$scope', '$http',
 						var myLayer = L.geoJson().addTo(map);
 						L.geoJson(myLines, {
 						    style: myStyle
-						}).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
+						}).addTo(map).addTo(locations).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 						/**/
 					});
 				});

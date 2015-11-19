@@ -31,11 +31,11 @@ public class DataSectionsController extends MainResource {
 
 	}
 	
-	@RequestMapping(value="/json/dataSections", method = RequestMethod.GET)
-	public List<DataSection> getDataSections() {
-		return dataSectionServicio.obterDataSections();
-
-	}
+//	@RequestMapping(value="/json/dataSections", method = RequestMethod.GET)
+//	public List<DataSection> getDataSections() {
+//		return dataSectionServicio.obterDataSections();
+//
+//	}
 	
 	@RequestMapping(value="/json/dataSectionsByBounds", method = RequestMethod.GET)
 	public List<DataSection> getVehicleLocationsByBounds(

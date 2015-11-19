@@ -32,11 +32,11 @@ public class MeasurementsController extends MainResource {
 
 	}
 	
-	@RequestMapping(value="/json/measurements", method = RequestMethod.GET)
-	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo) {
-		return measurementServicio.obterMeasurementsSegunTipo(tipo);
-
-	}
+//	@RequestMapping(value="/json/measurements", method = RequestMethod.GET)
+//	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo) {
+//		return measurementServicio.obterMeasurementsSegunTipo(tipo);
+//
+//	}
 	
 	@RequestMapping(value="/json/measurementsByBounds", method = RequestMethod.GET)
 	public List<Measurement> getMeasurementsByBounds(

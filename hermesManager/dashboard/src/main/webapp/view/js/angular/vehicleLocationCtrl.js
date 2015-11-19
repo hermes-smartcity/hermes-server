@@ -7,9 +7,9 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 	function($scope, $http) {
 		$scope.getVehicleLocations = function() {
 			var idUsuario = getUrlParameter("idUsuario");
-			var urlGet = "json/vehicleLocations";
+			/*var urlGet = "json/vehicleLocations";
 			if(idUsuario != null)
-				urlGet = "json/vehicleLocationsByUsuario?"+"idUsuario="+idUsuario;
+				urlGet = "json/vehicleLocationsByUsuario?"+"idUsuario="+idUsuario;*/
 			var map = L.map('map');
 			
 			var locations = L.layerGroup([]);
@@ -20,12 +20,15 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 			               [180,  90]
 			           ]);
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
-			recuperarEventos(urlGet);
+			onChangeBounds();
+//			recuperarEventos(urlGet);
 			
 			map.on('dragend', onChangeBounds);
 			map.on('zoomend', onChangeBounds);
 			
-			function onChangeBounds(e) {
+			function onChangeBounds() {
+				// Borramos los puntos cargamos con anterioridad
+				locations.clearLayers();
 				var bounds = map.getBounds();				
 				var esLng = bounds.getSouthEast().lng;
 				var esLat = bounds.getSouthEast().lat;
@@ -44,7 +47,7 @@ vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
 					    color: 'red',
 					    fillOpacity: 0.1
 					};
-				locations.clearLayers();
+				
 				$http.get(urlGet).success(function(data) {
 					$scope.vehicleLocations = data;
 										

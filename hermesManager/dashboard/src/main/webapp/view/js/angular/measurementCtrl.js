@@ -9,22 +9,28 @@ measurementApp.controller('MeasurementsController', [ '$scope', '$http',
 			var tipoMeasurement = getUrlParameter("tipo");
 
 			var idUsuario = getUrlParameter("idUsuario");
-			var urlGet = "json/measurements?tipo="+tipoMeasurement;
-			if(idUsuario != null)
-				urlGet = "json/measurementsByUsuario?tipo="+tipoMeasurement+"&idUsuario="+idUsuario;
+//			var urlGet = "json/measurements?tipo="+tipoMeasurement;
+//			if(idUsuario != null)
+//				urlGet = "json/measurementsByUsuario?tipo="+tipoMeasurement+"&idUsuario="+idUsuario;
 				
 			var map = L.map('map');
+			var locations = L.layerGroup([]);
+			map.addLayer(locations);
+			
 			map.fitBounds([
-			               [ -43.334162, -8.413220],
-			               [-43.334162, -8.413220]
+			               [ -180, -90],
+			               [180,  90]
 			           ]);
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
 			
-			recuperarEventos(urlGet);
+//			recuperarEventos(urlGet);
+			onChangeBounds();
 			map.on('dragend', onChangeBounds);
 			map.on('zoomend', onChangeBounds);
 			
-			function onChangeBounds(e) {
+			function onChangeBounds() {
+				// Borramos los puntos cargamos con anterioridad
+				locations.clearLayers();
 				var bounds = map.getBounds();				
 				var esLng = bounds.getSouthEast().lng;
 				var esLat = bounds.getSouthEast().lat;
@@ -57,7 +63,7 @@ measurementApp.controller('MeasurementsController', [ '$scope', '$http',
 					///Convierto el punto que quiero pintar para tener su lat y log
 					var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 					//Añado al mapa el punto
-					var circle = L.circle(latlng, 5, mystyles).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
+					var circle = L.circle(latlng, 5, mystyles).addTo(map).addTo(locations).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 //					L.marker(latlng).addTo(map).bindPopup('EventId: '+value.eventId+' Fecha: '+$scope.bdatetime);
 				});
 			});
