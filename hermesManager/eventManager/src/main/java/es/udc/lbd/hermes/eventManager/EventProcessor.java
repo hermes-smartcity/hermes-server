@@ -6,10 +6,12 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.message.DeflateEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +41,7 @@ public class EventProcessor extends Thread {
 	public void escucharEventos() {
 		long timeToWait = 10000;
 		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
-		client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+		client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();		
 		do {
 			EventoProcesado eventoProcesado = eventService.obterEventoProcesado();
 			Response response = establecerConexion(eventoProcesado.getEventId());			
@@ -58,7 +60,7 @@ public class EventProcessor extends Thread {
 	private Response establecerConexion(String lastEventId) {
 		Response result = null;
 		try {
-			result = client.target(URI + lastEventId).request().accept("application/x-ldjson").get();
+			result = client.target(URI + lastEventId).register(DeflateEncoder.class).request().accept("application/x-ldjson").header(HttpHeaders.ACCEPT_ENCODING, "deflate").get();
 		} catch (ProcessingException e) {
 			logger.warn(e.getLocalizedMessage(), e);
 		}
