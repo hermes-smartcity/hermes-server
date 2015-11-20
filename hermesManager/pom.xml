@@ -68,7 +68,7 @@
 				<jdbcDriver.className>${development.jdbcDriver.className}</jdbcDriver.className>
 				
 				<!-- Lectura de eventos eventManager properties -->
-				<url.eventos>${production.url.eventos}</url.eventos>
+				<url.eventos>${development.url.eventos}</url.eventos>
 				<log4j.appender.logfile.File>hermes-dashboard.log</log4j.appender.logfile.File>
 			</properties>
 		</profile>
