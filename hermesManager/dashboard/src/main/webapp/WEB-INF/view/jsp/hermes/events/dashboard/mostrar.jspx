@@ -38,7 +38,7 @@
 			<li class="pestanas pestanasFormulario">
 				<ol class="pestanas selectoresFormulario">
 					<li class="pestanas selector activa">${mapaFmt}</li>
-					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
+					<!-- <li class="pestanas selector" id="selectorF">${tablaFmt}</li> -->
 
 				</ol>
 				<ol class="pestanas fichas">
