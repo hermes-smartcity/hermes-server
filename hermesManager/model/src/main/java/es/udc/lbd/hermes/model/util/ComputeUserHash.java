@@ -69,6 +69,10 @@ public class ComputeUserHash {
 		
 		cadena = "arcos1989";
 		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
+		System.out.println("arcos1989 " + hash);
+
+		cadena = "arcos1989@gmail.com";
+		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
 		System.out.println("arcos1989@gmail.com " + hash);
 		
 		cadena = "luiss";
@@ -143,6 +147,21 @@ public class ComputeUserHash {
 		cadena = "lsf1968tv@gmail.com";
 		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
 		System.out.println("lsf1968tv@gmail.com " + hash);
-		
+
+		cadena = "jaalvarez";
+		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
+		System.out.println("jaalvarez " + hash);
+
+		cadena = "jaalvarez@us.es";
+		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
+		System.out.println("jaalvarez@us.es " + hash);		
+
+		cadena = "juan.piz";
+		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
+		System.out.println("juan.piz " + hash);		
+
+		cadena = "juan.piz@gmail.com";
+		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
+		System.out.println("juan.piz@gmail.com " + hash);		
 	}
 }
