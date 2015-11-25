@@ -26,18 +26,6 @@ public class DataSectionsController extends MainResource {
 
 	@Autowired
 	private DataSectionService dataSectionServicio;
-
-	// TODO a esta misma habria que añadir fecha
-//	@RequestMapping(value="/json/eventsByUsuario", method = RequestMethod.GET)
-//	public List<DataSection> getDataSections(@RequestParam(value = "idUsuario", required = false) Long idUsuario,			
-//			@RequestParam(value = "wnLng", required = true) Double wnLng,
-//			@RequestParam(value = "wnLat", required = true) Double wnLat,
-//			@RequestParam(value = "esLng", required = true) Double esLng, 
-//			@RequestParam(value = "esLat", required = true) Double esLat) {
-//		return dataSectionServicio.obterDataSectionsSegunUsuario(idUsuario, null, null,
-//				wnLng, wnLat,esLng, esLat);
-//
-//	}
 	
 	@RequestMapping(value="/json/dataSections", method = RequestMethod.GET)
 	public List<DataSection> getDataSections(@RequestParam(value = "idUsuario", required = false) Long idUsuario,	
@@ -53,15 +41,5 @@ public class DataSectionsController extends MainResource {
 				wnLng, wnLat,esLng, esLat);
 
 	}
-	
-//	@RequestMapping(value="/json/dataSectionsByBounds", method = RequestMethod.GET)
-//	public List<DataSection> getVehicleLocationsByBounds(
-//			@RequestParam(value = "wnLng", required = true) Double wnLng,
-//			@RequestParam(value = "wnLat", required = true) Double wnLat,
-//			@RequestParam(value = "esLng", required = true) Double esLng, 
-//			@RequestParam(value = "esLat", required = true) Double esLat) {
-//		return dataSectionServicio.obterDataSectionsByBounds(wnLng, wnLat, esLng, esLat);
-//
-//	}
 
 }

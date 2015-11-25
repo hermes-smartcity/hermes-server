@@ -12,13 +12,13 @@ function($scope, $http, $timeout, $log, $filter) {
 	vm.pintarLineas = pintarLineas;
 	vm.aplicarFiltros = aplicarFiltros;
 	
-	var urlGetEvensType = "../vehiclelocation/json/eventsType";
+	var urlGetEvensType = "../dashboard/json/eventsType";
 	$http.get(urlGetEvensType).success(function(data) {
 		$scope.eventsType = data;
 
 	});
 	
-	var urlGetUsuarios = "../vehiclelocation/json/usuarios";
+	var urlGetUsuarios = "../dashboard/json/usuarios";
 	$http.get(urlGetUsuarios).success(function(data) {
 		$scope.usuarios = data;
 
