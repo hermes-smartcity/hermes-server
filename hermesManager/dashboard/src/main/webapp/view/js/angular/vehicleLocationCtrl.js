@@ -1,10 +1,23 @@
-var vehicleLocationApp = angular.module('vehicleLocationApp', ['ngRoute']);
-var vehicleLocationApp = angular.module('vehicleLocationApp', []);
+//var vehicleLocationApp = angular.module('vehicleLocationApp', ['ngRoute']);
+//var vehicleLocationApp = angular.module('vehicleLocationApp', []);
 
 
-vehicleLocationApp.controller('VehicleLocationsController', [ '$scope', '$http',
+app.controller('FiltrosController', [ '$scope', '$http',
                                      
-	function($scope, $http) {
+	function($scope, $http) {	
+	
+		var urlGetEvensType = "../vehiclelocation/json/eventsType";
+		$http.get(urlGetEvensType).success(function(data) {
+			$scope.eventsType = data;
+	
+		});
+		
+		var urlGetUsuarios = "../vehiclelocation/json/usuarios";
+		$http.get(urlGetUsuarios).success(function(data) {
+			$scope.usuarios = data;
+	
+		});
+		
 		$scope.getVehicleLocations = function() {
 			var idUsuario = getUrlParameter("idUsuario");
 			/*var urlGet = "json/vehicleLocations";

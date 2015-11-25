@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.events.dataSection.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
@@ -15,9 +16,10 @@ public interface DataSectionService {
 	
 	public void delete(Long id);
 
-	public List<DataSection> obterDataSections();
+	public List<DataSection> obterDataSections(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat);
 	
-	public List<DataSection> obterDataSectionsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat);
+//	public List<DataSection> obterDataSectionsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat);
 	
-	public List<DataSection> obterDataSectionsSegunUsuario(Long idUsuario);
+//	public List<DataSection> obterDataSectionsSegunUsuario(Long idUsuario);
 }

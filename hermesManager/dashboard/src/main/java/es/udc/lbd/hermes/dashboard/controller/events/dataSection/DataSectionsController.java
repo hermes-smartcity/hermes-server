@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.dashboard.controller.events.dataSection;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
+import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 
 
 
 @RestController
-@RequestMapping(value = "/events/dataSection")
+@RequestMapping(value = "/events/datasection")
 public class DataSectionsController extends MainResource {
 	private final Logger log = LoggerFactory
 			.getLogger(DataSectionsController.class);
@@ -25,26 +27,41 @@ public class DataSectionsController extends MainResource {
 	@Autowired
 	private DataSectionService dataSectionServicio;
 
-	@RequestMapping(value="/json/dataSectionsByUsuario", method = RequestMethod.GET)
-	public List<DataSection> getDataSections(@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
-		return dataSectionServicio.obterDataSectionsSegunUsuario(idUsuario);
-
-	}
-	
-//	@RequestMapping(value="/json/dataSections", method = RequestMethod.GET)
-//	public List<DataSection> getDataSections() {
-//		return dataSectionServicio.obterDataSections();
+	// TODO a esta misma habria que añadir fecha
+//	@RequestMapping(value="/json/eventsByUsuario", method = RequestMethod.GET)
+//	public List<DataSection> getDataSections(@RequestParam(value = "idUsuario", required = false) Long idUsuario,			
+//			@RequestParam(value = "wnLng", required = true) Double wnLng,
+//			@RequestParam(value = "wnLat", required = true) Double wnLat,
+//			@RequestParam(value = "esLng", required = true) Double esLng, 
+//			@RequestParam(value = "esLat", required = true) Double esLat) {
+//		return dataSectionServicio.obterDataSectionsSegunUsuario(idUsuario, null, null,
+//				wnLng, wnLat,esLng, esLat);
 //
 //	}
 	
-	@RequestMapping(value="/json/dataSectionsByBounds", method = RequestMethod.GET)
-	public List<DataSection> getVehicleLocationsByBounds(
+	@RequestMapping(value="/json/dataSections", method = RequestMethod.GET)
+	public List<DataSection> getDataSections(@RequestParam(value = "idUsuario", required = false) Long idUsuario,	
+			@RequestParam(value = "fechaIni", required = false) String fechaIni,
+			@RequestParam(value = "fechaFin", required = false) String fechaFin,
 			@RequestParam(value = "wnLng", required = true) Double wnLng,
 			@RequestParam(value = "wnLat", required = true) Double wnLat,
 			@RequestParam(value = "esLng", required = true) Double esLng, 
 			@RequestParam(value = "esLat", required = true) Double esLat) {
-		return dataSectionServicio.obterDataSectionsByBounds(wnLng, wnLat, esLng, esLat);
+		Calendar ini = Helpers.getFecha(fechaIni);
+		Calendar fin = Helpers.getFecha(fechaFin);
+		return dataSectionServicio.obterDataSections(idUsuario, ini, fin,
+				wnLng, wnLat,esLng, esLat);
 
 	}
+	
+//	@RequestMapping(value="/json/dataSectionsByBounds", method = RequestMethod.GET)
+//	public List<DataSection> getVehicleLocationsByBounds(
+//			@RequestParam(value = "wnLng", required = true) Double wnLng,
+//			@RequestParam(value = "wnLat", required = true) Double wnLat,
+//			@RequestParam(value = "esLng", required = true) Double esLng, 
+//			@RequestParam(value = "esLat", required = true) Double esLat) {
+//		return dataSectionServicio.obterDataSectionsByBounds(wnLng, wnLat, esLng, esLat);
+//
+//	}
 
 }

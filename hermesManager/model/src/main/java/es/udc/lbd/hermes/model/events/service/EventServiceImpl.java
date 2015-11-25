@@ -2,10 +2,13 @@ package es.udc.lbd.hermes.model.events.service;
 
 import java.util.Calendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.lbd.hermes.model.events.EventType;
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
 import es.udc.lbd.hermes.model.events.eventoProcesado.dao.EventoProcesadoDao;
 
@@ -13,6 +16,8 @@ import es.udc.lbd.hermes.model.events.eventoProcesado.dao.EventoProcesadoDao;
 @Service("eventService")
 @Transactional
 public class EventServiceImpl implements EventService {
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private EventoProcesadoDao eventoProcesadoDao;
@@ -56,4 +61,5 @@ public class EventServiceImpl implements EventService {
 	public void eliminarEventosProcesados() {
 		eventoProcesadoDao.eliminarEventosProcesados();		
 	}
+	
 }

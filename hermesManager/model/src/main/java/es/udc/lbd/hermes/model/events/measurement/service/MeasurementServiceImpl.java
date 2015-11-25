@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.model.events.measurement.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,23 +62,25 @@ public class MeasurementServiceImpl implements MeasurementService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo) {
-		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipo(tipo);
+	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
+		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipo(tipo, idUsuario, fechaIni, fechaFin, polygon);
 		return measurements;
 	}
 	
-	@Transactional(readOnly = true)
-	public List<Measurement> obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Double wnLng, Double wnLat, Double esLng, Double esLat) {
-		List<Measurement> vehicleLocations = new ArrayList<>();
-			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-			vehicleLocations = measurementDao.obterMeasurementsSegunTipoByBounds(tipo, polygon);
-		
-		return vehicleLocations;
-	}
+//	@Transactional(readOnly = true)
+//	public List<Measurement> obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Double wnLng, Double wnLat, Double esLng, Double esLat) {
+//		List<Measurement> vehicleLocations = new ArrayList<>();
+//			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+//			vehicleLocations = measurementDao.obterMeasurementsSegunTipoByBounds(tipo, polygon);
+//		
+//		return vehicleLocations;
+//	}
 	
-	@Transactional(readOnly = true)
-	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario) {
-		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipoEusuario(tipo,idUsuario);
-		return measurements;
-	}
+//	@Transactional(readOnly = true)
+//	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario) {
+//		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipoEusuario(tipo,idUsuario);
+//		return measurements;
+//	}
 }

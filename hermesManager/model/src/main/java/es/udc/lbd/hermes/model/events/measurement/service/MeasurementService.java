@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.events.measurement.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
@@ -15,10 +16,11 @@ public interface MeasurementService {
 	
 	public void delete(Long id);
 	
-	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo);
+	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat);
 	
-	public List<Measurement> obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Double wnLng, Double wnLat, Double esLng, Double esLat);
+//	public List<Measurement> obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Double wnLng, Double wnLat, Double esLng, Double esLat);
 	
-	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario);
+//	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario);
 	
 }

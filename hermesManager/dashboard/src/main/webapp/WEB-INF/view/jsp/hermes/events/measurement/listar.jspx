@@ -18,7 +18,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<jsp:include page="../incluirAngular.jspx" />
 <jsp:include page="../form-script.jspx" />
 </head>
 		<fmt:message var="mapaFmt" key="citydriver.measurement.pestanas.mapa" />
@@ -31,7 +30,7 @@
 		<fmt:message var="valueFmt" key="citydriver.measurement.tabla.columnas.value" />
 		
 <!-- Gestión de angular -->
-<div class="col-lg-8" ng-app="measurementApp" ng-cloak="">
+<div class="col-lg-8" ng-cloak="">
 
 	<div  ng-controller="MeasurementsController" ng-init="getMeasurements()">		
 	

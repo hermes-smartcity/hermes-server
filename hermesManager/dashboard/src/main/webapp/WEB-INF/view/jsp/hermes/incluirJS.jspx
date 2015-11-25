@@ -8,34 +8,34 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	version="2.0">
 				
-			<c:url var="jqueryUrl" value="/view/js/jquery-1.10.2.js"/>			
+			<!--<c:url var="jqueryUrl" value="/view/js/jquery-1.10.2.js"/>			
 			<c:url var="jqueryUIUrl" value="/view/js/jquery-ui.js"/>
 
 			<c:url var="jqueryValidateUrl" value="/view/js/jquery.validate.js"/>
 			<c:url var="utilUrl" value="/view/js/citydriver/util.js"/>
 			
-    		<c:url var="jsBlock" value="/view/js/jquery.blockUI.js"/>
+    		<c:url var="jsBlock" value="/view/js/jquery.blockUI.js"/>-->
 			
+			
+			<c:url var="jsAux" value="/view/bower_components/jquery/dist/jquery.min.js"/>
+			<script type="text/javascript" src="${jsAux}"><!-- --></script>
+	
 			<c:url var="utilJs" value="/view/js/util.js" />
 			
 			<!-- Leaflet  -->
 			<c:url var="leafletSrcUrl" value="/view/js/leaflet-0.7.3/leaflet-src.js"/>
-			<c:url var="leafletUrl" value="/view/js/leaflet-0.7.3/leaflet.js"/>	
-			
-				
+			<c:url var="leafletUrl" value="/view/js/leaflet-0.7.3/leaflet.js"/>				
 			
 			<script type="text/javascript" src="${leafletSrcUrl}"><!-- c --></script>
 			<script type="text/javascript" src="${leafletUrl}"><!-- c --></script>
 			<!--  -->			
 
-			<script type="text/javascript" src="${utilUrl}"><!-- c --></script>
-
 			<script type="text/javascript" src="${utilJs}"><!-- c --></script>
 			
 			<!-- Plantilla de bootstrap -->
-			<!-- jQuery -->
-			<c:url var="aux" value="/view/bower_components/jquery/dist/jquery.min.js"/>
-			<script type="text/javascript" src="${aux}"><!-- c --></script>
+			<!-- jQuery 
+			<c:url var="aux" value="/view/bower_components/jquery/dist/jquery.min.js"/>-->
+			
 		
 		    <!-- Bootstrap Core JavaScript -->
 		    <c:url var="aux" value="/view/bower_components/bootstrap/dist/js/bootstrap.min.js"/>

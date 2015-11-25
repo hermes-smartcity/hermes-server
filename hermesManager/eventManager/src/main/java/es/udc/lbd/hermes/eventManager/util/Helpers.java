@@ -1,7 +1,10 @@
 package es.udc.lbd.hermes.eventManager.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.eventManager.json.RoadSectionPoint;
@@ -22,5 +25,21 @@ public class Helpers {
 		// Lo convertimos a GIS
 		ruta = HelpersModel.wktToGeometry(rutaStr);
 		return ruta;
+	}
+	
+	public static Calendar getFecha(String fecha){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date parsedEndDate;
+		try {
+			parsedEndDate = sdf.parse(fecha);
+			Calendar fin = Calendar.getInstance();
+			fin.setTime(parsedEndDate);
+			return fin;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 }

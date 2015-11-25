@@ -1,11 +1,10 @@
-var dataSectionApp = angular.module('dataSectionApp', ['ngRoute']);
-var dataSectionApp = angular.module('dataSectionApp', []);
+//var dataSectionApp = angular.module('dataSectionApp', ['ngRoute']);
+//var dataSectionApp = angular.module('dataSectionApp', []);
 
 
-dataSectionApp.controller('DataSectionsController', [ '$scope', '$http',
+app.controller('DataSectionsController', [ '$scope', '$http',
                                      
 	function($scope, $http) {
-	
 		$scope.getDataSections = function() {
 			var idUsuario = getUrlParameter("idUsuario");
 //			var urlGet = "json/dataSections";

@@ -17,8 +17,7 @@
 	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-		<jsp:include page="../incluirAngular.jspx"/>		
+	
 		<jsp:include page="../form-script.jspx" />
 	</head>
 	
@@ -31,7 +30,7 @@
 	
 	<!-- Gestión de angular -->
  
-	<div class="col-lg-8"  ng-app="dataSectionApp" ng-cloak="">
+	<div class="col-lg-8"  ng-cloak="">
 	
 		<div  ng-controller="DataSectionsController" ng-init="getDataSections()">
 
@@ -61,7 +60,7 @@
 								ng-repeat="dataSection in dataSections">
 										<tr>
 										<td>
-											<div class="campoFicha">
+										<div class="campoFicha">
 												<div class="etiqueta">
 													${idEventoFmt}
 												</div>

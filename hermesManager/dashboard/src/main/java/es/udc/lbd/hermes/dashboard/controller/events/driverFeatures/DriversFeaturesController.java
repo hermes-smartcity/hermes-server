@@ -24,7 +24,7 @@ public class DriversFeaturesController extends MainResource {
 	@Autowired
 	private DriverFeaturesService driverFeaturesServicio;
 
-	@RequestMapping(value="/json/driversFeaturesByUsuario", method = RequestMethod.GET)
+	@RequestMapping(value="/json/eventsByUsuario", method = RequestMethod.GET)
 	public List<DriverFeatures> getDriverFeaturess(@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
 		return driverFeaturesServicio.obterDriverFeaturessSegunUsuario(idUsuario);
 

@@ -18,8 +18,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		
-		<jsp:include page="../form-script.jspx" />	
-		<jsp:include page="../incluirAngular.jspx"/>		
+		<jsp:include page="../form-script.jspx" />		
 	</head>
 	
 	<fmt:message var="mapaFmt" key="hermes.driverFeatures.pestanas.mapa" />
@@ -32,7 +31,7 @@
 	
 	<!-- Gestión de angular -->
  
-	<div class="col-lg-8"  ng-app="driverFeaturesApp" ng-cloak="">
+	<div class="col-lg-8" ng-cloak="">
 	
 		<div ng-controller="DriversFeaturesController" ng-init="getDriversFeatures()">
 			

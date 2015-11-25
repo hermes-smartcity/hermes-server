@@ -1,8 +1,8 @@
-var driverFeaturesApp = angular.module('driverFeaturesApp', ['ngRoute']);
-var driverFeaturesApp = angular.module('driverFeaturesApp', []);
+//var driverFeaturesApp = angular.module('driverFeaturesApp', ['ngRoute']);
+//var driverFeaturesApp = angular.module('driverFeaturesApp', []);
 
 
-driverFeaturesApp.controller('DriversFeaturesController', [ '$scope', '$http',
+app.controller('DriversFeaturesController', [ '$scope', '$http',
                                      
 	function($scope, $http) {
 		$scope.getDriversFeatures = function() {

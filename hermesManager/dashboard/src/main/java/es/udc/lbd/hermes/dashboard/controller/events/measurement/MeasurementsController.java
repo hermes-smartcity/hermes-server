@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.dashboard.controller.events.measurement;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
+import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
@@ -25,28 +27,40 @@ public class MeasurementsController extends MainResource {
 	@Autowired
 	private MeasurementService measurementServicio;
 
-	@RequestMapping(value="/json/measurementsByUsuario", method = RequestMethod.GET)
-	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo,
-			@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
-		return  measurementServicio.obterMeasurementsSegunTipoEusuario(tipo, idUsuario);
-
-	}
-	
-//	@RequestMapping(value="/json/measurements", method = RequestMethod.GET)
-//	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo) {
-//		return measurementServicio.obterMeasurementsSegunTipo(tipo);
+//	@RequestMapping(value="/json/eventsByUsuario", method = RequestMethod.GET)
+//	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo,
+//			@RequestParam(value = "idUsuario", required = true) Long idUsuario) {
+//		return  measurementServicio.obterMeasurementsSegunTipoEusuario(tipo, idUsuario);
 //
 //	}
 	
-	@RequestMapping(value="/json/measurementsByBounds", method = RequestMethod.GET)
-	public List<Measurement> getMeasurementsByBounds(
-			@RequestParam(required = true) MeasurementType tipo,
+	@RequestMapping(value="/json/measurements", method = RequestMethod.GET)
+	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo,
+			@RequestParam(value = "idUsuario", required = false) Long idUsuario,			
+			@RequestParam(value = "fechaIni", required = false) String fechaIni,
+			@RequestParam(value = "fechaFin", required = false) String fechaFin,
 			@RequestParam(value = "wnLng", required = true) Double wnLng,
 			@RequestParam(value = "wnLat", required = true) Double wnLat,
 			@RequestParam(value = "esLng", required = true) Double esLng, 
 			@RequestParam(value = "esLat", required = true) Double esLat) {
-		return measurementServicio.obterMeasurementsSegunTipoByBounds(tipo, wnLng, wnLat, esLng, esLat);
+
+		Calendar ini = Helpers.getFecha(fechaIni);
+		Calendar fin = Helpers.getFecha(fechaFin);
+		
+		return measurementServicio.obterMeasurementsSegunTipo(tipo, idUsuario, ini, fin,
+				wnLng, wnLat,esLng, esLat);
 
 	}
+	
+//	@RequestMapping(value="/json/measurementsByBounds", method = RequestMethod.GET)
+//	public List<Measurement> getMeasurementsByBounds(
+//			@RequestParam(required = true) MeasurementType tipo,
+//			@RequestParam(value = "wnLng", required = true) Double wnLng,
+//			@RequestParam(value = "wnLat", required = true) Double wnLat,
+//			@RequestParam(value = "esLng", required = true) Double esLng, 
+//			@RequestParam(value = "esLat", required = true) Double esLat) {
+//		return measurementServicio.obterMeasurementsSegunTipoByBounds(tipo, wnLng, wnLat, esLng, esLat);
+//
+//	}
 
 }

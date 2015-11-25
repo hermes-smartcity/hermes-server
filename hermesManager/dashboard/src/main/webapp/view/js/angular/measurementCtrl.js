@@ -1,8 +1,8 @@
-var measurementApp = angular.module('measurementApp', ['ngRoute']);
-var measurementApp = angular.module('measurementApp', []);
+//var measurementApp = angular.module('measurementApp', ['ngRoute']);
+//var measurementApp = angular.module('measurementApp', []);
 
 
-measurementApp.controller('MeasurementsController', [ '$scope', '$http',
+app.controller('MeasurementsController', [ '$scope', '$http',
                                      
 	function($scope, $http) {
 		$scope.getMeasurements = function() {

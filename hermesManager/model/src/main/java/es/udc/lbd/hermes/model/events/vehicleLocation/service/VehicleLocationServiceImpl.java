@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.model.events.vehicleLocation.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.geotools.geometry.jts.JTSFactoryFinder;
@@ -8,6 +9,7 @@ import org.hibernate.ejb.criteria.ParameterContainer.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -73,23 +75,25 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<VehicleLocation> obterVehicleLocations() {
-		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations();
+	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
+		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, fechaFin, polygon);
 		return vehicleLocations;
 	}
 	
-	@Transactional(readOnly = true)
-	public List<VehicleLocation> obterVehicleLocationsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat) {
-		List<VehicleLocation> vehicleLocations = new ArrayList<>();
-			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-			vehicleLocations = vehicleLocationDao.obterVehicleLocationsByBounds(polygon);
-		
-		return vehicleLocations;
-	}
-	
-	@Transactional(readOnly = true)
-	public List<VehicleLocation> obterVehicleLocationsSegunUsuario(Long idUsuario) {
-		 List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsSegunUsuario(idUsuario);
-		return vehicleLocations;
-	}
+//	@Transactional(readOnly = true)
+//	public List<VehicleLocation> obterVehicleLocationsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat) {
+//		List<VehicleLocation> vehicleLocations = new ArrayList<>();
+//			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+//			vehicleLocations = vehicleLocationDao.obterVehicleLocationsByBounds(polygon);
+//		
+//		return vehicleLocations;
+//	}
+//	
+//	@Transactional(readOnly = true)
+//	public List<VehicleLocation> obterVehicleLocationsSegunUsuario(Long idUsuario) {
+//		 List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsSegunUsuario(idUsuario);
+//		return vehicleLocations;
+//	}
 }
