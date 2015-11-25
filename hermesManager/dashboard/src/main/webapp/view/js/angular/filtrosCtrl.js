@@ -198,7 +198,4 @@ function($scope, $http, $timeout, $log, $filter) {
 	// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 	  vm.aplicarFiltros();
 
-	
-
-
-} ]);
+	} ]);

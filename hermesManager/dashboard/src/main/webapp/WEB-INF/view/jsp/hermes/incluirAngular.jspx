@@ -32,27 +32,10 @@
 	<c:url var="jsbootstrap-tpls" value="/view/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"/>
 	<script type="text/javascript" src="${jsbootstrap-tpls}"><!-- --></script>
 	
-	<!-- vehicle location -->	
-	<c:url var="jsVehicleLocationCtrl" value="/view/js/angular/vehicleLocationCtrl.js"/>
-	<script type="text/javascript" src="${jsVehicleLocationCtrl}"><!-- --></script>
-	
-	<!-- data section -->
-	<c:url var="jsDataSectionCtrl" value="/view/js/angular/dataSectionCtrl.js"/>
-		<script type="text/javascript" src="${jsDataSectionCtrl}"><!-- --></script>
-	<!-- measurement -->
-	<c:url var="jsMeasurementCtrl" value="/view/js/angular/measurementCtrl.js"/>
-	<script type="text/javascript" src="${jsMeasurementCtrl}"><!-- --></script>
-	<!-- driverFeatures -->
-	<c:url var="jsDriverFeaturesCtrl" value="/view/js/angular/driverFeaturesCtrl.js"/>
-	<script type="text/javascript" src="${jsDriverFeaturesCtrl}"><!-- --></script>	
 	<!-- filtros -->	
 	<c:url var="jsFiltrosCtrl" value="/view/js/angular/filtrosCtrl.js"/>
 	<script type="text/javascript" src="${jsFiltrosCtrl}"><!-- --></script>
  	
-	<!--  -->
-	
-	  <!--  -->
-	
 	<c:url var="jsAux" value="/view/bower_components/bootstrap/dist/js/bootstrap.min.js"/>
 	<script type="text/javascript" src="${jsAux}"><!-- --></script>
 	
