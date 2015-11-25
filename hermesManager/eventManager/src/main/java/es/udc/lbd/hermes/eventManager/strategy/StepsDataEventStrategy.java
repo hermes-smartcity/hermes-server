@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,7 @@ public class StepsDataEventStrategy extends EventStrategy {
 			StepsData stepsData = new StepsData();
 			stepsData.setSteps(ztreamySteps.getSteps());
 			ztreamySteps.getTimeLog().set(dateTime.get(Calendar.YEAR), dateTime.get(Calendar.MONTH), dateTime.get(Calendar.DAY_OF_MONTH));
+			ztreamySteps.getTimeLog().setTimeZone(TimeZone.getDefault());
 			stepsData.setTimeLog(ztreamySteps.getTimeLog());
 			stepsData.setEventId(event.getEventId());
 			stepsDataService.create(stepsData, event.getSourceId());

@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,7 @@ public class HeartRateDataEventStrategy extends EventStrategy {
 			HeartRateData heartRateData = new HeartRateData();
 			heartRateData.setHeartRate(ztreamyHeartRate.getHeartRate());
 			ztreamyHeartRate.getTimeLog().set(dateTime.get(Calendar.YEAR), dateTime.get(Calendar.MONTH), dateTime.get(Calendar.DAY_OF_MONTH));
+			ztreamyHeartRate.getTimeLog().setTimeZone(TimeZone.getDefault());
 			heartRateData.setTimeLog(ztreamyHeartRate.getTimeLog());
 			heartRateData.setEventId(event.getEventId());
 			heartRateDataService.create(heartRateData, event.getSourceId());
