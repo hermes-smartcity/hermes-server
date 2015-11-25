@@ -1,26 +1,22 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>es.udc.lbd.hermes</groupId>
-    <artifactId>hermesManager</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>dashboard</artifactId>
-  <packaging>war</packaging>
- 
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>es.udc.lbd.hermes</groupId>
+		<artifactId>hermesManager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>dashboard</artifactId>
+	<packaging>war</packaging>
+	<name>hermes-dashboard</name>
 	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-			<resource>
-				<directory>src/main/jetty</directory>
-				<targetPath>jetty</targetPath>
-			</resource>
 		</resources>
-		 <extensions>
+		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ssh</artifactId>
@@ -28,13 +24,11 @@
 			</extension>
 		</extensions>
 	</build>
-
 	<dependencies>
 		<dependency>
-		    <groupId>es.udc.lbd.hermes</groupId>
-		    <artifactId>eventManager</artifactId>
+			<groupId>es.udc.lbd.hermes</groupId>
+			<artifactId>eventManager</artifactId>
 		</dependency>
-	
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -76,12 +70,11 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-	
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
-		 <!-- Servlet -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -105,24 +98,17 @@
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-el</artifactId>
 		</dependency>
-		
 		<dependency>
-		  <groupId>xerces</groupId>
-		  <artifactId>xercesImpl</artifactId>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
 		</dependency>
-		
 		<dependency>
-	      <groupId>jaxen</groupId>
-	      <artifactId>jaxen</artifactId>
-    	</dependency>
-  		
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>
-			
-	</dependencies>
-	
-	 
-	<name>hermes-dashboard</name>
+	</dependencies>	
 </project>
