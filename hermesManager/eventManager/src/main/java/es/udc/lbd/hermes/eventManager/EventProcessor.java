@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
@@ -18,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.message.DeflateEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +25,7 @@ import es.udc.lbd.hermes.eventManager.factory.EventFactory;
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.EventParser;
 import es.udc.lbd.hermes.eventManager.strategy.EventStrategy;
+import es.udc.lbd.hermes.eventManager.util.DeflateReaderInterceptor;
 import es.udc.lbd.hermes.eventManager.util.ReadPropertiesFile;
 import es.udc.lbd.hermes.model.events.EventType;
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
@@ -67,7 +68,7 @@ public class EventProcessor extends Thread {
 	private Response establecerConexion(String lastEventId) {
 		Response result = null;
 		try {
-			result = client.target(URI + lastEventId).request().accept("application/x-ldjson").header(HttpHeaders.ACCEPT_ENCODING, "deflate").get();
+			result = client.register(DeflateReaderInterceptor.class).target(URI + lastEventId).request().accept("application/x-ldjson").header(HttpHeaders.ACCEPT_ENCODING, "deflate").get();
 		} catch (ProcessingException e) {
 			logger.warn(e.getLocalizedMessage(), e);
 		}
@@ -75,20 +76,18 @@ public class EventProcessor extends Thread {
 	}
 	
 	private void procesaEventos(Response response) {
-		byte[] chunk;		
-		ChunkedInput<byte[]> chunkedInput = response.readEntity(new GenericType<ChunkedInput<byte[]>>() {});
+		String chunk;		
+		ChunkedInput<String> chunkedInput = response.readEntity(new GenericType<ChunkedInput<String>>() {});
 		while ((chunk = chunkedInput.read()) != null && !Thread.currentThread().isInterrupted()) {
 				procesaUnEvento(chunk);
 		}		
 	}
 	
 	// Almacenamos los diferentes tipos de eventos en la BD
-	private void procesaUnEvento(byte[] chunk) {
+	private void procesaUnEvento(String chunk) {
 		
 		try {
-			byte[] eventbytes = decompress(chunk);
-			String str = new String(eventbytes, "UTF-8");
-			Event event = eventParser.parse(str);
+			Event event = eventParser.parse(chunk);
 			if (event.getEventType() != null) {
 				EventType tipoEvento = EventType.getTipo((String) event.getEventType());
 				EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
@@ -102,9 +101,6 @@ public class EventProcessor extends Thread {
 				logger.warn("EventType is null: " + chunk);
 			}
 		} catch (IOException e) {
-			logger.error("Error convirtiendo chunk a JSON", e);
-			e.printStackTrace();
-		} catch (DataFormatException e) {
 			logger.error("Error convirtiendo chunk a JSON", e);
 			e.printStackTrace();
 		}
