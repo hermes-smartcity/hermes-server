@@ -16,8 +16,4 @@ public interface VehicleLocationService {
 	
 	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 	Double wnLng, Double wnLat,	Double esLng, Double esLat);
-	
-//	public List<VehicleLocation> obterVehicleLocationsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat);
-	
-//	public List<VehicleLocation> obterVehicleLocationsSegunUsuario(Long idUsuario);
 }

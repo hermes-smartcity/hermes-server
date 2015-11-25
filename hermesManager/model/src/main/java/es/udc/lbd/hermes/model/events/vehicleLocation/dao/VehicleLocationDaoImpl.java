@@ -47,30 +47,4 @@ VehicleLocationDao {
 				elementos = query.list();
 				return elementos;
 	}
-	
-//	@Override
-//	@SuppressWarnings("unchecked")
-//	public List<VehicleLocation> obterVehicleLocationsByBounds(Geometry bounds) {
-//		List<VehicleLocation> elementos = null;
-//
-//		String queryStr =  "from VehicleLocation where within(position, :bounds) = true";
-//		
-//		Query query = getSession().createQuery(queryStr);
-//
-//		elementos = query.setParameter("bounds", bounds).list();
-//		return elementos;
-//	}
-	
-	
-//	@Override
-//	public List<VehicleLocation> obterVehicleLocationsSegunUsuario(Long idUsuario) {
-//
-//		try {
-//			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("usuario.id", idUsuario)).list();
-//		} catch (HibernateException e) {
-//			throw SessionFactoryUtils.convertHibernateAccessException(e);
-//		}
-//		
-//	}
-	
 }

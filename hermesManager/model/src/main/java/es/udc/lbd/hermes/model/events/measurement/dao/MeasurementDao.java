@@ -13,7 +13,5 @@ public interface MeasurementDao extends GenericDao<Measurement, Long> {
 	
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, Geometry bounds);
-//	public List<Measurement>obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Geometry bounds);
-//	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario);
 
 }

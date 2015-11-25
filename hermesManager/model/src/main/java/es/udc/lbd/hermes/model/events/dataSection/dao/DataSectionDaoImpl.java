@@ -45,29 +45,5 @@ DataSectionDao {
 				elementos = query.list();
 				return elementos;
 	}
-	
-//	@Override
-//	@SuppressWarnings("unchecked")
-//	public List<DataSection> obterDataSectionsByBounds(Geometry bounds) {
-//		List<DataSection> elementos = null;
-//
-//		String queryStr =  "from DataSection where within(roadSection, :bounds) = true";
-//		
-//		Query query = getSession().createQuery(queryStr);
-//
-//		elementos = query.setParameter("bounds", bounds).list();
-//		return elementos;
-//	}
-	
-	
-//	@Override
-//	public List<DataSection> obterDataSectionsSegunUsuario(Long idUsuario) {
-//		try {
-//			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("usuario.id", idUsuario)).list();
-//		} catch (HibernateException e) {
-//			throw SessionFactoryUtils.convertHibernateAccessException(e);
-//		}
-//		
-//	}
-	
+
 }

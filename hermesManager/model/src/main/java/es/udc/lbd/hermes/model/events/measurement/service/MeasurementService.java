@@ -19,8 +19,4 @@ public interface MeasurementService {
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat);
 	
-//	public List<Measurement> obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Double wnLng, Double wnLat, Double esLng, Double esLat);
-	
-//	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario);
-	
 }

@@ -1,6 +1,5 @@
 package es.udc.lbd.hermes.model.events.dataSection.service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.dao.DataSectionDao;
-import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
@@ -66,19 +64,4 @@ public class DataSectionServiceImpl implements DataSectionService {
 		List<DataSection> dataSections = dataSectionDao.obterDataSections(idUsuario, fechaIni, fechaFin, polygon );
 		return dataSections;
 	}
-	
-//	@Transactional(readOnly = true)
-//	public List<DataSection> obterDataSectionsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat) {
-//		List<DataSection> dataSections = new ArrayList<>();
-//			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-//			dataSections = dataSectionDao.obterDataSectionsByBounds(polygon);
-//		
-//		return dataSections;
-//	}
-	
-//	@Transactional(readOnly = true)
-//	public List<DataSection> obterDataSectionsSegunUsuario(Long idUsuario) {
-//		List<DataSection> dataSections = dataSectionDao.obterDataSectionsSegunUsuario(idUsuario);
-//		return dataSections;
-//	}
 }

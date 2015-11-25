@@ -1,6 +1,5 @@
 package es.udc.lbd.hermes.model.events.measurement.service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.dao.MeasurementDao;
-import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
@@ -68,19 +66,4 @@ public class MeasurementServiceImpl implements MeasurementService {
 		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipo(tipo, idUsuario, fechaIni, fechaFin, polygon);
 		return measurements;
 	}
-	
-//	@Transactional(readOnly = true)
-//	public List<Measurement> obterMeasurementsSegunTipoByBounds(MeasurementType tipo, Double wnLng, Double wnLat, Double esLng, Double esLat) {
-//		List<Measurement> vehicleLocations = new ArrayList<>();
-//			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-//			vehicleLocations = measurementDao.obterMeasurementsSegunTipoByBounds(tipo, polygon);
-//		
-//		return vehicleLocations;
-//	}
-	
-//	@Transactional(readOnly = true)
-//	public List<Measurement> obterMeasurementsSegunTipoEusuario(MeasurementType tipo, Long idUsuario) {
-//		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipoEusuario(tipo,idUsuario);
-//		return measurements;
-//	}
 }
