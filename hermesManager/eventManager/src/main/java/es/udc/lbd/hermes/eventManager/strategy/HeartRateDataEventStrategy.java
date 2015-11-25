@@ -2,7 +2,6 @@ package es.udc.lbd.hermes.eventManager.strategy;
 
 import java.util.Calendar;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import es.udc.lbd.hermes.eventManager.json.Event;

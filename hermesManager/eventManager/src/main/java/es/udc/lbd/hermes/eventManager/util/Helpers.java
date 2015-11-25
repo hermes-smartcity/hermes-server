@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.eventManager.util;
 
 import java.util.List;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.eventManager.json.RoadSectionPoint;

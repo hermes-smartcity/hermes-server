@@ -10,8 +10,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.EventParser;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyHeartRateData;
-import es.udc.lbd.hermes.eventManager.json.ZtreamyStepsData;
 
 public class EventParserTest {
 
