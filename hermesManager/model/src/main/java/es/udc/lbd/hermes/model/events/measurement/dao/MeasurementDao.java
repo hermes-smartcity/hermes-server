@@ -12,6 +12,7 @@ import es.udc.lbd.hermes.model.util.dao.GenericDao;
 public interface MeasurementDao extends GenericDao<Measurement, Long> {
 	
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
-			Calendar fechaFin, Geometry bounds);
-
+			Calendar fechaFin, Geometry bounds, int startIndex, int count);
+	
+	public long contar(MeasurementType tipo);
 }

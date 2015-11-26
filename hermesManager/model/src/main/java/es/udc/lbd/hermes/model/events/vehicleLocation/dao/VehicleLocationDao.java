@@ -10,5 +10,8 @@ import es.udc.lbd.hermes.model.util.dao.GenericDao;
 
 public interface VehicleLocationDao extends GenericDao<VehicleLocation, Long> {
 	
-	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds);
+	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds,
+			int startIndex, int count);
+	
+	public long contar();
 }

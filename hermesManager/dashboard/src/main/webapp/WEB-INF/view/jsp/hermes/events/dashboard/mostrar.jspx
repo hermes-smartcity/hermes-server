@@ -38,7 +38,7 @@
 			<li class="pestanas pestanasFormulario">
 				<ol class="pestanas selectoresFormulario">
 					<li class="pestanas selector activa">${mapaFmt}</li>
-					<!-- <li class="pestanas selector" id="selectorF">${tablaFmt}</li> -->
+					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
 
 				</ol>
 				<ol class="pestanas fichas">
@@ -48,6 +48,24 @@
 							<div id="map"><!--  --></div>
 
 
+						</ol>
+					</li>
+					
+					<li class="pestanas ficha" id="pestanaF">
+						<ol class="pestanas">
+							<br></br>
+							<h3 style="font-weight: bold;">${eventosFmt}</h3>
+							<br></br>
+							<div ng-show="eventTypeSelected == 'VEHICLE_LOCATION'">	
+							 	<jsp:include page="../vehicleLocation/listar.jspx" />
+						    </div>
+						    <div ng-show="eventTypeSelected == 'DATA_SECTION'">	
+							 	<jsp:include page="../dataSection/listar.jspx" />
+						    </div>
+						     <div ng-show="eventTypeSelected != ('DATA_SECTION' ||  'VEHICLE_LOCATION')">	
+							 	<jsp:include page="../dataSection/listar.jspx" />
+						    </div>
+						   
 						</ol>
 					</li>
 
@@ -103,7 +121,15 @@
 		                     <button ng-click="vm.aplicarFiltros()">Filter</button>
 		                   </div>
 		    </div>
-     </div>    
+     </div>   
+     <!-- Prueba paginacion con angular js -->
+     
+ 
+    <div>{{noOfPages}}   {{currentPage}}   {{maxSize}}
+      <pagination ng-model="currentPage" total-items="tickets.length" items-per-page="5"></pagination>
+    </div>
+     <!--  -->
+      
  </div>
         
 	</html>

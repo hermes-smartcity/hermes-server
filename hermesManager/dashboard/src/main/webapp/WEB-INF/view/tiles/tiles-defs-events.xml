@@ -2,10 +2,25 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
 <tiles-definitions>
-
+	
+	<definition name="events/datasection/listar" extends="baseAdmin">
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/hermes/events/dataSection/listar.jspx" />
+	</definition>
+	
+	<definition name="events/measurement/listar" extends="baseAdmin">
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/hermes/events/measurement/listar.jspx" />
+	</definition>
+	
 	<definition name="events/dashboard/mostrar" extends="baseAdmin">
 		<put-attribute name="contido"
 			value="/WEB-INF/view/jsp/hermes/events/dashboard/mostrar.jspx" />
 	</definition>
 	
+	<definition name="events/driverFeatures/listar" extends="baseAdmin">
+		<put-attribute name="contido"
+			value="/WEB-INF/view/jsp/hermes/events/driverFeatures/listar.jspx" />
+	</definition>
+
 </tiles-definitions>

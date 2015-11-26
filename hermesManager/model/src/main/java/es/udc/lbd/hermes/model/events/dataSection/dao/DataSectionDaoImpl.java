@@ -18,7 +18,8 @@ public class DataSectionDaoImpl extends GenericDaoHibernate<DataSection, Long> i
 DataSectionDao {
 	
 	@Override
-	public List<DataSection> obterDataSections(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds){
+	public List<DataSection> obterDataSections(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
+			int startIndex, int count){
 		List<DataSection> elementos = null;
 		
 				String queryStr =  "from DataSection where within(roadSection, :bounds) = true ";
@@ -41,9 +42,18 @@ DataSectionDao {
 					 query.setCalendar("fechaIni", fechaIni);
 				if(fechaFin!=null)
 					query.setCalendar("fechaFin", fechaFin);
+				if(startIndex!=-1 && count!=-1)
+					query.setFirstResult(startIndex).setMaxResults(count);
 				
 				elementos = query.list();
 				return elementos;
+	}
+	
+	@Override
+	public long contar() {
+		return (Long) getSession()
+				.createQuery("select count(*) from DataSection")
+				.uniqueResult();
 	}
 
 }

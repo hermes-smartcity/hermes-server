@@ -158,8 +158,7 @@ function($scope, $http, $timeout, $log, $filter) {
 			
 			var urlGet = "../datasection/json/dataSections?";
 			urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
-			
-			
+						
 			var mystyles = {
 					color: 'red',
 					fillOpacity: 0.1
@@ -197,5 +196,26 @@ function($scope, $http, $timeout, $log, $filter) {
 		  
 	// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 	  vm.aplicarFiltros();
+	  
+	  /* *  Prueba paginacion angular * * * * */
+	  $scope.currentPage = 1;
+	  $scope.itemsPerPage = 5;
+	  $scope.maxSize = 5;
+	  $scope.tickets = [];
+	  for (var i = 0; i < 78; i++) {
+	    $scope.tickets.push('ticket ' + i);
+	  }
+	  $scope.noOfPages = $scope.tickets.length / $scope.itemsPerPage;
+	  
+	    $scope.$watch('currentPage', function() {
+	      var begin = ($scope.currentPage - 1) * $scope.itemsPerPage;
+	      var end = begin + $scope.itemsPerPage;
+	  
+	      $scope.paged = {
+	        tickets: $scope.tickets.slice(begin, end)
+	      }
+	    });
+	  
+	  /* * * * * * */
 
 	} ]);

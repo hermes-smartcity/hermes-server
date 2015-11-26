@@ -5,6 +5,7 @@ import java.util.List;
 
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
+import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
 
 public interface MeasurementService {
 
@@ -18,5 +19,8 @@ public interface MeasurementService {
 	
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat);
+	
+	public BloqueElementos<Measurement> obterMeasurementsPaginados(MeasurementType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
 	
 }

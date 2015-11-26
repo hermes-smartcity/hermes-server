@@ -16,7 +16,8 @@ public class MeasurementDaoImpl extends GenericDaoHibernate<Measurement, Long> i
 MeasurementDao {
 	@Override
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
-			Calendar fechaFin, Geometry bounds) {
+			Calendar fechaFin, Geometry bounds,
+			int startIndex, int count) {
 		
 			List<Measurement> elementos = null;
 			
@@ -43,10 +44,20 @@ MeasurementDao {
 			if(fechaFin!=null)
 				query.setCalendar("fechaFin", fechaFin);
 			
+			if(startIndex!=-1 && count!=-1)
+				query.setFirstResult(startIndex).setMaxResults(count);
+			
 			query.setString("tipo", tipo.getName());
 			elementos = query.list();
 			return elementos;
 		
+	}
+	
+	@Override
+	public long contar(MeasurementType tipo) {
+		return (Long) getSession()
+				.createQuery("select count(*) from Measurement where tipo LIKE :tipo").setString("tipo", tipo.getName())
+				.uniqueResult();
 	}
 
 }

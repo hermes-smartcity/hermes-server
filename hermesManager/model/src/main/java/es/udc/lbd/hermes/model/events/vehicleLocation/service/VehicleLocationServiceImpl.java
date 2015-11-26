@@ -14,12 +14,15 @@ import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
 import es.udc.lbd.hermes.model.util.HelpersModel;
+import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
 
 
 
 @Service("vehicleLocationService")
 @Transactional
 public class VehicleLocationServiceImpl implements VehicleLocationService {
+	
+	private static final int ELEMENTOS_PAXINA = 100;
 	
 	@Autowired
 	private VehicleLocationDao vehicleLocationDao;
@@ -69,8 +72,38 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
 		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, fechaFin, polygon);
+		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
+				fechaFin, polygon, -1, -1);
 		return vehicleLocations;
+	}
+	
+	@Transactional(readOnly = true)
+	public BloqueElementos<VehicleLocation> obterVehicleLocationsPaginados(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina) {
+
+		/*
+		 * Obten count+1 vehicleLocations para determinar si existen mais
+		 * vehicleLocations no rango especificado.
+		 */
+		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
+				fechaFin, polygon, ELEMENTOS_PAXINA * (paxina - 1), ELEMENTOS_PAXINA + 1);
+
+		boolean haiMais = vehicleLocations.size() == (ELEMENTOS_PAXINA + 1);
+
+		/*
+		 * Borra o ultimo vehicleLocation da lista devolta si existen mais
+		 * vehicleLocations no rango especificado
+		 */
+		if (haiMais) {
+			vehicleLocations.remove(vehicleLocations.size() - 1);
+		}
+
+		long numero = vehicleLocationDao.contar();
+		/* Return BloqueElementos. */
+		return new BloqueElementos<VehicleLocation>(vehicleLocations, numero,
+				ELEMENTOS_PAXINA, paxina, haiMais);
+
 	}
 	
 }
