@@ -24,6 +24,13 @@ function($scope, $http, $timeout, $log, $filter) {
 
 	});
 	
+	// Tipos de measurement 
+	var urlGetEvensType = "../dashboard/json/measurementTypes";
+	$http.get(urlGetEvensType).success(function(data) {
+		$scope.measurementTypes = data;
+
+	});
+	
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	$scope.eventTypeSelected = "VEHICLE_LOCATION";
 	$scope.startDate = new Date();
@@ -46,6 +53,7 @@ function($scope, $http, $timeout, $log, $filter) {
 	map.on('zoomend', aplicarFiltros);
 	
 	function aplicarFiltros() {
+		
 		var pos = $scope.eventTypeSelected.indexOf('_'); 
 		var value = $scope.eventTypeSelected.substr(0, pos);
 		value += $scope.eventTypeSelected.substr(pos+1, $scope.eventTypeSelected.length);
@@ -55,8 +63,9 @@ function($scope, $http, $timeout, $log, $filter) {
 			vm.pintarMapaVehicleLocations();
 		else if(angular.equals($scope.eventTypeSelected, "DATA_SECTION"))
 			vm.pintarMapaDataSections();
-		else vm.pintarMapaMeasurements();
-		
+		else if($scope.measurementTypes.indexOf($scope.eventTypeSelected) > -1){
+			vm.pintarMapaMeasurements();
+		} else console.log("No corresponde a ningún tipo --> En construcción");
 		
 	};
 	

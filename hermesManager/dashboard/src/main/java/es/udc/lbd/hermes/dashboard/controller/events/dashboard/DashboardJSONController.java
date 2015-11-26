@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.model.events.EventType;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
 
@@ -28,6 +29,12 @@ public class DashboardJSONController extends MainResource {
 		@RequestMapping(value="/json/eventsType", method = RequestMethod.GET)
 		public List<EventType> eventsType() {
 			return Arrays.asList(EventType.values());
+
+		}
+		
+		@RequestMapping(value="/json/measurementTypes", method = RequestMethod.GET)
+		public List<MeasurementType> measurementTypes() {
+			return Arrays.asList(MeasurementType.values());
 
 		}
 
