@@ -32,7 +32,7 @@
 
 <!-- Gestión de angular -->
 <div ng-controller="FiltrosController as vm">
-<div class="col-lg-9">
+<div class="col-lg-10">
 
 	<div>
 			<li class="pestanas pestanasFormulario">
@@ -74,7 +74,7 @@
 
 	</div>
 </div>
- <div class="col-lg-3">
+ <div class="col-lg-2">
 		  <div class="panel panel-default">
 		  				
 		                   <div class="panel-heading">
@@ -101,9 +101,11 @@
 									</select>		 
 					                 
 								 </div>	
-								 <div class="list-group-item" >
+								 
+								 <div   class="list-group-item" >
 								   <label for="singleSelect">Start date</label><br/>
-		                  	 		<div class="dropdown">
+								     <button ng-click="showCalendarStart = ! showCalendarStart">Select date</button>
+		                  	 		<div ng-show="showCalendarStart" class="dropdown">
 		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="startDate" > <!--  --></datetimepicker>
 									  	<p>Selected Date: {{ startDate | date:'yyyy-MM-dd HH:mm' }}</p>
 									</div>     
@@ -111,14 +113,15 @@
 								 
 								 <div class="list-group-item">
 								 <label for="singleSelect">End date</label><br/>
-		                  	 		<div class="dropdown">
+								  <button ng-click="showCalendarEnd = ! showCalendarEnd">Select date</button>
+		                  	 		<div ng-show="showCalendarEnd" class="dropdown">
 		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="endDate" > <!--  --></datetimepicker>
 									  	<p>Selected Date: {{ endDate | date:'yyyy-MM-dd HH:mm' }}</p>
 									</div>  	
 								  
 								 	
 		                     </div>	
-		                     <button ng-click="vm.aplicarFiltros()">Filter</button>
+		                     <button id="btnFilter" class="btn btn-success" ng-click="vm.aplicarFiltros()">Filter</button>
 		                   </div>
 		    </div>
      </div>   

@@ -23,4 +23,8 @@
 			value="/WEB-INF/view/jsp/hermes/events/driverFeatures/listar.jspx" />
 	</definition>
 
+	<definition name="events/eventManager/mostrar" extends="baseAdmin">
+		 <put-attribute name="contido"
+			value="/WEB-INF/view/jsp/hermes/events/eventManager/mostrar.jspx" />
+	</definition>
 </tiles-definitions>

@@ -73,7 +73,7 @@
 	                    <span class="icon-bar"><!--  --></span>
 	                    <span class="icon-bar"><!--  --></span>
 	                </button>
-	                 <c:url var="inicioUrl" value="/paxinaInicio/inicio"/>
+	                 <c:url var="inicioUrl" value="/events/eventManager/mostrar"/>
 	                <a class="navbar-brand" href="${inicioUrl}">Hermes Manager</a>
 	            </div>
 	            <!-- /.navbar-header -->
@@ -138,16 +138,16 @@
 	                <div class="sidebar-nav navbar-collapse">
 	                    <ul class="nav in" id="side-menu"> 	                        
 	                       <li><!--  -->
-	                       <c:url var="listarDashboardUrl" value="/events/dashboard/mostrar"/>		
-	                            <a href="${listarDashboardUrl}">
+	                       <c:url var="mostrarDashboardUrl" value="/events/dashboard/mostrar"/>		
+	                            <a href="${mostrarDashboardUrl}">
 		                            <i class="fa fa-dashboard fa-fw"><!--  --></i>
 		                            <span>Dashboard</span>
 	                            </a>
 	                        </li>
 	                        
 	                         <li><!--  -->
-	                       <c:url var="listarVehicleLocationsUrl" value="/events/vehiclelocation/listar"/>		
-	                             <a href="#">
+	                       <c:url var="mostrarEventManagerUrl" value="/events/eventManager/mostrar"/>		
+	                             <a href="${mostrarEventManagerUrl}">
 		                            <i class="fa fa-bar-chart-o fa-fw"><!--  --></i>
 		                            <span> Event Manager</span>
 	                            </a>

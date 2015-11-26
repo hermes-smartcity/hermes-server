@@ -11,7 +11,7 @@ public class PrincipalController {
 
 	@RequestMapping("/")
 	public String inicio(HttpSession session) {				
-		return "redirect:paxinaInicio/inicio";
+		return "redirect:events/dashboard/mostrar";
 	}
 
 }

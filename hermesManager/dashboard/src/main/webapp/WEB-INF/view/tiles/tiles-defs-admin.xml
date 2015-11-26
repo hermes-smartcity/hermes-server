@@ -18,12 +18,6 @@
 			value="/WEB-INF/view/jsp/hermes/inicio.jspx" />
 	</definition>-->
 	
-	<!-- Paxina de inicio -->
-	<definition name="paxinaInicio/inicio" extends="baseAdmin">
-		 <put-attribute name="contido"
-			value="/WEB-INF/view/jsp/hermes/paxinaInicio/paxinaInicio.jspx" />
-	</definition>
-	
 	<!-- Usuarios -->
 	<definition name="usuario/listar" extends="baseAdmin">
 		<put-attribute name="contido"
