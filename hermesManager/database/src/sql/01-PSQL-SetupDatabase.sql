@@ -1,2 +1,6 @@
 CREATE EXTENSION postgis
 ;
+CREATE EXTENSION hstore
+; 
+CREATE EXTENSION pgRouting
+;
