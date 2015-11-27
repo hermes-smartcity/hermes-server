@@ -18,10 +18,10 @@ public class DeflateReaderInterceptor implements ReaderInterceptor {
         MultivaluedMap<String,String> headers = context.getHeaders();
         List<String> contentEncoding = headers.get("Content-Encoding");
 
-        //if(contentEncoding!= null && contentEncoding.contains("deflate")) {
+        if(contentEncoding!= null && contentEncoding.contains("deflate")) {
             final InputStream originalInputStream = context.getInputStream();
             context.setInputStream(new InflaterInputStream(originalInputStream));
-        //}
+        }
         return context.proceed();
     }
 }
