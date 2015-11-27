@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import org.springframework.stereotype.Component;
 
@@ -26,8 +27,10 @@ public class SleepDataEventStrategy extends EventStrategy {
 		sleepData.setMinutesAsleep(ztreamysleepData.getMinutesAsleep());
 		sleepData.setMinutesInBed(ztreamysleepData.getMinutesInBed());
 		ztreamysleepData.getStartTime().set(ztreamysleepData.getDateTime().get(Calendar.YEAR), ztreamysleepData.getDateTime().get(Calendar.MONTH), ztreamysleepData.getDateTime().get(Calendar.DAY_OF_MONTH));
-		sleepData.setStartTime(ztreamysleepData.getStartTime());
+		ztreamysleepData.getStartTime().setTimeZone(TimeZone.getDefault());
+		sleepData.setStartTime(ztreamysleepData.getStartTime());		
 		ztreamysleepData.getEndTime().set(ztreamysleepData.getDateTime().get(Calendar.YEAR), ztreamysleepData.getDateTime().get(Calendar.MONTH), ztreamysleepData.getDateTime().get(Calendar.DAY_OF_MONTH));
+		ztreamysleepData.getEndTime().setTimeZone(TimeZone.getDefault());
 		sleepData.setEndTime(ztreamysleepData.getEndTime());
 		sleepData.setEventId(event.getEventId());
 		sleepDataService.create(sleepData, event.getSourceId());

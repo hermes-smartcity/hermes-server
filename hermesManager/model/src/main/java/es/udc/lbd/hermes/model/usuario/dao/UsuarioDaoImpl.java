@@ -15,8 +15,6 @@ public class UsuarioDaoImpl extends GenericDaoHibernate<Usuario, Long> implement
 UsuarioDao {
 	@Override
 	public List<Usuario> obterUsuarios() {
-
-		List<Usuario> elementos = null;
 		try {
 			return getSession().createCriteria(this.entityClass).list();
 		} catch (HibernateException e) {

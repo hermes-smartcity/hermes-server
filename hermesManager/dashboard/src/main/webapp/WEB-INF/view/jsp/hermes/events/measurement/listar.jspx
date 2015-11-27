@@ -18,8 +18,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<jsp:include page="../incluirAngular.jspx" />
-<jsp:include page="../form-script.jspx" />
+
 </head>
 		<fmt:message var="mapaFmt" key="citydriver.measurement.pestanas.mapa" />
 		<fmt:message var="tablaFmt" key="citydriver.measurement.pestanas.tabla" />
@@ -29,99 +28,65 @@
 		<fmt:message var="posicionFmt" key="citydriver.measurement.tabla.columnas.posicion" />
 		<fmt:message var="tipoFmt" key="citydriver.measurement.tabla.columnas.tipo" />
 		<fmt:message var="valueFmt" key="citydriver.measurement.tabla.columnas.value" />
-		
-<!-- Gestión de angular -->
-<div class="col-lg-8" ng-app="measurementApp" ng-cloak="">
-
-	<div  ng-controller="MeasurementsController" ng-init="getMeasurements()">		
 	
-		<!-- Configurar pestanas -->
-			<li class="pestanas pestanasFormulario">
-				<ol class="pestanas selectoresFormulario">
-					<li class="pestanas selector activa">${mapaFmt}</li>
-					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
-
-				</ol>
-				<ol class="pestanas fichas">
-					<li class="pestanas ficha activa">
-						<ol class="pestanas">
-
-							<div id="map"></div>
-
-
-						</ol>
-					</li>
-					<li class="pestanas ficha" id="pestanaF">
-						<ol class="pestanas">
-							<br></br>
-							<h3 style="font-weight: bold;">${eventosFmt}</h3>
-							<br></br>
-							  <table class="film-info-bottom"
-								ng-repeat="measurement in measurements">
-										<tr>
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${idEventoFmt}
-												</div>
-												<div class="valor">
-													{{measurement.eventId}}
-												</div>
-											</div>
-										</td>
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${timestampFmt}
-												</div>
-												<div class="valor">
-													{{ measurement.timestamp  | date : format : timezone}}
-																
-												</div>
-											</div>
-										</td>
-									
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${posicionFmt}
-												</div>
-												<div class="valor">
-													{{measurement.position.coordinates}}
-												</div>
-											</div>
-										</td>
-										
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${valueFmt}
-												</div>
-												<div class="valor">
-													{{measurement.value}}
-												</div>
-											</div>
-										</td>
-										
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${tipoFmt}
-												</div>
-												<div class="valor">
-													{{measurement.tipo}}
-												</div>
-											</div>
-										</td>
-									</tr>
-								</table> 
-						</ol>
-					</li>
-				</ol>
-			</li>
-
-	</div>
-</div>
-
+		  <table class="film-info-bottom"
+			ng-repeat="measurement in events">
+					<tr>
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								${idEventoFmt}
+							</div>
+							<div class="valor">
+								{{measurement.eventId}}
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								${timestampFmt}
+							</div>
+							<div class="valor">
+								{{ measurement.timestamp  | date : format : timezone}}
+											
+							</div>
+						</div>
+					</td>
+				
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								${posicionFmt}
+							</div>
+							<div class="valor">
+								{{measurement.position.coordinates}}
+							</div>
+						</div>
+					</td>
+					
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								${valueFmt}
+							</div>
+							<div class="valor">
+								{{measurement.value}}
+							</div>
+						</div>
+					</td>
+					
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								${tipoFmt}
+							</div>
+							<div class="valor">
+								{{measurement.tipo}}
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table> 
 	</html>
 </jsp:root>

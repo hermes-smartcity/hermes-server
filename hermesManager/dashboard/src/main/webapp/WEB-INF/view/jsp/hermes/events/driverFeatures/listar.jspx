@@ -17,9 +17,6 @@
 	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		
-		<jsp:include page="../form-script.jspx" />	
-		<jsp:include page="../incluirAngular.jspx"/>		
 	</head>
 	
 	<fmt:message var="mapaFmt" key="hermes.driverFeatures.pestanas.mapa" />
@@ -30,14 +27,10 @@
 	<fmt:message var="workingTimeFmt" key="hermes.driverFeatures.tabla.columnas.workingTime" />
 	<fmt:message var="deepSleepFmt" key="hermes.driverFeatures.tabla.columnas.deepSleep" />
 	
-	<!-- Gestión de angular -->
- 
-	<div class="col-lg-8"  ng-app="driverFeaturesApp" ng-cloak="">
-	
-		<div ng-controller="DriversFeaturesController" ng-init="getDriversFeatures()">
+
 			
 			<table class="film-info-bottom"
-				ng-repeat="driverFeatures in driversFeatures">
+				ng-repeat="driverFeatures in events">
 						<tr>
 						<td>
 							<div class="campoFicha">
@@ -83,10 +76,7 @@
 						</td>
 					</tr>
 				</table>
-				
-				
-		</div>
-	</div>
+
 
 </html>	
 </jsp:root>

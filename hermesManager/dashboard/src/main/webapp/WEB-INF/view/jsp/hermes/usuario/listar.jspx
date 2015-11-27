@@ -89,7 +89,7 @@
 							</a></td>
 							
 							<td colspan="2">								
-								<c:url var="listarDataSectionUrl" value="/events/dataSection/listar">
+								<c:url var="listarDataSectionUrl" value="/events/datasection/listar">
 									<c:param name="id" value="${usuario.id}" />
 								</c:url> <a href="${listarDataSectionUrl}" title="Listar Data Section">Listar Data Section
 							</a></td>

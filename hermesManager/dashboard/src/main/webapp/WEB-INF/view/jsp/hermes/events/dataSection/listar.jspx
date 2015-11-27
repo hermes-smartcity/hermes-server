@@ -17,9 +17,6 @@
 	
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-		<jsp:include page="../incluirAngular.jspx"/>		
-		<jsp:include page="../form-script.jspx" />
 	</head>
 	
 	<fmt:message var="mapaFmt" key="citydriver.dataSection.pestanas.mapa" />
@@ -29,79 +26,46 @@
 	<fmt:message var="timestampFmt" key="citydriver.dataSection.tabla.columnas.timestamp" />
 	<fmt:message var="posicionFmt" key="citydriver.dataSection.tabla.columnas.posicion" />
 	
-	<!-- Gestión de angular -->
- 
-	<div class="col-lg-8"  ng-app="dataSectionApp" ng-cloak="">
 	
-		<div  ng-controller="DataSectionsController" ng-init="getDataSections()">
-
+	<table class="film-info-bottom"
+		ng-repeat="dataSection in events">
+				<tr>
+				<td>
+				<div class="campoFicha">
+						<div class="etiqueta">
+							${idEventoFmt}
+						</div>
+						<div class="valor">
+							{{dataSection.eventId}}
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="campoFicha">
+						<div class="etiqueta">
+							${timestampFmt}
+						</div>
+						<div class="valor">
+							{{ dataSection.timestamp  | date : format : timezone}}
+										
+						</div>
+					</div>
+				</td>
 			
-			<!-- Configurar pestanas -->
-			<li class="pestanas pestanasFormulario">
-				<ol class="pestanas selectoresFormulario">
-					<li class="pestanas selector activa">${mapaFmt}</li>
-					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
+				<td>
+					<div class="campoFicha">
+						<div class="etiqueta">
+							${posicionFmt}
+						</div>
+						 <div class="valor">
+							{{dataSection.roadSection.coordinates}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+						
 
-				</ol>
-				<ol class="pestanas fichas">
-					<li class="pestanas ficha activa">
-						<ol class="pestanas">
-
-							<div id="map"></div>
-
-
-						</ol>
-					</li>
-					<li class="pestanas ficha" id="pestanaF">
-						<ol class="pestanas">
-							<br></br>
-							<h3 style="font-weight: bold;">${eventosFmt}</h3>
-							<br></br>
-							<table class="film-info-bottom"
-								ng-repeat="dataSection in dataSections">
-										<tr>
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${idEventoFmt}
-												</div>
-												<div class="valor">
-													{{dataSection.eventId}}
-												</div>
-											</div>
-										</td>
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${timestampFmt}
-												</div>
-												<div class="valor">
-													{{ dataSection.timestamp  | date : format : timezone}}
-																
-												</div>
-											</div>
-										</td>
-									
-										<td>
-											<div class="campoFicha">
-												<div class="etiqueta">
-													${posicionFmt}
-												</div>
-												 <div class="valor">
-													{{dataSection.roadSection.coordinates}}
-												</div>
-											</div>
-										</td>
-									</tr>
-								</table>
-						</ol>
-					</li>
-				</ol>
-			</li>
-
-				
-		</div>
-	</div>
 
 </html>	
 </jsp:root>

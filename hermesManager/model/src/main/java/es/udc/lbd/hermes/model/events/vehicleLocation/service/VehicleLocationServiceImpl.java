@@ -1,19 +1,12 @@
 package es.udc.lbd.hermes.model.events.vehicleLocation.service;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.hibernate.ejb.criteria.ParameterContainer.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKTReader;
 
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
@@ -21,12 +14,15 @@ import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
 import es.udc.lbd.hermes.model.util.HelpersModel;
+import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
 
 
 
 @Service("vehicleLocationService")
 @Transactional
 public class VehicleLocationServiceImpl implements VehicleLocationService {
+	
+	private static final int ELEMENTOS_PAXINA = 100;
 	
 	@Autowired
 	private VehicleLocationDao vehicleLocationDao;
@@ -73,23 +69,41 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<VehicleLocation> obterVehicleLocations() {
-		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations();
+	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
+		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
+				fechaFin, polygon, -1, -1);
 		return vehicleLocations;
 	}
 	
 	@Transactional(readOnly = true)
-	public List<VehicleLocation> obterVehicleLocationsByBounds(Double wnLng, Double wnLat, Double esLng, Double esLat) {
-		List<VehicleLocation> vehicleLocations = new ArrayList<>();
-			Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-			vehicleLocations = vehicleLocationDao.obterVehicleLocationsByBounds(polygon);
-		
-		return vehicleLocations;
+	public BloqueElementos<VehicleLocation> obterVehicleLocationsPaginados(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina) {
+
+		/*
+		 * Obten count+1 vehicleLocations para determinar si existen mais
+		 * vehicleLocations no rango especificado.
+		 */
+		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
+				fechaFin, polygon, ELEMENTOS_PAXINA * (paxina - 1), ELEMENTOS_PAXINA + 1);
+
+		boolean haiMais = vehicleLocations.size() == (ELEMENTOS_PAXINA + 1);
+
+		/*
+		 * Borra o ultimo vehicleLocation da lista devolta si existen mais
+		 * vehicleLocations no rango especificado
+		 */
+		if (haiMais) {
+			vehicleLocations.remove(vehicleLocations.size() - 1);
+		}
+
+		long numero = vehicleLocationDao.contar();
+		/* Return BloqueElementos. */
+		return new BloqueElementos<VehicleLocation>(vehicleLocations, numero,
+				ELEMENTOS_PAXINA, paxina, haiMais);
+
 	}
 	
-	@Transactional(readOnly = true)
-	public List<VehicleLocation> obterVehicleLocationsSegunUsuario(Long idUsuario) {
-		 List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsSegunUsuario(idUsuario);
-		return vehicleLocations;
-	}
 }

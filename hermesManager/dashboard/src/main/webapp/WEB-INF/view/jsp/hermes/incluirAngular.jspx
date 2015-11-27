@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:i18n="http://www.enxenio.es/tags/i18n"
+	xmlns:menu="http://www.enxenio.es/tags/menu"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	version="2.0">
+
+	
+	<!-- Includes de angular -->
+	<c:url var="jsAngular" value="/view/bower_components/angular/angular.min.js"/>
+	<script type="text/javascript" src="${jsAngular}"><!-- --></script>
+	<!-- moment -->
+	<c:url var="jsMoment" value="/view/bower_components/moment/moment.js"/>
+	<script type="text/javascript" src="${jsMoment}"><!-- --></script>
+	<!-- datetimepicker -->
+	<c:url var="jsDatetimepicker" value="/view/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"/>
+	<script type="text/javascript" src="${jsDatetimepicker}"><!-- --></script>
+	 
+	  	
+	<c:url var="jsDirectives" value="/view/js/angular/directives.js"/>
+	<script type="text/javascript" src="${jsDirectives}"><!-- --></script>
+		
+	<!-- app general -->
+	<c:url var="jsApp" value="/view/js/angular/app.js"/>
+	<script type="text/javascript" src="${jsApp}"><!-- --></script>
+	
+	<!-- bootstrap-tpls -->
+	<c:url var="jsbootstrap-tpls" value="/view/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"/>
+	<script type="text/javascript" src="${jsbootstrap-tpls}"><!-- --></script>
+	
+	<!-- filtros -->	
+	<c:url var="jsFiltrosCtrl" value="/view/js/angular/filtrosCtrl.js"/>
+	<script type="text/javascript" src="${jsFiltrosCtrl}"><!-- --></script>
+ 	
+	<c:url var="jsAux" value="/view/bower_components/bootstrap/dist/js/bootstrap.min.js"/>
+	<script type="text/javascript" src="${jsAux}"><!-- --></script>
+	
+
+  
+</jsp:root>
+

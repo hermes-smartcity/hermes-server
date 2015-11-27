@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:contido="http://www.enxenio.es/tags/contido"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+
+
+	<html xmlns="http://www.w3.org/1999/xhtml" lang="${localeActual}">
+<jsp:output doctype-root-element="html"
+	doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+	doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
+
+<jsp:directive.page contentType="text/html; charset=UTF-8" />
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<jsp:include page="../form-script.jspx" />
+
+</head>
+
+		<fmt:message var="mapaFmt" key="citydriver.vehicleLocation.pestanas.mapa" />
+		<fmt:message var="tablaFmt" key="citydriver.vehicleLocation.pestanas.tabla" />
+		<fmt:message var="eventosFmt" key="citydriver.vehicleLocation.tabla.titulo.eventos" />
+		<fmt:message var="idEventoFmt" key="citydriver.vehicleLocation.tabla.columnas.idEvento" />
+		<fmt:message var="timestampFmt" key="citydriver.vehicleLocation.tabla.columnas.timestamp" />
+		<fmt:message var="posicionFmt" key="citydriver.vehicleLocation.tabla.columnas.posicion" />
+	
+
+<!-- Gestión de angular -->
+<div ng-controller="FiltrosController as vm">
+ <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"><!--  --></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                     <div>Event Manager:</div>
+                                    <div>Events today:</div>
+                                     <div>Last event:</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="panel-footer">
+                                <span style="color: #337AB7;" class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa"><!--  --></i></span>
+                                <div class="clearfix"><!--  --></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"><!--  --></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                     <div>Total users</div>
+                                     <div>Active users</div>
+                                     <div>Last user</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa"><!--  --></i></span>
+                                <div class="clearfix"><!--  --></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"><!--  --></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                     <div>Total locations</div>
+                                    <div>Total measurements!</div>
+                                    <div>Total data sections</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa"><!--  --></i></span>
+                                <div class="clearfix"><!--  --></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"><!--  --></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                     <div>Future</div>
+                                     <div>Future</div>
+                                     <div>Future</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa"><!--  --></i></span>
+                                <div class="clearfix"><!--  --></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<div class="col-lg-10">
+
+	<div>
+			<li class="pestanas pestanasFormulario">
+				<ol class="pestanas selectoresFormulario">
+					<li class="pestanas selector activa">${mapaFmt}</li>
+					<li class="pestanas selector" id="selectorF">${tablaFmt}</li>
+
+				</ol>
+				<ol class="pestanas fichas">
+					<li class="pestanas ficha activa">
+						<ol>
+
+							<div id="map"><!--  --></div>
+
+
+						</ol>
+					</li>
+					
+					<li class="pestanas ficha" id="pestanaF">
+						<ol class="pestanas">
+							<br></br>
+							<h3 style="font-weight: bold;">${eventosFmt}</h3>
+							<br></br>
+							<div ng-show="eventTypeSelected == 'VEHICLE_LOCATION'">	
+							 	<jsp:include page="../vehicleLocation/listar.jspx" />
+						    </div>
+						    <div ng-show="eventTypeSelected == 'DATA_SECTION'">	
+							 	<jsp:include page="../dataSection/listar.jspx" />
+						    </div>
+						     <div ng-show="eventTypeSelected != ('DATA_SECTION' ||  'VEHICLE_LOCATION')">	
+							 	<jsp:include page="../dataSection/listar.jspx" />
+						    </div>
+						   
+						</ol>
+					</li>
+
+				</ol>
+			</li>
+
+	</div>
+</div>
+ <div class="col-lg-2">
+		  <div class="panel panel-default">
+		  				
+		                   <div class="panel-heading">
+		                       <i class="fa fa-bell fa-fw"><!--  --></i> 
+		                   </div>
+		               
+		                   <div class="panel-body">
+		                  	 
+		                  	   <div class="list-group-item">
+		                          <label for="singleSelect">User</label><br/>
+		                          <!-- Filtro usuarios  -->
+		                          <select id="selectUsers"  ng-model="usuarioSelected" ng-change="changedValue(usuarioSelected)" 
+									     data-ng-options="usuario as usuario.sourceId for usuario in usuarios">
+									   	   <option value="">Todos</option> 
+									</select>		           
+								 </div>	
+								 
+		                  	 	<div class="list-group-item">
+					                 <label for="singleSelect">Event Type</label><br/>	
+					             		<!-- Filtro event type -->    
+					                  <select  ng-model="eventTypeSelected" ng-change="changedValue(eventTypeSelected)" 
+									     data-ng-options="eventType as eventType for eventType in eventsType">
+									  <!--   <option value="">Select Account</option> --> 
+									</select>		 
+					                 
+								 </div>	
+								 
+								 <div   class="list-group-item" >
+								   <label for="singleSelect">Start date</label><br/>
+								     <button ng-click="showCalendarStart = ! showCalendarStart">Select date</button>
+		                  	 		<div ng-show="showCalendarStart" class="dropdown">
+		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="startDate" > <!--  --></datetimepicker>
+									  	<p>Selected Date: {{ startDate | date:'yyyy-MM-dd HH:mm' }}</p>
+									</div>     
+							 	</div>	
+								 
+								 <div class="list-group-item">
+								 <label for="singleSelect">End date</label><br/>
+								  <button ng-click="showCalendarEnd = ! showCalendarEnd">Select date</button>
+		                  	 		<div ng-show="showCalendarEnd" class="dropdown">
+		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="endDate" > <!--  --></datetimepicker>
+									  	<p>Selected Date: {{ endDate | date:'yyyy-MM-dd HH:mm' }}</p>
+									</div>  	
+								  
+								 	
+		                     </div>	
+		                     <button id="btnFilter" class="btn btn-success" ng-click="vm.aplicarFiltros()">Filter</button>
+		                   </div>
+		    </div>
+     </div>   
+     <!-- Prueba paginacion con angular js -->
+     
+ 
+    <div>{{noOfPages}}   {{currentPage}}   {{maxSize}}
+      <pagination ng-model="currentPage" total-items="tickets.length" items-per-page="5"></pagination>
+    </div>
+     <!--  -->
+      
+ </div>
+        
+	</html>
+</jsp:root>

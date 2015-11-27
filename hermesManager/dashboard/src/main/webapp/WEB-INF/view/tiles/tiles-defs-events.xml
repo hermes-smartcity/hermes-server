@@ -3,7 +3,7 @@
 
 <tiles-definitions>
 	
-	<definition name="events/dataSection/listar" extends="baseAdmin">
+	<definition name="events/datasection/listar" extends="baseAdmin">
 		<put-attribute name="contido"
 			value="/WEB-INF/view/jsp/hermes/events/dataSection/listar.jspx" />
 	</definition>
@@ -13,9 +13,9 @@
 			value="/WEB-INF/view/jsp/hermes/events/measurement/listar.jspx" />
 	</definition>
 	
-	<definition name="events/vehicleLocation/listar" extends="baseAdmin">
+	<definition name="events/dashboard/mostrar" extends="baseAdmin">
 		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/hermes/events/vehicleLocation/listar.jspx" />
+			value="/WEB-INF/view/jsp/hermes/events/dashboard/mostrar.jspx" />
 	</definition>
 	
 	<definition name="events/driverFeatures/listar" extends="baseAdmin">
@@ -23,4 +23,8 @@
 			value="/WEB-INF/view/jsp/hermes/events/driverFeatures/listar.jspx" />
 	</definition>
 
+	<definition name="events/eventManager/mostrar" extends="baseAdmin">
+		 <put-attribute name="contido"
+			value="/WEB-INF/view/jsp/hermes/events/eventManager/mostrar.jspx" />
+	</definition>
 </tiles-definitions>
