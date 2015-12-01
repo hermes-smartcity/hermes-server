@@ -20,4 +20,6 @@ public interface VehicleLocationService {
 	
 	public BloqueElementos<VehicleLocation> obterVehicleLocationsPaginados(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
+	
+	public long contar();
 }

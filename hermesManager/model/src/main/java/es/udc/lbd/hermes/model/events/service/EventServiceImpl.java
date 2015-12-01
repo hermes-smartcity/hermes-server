@@ -62,4 +62,9 @@ public class EventServiceImpl implements EventService {
 		eventoProcesadoDao.eliminarEventosProcesados();		
 	}
 	
+//	@Override
+//	public int getEventsToday() {
+//		return eventoProcesadoDao.getEventsToday();		
+//	}
+	
 }

@@ -96,4 +96,9 @@ public class DataSectionServiceImpl implements DataSectionService {
 				ELEMENTOS_PAXINA, paxina, haiMais);
 
 	}
+	
+	@Transactional(readOnly = true)
+	public long contar(){
+		return dataSectionDao.contar();
+	}
 }

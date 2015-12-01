@@ -35,6 +35,28 @@ public class HelpersModel {
 		}
 		return builder.toString();
 	}
+	
+	//Inicio del día, para comparaciones
+	public static Calendar getLimiteDiaInferior(Calendar fecha2) {
+		Calendar fecha=Calendar.getInstance();
+		fecha.setTimeInMillis(fecha2.getTimeInMillis());
+		fecha.set(Calendar.HOUR_OF_DAY, 0);
+		fecha.set(Calendar.MINUTE,0);
+		fecha.set(Calendar.SECOND,0);
+		fecha.set(Calendar.MILLISECOND,0);
+		return fecha;
+	}
+		
+	public static Calendar getHoy() {
+		return getLimiteDiaInferior(Calendar.getInstance());
+	}
+		
+	public static Calendar getAyer(Calendar fechaHoy){
+		Calendar fecha=Calendar.getInstance();
+		fecha.setTimeInMillis(fechaHoy.getTimeInMillis());
+		fecha.add(Calendar.HOUR,-24);
+		return getLimiteDiaInferior(fecha);
+	}
 
 	public static Calendar getFecha(String fecha) {
 		Calendar cal = Calendar.getInstance();

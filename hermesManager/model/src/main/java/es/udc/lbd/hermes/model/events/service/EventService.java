@@ -17,4 +17,6 @@ public interface EventService {
 	public EventoProcesado obterEventoProcesado();
 	
 	public void eliminarEventosProcesados();
+	
+//	public int getEventsToday();
 }

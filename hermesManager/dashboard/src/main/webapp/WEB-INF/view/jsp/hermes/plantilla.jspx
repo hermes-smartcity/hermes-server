@@ -15,7 +15,7 @@
 	<tiles:useAttribute name="entradaMenu" ignore="true" scope="request" />
 	<tiles:useAttribute name="entradaSubMenu" ignore="true" scope="request" />
 
-	<html lang="en">
+	<html ng-app="app" lang="en">
 		<jsp:output doctype-root-element="html" doctype-system="about:legacy-compat" />
 	    <jsp:directive.page contentType="text/html; charset=UTF-8" />
 		<head>
@@ -53,7 +53,10 @@
 			
 			 	<c:url var="estilosUrl" value="/view/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
-	
+				
+				
+				<c:url var="estilosUrl" value="/view/bower_components/angular-chart.js/dist/angular-chart.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
 				
 				<jsp:include page="incluirJS.jspx"/>
 					
@@ -73,8 +76,8 @@
 	                    <span class="icon-bar"><!--  --></span>
 	                    <span class="icon-bar"><!--  --></span>
 	                </button>
-	                 <c:url var="inicioUrl" value="/events/eventManager/mostrar"/>
-	                <a class="navbar-brand" href="${inicioUrl}">Hermes Manager</a>
+	                
+	                <a class="navbar-brand" ui-sref="eventManager" >Hermes Manager</a>
 	            </div>
 	            <!-- /.navbar-header -->
 	
@@ -139,7 +142,7 @@
 	                    <ul class="nav in" id="side-menu"> 	                        
 	                       <li><!--  -->
 	                       <c:url var="mostrarDashboardUrl" value="/events/dashboard/mostrar"/>		
-	                            <a href="${mostrarDashboardUrl}">
+	                            <a ui-sref="inicio" >
 		                            <i class="fa fa-dashboard fa-fw"><!--  --></i>
 		                            <span>Dashboard</span>
 	                            </a>
@@ -147,46 +150,13 @@
 	                        
 	                         <li><!--  -->
 	                       <c:url var="mostrarEventManagerUrl" value="/events/eventManager/mostrar"/>		
-	                             <a href="${mostrarEventManagerUrl}">
+	                             <a ui-sref="eventManager" >
 		                            <i class="fa fa-bar-chart-o fa-fw"><!--  --></i>
 		                            <span> Event Manager</span>
 	                            </a>
 	                        </li>
 	                        
-	                        <!--  <li>
-	                            <a href="#">
-	                            	<i class="fa fa-bar-chart-o fa-fw">
-	                            		
-	                            	</i> Event Manager<span class="fa arrow"></span>
-	                            </a>
-	                            <ul class="nav nav-second-level">
-	                                <li>
-	                                	<c:url var="highSpeedUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HIGH_SPEED" />
-										</c:url>
-	                                    <a href="${highSpeedUrl}">High Speed</a>
-	                                </li>
-	                                <li>
-	                               		 <c:url var="highAccelerationUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HIGH_ACCELERATION" />
-										</c:url>
-	                                    <a href="${fn:escapeXml(highAccelerationUrl)}">High Acceleration</a>
-	                                </li>
-	                                <li>
-	                                	<c:url var="highDecelerationUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HIGH_DECELERATION" />
-										</c:url>
-	                                    <a href="${highDecelerationUrl}">High Deceleration</a>
-	                                </li>
-	                                <li>
-	                                	<c:url var="highHeartRateUrl" value="/events/measurement/listar">
-											<c:param name="tipo" value="HIGH_HEART_RATE" />
-										</c:url>
-	                                    <a href="${highHeartRateUrl}">High Heart Rate</a>
-	                                </li>
-	                            </ul>-->
-	                            <!-- /.nav-second-level
-	                        </li>  -->
+	                   
 		                   <li><!--  -->
 		                       <c:url var="listarDataSectionsUrl" value="/events/datasection/listar"/>		
 		                            <a href="#">
@@ -220,8 +190,8 @@
 		                    <h1 class="page-header">Dashboard</h1>
 		                </div>
 		    	</div>
-		    	<div ng-app="app" id="contido" class="row">
-			      	<tiles:insertAttribute name="contido"/>
+		    	<div id="contido" class="row">
+			      <div class="view" ui-view=""><!-- --></div>
 				</div>
 	            <!-- /.row -->
 	        </div>

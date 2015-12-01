@@ -50,5 +50,9 @@ public class EventManager{
 			logger.warn("Could not acquire Semaphore. Nothing done.");
 			//TODO: Enviar mensaje de error hacia la vista
 		}
-	}	
+	}
+
+	public EventProcessor getEventProcessor() {
+		return eventProcessor;
+	}
 }

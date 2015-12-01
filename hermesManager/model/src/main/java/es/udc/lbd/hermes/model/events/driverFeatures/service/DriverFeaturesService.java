@@ -17,4 +17,6 @@ public interface DriverFeaturesService {
 	public List<DriverFeatures> obterDriverFeaturess();
 	
 	public List<DriverFeatures> obterDriverFeaturessSegunUsuario(Long idUsuario);
+	
+	public long contar();
 }

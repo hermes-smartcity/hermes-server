@@ -30,7 +30,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/view/tiles/tiles-defs-events.xml</value>
-				<value>/WEB-INF/view/tiles/tiles-defs-admin.xml</value>
 				<value>/WEB-INF/view/tiles/tiles-defs.xml</value>
 			</list>
 		</property>

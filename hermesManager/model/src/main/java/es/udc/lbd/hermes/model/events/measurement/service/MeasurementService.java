@@ -23,4 +23,6 @@ public interface MeasurementService {
 	public BloqueElementos<Measurement> obterMeasurementsPaginados(MeasurementType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
 	
+	public long contar();
+	
 }

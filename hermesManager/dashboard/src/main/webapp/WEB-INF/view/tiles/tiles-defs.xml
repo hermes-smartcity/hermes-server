@@ -2,19 +2,14 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
 <tiles-definitions>
-
-	<definition name="basePublica" template="/WEB-INF/view/jsp/publica/plantilla.jspx" />
-
-	<definition name="/login" template="/WEB-INF/view/jsp/login/login.jspx" />
-	
-	<definition name="excepcion" extends="baseAdmin">
-		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/publica/erro/excepcion.jspx" />
+	    	
+	<definition name=".Base"
+		template="/WEB-INF/view/jsp/hermes/plantilla.jspx">
+		<put-attribute name="title" value="${title}" />
+		<put-attribute name="content" value="${content}" />
 	</definition>
 
-<!-- 	<definition name="inicio" extends="basePublica"> -->
-<!-- 		<put-attribute name="contido" -->
-<!-- 			value="/WEB-INF/view/jsp/publica/inicio.jspx" /> -->
-<!-- 	</definition> -->
-		
+	<definition name="" extends=".Base">
+	</definition>
+	
 </tiles-definitions>

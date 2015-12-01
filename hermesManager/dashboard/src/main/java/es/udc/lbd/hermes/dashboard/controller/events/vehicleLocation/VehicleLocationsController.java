@@ -16,7 +16,7 @@ import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 
 @RestController
-@RequestMapping(value = "/events/vehiclelocation")
+@RequestMapping(value = "/api/vehiclelocation")
 public class VehicleLocationsController extends MainResource {
 	private final Logger log = LoggerFactory
 			.getLogger(VehicleLocationsController.class);
@@ -35,7 +35,7 @@ public class VehicleLocationsController extends MainResource {
 
 			Calendar ini = Helpers.getFecha(fechaIni);
 			Calendar fin = Helpers.getFecha(fechaFin);
-		
+
 			return vehicleLocationServicio.obterVehicleLocations(idUsuario, ini, fin,
 					wnLng, wnLat,esLng, esLat);
 		

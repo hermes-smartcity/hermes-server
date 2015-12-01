@@ -18,12 +18,12 @@ public class EventController {
 	@RequestMapping("/arrancar")
 	public String arrancar(HttpSession session) {
 		eventManager.startEventProcessor();
-		return "redirect:/events/eventManager/mostrar";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/parar")
 	public String parar(HttpSession session) {		
 		eventManager.stopEventProcessor();
-		return "redirect:/events/eventManager/mostrar";
+		return "redirect:/";
 	}
 }

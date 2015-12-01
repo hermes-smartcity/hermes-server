@@ -16,7 +16,7 @@ import es.udc.lbd.hermes.model.events.driverFeatures.service.DriverFeaturesServi
 
 
 @RestController
-@RequestMapping(value = "/events/driverFeatures")
+@RequestMapping(value = "/api/driverFeatures")
 public class DriversFeaturesController extends MainResource {
 	private final Logger log = LoggerFactory
 			.getLogger(DriversFeaturesController.class);

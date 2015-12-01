@@ -31,4 +31,11 @@ DriverFeaturesDao {
 		
 	}
 	
+	@Override
+	public long contar() {
+		return (Long) getSession()
+				.createQuery("select count(*) from DriverFeatures")
+				.uniqueResult();
+	}
+	
 }

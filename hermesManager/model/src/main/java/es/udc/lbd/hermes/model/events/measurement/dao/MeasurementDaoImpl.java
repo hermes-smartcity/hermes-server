@@ -55,9 +55,14 @@ MeasurementDao {
 	
 	@Override
 	public long contar(MeasurementType tipo) {
-		return (Long) getSession()
-				.createQuery("select count(*) from Measurement where tipo LIKE :tipo").setString("tipo", tipo.getName())
-				.uniqueResult();
+		String queryStr = "select count(*) from Measurement";
+		if(tipo!=null)
+			queryStr += "where tipo LIKE :tipo";
+		
+		Query query = getSession().createQuery(queryStr);
+		if(tipo!=null)
+			query.setString("tipo", tipo.getName());
+		return (long) query.uniqueResult();		
 	}
 
 }

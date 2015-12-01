@@ -18,7 +18,7 @@ import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 
 @RestController
-@RequestMapping(value = "/events/measurement")
+@RequestMapping(value = "/api/measurement")
 public class MeasurementsController extends MainResource {
 	private final Logger log = LoggerFactory
 			.getLogger(MeasurementsController.class);
@@ -38,7 +38,6 @@ public class MeasurementsController extends MainResource {
 
 		Calendar ini = Helpers.getFecha(fechaIni);
 		Calendar fin = Helpers.getFecha(fechaFin);
-		
 		return measurementServicio.obterMeasurementsSegunTipo(tipo, idUsuario, ini, fin,
 				wnLng, wnLat,esLng, esLat);
 

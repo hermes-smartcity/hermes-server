@@ -1,6 +1,8 @@
 package es.udc.lbd.hermes.model.events.vehicleLocation.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -21,6 +23,7 @@ VehicleLocationDao {
 	@SuppressWarnings("unchecked")
 	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
 			int startIndex, int count){
+    	
 			List<VehicleLocation> elementos = null;
 		
 				String queryStr =  "from VehicleLocation where within(position, :bounds) = true ";

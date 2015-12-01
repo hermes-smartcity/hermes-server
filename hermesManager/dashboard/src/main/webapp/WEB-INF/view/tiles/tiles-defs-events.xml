@@ -2,29 +2,6 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
 <tiles-definitions>
-	
-	<definition name="events/datasection/listar" extends="baseAdmin">
-		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/hermes/events/dataSection/listar.jspx" />
-	</definition>
-	
-	<definition name="events/measurement/listar" extends="baseAdmin">
-		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/hermes/events/measurement/listar.jspx" />
-	</definition>
-	
-	<definition name="events/dashboard/mostrar" extends="baseAdmin">
-		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/hermes/events/dashboard/mostrar.jspx" />
-	</definition>
-	
-	<definition name="events/driverFeatures/listar" extends="baseAdmin">
-		<put-attribute name="contido"
-			value="/WEB-INF/view/jsp/hermes/events/driverFeatures/listar.jspx" />
-	</definition>
-
-	<definition name="events/eventManager/mostrar" extends="baseAdmin">
-		 <put-attribute name="contido"
-			value="/WEB-INF/view/jsp/hermes/events/eventManager/mostrar.jspx" />
-	</definition>
+	<definition name="partials/events/inicio" template="/WEB-INF/view/jsp/hermes/partials/events/dashboard/mostrar.jspx" />
+	<definition name="partials/events/eventManager" template="/WEB-INF/view/jsp/hermes/partials/events/eventManager/mostrar.jspx" />
 </tiles-definitions>

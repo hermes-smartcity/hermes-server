@@ -64,4 +64,9 @@ public class DriverFeaturesServiceImpl implements DriverFeaturesService {
 		List<DriverFeatures> driverFeaturess = driverFeaturesDao.obterDriverFeaturessSegunUsuario(idUsuario);
 		return driverFeaturess;
 	}
+	
+	@Transactional(readOnly = true)
+	public long contar(){
+		return driverFeaturesDao.contar();
+	}
 }

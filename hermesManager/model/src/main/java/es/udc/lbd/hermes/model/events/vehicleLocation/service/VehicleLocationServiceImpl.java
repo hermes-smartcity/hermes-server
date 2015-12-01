@@ -103,7 +103,11 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 		/* Return BloqueElementos. */
 		return new BloqueElementos<VehicleLocation>(vehicleLocations, numero,
 				ELEMENTOS_PAXINA, paxina, haiMais);
-
+	}
+	
+	@Transactional(readOnly = true)
+	public long contar(){
+		return vehicleLocationDao.contar();
 	}
 	
 }

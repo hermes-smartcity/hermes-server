@@ -19,7 +19,7 @@ import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 
 
 @RestController
-@RequestMapping(value = "/events/datasection")
+@RequestMapping(value = "/api/datasection")
 public class DataSectionsController extends MainResource {
 	private final Logger log = LoggerFactory
 			.getLogger(DataSectionsController.class);

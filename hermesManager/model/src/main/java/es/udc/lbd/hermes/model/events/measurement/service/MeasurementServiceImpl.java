@@ -96,6 +96,10 @@ public class MeasurementServiceImpl implements MeasurementService {
 		/* Return BloqueElementos. */
 		return new BloqueElementos<Measurement>(measurements, numero,
 				ELEMENTOS_PAXINA, paxina, haiMais);
-
+	}
+	
+	@Transactional(readOnly = true)
+	public long contar() {
+		return measurementDao.contar(null);
 	}
 }
