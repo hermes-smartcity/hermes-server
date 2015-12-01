@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
-import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
-import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 
 @RestController

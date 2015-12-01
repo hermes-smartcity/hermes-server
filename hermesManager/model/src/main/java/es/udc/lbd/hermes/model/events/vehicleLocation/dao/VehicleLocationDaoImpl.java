@@ -1,8 +1,6 @@
 package es.udc.lbd.hermes.model.events.vehicleLocation.dao;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 

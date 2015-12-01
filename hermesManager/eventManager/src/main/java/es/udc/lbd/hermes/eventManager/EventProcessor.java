@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.message.DeflateEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

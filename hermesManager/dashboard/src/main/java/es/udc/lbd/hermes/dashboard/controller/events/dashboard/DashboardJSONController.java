@@ -15,7 +15,6 @@ import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.eventManager.EventManager;
 import es.udc.lbd.hermes.model.events.EventType;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
-import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 import es.udc.lbd.hermes.model.events.driverFeatures.service.DriverFeaturesService;
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;

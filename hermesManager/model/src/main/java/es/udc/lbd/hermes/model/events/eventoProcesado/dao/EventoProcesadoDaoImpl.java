@@ -1,13 +1,10 @@
 package es.udc.lbd.hermes.model.events.eventoProcesado.dao;
 
 
-import java.util.Calendar;
-
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
-import es.udc.lbd.hermes.model.util.HelpersModel;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 @Repository

@@ -94,17 +94,6 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 		listaEventosDias.setFechas(listaDias);
 		listaEventosDias.setnEventos(listaN);
 		
-		List<EventosPorDia> eventosDia = vehicleLocationDao.eventosPorDia();
-		for(EventosPorDia e:eventosDia){
-			System.out.println("- - - "+e.getFecha()+" "+e.getNumeroEventos());
-		}
-		for(String fecha:listaEventosDias.getFechas()){
-			System.out.println("- "+fecha);
-		}
-		for(Long nEv:listaEventosDias.getnEventos()){
-			System.out.println("- "+nEv);
-		}
-		
 		return listaEventosDias;
 		
 	}

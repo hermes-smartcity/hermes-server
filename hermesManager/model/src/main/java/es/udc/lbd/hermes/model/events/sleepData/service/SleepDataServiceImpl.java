@@ -1,21 +1,17 @@
 package es.udc.lbd.hermes.model.events.sleepData.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.sleepData.SleepData;
 import es.udc.lbd.hermes.model.events.sleepData.dao.SleepDataDao;
-import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.usuario.Usuario;
 import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
 import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
-import es.udc.lbd.hermes.model.util.HelpersModel;
 
 
 

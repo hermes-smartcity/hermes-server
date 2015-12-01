@@ -3,15 +3,11 @@ package es.udc.lbd.hermes.model.events.sleepData.dao;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 
-import com.vividsolutions.jts.geom.Geometry;
-
 import es.udc.lbd.hermes.model.events.sleepData.SleepData;
-import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 
