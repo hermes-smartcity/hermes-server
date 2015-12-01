@@ -7,10 +7,12 @@ import java.util.List;
 
 
 import org.hibernate.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
@@ -60,5 +62,18 @@ VehicleLocationDao {
 		return (Long) getSession()
 				.createQuery("select count(*) from VehicleLocation")
 				.uniqueResult();
+	}
+	
+	// Devolver un hashmap? clave dia... un array?
+	@Override
+	public List<EventosPorDia> eventosPorDia() {
+		
+		String queryString="select extract(day from v.timestamp) as dia, extract(month from v.timestamp) as mes, extract(year from v.timestamp) as anio, count(*) as numeroEventos" +
+				" from VehicleLocation v " +
+				"group by extract(day from v.timestamp), extract(month from v.timestamp), extract (year from v.timestamp) order by anio, mes, dia";
+		
+		Query query = getSession().createQuery(queryString);
+		query.setResultTransformer(Transformers.aliasToBean(EventosPorDia.class));
+		return (List<EventosPorDia>) query.list();
 	}
 }

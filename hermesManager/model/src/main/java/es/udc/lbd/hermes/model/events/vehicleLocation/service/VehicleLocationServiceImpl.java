@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.events.vehicleLocation.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.usuario.Usuario;
@@ -73,8 +76,37 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
 		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
 		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
-				fechaFin, polygon, -1, -1);
+				fechaFin, polygon, -1, -1);		
 		return vehicleLocations;
+	}
+	
+	@Transactional(readOnly = true)
+	public ListaEventosYdias obterEventosPorDia() {		
+		ListaEventosYdias listaEventosDias = new ListaEventosYdias();
+		List<String> listaDias = new ArrayList<String>();
+		List<Long> listaN = new ArrayList<Long>();
+		List<EventosPorDia> ed = vehicleLocationDao.eventosPorDia();
+		for(EventosPorDia e:ed){
+			listaDias.add(e.getFecha());
+			listaN.add(e.getNumeroEventos());
+		}
+		
+		listaEventosDias.setFechas(listaDias);
+		listaEventosDias.setnEventos(listaN);
+		
+		List<EventosPorDia> eventosDia = vehicleLocationDao.eventosPorDia();
+		for(EventosPorDia e:eventosDia){
+			System.out.println("- - - "+e.getFecha()+" "+e.getNumeroEventos());
+		}
+		for(String fecha:listaEventosDias.getFechas()){
+			System.out.println("- "+fecha);
+		}
+		for(Long nEv:listaEventosDias.getnEventos()){
+			System.out.println("- "+nEv);
+		}
+		
+		return listaEventosDias;
+		
 	}
 	
 	@Transactional(readOnly = true)

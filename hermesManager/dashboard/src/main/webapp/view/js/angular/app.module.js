@@ -5,7 +5,8 @@
 		'ui.router',
 		'ngResource',
 		'ngSanitize',
-		'ui.bootstrap'
+		'ui.bootstrap',
+		'chart.js'
 	]).config(routeConfig).run(appRun);
 
 	function obterRuta(ruta) {

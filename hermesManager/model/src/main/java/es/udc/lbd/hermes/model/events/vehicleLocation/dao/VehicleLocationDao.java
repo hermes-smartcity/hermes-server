@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.util.dao.GenericDao;
 
@@ -14,4 +15,6 @@ public interface VehicleLocationDao extends GenericDao<VehicleLocation, Long> {
 			int startIndex, int count);
 	
 	public long contar();
+	
+	public List<EventosPorDia> eventosPorDia();
 }

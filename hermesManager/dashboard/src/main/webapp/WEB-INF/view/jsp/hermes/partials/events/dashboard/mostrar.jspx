@@ -28,9 +28,7 @@
 		<fmt:message var="idEventoFmt" key="citydriver.vehicleLocation.tabla.columnas.idEvento" />
 		<fmt:message var="timestampFmt" key="citydriver.vehicleLocation.tabla.columnas.timestamp" />
 		<fmt:message var="posicionFmt" key="citydriver.vehicleLocation.tabla.columnas.posicion" />
-	
 
-<!-- Gestión de angular -->
 <div>
  <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -228,6 +226,13 @@
       <pagination ng-model="currentPage" total-items="tickets.length" items-per-page="5"></pagination>
     </div>
      <!--  -->
+     
+    <div>
+	  <canvas id="line" class="chart chart-line" chart-data="data"
+		  chart-labels="labels" chart-legend="true" chart-series="series"
+		  chart-click="onClick" >
+		</canvas> 
+    </div>
       
  </div>
         

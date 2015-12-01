@@ -47,7 +47,13 @@
 			<c:url  var="aux" value="/view/bower_components/leaflet.freedraw/dist/leaflet.freedraw.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 	
-	
+			<!-- Gráficos -->
+			<c:url  var="aux" value="/view/bower_components/Chart.js/Chart.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url  var="aux" value="/view/bower_components/angular-chart.js/dist/angular-chart.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+
 			<c:url var="aux" value="/view/js/angular/app.constants.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 			

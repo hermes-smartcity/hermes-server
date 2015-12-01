@@ -14,6 +14,7 @@ import es.udc.lbd.hermes.dashboard.controller.util.JSONData;
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.eventManager.EventManager;
 import es.udc.lbd.hermes.model.events.EventType;
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 import es.udc.lbd.hermes.model.events.driverFeatures.service.DriverFeaturesService;
@@ -110,5 +111,11 @@ public class DashboardJSONController extends MainResource {
 			JSONData jsonData = new JSONData();
 			jsonData.setValueL(driverFeaturesService.contar());
 			return jsonData;
+		}
+		
+		@RequestMapping(value="/json/eventosPorDia", method = RequestMethod.GET)
+		public ListaEventosYdias getEventosPorDia() {
+			return vehicleLocationService.obterEventosPorDia();
+			
 		}
 }

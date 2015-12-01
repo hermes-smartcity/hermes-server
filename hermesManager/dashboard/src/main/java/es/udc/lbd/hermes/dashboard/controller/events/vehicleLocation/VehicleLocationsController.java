@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
+import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
+import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 
 @RestController
@@ -21,8 +23,8 @@ public class VehicleLocationsController extends MainResource {
 	private final Logger log = LoggerFactory
 			.getLogger(VehicleLocationsController.class);
 
-	@Autowired
-	private VehicleLocationService vehicleLocationServicio;
+	@Autowired private VehicleLocationService vehicleLocationServicio;
+
 
 	@RequestMapping(value="/json/vehicleLocations", method = RequestMethod.GET)
 	public List<VehicleLocation> getVehicleLocations(@RequestParam(value = "idUsuario", required = false) Long idUsuario,		
@@ -35,7 +37,7 @@ public class VehicleLocationsController extends MainResource {
 
 			Calendar ini = Helpers.getFecha(fechaIni);
 			Calendar fin = Helpers.getFecha(fechaFin);
-
+			
 			return vehicleLocationServicio.obterVehicleLocations(idUsuario, ini, fin,
 					wnLng, wnLat,esLng, esLat);
 		

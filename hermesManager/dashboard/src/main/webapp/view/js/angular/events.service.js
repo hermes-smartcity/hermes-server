@@ -16,7 +16,8 @@
 			getTotalVLocations: getTotalVLocations,
 			getTotalDataScts: getTotalDataScts,
 			getTotalMeasurements: getTotalMeasurements,
-			getTotalDriversF: getTotalDriversF
+			getTotalDriversF: getTotalDriversF,
+			getEventosPorDia: getEventosPorDia
 		};
 
 		return service;
@@ -94,10 +95,18 @@
 		}
 		
 		function getTotalDriversF() {
-			var urlGetEventoProcesado = "api/dashboard/json/totalDriversF";
+			var urlGet = "api/dashboard/json/totalDriversF";
 			return $http({
 				method : 'GET',
-				url : urlGetEventoProcesado
+				url : urlGet
+			});
+		}
+		
+		function getEventosPorDia() {
+			var urlGet = "api/dashboard/json/eventosPorDia";
+			return $http({
+				method : 'GET',
+				url : urlGet
 			});
 		}
 	}
