@@ -9,7 +9,8 @@
 	<c:url var="playImg" value="/view/imaxes/iconos/play.png" />
 	<c:url var="stopImg" value="/view/imaxes/iconos/stop.png" />
 	
-	                <div class="col-lg-3 col-md-6">
+            <div class="row">
+              <div ng-show="showButton" class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -17,21 +18,21 @@
                                     <i class="glyphicon glyphicon-play fa-5x"><!--  --></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">Escuchar eventos</div>
+                                    <div class="huge">Start</div>
                                 </div>
                             </div>
                         </div>
                         <c:url var="arrancarUrl" value="/events/arrancar"/>
-                        <a href="${arrancarUrl}">
+                        <a ng-click="showButton = ! showButton" href="${arrancarUrl}">
                             <div class="panel-footer">
-                                <span class="pull-left">Arrancar</span>
+                                <span class="pull-left"><!--  --></span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"><!--  --></i><!--  --></span>
                                 <div class="clearfix"><!--  --></div>
                             </div>
                         </a>
                     </div>
                 </div>
-              <div class="col-lg-3 col-md-6">
+               <div ng-show="!showButton" class="col-lg-3 col-md-6">
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
@@ -39,22 +40,146 @@
                                     <i class="glyphicon glyphicon-pause fa-5x"><!--  --></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">Escuchar eventos</div>
+                                    <div class="huge">Stop</div>
                                 </div>
                             </div>
                         </div>
                        <c:url var="pararUrl" value="/events/parar"/>
-                        <a href="${pararUrl}">
+                        <a ng-click="showButton = ! showButton" href="${pararUrl}">
                             <div class="panel-footer">
-                                <span class="pull-left">Parar</span>
+                                <span class="pull-left"><!--  --></span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"><!--  --></i><!--  --></span>
                                 <div class="clearfix"><!--  --></div>
                             </div>
                         </a>
                     </div>
                 </div>
-             
-             
                 
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"><!--  --></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                     <div>Smart Driver statistics</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa"><!--  --></i></span>
+                                <div class="clearfix"><!--  --></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"><!--  --></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                     <div>Smart Citizen statistics</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa"><!--  --></i></span>
+                                <div class="clearfix"><!--  --></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"><!--  --></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                     <div>Future</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa"><!--  --></i></span>
+                                <div class="clearfix"><!--  --></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<div class="col-lg-10">
+
+	 <div>
+	  <canvas id="line" class="chart chart-line" chart-data="data"
+		  chart-labels="labels" chart-legend="true" chart-series="series"
+		  chart-click="onClick" >
+		</canvas> 
+    </div>
+</div>
+ <div class="col-lg-2">
+		  <div class="panel panel-default">
+		  				
+		                   <div class="panel-heading">
+		                       <i class="fa fa-bell fa-fw"><!--  --></i> 
+		                   </div>
+		               
+		                   <div class="panel-body">
+		                  	 
+		                  	   <div class="list-group-item">
+		                          <label for="singleSelect">User</label><br/>
+		                          <!-- Filtro usuarios  -->
+		                          <select id="selectUsers"  ng-model="usuarioSelected" ng-change="changedValue(usuarioSelected)" 
+									     data-ng-options="usuario as usuario.sourceId for usuario in usuarios">
+									   	   <option value="">Todos</option> 
+									</select>		           
+								 </div>	
+								 
+		                  	 	<div class="list-group-item">
+					                 <label for="singleSelect">Event Type</label><br/>	
+					             		<!-- Filtro event type -->    
+					                  <select  ng-model="eventTypeSelected" ng-change="changedValue(eventTypeSelected)" 
+									     data-ng-options="eventType as eventType for eventType in eventsType">
+									  <!--   <option value="">Select Account</option> --> 
+									</select>		 
+					                 
+								 </div>	
+								 
+								 <div   class="list-group-item" >
+								   <label for="singleSelect">Start date</label><br/>
+								     <button ng-click="showCalendarStart = ! showCalendarStart">Select date</button>
+		                  	 		<div ng-show="showCalendarStart" class="dropdown">
+		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="startDate" > <!--  --></datetimepicker>
+									  	<p>Selected Date: {{ startDate | date:'yyyy-MM-dd HH:mm' }}</p>
+									</div>     
+							 	</div>	
+								 
+								 <div class="list-group-item">
+								 <label for="singleSelect">End date</label><br/>
+								  <button ng-click="showCalendarEnd = ! showCalendarEnd">Select date</button>
+		                  	 		<div ng-show="showCalendarEnd" class="dropdown">
+		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="endDate" > <!--  --></datetimepicker>
+									  	<p>Selected Date: {{ endDate | date:'yyyy-MM-dd HH:mm' }}</p>
+									</div>  	
+								  
+								 	
+		                     </div>	
+		                     <button id="btnFilter" class="btn btn-success" ng-click="vm.aplicarFiltros()">Filter</button>
+		                   </div>
+		    </div>
+     </div>   
+    
 
 </jsp:root> 

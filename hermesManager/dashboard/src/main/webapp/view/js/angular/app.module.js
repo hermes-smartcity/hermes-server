@@ -6,7 +6,8 @@
 		'ngResource',
 		'ngSanitize',
 		'ui.bootstrap',
-		'chart.js'
+		'chart.js',
+		'ui.bootstrap.datetimepicker'
 	]).config(routeConfig).run(appRun);
 
 	function obterRuta(ruta) {
@@ -23,12 +24,12 @@
 		$stateProvider.state('inicio', {
 			url: obterRuta('inicio'),
 			templateUrl: 'partials/events/inicio.htm',
-			controller: 'FiltrosController',
+			controller: 'DashboardController',
 			controllerAs: 'vm'
 		}).state('eventManager', {
 			url: obterRuta('eventManager'),
 			templateUrl:'partials/events/eventManager.htm',
-			controller: 'FiltrosController',
+			controller: 'EventManagerController',
 			controllerAs: 'vm'
 		});
 	}

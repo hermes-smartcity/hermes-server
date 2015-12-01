@@ -35,7 +35,6 @@ public class VehicleLocationsController extends MainResource {
 
 			Calendar ini = Helpers.getFecha(fechaIni);
 			Calendar fin = Helpers.getFecha(fechaFin);
-			
 			return vehicleLocationServicio.obterVehicleLocations(idUsuario, ini, fin,
 					wnLng, wnLat,esLng, esLat);
 		

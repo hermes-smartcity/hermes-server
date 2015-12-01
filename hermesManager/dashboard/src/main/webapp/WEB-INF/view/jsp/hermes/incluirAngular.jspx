@@ -52,6 +52,15 @@
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 			
 			<c:url  var="aux" value="/view/bower_components/angular-chart.js/dist/angular-chart.min.js" />
+			
+			<!-- moment -->
+			<c:url var="jsMoment" value="/view/bower_components/moment/moment.js"/>
+			<script type="text/javascript" src="${jsMoment}"><!-- --></script>
+			
+			<!-- datetimepicker -->
+			<c:url var="jsDatetimepicker" value="/view/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"/>
+			<script type="text/javascript" src="${jsDatetimepicker}"><!-- --></script>
+			
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 
 			<c:url var="aux" value="/view/js/angular/app.constants.js" />
@@ -63,7 +72,10 @@
  			<c:url var="aux" value="/view/js/angular/events.service.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 			
-			<c:url var="aux" value="/view/js/angular/filtros.controller.js" />
+			<c:url var="aux" value="/view/js/angular/dashboard.controller.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
+			<c:url var="aux" value="/view/js/angular/eventManager.controller.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
 
   
