@@ -17,15 +17,6 @@
 		eventsService.getEvensType().then(getEvensTypeComplete);
 		eventsService.getUsuarios().then(getUsuariosComplete);
 		eventsService.getMeasurementsType().then(getMeasurementsTypeComplete);
-		eventsService.getEventoProcesado().then(getEventoProcesadoComplete);
-		eventsService.getTotalVLocations().then(getTotalVLocationsComplete);
-		eventsService.getTotalDataScts().then(getTotalDataSctsComplete);
-		eventsService.getTotalMeasurements().then(getTotalMeasurementsComplete);
-		eventsService.getTotalDriversF().then(getTotalDriversFComplete);
-		/*
-		 * TODO nose donde tiene que ir exactamente - es una prueba para saber
-		 * como van los gráficos
-		 */
 		eventsService.getEventosPorDia().then(getEventosPorDiaComplete);
 
 		function getStateEventManagerComplete(response) {
@@ -48,25 +39,7 @@
 			$scope.measurementsType = response.data;
 		}
 
-		function getEventoProcesadoComplete(response) {
-			$scope.eventoProcesado = response.data;
-		}
-
-		function getTotalVLocationsComplete(response) {
-			$scope.totalL = response.data;
-		}
-
-		function getTotalDataSctsComplete(response) {
-			$scope.totalDS = response.data;
-		}
-
-		function getTotalMeasurementsComplete(response) {
-			$scope.totalM = response.data;
-		}
-
-		function getTotalDriversFComplete(response) {
-			$scope.totalDF = response.data;
-		}
+		
 
 		function getEventosPorDiaComplete(response) {
 			$scope.eventosPorDia = response.data;

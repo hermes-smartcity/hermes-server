@@ -219,13 +219,13 @@
 		                   </div>
 		    </div>
      </div>   
-     <!-- Prueba paginacion con angular js -->
+     <!-- Prueba paginacion con angular js 
      
  
     <div> {{currentPage}}   {{maxSize}}
       <pagination ng-model="currentPage" total-items="tickets.length" items-per-page="5"></pagination>
     </div>
-     <!--  -->
+    -->
      
       
  </div>
