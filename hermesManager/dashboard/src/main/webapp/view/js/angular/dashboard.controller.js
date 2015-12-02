@@ -3,9 +3,9 @@
 
 	angular.module('app').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', '$http', '$timeout', '$log', '$filter', 'eventsService'];
+	DashboardController.$inject = ['$scope', 'eventsType', '$http', '$timeout', '$log', '$filter', 'eventsService'];
 
-	function DashboardController($scope, $http, $timeout, $log, $filter, eventsService) {
+	function DashboardController($scope, eventsType, $http, $timeout, $log, $filter, eventsService) {
 		
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -14,10 +14,11 @@
 	vm.pintarPuntos = pintarPuntos;
 	vm.pintarLineas = pintarLineas;
 	vm.aplicarFiltros = aplicarFiltros;
+	vm.eventsType = eventsType;
 	
 	eventsService.getStateEventManager().then(getStateEventManagerComplete);
 	eventsService.getEventsToday().then(getEventsTodayComplete);
-	eventsService.getEvensType().then(getEvensTypeComplete);
+//	eventsService.getEvensType().then(getEvensTypeComplete);
 	eventsService.getUsuarios().then(getUsuariosComplete);
 	eventsService.getMeasurementsType().then(getMeasurementsTypeComplete);
 	eventsService.getEventoProcesado().then(getEventoProcesadoComplete);
@@ -34,9 +35,9 @@
 		$scope.eventsToday =  response.data;
 	}
 	 
-	function getEvensTypeComplete(response) {
-		$scope.eventsType =  response.data;
-	}
+//	function getEvensTypeComplete(response) {
+//		$scope.eventsType =  response.data;
+//	}
 	
 	function getUsuariosComplete(response) {
 		$scope.usuarios =  response.data;

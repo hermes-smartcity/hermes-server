@@ -46,6 +46,19 @@
 			});
 		}
 		
+		function getEvensType() {
+			var urlGetEvensType = "api/dashboard/json/eventsType";
+			return $http.get(urlGetEvensType)
+				.then(getEvensTypeComplete)
+				.catch(getEvensTypeFailed);
+			function getEvensTypeComplete(response) {
+				return response.data;
+			}
+			function getEvensTypeFailed(error) {
+				$log.error('XHR Failed for getEvensType.' + error.data);
+			}
+		}
+		
 		function getUsuarios() {
 			var urlGet = "api/dashboard/json/usuarios";
 			return $http({

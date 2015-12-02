@@ -190,7 +190,7 @@
 					                 <label for="singleSelect">Event Type</label><br/>	
 					             		<!-- Filtro event type -->    
 					                  <select  ng-model="eventTypeSelected" ng-change="changedValue(eventTypeSelected)" 
-									     data-ng-options="eventType as eventType for eventType in eventsType">
+									     data-ng-options="eventType as eventType for eventType in vm.eventsType">
 									  <!--   <option value="">Select Account</option> --> 
 									</select>		 
 					                 

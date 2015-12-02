@@ -25,7 +25,12 @@
 			url: obterRuta('inicio'),
 			templateUrl: 'partials/events/inicio.htm',
 			controller: 'DashboardController',
-			controllerAs: 'vm'
+			controllerAs: 'vm',
+			resolve: {
+				eventsType: ['eventsService', function(eventsService) {
+					return eventsService.getEvensType();
+				}]
+			}
 		}).state('eventManager', {
 			url: obterRuta('eventManager'),
 			templateUrl:'partials/events/eventManager.htm',
