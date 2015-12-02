@@ -16,6 +16,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ChunkedInput;
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,9 @@ public class EventProcessor extends Thread {
 	public void escucharEventos() {
 		long timeToWait = 10000;
 		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
-		client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();		
+		client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+		client.property(ClientProperties.CONNECT_TIMEOUT, 1000 * 2); // Two seconds
+	    client.property(ClientProperties.READ_TIMEOUT,    1000 * 60 * 15);  // Fifteen minutes 
 		do {
 			EventoProcesado eventoProcesado = eventService.obterEventoProcesado();
 			Response response = establecerConexion(eventoProcesado.getEventId());			
