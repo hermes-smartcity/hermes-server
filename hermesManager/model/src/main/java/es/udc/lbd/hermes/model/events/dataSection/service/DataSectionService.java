@@ -3,6 +3,7 @@ package es.udc.lbd.hermes.model.events.dataSection.service;
 import java.util.Calendar;
 import java.util.List;
 
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
 
@@ -23,4 +24,6 @@ public interface DataSectionService {
 			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
 	
 	public long contar();
+	
+	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 }

@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.dashboard.controller.events.dashboard;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,11 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.dashboard.controller.util.JSONData;
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.eventManager.EventManager;
+import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.EventType;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
@@ -35,8 +38,6 @@ public class DashboardJSONController extends MainResource {
 	@Autowired private UsuarioService usuarioService;
 	
 	@Autowired private EventService eventService;
-	
-	@Autowired private EventManager eventManager;
 	
 	@Autowired private VehicleLocationService vehicleLocationService;
 	
@@ -67,20 +68,9 @@ public class DashboardJSONController extends MainResource {
 //			jsonData.setValueInt(eventService.getEventsToday());
 			return jsonData;
 		}
-		
-		@RequestMapping(value="/json/stateEventManager", method = RequestMethod.GET)
-		public JSONData getStateEventManager() {
-			JSONData jsonData = new JSONData();
-			// Parado
-			if (eventManager.getEventProcessor() == null)			
-				jsonData.setValue("Stopped");			
-			else jsonData.setValue("Running");
-			
-			return jsonData;
-		}
-		
+	
 		@RequestMapping(value="/json/eventoProcesado", method = RequestMethod.GET)
-		public EventoProcesado getEventoProcesado() {			
+		public EventoProcesado getEventoProcesado() {	
 			return eventService.obterEventoProcesado();		
 		}
 	
@@ -111,10 +101,4 @@ public class DashboardJSONController extends MainResource {
 			jsonData.setValueL(driverFeaturesService.contar());
 			return jsonData;
 		}
-		
-		@RequestMapping(value="/json/eventosPorDia", method = RequestMethod.GET)
-		public ListaEventosYdias getEventosPorDia() {
-			return vehicleLocationService.obterEventosPorDia();
-			
-		}
-}
+	}

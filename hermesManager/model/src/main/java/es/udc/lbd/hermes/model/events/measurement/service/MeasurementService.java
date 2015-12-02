@@ -3,6 +3,7 @@ package es.udc.lbd.hermes.model.events.measurement.service;
 import java.util.Calendar;
 import java.util.List;
 
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
@@ -24,5 +25,7 @@ public interface MeasurementService {
 			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
 	
 	public long contar();
+	
+	public ListaEventosYdias obterEventosPorDia(MeasurementType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 	
 }

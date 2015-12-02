@@ -30,11 +30,8 @@ VehicleLocationDao {
 				if(idUsuario!=null)
 					queryStr += "and usuario.id = :idUsuario ";
 				
-				if(fechaIni!=null)
-					queryStr += "and timestamp > :fechaIni ";
-				
-				if(fechaFin!=null)
-					queryStr += "and timestamp < :fechaFin";
+				queryStr += "and timestamp > :fechaIni ";
+				queryStr += "and timestamp < :fechaFin";
 				
 				Query query = getSession().createQuery(queryStr);
 		
@@ -43,10 +40,8 @@ VehicleLocationDao {
 				if(idUsuario!=null)
 					 query.setParameter("idUsuario", idUsuario);
 				
-				if(fechaIni!=null)
-					 query.setCalendar("fechaIni", fechaIni);
-				if(fechaFin!=null)
-					query.setCalendar("fechaFin", fechaFin);
+				query.setCalendar("fechaIni", fechaIni);
+				query.setCalendar("fechaFin", fechaFin);
 				
 				if(startIndex!=-1 && count!=-1)
 					query.setFirstResult(startIndex).setMaxResults(count);
@@ -62,15 +57,25 @@ VehicleLocationDao {
 				.uniqueResult();
 	}
 	
-	// Devolver un hashmap? clave dia... un array?
 	@Override
-	public List<EventosPorDia> eventosPorDia() {
+	public List<EventosPorDia> eventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin) {
 		
-		String queryString="select extract(day from v.timestamp) as dia, extract(month from v.timestamp) as mes, extract(year from v.timestamp) as anio, count(*) as numeroEventos" +
-				" from VehicleLocation v " +
-				"group by extract(day from v.timestamp), extract(month from v.timestamp), extract (year from v.timestamp) order by anio, mes, dia";
+		String queryStr="select extract(day from v.timestamp) as dia, extract(month from v.timestamp) as mes, extract(year from v.timestamp) as anio, count(*) as numeroEventos" +
+				" from VehicleLocation v where v.timestamp > :fechaIni and v.timestamp < :fechaFin ";
+	
+		if(idUsuario!=null)
+			queryStr += "and v.usuario.id = :idUsuario ";
 		
-		Query query = getSession().createQuery(queryString);
+		queryStr+="group by extract(day from v.timestamp), extract(month from v.timestamp), extract (year from v.timestamp) order by anio, mes, dia";
+		
+		Query query = getSession().createQuery(queryStr);
+		
+		if(idUsuario!=null)
+			 query.setParameter("idUsuario", idUsuario);
+		
+		query.setCalendar("fechaIni", fechaIni);
+		query.setCalendar("fechaFin", fechaFin);
+		
 		query.setResultTransformer(Transformers.aliasToBean(EventosPorDia.class));
 		return (List<EventosPorDia>) query.list();
 	}

@@ -39,9 +39,9 @@
                                     <i class="fa fa-comments fa-5x"><!--  --></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                     <div>Event Manager: {{active.value}}</div> 
-                                    <div>Events today: {{eventsToday.valueInt}}</div>
-                                     <div>Last event: {{eventoProcesado.timestamp  | date : 'dd/MM/yyyy HH:mm'}}</div>
+                                     <div>Event Manager: {{vm.active.value}}</div> 
+                                    <div>Events today: {{vm.eventsToday.valueInt}}</div>
+                                     <div>Last event: {{vm.eventoProcesado.timestamp  | date : 'dd/MM/yyyy HH:mm'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -85,10 +85,10 @@
                                     <i class="fa fa-shopping-cart fa-5x"><!--  --></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                     <div>Total locations: {{totalL.valueL}}</div>
-                                    <div>Total measurements: {{totalM.valueL}}</div>
-                                    <div>Total data sections: {{totalDS.valueL}}</div>
-                                    <div>Total driver features: {{totalDF.valueL}}</div>
+                                     <div>Total locations: {{vm.totalL.valueL}}</div>
+                                    <div>Total measurements: {{vm.totalM.valueL}}</div>
+                                    <div>Total data sections: {{vm.totalDS.valueL}}</div>
+                                    <div>Total driver features: {{vm.totalDF.valueL}}</div>
                                 </div>
                             </div>
                         </div>
@@ -150,15 +150,7 @@
 							<br></br>
 							<h3 style="font-weight: bold;">${eventosFmt}</h3>
 							<br></br>
-							<!-- <div ng-show="eventTypeSelected == 'VEHICLE_LOCATION'">	
-							 	<jsp:include page="../vehicleLocation/listar.jspx" />
-						    </div>
-						    <div ng-show="eventTypeSelected == 'DATA_SECTION'">	
-							 	<jsp:include page="../dataSection/listar.jspx" />
-						    </div>
-						     <div ng-show="eventTypeSelected != ('DATA_SECTION' ||  'VEHICLE_LOCATION')">	
-							 	<jsp:include page="../dataSection/listar.jspx" />
-						    </div> -->
+
 						   
 						</ol>
 					</li>
@@ -180,8 +172,8 @@
 		                  	   <div class="list-group-item">
 		                          <label for="singleSelect">User</label><br/>
 		                          <!-- Filtro usuarios  -->
-		                          <select id="selectUsers"  ng-model="usuarioSelected" ng-change="changedValue(usuarioSelected)" 
-									     data-ng-options="usuario as usuario.sourceId for usuario in usuarios">
+		                          <select id="selectUsers"  ng-model="vm.usuarioSelected" ng-change="changedValue(vm.usuarioSelected)" 
+									     data-ng-options="usuario as usuario.sourceId for usuario in vm.usuarios">
 									   	   <option value="">Todos</option> 
 									</select>		           
 								 </div>	
@@ -189,7 +181,7 @@
 		                  	 	<div class="list-group-item">
 					                 <label for="singleSelect">Event Type</label><br/>	
 					             		<!-- Filtro event type -->    
-					                  <select  ng-model="eventTypeSelected" ng-change="changedValue(eventTypeSelected)" 
+					                  <select  ng-model="vm.eventTypeSelected" ng-change="changedValue(vm.eventTypeSelected)" 
 									     data-ng-options="eventType as eventType for eventType in vm.eventsType">
 									  <!--   <option value="">Select Account</option> --> 
 									</select>		 

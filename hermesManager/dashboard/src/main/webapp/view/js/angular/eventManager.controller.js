@@ -3,90 +3,68 @@
 
 	angular.module('app').controller('EventManagerController', EventManagerController);
 
-	EventManagerController.$inject = [ '$scope', '$http', '$timeout', '$log',
-			'$filter', 'eventsService' ];
+	EventManagerController.$inject = ['$state', '$scope', 'eventsType', 'usuarios' ,'measurementsType', 
+	                                  '$http', '$timeout', '$log', '$filter', 'eventsService' ];
 
-	function EventManagerController($scope, $http, $timeout, $log, $filter,
+	function EventManagerController($state, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
 			eventsService) {
-
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
-
-		eventsService.getStateEventManager().then(getStateEventManagerComplete);
-		eventsService.getEventsToday().then(getEventsTodayComplete);
-		eventsService.getEvensType().then(getEvensTypeComplete);
-		eventsService.getUsuarios().then(getUsuariosComplete);
-		eventsService.getMeasurementsType().then(getMeasurementsTypeComplete);
-		eventsService.getEventosPorDia().then(getEventosPorDiaComplete);
-
-		function getStateEventManagerComplete(response) {
-			$scope.active = response.data;
-		}
-
-		function getEventsTodayComplete(response) {
-			$scope.eventsToday = response.data;
-		}
-
-		function getEvensTypeComplete(response) {
-			$scope.eventsType = response.data;
-		}
-
-		function getUsuariosComplete(response) {
-			$scope.usuarios = response.data;
-		}
-
-		function getMeasurementsTypeComplete(response) {
-			$scope.measurementsType = response.data;
-		}
-
+		vm.eventsType = eventsType;
+		vm.usuarios = usuarios;
+		vm.measurementsType = measurementsType;
+		vm.arrancar = arrancar;
+		vm.parar = parar;
+		vm.pintarGraficoVehicleLocations = pintarGraficoVehicleLocations;
+		vm.pintarGraficoDataSections = pintarGraficoDataSections;
+		vm.pintarGraficoMeasurements = pintarGraficoMeasurements;
+		vm.recuperarYpintarEventos = recuperarYpintarEventos;
 		
-
-		function getEventosPorDiaComplete(response) {
-			$scope.eventosPorDia = response.data;
-
-			/* * * * Prueba gráficos */
-			$scope.labels = $scope.eventosPorDia.fechas;
-			$scope.series = [ 'Días', 'Eventos'];
-			$scope.data = [$scope.eventosPorDia.nEventos];
-
-			/* * * * * */
+		eventsService.getStateActualizado().then(getStateActualizadoComplete);
+		function getStateActualizadoComplete(response) {				
+			vm.active = response.data;
+		}
+		
+		function recuperarYpintarEventos(urlGet){
+//
+//			$scope.$on('create', function (event, chart) {
+//				  chart.destroy();
+//				  chart.clear();
+//				  console.log(chart);
+//				});	
+			eventsService.getEventosPorDia(urlGet).then(getEventosPorDiaComplete);
+			// En cuanto tenga los eventos los pinto
+			function getEventosPorDiaComplete(response) {
+				vm.eventosPorDia = response.data;
+				vm.labels = vm.eventosPorDia.fechas;
+				vm.series = [ 'Días', 'Eventos'];
+				vm.data = [vm.eventosPorDia.nEventos];
+					
+				  vm.onClick = function (points, evt) {
+				    console.log(points, evt);
+				  };
+			}
+		};
+		
+		
 	
-			  $scope.onClick = function (points, evt) {
-			    console.log(points, evt);
-			  };
-		}
-		
 		// Inicializamos el filtro de event type para que inicialmente liste
 		// vehicle Locations
-		$scope.eventTypeSelected = "VEHICLE_LOCATION";
-		$scope.showButton = true; 
+		vm.eventTypeSelected = "VEHICLE_LOCATION";
 		$scope.startDate = new Date();
 		// Inicializamos la fecha de inicio a la de ayer
-		$scope.startDate.setDate($scope.startDate.getDate() - 1);
+		$scope.startDate.setDate($scope.startDate.getDate() - 31);
 		$scope.endDate = new Date();
 		
-	
-
-
-		function aplicarFiltros() {
-
-			var pos = $scope.eventTypeSelected.indexOf('_');
-			var value = $scope.eventTypeSelected.substr(0, pos);
-			value += $scope.eventTypeSelected.substr(pos + 1,
-					$scope.eventTypeSelected.length);
-			value = angular.lowercase(value);
-
-//			if (angular.equals($scope.eventTypeSelected, "VEHICLE_LOCATION"))
-//				vm.pintarMapaVehicleLocations();
-//			else if (angular.equals($scope.eventTypeSelected, "DATA_SECTION"))
-//				vm.pintarMapaDataSections();
-//			else if ($scope.measurementTypes.indexOf($scope.eventTypeSelected) > -1) {
-//				vm.pintarMapaMeasurements();
-//			} else
-//				console.log("No corresponde a ningún tipo --> En construcción");
-
+		function arrancar() {
+			eventsService.arrancar();
+			$state.go('inicio');
 		}
-		;
+		
+		function parar() {
+			eventsService.parar();
+			$state.go('inicio');
+		}
 
 
 
@@ -101,27 +79,62 @@
 			if ($scope.endDate != null) {
 				var _endDate = $filter('date')($scope.endDate,
 						'yyyy-MM-dd HH:mm:ss');
-				url += "fechaFin=" + _endDate + "&";
+				url += "fechaFin=" + _endDate;
 			}
 			return url;
 		}
 
 		// Preparar la url que va a llamar al controlador. TODO falta buscar una
 		// manera menos chapuza. y en el futuro se va a cambiar a hacer más REST
-		function prepararUrl(esLng, esLat, wnLng, wnLat) {
+		function prepararUrl() {
 			var url = "";
-			if ($scope.usuarioSelected != null)
-				url += "idUsuario=" + $scope.usuarioSelected.id + "&";
+			if (vm.usuarioSelected != null)
+				url += "idUsuario=" + vm.usuarioSelected.id + "&";
 			url += prepararParametrosFechas();
-			url += "wnLng=" + wnLng + "&wnLat=" + wnLat + "&esLng=" + esLng
-					+ "&esLat=" + esLat;
+			
 			return url;
 		};
+		
+		function pintarGraficoVehicleLocations() {
+			var urlGet = "api/vehiclelocation/json/eventosPorDia?";
+			urlGet+=prepararUrl();
+			vm.recuperarYpintarEventos(urlGet);
+		}
+		
+		function pintarGraficoDataSections() {
+			var urlGet = "api/datasection/json/eventosPorDia?";
+			urlGet+=prepararUrl();
+			vm.recuperarYpintarEventos(urlGet);
+		}
+		
+		function pintarGraficoMeasurements() {
+			var urlGet = "api/measurement/json/eventosPorDia?tipo="+vm.eventTypeSelected+"&";
+			urlGet+=prepararUrl();
+			vm.recuperarYpintarEventos(urlGet);
+		}
+		
+		function aplicarFiltros() {
+			var pos = vm.eventTypeSelected.indexOf('_');
+			var value = vm.eventTypeSelected.substr(0, pos);
+			value += vm.eventTypeSelected.substr(pos + 1,
+					vm.eventTypeSelected.length);
+			value = angular.lowercase(value);
 
+			if (angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION"))
+				vm.pintarGraficoVehicleLocations();
+			else if (angular.equals(vm.eventTypeSelected, "DATA_SECTION"))
+				vm.pintarGraficoDataSections();
+			else if (vm.measurementsType.indexOf(vm.eventTypeSelected) > -1) {
+				vm.pintarGraficoMeasurements();
+			} else
+				console.log("No corresponde a ningún tipo --> En construcción");
+
+		}
+		;
 
 		// Inicialmente sé que voy a pintar los vehicleLocation (la opción por
 		// defecto en el select)
-//		vm.aplicarFiltros();
+		vm.aplicarFiltros();
 
 	}
 })();

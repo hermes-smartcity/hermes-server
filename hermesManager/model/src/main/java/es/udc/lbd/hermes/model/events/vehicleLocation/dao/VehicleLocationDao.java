@@ -16,5 +16,5 @@ public interface VehicleLocationDao extends GenericDao<VehicleLocation, Long> {
 	
 	public long contar();
 	
-	public List<EventosPorDia> eventosPorDia();
+	public List<EventosPorDia> eventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 }

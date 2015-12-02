@@ -25,5 +25,5 @@ public interface VehicleLocationService {
 	
 	public long contar();
 	
-	public ListaEventosYdias obterEventosPorDia();
+	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 }

@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.events.dataSection.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.dao.DataSectionDao;
 import es.udc.lbd.hermes.model.usuario.Usuario;
@@ -100,5 +103,22 @@ public class DataSectionServiceImpl implements DataSectionService {
 	@Transactional(readOnly = true)
 	public long contar(){
 		return dataSectionDao.contar();
+	}
+	
+	@Transactional(readOnly = true)
+	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin) {		
+		ListaEventosYdias listaEventosDias = new ListaEventosYdias();
+		List<String> listaDias = new ArrayList<String>();
+		List<Long> listaN = new ArrayList<Long>();
+		List<EventosPorDia> ed = dataSectionDao.eventosPorDia(idUsuario, fechaIni, fechaFin);
+		for(EventosPorDia e:ed){
+			listaDias.add(e.getFecha());
+			listaN.add(e.getNumeroEventos());
+		}
+		
+		listaEventosDias.setFechas(listaDias);
+		listaEventosDias.setnEventos(listaN);
+		
+		return listaEventosDias;		
 	}
 }

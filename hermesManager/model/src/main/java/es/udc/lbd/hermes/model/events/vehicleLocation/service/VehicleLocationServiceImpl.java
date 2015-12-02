@@ -79,13 +79,13 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 				fechaFin, polygon, -1, -1);		
 		return vehicleLocations;
 	}
-	
+
 	@Transactional(readOnly = true)
-	public ListaEventosYdias obterEventosPorDia() {		
+	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin) {		
 		ListaEventosYdias listaEventosDias = new ListaEventosYdias();
 		List<String> listaDias = new ArrayList<String>();
 		List<Long> listaN = new ArrayList<Long>();
-		List<EventosPorDia> ed = vehicleLocationDao.eventosPorDia();
+		List<EventosPorDia> ed = vehicleLocationDao.eventosPorDia(idUsuario, fechaIni, fechaFin);
 		for(EventosPorDia e:ed){
 			listaDias.add(e.getFecha());
 			listaN.add(e.getNumeroEventos());
@@ -94,8 +94,7 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 		listaEventosDias.setFechas(listaDias);
 		listaEventosDias.setnEventos(listaN);
 		
-		return listaEventosDias;
-		
+		return listaEventosDias;		
 	}
 	
 	@Transactional(readOnly = true)

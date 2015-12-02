@@ -4,10 +4,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import com.vividsolutions.jts.geom.Geometry;
 
+import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
@@ -63,6 +65,34 @@ MeasurementDao {
 		if(tipo!=null)
 			query.setString("tipo", tipo.getName());
 		return (long) query.uniqueResult();		
+	}
+	
+	@Override
+	public List<EventosPorDia> eventosPorDia(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin) {
+		
+		String queryStr="select extract(day from m.timestamp) as dia, extract(month from m.timestamp) as mes, "
+				+ "extract(year from m.timestamp) as anio, count(*) as numeroEventos" +
+				" from Measurement m where m.timestamp > :fechaIni and m.timestamp < :fechaFin ";
+	
+		queryStr += " and tipo LIKE :tipo ";
+		
+		if(idUsuario!=null)
+			queryStr += "and m.usuario.id = :idUsuario ";
+		
+		queryStr+="group by extract(day from m.timestamp), extract(month from m.timestamp), "
+				+ "extract (year from m.timestamp) order by anio, mes, dia";
+		
+		Query query = getSession().createQuery(queryStr);
+		
+		if(idUsuario!=null)
+			 query.setParameter("idUsuario", idUsuario);
+		
+		query.setCalendar("fechaIni", fechaIni);
+		query.setCalendar("fechaFin", fechaFin);
+		query.setString("tipo", tipo.getName());
+		
+		query.setResultTransformer(Transformers.aliasToBean(EventosPorDia.class));
+		return (List<EventosPorDia>) query.list();
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
@@ -29,8 +30,8 @@ public class MeasurementsController extends MainResource {
 	@RequestMapping(value="/json/measurements", method = RequestMethod.GET)
 	public List<Measurement> getMeasurements(@RequestParam(required = true) MeasurementType tipo,
 			@RequestParam(value = "idUsuario", required = false) Long idUsuario,			
-			@RequestParam(value = "fechaIni", required = false) String fechaIni,
-			@RequestParam(value = "fechaFin", required = false) String fechaFin,
+			@RequestParam(value = "fechaIni", required = true) String fechaIni,
+			@RequestParam(value = "fechaFin", required = true) String fechaFin,
 			@RequestParam(value = "wnLng", required = true) Double wnLng,
 			@RequestParam(value = "wnLat", required = true) Double wnLat,
 			@RequestParam(value = "esLng", required = true) Double esLng, 
@@ -41,6 +42,18 @@ public class MeasurementsController extends MainResource {
 		return measurementServicio.obterMeasurementsSegunTipo(tipo, idUsuario, ini, fin,
 				wnLng, wnLat,esLng, esLat);
 
+	}
+	
+	@RequestMapping(value="/json/eventosPorDia", method = RequestMethod.GET)
+	public ListaEventosYdias getEventosPorDia(
+			@RequestParam(required = true) MeasurementType tipo,
+			@RequestParam(value = "idUsuario", required = false) Long idUsuario,		
+			@RequestParam(value = "fechaIni", required = true) String fechaIni,
+			@RequestParam(value = "fechaFin", required = true) String fechaFin) {
+		Calendar ini = Helpers.getFecha(fechaIni);
+		Calendar fin = Helpers.getFecha(fechaFin);
+		return measurementServicio.obterEventosPorDia(tipo, idUsuario, ini, fin);
+		
 	}
 
 }
