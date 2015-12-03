@@ -61,6 +61,10 @@
 			<c:url var="jsMoment" value="/view/bower_components/moment/moment.js"/>
 			<script type="text/javascript" src="${jsMoment}"><!-- --></script>
 			
+			<!-- animate -->
+			<c:url var="aux" value="/view/bower_components/angular-animate/angular-animate.js"/>
+			<script type="text/javascript" src="${aux}"><!-- --></script>
+			
 			<!-- datetimepicker -->
 			<c:url var="jsDatetimepicker" value="/view/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"/>
 			<script type="text/javascript" src="${jsDatetimepicker}"><!-- --></script>
@@ -81,7 +85,10 @@
 			
 			<c:url var="aux" value="/view/js/angular/eventManager.controller.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
-
+			
+			<!-- Prueba sin clusters -->
+			<c:url var="aux" value="/view/js/angular/dashboardSinClusters.controller.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>
   
 </jsp:root>
 

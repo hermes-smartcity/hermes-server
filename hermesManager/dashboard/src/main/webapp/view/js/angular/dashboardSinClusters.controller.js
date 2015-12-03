@@ -1,13 +1,13 @@
 (function() {
 	'use strict';
 
-	angular.module('app').controller('DashboardController', DashboardController);
+	angular.module('app').controller('DashboardSinClusterController', DashboardSinClusterController);
 
-	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios' ,'measurementsType', 
+	DashboardSinClusterController.$inject = ['$scope', 'eventsType', 'usuarios' ,'measurementsType', 
 	                               'eventsToday', 'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF' ,
 	                               '$http', '$timeout', '$log', '$filter', 'eventsService'];
 
-	function DashboardController($scope, eventsType, usuarios, measurementsType,  
+	function DashboardSinClusterController($scope, eventsType, usuarios, measurementsType,  
 			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF , $http, $timeout, $log, $filter, eventsService) {
 		
 	var vm = this;
@@ -40,7 +40,6 @@
     
 	var map = L.map('map');
 	var locations = L.layerGroup([]);
-	var markers = L.markerClusterGroup();
 	map.addLayer(locations);
 	
 	map.fitBounds([
@@ -85,21 +84,17 @@
 				color: 'red',
 				fillOpacity: 0.1
 		};
-	
-		markers.clearLayers();
+
 		angular.forEach(events, function(value, key) {
 			var info = infoPopup(value.eventId, value.timestamp);			
 			//Convierto el punto que quiero pintar para tener su lat y log
 			var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 			//Añado al mapa el punto
-			markers.addLayer(L.circle(latlng, 5, mystyles).bindPopup(info));
-//			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
+			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
 		});
-		map.addLayer(markers);
 	};
 
 	function pintarLineas(events) {
-		markers.clearLayers();
 		angular.forEach($scope.events, function(value, key) {			
 			var info = infoPopup(value.eventId, value.timestamp);
 			

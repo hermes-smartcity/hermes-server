@@ -151,10 +151,16 @@
 	                       <c:url var="mostrarDashboardUrl" value="/events/dashboard/mostrar"/>		
 	                            <a ui-sref="inicio" >
 		                            <i class="fa fa-dashboard fa-fw"><!--  --></i>
-		                            <span>Dashboard</span>
+		                            <span>Dashboard CON clusters</span>
 	                            </a>
 	                        </li>
-	                        
+	                        <li><!--  -->
+	                       <c:url var="mostrarDashboardUrl" value="/events/dashboard/mostrar"/>		
+	                            <a ui-sref="inicioSinClusters" >
+		                            <i class="fa fa-dashboard fa-fw"><!--  --></i>
+		                            <span>Dashboard SIN clusters</span>
+	                            </a>
+	                        </li>
 	                         <li><!--  -->
 	                       <c:url var="mostrarEventManagerUrl" value="/events/eventManager/mostrar"/>		
 	                             <a ui-sref="eventManager" >

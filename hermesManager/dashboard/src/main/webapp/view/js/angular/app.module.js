@@ -7,7 +7,8 @@
 		'ngSanitize',
 		'ui.bootstrap',
 		'chart.js',
-		'ui.bootstrap.datetimepicker'
+		'ui.bootstrap.datetimepicker',
+		'ngAnimate'
 	]).config(routeConfig).run(appRun);
 
 	function obterRuta(ruta) {
@@ -25,6 +26,40 @@
 			url: obterRuta('inicio'),
 			templateUrl: 'partials/events/inicio.htm',
 			controller: 'DashboardController',
+			controllerAs: 'vm',
+			resolve: {
+				eventsType: ['eventsService', function(eventsService) {
+					return eventsService.getEvensType();
+				}],
+				usuarios: ['eventsService', function(eventsService) {
+					return eventsService.getUsuarios();
+				}],
+				measurementsType: ['eventsService', function(eventsService) {
+					return eventsService.getMeasurementsType();
+				}],
+				eventoProcesado: ['eventsService', function(eventsService) {
+					return eventsService.getEventoProcesado();
+				}],
+				eventsToday: ['eventsService', function(eventsService) {
+					return eventsService.getEventsToday();
+				}],				
+				totalL: ['eventsService', function(eventsService) {
+					return eventsService.getTotalVLocations();
+				}],
+				totalDS: ['eventsService', function(eventsService) {
+					return eventsService.getTotalDataScts();
+				}],
+				totalM: ['eventsService', function(eventsService) {
+					return eventsService.getTotalMeasurements();
+				}],
+				totalDF: ['eventsService', function(eventsService) {
+					return eventsService.getTotalMeasurements();
+				}]
+			}
+		}).state('inicioSinClusters', {
+			url: obterRuta('inicioSinClusters'),
+			templateUrl: 'partials/events/inicio.htm',
+			controller: 'DashboardSinClusterController',
 			controllerAs: 'vm',
 			resolve: {
 				eventsType: ['eventsService', function(eventsService) {
