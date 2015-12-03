@@ -40,6 +40,7 @@
     
 	var map = L.map('map');
 	var locations = L.layerGroup([]);
+	var markers = L.markerClusterGroup();
 	map.addLayer(locations);
 	
 	map.fitBounds([
@@ -84,8 +85,8 @@
 				color: 'red',
 				fillOpacity: 0.1
 		};
-		var markers = L.markerClusterGroup();
-		
+	
+		markers.clearLayers();
 		angular.forEach(events, function(value, key) {
 			var info = infoPopup(value.eventId, value.timestamp);			
 			//Convierto el punto que quiero pintar para tener su lat y log
@@ -98,8 +99,8 @@
 	};
 
 	function pintarLineas(events) {
-		angular.forEach($scope.events, function(value, key) {
-			
+		markers.clearLayers();
+		angular.forEach($scope.events, function(value, key) {			
 			var info = infoPopup(value.eventId, value.timestamp);
 			
 			//Almaceno array de puntos 
@@ -161,7 +162,7 @@
 	  };
 	  
 	  function pintarMapaDataSections() {
-		  locations.clearLayers();
+		  	locations.clearLayers();
 			var bounds = map.getBounds();				
 			var esLng = bounds.getSouthEast().lng;
 			var esLat = bounds.getSouthEast().lat;
@@ -185,7 +186,7 @@
 	  
 	  
 	  function pintarMapaMeasurements() {
-		  locations.clearLayers();
+		  	locations.clearLayers();
 			var bounds = map.getBounds();				
 			var esLng = bounds.getSouthEast().lng;
 			var esLat = bounds.getSouthEast().lat;
