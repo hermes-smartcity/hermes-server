@@ -85,10 +85,6 @@
 			
 			<c:url var="aux" value="/view/js/angular/eventManager.controller.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>
-			
-			<!-- Prueba sin clusters -->
-			<c:url var="aux" value="/view/js/angular/dashboardSinClusters.controller.js" />
-			<script type="text/javascript" src="${aux}"><!-- --></script>
   
 </jsp:root>
 
