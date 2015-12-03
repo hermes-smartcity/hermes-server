@@ -3,10 +3,10 @@
 
 	angular.module('app').controller('EventManagerController', EventManagerController);
 
-	EventManagerController.$inject = ['$state', '$scope', 'eventsType', 'usuarios' ,'measurementsType', 
+	EventManagerController.$inject = ['$state', '$interval', '$scope', 'eventsType', 'usuarios' ,'measurementsType', 
 	                                  '$http', '$timeout', '$log', '$filter', 'eventsService' ];
 
-	function EventManagerController($state, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
+	function EventManagerController($state, $interval, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
 			eventsService) {
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
@@ -26,15 +26,11 @@
 		}
 		
 		function recuperarYpintarEventos(urlGet){
-//
-//			$scope.$on('create', function (event, chart) {
-//				  chart.destroy();
-//				  chart.clear();
-//				  console.log(chart);
-//				});	
+
 			eventsService.getEventosPorDia(urlGet).then(getEventosPorDiaComplete);
 			// En cuanto tenga los eventos los pinto
 			function getEventosPorDiaComplete(response) {
+
 				vm.eventosPorDia = response.data;
 				vm.labels = vm.eventosPorDia.fechas;
 				vm.series = [ 'Días', 'Eventos'];
@@ -43,11 +39,20 @@
 				  vm.onClick = function (points, evt) {
 				    console.log(points, evt);
 				  };
+
+				  // Si no hay eventos que cumplan los requisitos marcados en los filtros entonces se actualiza con el gráfico
+				  getLiveChartData();
+
+					function getLiveChartData () {
+					      if (!vm.data[0].length) {
+					    	vm.labels = [0];
+					        vm.data[0] = [0];
+					      }
+					}
 			}
+			
 		};
 		
-		
-	
 		// Inicializamos el filtro de event type para que inicialmente liste
 		// vehicle Locations
 		vm.eventTypeSelected = "VEHICLE_LOCATION";

@@ -49,9 +49,13 @@
 	
 			<!-- Gráficos -->
 			<c:url  var="aux" value="/view/bower_components/Chart.js/Chart.min.js" />
-			<script type="text/javascript" src="${aux}"><!-- --></script>
-			
+			<script type="text/javascript" src="${aux}"><!-- --></script>			
 			<c:url  var="aux" value="/view/bower_components/angular-chart.js/dist/angular-chart.min.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>		
+			
+			<!-- marker cluster  -->			
+			<c:url  var="aux" value="/view/bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js" />
+			<script type="text/javascript" src="${aux}"><!-- --></script>		
 			
 			<!-- moment -->
 			<c:url var="jsMoment" value="/view/bower_components/moment/moment.js"/>

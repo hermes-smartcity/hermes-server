@@ -41,7 +41,7 @@
 			
 			    <!-- Custom CSS -->
 			    <c:url var="estilosUrl" value="/view/dist/css/sb-admin-2.css"/>
-			<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
 			
 			    <!-- Morris Charts CSS -->
 			    <c:url var="estilosUrl" value="/view/bower_components/morrisjs/morris.css"/>
@@ -56,6 +56,13 @@
 				
 				
 				<c:url var="estilosUrl" value="/view/bower_components/angular-chart.js/dist/angular-chart.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+				
+				<!-- marker cluster -->
+				<c:url var="estilosUrl" value="/view/bower_components/leaflet.markercluster/dist/MarkerCluster.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+				
+				<c:url var="estilosUrl" value="/view/bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
 				
 				<jsp:include page="incluirJS.jspx"/>

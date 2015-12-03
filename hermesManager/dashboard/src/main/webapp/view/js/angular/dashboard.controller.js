@@ -84,13 +84,17 @@
 				color: 'red',
 				fillOpacity: 0.1
 		};
+		var markers = L.markerClusterGroup();
+		
 		angular.forEach(events, function(value, key) {
 			var info = infoPopup(value.eventId, value.timestamp);			
 			//Convierto el punto que quiero pintar para tener su lat y log
 			var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 			//Añado al mapa el punto
-			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
+			markers.addLayer(L.circle(latlng, 5, mystyles).bindPopup(info));
+//			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
 		});
+		map.addLayer(markers);
 	};
 
 	function pintarLineas(events) {
