@@ -68,8 +68,11 @@
 			<!-- datetimepicker -->
 			<c:url var="jsDatetimepicker" value="/view/bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"/>
 			<script type="text/javascript" src="${jsDatetimepicker}"><!-- --></script>
-			
+		
+			<!-- paginación -->
+			<c:url var="aux" value="/view/bower_components/angularUtils-pagination/dirPagination.js"/>
 			<script type="text/javascript" src="${aux}"><!-- --></script>
+		
 
 			<c:url var="aux" value="/view/js/angular/app.constants.js" />
 			<script type="text/javascript" src="${aux}"><!-- --></script>

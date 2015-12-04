@@ -26,9 +26,9 @@
 	<fmt:message var="timestampFmt" key="citydriver.dataSection.tabla.columnas.timestamp" />
 	<fmt:message var="posicionFmt" key="citydriver.dataSection.tabla.columnas.posicion" />
 	
-	
-	<table class="film-info-bottom"
-		ng-repeat="dataSection in events">
+		  <table class="film-info-bottom" 
+		  	dir-paginate="dataSection in vm.events | filter:q | itemsPerPage: vm.pageSize" 
+		  		current-page="vm.currentPage">
 				<tr>
 				<td>
 				<div class="campoFicha">
@@ -64,8 +64,9 @@
 				</td>
 			</tr>
 		</table>
-						
-
-
+		<c:url  var="aux" value="/view/bower_components/angularUtils-pagination/dirPagination.tpl.html" />
+        <div class="text-center">
+       		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="${aux}"><!--  --></dir-pagination-controls>
+       </div>
 </html>	
 </jsp:root>

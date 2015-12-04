@@ -38,7 +38,11 @@
 	$scope.startDate.setDate($scope.startDate.getDate()-1);
 	$scope.endDate = new Date();
     
-	var map = L.map('map');
+//	var map = L.map('map');
+	var map = L.map( 'map', {
+		  minZoom: 2,
+		  zoom: 2
+		});
 	var locations = L.layerGroup([]);
 	var markers = L.markerClusterGroup();
 	map.addLayer(locations);
@@ -52,6 +56,11 @@
 	
 	map.on('dragend', aplicarFiltros);
 	map.on('zoomend', aplicarFiltros);
+	
+	markers.on('clusterclick', function (a) {
+		console.log(" clusterclick ");
+	    a.layer.zoomToBounds();
+	});
 	
 	function aplicarFiltros() {
 		
@@ -85,6 +94,7 @@
 				color: 'red',
 				fillOpacity: 0.1
 		};
+		
 	
 		markers.clearLayers();
 		angular.forEach(events, function(value, key) {
@@ -100,7 +110,7 @@
 
 	function pintarLineas(events) {
 		markers.clearLayers();
-		angular.forEach($scope.events, function(value, key) {			
+		angular.forEach(vm.events, function(value, key) {			
 			var info = infoPopup(value.eventId, value.timestamp);
 			
 			//Almaceno array de puntos 
@@ -155,8 +165,9 @@
 		urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
 		
 		$http.get(urlGet).success(function(data) {
-			$scope.events = data;		
-			pintarPuntos($scope.events);
+			vm.events = data;		
+			pintarPuntos(vm.events);
+			paginarEventos();
 		
 		});
 	  };
@@ -178,9 +189,9 @@
 			};
 			
 			$http.get(urlGet).success(function(data) {
-				$scope.events = data;
-				pintarLineas($scope.events);
-			
+				vm.events = data;
+				pintarLineas(vm.events);
+				paginarEventos();			
 			});
 	  };
 	  
@@ -202,29 +213,38 @@
 			};
 			
 			$http.get(urlGet).success(function(data) {
-				$scope.events = data;									
-				pintarPuntos($scope.events);
+				vm.events = data;									
+				pintarPuntos(vm.events);
+				paginarEventos();
 			});
 	  };
 		  
 	// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 	  vm.aplicarFiltros();
 	  
-	  /* * *  Prueba paginacion * * * */
-	  $scope.totalItems = 64;
-	  $scope.currentPage = 4;
+	  function paginarEventos() {
+		  
+		  /* * *  Prueba paginacion * * * */
+		  vm.totalItems = vm.events.length;
+		  vm.currentPage = 1;
 
-	  $scope.setPage = function (pageNo) {
-	    $scope.currentPage = pageNo;
-	  };
+		  vm.setPage = function (pageNo) {
+			  vm.currentPage = pageNo;
+		  };
 
-	  $scope.pageChanged = function() {
-	    $log.log('Page changed to: ' + $scope.currentPage);
-	  };
+		  vm.pageChanged = function() {
+		    $log.log('Page changed to: ' + vm.currentPage);
+		  };
 
-	  $scope.maxSize = 5;
-	  $scope.bigTotalItems = 175;
-	  $scope.bigCurrentPage = 1;
-	  /* * * * *  */
+//		  vm.maxSize = 5;
+//		  vm.bigTotalItems = 175;
+//		  vm.bigCurrentPage = 1;
+		  
+		  vm.currentPage = 1;
+		  vm.pageSize = 10;
+
+		  /* * * * *  */
+	  }
+	 
 	}
 })();

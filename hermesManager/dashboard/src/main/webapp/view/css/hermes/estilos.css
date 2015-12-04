@@ -142,3 +142,11 @@ fieldset table.alternable {
 #btnFilter{
 	margin: 14px 18px;
 }
+
+.cabecera{
+	margin: 13px 0 0 0px;
+}
+
+.cabeceraFiltro{
+	 margin-top: 31px;
+}

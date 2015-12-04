@@ -27,10 +27,13 @@
 	<fmt:message var="workingTimeFmt" key="hermes.driverFeatures.tabla.columnas.workingTime" />
 	<fmt:message var="deepSleepFmt" key="hermes.driverFeatures.tabla.columnas.deepSleep" />
 	
-
-			
-			<table class="film-info-bottom"
-				ng-repeat="driverFeatures in events">
+		<c:url  var="aux" value="/view/bower_components/angularUtils-pagination/dirPagination.tpl.html" />
+        <div class="text-center">
+       		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="${aux}"><!--  --></dir-pagination-controls>
+       </div>
+		  <table class="film-info-bottom" 
+		  	dir-paginate="driverFeatures in vm.events | filter:q | itemsPerPage: vm.pageSize" 
+		  		current-page="vm.currentPage">
 						<tr>
 						<td>
 							<div class="campoFicha">

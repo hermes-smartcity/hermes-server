@@ -8,7 +8,8 @@
 		'ui.bootstrap',
 		'chart.js',
 		'ui.bootstrap.datetimepicker',
-		'ngAnimate'
+		'ngAnimate',
+		'angularUtils.directives.dirPagination'
 	]).config(routeConfig).run(appRun);
 
 	function obterRuta(ruta) {

@@ -29,8 +29,9 @@
 		<fmt:message var="tipoFmt" key="citydriver.measurement.tabla.columnas.tipo" />
 		<fmt:message var="valueFmt" key="citydriver.measurement.tabla.columnas.value" />
 	
-		  <table class="film-info-bottom"
-			ng-repeat="measurement in events">
+		  <table class="film-info-bottom" 
+		  	dir-paginate="measurement in vm.events | filter:q | itemsPerPage: vm.pageSize" 
+		  		current-page="vm.currentPage">
 					<tr>
 					<td>
 						<div class="campoFicha">
@@ -88,5 +89,9 @@
 					</td>
 				</tr>
 			</table> 
+			<c:url  var="aux" value="/view/bower_components/angularUtils-pagination/dirPagination.tpl.html" />
+	        <div class="text-center">
+	       		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="${aux}"><!--  --></dir-pagination-controls>
+	       </div>
 	</html>
 </jsp:root>
