@@ -224,26 +224,13 @@
 	  
 	  function paginarEventos() {
 		  
-		  /* * *  Prueba paginacion * * * */
-		  vm.totalItems = vm.events.length;
 		  vm.currentPage = 1;
 
-		  vm.setPage = function (pageNo) {
-			  vm.currentPage = pageNo;
-		  };
-
-		  vm.pageChanged = function() {
-		    $log.log('Page changed to: ' + vm.currentPage);
-		  };
-
-//		  vm.maxSize = 5;
-//		  vm.bigTotalItems = 175;
-//		  vm.bigCurrentPage = 1;
-		  
-		  vm.currentPage = 1;
+//		  vm.setPage = function (pageNo) {
+//			  vm.currentPage = pageNo;
+//		  };
 		  vm.pageSize = 10;
 
-		  /* * * * *  */
 	  }
 	 
 	}
