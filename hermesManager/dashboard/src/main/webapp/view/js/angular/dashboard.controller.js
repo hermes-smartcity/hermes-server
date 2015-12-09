@@ -37,14 +37,18 @@
 	// Inicializamos la fecha de inicio a la de ayer 
 	$scope.startDate.setDate($scope.startDate.getDate()-1);
 	$scope.endDate = new Date();
-    
-//	var map = L.map('map');
+	
 	var map = L.map( 'map', {
 		  minZoom: 2,
 		  zoom: 2
 		});
 	var locations = L.layerGroup([]);
-	var markers = L.markerClusterGroup();
+	
+	var markers = new L.MarkerClusterGroup({
+	  spiderfyDistanceMultiplier: 0.5,
+	  maxClusterRadius: 14,
+	});
+
 	map.addLayer(locations);
 	
 	map.fitBounds([
@@ -56,14 +60,34 @@
 	
 	map.on('dragend', aplicarFiltros);
 	map.on('zoomend', aplicarFiltros);
+//	map.on('zoomend', actualizarMaxClusterRadius);
 	
-	markers.on('clusterclick', function (a) {
-		console.log(" clusterclick ");
-	    a.layer.zoomToBounds();
-	});
+//	actualizarMaxClusterRadius();
+	
+//	function actualizarMaxClusterRadius() {
+//		var zoom = map.getZoom();
+//		var radius = 15;
+//		var distance = 0.25;
+//		if(zoom < 12){
+//			radius = 150 - zoom * 10;
+//			distance = 1.5;
+//		}
+//		
+//		markers = new L.MarkerClusterGroup({
+//		      spiderfyDistanceMultiplier: distance,
+//		      maxClusterRadius: radius,
+//		});
+//		
+//		 var current1 = markers.getLayers(); //get current layers in markers
+//	        map.removeLayer(markers); // remove markers from map
+//	        markers.clearLayers(); // clear any layers in clusters just in case
+//	        current1.forEach(function(item) {  //loop through the current layers and add them to clusters
+//	        	markers.addLayer(item);
+//	        });
+//	        map.addLayer(markers);
+//	}
 	
 	function aplicarFiltros() {
-		
 		var pos = vm.eventTypeSelected.indexOf('_'); 
 		var value = vm.eventTypeSelected.substr(0, pos);
 		value += vm.eventTypeSelected.substr(pos+1, vm.eventTypeSelected.length);
@@ -106,6 +130,7 @@
 //			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
 		});
 		map.addLayer(markers);
+		
 	};
 
 	function pintarLineas(events) {
