@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:contido="http://www.enxenio.es/tags/contido"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="${localeActual}" >
+	<jsp:output doctype-root-element="html"
+	    doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+	    
+	<jsp:directive.page contentType="text/html; charset=UTF-8"/> 
+	
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	</head>
+	
+	  <div class="panel panel-default">	  				
+		                   <div class="panel-heading">
+		                       <i class="fa fa-bell fa-fw"><!--  --></i> 
+		                   </div>
+		               
+		                   <div class="panel-body">
+		                  	 
+		                  	   <div class="list-group-item">
+		                          <label for="singleSelect">User</label><br/>
+		                          <!-- Filtro usuarios  -->
+		                          <select id="selectUsers"  ng-model="vm.usuarioSelected" ng-change="changedValue(vm.usuarioSelected)" 
+									     data-ng-options="usuario as usuario.sourceId for usuario in vm.usuarios">
+									   	   <option value="">Todos</option> 
+									</select>		           
+								 </div>	
+								 
+		                  	 	<div class="list-group-item">
+					                 <label for="singleSelect">Event Type</label><br/>	
+					             		<!-- Filtro event type -->    
+					                  <select  ng-model="vm.eventTypeSelected" ng-change="changedValue(vm.eventTypeSelected)" 
+									     data-ng-options="eventType as eventType for eventType in vm.eventsType">
+									  <!--   <option value="">Select Account</option> --> 
+									</select>		 
+					                 
+								 </div>	
+								 
+								 <div   class="list-group-item" >
+								   <label for="singleSelect">Start date</label><br/>
+								     <button ng-click="showCalendarStart = ! showCalendarStart">Select date</button>
+		                  	 		<div ng-show="showCalendarStart" class="dropdown">
+		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="startDate" > <!--  --></datetimepicker>
+									  	<p>Selected Date: {{ startDate | date:'yyyy-MM-dd HH:mm' }}</p>
+									</div>     
+							 	</div>	
+								 
+								 <div class="list-group-item">
+								 <label for="singleSelect">End date</label><br/>
+								  <button ng-click="showCalendarEnd = ! showCalendarEnd">Select date</button>
+		                  	 		<div ng-show="showCalendarEnd" class="dropdown">
+		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="endDate" > <!--  --></datetimepicker>
+									  	<p>Selected Date: {{ endDate | date:'yyyy-MM-dd HH:mm' }}</p>
+									</div>  	
+								  
+								 	
+		                     </div>	
+		                     <button id="btnFilter" class="btn btn-success" ng-click="vm.aplicarFiltros()">Filter</button>
+		                   </div>
+		    </div>
+
+
+</html>	
+</jsp:root>

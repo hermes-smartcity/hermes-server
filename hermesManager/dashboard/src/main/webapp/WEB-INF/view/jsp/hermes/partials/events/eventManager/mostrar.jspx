@@ -129,56 +129,8 @@
 		</canvas> 
     </div>
 </div>
- <div class="col-lg-2">
-		  <div class="panel panel-default">
-		  				
-		                   <div class="panel-heading">
-		                       <i class="fa fa-bell fa-fw"><!--  --></i> 
-		                   </div>
-		               
-		                   <div class="panel-body">
-		                  	 
-		                  	   <div class="list-group-item">
-		                          <label for="singleSelect">User</label><br/>
-		                          <!-- Filtro usuarios  -->
-		                          <select id="selectUsers"  ng-model="vm.usuarioSelected" ng-change="changedValue(vm.usuarioSelected)" 
-									     data-ng-options="usuario as usuario.sourceId for usuario in vm.usuarios">
-									   	   <option value="">Todos</option> 
-									</select>		           
-								 </div>	
-								 
-		                  	 	<div class="list-group-item">
-					                 <label for="singleSelect">Event Type</label><br/>	
-					             		<!-- Filtro event type -->    
-					                  <select  ng-model="vm.eventTypeSelected" ng-change="changedValue(vm.eventTypeSelected)" 
-									     data-ng-options="eventType as eventType for eventType in vm.eventsType">
-									  <!--   <option value="">Select Account</option> --> 
-									</select>		 
-					                 
-								 </div>	
-								 
-								 <div   class="list-group-item" >
-								   <label for="singleSelect">Start date</label><br/>
-								     <button ng-click="showCalendarStart = ! showCalendarStart">Select date</button>
-		                  	 		<div ng-show="showCalendarStart" class="dropdown">
-		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="startDate" > <!--  --></datetimepicker>
-									  	<p>Selected Date: {{ startDate | date:'yyyy-MM-dd HH:mm' }}</p>
-									</div>     
-							 	</div>	
-								 
-								 <div class="list-group-item">
-								 <label for="singleSelect">End date</label><br/>
-								  <button ng-click="showCalendarEnd = ! showCalendarEnd">Select date</button>
-		                  	 		<div ng-show="showCalendarEnd" class="dropdown">
-		                  	 			<datetimepicker id="calendarioHoras" data-ng-model="endDate" > <!--  --></datetimepicker>
-									  	<p>Selected Date: {{ endDate | date:'yyyy-MM-dd HH:mm' }}</p>
-									</div>  	
-								  
-								 	
-		                     </div>	
-		                     <button id="btnFilter" class="btn btn-success" ng-click="vm.aplicarFiltros()">Filter</button>
-		                   </div>
-		    </div>
+	 <div class="col-lg-2">
+		<jsp:include page="../filtros.jspx" />
      </div>   
     
 

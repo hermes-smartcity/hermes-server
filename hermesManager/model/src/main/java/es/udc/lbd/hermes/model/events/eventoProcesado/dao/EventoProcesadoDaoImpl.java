@@ -1,10 +1,14 @@
 package es.udc.lbd.hermes.model.events.eventoProcesado.dao;
 
 
+import java.math.BigInteger;
+import java.util.Calendar;
+
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
+import es.udc.lbd.hermes.model.util.HelpersModel;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 @Repository
@@ -28,16 +32,16 @@ EventoProcesadoDao {
 	
 	// TODO falta
 	//Events today
-//	@Override
-//	public int getEventsToday() {
-//		Calendar hoy = HelpersModel.getHoy();
-//		String queryString = "SELECT (select count(*) from EventoProcesado where timestamp > :hoy)";
-//		
-//		Number result = (Number) getSession().createQuery(queryString).setCalendar("hoy", hoy);
-//				
-//		return result == null ? 0 : result.intValue();
-//		
-//		
-//	}
+	@Override
+	public Long getEventsToday() {
+		Calendar hoy = HelpersModel.getHoy();
+		String queryString = "SELECT((select count(*) from VehicleLocation where timestamp > :hoy) "
+				+ "+ (select count(*) from Measurement where timestamp > :hoy)"
+		+ "+ (select count(*) from DataSection where timestamp > :hoy))";
+		
+		Query query = getSession().createSQLQuery(queryString).setCalendar("hoy", hoy);
+		BigInteger count = (BigInteger) query.uniqueResult();      
+	    return count.longValue();
+	}
 	
 }

@@ -6,5 +6,5 @@ import es.udc.lbd.hermes.model.util.dao.GenericDao;
 public interface EventoProcesadoDao extends GenericDao<EventoProcesado, Long> {	
 	public EventoProcesado obterEventoProcesado();
 	public void eliminarEventosProcesados();
-//	public int getEventsToday();
+	public Long getEventsToday();
 }

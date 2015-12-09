@@ -18,5 +18,5 @@ public interface EventService {
 	
 	public void eliminarEventosProcesados();
 	
-//	public int getEventsToday();
+	public Long getEventsToday();
 }

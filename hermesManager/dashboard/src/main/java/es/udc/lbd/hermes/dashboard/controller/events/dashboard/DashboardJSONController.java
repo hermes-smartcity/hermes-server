@@ -65,7 +65,7 @@ public class DashboardJSONController extends MainResource {
 		@RequestMapping(value="/json/eventsToday", method = RequestMethod.GET)
 		public JSONData getEventsToday() {
 			JSONData jsonData = new JSONData();
-//			jsonData.setValueInt(eventService.getEventsToday());
+			jsonData.setValueL(eventService.getEventsToday());
 			return jsonData;
 		}
 	
