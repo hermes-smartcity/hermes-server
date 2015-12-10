@@ -92,12 +92,13 @@ li.pestanasFormulario ol.fichas {
 	overflow: hidden;
 	float: none;
 	width: 100%;
+	padding: 0px;
 }
 
 li.pestanasFormulario ol.fichas li.ficha {
 	display: none;
 	border: 1px solid silver;
-	padding: 5px 15px;
+	padding: 5px;
 	margin: 0;
 	overflow: hidden;
 }

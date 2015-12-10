@@ -132,12 +132,21 @@ fieldset table.alternable {
 }
  
 #calendarioHoras {
-    width: 265px;
+	background-color: white;
+}
+
+#calendarioHoras .datetimepicker .table td, #calendarioHoras .datetimepicker .table th {
+  border-radius: 0px;
 }
 
 #selectUsers{
-	width: 57%;
+	width: 100%;
 }
+
+#selectEvent{
+	width: 100%;
+}
+
 
 #btnFilter{
 	margin: 14px 18px;
@@ -149,4 +158,8 @@ fieldset table.alternable {
 
 .cabeceraFiltro{
 	 margin-top: 31px;
+}
+
+.margin-top-20 {
+	margin-top: 20px;
 }

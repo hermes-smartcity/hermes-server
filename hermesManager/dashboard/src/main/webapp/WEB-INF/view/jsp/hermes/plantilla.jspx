@@ -38,11 +38,7 @@
 			    <!-- Timeline CSS -->
 			    <c:url var="estilosUrl" value="/view/dist/css/timeline.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
-			
-			    <!-- Custom CSS -->
-			    <c:url var="estilosUrl" value="/view/dist/css/sb-admin-2.css"/>
-				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
-			
+					
 			    <!-- Morris Charts CSS -->
 			    <c:url var="estilosUrl" value="/view/bower_components/morrisjs/morris.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/> 
@@ -54,6 +50,9 @@
 			 	<c:url var="estilosUrl" value="/view/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
 				
+			    <!-- Custom CSS -->
+			    <c:url var="estilosUrl" value="/view/dist/css/sb-admin-2.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
 				
 				<c:url var="estilosUrl" value="/view/bower_components/angular-chart.js/dist/angular-chart.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
@@ -151,16 +150,16 @@
 	            </div>
 	            <!-- /.navbar-static-side -->
 	        </nav>
-	
-	
 			
 	         <div id="page-wrapper"> <!-- TODO no sé porque al anadirle esta parte deja de funcionar el desplegable ?¿ FALTA por revisar -->
+		         
 		        <!-- <div class="row">  
 		                <div class="col-lg-12"> 
 		                    <h1 class="page-header">Dashboard</h1>
 		                </div>
 		    	</div> -->
 		    	<div id="contido" class="row">
+	
 			      <div class="view" ui-view=""><!-- --></div>
 				</div>
 	            <!-- /.row -->
