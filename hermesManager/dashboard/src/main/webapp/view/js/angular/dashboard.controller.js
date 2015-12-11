@@ -46,7 +46,8 @@
 	
 	var markers = new L.MarkerClusterGroup({
 	  spiderfyDistanceMultiplier: 0.5,
-	  disableClusteringAtZoom: 12
+	  disableClusteringAtZoom: 12,
+	  maxClusterRadius: 20
 	});
 
 	map.addLayer(locations);
