@@ -46,7 +46,7 @@
 	
 	var markers = new L.MarkerClusterGroup({
 	  spiderfyDistanceMultiplier: 0.5,
-	  maxClusterRadius: 14,
+	  disableClusteringAtZoom: 12
 	});
 
 	map.addLayer(locations);
@@ -103,30 +103,30 @@
 		
 	};
 	
-	function infoPopup(eventId, timestamp) {
+	function infoPopup(userId, timestamp, eventType, eventValue) {
 		var date = new Date(timestamp);
 		var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 		var hourEvento = $filter('date')(date, 'HH:mm:ss');
 		var datosEvento = L.DomUtil.create('datosEvento');
 
-		datosEvento.innerHTML = '<b>EventId:</b> ' + eventId+' <b>Fecha:</b> '+dateEvento+'<br/><b>Hora:</b> '+hourEvento;
+		datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Fecha:</b> '+dateEvento+'<br/><b>Hora:</b> '+hourEvento+'<br/><b>Tipo:</b> '+eventType+'<br/><b>Valor:</b> '+eventValue;
 		return datosEvento;
 	}
 	
 	function pintarPuntos(events) {
 		var mystyles = {
 				color: 'red',
-				fillOpacity: 0.1
+				fillOpacity: 0.5
 		};
 		
 	
 		markers.clearLayers();
 		angular.forEach(events, function(value, key) {
-			var info = infoPopup(value.eventId, value.timestamp);			
+			var info = infoPopup(value.usuario.sourceId.substring(0,10) + "...", value.timestamp, value.tipo, value.value);			
 			//Convierto el punto que quiero pintar para tener su lat y log
 			var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 			//Añado al mapa el punto
-			markers.addLayer(L.circle(latlng, 5, mystyles).bindPopup(info));
+			markers.addLayer(L.circle(latlng, 10, mystyles).bindPopup(info));
 //			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
 		});
 		map.addLayer(markers);
@@ -136,7 +136,7 @@
 	function pintarLineas(events) {
 		markers.clearLayers();
 		angular.forEach(vm.events, function(value, key) {			
-			var info = infoPopup(value.eventId, value.timestamp);
+			var info = infoPopup(value.usuario.sourceId.substring(0,10) + "...", value.timestamp, value.tipo, value.value);
 			
 			//Almaceno array de puntos 
 			var myLines = value.roadSection;
