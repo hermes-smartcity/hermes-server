@@ -10,105 +10,129 @@
 	<fmt:message var="idEventoFmt" key="citydriver.vehicleLocation.tabla.columnas.idEvento" />
 	<fmt:message var="timestampFmt" key="citydriver.vehicleLocation.tabla.columnas.timestamp" />
 	<fmt:message var="posicionFmt" key="citydriver.vehicleLocation.tabla.columnas.posicion" />
-	<div>
-		<div class="row">
-			<div class="cabecera col-lg-3 col-md-6">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-12">
-								<div>
-									<strong>Event Manager:</strong> <span class="pull-right">{{vm.active.value}}</span>
-								</div>
-								<div>
-									<strong>Events today:</strong> <span class="pull-right">{{vm.eventsToday.valueL}}</span>
-								</div>
-								<div>
-									<strong>Last event:</strong> <span class="pull-right">{{vm.eventoProcesado.timestamp | date : 'dd/MM/yyyy HH:mm'}}</span>
-								</div>
-							</div>
+	<div class="row">
+		<div class="cabecera col-md-3">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Event Manager:</strong><span class="pull-right">{{vm.active.value}}</span>
 						</div>
 					</div>
-					<div>
-						<div class="panel-footer">
-							<span style="color: #337AB7;" class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-							</i></span>
-							<div class="clearfix">
-								<!--  -->
-							</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Events today:</strong><span class="pull-right">{{vm.eventsToday.valueL}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Last event:</strong><span class="pull-right">{{vm.eventoProcesado.timestamp | date : 'dd/MM/yyyy HH:mm'}}</span>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="cabecera col-lg-3 col-md-6">
-				<div class="panel panel-green">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-12">
-								<div><strong>Total users: </strong></div>
-								<div><strong>Active users: </strong></div>
-								<div><strong>Last user: </strong></div>
-							</div>
-						</div>
-					</div>
-					<div>
-						<div class="panel-footer">
-							<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-							</i></span>
-							<div class="clearfix">
-								<!--  -->
-							</div>
-						</div>
+				<div class="panel-footer">
+					<span style="color: #337AB7;" class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+						<!--  -->
 					</div>
 				</div>
 			</div>
-			<div class="cabecera col-lg-3 col-md-6">
-				<div class="panel panel-yellow">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-12">
-								<div><strong>Total locations: </strong><span class="pull-right">{{vm.totalL.valueL}}</span></div>
-								<div><strong>Total measurements: </strong><span class="pull-right">{{vm.totalM.valueL}}</span></div>
-								<div><strong>Total data sections: </strong><span class="pull-right">{{vm.totalDS.valueL}}</span></div>
-								<div><strong>Total driver features: </strong><span class="pull-right">{{vm.totalDF.valueL}}</span></div>
-							</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-green">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Total users: </strong>
 						</div>
 					</div>
-					<div>
-						<div class="panel-footer">
-							<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-							</i></span>
-							<div class="clearfix">
-								<!--  -->
-							</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Active users: </strong>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Last user:</strong>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="cabecera col-lg-3 col-md-6">
-				<div class="panel panel-red">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-xs-12">
-								<div><strong>Future: </strong></div>
-								<div><strong>Future: </strong></div>
-								<div><strong>Future: </strong></div>
-							</div>
-						</div>
-					</div>
-					<div>
-						<div class="panel-footer">
-							<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-							</i></span>
-							<div class="clearfix">
-								<!--  -->
-							</div>
+				<div>
+					<div class="panel-footer">
+						<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+						</i></span>
+						<div class="clearfix">
+							<!--  -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-9">
+		<div class="cabecera col-md-3">
+			<div class="panel panel-yellow">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Locations:</strong><span class="pull-right">{{vm.totalL.valueL}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Measurements:</strong><span class="pull-right">{{vm.totalM.valueL}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Data sections:</strong> <span class="pull-right">{{vm.totalDS.valueL}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Driver features:</strong> <span class="pull-right">{{vm.totalDF.valueL}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+						<!--  -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-red">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Future: </strong>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Future: </strong>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Future: </strong>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+						<!--  -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-9">
 			<div>
 				<li class="pestanas pestanasFormulario">
 					<ol class="pestanas selectoresFormulario">
@@ -142,7 +166,7 @@
 				</li>
 			</div>
 		</div>
-		<div class="cabeceraFiltro col-lg-3">
+		<div class="cabeceraFiltro col-md-3">
 			<jsp:include page="../filtros.jspx" />
 		</div>
 	</div>

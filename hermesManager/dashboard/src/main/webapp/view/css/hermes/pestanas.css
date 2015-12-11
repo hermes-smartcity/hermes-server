@@ -92,7 +92,6 @@ li.pestanasFormulario ol.fichas {
 	overflow: hidden;
 	float: none;
 	width: 100%;
-	padding: 0px;
 }
 
 li.pestanasFormulario ol.fichas li.ficha {
@@ -113,4 +112,5 @@ li.pestanasFormulario ol.fichas li.ficha.activa {
 
 ol.pestanas, li.pestanas {
 	list-style-type: none;
+	padding: 0px;	
 }
