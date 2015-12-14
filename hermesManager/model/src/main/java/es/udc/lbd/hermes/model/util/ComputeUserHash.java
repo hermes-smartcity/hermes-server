@@ -14,6 +14,10 @@ public class ComputeUserHash {
 		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
 		System.out.println("luaces@lbd.org.es " + hash);
 
+		cadena = "susanaladra@gmail.com";
+		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
+		System.out.println("susanaladra@gmail.com " + hash);
+		
 		cadena = "jorgeyago.ingeniero";
 		hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
 		System.out.println("jorgeyago.ingeniero " + hash);
