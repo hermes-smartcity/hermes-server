@@ -1,7 +1,7 @@
 package es.udc.lbd.hermes.dashboard.controller.events.eventManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +16,8 @@ import es.udc.lbd.hermes.eventManager.EventManager;
 @RestController
 @RequestMapping(value = "/api/eventManager")
 public class EventManagerJSONController extends MainResource {
-	private final Logger log = LoggerFactory
-			.getLogger(EventManager.class);
+//	private final Logger log = LoggerFactory
+//			.getLogger(EventManager.class);
 
 	
 	@Autowired private EventManager eventManager;

@@ -19,10 +19,7 @@ public interface DataSectionService {
 
 	public List<DataSection> obterDataSections(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat);
-	
-	public BloqueElementos<DataSection> obterDataSectionsPaginados(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
-			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
-	
+		
 	public long contar();
 	
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);

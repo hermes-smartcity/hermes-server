@@ -28,7 +28,7 @@ VehicleLocationDao {
 		
 				String queryStr =  "from VehicleLocation where within(position, :bounds) = true ";
 				if(idUsuario!=null)
-					queryStr += "and usuario.id = :idUsuario ";
+					queryStr += "and usuarioMovil.id = :idUsuario ";
 				
 				queryStr += "and timestamp > :fechaIni ";
 				queryStr += "and timestamp < :fechaFin";
@@ -64,7 +64,7 @@ VehicleLocationDao {
 				" from VehicleLocation v where v.timestamp > :fechaIni and v.timestamp < :fechaFin ";
 	
 		if(idUsuario!=null)
-			queryStr += "and v.usuario.id = :idUsuario ";
+			queryStr += "and v.usuarioMovil.id = :idUsuario ";
 		
 		queryStr+="group by extract(day from v.timestamp), extract(month from v.timestamp), extract (year from v.timestamp) order by anio, mes, dia";
 		

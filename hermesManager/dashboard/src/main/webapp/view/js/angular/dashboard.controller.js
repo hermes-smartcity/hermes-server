@@ -26,6 +26,11 @@
 	vm.totalDS = totalDS;
 	vm.totalM = totalM;
 	vm.totalDF = totalDF;
+	vm.onTimeSetStart = onTimeSetStart;
+	vm.onTimeSetEnd = onTimeSetEnd;
+	vm.showCalendarStart = false;
+	vm.showCalendarEnd = false;
+	
 	eventsService.getStateActualizado().then(getStateActualizadoComplete);
 	
 	function getStateActualizadoComplete(response) {				
@@ -61,32 +66,6 @@
 	
 	map.on('dragend', aplicarFiltros);
 	map.on('zoomend', aplicarFiltros);
-//	map.on('zoomend', actualizarMaxClusterRadius);
-	
-//	actualizarMaxClusterRadius();
-	
-//	function actualizarMaxClusterRadius() {
-//		var zoom = map.getZoom();
-//		var radius = 15;
-//		var distance = 0.25;
-//		if(zoom < 12){
-//			radius = 150 - zoom * 10;
-//			distance = 1.5;
-//		}
-//		
-//		markers = new L.MarkerClusterGroup({
-//		      spiderfyDistanceMultiplier: distance,
-//		      maxClusterRadius: radius,
-//		});
-//		
-//		 var current1 = markers.getLayers(); //get current layers in markers
-//	        map.removeLayer(markers); // remove markers from map
-//	        markers.clearLayers(); // clear any layers in clusters just in case
-//	        current1.forEach(function(item) {  //loop through the current layers and add them to clusters
-//	        	markers.addLayer(item);
-//	        });
-//	        map.addLayer(markers);
-//	}
 	
 	function aplicarFiltros() {
 		var pos = vm.eventTypeSelected.indexOf('_'); 
@@ -123,12 +102,11 @@
 	
 		markers.clearLayers();
 		angular.forEach(events, function(value, key) {
-			var info = infoPopup(value.usuario.sourceId.substring(0,10) + "...", value.timestamp, value.tipo, value.value);			
+			var info = infoPopup(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.tipo, value.value);			
 			//Convierto el punto que quiero pintar para tener su lat y log
 			var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 			//Añado al mapa el punto
 			markers.addLayer(L.circle(latlng, 10, mystyles).bindPopup(info));
-//			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
 		});
 		map.addLayer(markers);
 		
@@ -137,7 +115,7 @@
 	function pintarLineas(events) {
 		markers.clearLayers();
 		angular.forEach(vm.events, function(value, key) {			
-			var info = infoPopup(value.usuario.sourceId.substring(0,10) + "...", value.timestamp, value.tipo, value.value);
+			var info = infoPopup(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.tipo, value.value);
 			
 			//Almaceno array de puntos 
 			var myLines = value.roadSection;
@@ -186,7 +164,6 @@
 		var esLat = bounds.getSouthEast().lat;
 		var wnLng = bounds.getNorthWest().lng;
 		var wnLat = bounds.getNorthWest().lat;
-		
 		var urlGet = "api/vehiclelocation/json/vehicleLocations?";		
 		urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
 		
@@ -248,16 +225,18 @@
 	// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 	  vm.aplicarFiltros();
 	  
-	  function paginarEventos() {
-		  
+	  function paginarEventos() {		  
 		  vm.currentPage = 1;
-
-//		  vm.setPage = function (pageNo) {
-//			  vm.currentPage = pageNo;
-//		  };
 		  vm.pageSize = 10;
-
 	  }
+	  
+	 function onTimeSetStart(newDate, oldDate) {
+		    vm.showCalendarStart = !vm.showCalendarStart;
+	 }
+	 
+	 function onTimeSetEnd(newDate, oldDate) {
+		    vm.showCalendarEnd = !vm.showCalendarEnd;
+	 }
 	 
 	}
 })();

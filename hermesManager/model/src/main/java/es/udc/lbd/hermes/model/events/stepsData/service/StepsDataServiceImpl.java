@@ -8,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.stepsData.StepsData;
 import es.udc.lbd.hermes.model.events.stepsData.dao.StepsDataDao;
-import es.udc.lbd.hermes.model.usuario.Usuario;
-import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
-import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 
 @Service("stepsDataService")
 @Transactional
@@ -20,10 +19,7 @@ public class StepsDataServiceImpl implements StepsDataService {
 	private StepsDataDao stepsDataDao;
 	
 	@Autowired
-	private UsuarioService usuarioService;
-	
-	@Autowired
-	private UsuarioDao usuarioDao;
+	private UsuarioMovilDao usuarioMovilDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -34,15 +30,13 @@ public class StepsDataServiceImpl implements StepsDataService {
 	@Override
 	public void create(StepsData stepsData, String sourceId) {	
 
-		Usuario usuario = usuarioDao.findBySourceId(sourceId);
-		//TODO prueba para comprobar hash 256. Luego borrar
-		usuario = usuarioService.getBySourceId(sourceId);
-		if(usuario == null){
-			usuario = new Usuario();
-			usuario.setSourceId(sourceId);
-			usuarioDao.create(usuario);
-		}
-		stepsData.setUsuario(usuario);
+		UsuarioMovil usuarioMovil = usuarioMovilDao.findBySourceId(sourceId);
+		if(usuarioMovil == null){
+			usuarioMovil = new UsuarioMovil();
+			usuarioMovil.setSourceId(sourceId);
+			usuarioMovilDao.create(usuarioMovil);
+		}	
+		stepsData.setUsuarioMovil(usuarioMovil);
 		stepsDataDao.create(stepsData);
 		
 	}

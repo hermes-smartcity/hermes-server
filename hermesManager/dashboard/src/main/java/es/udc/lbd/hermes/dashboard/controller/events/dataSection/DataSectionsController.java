@@ -3,8 +3,9 @@ package es.udc.lbd.hermes.dashboard.controller.events.dataSection;
 import java.util.Calendar;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.dashboard.web.rest.events.MainResource;
+import es.udc.lbd.hermes.eventManager.EventManager;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
@@ -22,9 +24,9 @@ import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 @RestController
 @RequestMapping(value = "/api/datasection")
 public class DataSectionsController extends MainResource {
-	private final Logger log = LoggerFactory
-			.getLogger(DataSectionsController.class);
-
+//	private final Logger log = LoggerFactory
+//			.getLogger(DataSectionsController.class);
+	static Logger logger = Logger.getLogger(EventManager.class);
 	@Autowired
 	private DataSectionService dataSectionServicio;
 	

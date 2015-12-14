@@ -53,9 +53,27 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>-->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<exclusions>
+			    <exclusion>
+			        <groupId>com.sun.jmx</groupId>
+			        <artifactId>jmxri</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>com.sun.jdmk</groupId>
+			        <artifactId>jmxtools</artifactId>
+			    </exclusion>
+			    <exclusion>
+			            <groupId>javax.jms</groupId>
+			            <artifactId>jms</artifactId>
+			    </exclusion>
+		</exclusions>
 		</dependency>
 		<!-- Servlet -->
 		<dependency>

@@ -3,8 +3,9 @@ package es.udc.lbd.hermes.dashboard.controller.events.measurement;
 import java.util.Calendar;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,14 +17,15 @@ import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
+import es.udc.lbd.hermes.model.util.jackson.CustomGeometryDeserializer;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 
 @RestController
 @RequestMapping(value = "/api/measurement")
 public class MeasurementsController extends MainResource {
-	private final Logger log = LoggerFactory
-			.getLogger(MeasurementsController.class);
-
+//	private final Logger log = LoggerFactory
+//			.getLogger(MeasurementsController.class);
+	static Logger logger = Logger.getLogger(MeasurementsController.class);
 	@Autowired
 	private MeasurementService measurementServicio;
 	

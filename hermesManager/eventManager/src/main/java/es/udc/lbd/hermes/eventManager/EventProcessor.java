@@ -15,11 +15,12 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
+import org.apache.log4j.Logger;
 import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import es.udc.lbd.hermes.eventManager.factory.EventFactory;
 import es.udc.lbd.hermes.eventManager.json.Event;
@@ -35,7 +36,7 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class EventProcessor extends Thread {
 
 	private static final String URI = ReadPropertiesFile.getUrlEventos();
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	static Logger logger = Logger.getLogger(EventProcessor.class);
 	private Client client;
 	private EventParser eventParser = new EventParser();
 	private Inflater inflater = new Inflater();

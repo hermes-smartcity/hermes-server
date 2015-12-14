@@ -9,9 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.sleepData.SleepData;
 import es.udc.lbd.hermes.model.events.sleepData.dao.SleepDataDao;
-import es.udc.lbd.hermes.model.usuario.Usuario;
-import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
-import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 
 
 
@@ -21,12 +20,9 @@ public class SleepDataServiceImpl implements SleepDataService {
 	
 	@Autowired
 	private SleepDataDao sleepDataDao;
-	
+
 	@Autowired
-	private UsuarioService usuarioService;
-	
-	@Autowired
-	private UsuarioDao usuarioDao;
+	private UsuarioMovilDao usuarioMovilDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -37,15 +33,13 @@ public class SleepDataServiceImpl implements SleepDataService {
 	@Override
 	public void create(SleepData sleepData, String sourceId) {	
 
-		Usuario usuario = usuarioDao.findBySourceId(sourceId);
-		//TODO prueba para comprobar hash 256. Luego borrar
-		usuario = usuarioService.getBySourceId(sourceId);
-		if(usuario == null){
-			usuario = new Usuario();
-			usuario.setSourceId(sourceId);
-			usuarioDao.create(usuario);
+		UsuarioMovil usuarioMovil = usuarioMovilDao.findBySourceId(sourceId);
+		if(usuarioMovil == null){
+			usuarioMovil = new UsuarioMovil();
+			usuarioMovil.setSourceId(sourceId);
+			usuarioMovilDao.create(usuarioMovil);
 		}
-		sleepData.setUsuario(usuario);
+		sleepData.setUsuarioMovil(usuarioMovil);
 		sleepDataDao.create(sleepData);
 		
 	}
