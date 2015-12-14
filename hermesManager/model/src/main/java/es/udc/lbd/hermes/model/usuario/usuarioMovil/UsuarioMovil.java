@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.model.usuario;
+package es.udc.lbd.hermes.model.usuario.usuarioMovil;
 
 import java.io.Serializable;
 
@@ -10,19 +10,18 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "usuario_id_seq")
-@Table(name = "usuario")
+@SequenceGenerator(name = "xeradorId", sequenceName = "usuario_movil_id_seq")
+@Table(name = "usuario_movil")
 @SuppressWarnings("serial")
-public class Usuario implements Serializable{
+public class UsuarioMovil implements Serializable{
 
 		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO, generator = "xeradorId")
         private Long id;
 
-		private String sourceId;
-		
+		private String sourceId;		
 		        
-        public Usuario() {
+        public UsuarioMovil() {
         }
 
 		public Long getId() {

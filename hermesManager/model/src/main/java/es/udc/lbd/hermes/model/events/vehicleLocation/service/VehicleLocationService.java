@@ -20,9 +20,6 @@ public interface VehicleLocationService {
 	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 	Double wnLng, Double wnLat,	Double esLng, Double esLat);
 	
-	public BloqueElementos<VehicleLocation> obterVehicleLocationsPaginados(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
-			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
-	
 	public long contar();
 	
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);

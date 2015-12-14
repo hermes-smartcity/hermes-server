@@ -3,8 +3,9 @@ package es.udc.lbd.hermes.dashboard.controller.events.vehicleLocation;
 import java.util.Calendar;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,9 +20,10 @@ import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationSer
 @RestController
 @RequestMapping(value = "/api/vehiclelocation")
 public class VehicleLocationsController extends MainResource {
-	private final Logger log = LoggerFactory
-			.getLogger(VehicleLocationsController.class);
-
+//	private final Logger log = LoggerFactory
+//			.getLogger(VehicleLocationsController.class);
+	static Logger logger = Logger.getLogger(VehicleLocationsController.class);
+	
 	@Autowired private VehicleLocationService vehicleLocationServicio;
 
 

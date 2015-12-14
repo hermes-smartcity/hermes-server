@@ -14,7 +14,6 @@ import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 
-
 @Repository
 public class DataSectionDaoImpl extends GenericDaoHibernate<DataSection, Long> implements
 DataSectionDao {
@@ -24,16 +23,16 @@ DataSectionDao {
 			int startIndex, int count){
 		List<DataSection> elementos = null;
 		
-				String queryStr =  "from DataSection where within(roadSection, :bounds) = true ";
+				String queryStr =  "from DataSection d where within(d.roadSection, :bounds) = true ";
 				
 				if(idUsuario!=null)
-					queryStr += "and usuario.id = :idUsuario ";
+					queryStr += "and d.usuarioMovil.id = :idUsuario ";
 				
 				if(fechaIni!=null)
-					queryStr += "and timestamp > :fechaIni ";
+					queryStr += "and d.timestamp > :fechaIni ";
 				
 				if(fechaFin!=null)
-					queryStr += "and timestamp < :fechaFin";
+					queryStr += "and d.timestamp < :fechaFin";
 				
 				Query query = getSession().createQuery(queryStr);
 		
@@ -65,7 +64,7 @@ DataSectionDao {
 				" from DataSection d where d.timestamp > :fechaIni and d.timestamp < :fechaFin ";
 	
 		if(idUsuario!=null)
-			queryStr += "and d.usuario.id = :idUsuario ";
+			queryStr += "and d.usuarioMovil.id = :idUsuario ";
 		
 		queryStr+="group by extract(day from d.timestamp), extract(month from d.timestamp), extract (year from d.timestamp) order by anio, mes, dia";
 		

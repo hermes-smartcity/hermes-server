@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Point;
 import es.udc.lbd.hermes.model.util.jackson.CustomPointDeserializer;
-import es.udc.lbd.hermes.model.usuario.Usuario;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.util.jackson.CustomGeometrySerializer;
 
 
@@ -47,8 +47,8 @@ public class VehicleLocation implements Serializable{
 		
 
 		@ManyToOne(fetch = FetchType.EAGER)
-    	@JoinColumn(name = "idUsuario")
-    	private Usuario usuario;
+    	@JoinColumn(name = "idUsuarioMovil")
+    	private UsuarioMovil usuarioMovil;
         
         public VehicleLocation() {
         }
@@ -91,11 +91,12 @@ public class VehicleLocation implements Serializable{
 			this.eventId = eventId;
 		}
 
-		public Usuario getUsuario() {
-			return usuario;
+		public UsuarioMovil getUsuarioMovil() {
+			return usuarioMovil;
 		}
 
-		public void setUsuario(Usuario usuario) {
-			this.usuario = usuario;
-		}		
+		public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
+			this.usuarioMovil = usuarioMovil;
+		}
+
 }

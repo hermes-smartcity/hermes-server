@@ -25,7 +25,7 @@ CREATE TABLE usuario_web(
   id_usuario_movil bigint,
   CONSTRAINT usuario_web_u UNIQUE (email),
   CONSTRAINT usuario_web_pk PRIMARY KEY (id),
-   CONSTRAINT usuario_movil_fk_usuario_web FOREIGN KEY (id_usuario_movil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+  CONSTRAINT usuario_movil_fk_usuario_web FOREIGN KEY (id_usuario_movil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
 -- measurement --
@@ -43,9 +43,9 @@ CREATE TABLE measurement (
   eventId VARCHAR(50) NOT NULL,
   tipo VARCHAR(20) NOT NULL,
   value double precision,
-  idUsuario BIGINT,
+  idUsuarioMovil BIGINT,
   CONSTRAINT idmeasurement_pk PRIMARY KEY (id),
-  CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+  CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
 
@@ -63,9 +63,9 @@ CREATE TABLE vehicleLocation (
   timestamp timestamp without time zone,
   position geometry(POINT, 4326),
   eventId VARCHAR(50) NOT NULL,
-  idUsuario BIGINT,
+  idUsuarioMovil BIGINT,
   CONSTRAINT idvehicleLocation_pk PRIMARY KEY (id),
-  CONSTRAINT vehicleLocation_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+  CONSTRAINT vehicleLocation_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
 
@@ -93,9 +93,9 @@ CREATE TABLE dataSection (
    standardDeviationRR double precision,
    standardDeviationHeartRate double precision,   
    pke double precision,
-   idUsuario BIGINT,
+   idUsuarioMovil BIGINT,
   CONSTRAINT iddataSection_pk PRIMARY KEY (id),
-  CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+  CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
 
@@ -116,9 +116,9 @@ CREATE TABLE driverFeatures (
   lightSleep integer,
   deepSleep integer,
   previousStress integer,
-  idUsuario BIGINT,
+  idUsuarioMovil BIGINT,
   CONSTRAINT idDriverFeatures_pk PRIMARY KEY (id),
-  CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+  CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
 
@@ -134,7 +134,8 @@ create sequence eventoProcesado_id_seq
 CREATE TABLE eventoProcesado (
   id bigint NOT NULL DEFAULT nextval('eventoProcesado_id_seq'::regclass),
   timestamp timestamp without time zone,
-  eventId VARCHAR(50) NOT NULL
+  eventId VARCHAR(50) NOT NULL, 
+  tipo VARCHAR(20) NOT NULL,
 )
 ;
 
@@ -156,9 +157,9 @@ CREATE TABLE sleepdata (
   minutesInBed integer,  
   startTime timestamp without time zone,
   endTime timestamp without time zone,
-  idUsuario bigint,
+  idUsuarioMovil bigint,
   CONSTRAINT idsleepdata_pk PRIMARY KEY (id),
-  CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+  CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
 
@@ -177,9 +178,9 @@ CREATE TABLE stepsdata (
   eventId VARCHAR(50) NOT NULL,
   timelog timestamp without time zone,
   steps integer,
-  idUsuario bigint,
+  idUsuarioMovil bigint,
   CONSTRAINT idstepsdata_pk PRIMARY KEY (id),
-  CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+  CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
 
@@ -198,8 +199,20 @@ CREATE TABLE heartratedata (
   eventId VARCHAR(50) NOT NULL,
   timelog timestamp without time zone,
   heartRate integer,
-  idUsuario bigint,
+  idUsuarioMovil bigint,
   CONSTRAINT idheartratedata_pk PRIMARY KEY (id),
-  CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY (idUsuario) REFERENCES usuario(id) ON DELETE CASCADE
+  CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
+
+--
+-- LOGS: Visualizar el log de errores en la BD
+--
+
+CREATE TABLE LOGS
+   (USER_ID VARCHAR(20)    NOT NULL,
+    DATED   DATE           NOT NULL,
+    LOGGER  VARCHAR(50)    NOT NULL,
+    LEVEL   VARCHAR(10)    NOT NULL,
+    MESSAGE VARCHAR(1000)  NOT NULL
+   );

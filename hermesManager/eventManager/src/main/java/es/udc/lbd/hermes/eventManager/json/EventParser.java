@@ -3,8 +3,10 @@ package es.udc.lbd.hermes.eventManager.json;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,10 +15,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+
 public class EventParser {
 	private ObjectMapper mapper;
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
+//	private Logger logger = LoggerFactory.getLogger(getClass());
+	static Logger logger = Logger.getLogger(EventParser.class);
+	
 	public EventParser() {
 		mapper = new ObjectMapper();
 	    EventDataDeserializer deserializer = new EventDataDeserializer();  

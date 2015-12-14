@@ -8,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.heartRateData.HeartRateData;
 import es.udc.lbd.hermes.model.events.heartRateData.dao.HeartRateDataDao;
-import es.udc.lbd.hermes.model.usuario.Usuario;
-import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
-import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 
 
 
@@ -22,10 +21,7 @@ public class HeartRateDataServiceImpl implements HeartRateDataService {
 	private HeartRateDataDao heartRateDataDao;
 	
 	@Autowired
-	private UsuarioService usuarioService;
-	
-	@Autowired
-	private UsuarioDao usuarioDao;
+	private UsuarioMovilDao usuarioMovilDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -35,16 +31,13 @@ public class HeartRateDataServiceImpl implements HeartRateDataService {
 
 	@Override
 	public void create(HeartRateData heartRateData, String sourceId) {	
-
-		Usuario usuario = usuarioDao.findBySourceId(sourceId);
-		//TODO prueba para comprobar hash 256. Luego borrar
-		usuario = usuarioService.getBySourceId(sourceId);
-		if(usuario == null){
-			usuario = new Usuario();
-			usuario.setSourceId(sourceId);
-			usuarioDao.create(usuario);
-		}
-		heartRateData.setUsuario(usuario);
+		UsuarioMovil usuarioMovil = usuarioMovilDao.findBySourceId(sourceId);
+		if(usuarioMovil == null){
+			usuarioMovil = new UsuarioMovil();
+			usuarioMovil.setSourceId(sourceId);
+			usuarioMovilDao.create(usuarioMovil);
+		}		
+		heartRateData.setUsuarioMovil(usuarioMovil);
 		heartRateDataDao.create(heartRateData);
 		
 	}

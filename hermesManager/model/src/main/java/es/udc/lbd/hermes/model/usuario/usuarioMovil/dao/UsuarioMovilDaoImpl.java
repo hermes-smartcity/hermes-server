@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.model.usuario.dao;
+package es.udc.lbd.hermes.model.usuario.usuarioMovil.dao;
 
 import java.util.List;
 
@@ -7,14 +7,14 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 
-import es.udc.lbd.hermes.model.usuario.Usuario;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 @Repository
-public class UsuarioDaoImpl extends GenericDaoHibernate<Usuario, Long> implements
-UsuarioDao {
+public class UsuarioMovilDaoImpl extends GenericDaoHibernate<UsuarioMovil, Long> implements
+UsuarioMovilDao {
 	@Override
-	public List<Usuario> obterUsuarios() {
+	public List<UsuarioMovil> obterUsuariosMovil() {
 		try {
 			return getSession().createCriteria(this.entityClass).list();
 		} catch (HibernateException e) {
@@ -22,10 +22,10 @@ UsuarioDao {
 		}
 	}
 
-	public Usuario findBySourceId(String sourceId) {
+	public UsuarioMovil findBySourceId(String sourceId) {
 
 		try {
-			return (Usuario) getSession().createCriteria(this.entityClass).add(Restrictions.eq("sourceId", sourceId)).setMaxResults(1).uniqueResult();
+			return (UsuarioMovil) getSession().createCriteria(this.entityClass).add(Restrictions.eq("sourceId", sourceId)).setMaxResults(1).uniqueResult();
 
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);

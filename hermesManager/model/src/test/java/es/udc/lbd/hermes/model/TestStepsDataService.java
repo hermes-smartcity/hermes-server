@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.stepsData.StepsData;
 import es.udc.lbd.hermes.model.events.stepsData.service.StepsDataService;
-import es.udc.lbd.hermes.model.usuario.Usuario;
-import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 
 @ContextConfiguration(locations = "classpath:application-context-test.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,8 +23,9 @@ public class TestStepsDataService {
 	
 	@Autowired
 	private StepsDataService stepsDataService;
+	
 	@Autowired
-	private UsuarioService usuarioService;
+	private UsuarioMovilDao usuarioMovilDao;
 	
 	@Test
     @Transactional
@@ -32,9 +33,9 @@ public class TestStepsDataService {
     public void testCreateStepsData() {
 		
 		String sourceId = "-1";
-		Usuario usuario = new Usuario();
+		UsuarioMovil usuario = new UsuarioMovil();
 		usuario.setSourceId(sourceId);
-		usuarioService.create(usuario);
+		usuarioMovilDao.create(usuario);
 		
 		StepsData stepsData = new StepsData();
 		stepsData.setTimeLog(Calendar.getInstance());

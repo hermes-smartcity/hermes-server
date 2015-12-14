@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Point;
 
 import es.udc.lbd.hermes.model.util.jackson.CustomPointDeserializer;
-import es.udc.lbd.hermes.model.usuario.Usuario;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.util.jackson.CustomGeometrySerializer;
 
 @Entity
@@ -53,8 +53,8 @@ public class Measurement implements Serializable{
         private Double value;
 
         @ManyToOne(fetch = FetchType.EAGER)
-    	@JoinColumn(name = "idUsuario")
-    	private Usuario usuario;
+    	@JoinColumn(name = "idUsuarioMovil")
+    	private UsuarioMovil usuarioMovil;
         
         public Measurement() {
         }
@@ -107,12 +107,12 @@ public class Measurement implements Serializable{
 			this.value = value;
 		}
 
-		public Usuario getUsuario() {
-			return usuario;
+		public UsuarioMovil getUsuarioMovil() {
+			return usuarioMovil;
 		}
 
-		public void setUsuario(Usuario usuario) {
-			this.usuario = usuario;
+		public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
+			this.usuarioMovil = usuarioMovil;
 		}
-
+		
 }

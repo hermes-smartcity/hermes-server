@@ -8,7 +8,7 @@ public class CustomMultiPolygonDeserializer extends CustomGeometryDeserializer<M
 
 	@Override
 	protected MultiPolygon convertGeometry(Geometry geom) {
-		logger.debug("Geometry type: {} to MultiPolygon", geom.getGeometryType());
+//		logger.debug("Geometry type: {} to MultiPolygon", geom.getGeometryType());
 
 		MultiPolygon ret = null;
 
