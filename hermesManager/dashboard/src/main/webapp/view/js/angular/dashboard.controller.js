@@ -42,22 +42,26 @@
 		  minZoom: 2,
 		  zoom: 2
 		});
-	var locations = L.layerGroup([]);
 	
 	var markers = new L.MarkerClusterGroup({
 	  spiderfyDistanceMultiplier: 0.5,
 	  disableClusteringAtZoom: 12,
 	  maxClusterRadius: 20
 	});
-
-	map.addLayer(locations);
 	
-	map.fitBounds([
-	               [ -180, -90],
-	               [180,  90]
-	           ]);
-	
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?{foo}', {foo: 'bar'}).addTo(map);
+    var osmLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+    var layerControl = L.control.layers(
+		{'OpenStreetMap': osmLayer,
+        'MapQuest Open': new L.TileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', {subdomains: '1234'}),
+        'Stamen Toner Lite': new L.TileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'),
+        'ESRI World Imagery': new L.TileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')
+		}, {'Events': markers});
+    map.addControl(layerControl);
+    var scaleControl = new L.control.scale({'imperial': false});
+    map.addControl(scaleControl);
+    map.addLayer(osmLayer);
+    map.addLayer(markers);
+	map.fitBounds([[-180,-90],[180,90]]);
 	
 	map.on('dragend', aplicarFiltros);
 	map.on('zoomend', aplicarFiltros);
@@ -128,10 +132,7 @@
 			var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 			//Añado al mapa el punto
 			markers.addLayer(L.circle(latlng, 10, mystyles).bindPopup(info));
-//			var circle = L.circle(latlng, 5, mystyles).addTo(locations).bindPopup(info);
-		});
-		map.addLayer(markers);
-		
+		});		
 	};
 
 	function pintarLineas(events) {
@@ -149,7 +150,7 @@
 			var myLayer = L.geoJson().addTo(map);
 			L.geoJson(myLines, {
 				style: myStyle
-			}).addTo(map).addTo(locations).bindPopup(info);
+			}).addTo(map).addTo(markers).bindPopup(info);
 			
 		});
 	};
@@ -180,7 +181,6 @@
 	
 	function pintarMapaVehicleLocations() {
 	    
-		locations.clearLayers();
 		var bounds = map.getBounds();				
 		var esLng = bounds.getSouthEast().lng;
 		var esLat = bounds.getSouthEast().lat;
@@ -199,7 +199,6 @@
 	  };
 	  
 	  function pintarMapaDataSections() {
-		  	locations.clearLayers();
 			var bounds = map.getBounds();				
 			var esLng = bounds.getSouthEast().lng;
 			var esLat = bounds.getSouthEast().lat;
@@ -223,7 +222,6 @@
 	  
 	  
 	  function pintarMapaMeasurements() {
-		  	locations.clearLayers();
 			var bounds = map.getBounds();				
 			var esLng = bounds.getSouthEast().lng;
 			var esLat = bounds.getSouthEast().lat;

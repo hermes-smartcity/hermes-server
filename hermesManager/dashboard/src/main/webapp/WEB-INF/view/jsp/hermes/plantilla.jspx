@@ -57,6 +57,11 @@
 				<c:url var="estilosUrl" value="/view/bower_components/angular-chart.js/dist/angular-chart.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
 				
+
+				<!-- leaflet -->
+				<c:url var="estilosUrl" value="/view/bower_components/leaflet/dist/leaflet.css"/>
+				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
+				
 				<!-- marker cluster -->
 				<c:url var="estilosUrl" value="/view/bower_components/leaflet.markercluster/dist/MarkerCluster.css"/>
 				<link rel="StyleSheet" href="${estilosUrl}" type="text/css" media="all"/>
