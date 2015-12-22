@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.eventManager.web.rest.events;
+package es.udc.lbd.hermes.eventManager.web.rest;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import es.udc.lbd.hermes.eventManager.web.rest.custom.JSONError;
 
 
-
-
 public abstract class MainResource {
-//	private Logger log = LoggerFactory.getLogger(MainResource.class);
 	static Logger log = Logger.getLogger(MainResource.class);
+	
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody JSONError exceptionHandler(Exception e) {

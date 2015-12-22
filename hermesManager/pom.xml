@@ -15,7 +15,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
 		<org.springframework.security-version>4.0.2.CI-SNAPSHOT</org.springframework.security-version>
-		<!-- <org.slf4j-version>1.7.12</org.slf4j-version> -->
 		<hibernate.version>4.0.0.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- use the latest snapshot -->
@@ -168,7 +167,7 @@
   
   <dependencyManagement>
   	<dependencies>
-  	<dependency>
+  		<dependency>
 		    <groupId>es.udc.lbd.hermes</groupId>
 		    <artifactId>model</artifactId>
 		    <version>0.0.1-SNAPSHOT</version>
@@ -263,11 +262,6 @@
 			<version>9.3-1100-jdbc4</version>
 		</dependency>
 
-         <!--<dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.5.11</version>
-        </dependency>-->
 		 <!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>

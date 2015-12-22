@@ -19,8 +19,6 @@ import org.apache.log4j.Logger;
 import org.glassfish.jersey.client.ChunkedInput;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.jackson.JacksonFeature;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
 import es.udc.lbd.hermes.eventManager.factory.EventFactory;
 import es.udc.lbd.hermes.eventManager.json.Event;

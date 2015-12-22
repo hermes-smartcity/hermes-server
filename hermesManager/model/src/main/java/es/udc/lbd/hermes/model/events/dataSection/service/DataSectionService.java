@@ -5,7 +5,6 @@ import java.util.List;
 
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
-import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
 
 public interface DataSectionService {
 

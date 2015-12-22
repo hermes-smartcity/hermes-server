@@ -2,8 +2,6 @@ package es.udc.lbd.hermes.eventManager.strategy;
 
 
 import org.apache.log4j.Logger;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.vividsolutions.jts.geom.LineString;
