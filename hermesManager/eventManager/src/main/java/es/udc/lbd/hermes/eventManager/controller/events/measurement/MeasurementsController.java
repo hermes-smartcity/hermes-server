@@ -20,8 +20,7 @@ import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 @RestController
 @RequestMapping(value = "/api/measurement")
 public class MeasurementsController extends MainResource {
-//	private final Logger log = LoggerFactory
-//			.getLogger(MeasurementsController.class);
+
 	static Logger logger = Logger.getLogger(MeasurementsController.class);
 	@Autowired
 	private MeasurementService measurementServicio;
