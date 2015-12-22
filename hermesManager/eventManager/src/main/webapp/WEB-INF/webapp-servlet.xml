@@ -18,7 +18,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator"/>
  
-	<bean id="viewResolver"
+	<!-- <bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
@@ -35,7 +35,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 		</property>
 		<property name="preparerFactoryClass"
 			value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory" />
-	</bean>
+	</bean> -->
 
 	<bean id="exceptionResolver"
 		class=" es.udc.lbd.hermes.eventManager.controller.util.exceptionresolver.ExceptionResolver" />
