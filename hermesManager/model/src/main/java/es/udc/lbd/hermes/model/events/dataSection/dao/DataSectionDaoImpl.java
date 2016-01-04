@@ -24,7 +24,7 @@ DataSectionDao {
 			int startIndex, int count){
 		List<DataSection> elementos = null;
 		
-				String queryStr =  "from DataSection where within(roadSection, :bounds) = true ";
+				String queryStr =  "from DataSection where intersects(roadSection, :bounds) = true ";
 				
 				if(idUsuario!=null)
 					queryStr += "and usuario.id = :idUsuario ";
