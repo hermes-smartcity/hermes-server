@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/measurement")
 public class MeasurementsController extends MainResource {

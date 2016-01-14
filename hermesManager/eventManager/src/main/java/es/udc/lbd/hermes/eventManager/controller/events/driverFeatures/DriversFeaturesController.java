@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,7 @@ import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.events.driverFeatures.DriverFeatures;
 import es.udc.lbd.hermes.model.events.driverFeatures.service.DriverFeaturesService;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/driverFeatures")
 public class DriversFeaturesController extends MainResource {

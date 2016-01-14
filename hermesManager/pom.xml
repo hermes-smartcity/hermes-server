@@ -13,7 +13,7 @@
   
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
+		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
 		<org.springframework.security-version>4.0.2.CI-SNAPSHOT</org.springframework.security-version>
 		<hibernate.version>4.0.0.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -226,6 +226,12 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>${org.springframework.security-version}</version>
 		</dependency>
+		<!-- Para Cors, necesario para hacer peticiones REST desde un dominio origen distinto al de destinio -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${org.springframework-version}</version>
+			</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

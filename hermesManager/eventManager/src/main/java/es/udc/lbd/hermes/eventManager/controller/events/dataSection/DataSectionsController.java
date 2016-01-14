@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +21,7 @@ import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 
 
-
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/datasection")
 public class DataSectionsController extends MainResource {
