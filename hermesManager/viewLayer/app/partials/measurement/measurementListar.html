@@ -1,0 +1,63 @@
+  <table class="tablaEventos film-info-bottom" 
+		  	dir-paginate="measurement in vm.events | filter:q | itemsPerPage: vm.pageSize" 
+		  		current-page="vm.currentPage">
+					<tr>
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								idEvento
+							</div>
+							<div class="valor">
+								{{measurement.eventId}}
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								Timestamp
+							</div>
+							<div class="valor">
+								{{ measurement.timestamp  | date : format : timezone}}
+											
+							</div>
+						</div>
+					</td>
+				
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								Posición
+							</div>
+							<div class="valor">
+								{{measurement.position.coordinates}}
+							</div>
+						</div>
+					</td>
+					
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								Valor
+							</div>
+							<div class="valor">
+								{{measurement.value}}
+							</div>
+						</div>
+					</td>
+					
+					<td>
+						<div class="campoFicha">
+							<div class="etiqueta">
+								Tipo
+							</div>
+							<div class="valor">
+								{{measurement.tipo}}
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table> 
+	        <div class="text-center">
+	       		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+	       </div>

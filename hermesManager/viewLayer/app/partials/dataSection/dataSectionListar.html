@@ -1,0 +1,41 @@
+<table class="tablaEventos film-info-bottom" 
+		  	dir-paginate="dataSection in vm.events | filter:q | itemsPerPage: vm.pageSize" 
+		  		current-page="vm.currentPage">
+				<tr>
+				<td>
+				<div class="campoFicha">
+						<div class="etiqueta">
+							idEvento
+						</div>
+						<div class="valor">
+							{{dataSection.eventId}}
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="campoFicha">
+						<div class="etiqueta">
+							Timestamp
+						</div>
+						<div class="valor">
+							{{ dataSection.timestamp  | date : format : timezone}}
+										
+						</div>
+					</div>
+				</td>
+			
+				<td>
+					<div class="campoFicha">
+						<div class="etiqueta">
+							Lista de posiciones
+						</div>
+						 <div class="valor">
+							{{dataSection.roadSection.coordinates}}
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+        <div class="text-center">
+       		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+       </div>
