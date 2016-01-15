@@ -106,7 +106,7 @@ gulp.task('default',
 );
 gulp.task('build', function() {
   runSequence(
-    ['clean'],
-    ['lint','wiredep:app',  'html:app', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components', 'connect', 'watch']
+    ['clean'], ['wiredep:app'],
+    ['lint'], ['html:app'], ['minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components', 'connect', 'watch']
   );
 });
