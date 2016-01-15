@@ -1,6 +1,6 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
+  "name": "viewLayer",
+  "description": "View Layer of Dashboard",
   "version": "0.0.0",
   "homepage": "https://github.com/angular/angular-seed",
   "license": "MIT",
@@ -23,8 +23,9 @@
     "angular-chart.js": "~0.8.8",
     "leaflet": "~0.7.3",
     "leaflet.markercluster": "~0.4.0",
+    "moment": "~2.11.1",
     "angular-bootstrap-datetimepicker": "~0.4.0",
-    "moment": "~2.11.1"
+    "startbootstrap-sb-admin-2": "~1.0.8"
   },
   "authors": [
     "cmartinez <cristinacmp1988@gmail.com>"
