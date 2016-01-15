@@ -27,7 +27,7 @@
 	
 		
 		function arrancar() {		
-			var urlGet = "http://localhost:8080/eventManager/api/eventManager/arrancar";
+			var urlGet = url_servidor+"api/eventManager/arrancar";
 			return $http.post(urlGet)
 				.success(arrancarSuccess)
 				.error(arrancarFailed);
@@ -42,7 +42,7 @@
 		}
 		
 		function parar() {		
-			var urlGet = "http://localhost:8080/eventManager/api/eventManager/parar";
+			var urlGet = url_servidor+"api/eventManager/parar";
 			return $http.post(urlGet)
 				.success(pararSuccess)
 				.error(pararFailed);
@@ -57,7 +57,7 @@
 		}
 		
 		function getStateActualizado() {
-			var urlGet = "http://localhost:8080/eventManager/api/eventManager/json/stateEventManager";
+			var urlGet = url_servidor+"api/eventManager/json/stateEventManager";
 			//var urlGet = "api/eventManager/json/stateEventManager";
 			return $http({
 				method : 'GET',
@@ -66,7 +66,7 @@
 		}
 		
 		function getEventsToday() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/eventsToday";
+			var urlGet = url_servidor+"api/dashboard/json/eventsToday";
 			return $http.get(urlGet)
 				.then(getEventsTodayComplete)
 				.catch(getEventsTodayFailed);
@@ -79,7 +79,7 @@
 		}
 		
 		function getEvensType() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/eventsType";
+			var urlGet = url_servidor+"api/dashboard/json/eventsType";
 			return $http.get(urlGet)
 				.then(getEvensTypeComplete)
 				.catch(getEvensTypeFailed);
@@ -92,7 +92,7 @@
 		}
 		
 		function getUsuarios() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/usuarios";
+			var urlGet = url_servidor+"api/dashboard/json/usuarios";
 			return $http.get(urlGet)
 				.then(getUsuariosComplete)
 				.catch(getUsuariosFailed);
@@ -105,7 +105,7 @@
 		}
 		
 		function getMeasurementsType() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/measurementTypes";
+			var urlGet = url_servidor+"api/dashboard/json/measurementTypes";
 			return $http.get(urlGet)
 				.then(getMeasurementsTypeComplete)
 				.catch(getMeasurementsTypeFailed);
@@ -118,7 +118,7 @@
 		}
 		
 		function getEventoProcesado() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/eventoProcesado";
+			var urlGet = url_servidor+"api/dashboard/json/eventoProcesado";
 			return $http.get(urlGet)
 				.then(getEventoProcesadoComplete)
 				.catch(getEventoProcesadoFailed);
@@ -131,7 +131,7 @@
 		}
 		
 		function getTotalVLocations() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/totalVLocations";
+			var urlGet = url_servidor+"api/dashboard/json/totalVLocations";
 			return $http.get(urlGet)
 				.then(getTotalVLocationsComplete)
 				.catch(getTotalVLocationsFailed);
@@ -144,7 +144,7 @@
 		}
 		
 		function getTotalDataScts() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/totalDataScts";
+			var urlGet = url_servidor+"api/dashboard/json/totalDataScts";
 			return $http.get(urlGet)
 				.then(getTotalDataSctsComplete)
 				.catch(getTotalDataSctsFailed);
@@ -157,7 +157,7 @@
 		}
 	
 		function getTotalMeasurements() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/totalMeasurements";
+			var urlGet = url_servidor+"api/dashboard/json/totalMeasurements";
 			return $http.get(urlGet)
 				.then(getUsuariosComplete)
 				.catch(getUsuariosFailed);
@@ -170,7 +170,7 @@
 		}
 		
 		function getTotalDriversF() {
-			var urlGet = "http://localhost:8080/eventManager/api/dashboard/json/totalDriversF";
+			var urlGet = url_servidor+"api/dashboard/json/totalDriversF";
 			return $http.get(urlGet)
 				.then(getTotalDriversFComplete)
 				.catch(getTotalDriversFFailed);

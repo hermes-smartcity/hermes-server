@@ -27,7 +27,7 @@
 		eventsService.getStateActualizado().then(getStateActualizadoComplete);
 		
 		//TODO provisional - mientras no incluyo la constante	
-		var urlGet = "http://localhost:8080/eventManager/";	
+		var urlGet = url_servidor;	
 		
 		function getStateActualizadoComplete(response) {				
 			vm.active = response.data;

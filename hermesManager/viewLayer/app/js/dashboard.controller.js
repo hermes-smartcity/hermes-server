@@ -179,7 +179,7 @@
 		var wnLng = bounds.getNorthWest().lng;
 		var wnLat = bounds.getNorthWest().lat;
 		
-		var urlGet = "http://localhost:8080/eventManager/api/vehiclelocation/json/vehicleLocations?";		
+		var urlGet = url_servidor+"api/vehiclelocation/json/vehicleLocations?";		
 		urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
 		
 		$http.get(urlGet).success(function(data) {
@@ -197,7 +197,7 @@
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
 			
-			var urlGet = "http://localhost:8080/eventManager/api/datasection/json/dataSections?";
+			var urlGet = url_servidor+"api/datasection/json/dataSections?";
 			urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
 						
 			var mystyles = {
@@ -220,7 +220,7 @@
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
 			
-			var urlGet = "http://localhost:8080/eventManager/api/measurement/json/measurements?tipo="+vm.eventTypeSelected+"&";
+			var urlGet = url_servidor+"api/measurement/json/measurements?tipo="+vm.eventTypeSelected+"&";
 			urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
 			
 			var mystyles = {
