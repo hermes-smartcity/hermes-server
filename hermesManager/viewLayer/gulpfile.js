@@ -52,14 +52,6 @@ gulp.task('connect', function () {
     livereload: true
   });
 });
-gulp.task('connectDist', function () {
-  connect.server({
-    root: 'dist/',
-    port: 9999,
-    livereload: true
-	
-  });
-});
 
 gulp.task('html:app', function() {
   return gulp.src('./app/index.html')
