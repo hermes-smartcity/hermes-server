@@ -25,10 +25,7 @@
 		vm.showCalendarEnd = false;
 		
 		eventsService.getStateActualizado().then(getStateActualizadoComplete);
-		
-		//TODO provisional - mientras no incluyo la constante	
-		var urlGet = url_servidor;	
-		
+	
 		function getStateActualizadoComplete(response) {				
 			vm.active = response.data;
 		}
@@ -107,21 +104,22 @@
 		}
 		
 		function pintarGraficoVehicleLocations() {
-			urlGet += "api/vehiclelocation/json/eventosPorDia?";
-			urlGet+=prepararUrl();
-			vm.recuperarYpintarEventos(urlGet);
+			var url = url_eventosPorDiaVL;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
 		}
 		
 		function pintarGraficoDataSections() {
-			urlGet += "api/datasection/json/eventosPorDia?";
-			urlGet+=prepararUrl();
-			vm.recuperarYpintarEventos(urlGet);
+			var url = url_eventosPorDiaDS;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
 		}
 		
 		function pintarGraficoMeasurements() {
-			urlGet += "api/measurement/json/eventosPorDia?tipo="+vm.eventTypeSelected+"&";
-			urlGet+=prepararUrl();
-			vm.recuperarYpintarEventos(urlGet);
+			var url = url_eventosPorDiaM;
+			url +="tipo="+vm.eventTypeSelected+"&";
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
 		}
 		
 		function aplicarFiltros() {

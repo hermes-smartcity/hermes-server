@@ -177,10 +177,11 @@
 		var esLat = bounds.getSouthEast().lat;
 		var wnLng = bounds.getNorthWest().lng;
 		var wnLat = bounds.getNorthWest().lat;
-			
-		url_vehicleLocations+=prepararUrl(esLng, esLat, wnLng, wnLat);
 		
-		$http.get(url_vehicleLocations).success(function(data) {
+		var url = url_vehicleLocations;
+		url+=prepararUrl(esLng, esLat, wnLng, wnLat);
+		
+		$http.get(url).success(function(data) {
 			vm.events = data;		
 			pintarPuntos(vm.events);
 			paginarEventos();
@@ -195,14 +196,16 @@
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
 			
-			url_dataSections+=prepararUrl(esLng, esLat, wnLng, wnLat);
+			var url = url_dataSections;
+			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
 						
 			var mystyles = {
 					color: 'red',
 					fillOpacity: 0.1
 			};
 			
-			$http.get(url_dataSections).success(function(data) {
+			
+			$http.get(url).success(function(data) {
 				vm.events = data;
 				pintarLineas(vm.events);
 				paginarEventos();			
@@ -217,15 +220,16 @@
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
 			
-			url_measurements+='?tipo='+vm.eventTypeSelected+'&';
-			url_measurements+=prepararUrl(esLng, esLat, wnLng, wnLat);
+			var url = url_measurements;
+			url+='?tipo='+vm.eventTypeSelected+'&';
+			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
 			
 			var mystyles = {
 					color: 'red',
 					fillOpacity: 0.1
 			};
 			
-			$http.get(url_measurements).success(function(data) {
+			$http.get(url).success(function(data) {
 				vm.events = data;									
 				pintarPuntos(vm.events);
 				paginarEventos();
