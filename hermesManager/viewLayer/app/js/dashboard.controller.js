@@ -46,7 +46,6 @@
 	// Inicializamos la fecha de inicio a la de ayer 
 	vm.startDate.setDate(vm.startDate.getDate()-1);
 	vm.endDate = new Date();
-	
 	var map = L.map( 'map', {
 		  minZoom: 2,
 		  zoom: 2
@@ -178,11 +177,10 @@
 		var esLat = bounds.getSouthEast().lat;
 		var wnLng = bounds.getNorthWest().lng;
 		var wnLat = bounds.getNorthWest().lat;
+			
+		url_vehicleLocations+=prepararUrl(esLng, esLat, wnLng, wnLat);
 		
-		var urlGet = url_servidor+"api/vehiclelocation/json/vehicleLocations?";		
-		urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
-		
-		$http.get(urlGet).success(function(data) {
+		$http.get(url_vehicleLocations).success(function(data) {
 			vm.events = data;		
 			pintarPuntos(vm.events);
 			paginarEventos();
@@ -197,15 +195,14 @@
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
 			
-			var urlGet = url_servidor+"api/datasection/json/dataSections?";
-			urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
+			url_dataSections+=prepararUrl(esLng, esLat, wnLng, wnLat);
 						
 			var mystyles = {
 					color: 'red',
 					fillOpacity: 0.1
 			};
 			
-			$http.get(urlGet).success(function(data) {
+			$http.get(url_dataSections).success(function(data) {
 				vm.events = data;
 				pintarLineas(vm.events);
 				paginarEventos();			
@@ -220,15 +217,15 @@
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
 			
-			var urlGet = url_servidor+"api/measurement/json/measurements?tipo="+vm.eventTypeSelected+"&";
-			urlGet+=prepararUrl(esLng, esLat, wnLng, wnLat);
+			url_measurements+='?tipo='+vm.eventTypeSelected+'&';
+			url_measurements+=prepararUrl(esLng, esLat, wnLng, wnLat);
 			
 			var mystyles = {
 					color: 'red',
 					fillOpacity: 0.1
 			};
 			
-			$http.get(urlGet).success(function(data) {
+			$http.get(url_measurements).success(function(data) {
 				vm.events = data;									
 				pintarPuntos(vm.events);
 				paginarEventos();

@@ -23,21 +23,18 @@ public class EventManagerJSONController extends MainResource {
 	
 	@Autowired private EventManager eventManager;
 	
-	// TODO falta decidir si es la mejor opcion un post ?¿
 	@RequestMapping(value = "/arrancar", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void arrancar(){		
 		eventManager.startEventProcessor();
 	}
 	
-	// TODO falta decidir si es la mejor opcion un post ?¿
 	@RequestMapping(value = "/parar", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void parar(){		
 		eventManager.stopEventProcessor();
 	}
 	
-	//TODO mover a eventManager
 	@RequestMapping(value="/json/stateEventManager", method = RequestMethod.GET)
 	public JSONData getStateEventManager() {
 		JSONData jsonData = new JSONData();
@@ -47,6 +44,13 @@ public class EventManagerJSONController extends MainResource {
 		else jsonData.setValue("Running");
 		
 		return jsonData;
+	}
+	
+	@RequestMapping(value="/json/user", method = RequestMethod.GET)
+	public JSONData getUser() {
+		return null;
+		// Modo chapuza, llamare a una funcion de user service donde recupere el usuario con ese password y ese login
+		// Luego aplicarlo con spring-security
 	}
 	
 }
