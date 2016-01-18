@@ -85,11 +85,14 @@ gulp.task('html', function () {
     .pipe(connect.reload());
   gulp.src('./app/partials/**/*.html')
   .pipe(connect.reload());
+  gulp.src('./app/partials/js/*.js')
+  .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
   gulp.watch(['./app/partials/*.html'], ['html']);
   gulp.watch(['./app/partials/**/*.html'], ['html']);
+  gulp.watch(['./app/partials/js/*.js'], ['html']);
 });
 
 // default task
