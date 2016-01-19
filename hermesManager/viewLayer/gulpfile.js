@@ -19,7 +19,7 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('fail'));
 });
 gulp.task('clean', function() {
-    gulp.src('./dist/*')
+	return gulp.src('./dist/*')
       .pipe(clean({force: true}));
 });
 gulp.task('minify-css', function() {
@@ -43,30 +43,18 @@ gulp.task('copy-bower-components', function () {
 gulp.task('copy-html-files', function () {
   gulp.src('./app/**/*.html')
     .pipe(gulp.dest('dist/'));
+  gulp.src('./app/*.html')
+  .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('connect', function () {
   connect.server({
-    root: 'app/',
+    root: 'dist/',
     port: 8888,
     livereload: true
   });
 });
 
-gulp.task('html:app', function() {
-  return gulp.src('./app/index.html')
-    .pipe(inject(gulp.src([
-      './app/js/app.js',
-      './app/js/**/*.js',
-	  './app/js/*.js',
-      './app/css/*.css'
-    ], {
-      read: false
-    }), {
-      relative: true
-    }))
-    .pipe(gulp.dest( './app'));
-});
 
 gulp.task('wiredep:app', function() {
   return gulp.src('./app/index.html')
@@ -78,6 +66,21 @@ gulp.task('wiredep:app', function() {
     }))
     .pipe(gulp.dest('./app'));
 });
+
+gulp.task('html:app', function() {
+	  return gulp.src('./app/index.html')
+	    .pipe(inject(gulp.src([
+	      './app/js/app.js',
+	      './app/js/**/*.js',
+		  './app/js/*.js',
+	      './app/css/*.css'
+	    ], {
+	      read: false
+	    }), {
+	      relative: true
+	    }))
+	    .pipe(gulp.dest( './app'));
+	});
 
 //Se supone que el index casi no lo voy a modificar
 gulp.task('html', function () {
@@ -99,9 +102,8 @@ gulp.task('watch', function () {
 gulp.task('default',
   ['lint','wiredep:app', 'html:app', 'connect', 'watch']
 );
-gulp.task('build', function() {
-  runSequence(
-    ['clean'], ['wiredep:app'],
-    ['lint'], ['html:app'], ['minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components', 'connect', 'watch']
-  );
-});
+
+gulp.task('build', function(cb) {
+	  runSequence(['clean'], 
+			  ['wiredep:app', 'html:app'] ,['lint', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components'], 'connect', 'watch', cb);
+	});
