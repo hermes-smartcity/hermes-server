@@ -41,10 +41,7 @@ gulp.task('copy-bower-components', function () {
     .pipe(gulp.dest('dist/bower_components'));
 });
 gulp.task('copy-html-files', function () {
-  gulp.src('./app/**/*.html')
-    .pipe(gulp.dest('dist/'));
-  gulp.src('./app/*.html')
-  .pipe(gulp.dest('dist/'));
+  gulp.src('./app/partials/*.html').pipe(gulp.dest('dist/partials/'));
 });
 
 gulp.task('connect', function () {
@@ -64,12 +61,7 @@ gulp.task('wiredep:app', function() {
         './app/bower_components' + '/bootstrap-sass/assets/javascripts/bootstrap.js'
       ]
     }))
-    .pipe(gulp.dest('./app'));
-});
-
-gulp.task('html:app', function() {
-	  return gulp.src('./app/index.html')
-	    .pipe(inject(gulp.src([
+	.pipe(inject(gulp.src([
 	      './app/js/app.js',
 	      './app/js/**/*.js',
 		  './app/js/*.js',
@@ -79,8 +71,8 @@ gulp.task('html:app', function() {
 	    }), {
 	      relative: true
 	    }))
-	    .pipe(gulp.dest( './app'));
-	});
+    .pipe(gulp.dest('./dist'));
+});
 
 //Se supone que el index casi no lo voy a modificar
 gulp.task('html', function () {
@@ -105,5 +97,5 @@ gulp.task('default',
 
 gulp.task('build', function(cb) {
 	  runSequence(['clean'], 
-			  ['wiredep:app', 'html:app'] ,['lint', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components'], 'connect', 'watch', cb);
+			  ['wiredep:app'] ,['lint', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components'], 'connect', 'watch', cb);
 	});
