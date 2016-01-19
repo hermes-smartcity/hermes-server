@@ -23,11 +23,11 @@
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 	function routeConfig($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise(obterRuta('inicio'));
-		$stateProvider.state('login', {
+		$stateProvider./*state('login', {
 			url: obterRuta('login'),
 			templateUrl:'login.html',
 			controller: 'LoginController'
-		}).state('inicio', {
+		}).*/state('inicio', {
 			url: obterRuta('inicio'),
 			templateUrl: 'partials/dashboard.html',
 			controller: 'DashboardController',
