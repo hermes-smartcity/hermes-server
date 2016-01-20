@@ -12,6 +12,12 @@ CREATE TABLE usuario_movil(
   CONSTRAINT usuario_movil_id_pk PRIMARY KEY (id)
 );
 
+-- Copiamos los valores de usuario a usuario_movil
+-- usuario_movil debe estar vacia
+
+INSERT INTO usuario_movil (sourceId) 
+SELECT sourceId FROM usuario;
+
 -- usuario_web --
 DROP TABLE if exists usuario_web cascade;
 DROP sequence if exists usuario_web_id_seq cascade;
