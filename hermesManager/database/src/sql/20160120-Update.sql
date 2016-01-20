@@ -1,13 +1,8 @@
 -- script update - postgres --
 
--- eliminar tabla usuario si existe --
-drop table if exists usuario cascade;
-drop sequence if exists usuario_id_seq cascade;
-
-
 -- usuario_movil --
-drop table if exists usuario_movil cascade;
-drop sequence if exists usuario_movil_id_seq cascade;
+DROP TABLE if exists usuario_movil cascade;
+DROP sequence if exists usuario_movil_id_seq cascade;
 create sequence usuario_movil_id_seq;
 
 
@@ -18,8 +13,8 @@ CREATE TABLE usuario_movil(
 );
 
 -- usuario_web --
-drop table if exists usuario_web cascade;
-drop sequence if exists usuario_web_id_seq cascade;
+DROP TABLE if exists usuario_web cascade;
+DROP sequence if exists usuario_web_id_seq cascade;
 create sequence usuario_web_id_seq;
 
 
@@ -38,69 +33,76 @@ CREATE TABLE usuario_web(
 -- measurement 
 --
 
-delete from measurement;
-alter table measurement drop CONSTRAINT if exists measurement_fk_usuario;
+DELETE from measurement;
+ALTER TABLE measurement DROP CONSTRAINT if exists measurement_fk_usuario;
 ALTER TABLE measurement RENAME COLUMN idUsuario to idUsuarioMovil;
-alter table measurement add  CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+ALTER TABLE measurement ADD CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
 
 --
 -- vehicleLocation
 --
 
-delete from vehicleLocation;
-alter table vehicleLocation drop CONSTRAINT vehiclelocation_fk_usuario;
+DELETE from vehicleLocation;
+ALTER TABLE vehicleLocation DROP CONSTRAINT vehiclelocation_fk_usuario;
 ALTER TABLE vehicleLocation RENAME COLUMN idUsuario to idUsuarioMovil;
-alter table vehicleLocation add  CONSTRAINT vehicleLocation_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+ALTER TABLE vehicleLocation ADD CONSTRAINT vehicleLocation_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
 -- 
 -- dataSection
 --
 
-delete from dataSection;
-alter table dataSection drop CONSTRAINT dataSection_fk_usuario;
+DELETE from dataSection;
+ALTER TABLE dataSection DROP CONSTRAINT dataSection_fk_usuario;
 ALTER TABLE dataSection RENAME COLUMN idUsuario to idUsuarioMovil;
-alter table dataSection add  CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+ALTER TABLE dataSection ADD CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
 --
 -- driverFeatures
 --
 
-delete from driverFeatures;
-alter table driverFeatures drop CONSTRAINT driverfeatures_fk_usuario;
+DELETE from driverFeatures;
+ALTER TABLE driverFeatures DROP CONSTRAINT driverfeatures_fk_usuario;
 ALTER TABLE driverFeatures RENAME COLUMN idUsuario to idUsuarioMovil;
-alter table driverFeatures add  CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+ALTER TABLE driverFeatures ADD CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
 --
 -- eventoProcesado 
 --
-alter table eventoProcesado ADD COLUMN tipo VARCHAR(20);
+ALTER TABLE eventoProcesado ADD COLUMN tipo VARCHAR(20);
 
 --
 -- SmartCitizen: Sleep Data
 --
 
-delete from sleepdata;
-alter table sleepdata drop CONSTRAINT idsleepdata_fk_usuario;
+DELETE from sleepdata;
+ALTER TABLE sleepdata DROP CONSTRAINT idsleepdata_fk_usuario;
 ALTER TABLE sleepdata RENAME COLUMN idUsuario to idUsuarioMovil;
-alter table sleepdata add  CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+ALTER TABLE sleepdata ADD CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
 
 --
 -- SmartCitizen: Steps Data
 --
 
-delete from stepsdata;
-alter table stepsdata drop CONSTRAINT idstepsdata_fk_usuario;
+DELETE from stepsdata;
+ALTER TABLE stepsdata DROP CONSTRAINT idstepsdata_fk_usuario;
 ALTER TABLE stepsdata RENAME COLUMN idUsuario to idUsuarioMovil;
-alter table stepsdata add  CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+ALTER TABLE stepsdata ADD CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
 
 --
 -- SmartCitizen: Heart Rate Data
 --
 
-delete from heartratedata;
-alter table heartratedata drop CONSTRAINT idheartratedata_fk_usuario;
+DELETE from heartratedata;
+ALTER TABLE heartratedata DROP CONSTRAINT idheartratedata_fk_usuario;
 ALTER TABLE heartratedata RENAME COLUMN idUsuario to idUsuarioMovil;
-alter table heartratedata add  CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+ALTER TABLE heartratedata ADD CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
+
+--
+-- Eliminar tabla usuario si existe --
+--
+
+DROP TABLE if exists usuario cascade;
+DROP sequence if exists usuario_id_seq cascade;
