@@ -75,20 +75,31 @@ gulp.task('wiredep:app', function() {
     .pipe(gulp.dest('./dist'));
 });
 
-//Se supone que el index casi no lo voy a modificar
-gulp.task('html', function () {
-  gulp.src('./app/partials/*.html')
-    .pipe(connect.reload());
-  gulp.src('./app/partials/**/*.html')
-  .pipe(connect.reload());
-  gulp.src('./app/partials/js/*.js')
-  .pipe(connect.reload());
+gulp.task('connectIndex', function () {
+	 return gulp.src('./dist/partials/*.html')
+	    .pipe(connect.reload());	
+});
+
+gulp.task('connectHTML', function () {
+	 return gulp.src('./dist/partials/**/*.html')
+	  .pipe(connect.reload());
+});
+
+gulp.task('connectJS', function () {
+	return gulp.src('./dist/js/*.js')
+	  .pipe(connect.reload());
+});
+
+gulp.task('connectCSS', function () {
+	return gulp.src('./dist/css/*.css')
+	  .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['./app/partials/*.html'], ['html']);
-  gulp.watch(['./app/partials/**/*.html'], ['html']);
-  gulp.watch(['./app/partials/js/*.js'], ['html']);
+  gulp.watch(['./app/partials/*.html'], ['wiredep:app', 'connectIndex']);
+  gulp.watch(['./app/partials/**/*.html'], ['copy-html-files', 'connectHTML']);
+  gulp.watch(['./app/js/*.js'], ['minify-js', 'connectJS']);
+  gulp.watch(['./app/css/*.css'], ['minify-css', 'connectCSS']);
 });
 
 // default task
