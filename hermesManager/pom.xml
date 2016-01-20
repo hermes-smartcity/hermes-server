@@ -7,7 +7,6 @@
   <modules>
 	<module>database</module>
   	<module>eventManager</module>
-  	<module>dashboard</module>
   	<module>model</module>
   </modules>
   
