@@ -75,31 +75,16 @@ gulp.task('wiredep:app', function() {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('connectIndex', function () {
-	 return gulp.src('./dist/partials/*.html')
+gulp.task('reload', function () {
+	 return gulp.src('./dist/')
 	    .pipe(connect.reload());	
 });
 
-gulp.task('connectHTML', function () {
-	 return gulp.src('./dist/partials/**/*.html')
-	  .pipe(connect.reload());
-});
-
-gulp.task('connectJS', function () {
-	return gulp.src('./dist/js/*.js')
-	  .pipe(connect.reload());
-});
-
-gulp.task('connectCSS', function () {
-	return gulp.src('./dist/css/*.css')
-	  .pipe(connect.reload());
-});
-
 gulp.task('watch', function () {
-  gulp.watch(['./app/partials/*.html'], ['wiredep:app', 'connectIndex']);
-  gulp.watch(['./app/partials/**/*.html'], ['copy-html-files', 'connectHTML']);
-  gulp.watch(['./app/js/*.js'], ['minify-js', 'connectJS']);
-  gulp.watch(['./app/css/*.css'], ['minify-css', 'connectCSS']);
+  gulp.watch(['./app/partials/*.html'], ['wiredep:app', 'reload']);
+  gulp.watch(['./app/partials/**/*.html'], ['copy-html-files', 'reload']);
+  gulp.watch(['./app/js/*.js'], ['minify-js', 'reload']);
+  gulp.watch(['./app/css/*.css'], ['minify-css', 'reload']);
 });
 
 // default task
