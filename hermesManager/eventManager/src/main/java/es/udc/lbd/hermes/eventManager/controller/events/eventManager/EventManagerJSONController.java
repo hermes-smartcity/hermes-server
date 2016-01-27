@@ -93,8 +93,6 @@ public class EventManagerJSONController extends MainResource {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 		UserDetails userDetails = this.usuarioWebService.loadUserByUsername(username);
-		TokenTransfer tk = new TokenTransfer(TokenUtils.createToken(userDetails));
-		System.out.println("-- tk "+tk.getToken());
 		return new TokenTransfer(TokenUtils.createToken(userDetails));
 
 	}
