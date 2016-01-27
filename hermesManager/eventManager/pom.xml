@@ -115,44 +115,6 @@
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 		</dependency>		
-       <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<exclusions>
-			    <exclusion>
-			        <groupId>com.sun.jmx</groupId>
-			        <artifactId>jmxri</artifactId>
-			    </exclusion>
-			    <exclusion>
-			        <groupId>com.sun.jdmk</groupId>
-			        <artifactId>jmxtools</artifactId>
-			    </exclusion>
-			    <exclusion>
-			            <groupId>javax.jms</groupId>
-			            <artifactId>jms</artifactId>
-			    </exclusion>
-		</exclusions>
-		</dependency>
-		 <!-- Servlet -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
-			
-		<dependency>
-		  <groupId>xerces</groupId>
-		  <artifactId>xercesImpl</artifactId>
-		</dependency>
-		
-		<dependency>
-	      <groupId>jaxen</groupId>
-	      <artifactId>jaxen</artifactId>
-    	</dependency>
   
 		<dependency>
 		    <groupId>org.glassfish.jersey.core</groupId>
@@ -178,10 +140,6 @@
 		    <artifactId>jersey-jetty-connector</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>	
 		<!-- Apache Tiles 
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
