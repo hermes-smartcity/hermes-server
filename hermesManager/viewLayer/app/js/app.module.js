@@ -104,7 +104,6 @@
 		 return {
 	        	'request': function(config) {
 	        		var isRestCall = config.url.indexOf('api') > -1;
-	        		console.log("isRestCall interceptors "+isRestCall+" "+config.url);
 	        		if (isRestCall && angular.isDefined($rootScope.authToken)) {
 	        			var authToken = $rootScope.authToken;
 //	        			if (exampleAppConfig.useAuthTokenHeader) {
@@ -146,7 +145,7 @@
 			userService.getUser(url_user).then(getUserComplete);
 
 		}
-		console.log("en el run "+$rootScope.authToken);
+
 		$rootScope.initialized = true;
 	}
 })();

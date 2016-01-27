@@ -15,7 +15,6 @@
 		authenticateService.authenticate($.param({username: vm.username, password: vm.password}),
 				function(authenticationResult) {
 			var authToken = authenticationResult.token;
-			console.log("authToken - login "+authToken);
 			$rootScope.authToken = authToken;
 			
 			
@@ -28,6 +27,7 @@
 				$rootScope.user = response.data;
 				$location.path("/");
 			}
+			$state.go("dashboard");
 //			userService.get(function(user) {
 //				$rootScope.user = user;
 //				$location.path("/");
