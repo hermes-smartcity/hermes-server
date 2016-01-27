@@ -1,6 +1,8 @@
 package es.udc.lbd.hermes.model.usuario.usuarioWeb;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 
@@ -21,7 +28,7 @@ import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 @SequenceGenerator(name = "xeradorId", sequenceName = "usuario_web_id_seq")
 @Table(name = "usuario_web")
 @SuppressWarnings("serial")
-public class UsuarioWeb implements Serializable{
+public class UsuarioWeb implements UserDetails {
 
 		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO, generator = "xeradorId")
@@ -30,6 +37,8 @@ public class UsuarioWeb implements Serializable{
 		private String email;
 		
 		private String password;
+		
+		private boolean activado;
 		
 		@Enumerated(EnumType.STRING)
         private Rol rol;
@@ -81,4 +90,42 @@ public class UsuarioWeb implements Serializable{
 			this.usuarioMovil = usuarioMovil;
 		}
 	
+		@Override
+		@Transient
+		public Collection<? extends GrantedAuthority> getAuthorities() {
+			Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority(this.getRol().toString()));
+			return authorities;
+		}
+		
+		@Override
+		@Transient
+		public String getUsername() {
+			return email;
+		}
+
+		@Override
+		@Transient
+		public boolean isAccountNonExpired() {
+			return true;
+		}
+
+		@Override
+		@Transient
+		public boolean isAccountNonLocked() {
+			return true;
+		}
+
+		@Override
+		@Transient
+		public boolean isCredentialsNonExpired() {
+			return true;
+		}
+
+		@Override
+		@Transient
+		public boolean isEnabled() {
+			return activado;
+		}
+
 }

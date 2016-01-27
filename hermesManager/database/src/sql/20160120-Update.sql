@@ -112,3 +112,9 @@ ALTER TABLE heartratedata ADD CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY 
 
 DROP TABLE if exists usuario cascade;
 DROP sequence if exists usuario_id_seq cascade;
+
+--
+-- UsuarioWeb columna activado - spring security
+--
+
+ALTER TABLE usuario_web ADD COLUMN activado boolean DEFAULT true;

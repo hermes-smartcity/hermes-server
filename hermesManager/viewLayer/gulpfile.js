@@ -41,8 +41,9 @@ gulp.task('copy-bower-components', function () {
     .pipe(gulp.dest('dist/bower_components'));
 });
 gulp.task('copy-html-files', function () {
-  gulp.src('./app/partials/*.html').pipe(gulp.dest('dist/partials/'));
-  gulp.src('./app/partials/**/*.html').pipe(gulp.dest('dist/partials/'));
+	gulp.src('./app/login.html').pipe(gulp.dest('dist/'));
+	gulp.src('./app/partials/*.html').pipe(gulp.dest('dist/partials/'));
+	gulp.src('./app/partials/**/*.html').pipe(gulp.dest('dist/partials/'));
 });
 
 gulp.task('connect', function () {

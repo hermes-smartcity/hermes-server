@@ -12,6 +12,7 @@ var url_eventManager = url_servidor+'api/eventManager/';
 var url_arrancar = url_eventManager+'arrancar';
 var url_parar = url_eventManager+'parar';
 var url_state = url_eventManager+'json/stateEventManager';
+var url_authenticate = url_eventManager+'json/authenticate';
 var url_user = url_eventManager+'json/user';
 
 //Controlador dashboard

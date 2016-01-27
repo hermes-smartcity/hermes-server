@@ -9,7 +9,7 @@
 
 	function DashboardController($scope, eventsType, usuarios, measurementsType,  
 			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF , $http, $timeout, $log, $filter, eventsService) {
-		
+	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
 	vm.pintarMapaDataSections = pintarMapaDataSections;

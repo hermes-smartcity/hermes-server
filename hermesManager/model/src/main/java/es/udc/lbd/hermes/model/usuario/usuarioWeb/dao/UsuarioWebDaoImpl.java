@@ -29,7 +29,27 @@ UsuarioWebDao {
 
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
-		}
-		
+		}				
 	}
+	
+	public UsuarioWeb findUser(String email, String passwordEncr) {
+
+		try {
+			return (UsuarioWeb) getSession().createCriteria(this.entityClass).add(Restrictions.eq("email", email)).add(Restrictions.eq("password", passwordEncr)).setMaxResults(1).uniqueResult();
+
+		} catch (HibernateException e) {
+			throw SessionFactoryUtils.convertHibernateAccessException(e);
+		}				
+	}
+	
+	public UsuarioWeb findByEmail(String email) {
+		try {
+			return (UsuarioWeb) getSession().createCriteria(this.entityClass).add(Restrictions.eq("email", email)).setMaxResults(1).uniqueResult();
+
+		} catch (HibernateException e) {
+			throw SessionFactoryUtils.convertHibernateAccessException(e);
+		}		
+	}
+	
+	
 }

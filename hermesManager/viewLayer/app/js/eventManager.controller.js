@@ -68,12 +68,12 @@
 		
 		function arrancar() {
 			eventsService.arrancar();
-			$state.go('inicio');
+			$state.go('dashboard');
 		}
 		
 		function parar() {
 			eventsService.parar();
-			$state.go('inicio');
+			$state.go('dashboard');
 		}
 
 		// Preparar las fechas para pasarlas como parametro a los controladores

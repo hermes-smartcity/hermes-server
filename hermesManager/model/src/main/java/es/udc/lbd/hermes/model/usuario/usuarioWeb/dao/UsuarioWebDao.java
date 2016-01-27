@@ -9,5 +9,6 @@ public interface UsuarioWebDao extends GenericDao<UsuarioWeb, Long> {
 	
 	public List<UsuarioWeb> obterUsuariosWeb();
 	public UsuarioWeb findBySourceId(String sourceId);
-
+	public UsuarioWeb findUser(String email, String passwordEncr);	
+	public UsuarioWeb findByEmail(String email);
 }
