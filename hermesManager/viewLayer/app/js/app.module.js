@@ -118,6 +118,8 @@
 	        };
 	}]);
 
+	
+	
 	function getUserComplete(response) {
 		$rootScope.user = response.data;
 		$location.path(originalPath);
@@ -129,6 +131,13 @@
 			return angular.isUndefined(val) || val === null;
 		};
 
+		$rootScope.logout = function() {
+			delete $rootScope.user;
+			delete $rootScope.authToken;
+			$cookieStore.remove('authToken');
+			$location.path("/login");
+		};
+		
 		 /* Try getting valid user from cookie or go to login page */
 		var originalPath = $location.path();
 		$location.path("/login");
