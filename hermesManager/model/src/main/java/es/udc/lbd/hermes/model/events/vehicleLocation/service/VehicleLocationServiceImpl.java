@@ -13,28 +13,20 @@ import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
-import es.udc.lbd.hermes.model.usuario.Usuario;
-import es.udc.lbd.hermes.model.usuario.dao.UsuarioDao;
-import es.udc.lbd.hermes.model.usuario.service.UsuarioService;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
-import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
-
 
 
 @Service("vehicleLocationService")
 @Transactional
 public class VehicleLocationServiceImpl implements VehicleLocationService {
 	
-	private static final int ELEMENTOS_PAXINA = 100;
-	
 	@Autowired
 	private VehicleLocationDao vehicleLocationDao;
 	
 	@Autowired
-	private UsuarioService usuarioService;
-	
-	@Autowired
-	private UsuarioDao usuarioDao;
+	private UsuarioMovilDao usuarioMovilDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -45,15 +37,14 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	@Override
 	public void create(VehicleLocation vehicleLocation, String sourceId) {	
 
-		Usuario usuario = usuarioDao.findBySourceId(sourceId);
-		//TODO prueba para comprobar hash 256. Luego borrar
-		usuario = usuarioService.getBySourceId(sourceId);
-		if(usuario == null){
-			usuario = new Usuario();
-			usuario.setSourceId(sourceId);
-			usuarioDao.create(usuario);
+		UsuarioMovil usuarioMovil = usuarioMovilDao.findBySourceId(sourceId);
+		usuarioMovil = usuarioMovilDao.findBySourceId(sourceId);
+		if(usuarioMovil == null){
+			usuarioMovil = new UsuarioMovil();
+			usuarioMovil.setSourceId(sourceId);
+			usuarioMovilDao.create(usuarioMovil);
 		}
-		vehicleLocation.setUsuario(usuario);
+		vehicleLocation.setUsuarioMovil(usuarioMovil);
 		vehicleLocationDao.create(vehicleLocation);
 		
 	}
@@ -95,34 +86,6 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 		listaEventosDias.setnEventos(listaN);
 		
 		return listaEventosDias;		
-	}
-	
-	@Transactional(readOnly = true)
-	public BloqueElementos<VehicleLocation> obterVehicleLocationsPaginados(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
-			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina) {
-
-		/*
-		 * Obten count+1 vehicleLocations para determinar si existen mais
-		 * vehicleLocations no rango especificado.
-		 */
-		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
-				fechaFin, polygon, ELEMENTOS_PAXINA * (paxina - 1), ELEMENTOS_PAXINA + 1);
-
-		boolean haiMais = vehicleLocations.size() == (ELEMENTOS_PAXINA + 1);
-
-		/*
-		 * Borra o ultimo vehicleLocation da lista devolta si existen mais
-		 * vehicleLocations no rango especificado
-		 */
-		if (haiMais) {
-			vehicleLocations.remove(vehicleLocations.size() - 1);
-		}
-
-		long numero = vehicleLocationDao.contar();
-		/* Return BloqueElementos. */
-		return new BloqueElementos<VehicleLocation>(vehicleLocations, numero,
-				ELEMENTOS_PAXINA, paxina, haiMais);
 	}
 	
 	@Transactional(readOnly = true)

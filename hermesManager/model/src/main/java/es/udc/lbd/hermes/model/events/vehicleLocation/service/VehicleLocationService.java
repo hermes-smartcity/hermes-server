@@ -5,7 +5,6 @@ import java.util.List;
 
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
-import es.udc.lbd.hermes.model.util.dao.BloqueElementos;
 
 public interface VehicleLocationService {
 
@@ -19,9 +18,6 @@ public interface VehicleLocationService {
 	
 	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 	Double wnLng, Double wnLat,	Double esLng, Double esLat);
-	
-	public BloqueElementos<VehicleLocation> obterVehicleLocationsPaginados(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
-			Double wnLng, Double wnLat,	Double esLng, Double esLat, int paxina);
 	
 	public long contar();
 	

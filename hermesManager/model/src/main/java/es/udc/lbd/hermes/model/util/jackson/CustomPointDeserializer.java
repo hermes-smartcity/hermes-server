@@ -7,7 +7,7 @@ public class CustomPointDeserializer extends CustomGeometryDeserializer<Point> {
 
 	@Override
 	protected Point convertGeometry(Geometry geom) {
-		logger.debug("Geometry type: {} to Point", geom.getGeometryType());
+//		logger.debug("Geometry type: {} to Point", geom.getGeometryType());
 
 		Point ret = null;
 

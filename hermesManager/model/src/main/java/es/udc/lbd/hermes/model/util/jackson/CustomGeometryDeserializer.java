@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.apache.log4j.Logger;
 import org.geotools.geojson.geom.GeometryJSON;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -18,8 +16,8 @@ import com.vividsolutions.jts.geom.PrecisionModel;
 
 public abstract class CustomGeometryDeserializer<T extends Geometry> extends JsonDeserializer<T> {
 
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
+	static Logger logger = Logger.getLogger(CustomGeometryDeserializer.class);
+	
 	public static int SRID = 4326;
 	protected static final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(
 		PrecisionModel.FLOATING), SRID);

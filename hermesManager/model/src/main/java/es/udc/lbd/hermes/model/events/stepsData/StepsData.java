@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import es.udc.lbd.hermes.model.usuario.Usuario;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 
 @Entity
 @SequenceGenerator(name = "xeradorId", sequenceName = "stepsdata_id_seq")
@@ -33,8 +33,8 @@ public class StepsData implements Serializable {
 	private Integer steps;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "idUsuario")
-	private Usuario usuario;
+	@JoinColumn(name = "idUsuarioMovil")
+	private UsuarioMovil usuarioMovil;
 
 	public Long getId() {
 		return id;
@@ -68,12 +68,12 @@ public class StepsData implements Serializable {
 		this.steps = steps;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public UsuarioMovil getUsuarioMovil() {
+		return usuarioMovil;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
+		this.usuarioMovil = usuarioMovil;
 	}
 
 }

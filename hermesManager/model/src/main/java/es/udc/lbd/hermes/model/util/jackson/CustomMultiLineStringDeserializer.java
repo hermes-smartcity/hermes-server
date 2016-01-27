@@ -8,7 +8,7 @@ public class CustomMultiLineStringDeserializer extends CustomGeometryDeserialize
 
 	@Override
 	protected MultiLineString convertGeometry(Geometry geom) {
-		logger.debug("Geometry type: {} to MultiLineString", geom.getGeometryType());
+//		logger.debug("Geometry type: {} to MultiLineString", geom.getGeometryType());
 
 		MultiLineString ret = null;
 

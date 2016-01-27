@@ -9,26 +9,8 @@
 	<artifactId>dashboard</artifactId>
 	<packaging>war</packaging>
 	<name>hermes-dashboard</name>
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ssh</artifactId>
-				<version>2.0</version>
-			</extension>
-		</extensions>
-	</build>
+	
 	<dependencies>
-		<dependency>
-			<groupId>es.udc.lbd.hermes</groupId>
-			<artifactId>eventManager</artifactId>
-		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -71,8 +53,22 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<exclusions>
+			    <exclusion>
+			        <groupId>com.sun.jmx</groupId>
+			        <artifactId>jmxri</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>com.sun.jdmk</groupId>
+			        <artifactId>jmxtools</artifactId>
+			    </exclusion>
+			    <exclusion>
+			            <groupId>javax.jms</groupId>
+			            <artifactId>jms</artifactId>
+			    </exclusion>
+		</exclusions>
 		</dependency>
 		<!-- Servlet -->
 		<dependency>
@@ -91,14 +87,6 @@
 		</dependency>
 		<!-- Apache Tiles -->
 		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-jsp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-el</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xercesImpl</artifactId>
 		</dependency>
@@ -109,6 +97,6 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-		</dependency>
+		</dependency>		
 	</dependencies>	
 </project>

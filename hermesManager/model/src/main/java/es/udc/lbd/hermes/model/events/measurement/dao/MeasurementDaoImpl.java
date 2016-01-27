@@ -25,7 +25,7 @@ MeasurementDao {
 			
 			String queryStr =  "from Measurement where  within(position, :bounds) = true ";
 			if(idUsuario!=null)
-				queryStr += "and usuario.id = :idUsuario";
+				queryStr += "and usuarioMovil.id = :idUsuario";
 			
 			queryStr += " and tipo LIKE :tipo ";
 			
@@ -77,7 +77,7 @@ MeasurementDao {
 		queryStr += " and tipo LIKE :tipo ";
 		
 		if(idUsuario!=null)
-			queryStr += "and m.usuario.id = :idUsuario ";
+			queryStr += "and m.usuarioMovil.id = :idUsuario ";
 		
 		queryStr+="group by extract(day from m.timestamp), extract(month from m.timestamp), "
 				+ "extract (year from m.timestamp) order by anio, mes, dia";

@@ -7,20 +7,26 @@
 	<modules>
 		<module>database</module>
 		<module>eventManager</module>
-		<module>dashboard</module>
 		<module>model</module>
 	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
-		<org.springframework.security-version>4.0.2.CI-SNAPSHOT</org.springframework.security-version>
-		<org.slf4j-version>1.7.12</org.slf4j-version>
+		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
+		<org.springframework.security-version>3.2.10.CI-SNAPSHOT</org.springframework.security-version>
 		<hibernate.version>4.0.0.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- use the latest snapshot -->
 		<geotools.version>14.0</geotools.version>
 		<version.sql-maven-plugin>1.4</version.sql-maven-plugin>
+
+		<!-- log4j.properties -->
+		<development.log4j.level>INFO</development.log4j.level>
+		<!--<development.log4j.appenders>stdout</development.log4j.appenders> -->
+
+		<!-- log4j.properties -->
+		<log4j.level>${development.log4j.level}</log4j.level>
+		<!--<log4j.appenders>${development.log4j.appenders}</log4j.appenders> -->
 
 		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5432/postgres</development.datasource.jdbcUrlPostgres>
 		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5432/smartcity</development.datasource.jdbcUrl>
@@ -44,7 +50,6 @@
 
 		<production.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream?last-seen=</production.url.eventos>
 		<development.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed-test/stream?last-seen=</development.url.eventos>
-
 	</properties>
 	<profiles>
 		<profile>
@@ -201,6 +206,12 @@
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
 				<version>${org.springframework.security-version}</version>
+			</dependency>
+			<!-- Para Cors, necesario para hacer peticiones REST desde un dominio origen distinto al de destinio -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${org.springframework-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
