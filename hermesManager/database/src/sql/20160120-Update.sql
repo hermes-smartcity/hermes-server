@@ -38,8 +38,6 @@ CREATE TABLE usuario_web(
 --
 -- measurement 
 --
-
-DELETE from measurement;
 ALTER TABLE measurement DROP CONSTRAINT if exists measurement_fk_usuario;
 ALTER TABLE measurement RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE measurement ADD CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
@@ -48,8 +46,6 @@ ALTER TABLE measurement ADD CONSTRAINT measurement_fk_usuario FOREIGN KEY (idUsu
 --
 -- vehicleLocation
 --
-
-DELETE from vehicleLocation;
 ALTER TABLE vehicleLocation DROP CONSTRAINT vehiclelocation_fk_usuario;
 ALTER TABLE vehicleLocation RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE vehicleLocation ADD CONSTRAINT vehicleLocation_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
@@ -57,8 +53,6 @@ ALTER TABLE vehicleLocation ADD CONSTRAINT vehicleLocation_fk_usuario FOREIGN KE
 -- 
 -- dataSection
 --
-
-DELETE from dataSection;
 ALTER TABLE dataSection DROP CONSTRAINT dataSection_fk_usuario;
 ALTER TABLE dataSection RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE dataSection ADD CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
@@ -66,8 +60,6 @@ ALTER TABLE dataSection ADD CONSTRAINT dataSection_fk_usuario FOREIGN KEY (idUsu
 --
 -- driverFeatures
 --
-
-DELETE from driverFeatures;
 ALTER TABLE driverFeatures DROP CONSTRAINT driverfeatures_fk_usuario;
 ALTER TABLE driverFeatures RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE driverFeatures ADD CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
@@ -80,8 +72,6 @@ ALTER TABLE eventoProcesado ADD COLUMN tipo VARCHAR(20);
 --
 -- SmartCitizen: Sleep Data
 --
-
-DELETE from sleepdata;
 ALTER TABLE sleepdata DROP CONSTRAINT idsleepdata_fk_usuario;
 ALTER TABLE sleepdata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE sleepdata ADD CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
@@ -90,8 +80,6 @@ ALTER TABLE sleepdata ADD CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuar
 --
 -- SmartCitizen: Steps Data
 --
-
-DELETE from stepsdata;
 ALTER TABLE stepsdata DROP CONSTRAINT idstepsdata_fk_usuario;
 ALTER TABLE stepsdata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE stepsdata ADD CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
@@ -100,8 +88,6 @@ ALTER TABLE stepsdata ADD CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuar
 --
 -- SmartCitizen: Heart Rate Data
 --
-
-DELETE from heartratedata;
 ALTER TABLE heartratedata DROP CONSTRAINT idheartratedata_fk_usuario;
 ALTER TABLE heartratedata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE heartratedata ADD CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
