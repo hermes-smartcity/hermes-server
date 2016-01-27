@@ -117,8 +117,6 @@
 	        	}
 	        };
 	}]);
-
-	
 	
 	function getUserComplete(response) {
 		$rootScope.user = response.data;
