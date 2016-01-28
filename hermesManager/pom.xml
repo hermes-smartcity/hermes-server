@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.udc.lbd.hermes</groupId>
   <artifactId>hermesManager</artifactId>
@@ -12,7 +13,8 @@
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
-		<org.springframework.security-version>3.2.10.CI-SNAPSHOT</org.springframework.security-version>
+<!-- 		<org.springframework.security-version>3.2.10.CI-SNAPSHOT</org.springframework.security-version> -->
+		<org.springframework.security-version>4.0.0.RELEASE</org.springframework.security-version>
 		<hibernate.version>4.0.0.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- use the latest snapshot -->

@@ -12,8 +12,9 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
-			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
+	
 	
 	<security:authentication-manager id="authenticationManager">
 		<security:authentication-provider user-service-ref="usuarioWebService">
@@ -32,10 +33,12 @@
 			authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
 		<security:intercept-url pattern="/api/eventManager/json/user/authenticate" access="permitAll" />
-		<security:intercept-url method="GET" pattern="/api/dashboard/**" access="hasAuthority('ADMIN')" />
-		<security:intercept-url method="GET" pattern="/api/vehiclelocation/**" access="hasAuthority('ADMIN')" />
-		<security:intercept-url method="GET" pattern="/api/measurement/**" access="hasAuthority('ADMIN')" />
+		<security:intercept-url method="GET" pattern="/api/dashboard/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="GET" pattern="/api/vehiclelocation/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="GET" pattern="/api/measurement/**" access="hasRole('ADMIN')" />	
+		<security:csrf disabled="true"/>
 	</security:http>
+	
 
 	<bean id="unauthorizedEntryPoint" class="es.udc.lbd.hermes.eventManager.util.UnauthorizedEntryPoint" />
 	 <bean class="es.udc.lbd.hermes.eventManager.util.AuthenticationTokenProcessingFilter" id="authenticationTokenProcessingFilter">

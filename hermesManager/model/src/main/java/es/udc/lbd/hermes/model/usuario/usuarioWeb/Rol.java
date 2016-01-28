@@ -2,7 +2,7 @@ package es.udc.lbd.hermes.model.usuario.usuarioWeb;
 
 public enum Rol {
 
-	CONSULTA, ADMIN;
+	ROLE_CONSULTA, ROLE_ADMIN;
 
 	public String getName(){		
 		return this.name();
@@ -10,10 +10,10 @@ public enum Rol {
 
 	public static Rol getTipo(String tipo){
 		switch (tipo){
-		case "Consulta":
-			return CONSULTA;
-		case "Admin":
-			return ADMIN;
+		case "Role_Consulta":
+			return ROLE_CONSULTA;
+		case "Role_Admin":
+			return ROLE_ADMIN;
 		default:
 			return null;
 		}
