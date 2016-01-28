@@ -15,12 +15,13 @@
 			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
 	
+	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+    	<constructor-arg  name="strength" value="12"/>
+    </bean>
 	
 	<security:authentication-manager id="authenticationManager">
 		<security:authentication-provider user-service-ref="usuarioWebService">
-		 <security:password-encoder hash="md5">
-            <security:salt-source user-property="username" />
-        </security:password-encoder>
+		 	  <security:password-encoder ref="bCryptPasswordEncoder"></security:password-encoder>
 		</security:authentication-provider>
 	</security:authentication-manager> 
 
