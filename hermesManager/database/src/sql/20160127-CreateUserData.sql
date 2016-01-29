@@ -7,3 +7,6 @@ INSERT INTO usuario_web (rol, email, password) VALUES
  -- usuario_web (usuario:user - password:user) Para BCryptPasswordEncoder --
 INSERT INTO usuario_web (rol, email, password) VALUES
     ('ADMIN', 'user', '$2a$10$WPe2V9MC1loxbiLIsqQE9e4hYnUq37dHpPzKAcv1RVUnfwHiSfJyG');
+    
+-- Con spring security 4
+UPDATE usuario_web SET rol = 'ROLE_ADMIN';
