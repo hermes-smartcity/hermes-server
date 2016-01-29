@@ -1,11 +1,8 @@
 package es.udc.lbd.hermes.eventManager.util;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
