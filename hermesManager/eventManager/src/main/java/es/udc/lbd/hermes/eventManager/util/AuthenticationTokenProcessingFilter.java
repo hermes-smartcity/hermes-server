@@ -12,8 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -33,12 +31,7 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException
-	{
-//		String password = "user"; 
-//	    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-//	    String encodedPassword = passwordEncoder.encode(password);  
-//	    System.out.print(encodedPassword);
-	    
+	{    
 		HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
 		String authToken = this.extractAuthTokenFromRequest(httpRequest);

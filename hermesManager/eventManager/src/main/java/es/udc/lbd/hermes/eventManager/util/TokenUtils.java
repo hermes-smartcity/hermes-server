@@ -4,7 +4,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.codec.Hex;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 public class TokenUtils
@@ -27,8 +29,23 @@ public class TokenUtils
 
 		return tokenBuilder.toString();
 	}
-
-
+	
+	// Comparamos si signature que nos envían (token) son correctas
+	public static boolean compareTokenWithCredentials(String signature, UserDetails userDetails, long expires)
+	{
+		StringBuilder signatureBuilder = new StringBuilder();
+		signatureBuilder.append(userDetails.getUsername());
+		signatureBuilder.append(":");
+		signatureBuilder.append(expires);
+		signatureBuilder.append(":");
+		signatureBuilder.append(userDetails.getPassword());
+		signatureBuilder.append(":");
+		signatureBuilder.append(TokenUtils.MAGIC_KEY);
+		
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.matches(signatureBuilder.toString(), signature);
+		
+	}
 	public static String computeSignature(UserDetails userDetails, long expires)
 	{
 		StringBuilder signatureBuilder = new StringBuilder();
@@ -40,14 +57,8 @@ public class TokenUtils
 		signatureBuilder.append(":");
 		signatureBuilder.append(TokenUtils.MAGIC_KEY);
 
-		MessageDigest digest;
-		try {
-			digest = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			throw new IllegalStateException("No MD5 algorithm available!");
-		}
-
-		return new String(Hex.encode(digest.digest(signatureBuilder.toString().getBytes())));
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+		return passwordEncoder.encode(signatureBuilder.toString());  
 	}
 
 
@@ -71,7 +82,7 @@ public class TokenUtils
 		if (expires < System.currentTimeMillis()) {
 			return false;
 		}
-
-		return signature.equals(TokenUtils.computeSignature(userDetails, expires));
+		
+		return compareTokenWithCredentials(signature, userDetails, expires);
 	}
 }
