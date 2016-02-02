@@ -43,7 +43,7 @@ public class UsuarioWeb implements UserDetails {
 		@Enumerated(EnumType.STRING)
         private Rol rol;
 			
-		@OneToOne (fetch=FetchType.LAZY)	
+		@OneToOne (fetch=FetchType.EAGER)	
 		@JoinColumn(name = "id_usuario_movil")
 		private UsuarioMovil usuarioMovil;
 		
@@ -90,6 +90,10 @@ public class UsuarioWeb implements UserDetails {
 			this.usuarioMovil = usuarioMovil;
 		}
 	
+		public void setActivado(boolean activado) {
+			this.activado = activado;
+		}
+		
 		@Override
 		@Transient
 		public Collection<? extends GrantedAuthority> getAuthorities() {

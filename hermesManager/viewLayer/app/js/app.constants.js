@@ -7,13 +7,35 @@ var debug_mode = true;
 
 var url_servidor = 'http://localhost:8080/eventManager/';
 
+//Controlador authenticate
+var url_authenticate = url_servidor+'api/authenticate';
+
+//Controlador user
+var url_user = url_servidor+'api/user';
+var url_get_user = url_user;
+var url_register_user = url_user;
+var url_delete_user = url_user;
+var url_roles = url_user+'/json/roles';
+var url_users = url_user+'/json/users';
+var url_admins = url_user+'/json/admins';
+var url_userToModify = url_user+'/json/userToModify';
+/**/
+//var url_user = url_servidor+'api/user/';
+//var url_authenticate = url_user+'json/authenticate';
+//var url_get_user = url_user+'json/user';
+//var url_register_user = url_user+'json/registerUser';
+//var url_roles = url_user+'json/roles';
+//var url_users = url_user+'json/users';
+//var url_admins = url_user+'json/admins';
+
+
+
 // Controlador event manager
 var url_eventManager = url_servidor+'api/eventManager/';
 var url_arrancar = url_eventManager+'arrancar';
 var url_parar = url_eventManager+'parar';
 var url_state = url_eventManager+'json/stateEventManager';
-var url_authenticate = url_eventManager+'json/authenticate';
-var url_user = url_eventManager+'json/user';
+
 
 //Controlador dashboard
 var url_dashboard = url_servidor+'api/dashboard/';

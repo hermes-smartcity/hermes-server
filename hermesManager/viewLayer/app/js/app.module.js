@@ -15,16 +15,37 @@
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
 	function routeConfig($stateProvider, $urlRouterProvider, $httpProvider) {
-
+	
+		// TODO luego hacer states abstractos y que hereden de el
 		$urlRouterProvider.otherwise('login');
 		$stateProvider.state('login', {
 			url: '/login',
 			templateUrl:'login.html',
 			controller: 'LoginController',
 			controllerAs: 'vm'
+		}).state('register', {
+			url: '/register',
+			templateUrl:'partials/user/register.html',
+			controller: 'RegisterController',
+			controllerAs: 'vm',
+			resolve: {
+				roles: ['userService', function(userService) {
+					return userService.getRoles();
+				}]
+			}/*ui-sref="menu-edit({ idMenu: node.id})"*/
+		}).state('editUser', {
+			url: '/editUser/idUser/:idUser',
+			templateUrl:'partials/user/edit.html',
+			controller: 'EditUserController',
+			controllerAs: 'vm',
+			resolve: {				
+				usuariosMoviles: ['eventsService', function(eventsService) {
+					return eventsService.getUsuarios();
+				}]
+			}
 		}).state('dashboard', {
 			url: '/dashboard',
-			templateUrl: 'partials/dashboard.html',
+			templateUrl: 'partials/dashboard/dashboard.html',
 			controller: 'DashboardController',
 			controllerAs: 'vm',
 			resolve: {
@@ -56,9 +77,19 @@
 					return eventsService.getTotalMeasurements();
 				}]
 			}
+		}).state('userManager', { 
+			url: '/userManager',
+			templateUrl: 'partials/user/userManager.html',
+			controller: 'UserManagerController',
+			controllerAs: 'vm'/*,
+			resolve: {
+				users: ['userService', function(userService) {
+					return userService.getUsers();
+				}]
+			}*/
 		}).state('eventManager', {
 			url: '/eventManager',
-			templateUrl:'partials/eventManager.html',
+			templateUrl:'partials/event/eventManager.html',
 			controller: 'EventManagerController',
 			controllerAs: 'vm',
 			resolve: {
@@ -142,10 +173,11 @@
 		if (authToken !== undefined) {
 			$rootScope.authToken = authToken;
 			
-			userService.getUser(url_user).then(getUserComplete);
+			userService.getUser(url_get_user).then(getUserComplete);
 
 		}
 
 		$rootScope.initialized = true;
+		
 	}
 })();

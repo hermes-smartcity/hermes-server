@@ -1,0 +1,98 @@
+	<div class="row">
+		<div class="cabecera col-md-3">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>usuarios_web:</strong><span class="pull-right"></span>
+						</div>
+					</div>
+					
+				</div>
+				<div class="panel-footer">
+					<span style="color: #337AB7;" class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-green">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>usuarios_moviles: </strong>
+						</div>
+					</div>
+					
+				</div>
+				<div>
+					<div class="panel-footer">
+						<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+						</i></span>
+						<div class="clearfix">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-yellow">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Future:</strong><span class="pull-right"></span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-red">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Future: </strong>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-9">
+			<div>
+				<li class="pestanas pestanasFormulario">
+					<ol class="pestanas selectoresFormulario">
+						<li  ng-click="vm.showUsers()"  ng-class="{ 'activa':  vm.showUser }" class="pestanas selector">Users</li>
+						<li ng-click="vm.showAdmins()"  ng-class="{ 'activa':  vm.showAdmin }" class="pestanas selector" id="selectorF">Admin</li>
+					</ol>
+					<ol class="pestanas fichas">
+						<div ng-show="vm.showUser" class="pestanas ficha">
+							<div ng-include="'./partials/user/userListar.html'"></div>
+						</div>
+						<div ng-show="vm.showAdmin" class="pestanas ficha" id="pestanaF">
+							<div ng-include="'./partials/user/adminListar.html'"></div>
+							
+						</div>
+					</ol>
+				</li>
+			</div>
+		</div>
+		
+		</div>
+		
+	</div>

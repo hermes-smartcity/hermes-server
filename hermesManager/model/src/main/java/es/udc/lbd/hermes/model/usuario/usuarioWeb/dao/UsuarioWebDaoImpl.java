@@ -7,6 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
@@ -32,14 +33,14 @@ UsuarioWebDao {
 		}				
 	}
 	
-	public UsuarioWeb findUser(String email, String passwordEncr) {
+	public List<UsuarioWeb> obterUsuariosWebSegunRol(Rol rol){
 
 		try {
-			return (UsuarioWeb) getSession().createCriteria(this.entityClass).add(Restrictions.eq("email", email)).add(Restrictions.eq("password", passwordEncr)).setMaxResults(1).uniqueResult();
+			return  getSession().createCriteria(this.entityClass).add(Restrictions.eq("rol", rol)).list();
 
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
-		}				
+		}	
 	}
 	
 	public UsuarioWeb findByEmail(String email) {

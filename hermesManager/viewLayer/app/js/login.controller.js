@@ -22,7 +22,7 @@
 				$cookieStore.put('authToken', authToken);
 			}
 			
-			userService.getUser(url_user).then(getUserComplete);
+			userService.getUser(url_get_user).then(getUserComplete);
 			function getUserComplete(response) {
 				$rootScope.user = response.data;
 				$location.path("/");
