@@ -32,7 +32,7 @@
 				roles: ['userService', function(userService) {
 					return userService.getRoles();
 				}]
-			}/*ui-sref="menu-edit({ idMenu: node.id})"*/
+			}
 		}).state('editUser', {
 			url: '/editUser/idUser/:idUser',
 			templateUrl:'partials/user/edit.html',

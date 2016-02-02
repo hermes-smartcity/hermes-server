@@ -1,10 +1,12 @@
 package es.udc.lbd.hermes.model.usuario.usuarioWeb.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
@@ -32,8 +34,10 @@ public interface UsuarioWebService extends UserDetailsService {
 	
 	public UserDetails loadUserByUsername(String username);
 	
-	public UsuarioWeb registerUser(UserJSON userJSON) throws NoExiteNingunUsuarioMovilConSourceIdException;
+	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale) throws NoExiteNingunUsuarioMovilConSourceIdException;
 	
 	public UsuarioWeb updateUser(UserJSON userJSON, Long id);
+	
+	public void activarCuenta(String email, String hash) throws ActivarCuentaException;
 
 }

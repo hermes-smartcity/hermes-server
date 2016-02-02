@@ -33,9 +33,11 @@
 			entry-point-ref="unauthorizedEntryPoint"
 			authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
-		<security:intercept-url method="POST" pattern="/api/eventManager/api/authenticate" access="permitAll" />
+		<security:intercept-url method="POST" pattern="/api/authenticate" access="permitAll" />
+<!-- 		<security:intercept-url pattern="/api/activarCuenta" access="permitAll" /> -->
 		
 		<security:intercept-url method="GET" pattern="/api/dashboard/**" access="hasRole('ADMIN')" />
+
 
 		
 		<security:intercept-url method="GET" pattern="/api/user/**" access="hasRole('ADMIN')" />
@@ -45,9 +47,7 @@
 		
 		<security:intercept-url method="GET" pattern="/api/vehiclelocation/**" access="hasRole('ADMIN')" />
 		<security:intercept-url method="GET" pattern="/api/measurement/**" access="hasRole('ADMIN')" />	
-		
-		
-		
+			
 		<security:csrf disabled="true"/>
 	</security:http>
 	
@@ -56,6 +56,4 @@
 	 <bean class="es.udc.lbd.hermes.eventManager.util.AuthenticationTokenProcessingFilter" id="authenticationTokenProcessingFilter">
 		<constructor-arg ref="usuarioWebService" />
 	</bean>
-
-
 </beans>

@@ -25,6 +25,9 @@
 
 	<context:property-placeholder
 		location="classpath:jdbc.properties, classpath:javamail.properties" />
+  	
+  	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
+
 
 	<bean
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
@@ -59,6 +62,38 @@
 		</property>
 	</bean>
 
+ 	<!-- Envío de correos -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    	<property name="username">
+    		<value>${javamail.username}</value>
+    	</property>
+    	<property name="password">
+    		<value>${javamail.password}</value>
+    	</property>
+    	<property name="host">
+    		<value>${javamail.host}</value>
+    	</property>
+    	<property name="protocol">
+    		<value>${javamail.protocol}</value>
+    	</property>
+    	<property name="defaultEncoding">
+    		<value>${javamail.defaultEncoding}</value>
+    	</property>
+    	<property name="port">
+    		<value>${javamail.port}</value>
+    	</property>
+	    <property name="javaMailProperties">
+		    <props>
+		    	<prop key="mail.from">${javamail.from}</prop>
+				<prop key="mail.smtps.auth">${javamail.mail.smtps.auth}</prop>
+				<prop key="mail.smtps.starttls.enable">${javamail.mail.smtps.starttls.enable}</prop>
+				<prop key="mail.smtps.debug">${javamail.mail.smtps.debug}</prop>
+		        <prop key="mail.smtp.auth">${javamail.mail.smtp.auth}</prop>
+		        <prop key="mail.smtp.debug">${javamail.mail.smtp.debug}</prop>
+		    </props>
+	    </property>
+    </bean>  
+    
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
@@ -74,9 +109,7 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>classpath:/mensaxes/comun</value>
-				<value>classpath:/mensaxes/hermes</value>
-				<value>classpath:/mensaxes/publica</value>
+				<value>classpath:/mensajes/eventManagerMensaxes_es</value>
 			</list>
 		</property>
 		<property name="fallbackToSystemLocale" value="false" />

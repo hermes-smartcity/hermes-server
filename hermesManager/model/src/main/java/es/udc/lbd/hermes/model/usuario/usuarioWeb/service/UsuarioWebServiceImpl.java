@@ -1,10 +1,12 @@
 package es.udc.lbd.hermes.model.usuario.usuarioWeb.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.lbd.hermes.model.mail.EmailService;
+import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
@@ -33,6 +37,12 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	
 	@Autowired
 	private UsuarioMovilDao usuarioMovilDao;
+	
+	@Autowired 
+	private EmailService emailService;
+	
+	@Autowired
+	public MessageSource messageSource;
 	
 	
 	private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
@@ -112,7 +122,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	}
 	
 	@Secured({ "ROLE_ADMIN" })
-	public UsuarioWeb registerUser(UserJSON userJSON) throws NoExiteNingunUsuarioMovilConSourceIdException{
+	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale) throws NoExiteNingunUsuarioMovilConSourceIdException{
 		UsuarioWeb usuario = new UsuarioWeb();
 		UsuarioMovil usuarioMovil = recuperarUsarioMovilExistente(userJSON.getEmail());
 		// Existe un usuario movil con ese email, podemos crear el usuario web y asociarlo
@@ -120,9 +130,11 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 			usuario.setEmail(userJSON.getEmail());
 			usuario.setPassword(generarHashPassword(userJSON.getPassword()));
 			usuario.setRol(userJSON.getRol());
-			usuario.setActivado(true);
+			usuario.setActivado(false);
 			create(usuario);
 			usuario.setUsuarioMovil(usuarioMovil);
+			// Enviamos un mail para activar el usuario
+			enviarMail(usuario, locale);
 		} else throw new NoExiteNingunUsuarioMovilConSourceIdException();
 		
 		
@@ -153,6 +165,16 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		return usuarioWeb;
 	}
 	
+	// Activar cuenta de un usuario tras registrarse y recibir un mail con el enlace que lleva hasta este service
+	public void activarCuenta(String email, String hash) throws ActivarCuentaException{		
+		UsuarioWeb usuario = usuarioWebDao.findByEmail(email);
+		if(usuario == null || usuario.isEnabled() || !generarHash(email).equals(hash))
+			throw new ActivarCuentaException();
+		usuario.setActivado(true);
+		usuarioWebDao.update(usuario);
+	}
+
+	
 	
 	private String generarHash(String cadena){
 			String hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
@@ -168,6 +190,24 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	private String generarHashPassword(String cadena){
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
 		return passwordEncoder.encode(cadena.toString());  
-}
+	}
+	
+	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){
+		String urlActivacion = "localhost:8080/eventManager/api/user/activarCuenta"+
+		 "?" + "email="
+			+ usuarioWeb.getEmail() + "&hash=" + generarHash(usuarioWeb.getEmail());
+		Object [] parametros = new Object[] {
+				usuarioWeb.getUsername(), usuarioWeb.getEmail(), usuarioWeb.getUsername(), 
+				urlActivacion, ""};
+		
+		String mensaxe = messageSource.getMessage(
+				"eventManager.usuario.pagina.registrar.activacionEmail.texto", parametros, locale);
+		String mensaxeHTML = messageSource.getMessage(
+				"eventManager.usuario.pagina.registrar.activacionEmail.html", parametros, locale);
+				
+		String asunto = "Asunto del mail";
+		
+		emailService.enviarCorreo(usuarioWeb.getEmail(), asunto, mensaxe, mensaxeHTML);
+	}
 	
 }

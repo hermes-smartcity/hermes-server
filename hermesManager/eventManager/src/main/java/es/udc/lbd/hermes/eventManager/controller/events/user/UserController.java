@@ -3,6 +3,7 @@ package es.udc.lbd.hermes.eventManager.controller.events.user;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.ws.rs.WebApplicationException;
@@ -29,6 +30,7 @@ import es.udc.lbd.hermes.eventManager.transfer.UserTransfer;
 import es.udc.lbd.hermes.eventManager.util.TokenUtils;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.events.driverFeatures.DriverFeatures;
+import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
@@ -76,7 +78,9 @@ public class UserController extends MainResource {
 	public void registerUser(@RequestBody UserJSON userJSON)
 	{
 		try {
-			usuarioWebService.registerUser(userJSON);
+			// TODO paso por parametro el locale?
+//			new Locale("es")
+			usuarioWebService.registerUser(userJSON, Locale.getDefault());
 		} catch (NoExiteNingunUsuarioMovilConSourceIdException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,6 +133,20 @@ public class UserController extends MainResource {
 	public UsuarioWeb getUserToModify(@RequestParam(value = "id", required = true) Long id) {
 		return usuarioWebService.get(id);
 
+	}
+	
+	// Controlador que reenviamos desde un enlace de activación enviado por correo electrónico
+	@RequestMapping(value="/api/activarCuenta")
+	public void activarConta(@RequestParam(required=true) String email,
+			@RequestParam(required=true)String hash){
+
+			try {
+				usuarioWebService.activarCuenta(email, hash);
+			} catch (ActivarCuentaException e) {
+				// TODO devolver JSON o mensaje para devovler en angular
+			}
+		
+			return;
 	}
 	
 	//TODO no sé porque falla
