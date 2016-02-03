@@ -2,7 +2,7 @@
 		<div class="panel-heading"><strong>Filters</strong></div>
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-xs-12">
+				<div ng-if="hasRole('ROLE_ADMIN')" class="col-xs-12">
 					<label for="singleSelect">User:</label><br />
 					<!-- Filtro usuarios  -->
 					<select id="selectUsers" ng-model="vm.usuarioSelected" ng-change="changedValue(vm.usuarioSelected)" data-ng-options="usuario as usuario.sourceId for usuario in vm.usuarios">

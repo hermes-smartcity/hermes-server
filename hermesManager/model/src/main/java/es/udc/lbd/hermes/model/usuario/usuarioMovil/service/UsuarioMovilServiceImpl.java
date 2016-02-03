@@ -56,9 +56,7 @@ public class UsuarioMovilServiceImpl implements UsuarioMovilService {
 		return usuarioMovilDao.findBySourceId(sourceId);
 	}
 	
-	private String generarHash(String cadena){
-	
-			cadena = "cristinacmp1988";
+	private String generarHash(String cadena){	
 			String hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
 			return hash;
 	}

@@ -85,7 +85,7 @@
 		                            <span>Dashboard</span>
 	                            </a>
 	                        </li>	                     
-	                         <li><!--  -->
+	                         <li ng-if="hasRole('ROLE_ADMIN')"><!--  -->
 	                             <a ui-sref="eventManager" >
 		                            <i class="fa fa-bar-chart-o fa-fw"><!--  --></i>
 		                            <span> Event Manager</span>
@@ -93,14 +93,14 @@
 	                        </li>
 	                        
 	                   
-		                   <li><!--  -->	
+		                   <li ng-if="hasRole('ROLE_ADMIN')"><!--  -->	
 		                            <a ui-sref="userManager">
 			                            <i class="fa fa-wrench fa-fw"><!--  --></i>
 			                            <span>User Manager</span>
 		                            </a>
 	                       </li>
 	                        
-	                       <li><!--  -->
+	                       <li ng-if="hasRole('ROLE_ADMIN')"><!--  -->
 		                           <a href="#">
 			                            <i class="fa fa-edit fa-fw"><!--  --></i>
 			                            <span>Data Services</span>

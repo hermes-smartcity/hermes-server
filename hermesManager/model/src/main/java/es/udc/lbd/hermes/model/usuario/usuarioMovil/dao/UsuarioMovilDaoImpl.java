@@ -29,7 +29,6 @@ UsuarioMovilDao {
 
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
-		}
-		
+		}		
 	}
 }

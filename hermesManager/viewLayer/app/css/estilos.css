@@ -163,3 +163,8 @@ fieldset table.alternable {
 .margin-top-20 {
 	margin-top: 20px;
 }
+
+.iconoAnadir{
+	float: right;
+    margin-top: 15px;
+}

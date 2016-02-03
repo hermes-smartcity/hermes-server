@@ -10,7 +10,7 @@
 		'ui.bootstrap.datetimepicker',
 		'ngAnimate',
 		'angularUtils.directives.dirPagination',
-		'ngCookies'
+		'ngCookies', 'permission'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
@@ -32,6 +32,12 @@
 				roles: ['userService', function(userService) {
 					return userService.getRoles();
 				}]
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('editUser', {
 			url: '/editUser/idUser/:idUser',
@@ -42,6 +48,11 @@
 				usuariosMoviles: ['eventsService', function(eventsService) {
 					return eventsService.getUsuarios();
 				}]
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN']
+			        }
 			}
 		}).state('dashboard', {
 			url: '/dashboard',
@@ -76,12 +87,23 @@
 				totalDF: ['eventsService', function(eventsService) {
 					return eventsService.getTotalMeasurements();
 				}]
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('userManager', { 
 			url: '/userManager',
 			templateUrl: 'partials/user/userManager.html',
 			controller: 'UserManagerController',
-			controllerAs: 'vm'/*,
+			controllerAs: 'vm',
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN']
+			        }
+			}/*,
 			resolve: {
 				users: ['userService', function(userService) {
 					return userService.getUsers();
@@ -102,6 +124,11 @@
 				measurementsType: ['eventsService', function(eventsService) {
 					return eventsService.getMeasurementsType();
 				}]
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN']
+			        }
 			}
 		});
 		
@@ -153,12 +180,24 @@
 		$location.path(originalPath);
 	}
 	
-	appRun.$inject = ['$rootScope', '$location', '$cookieStore',  'userService'];
-	function appRun($rootScope, $location, $cookieStore, userService) {
+	appRun.$inject = ['$rootScope', '$location', '$cookieStore',  'userService', 'PermissionStore'];
+	function appRun($rootScope, $location, $cookieStore, userService, PermissionStore) {
 		angular.isUndefinedOrNull = function(val) {
 			return angular.isUndefined(val) || val === null;
 		};
-
+		
+		$rootScope.hasRole = function(role) {
+		
+			if ($rootScope.user === undefined) {
+				return false;
+			}
+			
+			if ($rootScope.user.roles[role] === undefined) {
+				return false;
+			}
+			return $rootScope.user.roles[role];
+		};
+		
 		$rootScope.logout = function() {
 			delete $rootScope.user;
 			delete $rootScope.authToken;
@@ -178,6 +217,12 @@
 		}
 
 		$rootScope.initialized = true;
+		var ROLES_POSIBLES = ["ROLE_ADMIN", "ROLE_CONSULTA", "ANONIMO"];
 		
+		PermissionStore.defineManyPermissions(ROLES_POSIBLES, function (stateParams, permissionName) {
+			  return  $rootScope.hasRole(permissionName);
+		});
+	
+
 	}
 })();

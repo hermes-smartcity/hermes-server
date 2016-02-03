@@ -23,7 +23,8 @@
 		vm.error = null;
 	
 		userRestService.delete({id: usuario.id}, success, failure);
-				
+		
+		// TODO no está funcionando?
 		var success = function (result) {
 			var idx = vm.users.indexOf(usuario);
 			vm.users.splice(idx, 1);

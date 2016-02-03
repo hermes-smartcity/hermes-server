@@ -98,7 +98,7 @@ public class UsuarioWeb implements UserDetails {
 		@Transient
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-			authorities.add(new SimpleGrantedAuthority(this.getRol().toString()));
+			authorities.add(new SimpleGrantedAuthority(this.getRol().getName()));
 			return authorities;
 		}
 		

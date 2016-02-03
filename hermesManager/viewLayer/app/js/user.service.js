@@ -8,7 +8,7 @@
 	function userService($http, $log, $q) {
 		var service = {
 			getUser: getUser,
-			registerUser: registerUser,
+//			registerUser: registerUser,
 			getRoles: getRoles,
 			getUsers : getUsers,
 			getUserToModify: getUserToModify
@@ -24,14 +24,14 @@
 			});
 		}
 		
-		function registerUser (email, password, rol) {		
-			return $http({
-				method : 'POST',
-				url : url_register_user,
-				params: {"email": email, "password": password, "rol":rol}
-			});
-		}
-		
+//		function registerUser (email, password, rol) {		
+//			return $http({
+//				method : 'POST',
+//				url : url_register_user,
+//				params: {"email": email, "password": password, "rol":rol}
+//			});
+//		}
+//		
 		function getRoles() {
 			return $http.get(url_roles)
 				.then(getRolesComplete)
