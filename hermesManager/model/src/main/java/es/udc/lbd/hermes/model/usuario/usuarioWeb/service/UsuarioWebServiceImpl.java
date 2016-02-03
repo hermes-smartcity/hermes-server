@@ -193,7 +193,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	}
 	
 	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){
-		String urlActivacion = "localhost:8080/eventManager/api/user/activarCuenta"+
+		String urlActivacion = "localhost:8080/eventManager/api/activarCuenta"+
 		 "?" + "email="
 			+ usuarioWeb.getEmail() + "&hash=" + generarHash(usuarioWeb.getEmail());
 		Object [] parametros = new Object[] {
