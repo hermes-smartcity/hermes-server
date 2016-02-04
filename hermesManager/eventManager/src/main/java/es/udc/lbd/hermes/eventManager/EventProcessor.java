@@ -94,7 +94,11 @@ public class EventProcessor extends Thread {
 				EventType tipoEvento = EventType.getTipo((String) event.getEventType());
 				EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
 				if (estrategia != null) {
-					estrategia.processEvent(event);
+					try {
+						estrategia.processEvent(event);
+					} catch (ClassCastException e) {
+						logger.error("Event-Type no coincide con el tipo especificado en el body\n"+chunk, e);
+					}
 					logger.info("Guardado el evento con Event-Type: " + tipoEvento.getName());
 				} else {
 					logger.warn("EventType desconocido: " + chunk);

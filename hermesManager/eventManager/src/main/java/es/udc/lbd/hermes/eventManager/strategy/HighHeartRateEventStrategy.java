@@ -1,10 +1,12 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 
+import es.udc.lbd.hermes.eventManager.EventProcessor;
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHighHeartRate;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
@@ -15,8 +17,8 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 import es.udc.lbd.hermes.model.util.HelpersModel;
 
 @Component
-public class HighHeartRateEventStrategy extends EventStrategy {
-		
+public class HighHeartRateEventStrategy extends EventStrategy {	
+	
 	@Override
 	public void processEvent(Event event) {
 		
