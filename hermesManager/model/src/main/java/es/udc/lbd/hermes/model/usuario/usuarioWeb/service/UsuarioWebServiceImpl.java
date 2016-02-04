@@ -26,6 +26,7 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.dao.UsuarioWebDao;
+import es.udc.lbd.hermes.model.util.ReadPropertiesFile;
 
 
 @Service("usuarioWebService")
@@ -44,7 +45,6 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	@Autowired
 	public MessageSource messageSource;
 	
-	
 	private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
 	
 	@Override
@@ -54,17 +54,20 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	}
 
 	@Override
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public void create(UsuarioWeb usuarioWeb) {
 		usuarioWebDao.create(usuarioWeb);
 		
 	}
 
 	@Override
+	@Secured({ "ROLE_ADMIN" })
 	public void update(UsuarioWeb usuarioWeb) {
 		usuarioWebDao.update(usuarioWeb);
 	}
 
 	@Override
+	@Secured({ "ROLE_ADMIN" })
 	public void delete(Long id) {
 		UsuarioWeb usuarioWeb = usuarioWebDao.get(id);
 		if (usuarioWeb != null) {
@@ -121,7 +124,8 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		return usuario;
 	}
 	
-	@Secured({ "ROLE_ADMIN" })
+
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale) throws NoExiteNingunUsuarioMovilConSourceIdException{
 		UsuarioWeb usuario = new UsuarioWeb();
 		UsuarioMovil usuarioMovil = recuperarUsarioMovilExistente(userJSON.getEmail());
@@ -193,7 +197,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	}
 	
 	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){
-		String urlActivacion = "localhost:8080/eventManager/api/activarCuenta"+
+		String urlActivacion = ReadPropertiesFile.getUrlViewLayer()+"/api/activarCuenta"+
 		 "?" + "email="
 			+ usuarioWeb.getEmail() + "&hash=" + generarHash(usuarioWeb.getEmail());
 		Object [] parametros = new Object[] {

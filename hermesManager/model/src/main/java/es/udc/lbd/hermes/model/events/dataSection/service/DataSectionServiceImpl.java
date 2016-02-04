@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +62,7 @@ public class DataSectionServiceImpl implements DataSectionService {
 	}
 	
 	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<DataSection> obterDataSections(Long idUsuarioMovil, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
 		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
@@ -69,11 +71,13 @@ public class DataSectionServiceImpl implements DataSectionService {
 	}
 	
 	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public long contar(){
 		return dataSectionDao.contar();
 	}
 	
 	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public ListaEventosYdias obterEventosPorDia(Long idUsuarioMovil, Calendar fechaIni, Calendar fechaFin) {		
 		ListaEventosYdias listaEventosDias = new ListaEventosYdias();
 		List<String> listaDias = new ArrayList<String>();

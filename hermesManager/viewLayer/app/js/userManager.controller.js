@@ -4,9 +4,10 @@
 	angular.module('app').controller('UserManagerController', UserManagerController);
 
 	UserManagerController.$inject = ['$scope', '$http', '$timeout', '$log', '$filter', 'userService'/*, 'users'*/,
-	                                 'userRestService', '$resource'];
+	                                 'userRestService', '$resource', '$state'];
 
-	function UserManagerController($scope, $http, $timeout, $log, $filter, userService/*, users*/, userRestService, $resource) {
+	function UserManagerController($scope, $http, $timeout, $log, $filter, userService/*, users*/, userRestService, 
+			$resource, $state) {
 	
 	var vm = this;
 //	vm.users = users;
@@ -21,18 +22,29 @@
 	function deleteUser(usuario) {
 
 		vm.error = null;
-	
-		userRestService.delete({id: usuario.id}, success, failure);
+		var idUsers = -1;
+		var idAdmins = -1;
+		if(typeof vm.users != "undefined")
+			vm.users.indexOf(usuario);
 		
-		// TODO no está funcionando?
-		var success = function (result) {
-			var idx = vm.users.indexOf(usuario);
-			vm.users.splice(idx, 1);
-		};
-
-		var failure = function (result) {
-		    alert("Error: " + result);
-		};
+		if(typeof vm.admins != "undefined")
+			vm.admins.indexOf(usuario);
+		
+//		var idUsers = vm.users.indexOf(usuario);
+//		var idAdmins = vm.admins.indexOf(usuario);
+//		userRestService.delete({id: usuario.id});
+		
+	
+		userRestService.$remove(function(){
+			if(idUsers!=-1){
+				vm.users.splice(idUsers,1);
+				lista = vm.users;
+			}
+			if(idAdmins!=-1){
+				vm.admins.splice(idAdmins,1);
+			}
+		});
+		
 		
 	}
 	

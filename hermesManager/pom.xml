@@ -51,6 +51,9 @@
 		
 		<production.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream?last-seen=</production.url.eventos>
 		<development.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream?last-seen=</development.url.eventos>
+		<!-- TODO cambiar -->
+		<production.url.viewLayer>localhost:8888/#/</production.url.viewLayer>
+		<development.url.viewLayer>localhost:8888/#/</development.url.viewLayer>
 		
 	</properties>
 <profiles>
@@ -76,6 +79,7 @@
 				
 				<!-- Lectura de eventos eventManager properties -->
 				<url.eventos>${development.url.eventos}</url.eventos>
+				<url.viewLayer>${development.url.viewLayer}</url.viewLayer>
 				<log4j.appender.logfile.File>hermes-dashboard.log</log4j.appender.logfile.File>
 			</properties>
 		</profile>
@@ -101,6 +105,7 @@
 				
 				<!-- Lectura de eventos eventManager properties -->
 				<url.eventos>${production.url.eventos}</url.eventos>
+				<url.viewLayer>${production.url.viewLayer}</url.viewLayer>
 				<log4j.appender.logfile.File>/var/log/tomcat7/hermes-dashboard.log</log4j.appender.logfile.File>
 				
 			</properties>

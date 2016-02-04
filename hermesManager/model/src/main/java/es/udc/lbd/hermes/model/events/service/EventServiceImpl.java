@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +61,7 @@ public class EventServiceImpl implements EventService {
 	}
 	
 	@Override
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public Long getEventsToday() {
 		return eventoProcesadoDao.getEventsToday();		
 	}

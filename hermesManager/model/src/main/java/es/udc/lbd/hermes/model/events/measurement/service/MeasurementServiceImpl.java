@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,6 +63,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 	}
 	
 	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
 		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
@@ -70,11 +72,13 @@ public class MeasurementServiceImpl implements MeasurementService {
 	}
 	
 	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public long contar() {
 		return measurementDao.contar(null);
 	}
 	
 	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public ListaEventosYdias obterEventosPorDia(MeasurementType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin) {		
 		ListaEventosYdias listaEventosDias = new ListaEventosYdias();
 		List<String> listaDias = new ArrayList<String>();

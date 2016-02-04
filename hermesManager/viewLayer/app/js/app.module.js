@@ -90,7 +90,7 @@
 			},
 			data: {
 			      permissions: {
-			          only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+			    	  except: ['anonimo'],
 						redirectTo: 'login'
 			        }
 			}

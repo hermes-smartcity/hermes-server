@@ -83,7 +83,7 @@ public class UserController extends MainResource {
 			usuarioWebService.registerUser(userJSON, Locale.getDefault());
 		} catch (NoExiteNingunUsuarioMovilConSourceIdException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("No exite ningún usuarioMovil con ese sourceId");
 		}
 
 	}

@@ -1,7 +1,7 @@
 
 
 <table class="tablaEventos film-info-bottom" 
-		  	dir-paginate="user in vm.users | filter:q | itemsPerPage: vm.pageSize" 
+		  	dir-paginate="user in vm.users | filter:searchText | filter:q | itemsPerPage: vm.pageSize" 
 		  		current-page="vm.currentPage">
 				<tr>
 				<td>
@@ -32,8 +32,8 @@
 							Actions
 						</div>
 						 <div class="valor">						 
-						 	<a class="glyphicon glyphicon-pencil pull-right icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></a>
-							<a class="glyphicon glyphicon-trash pull-right icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></a>
+						 	<div class="glyphicon glyphicon-trash icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></div>
+							<div class="glyphicon glyphicon-pencil icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></div>
 						</div>
 					</div>
 				</td>

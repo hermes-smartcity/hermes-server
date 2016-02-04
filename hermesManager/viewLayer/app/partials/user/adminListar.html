@@ -30,8 +30,8 @@
 							Actions
 						</div>
 						 <div class="valor">
-							<a class="glyphicon glyphicon-pencil pull-right icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></a>
-							<div class="glyphicon glyphicon-trash pull-right icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></div>
+						 	<div class="glyphicon glyphicon-trash icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></div>
+							<div class="glyphicon glyphicon-pencil icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></div>
 						</div>
 					</div>
 				</td>
@@ -40,3 +40,4 @@
         <div class="text-center">
        		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
        </div>
+      

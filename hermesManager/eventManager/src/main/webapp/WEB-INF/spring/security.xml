@@ -33,21 +33,28 @@
 			entry-point-ref="unauthorizedEntryPoint"
 			authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
-		<security:intercept-url method="POST" pattern="/api/authenticate" access="permitAll" />
-		
+		<!-- Acceso anónimo autenticarse y activar cuenta -->
+		<security:intercept-url method="POST" pattern="/api/authenticate" access="permitAll" />		
 		<security:intercept-url pattern="/api/activarCuenta" access="permitAll" />
-		
+		<!-- dashboard -->
 		<security:intercept-url method="GET" pattern="/api/dashboard/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
-
-
-		
+		<!-- eventManager -->
+		<security:intercept-url method="GET" pattern="/api/eventManager/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/eventManager/**" access="hasRole('ADMIN')" />
+		<!-- userManager -->
 		<security:intercept-url method="GET" pattern="/api/user/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		<security:intercept-url method="PUT" pattern="/api/user/**" access="hasRole('ADMIN')" />
+		<!-- TODO Si permitimos que un usuario cualquiera, consulta pueda registrarse, cualquiera puede 
+		hacer post - Ya no es REST -->
 		<security:intercept-url method="POST" pattern="/api/user/**" access="hasRole('ADMIN')" />
-		<security:intercept-url method="DELETE" pattern="/api/user/**" access="hasRole('ADMIN')" />
 		
+		<security:intercept-url method="DELETE" pattern="/api/user/**" access="hasRole('ADMIN')" />
+		<!-- vechicleLocation -->
 		<security:intercept-url method="GET" pattern="/api/vehiclelocation/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<!-- measurement -->
 		<security:intercept-url method="GET" pattern="/api/measurement/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />	
+		<!-- dataSection -->
+		<security:intercept-url method="GET" pattern="/api/dataSection/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />	
 			
 		<security:csrf disabled="true"/>
 	</security:http>

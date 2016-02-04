@@ -26,13 +26,15 @@
 			function getUserComplete(response) {
 				$rootScope.user = response.data;
 				$location.path("/");
+				$state.go("dashboard");				
 			}
-			$state.go("dashboard");
+			
 //			userService.get(function(user) {
 //				$rootScope.user = user;
 //				$location.path("/");
 //			});
 		});
+	
 		
 	}
 	
