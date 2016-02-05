@@ -126,14 +126,18 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	
 
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
-	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale) throws NoExiteNingunUsuarioMovilConSourceIdException{
+	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale, boolean isAdmin) throws NoExiteNingunUsuarioMovilConSourceIdException{
 		UsuarioWeb usuario = new UsuarioWeb();
 		UsuarioMovil usuarioMovil = recuperarUsarioMovilExistente(userJSON.getEmail());
 		// Existe un usuario movil con ese email, podemos crear el usuario web y asociarlo
 		if(usuarioMovil!=null){			
 			usuario.setEmail(userJSON.getEmail());
 			usuario.setPassword(generarHashPassword(userJSON.getPassword()));
-			usuario.setRol(userJSON.getRol());
+			
+			if(isAdmin)
+				usuario.setRol(Rol.ROLE_ADMIN);
+			else usuario.setRol(Rol.ROLE_CONSULTA);
+			// Hasta que el propio usuario confirme el registro con el enlace de activación permacerá enable
 			usuario.setActivado(false);
 			create(usuario);
 			usuario.setUsuarioMovil(usuarioMovil);
@@ -196,10 +200,10 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		return passwordEncoder.encode(cadena.toString());  
 	}
 	
-	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){
-		String urlActivacion = ReadPropertiesFile.getUrlViewLayer()+"/api/activarCuenta"+
-		 "?" + "email="
-			+ usuarioWeb.getEmail() + "&hash=" + generarHash(usuarioWeb.getEmail());
+	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){/*url: '/activarCuenta/email/:email/hash/:hash',*/
+		String urlActivacion = ReadPropertiesFile.getUrlViewLayer()+"activarCuenta/email/"+
+		 
+			 usuarioWeb.getEmail() + "/hash/" + generarHash(usuarioWeb.getEmail());
 		Object [] parametros = new Object[] {
 				usuarioWeb.getUsername(), usuarioWeb.getEmail(), usuarioWeb.getUsername(), 
 				urlActivacion, ""};

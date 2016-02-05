@@ -1,6 +1,4 @@
-<div class="alert alert-danger" ng-show="error">
-	There was a problem logging in. Please try again.
-</div>
+<h1 id="breadcrumbs" class="page-header"> Editar </h1>
 <form role="form" ng-submit="vm.edit()">
 	<div class="form-group">
 		<label for="username">Email:</label> {{vm.usuario.email}}
@@ -23,6 +21,12 @@
 	</div>
 	
 	<div class="form-group">
-		<button type="submit" class="btn btn-primary">Editar</button>
+		<button type="submit" class="btn btn-primary">Editar</button> <button ui-sref="userManager" class="btn btn-primary">Volver</button>
 	</div>
+	
+	
+	<div class="form-group">
+		<div ng-if="vm.infoCuenta" class="pull-center alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
+	</div>
+	
 </form>

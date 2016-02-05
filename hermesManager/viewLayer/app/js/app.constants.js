@@ -7,26 +7,32 @@ var debug_mode = true;
 
 var url_servidor = 'http://localhost:8080/eventManager/';
 
-//Controlador authenticate
-var url_authenticate = url_servidor+'api/authenticate';
+////Controlador authenticate
+//var url_authenticate = url_servidor+'api/authenticate';
 
 //Controlador user
-var url_user = url_servidor+'api/user';
-var url_get_user = url_user;
-var url_register_user = url_user;
-var url_delete_user = url_user;
-var url_roles = url_user+'/json/roles';
-var url_users = url_user+'/json/users';
-var url_admins = url_user+'/json/admins';
-var url_userToModify = url_user+'/json/userToModify';
+//var url_user = url_servidor+'api/user';
+//var url_get_user = url_user;
+//var url_register_user = url_user;
+//var url_delete_user = url_user;
+//var url_infoCuenta = url_servidor+'api/json/infoCuenta';
+//var url_roles = url_user+'/json/roles';
+//var url_users = url_user+'/json/users';
+//var url_admins = url_user+'/json/admins';
+//var url_userToModify = url_user+'/json/userToModify';
 /**/
-//var url_user = url_servidor+'api/user/';
-//var url_authenticate = url_user+'json/authenticate';
-//var url_get_user = url_user+'json/user';
-//var url_register_user = url_user+'json/registerUser';
-//var url_roles = url_user+'json/roles';
-//var url_users = url_user+'json/users';
-//var url_admins = url_user+'json/admins';
+var url_user = url_servidor+'api/user/';
+var url_authenticate = url_user+'authenticate';
+var url_get_user = url_user+"getUser";
+var url_register_user = url_user+"registerUser";
+var url_register_admin = url_user+"registerAdmin";
+var url_edit_user = url_user+"editUser";
+var url_delete_user = url_user+"deleteUser";
+var url_users = url_user+'json/users';
+var url_admins = url_user+'json/admins';
+var url_roles = url_user+'json/roles';
+var url_userToModify = url_user+'json/userToModify';
+var url_infoCuenta = url_user+'activarCuenta';
 
 
 

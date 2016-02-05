@@ -1,6 +1,5 @@
-<div class="alert alert-danger" ng-show="error">
-	There was a problem logging in. Please try again.
-</div>
+<h1 id="breadcrumbs" class="page-header"> Registro </h1>
+
 <form role="form" ng-submit="vm.register()">
 	<div class="form-group">
 		<label for="username">Email:</label> <input type="text"
@@ -12,14 +11,11 @@
 	</div>
 
 	<div class="form-group">
-				
-		<label for="singleSelect">Roles:</label><br />
-		
-		<select id="selectRol" ng-model="vm.rolSelected" ng-change="changedValue(vm.rolSelected)" data-ng-options="rol as rol for rol in vm.roles">
-		</select>
-				
-			</div>
-	<div class="form-group">
 		<button type="submit" class="btn btn-primary">Registrar</button>
 	</div>
+	
+	<div class="form-group">
+		<div ng-if="vm.infoCuenta" class="alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
+	</div>
+		
 </form>

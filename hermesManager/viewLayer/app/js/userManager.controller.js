@@ -3,14 +3,12 @@
 
 	angular.module('app').controller('UserManagerController', UserManagerController);
 
-	UserManagerController.$inject = ['$scope', '$http', '$timeout', '$log', '$filter', 'userService'/*, 'users'*/,
-	                                 'userRestService', '$resource', '$state'];
+	UserManagerController.$inject = ['$scope', '$http', '$timeout', '$log', '$filter',
+	                                 'userService', '$state'];
 
-	function UserManagerController($scope, $http, $timeout, $log, $filter, userService/*, users*/, userRestService, 
-			$resource, $state) {
+	function UserManagerController($scope, $http, $timeout, $log, $filter, userService, $state) {
 	
 	var vm = this;
-//	vm.users = users;
 	vm.showAdmins = showAdmins;
 	vm.showUsers = showUsers;
 	vm.deleteUser = deleteUser;
@@ -30,21 +28,20 @@
 		if(typeof vm.admins != "undefined")
 			vm.admins.indexOf(usuario);
 		
-//		var idUsers = vm.users.indexOf(usuario);
-//		var idAdmins = vm.admins.indexOf(usuario);
-//		userRestService.delete({id: usuario.id});
+		userService.deleteUser(usuario.id).then(deleteUserComplete);	
 		
-	
-		userRestService.$remove(function(){
+		function deleteUserComplete(response) {
+			
 			if(idUsers!=-1){
 				vm.users.splice(idUsers,1);
-				lista = vm.users;
+				console.log("idUsers");
 			}
 			if(idAdmins!=-1){
 				vm.admins.splice(idAdmins,1);
+				console.log("idAdmins");
 			}
-		});
-		
+			vm.infoCuenta = response.data;
+		}
 		
 	}
 	

@@ -23,16 +23,16 @@
 			templateUrl:'login.html',
 			controller: 'LoginController',
 			controllerAs: 'vm'
-		}).state('register', {
-			url: '/register',
+		}).state('registerUser', {
+			url: '/registerUser',
 			templateUrl:'partials/user/register.html',
-			controller: 'RegisterController',
+			controller: 'RegisterUserController',
+			controllerAs: 'vm'
+		}).state('registerAdmin', {
+			url: '/registerAdmin',
+			templateUrl:'partials/user/register.html',
+			controller: 'RegisterAdminController',
 			controllerAs: 'vm',
-			resolve: {
-				roles: ['userService', function(userService) {
-					return userService.getRoles();
-				}]
-			},
 			data: {
 			      permissions: {
 			          only: ['ROLE_ADMIN'],
@@ -94,6 +94,11 @@
 						redirectTo: 'login'
 			        }
 			}
+		}).state('activarCuenta', { 
+			url: '/activarCuenta/email/:email/hash/:hash',
+			templateUrl: 'partials/user/activarCuenta.html',
+			controller: 'LoginController',
+			controllerAs: 'vm'
 		}).state('userManager', { 
 			url: '/userManager',
 			templateUrl: 'partials/user/userManager.html',
@@ -103,12 +108,7 @@
 			      permissions: {
 			          only: ['ROLE_ADMIN']
 			        }
-			}/*,
-			resolve: {
-				users: ['userService', function(userService) {
-					return userService.getUsers();
-				}]
-			}*/
+			}
 		}).state('eventManager', {
 			url: '/eventManager',
 			templateUrl:'partials/event/eventManager.html',

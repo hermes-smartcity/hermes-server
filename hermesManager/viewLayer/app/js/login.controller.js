@@ -3,12 +3,22 @@
 
 	angular.module('app').controller('LoginController', LoginController);
 
-	LoginController.$inject = ['$rootScope','$scope', '$http', '$location','$state', 'authenticateService', 'userService'];
+	LoginController.$inject = ['$rootScope','$scope', '$http', '$location','$state', 'authenticateService', 'userService', '$stateParams'];
 
-	function LoginController($rootScope, $scope, $http, $location, $state, authenticateService, userService) {
+	function LoginController($rootScope, $scope, $http, $location, $state, authenticateService, userService, $stateParams) {
 		
 	var vm = this;
 	vm.login = login;
+	vm.activarCuenta = activarCuenta;
+	
+	function activarCuenta() {
+		userService.getInfoCuenta($stateParams.email, $stateParams.hash).then(getInfoCuentaComplete);
+	
+		function getInfoCuentaComplete(response) {		
+			vm.infoCuenta = response.data;		
+		}
+	}
+	  
 	
 	function login() {
 		
@@ -28,11 +38,7 @@
 				$location.path("/");
 				$state.go("dashboard");				
 			}
-			
-//			userService.get(function(user) {
-//				$rootScope.user = user;
-//				$location.path("/");
-//			});
+
 		});
 	
 		

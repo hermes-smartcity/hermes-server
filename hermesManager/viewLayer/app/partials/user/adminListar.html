@@ -1,3 +1,4 @@
+
 <table class="tablaEventos film-info-bottom" 
 		  	dir-paginate="user in vm.admins | filter:q | itemsPerPage: vm.pageSize" 
 		  		current-page="vm.currentPage">
@@ -30,14 +31,20 @@
 							Actions
 						</div>
 						 <div class="valor">
+						 	<div class="glyphicon glyphicon-pencil icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></div>
 						 	<div class="glyphicon glyphicon-trash icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></div>
-							<div class="glyphicon glyphicon-pencil icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></div>
 						</div>
 					</div>
 				</td>
 			</tr>
 		</table>
+				
         <div class="text-center">
        		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
        </div>
+       
+       	 <div id="buscadorMasIcono" class="text-rigth">		       	 							 	
+				<div ng-show="vm.admins" class="buscador"><input placeholder="Buscar..." ng-model="searchText"></div>		
+				<div id="iconoAnadir" class="glyphicon glyphicon-plus right"  ui-sref="registerAdmin"></div>			
+		</div>
       

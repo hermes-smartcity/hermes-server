@@ -34,7 +34,7 @@ public interface UsuarioWebService extends UserDetailsService {
 	
 	public UserDetails loadUserByUsername(String username);
 	
-	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale) throws NoExiteNingunUsuarioMovilConSourceIdException;
+	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale, boolean isAdmin) throws NoExiteNingunUsuarioMovilConSourceIdException;
 	
 	public UsuarioWeb updateUser(UserJSON userJSON, Long id);
 	

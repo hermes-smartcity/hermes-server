@@ -78,10 +78,6 @@
 			<div>
 				<li class="pestanas pestanasFormulario">
 					<ol class="pestanas selectoresFormulario">
-					
-						<div id="iconoAnadir" class="glyphicon glyphicon-plus right"  ui-sref="register"></div>
-						 	
-						<div ng-show="vm.admins" class="buscador"><label>Search: <input ng-model="searchText"></label></div>
 						
 						<li  ng-click="vm.showUsers()"  ng-class="{ 'activa':  vm.showUser }" class="pestanas selector">Users</li>
 						<li ng-click="vm.showAdmins()"  ng-class="{ 'activa':  vm.showAdmin }" class="pestanas selector" id="selectorF">Admin</li>
@@ -100,5 +96,10 @@
 		
 		
 		</div>
-		
+	</div>
+	
+	<div class="row">
+		<div class="col-md-9">
+			<div ng-if="vm.infoCuenta.length > 1" class="pull-center alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
+		</div>
 	</div>

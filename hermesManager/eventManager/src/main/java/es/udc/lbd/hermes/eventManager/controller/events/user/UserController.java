@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
 import es.udc.lbd.hermes.eventManager.transfer.TokenTransfer;
 import es.udc.lbd.hermes.eventManager.transfer.UserTransfer;
 import es.udc.lbd.hermes.eventManager.util.TokenUtils;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
-import es.udc.lbd.hermes.model.events.driverFeatures.DriverFeatures;
 import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
@@ -40,21 +40,37 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
 @CrossOrigin
 @RestController
-//@RequestMapping(value = "/api/user")
+@RequestMapping(value = "/api/user")
 public class UserController extends MainResource {
 
 	static Logger logger = Logger.getLogger(UserController.class);
-	
-	@Autowired private UsuarioWebService usuarioWebService;
+
+	@Autowired
+	private UsuarioWebService usuarioWebService;
 
 	@Autowired
 	@Qualifier("authenticationManager")
 	private AuthenticationManager authManager;
 
+	// Autenticar usuario
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	public TokenTransfer authenticate(@RequestParam(value = "username", required = false) String username,
+			@RequestParam(value = "password", required = false) String password) {
+
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
+				password);
+		Authentication authentication = this.authManager.authenticate(authenticationToken);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		UserDetails userDetails = this.usuarioWebService.loadUserByUsername(username);
+
+		return new TokenTransfer(TokenUtils.createToken(userDetails));
+
+	}
+
 	// Recuperar usuario logueado
-	@RequestMapping(value = "/api/user", method = RequestMethod.GET)
-	public UserTransfer getUser()
-	{
+	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
+	public UserTransfer getUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Object principal = authentication.getPrincipal();
 		if (principal instanceof String && ((String) principal).equals("anonymousUser")) {
@@ -65,99 +81,101 @@ public class UserController extends MainResource {
 		return new UserTransfer(userDetails.getUsername(), this.createRoleMap(userDetails));
 	}
 
-	// Eliminar usuario - Sólo administradores
-	@RequestMapping(value = "/api/user" + "/{id}", method = RequestMethod.DELETE)
-	public void eliminar(@PathVariable(value = "id") Long usuarioId) throws NoEsPosibleBorrarseASiMismoException {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String login = auth.getName();
-		usuarioWebService.eliminar(usuarioId, login);
+	// Registrar usuario
+	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
+	public JSONData registerUser(@RequestBody UserJSON userJSON) {
+		JSONData jsonD = new JSONData();
+		try {			
+			// TODO paso por parametro el locale?
+			// new Locale("es")
+			usuarioWebService.registerUser(userJSON, Locale.getDefault(), false);
+			jsonD.setValue("Usuario/a registrado/a correctamente. En unos instantes recibirá un correo para completar su registro en Dashboard.");
+		} catch (NoExiteNingunUsuarioMovilConSourceIdException e) {
+			jsonD.setValue("No exite ningún usuario movil con el email indicado. Primero debe instalar la aplicación Smart Driver en su teléfono móvil");
+			logger.error("No exite ningún usuarioMovil con ese sourceId");
+		}
+		return jsonD;
+	}
+
+	// Controlador al que redirigimos desde un enlace de activación
+	@RequestMapping(value = "/activarCuenta")
+	public JSONData activarConta(@RequestParam(required = true) String email,
+			@RequestParam(required = true) String hash) {
+
+		JSONData jsonD = new JSONData();
+		try {
+			usuarioWebService.activarCuenta(email, hash);
+			jsonD.setValue("Su usuario se ha registrado correctamente");
+		} catch (ActivarCuentaException e) {
+			jsonD.setValue("Ha surgido un problema al activar su cuenta. Si el problema persiste contacte con el administrador del sistema");
+			logger.error("ActivarCuentaException "+e);
+		}
+
+		return jsonD;
 	}
 	
-	// Registrar usuario - Sólo administradores
-	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
-	public void registerUser(@RequestBody UserJSON userJSON)
-	{
+	// Registrar admin - Sólo administradores
+	@RequestMapping(value = "/registerAdmin", method = RequestMethod.POST)
+	public void registerAdmin(@RequestBody UserJSON userJSON) {
+		JSONData jsonD = new JSONData();
 		try {
 			// TODO paso por parametro el locale?
-//			new Locale("es")
-			usuarioWebService.registerUser(userJSON, Locale.getDefault());
+			// new Locale("es")
+			usuarioWebService.registerUser(userJSON, Locale.getDefault(), true);
+			jsonD.setValue("Usuario/a registrado/a correctamente.En unos instantes el administrador/a dado/a de alta recibirá un correo para completar su registro en Dashboard.");
 		} catch (NoExiteNingunUsuarioMovilConSourceIdException e) {
-			// TODO Auto-generated catch block
+			jsonD.setValue("No exite ningún usuario movil con el email indicado. Comunique al usuario administrador que primero debe instalar la aplicación Smart Driver en su teléfono móvil");
 			logger.error("No exite ningún usuarioMovil con ese sourceId");
 		}
 
 	}
 
-	// Editar usuario - Sólo administradores -> Pensada para modificar contraseña y usuario de movil asociado. TODO luego dividir. PROVISIONAL
-	@RequestMapping(value =  "/api/user/{id}", method = RequestMethod.PUT)
-	public void updateUser(@PathVariable Long id, @RequestBody UserJSON userJSON) {
+	// Editar usuario - Sólo administradores 
+	@RequestMapping(value = "/editUser/{id}", method = RequestMethod.PUT)
+	public JSONData updateUser(@PathVariable Long id, @RequestBody UserJSON userJSON) {
+		JSONData jsonD = new JSONData();
 		usuarioWebService.updateUser(userJSON, id);
+		jsonD.setValue("Usuario/a modificado/a correctamente");
+		return jsonD;
 	}
-	
-	// Autenticar usuario
-	@RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
-	public TokenTransfer authenticate(@RequestParam(value = "username", required = false) String username,
-			@RequestParam(value = "password", required = false) String password)
-	{
-		
-		UsernamePasswordAuthenticationToken authenticationToken =
-				new UsernamePasswordAuthenticationToken(username, password);
-		Authentication authentication = this.authManager.authenticate(authenticationToken);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		UserDetails userDetails = this.usuarioWebService.loadUserByUsername(username);
 
-		return new TokenTransfer(TokenUtils.createToken(userDetails));
-
+	// Eliminar usuario - Sólo administradores
+	@RequestMapping(value = "/deleteUser" + "/{id}", method = RequestMethod.DELETE)
+	public JSONData eliminar(@PathVariable(value = "id") Long usuarioId) throws NoEsPosibleBorrarseASiMismoException {
+		JSONData jsonD = new JSONData();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String login = auth.getName();
+		usuarioWebService.eliminar(usuarioId, login);
+		jsonD.setValue("Usuario/a eliminado/a correctamente");
+		return jsonD;
 	}
-	
+
 	// Listar usuarios consulta - Sólo administradores
-	@RequestMapping(value="/api/user/json/users", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/users", method = RequestMethod.GET)
 	public List<UsuarioWeb> getUsers() {
 		return usuarioWebService.obterUsuariosWebSegunRol(Rol.ROLE_CONSULTA);
 	}
-	
+
 	// Listar usuarios administradores - Sólo administradores
-	@RequestMapping(value="/api/user/json/admins", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/admins", method = RequestMethod.GET)
 	public List<UsuarioWeb> getAdmins() {
 		return usuarioWebService.obterUsuariosWebSegunRol(Rol.ROLE_ADMIN);
 	}
-	
+
 	// Tipos de usuarios
-	@RequestMapping(value="/api/user/json/roles", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/roles", method = RequestMethod.GET)
 	public List<Rol> roles() {
 		return Arrays.asList(Rol.values());
 	}
-	
-	@RequestMapping(value="/api/user/json/userToModify", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/json/userToModify", method = RequestMethod.GET)
 	public UsuarioWeb getUserToModify(@RequestParam(value = "id", required = true) Long id) {
 		return usuarioWebService.get(id);
 
 	}
-	
-	// Controlador que reenviamos desde un enlace de activación enviado por correo electrónico
-	@RequestMapping(value="/api/activarCuenta")
-	public void activarConta(@RequestParam(required=true) String email,
-			@RequestParam(required=true)String hash){
 
-			try {
-				usuarioWebService.activarCuenta(email, hash);
-			} catch (ActivarCuentaException e) {
-				// TODO devolver JSON o mensaje para devovler en angular
-			}
-		
-			return;
-	}
-	
-	//TODO no sé porque falla
-//	@RequestMapping(value = "/api/user/json/userToModify", method = RequestMethod.GET)
-//	public UsuarioWeb getUserToModify(@PathVariable Long id)
-//	{
-//		return usuarioWebService.get(id);
-//	}
 
-	private Map<String, Boolean> createRoleMap(UserDetails userDetails)
-	{
+	private Map<String, Boolean> createRoleMap(UserDetails userDetails) {
 		Map<String, Boolean> roles = new HashMap<String, Boolean>();
 		for (GrantedAuthority authority : userDetails.getAuthorities()) {
 			roles.put(authority.getAuthority(), Boolean.TRUE);
@@ -165,5 +183,5 @@ public class UserController extends MainResource {
 
 		return roles;
 	}
-	
+
 }

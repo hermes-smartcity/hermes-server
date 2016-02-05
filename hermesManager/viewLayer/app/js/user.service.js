@@ -8,30 +8,57 @@
 	function userService($http, $log, $q) {
 		var service = {
 			getUser: getUser,
-//			registerUser: registerUser,
+			registerUser: registerUser,
+			registerAdmin: registerAdmin,
+			editUser: editUser,
+			deleteUser: deleteUser,
 			getRoles: getRoles,
 			getUsers : getUsers,
-			getUserToModify: getUserToModify
+			getUserToModify: getUserToModify,
+			getInfoCuenta: getInfoCuenta
 		};
 
 		return service;
 	
-		function getUser(url) {
-		
+		function getUser(url) {		
 			return $http({
 				method : 'GET',
 				url : url
 			});
 		}
 		
-//		function registerUser (email, password, rol) {		
-//			return $http({
-//				method : 'POST',
-//				url : url_register_user,
-//				params: {"email": email, "password": password, "rol":rol}
-//			});
-//		}
-//		
+		function registerUser (user) {		
+			return $http({
+				method : 'POST',
+				url : url_register_user,
+				data : user
+			});
+		}
+		
+		function registerAdmin (user) {		
+			return $http({
+				method : 'POST',
+				url : url_register_admin,
+				data : user
+			});
+		}
+		
+		function editUser (user) {		
+			return $http({
+				method : 'PUT',
+				url : url_edit_user+"/"+user.id,
+				data : user
+			});
+		}
+
+		function deleteUser (id) {		
+			return $http({
+				method : 'DELETE',
+				url : url_delete_user+"/"+id
+			});
+		}
+		
+		// Listar roles
 		function getRoles() {
 			return $http.get(url_roles)
 				.then(getRolesComplete)
@@ -44,6 +71,7 @@
 			}
 		}
 		
+		// Listar usuarios ROL_CONSULTA
 		function getUsers() {
 			return $http.get(url_users)
 				.then(getUsersComplete)
@@ -56,20 +84,20 @@
 			}
 		}
 		
-		// TODO no sé porque falla
-//		function getUserToModify(id) {
-//			return $http({
-//				method : 'GET',
-//				url : url_userToModify + "/" + id
-//			});
-//		}
-		
-		//Opcion uno, asi, sino con then and catch
+		// Opcion uno, asi, sino con then and catch
 		function getUserToModify (id) {		
 			return $http({
 				method : 'GET',
 				url : url_userToModify,
 				params: {"id": id}
+			});
+		}
+		
+		// Activar cuenta
+		function getInfoCuenta (email, hash) {		
+			return $http({
+				method : 'GET',
+				url : url_infoCuenta+"?email="+email+"&hash="+hash
 			});
 		}
 	}
