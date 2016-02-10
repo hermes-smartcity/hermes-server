@@ -148,6 +148,7 @@
 	      
 	        		if (status == 401) {
 	        			$location.path( "/login" );
+	        			$rootScope.error="";
 	        		} else {
 	        			$rootScope.error = method + " on " + url + " failed with status " + status;
 	        		}
@@ -182,6 +183,7 @@
 	
 	appRun.$inject = ['$rootScope', '$location', '$cookieStore',  'userService', 'PermissionStore'];
 	function appRun($rootScope, $location, $cookieStore, userService, PermissionStore) {
+		
 		angular.isUndefinedOrNull = function(val) {
 			return angular.isUndefined(val) || val === null;
 		};
@@ -200,6 +202,7 @@
 		
 		$rootScope.logout = function() {
 			delete $rootScope.user;
+			delete $rootScope.error;
 			delete $rootScope.authToken;
 			$cookieStore.remove('authToken');
 			$location.path("/login");

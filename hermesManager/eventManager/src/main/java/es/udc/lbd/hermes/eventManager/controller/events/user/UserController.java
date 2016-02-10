@@ -31,12 +31,14 @@ import es.udc.lbd.hermes.eventManager.transfer.UserTransfer;
 import es.udc.lbd.hermes.eventManager.util.TokenUtils;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
+import es.udc.lbd.hermes.model.usuario.exceptions.EnlaceCaducadoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
+import es.udc.lbd.hermes.model.util.exceptions.DuplicateEmailException;
 
 @CrossOrigin
 @RestController
@@ -93,6 +95,9 @@ public class UserController extends MainResource {
 		} catch (NoExiteNingunUsuarioMovilConSourceIdException e) {
 			jsonD.setValue("No exite ningún usuario movil con el email indicado. Primero debe instalar la aplicación Smart Driver en su teléfono móvil");
 			logger.error("No exite ningún usuarioMovil con ese sourceId");
+		} catch (DuplicateEmailException e) {
+			jsonD.setValue("DuplicateEmailException");
+			logger.error("DuplicateEmailException");
 		}
 		return jsonD;
 	}
@@ -106,7 +111,7 @@ public class UserController extends MainResource {
 		try {
 			usuarioWebService.activarCuenta(email, hash);
 			jsonD.setValue("Su usuario se ha registrado correctamente");
-		} catch (ActivarCuentaException e) {
+		} catch (ActivarCuentaException | EnlaceCaducadoException e) {
 			jsonD.setValue("Ha surgido un problema al activar su cuenta. Si el problema persiste contacte con el administrador del sistema");
 			logger.error("ActivarCuentaException "+e);
 		}
@@ -123,7 +128,7 @@ public class UserController extends MainResource {
 			// new Locale("es")
 			usuarioWebService.registerUser(userJSON, Locale.getDefault(), true);
 			jsonD.setValue("Usuario/a registrado/a correctamente.En unos instantes el administrador/a dado/a de alta recibirá un correo para completar su registro en Dashboard.");
-		} catch (NoExiteNingunUsuarioMovilConSourceIdException e) {
+		} catch (NoExiteNingunUsuarioMovilConSourceIdException | DuplicateEmailException e) {
 			jsonD.setValue("No exite ningún usuario movil con el email indicado. Comunique al usuario administrador que primero debe instalar la aplicación Smart Driver en su teléfono móvil");
 			logger.error("No exite ningún usuarioMovil con ese sourceId");
 		}

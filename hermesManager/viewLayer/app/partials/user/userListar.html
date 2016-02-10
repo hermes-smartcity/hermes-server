@@ -1,48 +1,23 @@
-
-
-<table class="tablaEventos film-info-bottom" 
-		  	dir-paginate="user in vm.users | filter:searchText | filter:q | itemsPerPage: vm.pageSize" 
+<div ng-if="!vm.users.length">No hay usuarios/as registrados/as</div>
+<table ng-if="vm.users.length" class="table table-hover">
+		 <thead>
+		    <tr>				   
+		      <th colspan="8">Email</th>
+		      <th colspan="2">Mobile user</th>
+		      <th colspan="2">Actions</th>
+		    </tr>
+		  </thead>
+		<tr>
+		  <tbody dir-paginate="user in vm.users | filter:searchText | itemsPerPage: vm.pageSize" 
 		  		current-page="vm.currentPage">
-				<tr>
-				<td>
-				<div class="campoFicha">
-						<div class="etiqueta">
-							email
-						</div>
-						<div class="valor">
-							{{user.email}}
-						</div>
-					</div>
-				</td>
-				<td>
-					<div class="campoFicha">
-						<div class="etiqueta">
-							mobile_user
-						</div>
-						<div class="valor">
-							{{ user.usuarioMovil.id}}
-										
-						</div>
-					</div>
-				</td>
-			
-				<td>
-					<div class="campoFicha">
-						<div class="etiqueta">
-							Actions
-						</div>
-						 <div class="valor">						 
-							<div class="glyphicon glyphicon-pencil icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></div>
-							<div class="glyphicon glyphicon-trash icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></div>
-						
-						</div>
-					</div>
-				</td>
-			</tr>
-		</table>
-        <div class="text-center">
-       		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
-       </div>
- 		<div id="buscadorMasIcono" class="text-rigth">		 	
-				<div ng-show="vm.admins" class="buscador"><input placeholder="Buscar..." ng-model="searchText"></div>
-		</div>
+		     <tr>
+		      <th colspan="8">{{user.email}}</th>
+		      <td colspan="2">{{user.usuarioMovil.id}}</td>
+		      <td colspan="2">
+	      		<div class="glyphicon glyphicon-pencil icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></div>
+			 	<div class="glyphicon glyphicon-trash icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></div>
+			  </td>
+		    </tr>
+		  </tbody>				  
+		
+</table>

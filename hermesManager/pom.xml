@@ -406,6 +406,12 @@
 		  <groupId>org.geotools</groupId>
 		  <artifactId>gt-geojson</artifactId>
 		  <version>${geotools.version}</version>
+		</dependency>
+		<!-- Encriptar código para activación de registro de usuarios -->
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.0</version>
 		</dependency>	
   	</dependencies>
   </dependencyManagement>

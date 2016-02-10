@@ -74,32 +74,65 @@
 	</div>
 	<div class="row">
 		<div class="col-md-9">
-			
-			<div>
-				<li class="pestanas pestanasFormulario">
-					<ol class="pestanas selectoresFormulario">
-						
-						<li  ng-click="vm.showUsers()"  ng-class="{ 'activa':  vm.showUser }" class="pestanas selector">Users</li>
-						<li ng-click="vm.showAdmins()"  ng-class="{ 'activa':  vm.showAdmin }" class="pestanas selector" id="selectorF">Admin</li>
-					</ol>
-					<ol class="pestanas fichas">
-						<div ng-show="vm.showUser" class="pestanas ficha">
+		      <div class="panel panel-default">
+                       <div class="panel-heading">	
+                            <i class="fa glyphicon fa-fw"></i>
+                           <div class="pull-left">
+                           		<i class="fa glyphicon glyphicon-user fa-fw"></i> 
+                               <div class="btn-group">
+                                   <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                       {{vm.activeInput}}
+                                       <span class="caret"></span>
+                                   </button>
+                                   <ul class="dropdown-menu pull-right" role="menu">
+                                       <li ng-click="vm.showUsers()"><a>Users</a>
+                                       </li>
+                                       <li ng-click="vm.showAdmins()"><a>Admins</a>
+                                       </li>
+                                       
+                                   </ul>
+                               </div>
+                           </div>
+                           <div ng-if="vm.showAdmin" class="pull-right">
+                           <!--  --><i class="fa glyphicon glyphicon-plus fa-fw" ui-sref="registerAdmin"></i>
+                            </div>
+                       </div>
+                       <!-- /.panel-heading -->
+                       <div class="panel-body">
+                          <div ng-show="vm.showUser">
 							<div ng-include="'./partials/user/userListar.html'"></div>
 						</div>
-						<div ng-show="vm.showAdmin" class="pestanas ficha" id="pestanaF">
+						<div ng-show="vm.showAdmin" id="pestanaF">
 							<div ng-include="'./partials/user/adminListar.html'"></div>
 							
 						</div>
-					</ol>
-				</li>
-			</div>
-		
+                       </div>
+                       <!-- /.panel-body -->
+                   </div>
 		
 		</div>
 	</div>
 	
 	<div class="row">
+		<div class="col-md-6">
+      		<dir-pagination-controls ng-if="(vm.users.length > 1) || (vm.admins.length > 1)" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+      	</div>
+      	<div class="col-md-3">
+      		<div class="buscador"><input placeholder="Buscar..." ng-model="searchText"></div>
+      	</div>
+    </div>
+      
+  <!--  <div id="buscadorMasIcono" class="text-rigth">		       	 							 	
+		<div ng-show="vm.admins" class="buscador"><input placeholder="Buscar..." ng-model="searchText"></div>		
+		<div id="iconoAnadir" class="glyphicon glyphicon-plus right"  ui-sref="registerAdmin"></div>			
+	</div>  -->
+	
+	<!-- Mostrar mensajes informativos al usuario: Error, acción completada correctamente, etc. -->	
+	<div class="row">
 		<div class="col-md-9">
-			<div ng-if="vm.infoCuenta.length > 1" class="pull-center alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
+			<div ng-if="vm.infoCuenta.length" class="pull-center alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
 		</div>
 	</div>
+	
+
+      

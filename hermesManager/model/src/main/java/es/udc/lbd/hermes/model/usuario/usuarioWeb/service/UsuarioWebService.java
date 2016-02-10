@@ -7,11 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
+import es.udc.lbd.hermes.model.usuario.exceptions.EnlaceCaducadoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
+import es.udc.lbd.hermes.model.util.exceptions.DuplicateEmailException;
 
 
 public interface UsuarioWebService extends UserDetailsService {
@@ -34,10 +36,10 @@ public interface UsuarioWebService extends UserDetailsService {
 	
 	public UserDetails loadUserByUsername(String username);
 	
-	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale, boolean isAdmin) throws NoExiteNingunUsuarioMovilConSourceIdException;
+	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale, boolean isAdmin) throws NoExiteNingunUsuarioMovilConSourceIdException, DuplicateEmailException;
 	
 	public UsuarioWeb updateUser(UserJSON userJSON, Long id);
 	
-	public void activarCuenta(String email, String hash) throws ActivarCuentaException;
+	public void activarCuenta(String email, String hash) throws ActivarCuentaException, EnlaceCaducadoException;
 
 }

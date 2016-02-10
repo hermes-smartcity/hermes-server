@@ -14,6 +14,9 @@
 	vm.deleteUser = deleteUser;
 	vm.showAdmin = false;
 	vm.showUser = true;
+	vm.activeInput = 'Users';
+	vm.users = [];
+	vm.admins = [];
 	
 	vm.showUsers();
 	
@@ -22,24 +25,23 @@
 		vm.error = null;
 		var idUsers = -1;
 		var idAdmins = -1;
+		
 		if(typeof vm.users != "undefined")
-			vm.users.indexOf(usuario);
+			idUsers = vm.users.indexOf(usuario);
 		
 		if(typeof vm.admins != "undefined")
-			vm.admins.indexOf(usuario);
+			idAdmins = vm.admins.indexOf(usuario);
 		
 		userService.deleteUser(usuario.id).then(deleteUserComplete);	
 		
 		function deleteUserComplete(response) {
 			
-			if(idUsers!=-1){
+			if(idUsers!=-1)
 				vm.users.splice(idUsers,1);
-				console.log("idUsers");
-			}
-			if(idAdmins!=-1){
+			
+			if(idAdmins!=-1)
 				vm.admins.splice(idAdmins,1);
-				console.log("idAdmins");
-			}
+			
 			vm.infoCuenta = response.data;
 		}
 		
@@ -48,24 +50,25 @@
 	function showAdmins() {	
 		vm.showAdmin = true;
 		vm.showUser = false;
+		vm.activeInput = 'Admins';
 		$http.get(url_admins).success(function(data) {
-			vm.admins = data;
-			paginarUsuarios();			
+			vm.admins = data;				
 		});
+		paginarUsuarios();	
 	}
 	
 	function showUsers() {	
 		vm.showAdmin = false;
 		vm.showUser = true;
-	
+		vm.activeInput = 'Users';
 		$http.get(url_users).success(function(data) {
-			vm.users = data;
-			paginarUsuarios();			
+			vm.users = data;					
 		});
+		paginarUsuarios();	
 	}
 
 	  
-	  function paginarUsuarios() {		  
+	  function paginarUsuarios() {
 		  vm.currentPage = 1;
 		  vm.pageSize = 10;
 	  }

@@ -34,6 +34,8 @@
 	vm.onTimeSetEnd = onTimeSetEnd;
 	vm.showCalendarStart = false;
 	vm.showCalendarEnd = false;
+	vm.activeInput = 'Mapa';
+	
 	
 	eventsService.getStateActualizado().then(getStateActualizadoComplete);
 	
@@ -77,11 +79,13 @@
 	function mostrarMapa() {	
 		vm.showMap = true;
 		vm.showTab = false;
+		vm.activeInput = 'Mapa';
 	}
 	
 	function mostrarTabla() {	
 		vm.showMap = false;
 		vm.showTab = true;
+		vm.activeInput = 'Tabla';
 	}
 	
 	function aplicarFiltros() {		

@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.usuario.usuarioWeb.service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.mail.EmailService;
 import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
+import es.udc.lbd.hermes.model.usuario.exceptions.EnlaceCaducadoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
@@ -27,6 +29,9 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.dao.UsuarioWebDao;
 import es.udc.lbd.hermes.model.util.ReadPropertiesFile;
+import es.udc.lbd.hermes.model.util.UserUtils;
+import es.udc.lbd.hermes.model.util.VerificationToken;
+import es.udc.lbd.hermes.model.util.exceptions.DuplicateEmailException;
 
 
 @Service("usuarioWebService")
@@ -45,6 +50,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	@Autowired
 	public MessageSource messageSource;
 	
+	public static final long MILISEGUNDOS_EXPIRACION_ENLACE_ACTIVACION = 1000 * 60 * 30 ;
 	private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
 	
 	@Override
@@ -126,9 +132,12 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 	
 
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
-	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale, boolean isAdmin) throws NoExiteNingunUsuarioMovilConSourceIdException{
+	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale, boolean isAdmin) throws NoExiteNingunUsuarioMovilConSourceIdException, DuplicateEmailException{
 		UsuarioWeb usuario = new UsuarioWeb();
 		UsuarioMovil usuarioMovil = recuperarUsarioMovilExistente(userJSON.getEmail());
+		if (usuarioWebDao.findByEmail(userJSON.getEmail()) != null) {
+			throw new DuplicateEmailException(userJSON.getEmail());
+		}
 		// Existe un usuario movil con ese email, podemos crear el usuario web y asociarlo
 		if(usuarioMovil!=null){			
 			usuario.setEmail(userJSON.getEmail());
@@ -173,16 +182,33 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		return usuarioWeb;
 	}
 	
-	// Activar cuenta de un usuario tras registrarse y recibir un mail con el enlace que lleva hasta este service
-	public void activarCuenta(String email, String hash) throws ActivarCuentaException{		
-		UsuarioWeb usuario = usuarioWebDao.findByEmail(email);
-		if(usuario == null || usuario.isEnabled() || !generarHash(email).equals(hash))
-			throw new ActivarCuentaException();
-		usuario.setActivado(true);
-		usuarioWebDao.update(usuario);
-	}
+//	// Activar cuenta de un usuario tras registrarse y recibir un mail con el enlace que lleva hasta este service
+//	public void activarCuenta(String email, String hash) throws ActivarCuentaException{		
+//		UsuarioWeb usuario = usuarioWebDao.findByEmail(email);
+//		if(usuario == null || usuario.isEnabled() || !generarHash(email).equals(hash))
+//			throw new ActivarCuentaException();
+//		usuario.setActivado(true);
+//		usuarioWebDao.update(usuario);
+//	}
 
-	
+	@Override
+	public void activarCuenta(String email, String codigo) throws ActivarCuentaException, EnlaceCaducadoException {
+
+		String emailNormalizado = UserUtils.normalizarLogin(email);
+
+		UsuarioWeb usuario = usuarioWebDao.findByEmail(email);
+
+		VerificationToken verificationToken = new VerificationToken(codigo);
+		if (usuario == null || !emailNormalizado.equals(verificationToken.getEmail())) {
+			throw new ActivarCuentaException();
+		}
+
+		if (verificationToken.getFechaExpiracion().before(Calendar.getInstance())) {
+			throw new EnlaceCaducadoException();
+		}
+
+		usuario.setActivado(true);
+	}
 	
 	private String generarHash(String cadena){
 			String hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
@@ -200,22 +226,32 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		return passwordEncoder.encode(cadena.toString());  
 	}
 	
-	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){/*url: '/activarCuenta/email/:email/hash/:hash',*/
+	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){
+		//TODO falta normalizar login
+//		String emailNormalizado = UserUtils.normalizarLogin(usuarioWeb.getEmail());
+		
 		String urlActivacion = ReadPropertiesFile.getUrlViewLayer()+"activarCuenta/email/"+
 		 
-			 usuarioWeb.getEmail() + "/hash/" + generarHash(usuarioWeb.getEmail());
-		Object [] parametros = new Object[] {
-				usuarioWeb.getUsername(), usuarioWeb.getEmail(), usuarioWeb.getUsername(), 
-				urlActivacion, ""};
-		
-		String mensaxe = messageSource.getMessage(
+			 usuarioWeb.getEmail() +"/hash/"
+				+ generarCodigoActivacion(usuarioWeb.getEmail(), MILISEGUNDOS_EXPIRACION_ENLACE_ACTIVACION);
+
+		Object [] parametros = new Object[] {usuarioWeb.getEmail(), "Hermes Manager ", urlActivacion};
+
+		String mensaje = messageSource.getMessage(
 				"eventManager.usuario.pagina.registrar.activacionEmail.texto", parametros, locale);
-		String mensaxeHTML = messageSource.getMessage(
+		String mensajeHTML = messageSource.getMessage(
 				"eventManager.usuario.pagina.registrar.activacionEmail.html", parametros, locale);
-				
-		String asunto = "Asunto del mail";
+			String asunto = "Activación cuenta Hermes Manager";
 		
-		emailService.enviarCorreo(usuarioWeb.getEmail(), asunto, mensaxe, mensaxeHTML);
+		
+		emailService.enviarCorreo(usuarioWeb.getEmail(), asunto, mensaje, mensajeHTML);
 	}
+	
+
+	private String generarCodigoActivacion(String email, long milisegundosExpiracion) {
+		VerificationToken verificationToken = new VerificationToken(email, milisegundosExpiracion);
+		return verificationToken.getCodigo();
+	}
+
 	
 }

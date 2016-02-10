@@ -18,7 +18,7 @@ td.enum, th.enum{
 	width:180px;
 }
 
-/* Taboa de tramos */
+/* Taboa de tramos 
 table.tramos td {
 	vertical-align: top;
 	padding-left: 9px;
@@ -118,18 +118,15 @@ td.categoriaver{
 td.categoriaver a{
 	text-decoration: none;
 }
-
-/* Taboas alternable */
+*/
+/* Taboas alternable 
 
 fieldset table.alternable {
 	margin: 10px;
 	width: 98%;
 }
 
-#map{
-	height:750px;
-	width: 100%;
-}
+
  
 #calendarioHoras {
 	background-color: white;
@@ -137,6 +134,12 @@ fieldset table.alternable {
 
 #calendarioHoras .datetimepicker .table td, #calendarioHoras .datetimepicker .table th {
   border-radius: 0px;
+}
+*/
+
+#map{
+	height:750px;
+	width: 100%;
 }
 
 #selectUsers{
@@ -254,4 +257,19 @@ fieldset table.alternable {
 {
     display: block;
     margin-top: 10px;
+}
+
+/* submenu */
+
+ol.submenu {
+	margin-bottom: 15px;
+}
+
+ol.submenu li  {
+	display: inline;
+}
+
+ol.submenu li.activo a,ol.submenu li.activo span {
+	font-weight: bold;
+	text-decoration: none;
 }

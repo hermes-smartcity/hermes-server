@@ -3,7 +3,7 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-xs-12">
+						<div ng-if="hasRole('ROLE_ADMIN')" class="col-xs-12">
 							<strong>Event Manager:</strong><span class="pull-right">{{vm.active.value}}</span>
 						</div>
 					</div>
@@ -119,32 +119,51 @@
 	<div class="row">
 		<div class="col-md-9">
 			<div>
-				<li class="pestanas pestanasFormulario">
-					<ol class="pestanas selectoresFormulario">
-						<li  ng-click="vm.mostrarMapa()"  ng-class="{ 'activa':  vm.showMap }" class="pestanas selector">Mapa</li>
-						<li ng-click="vm.mostrarTabla()"  ng-class="{ 'activa':  vm.showTab }" class="pestanas selector" id="selectorF">Tabla</li>
-					</ol>
-					<ol class="pestanas fichas">
-						<div ng-show="vm.showMap" class="pestanas ficha">
-							<div id="map">
+			
+			<div class="panel panel-default">
+                       <div class="panel-heading">	
+                            <i class="fa glyphicon fa-fw"></i>
+                           <div class="pull-left">
+                           		<i class="fa glyphicon glyphicon glyphicon-eye-open fa-fw"></i> 
+                               <div class="btn-group">
+                                   <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                       {{vm.activeInput}}
+                                       <span class="caret"></span>
+                                   </button>
+                                   <ul class="dropdown-menu pull-right" role="menu">
+                                       <li ng-click="vm.mostrarMapa()" ><a>Mapa</a>
+                                       </li>
+                                       <li ng-click="vm.mostrarTabla()"><a>Tabla</a>
+                                       </li>
+                                       
+                                   </ul>
+                               </div>
+                           </div>
+                           <div ng-if="vm.showAdmin" class="pull-right">
+                           <!--  --><i class="fa glyphicon  fa-fw"></i>
+                            </div>
+                       </div>
+                       <!-- /.panel-heading -->
+                       <div class="panel-body">
+	                       <div ng-show="vm.showMap">
+								<div id="map">
+								</div>
 							</div>
-						</div>
-						<div ng-show="vm.showTab" class="pestanas ficha" id="pestanaF">
-								<div ng-show="vm.eventTypeSelected == 'VEHICLE_LOCATION'">
-									<div ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'"></div>
-								</div>
-								<div ng-show="vm.eventTypeSelected == 'DATA_SECTION'">
-								<div ng-include="'./partials/dataSection/dataSectionListar.html'"></div>
-								</div>
-								<div ng-show="((vm.eventTypeSelected == 'HIGH_SPEED') || (vm.eventTypeSelected == 'HIGH_SPEED') || 
-						     				(vm.eventTypeSelected == 'HIGH_DECELERATION') || (vm.eventTypeSelected == 'HIGH_HEART_RATE'))">
-									<div ng-include="'./partials/measurement/measurementListar.html'"></div>
-								</div>
-							
-							
-						</div>
-					</ol>
-				</li>
+                       		<div ng-show="vm.showTab">
+	                        	<div ng-show="vm.eventTypeSelected == 'VEHICLE_LOCATION'">
+										<div ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'"></div>
+									</div>
+									<div ng-show="vm.eventTypeSelected == 'DATA_SECTION'">
+									<div ng-include="'./partials/dataSection/dataSectionListar.html'"></div>
+									</div>
+									<div ng-show="((vm.eventTypeSelected == 'HIGH_SPEED') || (vm.eventTypeSelected == 'HIGH_SPEED') || 
+							     				(vm.eventTypeSelected == 'HIGH_ACCELERATION') || (vm.eventTypeSelected == 'HIGH_DECELERATION') || (vm.eventTypeSelected == 'HIGH_HEART_RATE'))">
+										<div ng-include="'./partials/measurement/measurementListar.html'"></div>
+									</div>
+							</div>
+                       </div>
+                       <!-- /.panel-body -->
+                   </div>
 			</div>
 		</div>
 			<div class="cabeceraFiltro col-md-3">
