@@ -52,7 +52,7 @@ UsuarioMovilDao {
 				Calendar dateHasta = FechaUtil.getHoy();
 				Calendar fechaDesde = FechaUtil.getAnteriorSemana(dateHasta);
 				
-				String queryStr =  "select count(u) from UsuarioMovil u where u.id in (select v.usuarioMovil.id from VehicleLocation v where ";
+				String queryStr =  "select count(*) from UsuarioMovil u where u.id in (select v.usuarioMovil.id from VehicleLocation v where ";
 				
 				if(fechaDesde!=null)
 					queryStr += " v.timestamp > :fechaDesde ";
