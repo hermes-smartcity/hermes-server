@@ -118,7 +118,10 @@
       		<dir-pagination-controls ng-if="(vm.users.length > 1) || (vm.admins.length > 1)" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
       	</div>
       	<div class="col-md-3">
-      		<div class="buscador"><input placeholder="Buscar..." ng-model="searchText"></div>
+      		<!-- Buscador/filtro para usuarios consulta -->
+      		<div ng-if="!vm.showAdmin" class="buscador"><input placeholder="Buscar..." ng-model="vm.searchText"></div>
+      		<!-- Buscador/filtro para administradores -->
+      		<div ng-if="vm.showAdmin" class="buscador"><input placeholder="Buscar..." ng-model="vm.searchTextAdmin"></div>
       	</div>
     </div>
       

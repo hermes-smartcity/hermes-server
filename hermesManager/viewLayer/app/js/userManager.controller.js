@@ -17,6 +17,8 @@
 	vm.activeInput = 'Users';
 	vm.users = [];
 	vm.admins = [];
+	vm.searchText ='';
+	vm.searchTextAdmin='';
 	
 	vm.showUsers();
 	
