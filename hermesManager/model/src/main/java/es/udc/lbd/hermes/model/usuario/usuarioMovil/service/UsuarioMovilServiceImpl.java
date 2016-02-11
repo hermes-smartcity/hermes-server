@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +56,20 @@ public class UsuarioMovilServiceImpl implements UsuarioMovilService {
 	public UsuarioMovil getBySourceId(String sourceId) {
 		return usuarioMovilDao.findBySourceId(sourceId);
 	}
+	
+
+	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public long contar(){
+		return usuarioMovilDao.contar();
+	}
+	
+	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public long getNumberActiveUsers(){
+		return usuarioMovilDao.getNumberActiveUsers();
+	}
+	
 	
 	private String generarHash(String cadena){	
 			String hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));

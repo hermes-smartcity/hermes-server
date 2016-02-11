@@ -158,6 +158,12 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		return usuario;
 	}
 	
+	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public long contar(){
+		return usuarioWebDao.contar();
+	}
+	
 	@Secured({ "ROLE_ADMIN" })
 	public UsuarioWeb updateUser(UserJSON userJSON, Long id){
 		UsuarioWeb usuarioWeb = usuarioWebDao.get(id);
@@ -166,7 +172,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		usuarioWeb.setRol(usuarioWeb.getRol());
 		usuarioWeb.setActivado(true);
 		
-		//Modificamos la contraseña
+		// Modificamos la contraseña
 		if(userJSON.getPassword()!=null && !userJSON.getPassword().isEmpty())
 			usuarioWeb.setPassword(generarHashPassword(userJSON.getPassword()));
 		

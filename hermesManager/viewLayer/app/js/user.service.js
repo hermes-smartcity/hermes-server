@@ -15,7 +15,10 @@
 			getRoles: getRoles,
 			getUsers : getUsers,
 			getUserToModify: getUserToModify,
-			getInfoCuenta: getInfoCuenta
+			getInfoCuenta: getInfoCuenta,
+			getTotalMUsers: getTotalMUsers,
+			getTotalWebUsers: getTotalWebUsers,
+			getNumberActiveUsers: getNumberActiveUsers
 		};
 
 		return service;
@@ -99,6 +102,42 @@
 				method : 'GET',
 				url : url_infoCuenta+"?email="+email+"&hash="+hash
 			});
+		}
+		
+		function getTotalMUsers() {
+			return $http.get(url_contarUsuariosMovil)
+				.then(getTotalMUsersComplete)
+				.catch(getTotalMUsersFailed);
+			function getTotalMUsersComplete(response) {
+				return response.data;
+			}
+			function getTotalMUsersFailed(error) {
+				$log.error('XHR Failed for getTotalMUsers.' + error.data);
+			}
+		}
+		
+		function getTotalWebUsers() {
+			return $http.get(url_contarUsuariosWeb)
+				.then(getTotalWebUsersComplete)
+				.catch(getTotalWebUsersFailed);
+			function getTotalWebUsersComplete(response) {
+				return response.data;
+			}
+			function getTotalWebUsersFailed(error) {
+				$log.error('XHR Failed for getTotalWebUsers.' + error.data);
+			}
+		}
+		
+		function getNumberActiveUsers() {
+			return $http.get(url_numberActiveUsers)
+				.then(getNumberActiveUsersComplete)
+				.catch(getNumberActiveUsersFailed);
+			function getNumberActiveUsersComplete(response) {
+				return response.data;
+			}
+			function getNumberActiveUsersFailed(error) {
+				$log.error('XHR Failed for getNumberActiveUsers.' + error.data);
+			}
 		}
 	}
 })();

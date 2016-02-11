@@ -8,6 +8,7 @@
 		    </tr>
 		  </thead>
 		<tr>
+	
 		  <tbody dir-paginate="user in vm.users | orderBy:'email' | filter:vm.searchText | itemsPerPage: vm.pageSize " 
 		  		current-page="vm.currentPage">
 		     <tr>

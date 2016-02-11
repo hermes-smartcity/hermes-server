@@ -23,6 +23,7 @@ import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.service.UsuarioMovilService;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
 @CrossOrigin
 @RestController
@@ -32,6 +33,8 @@ public class DashboardJSONController extends MainResource {
 	static Logger logger = Logger.getLogger(DashboardJSONController.class);
 	
 	@Autowired private UsuarioMovilService usuarioMovilService;
+	
+	@Autowired private UsuarioWebService usuarioWebService;
 	
 	@Autowired private EventService eventService;
 	
@@ -53,6 +56,27 @@ public class DashboardJSONController extends MainResource {
 			return Arrays.asList(MeasurementType.values());
 		}
 
+		@RequestMapping(value="/json/contarUsuariosMovil", method = RequestMethod.GET)
+		public JSONData getContarUsuariosMovil() {
+			JSONData jsonData = new JSONData();
+			jsonData.setValueL(usuarioMovilService.contar());
+			return jsonData;
+		}
+		
+		@RequestMapping(value="/json/contarUsuariosWeb", method = RequestMethod.GET)
+		public JSONData getContarUsuariosWeb() {
+			JSONData jsonData = new JSONData();
+			jsonData.setValueL(usuarioWebService.contar());
+			return jsonData;
+		}
+		
+		@RequestMapping(value="/json/numberActiveUsers", method = RequestMethod.GET)
+		public JSONData getNumberActiveUsers() {
+			JSONData jsonData = new JSONData();
+			jsonData.setValueL(usuarioMovilService.getNumberActiveUsers());
+			return jsonData;
+		}
+		
 		@RequestMapping(value="/json/usuarios", method = RequestMethod.GET)
 		public List<UsuarioMovil> getUsuarios() {
 			return usuarioMovilService.obterUsuariosMovil();

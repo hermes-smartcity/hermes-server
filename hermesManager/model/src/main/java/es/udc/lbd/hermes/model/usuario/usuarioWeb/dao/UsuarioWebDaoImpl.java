@@ -52,5 +52,11 @@ UsuarioWebDao {
 		}		
 	}
 	
+	@Override
+	public long contar() {
+		return (Long) getSession()
+				.createQuery("select count(*) from UsuarioWeb")
+				.uniqueResult();
+	}
 	
 }

@@ -19,4 +19,8 @@ public interface UsuarioMovilService {
 	public List<UsuarioMovil> obterUsuariosMovil();
 	
 	public UsuarioMovil getBySourceId(String sourceId);
+	
+	public long contar();
+	
+	public long getNumberActiveUsers();
 }

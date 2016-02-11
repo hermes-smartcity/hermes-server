@@ -9,5 +9,7 @@ public interface UsuarioMovilDao extends GenericDao<UsuarioMovil, Long> {
 	
 	public List<UsuarioMovil> obterUsuariosMovil();
 	public UsuarioMovil findBySourceId(String sourceId);
+	public long contar();
+	public long getNumberActiveUsers();
 
 }

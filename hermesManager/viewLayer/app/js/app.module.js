@@ -66,6 +66,15 @@
 				usuarios: ['eventsService', function(eventsService) {
 					return eventsService.getUsuarios();
 				}],
+				totalMUsers: ['userService', function(userService) {
+					return userService.getTotalMUsers();
+				}],
+				totalWebUsers: ['userService', function(userService) {
+					return userService.getTotalWebUsers();
+				}],
+				numberActiveUsers: ['userService', function(userService) {
+					return userService.getNumberActiveUsers();
+				}],
 				measurementsType: ['eventsService', function(eventsService) {
 					return eventsService.getMeasurementsType();
 				}],

@@ -3,11 +3,11 @@
 
 	angular.module('app').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios' ,'measurementsType', 
-	                               'eventsToday', 'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF' ,
-	                               '$http', '$timeout', '$log', '$filter', 'eventsService'];
+	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 'numberActiveUsers',
+	                               'measurementsType', 'eventsToday', 'eventoProcesado' ,'totalL', 'totalDS', 
+	                               'totalM', 'totalDF', '$http', '$timeout', '$log', '$filter', 'eventsService'];
 
-	function DashboardController($scope, eventsType, usuarios, measurementsType,  
+	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, numberActiveUsers, measurementsType,  
 			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF , $http, $timeout, $log, $filter, eventsService) {
 	
 	var vm = this;
@@ -19,6 +19,9 @@
 	vm.aplicarFiltros = aplicarFiltros;
 	vm.eventsType = eventsType;
 	vm.usuarios = usuarios;
+	vm.totalMUsers = totalMUsers;
+	vm.totalWebUsers = totalWebUsers;
+	vm.numberActiveUsers = numberActiveUsers;
 	vm.measurementsType = measurementsType;
 	vm.eventsToday = eventsToday;
 	vm.eventoProcesado = eventoProcesado;

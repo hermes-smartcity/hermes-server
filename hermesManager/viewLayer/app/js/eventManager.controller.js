@@ -62,7 +62,7 @@
 		// vehicle Locations
 		vm.eventTypeSelected = "VEHICLE_LOCATION";
 		vm.startDate = new Date();
-		// Inicializamos la fecha de inicio a la de ayer
+		// Inicializamos la fecha de inicio a la del mes anterior
 		vm.startDate.setDate(vm.startDate.getDate() - 31);
 		vm.endDate = new Date();
 		

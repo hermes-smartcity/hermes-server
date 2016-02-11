@@ -12,4 +12,5 @@ public interface UsuarioWebDao extends GenericDao<UsuarioWeb, Long> {
 	public List<UsuarioWeb> obterUsuariosWebSegunRol(Rol rol);
 	public UsuarioWeb findBySourceId(String sourceId);
 	public UsuarioWeb findByEmail(String email);
+	public long contar();
 }

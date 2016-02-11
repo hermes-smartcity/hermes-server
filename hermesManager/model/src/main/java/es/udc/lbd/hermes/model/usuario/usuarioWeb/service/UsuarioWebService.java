@@ -38,8 +38,10 @@ public interface UsuarioWebService extends UserDetailsService {
 	
 	public UsuarioWeb registerUser(UserJSON userJSON, Locale locale, boolean isAdmin) throws NoExiteNingunUsuarioMovilConSourceIdException, DuplicateEmailException;
 	
+	public long contar();
+	
 	public UsuarioWeb updateUser(UserJSON userJSON, Long id);
 	
 	public void activarCuenta(String email, String hash) throws ActivarCuentaException, EnlaceCaducadoException;
-
+	
 }
