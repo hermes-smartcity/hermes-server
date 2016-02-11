@@ -49,23 +49,25 @@ UsuarioMovilDao {
 	@Override
 	public long getNumberActiveUsers(){
 	
-				Calendar dateHasta = FechaUtil.getHoy();
+				// Se supone que no vamos a tener eventos guardados posteriores a la fecha de ahora mismo por supuesto. 
+				// Por lo tanto no se limita la fechaHasta 
+				Calendar dateHasta = FechaUtil.getHoy();				
 				Calendar fechaDesde = FechaUtil.getAnteriorSemana(dateHasta);
 				
-				String queryStr =  "select count(*) from UsuarioMovil u where u.id in (select v.usuarioMovil.id from VehicleLocation v where ";
+				String queryStr =  "select count(*) from UsuarioMovil u where u.id in (select distinct v.usuarioMovil.id from VehicleLocation v where ";
 				
 				if(fechaDesde!=null)
-					queryStr += " v.timestamp > :fechaDesde ";
+					queryStr += " v.timestamp > :fechaDesde)";
 				
-				if(dateHasta!=null)
-					queryStr += "and v.timestamp < :dateHasta)";
+//				if(dateHasta!=null)
+//					queryStr += "and v.timestamp < :dateHasta)";
 				
 				Query query = getSession().createQuery(queryStr);
 		
 				if(fechaDesde!=null)
 					 query.setCalendar("fechaDesde", fechaDesde);
-				if(dateHasta!=null)
-					query.setCalendar("dateHasta", dateHasta);
+//				if(dateHasta!=null)
+//					query.setCalendar("dateHasta", dateHasta);
 				
 				return (long) query.uniqueResult();
 			
