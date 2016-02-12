@@ -1,26 +1,26 @@
 <h1 class="col-md-12" id="breadcrumbs" class="page-header"> Registro </h1>
 
 <form name="registerForm" class="col-md-4" role="form" ng-submit="vm.register()">
-	<div class="form-group">
+	<fieldset  class="form-group">
 		<label for="username">Email:</label> <input type="email"
 			class="form-control"  id="email" name="email" ng-model="vm.email" required/>
-	</div>
+	</fieldset >
 	
 <!-- 	<div  ng-show="{{registerForm.email.$valid}} == false" class="alert alert-danger form-group"> -->
 <!-- 		Formato email erróneo -->
 <!-- 	</div> -->
 	
-	<div class="form-group">
+	<fieldset  class="form-group">
 		<label for="password">Password:</label> <input type="password"
 			class="form-control" id="password" name="password" ng-model="vm.password"/>
-	</div>
+	</fieldset >
 
-	<div class="form-group">
+	<fieldset  class="form-group">
 		<button type="submit" class="btn btn-primary">Registrar</button>
-	</div>
+	</fieldset >
 	
-	<div class="form-group">
+	<fieldset  class="form-group">
 		<div ng-if="vm.infoCuenta" class="alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
-	</div>
+	</fieldset >
 		
 </form>
