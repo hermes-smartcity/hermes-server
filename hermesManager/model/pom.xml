@@ -57,10 +57,10 @@
 			<artifactId>javassist</artifactId>
 		</dependency>
 		<!--Conexion a base de datos -->
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-		</dependency>
+			<dependency>
+				<groupId>com.mchange</groupId>
+				<artifactId>c3p0</artifactId>
+			</dependency>
 		<!-- the postgresql driver -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -110,10 +110,6 @@
 		</dependency>
 
 		<!-- Jackson -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
@@ -169,6 +165,10 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/test/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>

@@ -3,7 +3,8 @@
     "High Speed": {
         "latitude": 43.49828428,
         "value": 101.7,
-        "longitude": -8.21510772
+        "longitude": -8.21510772,
+		"accuracy": 2.5
     }
 },
     "Timestamp": "2015-06-08T18:21:16+02:00",

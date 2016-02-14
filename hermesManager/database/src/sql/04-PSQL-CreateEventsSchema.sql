@@ -11,12 +11,11 @@ CREATE TABLE usuario_movil(
   CONSTRAINT usuario_movil_id_pk PRIMARY KEY (id)
 );
 
--- usuario_web --
 drop table if exists usuario_web cascade;
 drop sequence if exists usuario_web_id_seq cascade;
 create sequence usuario_web_id_seq;
 
-
+-- usuario_web --
 CREATE TABLE usuario_web(
   id bigint NOT NULL DEFAULT nextval('usuario_web_id_seq'::regclass),
   rol VARCHAR(32),
@@ -30,17 +29,15 @@ CREATE TABLE usuario_web(
 ;
 
 -- measurement --
-drop table if exists measurement cascade
-;
-drop sequence if exists measurement_id_seq cascade
-;
-create sequence measurement_id_seq
-;
+drop table if exists measurement cascade;
+drop sequence if exists measurement_id_seq cascade;
+create sequence measurement_id_seq;
 
 CREATE TABLE measurement (
   id bigint NOT NULL DEFAULT nextval('measurement_id_seq'::regclass),
   timestamp timestamp without time zone,
   position geometry(POINT, 4326),
+  accuracy double precision,
   eventId VARCHAR(50) NOT NULL,
   tipo VARCHAR(20) NOT NULL,
   value double precision,
@@ -50,19 +47,16 @@ CREATE TABLE measurement (
 )
 ;
 
-
 -- vehicleLocation --
-drop table if exists vehicleLocation cascade
-;
-drop sequence if exists vehicleLocation_id_seq cascade
-;
-create sequence vehicleLocation_id_seq
-;
+drop table if exists vehicleLocation cascade;
+drop sequence if exists vehicleLocation_id_seq cascade;
+create sequence vehicleLocation_id_seq;
 
 CREATE TABLE vehicleLocation (
   id bigint NOT NULL DEFAULT nextval('vehicleLocation_id_seq'::regclass),
   timestamp timestamp without time zone,
   position geometry(POINT, 4326),
+  accuracy double precision,
   eventId VARCHAR(50) NOT NULL,
   idUsuarioMovil BIGINT,
   CONSTRAINT idvehicleLocation_pk PRIMARY KEY (id),
@@ -72,17 +66,15 @@ CREATE TABLE vehicleLocation (
 
 
 -- dataSection --
-drop table if exists dataSection cascade
-;
-drop sequence if exists dataSection_id_seq cascade
-;
-create sequence dataSection_id_seq
-;
+drop table if exists dataSection cascade;
+drop sequence if exists dataSection_id_seq cascade;
+create sequence dataSection_id_seq;
 
 CREATE TABLE dataSection (
   id bigint NOT NULL DEFAULT nextval('dataSection_id_seq'::regclass),
   timestamp timestamp without time zone,
-  roadSection geometry(LineString,4326), 
+  roadSection geometry(LineString,4326),
+  accuracy double precision[],
   eventId VARCHAR(50) NOT NULL,
    minSpeed double precision,
    maxSpeed double precision,
@@ -102,12 +94,9 @@ CREATE TABLE dataSection (
 
 -- driverFeatures --
 
-drop table if exists driverFeatures cascade
-;
-drop sequence if exists driverFeatures_id_seq cascade
-;
-create sequence driverFeatures_id_seq
-;
+drop table if exists driverFeatures cascade;
+drop sequence if exists driverFeatures_id_seq cascade;
+create sequence driverFeatures_id_seq;
 
 CREATE TABLE driverFeatures (
   id bigint NOT NULL DEFAULT nextval('driverFeatures_id_seq'::regclass),
@@ -125,12 +114,9 @@ CREATE TABLE driverFeatures (
 
 -- eventoProcesado --
 
-drop table if exists eventoProcesado cascade
-;
-drop sequence if exists eventoProcesado_id_seq cascade
-;
-create sequence eventoProcesado_id_seq
-;
+drop table if exists eventoProcesado cascade;
+drop sequence if exists eventoProcesado_id_seq cascade;
+create sequence eventoProcesado_id_seq;
 
 CREATE TABLE eventoProcesado (
   id bigint NOT NULL DEFAULT nextval('eventoProcesado_id_seq'::regclass),
@@ -142,12 +128,9 @@ CREATE TABLE eventoProcesado (
 --
 -- SmartCitizen: Sleep Data
 --
-drop table if exists sleepdata cascade
-;
-drop sequence if exists sleepdata_id_seq cascade
-;
-create sequence sleepdata_id_seq
-;
+drop table if exists sleepdata cascade;
+drop sequence if exists sleepdata_id_seq cascade;
+create sequence sleepdata_id_seq;
 
 CREATE TABLE sleepdata (
   id bigint NOT NULL DEFAULT nextval('sleepdata_id_seq'::regclass),
@@ -166,12 +149,9 @@ CREATE TABLE sleepdata (
 --
 -- SmartCitizen: Steps Data
 --
-drop table if exists stepsdata cascade
-;
-drop sequence if exists stepsdata_id_seq cascade
-;
-create sequence stepsdata_id_seq
-;
+drop table if exists stepsdata cascade;
+drop sequence if exists stepsdata_id_seq cascade;
+create sequence stepsdata_id_seq;
 
 CREATE TABLE stepsdata (
   id bigint NOT NULL DEFAULT nextval('stepsdata_id_seq'::regclass),
@@ -187,12 +167,9 @@ CREATE TABLE stepsdata (
 --
 -- SmartCitizen: Heart Rate Data
 --
-drop table if exists heartratedata cascade
-;
-drop sequence if exists heartratedata_id_seq cascade
-;
-create sequence heartratedata_id_seq
-;
+drop table if exists heartratedata cascade;
+drop sequence if exists heartratedata_id_seq cascade;
+create sequence heartratedata_id_seq;
 
 CREATE TABLE heartratedata (
   id bigint NOT NULL DEFAULT nextval('heartratedata_id_seq'::regclass),

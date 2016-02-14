@@ -27,6 +27,7 @@ public class HighSpeedEventStrategy extends EventStrategy {
 		Measurement measurement = new Measurement();
 		Geometry punto = HelpersModel.prepararPunto(ztreamyHighSpeed.getLatitude(),ztreamyHighSpeed.getLongitude());
 		measurement.setPosition((Point)punto);
+		measurement.setAccuracy(ztreamyHighSpeed.getAccuracy());
 		measurement.setValue(ztreamyHighSpeed.getValue());
 		measurement.setTipo(MeasurementType.HIGH_SPEED);
 		measurement.setEventId(event.getEventId());

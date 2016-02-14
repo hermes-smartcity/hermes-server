@@ -1,7 +1,8 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.vividsolutions.jts.geom.LineString;
@@ -18,8 +19,7 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 @Component
 public class DataSectionEventStrategy extends EventStrategy {
 
-//	private Logger logger = LoggerFactory.getLogger(getClass());
-	static Logger logger = Logger.getLogger(DataSectionEventStrategy.class);
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public void processEvent(Event event) {
@@ -42,6 +42,7 @@ public class DataSectionEventStrategy extends EventStrategy {
 			dataSection.setPke(ztreamyDataSection.getPke());
 			// TODO Falta decidir como se va a hacer
 			dataSection.setRoadSection((LineString) Helpers.prepararRuta(ztreamyDataSection.getRoadSection()));
+			dataSection.setAccuracy(Helpers.prepararPrecision(ztreamyDataSection.getRoadSection()));
 			dataSection.setEventId(event.getEventId());
 	
 			dataSection.setTimestamp(event.getTimestamp());

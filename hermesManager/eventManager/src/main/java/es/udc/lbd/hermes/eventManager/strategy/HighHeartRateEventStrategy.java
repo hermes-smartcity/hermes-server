@@ -29,6 +29,7 @@ public class HighHeartRateEventStrategy extends EventStrategy {
 		Measurement measurement = new Measurement();
 		Geometry punto = HelpersModel.prepararPunto(ztreamyHighHeartRate.getLatitude(),ztreamyHighHeartRate.getLongitude());
 		measurement.setPosition((Point)punto);
+		measurement.setAccuracy(ztreamyHighHeartRate.getAccuracy());
 		measurement.setValue(ztreamyHighHeartRate.getValue());
 		measurement.setTipo(MeasurementType.HIGH_HEART_RATE);
 		measurement.setEventId(event.getEventId());

@@ -13,9 +13,8 @@
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
-<!-- 		<org.springframework.security-version>3.2.10.CI-SNAPSHOT</org.springframework.security-version> -->
 		<org.springframework.security-version>4.0.0.RELEASE</org.springframework.security-version>
-		<hibernate.version>4.0.0.Final</hibernate.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- use the latest snapshot -->
         <geotools.version>14.0</geotools.version>
@@ -268,11 +267,11 @@
 			<version>3.4.GA</version>
 		</dependency>
 		<!--Conexion a base de datos -->
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
-		</dependency>
+			<dependency>
+				<groupId>com.mchange</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>0.9.5.2</version>
+			</dependency>
 		<!-- the postgresql driver -->
       	<dependency>
 			<groupId>org.postgresql</groupId>
