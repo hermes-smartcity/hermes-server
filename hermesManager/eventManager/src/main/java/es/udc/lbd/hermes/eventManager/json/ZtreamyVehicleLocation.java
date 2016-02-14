@@ -9,6 +9,8 @@ public class ZtreamyVehicleLocation extends EventData {
 	private Double latitude;
 	@JsonProperty("longitude")
 	private Double longitude;
+	@JsonProperty("accuracy")
+	private Double accuracy;
 	@JsonProperty("timeStamp")
 	private Calendar timeStamp;
 	
@@ -30,5 +32,10 @@ public class ZtreamyVehicleLocation extends EventData {
 	public void setTimeStamp(Calendar timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	
+	public Double getAccuracy() {
+		return accuracy;
+	}
+	public void setAccuracy(Double accuracy) {
+		this.accuracy = accuracy;
+	}	
 }

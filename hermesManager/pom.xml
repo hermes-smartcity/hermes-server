@@ -16,7 +16,7 @@
 		<org.springframework-version>4.0.0.RELEASE</org.springframework-version>
 		<org.springframework.security-version>4.0.2.CI-SNAPSHOT</org.springframework.security-version>
 		<org.slf4j-version>1.7.12</org.slf4j-version>
-		<hibernate.version>4.0.0.Final</hibernate.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- use the latest snapshot -->
 		<geotools.version>14.0</geotools.version>
@@ -212,7 +212,13 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-spatial</artifactId>
-				<version>4.0</version>
+				<version>4.3</version>
+		      <exclusions>
+		        <exclusion>
+		          <groupId>postgresql</groupId>
+		          <artifactId>postgresql</artifactId>
+		        </exclusion>
+		      </exclusions> 				
 			</dependency>
 			<!-- Hibernate -->
 			<dependency>
@@ -227,9 +233,9 @@
 			</dependency>
 			<!--Conexion a base de datos -->
 			<dependency>
-				<groupId>c3p0</groupId>
+				<groupId>com.mchange</groupId>
 				<artifactId>c3p0</artifactId>
-				<version>0.9.1.2</version>
+				<version>0.9.5.2</version>
 			</dependency>
 			<!-- the postgresql driver -->
 			<dependency>

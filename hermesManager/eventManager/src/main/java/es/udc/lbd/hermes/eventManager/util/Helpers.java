@@ -2,6 +2,7 @@ package es.udc.lbd.hermes.eventManager.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,15 @@ public class Helpers {
 		// Lo convertimos a GIS
 		ruta = HelpersModel.wktToGeometry(rutaStr);
 		return ruta;
+	}
+	
+	public static Double[] prepararPrecision(List<RoadSectionPoint> roadSection){
+		List<Double> precision = new ArrayList<Double>(); 
+		for(int i=0;i<roadSection.size();i++){
+			precision.add(roadSection.get(i).getAccuracy());
+		}
+		Double result[] = new Double[precision.size()];
+		return precision.toArray(result);
 	}
 	
 	public static Calendar getFecha(String fecha){

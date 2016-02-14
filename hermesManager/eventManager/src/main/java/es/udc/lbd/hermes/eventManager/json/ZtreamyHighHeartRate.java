@@ -7,6 +7,8 @@ public class ZtreamyHighHeartRate extends EventData {
 	private Double latitude;
 	@JsonProperty("longitude")
 	private Double longitude;
+	@JsonProperty("accuracy")
+	private Double accuracy;
 	@JsonProperty("value")
 	private Double value;
 
@@ -32,5 +34,11 @@ public class ZtreamyHighHeartRate extends EventData {
 
 	public void setValue(Double value) {
 		this.value = value;
+	}
+	public Double getAccuracy() {
+		return accuracy;
+	}
+	public void setAccuracy(Double accuracy) {
+		this.accuracy = accuracy;
 	}
 }

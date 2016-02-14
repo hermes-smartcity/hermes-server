@@ -10,6 +10,8 @@ public class RoadSectionPoint {
 	private Double latitude;
 	@JsonProperty("longitude")
 	private Double longitude;
+	@JsonProperty("accuracy")
+	private Double accuracy;
 	@JsonProperty("timeStamp")
 	private Calendar timestamp;
 	
@@ -30,6 +32,12 @@ public class RoadSectionPoint {
 	}
 	public void setTimestamp(Calendar timestamp) {
 		this.timestamp = timestamp;
+	}
+	public Double getAccuracy() {
+		return accuracy;
+	}
+	public void setAccuracy(Double accuracy) {
+		this.accuracy = accuracy;
 	}
 
 	

@@ -42,6 +42,7 @@ public class DataSectionEventStrategy extends EventStrategy {
 			dataSection.setPke(ztreamyDataSection.getPke());
 			// TODO Falta decidir como se va a hacer
 			dataSection.setRoadSection((LineString) Helpers.prepararRuta(ztreamyDataSection.getRoadSection()));
+			dataSection.setAccuracy(Helpers.prepararPrecision(ztreamyDataSection.getRoadSection()));
 			dataSection.setEventId(event.getEventId());
 	
 			dataSection.setTimestamp(event.getTimestamp());

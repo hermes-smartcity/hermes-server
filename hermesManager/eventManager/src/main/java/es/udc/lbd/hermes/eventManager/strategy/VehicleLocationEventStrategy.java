@@ -26,6 +26,7 @@ public class VehicleLocationEventStrategy extends EventStrategy {
 		VehicleLocation vehicleLocation = new VehicleLocation();	
 		Geometry punto = HelpersModel.prepararPunto(ztreamyVehicleLocation.getLatitude(), ztreamyVehicleLocation.getLongitude());
 		vehicleLocation.setPosition((Point)punto);
+		vehicleLocation.setAccuracy(ztreamyVehicleLocation.getAccuracy());
 		vehicleLocation.setEventId(event.getEventId());
 		
 		vehicleLocation.setTimestamp(ztreamyVehicleLocation.getTimeStamp());

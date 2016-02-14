@@ -44,6 +44,8 @@ public class VehicleLocation implements Serializable{
 		@JsonSerialize(using = CustomGeometrySerializer.class)
         @JsonDeserialize(using = CustomPointDeserializer.class)	
         private Point position;
+
+		private Double accuracy;
 		
 
 		@ManyToOne(fetch = FetchType.EAGER)
@@ -98,4 +100,11 @@ public class VehicleLocation implements Serializable{
 		public void setUsuario(Usuario usuario) {
 			this.usuario = usuario;
 		}		
+		public Double getAccuracy() {
+			return accuracy;
+		}
+
+		public void setAccuracy(Double accuracy) {
+			this.accuracy = accuracy;
+		}
 }

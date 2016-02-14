@@ -51,6 +51,8 @@ public class Measurement implements Serializable{
         private MeasurementType tipo;
         
         private Double value;
+        
+        private Double accuracy;
 
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuario")
@@ -115,4 +117,13 @@ public class Measurement implements Serializable{
 			this.usuario = usuario;
 		}
 
+		public Double getAccuracy() {
+			return accuracy;
+		}
+
+		public void setAccuracy(Double accuracy) {
+			this.accuracy = accuracy;
+		}
+
+		
 }

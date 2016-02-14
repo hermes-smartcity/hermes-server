@@ -65,6 +65,9 @@ public class DataSection implements Serializable{
         @JsonDeserialize(using = CustomMultiLineStringDeserializer.class)       
         private LineString roadSection;
         
+        @Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+        private Double[] accuracy;
+        
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuario")
     	private Usuario usuario;
@@ -196,5 +199,12 @@ public class DataSection implements Serializable{
 		public void setUsuario(Usuario usuario) {
 			this.usuario = usuario;
 		}
-		
+
+		public Double[] getAccuracy() {
+			return accuracy;
+		}
+
+		public void setAccuracy(Double[] accuracy) {
+			this.accuracy = accuracy;
+		}		
 }
