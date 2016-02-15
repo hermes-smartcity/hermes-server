@@ -1,6 +1,8 @@
 -- script update - postgres --
 
 -- usuario_movil --
+create sequence usuario_movil_id_seq;
+
 CREATE TABLE usuario_movil(
   id bigint NOT NULL DEFAULT nextval('usuario_movil_id_seq'::regclass),
   sourceId VARCHAR(160),
@@ -10,10 +12,14 @@ CREATE TABLE usuario_movil(
 -- Copiamos los valores de usuario a usuario_movil
 -- usuario_movil debe estar vacia
 
-INSERT INTO usuario_movil (sourceId) 
-SELECT sourceId FROM usuario;
+INSERT INTO usuario_movil (id, sourceId) 
+SELECT id, sourceId FROM usuario;
+
+SELECT setval('usuario_movil_id_seq'::regclass, (select max(id)+1 from usuario_movil))
 
 -- usuario_web --
+create sequence usuario_web_id_seq;
+
 CREATE TABLE usuario_web(
   id bigint NOT NULL DEFAULT nextval('usuario_web_id_seq'::regclass),
   rol VARCHAR(32),
@@ -78,14 +84,12 @@ ALTER TABLE sleepdata DROP CONSTRAINT idsleepdata_fk_usuario;
 ALTER TABLE sleepdata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE sleepdata ADD CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
-
 --
 -- SmartCitizen: Steps Data
 --
 ALTER TABLE stepsdata DROP CONSTRAINT idstepsdata_fk_usuario;
 ALTER TABLE stepsdata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE stepsdata ADD CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
-
 
 --
 -- SmartCitizen: Heart Rate Data
