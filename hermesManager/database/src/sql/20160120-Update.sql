@@ -95,13 +95,6 @@ ALTER TABLE heartratedata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE heartratedata ADD CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
 --
--- Eliminar tabla usuario si existe --
---
-
-DROP TABLE if exists usuario cascade;
-DROP sequence if exists usuario_id_seq cascade;
-
---
 -- UsuarioWeb columna activado - spring security
 --
 
