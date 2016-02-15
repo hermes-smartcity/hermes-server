@@ -1,10 +1,7 @@
 -- script update - postgres --
 
 -- usuario_movil --
-DROP TABLE if exists usuario_movil cascade;
-DROP sequence if exists usuario_movil_id_seq cascade;
 create sequence usuario_movil_id_seq;
-
 
 CREATE TABLE usuario_movil(
   id bigint NOT NULL DEFAULT nextval('usuario_movil_id_seq'::regclass),
@@ -15,14 +12,13 @@ CREATE TABLE usuario_movil(
 -- Copiamos los valores de usuario a usuario_movil
 -- usuario_movil debe estar vacia
 
-INSERT INTO usuario_movil (sourceId) 
-SELECT sourceId FROM usuario;
+INSERT INTO usuario_movil (id, sourceId) 
+SELECT id, sourceId FROM usuario;
+
+SELECT setval('usuario_movil_id_seq'::regclass, (select max(id)+1 from usuario_movil))
 
 -- usuario_web --
-DROP TABLE if exists usuario_web cascade;
-DROP sequence if exists usuario_web_id_seq cascade;
 create sequence usuario_web_id_seq;
-
 
 CREATE TABLE usuario_web(
   id bigint NOT NULL DEFAULT nextval('usuario_web_id_seq'::regclass),
@@ -33,8 +29,7 @@ CREATE TABLE usuario_web(
   CONSTRAINT usuario_web_u UNIQUE (email),
   CONSTRAINT usuario_web_pk PRIMARY KEY (id),
   CONSTRAINT usuario_movil_fk_usuario_web FOREIGN KEY (id_usuario_movil) REFERENCES usuario_movil(id) ON DELETE CASCADE
-)
-;
+);
 
 --
 -- LOGS: Visualizar el log de errores en la BD
@@ -89,7 +84,6 @@ ALTER TABLE sleepdata DROP CONSTRAINT idsleepdata_fk_usuario;
 ALTER TABLE sleepdata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE sleepdata ADD CONSTRAINT idsleepdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
-
 --
 -- SmartCitizen: Steps Data
 --
@@ -97,20 +91,12 @@ ALTER TABLE stepsdata DROP CONSTRAINT idstepsdata_fk_usuario;
 ALTER TABLE stepsdata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE stepsdata ADD CONSTRAINT idstepsdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
 
-
 --
 -- SmartCitizen: Heart Rate Data
 --
 ALTER TABLE heartratedata DROP CONSTRAINT idheartratedata_fk_usuario;
 ALTER TABLE heartratedata RENAME COLUMN idUsuario to idUsuarioMovil;
 ALTER TABLE heartratedata ADD CONSTRAINT idheartratedata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE;
-
---
--- Eliminar tabla usuario si existe --
---
-
-DROP TABLE if exists usuario cascade;
-DROP sequence if exists usuario_id_seq cascade;
 
 --
 -- UsuarioWeb columna activado - spring security
