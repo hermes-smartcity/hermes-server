@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import es.udc.lbd.hermes.model.usuario.Usuario;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 
 @Entity
 @SequenceGenerator(name = "xeradorId", sequenceName = "driverFeatures_id_seq")
@@ -36,8 +36,8 @@ public class DriverFeatures implements Serializable{
         private Integer lightSleep;
         
         @ManyToOne(fetch = FetchType.EAGER)
-    	@JoinColumn(name = "idUsuario")
-    	private Usuario usuario;
+    	@JoinColumn(name = "idUsuarioMovil")
+    	private UsuarioMovil usuarioMovil;
         
         public DriverFeatures() {
         }
@@ -106,12 +106,12 @@ public class DriverFeatures implements Serializable{
 			this.previousStress = previousStress;
 		}
 
-		public Usuario getUsuario() {
-			return usuario;
+		public UsuarioMovil getUsuarioMovil() {
+			return usuarioMovil;
 		}
 
-		public void setUsuario(Usuario usuario) {
-			this.usuario = usuario;
+		public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
+			this.usuarioMovil = usuarioMovil;
 		}
 		
 }

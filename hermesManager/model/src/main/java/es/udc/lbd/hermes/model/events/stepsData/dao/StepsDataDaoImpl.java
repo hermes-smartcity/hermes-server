@@ -25,7 +25,7 @@ public class StepsDataDaoImpl extends GenericDaoHibernate<StepsData, Long> imple
 	public List<StepsData> obterStepsDataSegunUsuario(Long idUsuario) {
 
 		try {
-			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("usuario.id", idUsuario)).list();
+			return getSession().createCriteria(this.entityClass).add(Restrictions.eq("usuarioMovil.id", idUsuario)).list();
 		} catch (HibernateException e) {
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
 		}		

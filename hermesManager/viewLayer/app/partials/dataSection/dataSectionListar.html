@@ -1,0 +1,26 @@
+<div ng-if="!vm.events.length">No hay eventos para mostrar</div>
+<table  ng-if="vm.events.length" class="table table-hover">
+		 <thead>
+		    <tr>				   
+		      <th colspan="2">IdEvento</th>
+		      <th colspan="5">Timestamp</th>
+		      <th colspan="5">Lista de posiciones</th>
+		    </tr>
+		  </thead>
+		<tr>
+		  <tbody dir-paginate="dataSection in vm.events | filter:searchText | itemsPerPage: vm.pageSize" 
+  		current-page="vm.currentPage">
+		     <tr>
+		      <th colspan="2">{{dataSection.eventId}}</th>
+		      <td colspan="5">{{ dataSection.timestamp  | date : format : timezone}}</td>
+		      <td colspan="5">
+	      		{{dataSection.roadSection.coordinates}}
+			  </td>
+		    </tr>
+		  </tbody>				  
+		
+</table>
+
+  <div class="text-center">
+    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+  </div>

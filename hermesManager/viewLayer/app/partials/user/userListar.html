@@ -1,0 +1,24 @@
+<div ng-if="!vm.users.length">No hay usuarios/as registrados/as</div>
+<table ng-if="vm.users.length" class="table table-hover">
+		 <thead>
+		    <tr>				   
+		      <th colspan="8">Email</th>
+		      <th colspan="2">Mobile user</th>
+		      <th colspan="2">Actions</th>
+		    </tr>
+		  </thead>
+		<tr>
+	
+		  <tbody dir-paginate="user in vm.users | orderBy:'email' | filter:vm.searchText | itemsPerPage: vm.pageSize " 
+		  		current-page="vm.currentPage">
+		     <tr>
+		      <th colspan="8">{{user.email}}</th>
+		      <td colspan="2">{{user.usuarioMovil.id}}</td>
+		      <td colspan="2">
+	      		<div class="glyphicon glyphicon-pencil icono-boton" ui-sref="editUser({idUser: user.id})" title="Editar Usuario"></div>
+			 	<div class="glyphicon glyphicon-trash icono-boton" ng-click="vm.deleteUser(user)" title="Eliminar Usuario"></div>
+			  </td>
+		    </tr>
+		  </tbody>				  
+		
+</table>

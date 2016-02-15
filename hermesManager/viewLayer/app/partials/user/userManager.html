@@ -1,0 +1,141 @@
+	<div class="row">
+		<div class="cabecera col-md-3">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>usuarios_web:</strong><span class="pull-right"></span>
+						</div>
+					</div>
+					
+				</div>
+				<div class="panel-footer">
+					<span style="color: #337AB7;" class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-green">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>usuarios_moviles: </strong>
+						</div>
+					</div>
+					
+				</div>
+				<div>
+					<div class="panel-footer">
+						<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+						</i></span>
+						<div class="clearfix">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-yellow">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Future:</strong><span class="pull-right"></span>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cabecera col-md-3">
+			<div class="panel panel-red">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-12">
+							<strong>Future: </strong>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-9">
+		      <div class="panel panel-default">
+                       <div class="panel-heading">	
+                            <i class="fa glyphicon fa-fw"></i>
+                           <div class="pull-left">
+                           		<i class="fa glyphicon glyphicon-user fa-fw"></i> 
+                               <div class="btn-group">
+                                   <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                       {{vm.activeInput}}
+                                       <span class="caret"></span>
+                                   </button>
+                                   <ul class="dropdown-menu pull-right" role="menu">
+                                       <li ng-click="vm.showUsers()"><a>Users</a>
+                                       </li>
+                                       <li ng-click="vm.showAdmins()"><a>Admins</a>
+                                       </li>
+                                       
+                                   </ul>
+                               </div>
+                           </div>
+                           <div ng-if="vm.showAdmin" class="pull-right">
+                           <!--  --><i class="fa glyphicon glyphicon-plus fa-fw" ui-sref="registerAdmin"></i>
+                            </div>
+                       </div>
+                       <!-- /.panel-heading -->
+                       <div class="panel-body">
+                          <div ng-show="vm.showUser">
+							<div ng-include="'./partials/user/userListar.html'"></div>
+						</div>
+						<div ng-show="vm.showAdmin" id="pestanaF">
+							<div ng-include="'./partials/user/adminListar.html'"></div>
+							
+						</div>
+                       </div>
+                       <!-- /.panel-body -->
+                   </div>
+		
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-6">
+      		<dir-pagination-controls ng-if="(vm.users.length > 1) || (vm.admins.length > 1)" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+      	</div>
+      	<div class="col-md-3">
+      		<!-- Buscador/filtro para usuarios consulta -->
+      		<div ng-if="!vm.showAdmin" class="buscador"><input placeholder="Buscar..." ng-model="vm.searchText"></div>
+      		<!-- Buscador/filtro para administradores -->
+      		<div ng-if="vm.showAdmin" class="buscador"><input placeholder="Buscar..." ng-model="vm.searchTextAdmin"></div>
+      	</div>
+    </div>
+      
+  <!--  <div id="buscadorMasIcono" class="text-rigth">		       	 							 	
+		<div ng-show="vm.admins" class="buscador"><input placeholder="Buscar..." ng-model="searchText"></div>		
+		<div id="iconoAnadir" class="glyphicon glyphicon-plus right"  ui-sref="registerAdmin"></div>			
+	</div>  -->
+	
+	<!-- Mostrar mensajes informativos al usuario: Error, acción completada correctamente, etc. -->	
+	<div class="row">
+		<div class="col-md-9">
+			<div ng-if="vm.infoCuenta.length" class="pull-center alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
+		</div>
+	</div>
+	
+
+      

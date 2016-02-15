@@ -1,17 +1,15 @@
 package es.udc.lbd.hermes.eventManager;
 
 import java.util.concurrent.Semaphore;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
+import org.apache.log4j.Logger;
 
 // Singleton . Sera guardado en session. Desde aqui se llamara a eventProcessor, que escuchará y almacenará los eventos
 @Component
 public class EventManager{
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+//	private Logger logger = LoggerFactory.getLogger(getClass());
+	static Logger logger = Logger.getLogger(EventManager.class);
 	private final Semaphore semaphore = new Semaphore(1, true);
 	private EventProcessor eventProcessor;
 	

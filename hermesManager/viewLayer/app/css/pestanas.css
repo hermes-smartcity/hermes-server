@@ -1,0 +1,116 @@
+ul.tabs {
+	margin: 0;
+	padding: 0;
+	/*float: left;*/
+	list-style: none;
+	height: 23px; /* 26px;*/ /*--Define el ancho de las tabs--*/
+	border-bottom: 1px solid #AAAAAA;
+	width: 100%;
+	margin-bottom: 15px;
+	clear: left;
+}
+
+ul.tabs li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	height: 22px; /* 25px; */	/*--Sustrae 1px de la altura de la lista desordenada--*/
+	line-height: 22px; /* 25px; */
+	/*--Alineamiento vertical del texto dentro de la tabla--*/
+	border: 1px solid #AAAAAA;
+	margin-bottom: -1px; /*--Desplaza los item de la lista abajo 1px--*/
+	overflow: hidden;
+	position: relative;
+	background: #CCCCCC;
+	margin-right: 5px;
+	/* Bordes redondeados */
+	-moz-border-radius: 10px 10px 0px 0px;
+	 -webkit-border-radius: 10px 10px 0px 0px;
+	 border-radius: 10px 10px 0px 0px;
+}
+
+ul.tabs li a {
+	text-decoration: none;
+	color: #4E595B;
+	display: block;
+	font-size: 13px; /*1.2em;*/
+	padding: 0 5px; /*0 10px;*/
+	outline: none;
+}
+
+ul.tabs li a:hover {
+	background: #E0E0E0;
+	/* Bordes redondeados */
+	-moz-border-radius: 10px 10px 0px 0px;
+	 -webkit-border-radius: 10px 10px 0px 0px;
+	 border-radius: 10px 10px 0px 0px;		
+}
+
+html ul.tabs li.active,html ul.tabs li.active a:hover {
+	/*--Estate seguro de que a la tab activa no se le aplicarán estas propiedades hover--*/
+	background: white;
+	border-bottom: 1px solid white;
+	/*--Esto hace que la tab activa esté conectada con respecto a su contenido--*/
+}
+
+
+/* pestanas */
+
+li.pestanasFormulario {
+	overflow: hidden;
+	width: 100%;
+}
+
+li.pestanasFormulario ol.selectoresFormulario {
+	width: 100%;
+}
+
+li.pestanasFormulario ol.selectoresFormulario li {
+	background-color: #EFEFEF;
+	border: 1px solid silver;
+	border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+	-webkit-border-radius: 10px 10px 0 0;
+	cursor: pointer;
+	color: #9b9b9b;
+	float: left;
+	font-weight: bold;
+	margin: 0;
+	margin-right: 5px;
+	padding: 5px 12px;
+	position: relative;
+	top: 1px;
+}
+
+li.pestanasFormulario ol.selectoresFormulario li.activa {
+	background-color: #F9F9F9;
+	color: black;
+	border-bottom: 1px solid #F9F9F9;
+}
+
+li.pestanasFormulario ol.fichas {
+	overflow: hidden;
+	float: none;
+	width: 100%;
+}
+
+li.pestanasFormulario ol.fichas li.ficha {
+	display: none;
+	border: 1px solid silver;
+	padding: 5px;
+	margin: 0;
+	overflow: hidden;
+}
+
+li.pestanasFormulario ol.fichas li.ficha ol {
+	float: none;
+}
+
+li.pestanasFormulario ol.fichas li.ficha.activa {
+	display: block;
+}
+
+ol.pestanas, li.pestanas {
+	list-style-type: none;
+	padding: 0px;	
+}

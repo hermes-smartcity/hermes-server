@@ -1,0 +1,184 @@
+/*Estilo táboas etapas*/
+
+table.listaEtapas th.accions, table.listaEtapas td.accions{
+	width: 213px;
+	text-align: center;
+}
+
+table.listaEtapas tr.elementoEtapa {
+	font-weight: bold;
+}
+
+table.listaEtapas tr.elementoCapitulo td.titulo{
+	padding-left: 50px;
+}
+table.listaEtapas tr.elementoApartado td.titulo{
+	padding-left: 100px;
+}
+table.listaEtapas tr.elementoSubapartado td.titulo{
+	padding-left: 150px;
+}
+
+span.espacio {
+	display: inline-block;
+	width: 10px;
+}
+/*
+table tr.elementoApartado, table tr.elementoCapitulo, table tr.elementoSubapartado, a.contraerEtapa, a.contraerCapitulo,
+a.contraerApartado{
+	display: none;	
+}*/
+
+a.expandirEtapa, a.expandirCapitulo,
+a.expandirApartado{
+	display: none;
+}	
+
+a.expandirEtapa, a.expandirCapitulo,a.expandirApartado,
+a.contraerEtapa, a.contraerCapitulo,a.contraerApartado{
+	text-decoration: none;
+}	
+
+td.accions span.iconoAnadir{
+  display: block;
+  float: left;
+  width: 20px;
+  margin-right: 5px;
+  margin-left: 15px;
+}
+
+td.accions span.iconoOrdenarSubir,td.accions span.iconoOrdenarBaixar{
+	display: block;
+    float: left;
+    width: 30px;
+}
+
+td.accions span.iconoXerarHTML {
+	display: block;
+    float: left;
+	width: 9px;
+}
+
+td.accions span.iconoXerarEpub{
+	width: 36px;
+	display: block;
+    float: left;
+}
+
+td.accions span.iconoPrevisualizar{
+	display: block;
+    float: left;
+    width: 29px;
+}
+
+td.accions span.iconoEliminar, td.accions span.iconoVer{
+	display: block;
+    float: left;
+    width: 20px;
+   margin-left: 5px;
+}
+
+td.accions span.iconoEliminar{
+	display: block;
+    float: left;
+    width: 20px;
+	margin-left: 5px;
+}
+
+
+/* Taboas */
+.informacionTaboa li {
+	margin-bottom: 0;
+}
+
+.informacionTaboa form {
+	float: left;
+	margin-bottom: 10px;
+}
+
+.informacionTaboa .paxinacion {
+	float: right;
+	margin-bottom: 10px;
+}
+
+.informacionTaboa .paxinacion .indicador {
+	float: right;
+	margin-right: 15px;
+}
+
+.informacionTaboa .paxinacion .seguinte {
+	margin-left: 5px;
+}
+
+table.lista {
+	border: 1px solid silver;
+	border-collapse: collapse;
+	text-align: left;
+	width: 100%;
+	table-layout: fixed;	
+}
+
+table.lista th {
+	padding: 5px;
+	background-color: #DDD;
+	font-weight: bold;
+	border-bottom: 1px solid silver;
+}
+
+table.lista th.iconos{
+	width: 60px;
+}
+
+table.lista.p8 th {
+	padding: 8px;
+}
+
+table.lista tr:nth-child(2n) td {
+	background-color: #eee;
+}
+
+table.listaEtapas, table.lista tr:hover td{
+	 background-color: #d4d4d4;
+}
+
+table.lista td {
+	background-color: #FFFFFF;
+	padding: 5px 10px;
+}
+
+table.lista td.centrar,table.lista th.centrar {
+	text-align: center;
+}
+
+table.lista td.centrar input {
+	vertical-align: middle;
+}
+
+table.lista td.dereita {
+	text-align: right;
+}
+
+table.lista .iconaE {
+	padding-left: 8px;
+	height: 17px;
+	width: 17px;
+}
+
+table.lista .iconaD {
+	padding-right: 3px;
+	height: 17px;
+	width: 17px;
+}
+
+table.lista .iconaM {
+	float: left;
+	height: 17px;
+	width: 17px;
+}
+table.lista .iconaM img {
+	vertical-align: middle;
+}
+
+.tablaEventos{
+	margin-top:5px;
+}

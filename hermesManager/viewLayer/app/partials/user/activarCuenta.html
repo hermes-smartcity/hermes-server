@@ -1,0 +1,20 @@
+<h1 id="breadcrumbs" class="page-header"> Completar registro </h1>
+<div class="row">
+	<div class="col-lg-9">
+		<div class="pull-center">
+			<div class="btn btn-default" ng-click="vm.activarCuenta()">Activar cuenta</div>		
+		</div>	
+	</div>
+</div>
+<p></p>
+<div class="row">
+<div class="col-lg-9">
+	<div ng-if="vm.infoCuenta" class="pull-center alert alert-info" role="alert">
+	{{vm.infoCuenta.value}}
+	<div class="pull-center">
+		<div class="btn btn-default" ui-sref="login">Entrar</div>		
+	</div>	
+</div>
+	
+</div>
+</div>
