@@ -18,25 +18,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator"/>
  
-	<!-- <bean id="viewResolver"
-		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.tiles2.TilesView" />
-		<property name="requestContextAttribute" value="rc" />
-	</bean>
-
-	<bean id="tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
-		<property name="definitions">
-			<list>
-				<value>/WEB-INF/view/tiles/tiles-defs-events.xml</value>
-				<value>/WEB-INF/view/tiles/tiles-defs.xml</value>
-			</list>
-		</property>
-		<property name="preparerFactoryClass"
-			value="org.springframework.web.servlet.view.tiles2.SpringBeanPreparerFactory" />
-	</bean> -->
-
 	<bean id="exceptionResolver"
 		class=" es.udc.lbd.hermes.eventManager.controller.util.exceptionresolver.ExceptionResolver" />
 	
