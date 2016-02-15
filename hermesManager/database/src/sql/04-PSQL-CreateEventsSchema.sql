@@ -11,12 +11,11 @@ CREATE TABLE usuario_movil(
   CONSTRAINT usuario_movil_id_pk PRIMARY KEY (id)
 );
 
--- usuario_web --
 drop table if exists usuario_web cascade;
 drop sequence if exists usuario_web_id_seq cascade;
 create sequence usuario_web_id_seq;
 
-
+-- usuario_web --
 CREATE TABLE usuario_web(
   id bigint NOT NULL DEFAULT nextval('usuario_web_id_seq'::regclass),
   rol VARCHAR(32),

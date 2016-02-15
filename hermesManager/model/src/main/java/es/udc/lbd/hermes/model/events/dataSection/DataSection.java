@@ -199,7 +199,6 @@ public class DataSection implements Serializable{
 		public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
 			this.usuarioMovil = usuarioMovil;
 		}
-
 		public Double[] getAccuracy() {
 			return accuracy;
 		}

@@ -101,10 +101,6 @@ public class VehicleLocation implements Serializable{
 			this.usuarioMovil = usuarioMovil;
 		}
 
-		public void setUsuario(Usuario usuario) {
-			this.usuario = usuario;
-		}		
-
 		public Double getAccuracy() {
 			return accuracy;
 		}

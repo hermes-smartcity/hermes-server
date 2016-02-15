@@ -124,4 +124,5 @@ public class Measurement implements Serializable{
 		public void setAccuracy(Double accuracy) {
 			this.accuracy = accuracy;
 		}
+		
 }
