@@ -21,6 +21,8 @@
 		vm.recuperarYpintarEventos = recuperarYpintarEventos;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
+		vm.getLiveChartData = getLiveChartData;
+		vm.onClick = onClick;
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
 		
@@ -38,22 +40,13 @@
 
 				vm.eventosPorDia = response.data;
 				vm.labels = vm.eventosPorDia.fechas;
-				vm.series = [ 'Días', 'Eventos'];
+				vm.series = [ 'Número eventos'];
 				vm.data = [vm.eventosPorDia.nEventos];
-					
-				  vm.onClick = function (points, evt) {
-				    console.log(points, evt);
-				  };
-
+			
 				  // Si no hay eventos que cumplan los requisitos marcados en los filtros entonces se actualiza con el gráfico
 				  getLiveChartData();
 
-					function getLiveChartData () {
-					      if (!vm.data[0].length) {
-					    	vm.labels = [0];
-					        vm.data[0] = [0];
-					      }
-					}
+				
 			}
 			
 		}
@@ -65,6 +58,17 @@
 		// Inicializamos la fecha de inicio a la del mes anterior
 		vm.startDate.setDate(vm.startDate.getDate() - 31);
 		vm.endDate = new Date();
+		
+		function onClick (points, evt) {
+		    console.log(points, evt);
+		  }
+		  
+		function getLiveChartData () {
+		      if (!vm.data[0].length) {
+		    	vm.labels = [0];
+		        vm.data[0] = [0];
+		      }
+		}
 		
 		function arrancar() {
 			eventsService.arrancar();

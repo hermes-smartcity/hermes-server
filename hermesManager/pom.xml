@@ -22,11 +22,11 @@
 
 		<!-- log4j.properties -->
 		<development.log4j.level>INFO</development.log4j.level>
-		<!--<development.log4j.appenders>stdout</development.log4j.appenders>-->
+<!-- 		<development.log4j.appenders>stdout</development.log4j.appenders> -->
 		
 		<!-- log4j.properties -->
 		<log4j.level>${development.log4j.level}</log4j.level>
-		<!--<log4j.appenders>${development.log4j.appenders}</log4j.appenders>-->
+<!-- 		<log4j.appenders>${development.log4j.appenders}</log4j.appenders> -->
 		
 		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5432/postgres</development.datasource.jdbcUrlPostgres>		
 		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5432/smartcity</development.datasource.jdbcUrl>

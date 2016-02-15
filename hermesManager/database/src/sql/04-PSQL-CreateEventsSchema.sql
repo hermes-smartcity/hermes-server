@@ -187,10 +187,10 @@ CREATE TABLE heartratedata (
 -- LOGS: Visualizar el log de errores en la BD
 --
 
-CREATE TABLE LOGS
-   (USER_ID VARCHAR(20)    NOT NULL,
-    DATED   DATE           NOT NULL,
-    LOGGER  VARCHAR(50)    NOT NULL,
-    LEVEL   VARCHAR(10)    NOT NULL,
-    MESSAGE VARCHAR(1000)  NOT NULL
+CREATE TABLE logs
+   (id bigserial primary key,
+	dated   timestamp without time zone NOT NULL,
+    logger  VARCHAR(50)    NOT NULL,
+    level   VARCHAR(10)    NOT NULL,
+    message VARCHAR(1000)  NOT NULL
    );

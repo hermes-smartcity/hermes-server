@@ -35,6 +35,19 @@ CREATE TABLE usuario_web(
   CONSTRAINT usuario_movil_fk_usuario_web FOREIGN KEY (id_usuario_movil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
+
+--
+-- LOGS: Visualizar el log de errores en la BD
+--
+
+CREATE TABLE logs
+   (id bigserial primary key,
+	dated   timestamp without time zone NOT NULL,
+    logger  VARCHAR(50)    NOT NULL,
+    level   VARCHAR(10)    NOT NULL,
+    message VARCHAR(1000)  NOT NULL
+   );
+   
 --
 -- measurement 
 --
