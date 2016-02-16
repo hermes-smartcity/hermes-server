@@ -146,7 +146,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 			if(isAdmin)
 				usuario.setRol(Rol.ROLE_ADMIN);
 			else usuario.setRol(Rol.ROLE_CONSULTA);
-			// Hasta que el propio usuario confirme el registro con el enlace de activación permacerá enable
+			// Hasta que el propio usuario confirme el registro con el enlace de activación permacerá disabled
 			usuario.setActivado(false);
 			create(usuario);
 			usuario.setUsuarioMovil(usuarioMovil);
@@ -176,7 +176,6 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		if(userJSON.getPassword()!=null && !userJSON.getPassword().isEmpty())
 			usuarioWeb.setPassword(generarHashPassword(userJSON.getPassword()));
 		
-		//TODO falta hacer comprobaciones
 		// Modificamos id_usuario_movil
 		if(userJSON.getSourceIdUsuarioMovilNuevo()!=null && !userJSON.getSourceIdUsuarioMovilNuevo().isEmpty()){
 			UsuarioMovil usuarioMovil = usuarioMovilDao.findBySourceId(userJSON.getSourceIdUsuarioMovilNuevo());			
@@ -188,14 +187,6 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		return usuarioWeb;
 	}
 	
-//	// Activar cuenta de un usuario tras registrarse y recibir un mail con el enlace que lleva hasta este service
-//	public void activarCuenta(String email, String hash) throws ActivarCuentaException{		
-//		UsuarioWeb usuario = usuarioWebDao.findByEmail(email);
-//		if(usuario == null || usuario.isEnabled() || !generarHash(email).equals(hash))
-//			throw new ActivarCuentaException();
-//		usuario.setActivado(true);
-//		usuarioWebDao.update(usuario);
-//	}
 
 	@Override
 	public void activarCuenta(String email, String codigo) throws ActivarCuentaException, EnlaceCaducadoException {

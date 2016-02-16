@@ -23,6 +23,11 @@
 			templateUrl:'login.html',
 			controller: 'LoginController',
 			controllerAs: 'vm'
+		}).state('activarCuenta', { 
+			url: '/activarCuenta/email/:email/hash/:hash',
+			templateUrl: 'partials/user/activarCuenta.html',
+			controller: 'ActivateUserController',
+			controllerAs: 'vm'
 		}).state('registerUser', {
 			url: '/registerUser',
 			templateUrl:'partials/user/register.html',
@@ -51,7 +56,8 @@
 			},
 			data: {
 			      permissions: {
-			          only: ['ROLE_ADMIN']
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
 			        }
 			}
 		}).state('dashboard', {
@@ -99,15 +105,10 @@
 			},
 			data: {
 			      permissions: {
-			    	  except: ['anonimo'],
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
 						redirectTo: 'login'
 			        }
 			}
-		}).state('activarCuenta', { 
-			url: '/activarCuenta/email/:email/hash/:hash',
-			templateUrl: 'partials/user/activarCuenta.html',
-			controller: 'LoginController',
-			controllerAs: 'vm'
 		}).state('userManager', { 
 			url: '/userManager',
 			templateUrl: 'partials/user/userManager.html',
@@ -115,7 +116,8 @@
 			controllerAs: 'vm',
 			data: {
 			      permissions: {
-			          only: ['ROLE_ADMIN']
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
 			        }
 			}
 		}).state('eventManager', {
@@ -136,7 +138,8 @@
 			},
 			data: {
 			      permissions: {
-			          only: ['ROLE_ADMIN']
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
 			        }
 			}
 		});
@@ -217,19 +220,9 @@
 			$location.path("/login");
 		};
 		
-		 /* Try getting valid user from cookie or go to login page */
-		var originalPath = $location.path();
-		$location.path("/login");
-		var authToken = $cookieStore.get('authToken');
-		if (authToken !== undefined) {
-			$rootScope.authToken = authToken;
-			
-			userService.getUser(url_get_user).then(getUserComplete);
-
-		}
 
 		$rootScope.initialized = true;
-		var ROLES_POSIBLES = ["ROLE_ADMIN", "ROLE_CONSULTA", "ANONIMO"];
+		var ROLES_POSIBLES = ["ROLE_ADMIN", "ROLE_CONSULTA"];
 		
 		PermissionStore.defineManyPermissions(ROLES_POSIBLES, function (stateParams, permissionName) {
 			  return  $rootScope.hasRole(permissionName);
