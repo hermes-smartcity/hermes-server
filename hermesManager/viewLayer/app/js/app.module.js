@@ -160,7 +160,12 @@
 	      
 	        		if (status == 401) {
 	        			$location.path( "/login" );
-	        			$rootScope.error="";
+	        			$rootScope.error="401";
+	        		} if (status == 403) {
+	        			$location.path( "/login" );
+	        			$rootScope.error="Email/password incorrectos";
+	        		} else if (status == -1){
+	        			$rootScope.error = "No tienes permisos, inicia sesión con otras credenciales.";
 	        		} else {
 	        			$rootScope.error = method + " on " + url + " failed with status " + status;
 	        		}
