@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
@@ -69,20 +70,39 @@ MeasurementDao {
 	
 	@Override
 	public List<EventosPorDia> eventosPorDia(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin) {
+
+		String queryStr = "select extract(day from generateddate) as dia, extract(month from generateddate) as mes, extract (year from generateddate) as anio, "
+				+ "greatest(neventos, 0)  as neventos from "
+					+ " (select cast(m.timestamp as date), count(*) as neventos "
+					+ " from Measurement m "
+					+ "	where (m.timestamp > :fechaIni "; 
+					
+					queryStr += " and tipo LIKE :tipo ";
 		
-		String queryStr="select extract(day from m.timestamp) as dia, extract(month from m.timestamp) as mes, "
-				+ "extract(year from m.timestamp) as anio, count(*) as numeroEventos" +
-				" from Measurement m where m.timestamp > :fechaIni and m.timestamp < :fechaFin ";
-	
-		queryStr += " and tipo LIKE :tipo ";
+					if(idUsuario!=null)
+						queryStr += " and m.usuarioMovil.id = :idUsuario ";
+				
+					queryStr += " and m.timestamp < :fechaFin ) "
+					+ "  group by cast(m.timestamp as date)) as eventos right join "
+				+ "(select cast(:fechaIni as date) + s AS generateddate from generate_series(0,(cast(:fechaFin as date) - cast(:fechaIni as date)),1) as s) as todoslosdias "
+				+ " on cast(eventos.timestamp as date) = generateddate order by anio, mes, dia";
+
 		
-		if(idUsuario!=null)
-			queryStr += "and m.usuarioMovil.id = :idUsuario ";
+		SQLQuery query = getSession().createSQLQuery(queryStr);
 		
-		queryStr+="group by extract(day from m.timestamp), extract(month from m.timestamp), "
-				+ "extract (year from m.timestamp) order by anio, mes, dia";
-		
-		Query query = getSession().createQuery(queryStr);
+//		String queryStr="select extract(day from m.timestamp) as dia, extract(month from m.timestamp) as mes, "
+//				+ "extract(year from m.timestamp) as anio, count(*) as numeroEventos" +
+//				" from Measurement m where m.timestamp > :fechaIni and m.timestamp < :fechaFin ";
+//	
+//		queryStr += " and tipo LIKE :tipo ";
+//		
+//		if(idUsuario!=null)
+//			queryStr += "and m.usuarioMovil.id = :idUsuario ";
+//		
+//		queryStr+="group by extract(day from m.timestamp), extract(month from m.timestamp), "
+//				+ "extract (year from m.timestamp) order by anio, mes, dia";
+//		
+//		Query query = getSession().createQuery(queryStr);
 		
 		if(idUsuario!=null)
 			 query.setParameter("idUsuario", idUsuario);

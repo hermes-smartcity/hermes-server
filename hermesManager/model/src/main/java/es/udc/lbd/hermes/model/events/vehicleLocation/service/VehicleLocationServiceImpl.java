@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.events.vehicleLocation.service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -72,17 +73,17 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 				fechaFin, polygon, -1, -1);		
 		return vehicleLocations;
 	}
-
+	
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin) {		
 		ListaEventosYdias listaEventosDias = new ListaEventosYdias();
 		List<String> listaDias = new ArrayList<String>();
-		List<Long> listaN = new ArrayList<Long>();
+		List<BigInteger> listaN = new ArrayList<BigInteger>();
 		List<EventosPorDia> ed = vehicleLocationDao.eventosPorDia(idUsuario, fechaIni, fechaFin);
 		for(EventosPorDia e:ed){
 			listaDias.add(e.getFecha());
-			listaN.add(e.getNumeroEventos());
+			listaN.add(e.getNeventos());
 		}
 		
 		listaEventosDias.setFechas(listaDias);
