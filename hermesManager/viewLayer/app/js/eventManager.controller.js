@@ -22,7 +22,6 @@
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
 		vm.getLiveChartData = getLiveChartData;
-		vm.onClick = onClick;
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
 		
@@ -43,9 +42,15 @@
 				vm.series = [ 'Número eventos'];
 				vm.data = [vm.eventosPorDia.nEventos];
 			
-				  // Si no hay eventos que cumplan los requisitos marcados en los filtros entonces se actualiza con el gráfico
-				  getLiveChartData();
 
+				vm.onClick = function (points, evt) {
+				    console.log(points, evt);
+				};
+				  
+				// Si no hay eventos que cumplan los requisitos marcados en los filtros entonces se actualiza con el gráfico
+				getLiveChartData();
+				  
+				  
 				
 			}
 			
@@ -59,9 +64,6 @@
 		vm.startDate.setDate(vm.startDate.getDate() - 31);
 		vm.endDate = new Date();
 		
-		function onClick (points, evt) {
-		    console.log(points, evt);
-		  }
 		  
 		function getLiveChartData () {
 		      if (!vm.data[0].length) {

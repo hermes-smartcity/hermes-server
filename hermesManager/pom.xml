@@ -50,9 +50,9 @@
 		
 		<production.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream?last-seen=</production.url.eventos>
 		<development.url.eventos>http://hermes1.gast.it.uc3m.es:9102/dbfeed/stream?last-seen=</development.url.eventos>
-		<!-- TODO cambiar -->
-		<production.url.viewLayer>localhost:8888/#/</production.url.viewLayer>
-		<development.url.viewLayer>localhost:8888/#/</development.url.viewLayer>
+
+		<production.url.viewLayer>http://cronos.lbd.org.es/hermes/#/</production.url.viewLayer>
+		<development.url.viewLayer>http://localhost:8888/#/</development.url.viewLayer>
 		
 	</properties>
 <profiles>

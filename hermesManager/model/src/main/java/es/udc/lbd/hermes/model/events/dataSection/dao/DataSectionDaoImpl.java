@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
@@ -58,16 +59,34 @@ DataSectionDao {
 
 	@Override
 	public List<EventosPorDia> eventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin) {
+		String queryStr = "select extract(day from generateddate) as dia, extract(month from generateddate) as mes, extract (year from generateddate) as anio, "
+				+ "greatest(neventos, 0)  as neventos from "
+					+ " (select cast(d.timestamp as date), count(*) as neventos "
+					+ " from DataSection d "
+					+ "	where (d.timestamp > :fechaIni "; 
+					
+					if(idUsuario!=null)
+						queryStr += " and d.usuarioMovil.id = :idUsuario ";
+				
+					queryStr += " and d.timestamp < :fechaFin ) "
+					+ "  group by cast(d.timestamp as date)) as eventos right join "
+				+ "(select cast(:fechaIni as date) + s AS generateddate from generate_series(0,(cast(:fechaFin as date) - cast(:fechaIni as date)),1) as s) as todoslosdias "
+				+ " on cast(eventos.timestamp as date) = generateddate order by anio, mes, dia";
+
 		
-		String queryStr="select extract(day from d.timestamp) as dia, extract(month from d.timestamp) as mes, extract(year from d.timestamp) as anio, count(*) as numeroEventos" +
-				" from DataSection d where d.timestamp > :fechaIni and d.timestamp < :fechaFin ";
-	
-		if(idUsuario!=null)
-			queryStr += "and d.usuarioMovil.id = :idUsuario ";
+		SQLQuery query = getSession().createSQLQuery(queryStr);
 		
-		queryStr+="group by extract(day from d.timestamp), extract(month from d.timestamp), extract (year from d.timestamp) order by anio, mes, dia";
-		
-		Query query = getSession().createQuery(queryStr);
+
+		/**/
+//		String queryStr="select extract(day from d.timestamp) as dia, extract(month from d.timestamp) as mes, extract(year from d.timestamp) as anio, count(*) as numeroEventos" +
+//				" from DataSection d where d.timestamp > :fechaIni and d.timestamp < :fechaFin ";
+//	
+//		if(idUsuario!=null)
+//			queryStr += "and d.usuarioMovil.id = :idUsuario ";
+//		
+//		queryStr+="group by extract(day from d.timestamp), extract(month from d.timestamp), extract (year from d.timestamp) order by anio, mes, dia";
+//		
+//		Query query = getSession().createQuery(queryStr);
 		
 		if(idUsuario!=null)
 			 query.setParameter("idUsuario", idUsuario);

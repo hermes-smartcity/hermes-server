@@ -21,6 +21,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 
 
@@ -35,7 +37,7 @@ public class UsuarioWeb implements UserDetails {
         private Long id;
 		
 		private String email;
-		
+				
 		private String password;
 		
 		private boolean activado;
@@ -65,7 +67,8 @@ public class UsuarioWeb implements UserDetails {
 		public void setEmail(String email) {
 			this.email = email;
 		}
-
+		
+		@JsonIgnore
 		public String getPassword() {
 			return password;
 		}
