@@ -3,8 +3,10 @@ package es.udc.lbd.hermes.eventManager.json;
 import java.util.Calendar;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ZtreamySteps {
 	@JsonProperty("timeLog")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
