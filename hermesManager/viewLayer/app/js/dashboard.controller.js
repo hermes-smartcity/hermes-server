@@ -5,10 +5,10 @@
 
 	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 'numberActiveUsers',
 	                               'measurementsType', 'eventsToday', 'eventoProcesado' ,'totalL', 'totalDS', 
-	                               'totalM', 'totalDF', '$http', '$timeout', '$log', '$filter', 'eventsService'];
+	                               'totalM', 'totalDF', '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope'];
 
 	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, numberActiveUsers, measurementsType,  
-			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF , $http, $timeout, $log, $filter, eventsService) {
+			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF , $http, $timeout, $log, $filter, eventsService, $rootScope) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -39,12 +39,15 @@
 	vm.showCalendarEnd = false;
 	vm.activeInput = 'Mapa';
 	
-	
-	eventsService.getStateActualizado().then(getStateActualizadoComplete);
+	// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
+	if($rootScope.hasRole('ROLE_ADMIN')){
+		eventsService.getStateActualizado().then(getStateActualizadoComplete);		
+	}
 	
 	function getStateActualizadoComplete(response) {				
 		vm.active = response.data;		
 	}
+	
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	vm.eventTypeSelected = "VEHICLE_LOCATION";
 	vm.startDate = new Date();
