@@ -48,7 +48,7 @@
 		<security:intercept-url method="GET" pattern="/api/dashboard/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
 		<!-- eventManager -->
-		<security:intercept-url method="POST" pattern="/api/eventManager/json/stateEventManager" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="POST" pattern="/api/eventManager/**" access="hasRole('ADMIN')" />
 		<security:intercept-url method="GET" pattern="/api/eventManager/**" access="hasRole('ADMIN')" />
 		<security:intercept-url method="POST" pattern="/api/eventManager/**" access="hasRole('ADMIN')" />		
 				

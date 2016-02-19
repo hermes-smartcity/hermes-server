@@ -4,10 +4,10 @@
 	angular.module('app').controller('EventManagerController', EventManagerController);
 
 	EventManagerController.$inject = ['$state', '$interval', '$scope', 'eventsType', 'usuarios' ,'measurementsType', 
-	                                  '$http', '$timeout', '$log', '$filter', 'eventsService' ];
+	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope'];
 
 	function EventManagerController($state, $interval, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
-			eventsService) {
+			eventsService, $rootScope) {
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
 		vm.eventsType = eventsType;
@@ -25,8 +25,11 @@
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
 		
-		eventsService.getStateActualizado().then(getStateActualizadoComplete);
-	
+		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
+		if($rootScope.hasRole('ROLE_ADMIN')){
+			eventsService.getStateActualizado().then(getStateActualizadoComplete);	
+		}
+		
 		function getStateActualizadoComplete(response) {				
 			vm.active = response.data;
 		}

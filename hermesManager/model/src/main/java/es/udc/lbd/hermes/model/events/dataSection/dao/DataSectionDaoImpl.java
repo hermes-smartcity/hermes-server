@@ -66,7 +66,7 @@ DataSectionDao {
 					+ "	where (d.timestamp > :fechaIni "; 
 					
 					if(idUsuario!=null)
-						queryStr += " and d.usuarioMovil.id = :idUsuario ";
+						queryStr += " and d.idusuariomovil = :idUsuario ";
 				
 					queryStr += " and d.timestamp < :fechaFin ) "
 					+ "  group by cast(d.timestamp as date)) as eventos right join "
@@ -75,19 +75,7 @@ DataSectionDao {
 
 		
 		SQLQuery query = getSession().createSQLQuery(queryStr);
-		
-
-		/**/
-//		String queryStr="select extract(day from d.timestamp) as dia, extract(month from d.timestamp) as mes, extract(year from d.timestamp) as anio, count(*) as numeroEventos" +
-//				" from DataSection d where d.timestamp > :fechaIni and d.timestamp < :fechaFin ";
-//	
-//		if(idUsuario!=null)
-//			queryStr += "and d.usuarioMovil.id = :idUsuario ";
-//		
-//		queryStr+="group by extract(day from d.timestamp), extract(month from d.timestamp), extract (year from d.timestamp) order by anio, mes, dia";
-//		
-//		Query query = getSession().createQuery(queryStr);
-		
+			
 		if(idUsuario!=null)
 			 query.setParameter("idUsuario", idUsuario);
 		

@@ -189,7 +189,7 @@ CREATE TABLE heartratedata (
 CREATE TABLE logs
    (id bigserial primary key,
 	dated   timestamp without time zone NOT NULL,
-    logger  VARCHAR(50)    NOT NULL,
+    logger  VARCHAR(500)    NOT NULL,
     level   VARCHAR(10)    NOT NULL,
     message VARCHAR(1000)  NOT NULL
    );

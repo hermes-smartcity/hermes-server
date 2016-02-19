@@ -80,7 +80,7 @@ MeasurementDao {
 					queryStr += " and tipo LIKE :tipo ";
 		
 					if(idUsuario!=null)
-						queryStr += " and m.usuarioMovil.id = :idUsuario ";
+						queryStr += " and m.idusuariomovil = :idUsuario ";
 				
 					queryStr += " and m.timestamp < :fechaFin ) "
 					+ "  group by cast(m.timestamp as date)) as eventos right join "
@@ -89,20 +89,6 @@ MeasurementDao {
 
 		
 		SQLQuery query = getSession().createSQLQuery(queryStr);
-		
-//		String queryStr="select extract(day from m.timestamp) as dia, extract(month from m.timestamp) as mes, "
-//				+ "extract(year from m.timestamp) as anio, count(*) as numeroEventos" +
-//				" from Measurement m where m.timestamp > :fechaIni and m.timestamp < :fechaFin ";
-//	
-//		queryStr += " and tipo LIKE :tipo ";
-//		
-//		if(idUsuario!=null)
-//			queryStr += "and m.usuarioMovil.id = :idUsuario ";
-//		
-//		queryStr+="group by extract(day from m.timestamp), extract(month from m.timestamp), "
-//				+ "extract (year from m.timestamp) order by anio, mes, dia";
-//		
-//		Query query = getSession().createQuery(queryStr);
 		
 		if(idUsuario!=null)
 			 query.setParameter("idUsuario", idUsuario);

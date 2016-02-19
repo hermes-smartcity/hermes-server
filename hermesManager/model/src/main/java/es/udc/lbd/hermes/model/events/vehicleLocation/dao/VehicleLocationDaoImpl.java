@@ -82,9 +82,9 @@ VehicleLocationDao {
 					+ " (select cast(v.timestamp as date), count(*) as neventos "
 					+ " from VehicleLocation v "
 					+ "	where (v.timestamp > :fechaIni "; 
-					
+	
 					if(idUsuario!=null)
-						queryStr += " and v.usuarioMovil.id = :idUsuario ";
+						queryStr += " and v.idusuariomovil = :idUsuario ";
 				
 					queryStr += " and v.timestamp < :fechaFin ) "
 					+ "  group by cast(v.timestamp as date)) as eventos right join "

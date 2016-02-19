@@ -138,7 +138,7 @@
 			},
 			data: {
 			      permissions: {
-			          only: ['ROLE_ADMIN'],
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
 						redirectTo: 'login'
 			        }
 			}
