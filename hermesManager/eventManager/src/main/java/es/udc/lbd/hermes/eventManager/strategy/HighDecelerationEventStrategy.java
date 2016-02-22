@@ -28,6 +28,7 @@ public class HighDecelerationEventStrategy extends EventStrategy {
 		Geometry punto = HelpersModel.prepararPunto(ztreamyHighDeceleration.getLatitude(),ztreamyHighDeceleration.getLongitude());
 		measurement.setPosition((Point)punto);
 		measurement.setAccuracy(ztreamyHighDeceleration.getAccuracy());
+		measurement.setSpeed(ztreamyHighDeceleration.getSpeed());
 		measurement.setValue(ztreamyHighDeceleration.getValue());
 		measurement.setTipo(MeasurementType.HIGH_DECELERATION);
 		measurement.setEventId(event.getEventId());

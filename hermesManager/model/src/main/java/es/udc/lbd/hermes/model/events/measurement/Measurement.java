@@ -53,7 +53,12 @@ public class Measurement implements Serializable{
         private Double value;
         
         private Double accuracy;
+        
+        private Double speed;
 
+		@Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+		private Double[] rrLast10Seconds;
+        
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuarioMovil")
     	private UsuarioMovil usuarioMovil;
@@ -123,6 +128,22 @@ public class Measurement implements Serializable{
 
 		public void setAccuracy(Double accuracy) {
 			this.accuracy = accuracy;
+		}
+
+		public Double getSpeed() {
+			return speed;
+		}
+
+		public void setSpeed(Double speed) {
+			this.speed = speed;
+		}
+
+		public Double[] getRrLast10Seconds() {
+			return rrLast10Seconds;
+		}
+
+		public void setRrLast10Seconds(Double[] rrLast10Seconds) {
+			this.rrLast10Seconds = rrLast10Seconds;
 		}
 		
 }

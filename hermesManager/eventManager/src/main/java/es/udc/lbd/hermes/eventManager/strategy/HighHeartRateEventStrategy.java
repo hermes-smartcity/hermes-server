@@ -30,10 +30,11 @@ public class HighHeartRateEventStrategy extends EventStrategy {
 		Geometry punto = HelpersModel.prepararPunto(ztreamyHighHeartRate.getLatitude(),ztreamyHighHeartRate.getLongitude());
 		measurement.setPosition((Point)punto);
 		measurement.setAccuracy(ztreamyHighHeartRate.getAccuracy());
+		measurement.setSpeed(ztreamyHighHeartRate.getSpeed());
 		measurement.setValue(ztreamyHighHeartRate.getValue());
 		measurement.setTipo(MeasurementType.HIGH_HEART_RATE);
 		measurement.setEventId(event.getEventId());
-
+		measurement.setRrLast10Seconds(ztreamyHighHeartRate.getRrLast10Seconds());
 		measurement.setTimestamp(event.getTimestamp());
 		measurementService.create(measurement, event.getSourceId());
 		// Ultimo evento procesado

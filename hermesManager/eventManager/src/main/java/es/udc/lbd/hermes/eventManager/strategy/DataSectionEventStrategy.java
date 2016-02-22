@@ -1,6 +1,5 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -20,12 +19,12 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class DataSectionEventStrategy extends EventStrategy {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Override
 	public void processEvent(Event event) {
-		
+
 		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
-		DataSectionService dataSectionService = ApplicationContextProvider.getApplicationContext().getBean("dataSectionService", DataSectionService.class);		
+		DataSectionService dataSectionService = ApplicationContextProvider.getApplicationContext().getBean("dataSectionService", DataSectionService.class);
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyDataSection ztreamyDataSection = (ZtreamyDataSection) event.getEventData();
 		if (ztreamyDataSection.getRoadSection().size() >= 2) {
@@ -39,12 +38,16 @@ public class DataSectionEventStrategy extends EventStrategy {
 			dataSection.setStandardDeviationSpeed(ztreamyDataSection.getStandardDeviationSpeed());
 			dataSection.setStandardDeviationRR(ztreamyDataSection.getStandardDeviationRR());
 			dataSection.setStandardDeviationHeartRate(ztreamyDataSection.getStandardDeviationHeartRate());
+			dataSection.setNumHighDecelerations(ztreamyDataSection.getNumHighDecelerations());
+			dataSection.setNumHighAccelerations(ztreamyDataSection.getNumHighAccelerations());
+			dataSection.setAverageAcceleration(ztreamyDataSection.getAverageAcceleration());
+			dataSection.setAverageDeceleration(ztreamyDataSection.getAverageDeceleration());
+			dataSection.setRrSection(ztreamyDataSection.getRrSection());
 			dataSection.setPke(ztreamyDataSection.getPke());
-			// TODO Falta decidir como se va a hacer
 			dataSection.setRoadSection((LineString) Helpers.prepararRuta(ztreamyDataSection.getRoadSection()));
 			dataSection.setAccuracy(Helpers.prepararPrecision(ztreamyDataSection.getRoadSection()));
+			dataSection.setSpeed(Helpers.prepararVelocidad(ztreamyDataSection.getRoadSection()));
 			dataSection.setEventId(event.getEventId());
-	
 			dataSection.setTimestamp(event.getTimestamp());
 			dataSectionService.create(dataSection, event.getSourceId());
 		} else {
@@ -52,6 +55,6 @@ public class DataSectionEventStrategy extends EventStrategy {
 			String eventAsString = parser.prettyPrint(event);
 			logger.warn("Evento descartado. DataSection con un único punto." + eventAsString);
 		}
-		eventService.create(event.getTimestamp(),event.getEventId());		
+		eventService.create(event.getTimestamp(), event.getEventId());
 	}
 }

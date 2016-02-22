@@ -79,13 +79,13 @@
 	            <div class="navbar-default sidebar" role="navigation">
 	                <div class="sidebar-nav navbar-collapse">
 	                    <ul class="nav in" id="side-menu"> 	                        
-	                       <li ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')"><!--  -->	
+	                       <li ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">	
 	                            <a ui-sref="dashboard">
 		                            <i class="fa fa-dashboard fa-fw"><!--  --></i>
 		                            <span>Dashboard</span>
 	                            </a>
 	                        </li>	                     
-	                         <li>
+	                         <li ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
 	                             <a ui-sref="eventManager" >
 		                            <i class="fa fa-bar-chart-o fa-fw"><!--  --></i>
 		                            <span> Event Manager</span>

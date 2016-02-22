@@ -36,6 +36,15 @@ public class Helpers {
 		Double result[] = new Double[precision.size()];
 		return precision.toArray(result);
 	}
+
+	public static Double[] prepararVelocidad(List<RoadSectionPoint> roadSection){
+		List<Double> velocidad = new ArrayList<Double>(); 
+		for(int i=0;i<roadSection.size();i++){
+			velocidad.add(roadSection.get(i).getSpeed());
+		}
+		Double result[] = new Double[velocidad.size()];
+		return velocidad.toArray(result);
+	}
 	
 	public static Calendar getFecha(String fecha){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

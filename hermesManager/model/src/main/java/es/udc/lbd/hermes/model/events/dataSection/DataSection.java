@@ -2,6 +2,7 @@ package es.udc.lbd.hermes.model.events.dataSection;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.LineString;
@@ -60,6 +62,17 @@ public class DataSection implements Serializable{
 		
 		private Double pke;
         
+		private Double numHighAccelerations;
+
+		private Double numHighDecelerations;
+		
+		private Double averageAcceleration;
+		
+		private Double averageDeceleration;
+		
+		@Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+		private Double[] rrSection;
+		
         @Type(type="org.hibernate.spatial.GeometryType")
         @JsonSerialize(using = CustomGeometrySerializer.class)
         @JsonDeserialize(using = CustomMultiLineStringDeserializer.class)       
@@ -67,6 +80,9 @@ public class DataSection implements Serializable{
         
         @Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
         private Double[] accuracy;
+
+        @Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+        private Double[] speed;
         
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuarioMovil")
@@ -205,5 +221,52 @@ public class DataSection implements Serializable{
 
 		public void setAccuracy(Double[] accuracy) {
 			this.accuracy = accuracy;
+		}		
+		public Double[] getSpeed() {
+			return speed;
+		}
+
+		public void setSpeed(Double[] speed) {
+			this.speed = speed;
+		}
+
+		public Double getNumHighAccelerations() {
+			return numHighAccelerations;
+		}
+
+		public void setNumHighAccelerations(Double numHighAccelerations) {
+			this.numHighAccelerations = numHighAccelerations;
+		}
+
+		public Double getNumHighDecelerations() {
+			return numHighDecelerations;
+		}
+
+		public void setNumHighDecelerations(Double numHighDecelerations) {
+			this.numHighDecelerations = numHighDecelerations;
+		}
+
+		public Double getAverageAcceleration() {
+			return averageAcceleration;
+		}
+
+		public void setAverageAcceleration(Double averageAcceleration) {
+			this.averageAcceleration = averageAcceleration;
+		}
+
+		public Double getAverageDeceleration() {
+			return averageDeceleration;
+		}
+
+		public void setAverageDeceleration(Double averageDeceleration) {
+			this.averageDeceleration = averageDeceleration;
+		}
+
+		public Double[] getRrSection() {
+			return rrSection;
+		}
+
+		public void setRrSection(Double[] rrSection) {
+			this.rrSection = rrSection;
 		}		
 }
