@@ -39,10 +39,16 @@ public class DataSectionEventStrategy extends EventStrategy {
 			dataSection.setStandardDeviationSpeed(ztreamyDataSection.getStandardDeviationSpeed());
 			dataSection.setStandardDeviationRR(ztreamyDataSection.getStandardDeviationRR());
 			dataSection.setStandardDeviationHeartRate(ztreamyDataSection.getStandardDeviationHeartRate());
+			dataSection.setNumHighDecelerations(ztreamyDataSection.getNumHighDecelerations());
+			dataSection.setNumHighAccelerations(ztreamyDataSection.getNumHighAccelerations());
+			dataSection.setAverageAcceleration(ztreamyDataSection.getAverageAcceleration());
+			dataSection.setAverageDeceleration(ztreamyDataSection.getAverageDeceleration());
+			dataSection.setRrSection(ztreamyDataSection.getRrSection());
 			dataSection.setPke(ztreamyDataSection.getPke());
 			// TODO Falta decidir como se va a hacer
 			dataSection.setRoadSection((LineString) Helpers.prepararRuta(ztreamyDataSection.getRoadSection()));
 			dataSection.setAccuracy(Helpers.prepararPrecision(ztreamyDataSection.getRoadSection()));
+			dataSection.setSpeed(Helpers.prepararVelocidad(ztreamyDataSection.getRoadSection()));
 			dataSection.setEventId(event.getEventId());
 	
 			dataSection.setTimestamp(event.getTimestamp());

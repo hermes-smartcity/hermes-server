@@ -47,6 +47,8 @@ public class VehicleLocation implements Serializable{
 
 		private Double accuracy;
 		
+		private Double speed;
+		
 
 		@ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuarioMovil")
@@ -107,5 +109,12 @@ public class VehicleLocation implements Serializable{
 
 		public void setAccuracy(Double accuracy) {
 			this.accuracy = accuracy;
+		}
+		public Double getSpeed() {
+			return speed;
+		}
+
+		public void setSpeed(Double speed) {
+			this.speed = speed;
 		}
 }

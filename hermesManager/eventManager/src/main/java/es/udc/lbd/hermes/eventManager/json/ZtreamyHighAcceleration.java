@@ -11,6 +11,8 @@ public class ZtreamyHighAcceleration extends EventData {
 	private Double longitude;
 	@JsonProperty("accuracy")
 	private Double accuracy;
+	@JsonProperty("speed")
+	private Double speed;
 	@JsonProperty("value")
 	private Double value;
 
@@ -43,5 +45,10 @@ public class ZtreamyHighAcceleration extends EventData {
 	public void setAccuracy(Double accuracy) {
 		this.accuracy = accuracy;
 	}
-
+	public Double getSpeed() {
+		return speed;
+	}
+	public void setSpeed(Double speed) {
+		this.speed = speed;
+	}
 }

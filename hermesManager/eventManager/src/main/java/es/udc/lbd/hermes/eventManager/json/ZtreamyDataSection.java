@@ -28,6 +28,16 @@ public class ZtreamyDataSection extends EventData {
 	private Double standardDeviationHeartRate;
 	@JsonProperty("pke")
 	private Double pke;
+	@JsonProperty("numHighAccelerations")
+	private Double numHighAccelerations;
+	@JsonProperty("numHighDecelerations")
+	private Double numHighDecelerations;
+	@JsonProperty("averageAcceleration")
+	private Double averageAcceleration;
+	@JsonProperty("averageDeceleration")
+	private Double averageDeceleration;
+	@JsonProperty("rrSection")
+	private Double[] rrSection;
 	@JsonProperty("roadSection")
 	private List<RoadSectionPoint> roadSection;
 	public Double getMinSpeed() {
@@ -95,6 +105,36 @@ public class ZtreamyDataSection extends EventData {
 	}
 	public void setRoadSection(List<RoadSectionPoint> roadSection) {
 		this.roadSection = roadSection;
+	}
+	public Double getNumHighAccelerations() {
+		return numHighAccelerations;
+	}
+	public void setNumHighAccelerations(Double numHighAccelerations) {
+		this.numHighAccelerations = numHighAccelerations;
+	}
+	public Double getNumHighDecelerations() {
+		return numHighDecelerations;
+	}
+	public void setNumHighDecelerations(Double numHighDecelerations) {
+		this.numHighDecelerations = numHighDecelerations;
+	}
+	public Double getAverageAcceleration() {
+		return averageAcceleration;
+	}
+	public void setAverageAcceleration(Double averageAcceleration) {
+		this.averageAcceleration = averageAcceleration;
+	}
+	public Double getAverageDeceleration() {
+		return averageDeceleration;
+	}
+	public void setAverageDeceleration(Double averageDeceleration) {
+		this.averageDeceleration = averageDeceleration;
+	}
+	public Double[] getRrSection() {
+		return rrSection;
+	}
+	public void setRrSection(Double[] rrSection) {
+		this.rrSection = rrSection;
 	}
 
 }

@@ -13,6 +13,8 @@ public class ZtreamyVehicleLocation extends EventData {
 	private Double longitude;
 	@JsonProperty("accuracy")
 	private Double accuracy;
+	@JsonProperty("speed")
+	private Double speed;
 	@JsonProperty("timeStamp")
 	private Calendar timeStamp;
 	
@@ -39,5 +41,11 @@ public class ZtreamyVehicleLocation extends EventData {
 	}
 	public void setAccuracy(Double accuracy) {
 		this.accuracy = accuracy;
+	}
+	public Double getSpeed() {
+		return speed;
+	}
+	public void setSpeed(Double speed) {
+		this.speed = speed;
 	}	
 }
