@@ -3,6 +3,7 @@ package es.udc.lbd.hermes.eventManager.factory;
 import java.util.HashMap;
 import java.util.Map;
 
+import es.udc.lbd.hermes.eventManager.strategy.ContextDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.DataSectionEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.DriverFeaturesEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.EventStrategy;
@@ -31,6 +32,7 @@ public class EventFactory {
 		registry.put(EventType.DATA_SECTION, new DataSectionEventStrategy());
 		registry.put(EventType.SLEEP_DATA, new SleepDataEventStrategy());
 		registry.put(EventType.STEPS_DATA, new StepsDataEventStrategy());
+		registry.put(EventType.CONTEXT_DATA, new ContextDataEventStrategy());
 		registry.put(EventType.HEART_RATE_DATA, new HeartRateDataEventStrategy());
 	}
 

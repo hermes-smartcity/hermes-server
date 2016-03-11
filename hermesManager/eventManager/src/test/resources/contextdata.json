@@ -1,0 +1,4551 @@
+{
+  "Body": {
+    "Context Data": {
+      "contextLogDetailList": [
+        {
+          "timeLog": "00:25:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:26:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:27:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:28:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:29:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:30:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:31:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:32:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:33:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:34:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:35:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:36:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:37:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:38:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:39:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:40:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:41:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:42:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:43:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:44:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:45:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:46:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:47:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:48:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:49:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:50:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:51:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:52:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:53:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:54:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:55:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:56:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:57:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:58:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "00:59:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:00:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:01:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:02:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:03:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:04:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:05:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:06:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:07:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:08:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:09:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:10:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:11:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:12:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:13:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:14:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:15:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:16:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:17:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:18:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:19:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:20:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:21:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:22:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:23:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:24:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:25:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:26:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:27:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:28:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:29:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:30:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:31:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:32:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:33:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:34:00",
+          "latitude": 37.33763,
+          "detectedActivity": "still",
+          "longitude": -5.829003,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "01:35:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:36:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:37:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:38:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:39:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:40:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:41:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:42:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:43:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:44:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:45:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:46:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:47:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:48:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:49:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:50:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:51:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:52:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:53:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:54:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:55:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:56:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:57:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:58:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "01:59:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:00:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:01:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:02:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:03:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:04:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:05:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:06:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:07:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:08:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:09:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:10:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:11:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:12:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:13:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:14:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:15:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:16:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:17:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:18:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:19:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:20:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:21:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:22:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:23:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:24:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:25:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:26:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:27:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:28:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:29:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:30:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:31:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:32:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:33:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:34:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:35:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:36:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:37:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:38:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:39:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:40:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:41:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:42:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:43:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:44:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:45:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:46:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:47:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:48:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:49:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:50:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:51:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:52:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:53:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:54:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:55:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:56:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:57:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:58:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "02:59:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:00:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:01:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:02:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:03:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:04:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:05:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:06:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:07:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:08:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:09:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:10:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:11:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:12:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:13:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:14:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:15:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:16:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:17:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:18:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:19:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:20:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:21:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:22:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:23:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:24:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:25:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:26:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:27:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:28:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:29:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:30:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:31:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:32:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:33:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:34:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:35:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:36:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:37:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:38:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:39:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:40:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:41:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:42:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:43:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:44:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:45:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:46:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:47:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:48:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:49:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:50:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:51:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:52:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:53:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:54:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:55:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:56:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:57:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:58:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "03:59:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:00:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:01:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:02:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:03:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:04:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:05:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:06:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:07:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:08:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:09:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:10:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:11:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:12:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:13:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:14:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:15:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:16:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:17:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:18:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:19:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:20:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:21:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:22:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:23:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:24:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:25:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:26:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:27:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:28:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:29:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:30:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:31:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:32:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:33:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:34:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:35:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:36:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:37:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:38:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:39:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:40:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:41:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:42:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:43:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:44:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:45:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:46:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:47:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:48:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:49:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:50:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:51:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:52:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:53:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:54:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:55:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:56:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:57:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:58:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "04:59:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:00:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:01:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:02:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:03:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:04:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:05:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:06:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:07:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:08:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:09:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:10:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:11:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:12:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:13:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:14:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:15:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:16:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:17:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:18:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:19:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:20:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:21:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:22:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:23:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:24:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:25:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:26:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:27:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:28:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:29:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:30:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:31:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:32:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:33:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:34:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:35:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:36:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:37:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:38:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:39:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:40:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:41:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:42:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:43:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:44:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:45:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:46:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:47:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:48:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:49:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:50:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:51:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:52:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:53:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:54:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:55:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:56:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:57:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:58:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "05:59:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:00:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:01:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:02:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:03:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:04:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:05:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:06:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:07:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:08:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:09:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:10:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:11:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:12:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:13:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:14:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:15:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:16:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:17:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:18:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:19:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:20:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:21:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:22:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:23:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:24:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:25:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:26:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:27:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:28:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:29:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:30:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:31:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:32:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:33:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:34:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:35:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:36:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:37:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:38:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:39:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:40:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:41:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:42:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:43:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:44:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:45:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:46:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:47:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:48:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:49:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:50:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:51:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:52:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:53:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:54:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:55:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:56:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:57:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:58:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "06:59:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "07:00:00",
+          "latitude": 37.33766,
+          "detectedActivity": "still",
+          "longitude": -5.8289547,
+          "accuracy": 29.358
+        },
+        {
+          "timeLog": "07:01:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:02:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:03:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:04:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:05:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:06:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:07:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:08:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:09:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:10:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:11:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:12:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:13:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:14:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:15:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:16:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:17:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:18:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:19:00",
+          "latitude": 37.337612,
+          "detectedActivity": "still",
+          "longitude": -5.8289704,
+          "accuracy": 31.431
+        },
+        {
+          "timeLog": "07:20:00",
+          "latitude": 37.337643,
+          "detectedActivity": "still",
+          "longitude": -5.8288984,
+          "accuracy": 30
+        },
+        {
+          "timeLog": "07:21:00",
+          "latitude": 37.337643,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.8288984,
+          "accuracy": 30
+        },
+        {
+          "timeLog": "07:22:00",
+          "latitude": 37.337643,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.8288984,
+          "accuracy": 30
+        },
+        {
+          "timeLog": "07:23:00",
+          "latitude": 37.337643,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.8288984,
+          "accuracy": 30
+        },
+        {
+          "timeLog": "07:24:00",
+          "latitude": 37.337643,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.8288984,
+          "accuracy": 30
+        },
+        {
+          "timeLog": "07:25:00",
+          "latitude": 37.337643,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.8288984,
+          "accuracy": 30
+        },
+        {
+          "timeLog": "07:26:00",
+          "latitude": 37.337643,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.8288984,
+          "accuracy": 30
+        },
+        {
+          "timeLog": "07:27:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:28:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:29:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:30:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:31:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:32:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:33:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:34:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:35:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:36:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:37:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:38:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:39:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:40:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:41:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:42:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:43:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:44:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:45:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:46:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:47:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:48:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:49:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:50:00",
+          "latitude": 37.35447,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.854272,
+          "accuracy": 3
+        },
+        {
+          "timeLog": "07:51:00",
+          "latitude": 37.358177,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:52:00",
+          "latitude": 37.358177,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:53:00",
+          "latitude": 37.358177,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:54:00",
+          "latitude": 37.358177,
+          "detectedActivity": "in_vehicle",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:55:00",
+          "latitude": 37.358177,
+          "detectedActivity": "still",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:56:00",
+          "latitude": 37.358177,
+          "detectedActivity": "still",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:57:00",
+          "latitude": 37.358177,
+          "detectedActivity": "still",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:58:00",
+          "latitude": 37.358177,
+          "detectedActivity": "still",
+          "longitude": -5.9898224,
+          "accuracy": 8
+        },
+        {
+          "timeLog": "07:59:00",
+          "latitude": 37.359028,
+          "detectedActivity": "still",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:00:00",
+          "latitude": 37.359028,
+          "detectedActivity": "still",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:01:00",
+          "latitude": 37.359028,
+          "detectedActivity": "still",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:02:00",
+          "latitude": 37.359028,
+          "detectedActivity": "still",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:03:00",
+          "latitude": 37.359028,
+          "detectedActivity": "still",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:04:00",
+          "latitude": 37.359028,
+          "detectedActivity": "still",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:05:00",
+          "latitude": 37.359028,
+          "detectedActivity": "still",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:06:00",
+          "latitude": 37.359028,
+          "detectedActivity": "walking",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:07:00",
+          "latitude": 37.359028,
+          "detectedActivity": "walking",
+          "longitude": -5.9877615,
+          "accuracy": 33.545
+        },
+        {
+          "timeLog": "08:08:00",
+          "latitude": 37.35888,
+          "detectedActivity": "walking",
+          "longitude": -5.987748,
+          "accuracy": 15
+        },
+        {
+          "timeLog": "08:09:00",
+          "latitude": 37.35888,
+          "detectedActivity": "still",
+          "longitude": -5.987748,
+          "accuracy": 15
+        },
+        {
+          "timeLog": "08:10:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:11:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:12:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:13:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:14:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:15:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:16:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:17:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:18:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:19:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:20:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:21:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:22:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:23:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:24:00",
+          "latitude": 37.3591,
+          "detectedActivity": "still",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:25:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:26:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:27:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:28:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:29:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:30:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:31:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:32:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:33:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:34:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:35:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:36:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:37:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:38:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:39:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:40:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:41:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:42:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:43:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:44:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:45:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:46:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:47:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:48:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:49:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:50:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:51:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:52:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:53:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:54:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:55:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:56:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:57:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:58:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "08:59:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:00:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:01:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:02:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:03:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:04:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:05:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:06:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:07:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:08:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:09:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:10:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:11:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:12:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:13:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:14:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:15:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:16:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:17:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:18:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:19:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:20:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:21:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:22:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:23:00",
+          "latitude": 37.3591,
+          "detectedActivity": "unknown",
+          "longitude": -5.987821,
+          "accuracy": 20
+        },
+        {
+          "timeLog": "09:24:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:25:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:26:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:27:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:28:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:29:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:30:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:31:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:32:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:33:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:34:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:35:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:36:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:37:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:38:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:39:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:40:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:41:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:42:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:43:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:44:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:45:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:46:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:47:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:48:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:49:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:50:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:51:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:52:00",
+          "latitude": 37.359104,
+          "detectedActivity": "unknown",
+          "longitude": -5.987761,
+          "accuracy": 21.713
+        },
+        {
+          "timeLog": "09:53:00",
+          "latitude": 37.3594,
+          "detectedActivity": "unknown",
+          "longitude": -5.987833,
+          "accuracy": 53
+        },
+        {
+          "timeLog": "09:54:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "09:55:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "09:56:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "09:57:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "09:58:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "09:59:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:00:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:01:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:02:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:03:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:04:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:05:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:06:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:07:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:08:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:09:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:10:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:11:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:12:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:13:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:14:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:15:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:16:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:17:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:18:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:19:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:20:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:21:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:22:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:23:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "10:24:00",
+          "latitude": 37.359383,
+          "detectedActivity": "unknown",
+          "longitude": -5.987911,
+          "accuracy": 110
+        },
+        {
+          "timeLog": "00:00:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:01:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:02:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:03:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:04:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:05:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:06:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:07:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:08:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:09:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:10:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:11:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:12:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:13:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:14:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:15:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:16:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:17:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:18:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:19:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:20:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:21:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:22:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:23:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "00:24:00",
+          "detectedActivity": "still"
+        },
+        {
+          "timeLog": "10:25:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:26:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:27:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:28:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:29:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:30:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:31:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:32:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:33:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:34:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:35:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:36:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:37:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:38:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:39:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:40:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:41:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:42:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:43:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:44:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:45:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:46:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:47:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:48:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:49:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:50:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:51:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:52:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:53:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:54:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:55:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:56:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:57:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:58:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "10:59:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:00:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:01:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:02:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:03:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:04:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:05:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:06:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:07:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:08:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:09:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:10:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:11:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:12:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:13:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:14:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:15:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:16:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:17:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:18:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:19:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:20:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:21:00",
+          "detectedActivity": "unknown"
+        },
+        {
+          "timeLog": "11:22:00",
+          "detectedActivity": "unknown"
+        }
+      ],
+      "dateTime": "01/03/2016"
+    }
+  },
+  "Timestamp": "2015-11-18T21:22:04+01:00",
+  "Application-Id": "Hermes-Citizen-Fitbit-Steps",
+  "Syntax": "application/json",
+  "Event-Id": "784c6140-0936-4c68-86de-081679f7fa67",
+  "Event-Type": "Steps Data",
+  "Aggregator-Ids": [
+    "0d3389e4-5749-4d70-bbda-6b1af854a6d1",
+    "9352025a-5932-4b6e-87a2-5c1a516e0f9a"
+  ],
+  "Source-Id": "9ded04c9c0750d2677d5f3ba9e2bd23041c1e73d28999b1f81fc8bbf1d0ca5ad"
+}
