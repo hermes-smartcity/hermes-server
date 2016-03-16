@@ -30,8 +30,6 @@ public class ContextDataEventStrategy extends EventStrategy {
 		Calendar dateTime = ztreamyContextData.getDateTime();
 		for (ZtreamyContextData ztreamyContext : ztreamyContextData.getContextLogDetailList()) {
 			ContextData contextData = new ContextData();
-			contextData.setLatitude(ztreamyContext.getLatitude());
-			contextData.setLongitude(ztreamyContext.getLongitude());
 			contextData.setDetectedActivity(ztreamyContext.getDetectedActivity());
 			contextData.setAccuracy(ztreamyContext.getAccuracy());
 			

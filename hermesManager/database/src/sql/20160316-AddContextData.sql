@@ -7,8 +7,6 @@ CREATE TABLE contextdata (
   eventId VARCHAR(50) NOT NULL,
   position geometry(POINT, 4326),
   timelog timestamp without time zone,
-  latitude double precision,
-  longitude double precision,
   detectedActivity VARCHAR(50),
   accuracy integer,
   idUsuarioMovil bigint,
