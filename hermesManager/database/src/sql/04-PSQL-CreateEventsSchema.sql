@@ -22,6 +22,7 @@ CREATE TABLE usuario_web(
   email VARCHAR(160),
   password VARCHAR(160),
   id_usuario_movil bigint,
+  activado boolean DEFAULT true,
   CONSTRAINT usuario_web_u UNIQUE (email),
   CONSTRAINT usuario_web_pk PRIMARY KEY (id),
   CONSTRAINT usuario_movil_fk_usuario_web FOREIGN KEY (id_usuario_movil) REFERENCES usuario_movil(id) ON DELETE CASCADE
