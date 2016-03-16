@@ -14,6 +14,7 @@
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
 	vm.pintarMapaDataSections = pintarMapaDataSections;
 	vm.pintarMapaMeasurements = pintarMapaMeasurements;
+	vm.pintarMapaContextData = pintarMapaContextData;
 	vm.pintarPuntos = pintarPuntos;
 	vm.pintarLineas = pintarLineas;
 	vm.aplicarFiltros = aplicarFiltros;
@@ -104,6 +105,8 @@
 			vm.pintarMapaVehicleLocations();
 		else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION"))
 			vm.pintarMapaDataSections();
+		else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA"))
+			vm.pintarMapaContextData();
 		else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 			vm.pintarMapaMeasurements();
 		} else console.log("No corresponde a ningún tipo --> En construcción");
@@ -156,6 +159,22 @@
 		});
 	}
 
+	function pintarPuntosContextData(events) {
+		var mystyles = {
+				color: 'red',
+				fillOpacity: 0.5
+		};
+		
+		markers.clearLayers();
+		angular.forEach(events, function(value, key) {
+			var info = infoPopup(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timeLog, value.detectedActivity, value.accuracy);			
+			//Convierto el punto que quiero pintar para tener su lat y log
+			var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
+			//Añado al mapa el punto
+			markers.addLayer(L.circle(latlng, 10, mystyles).bindPopup(info));
+		});		
+	}
+	
 	// Preparar las fechas para pasarlas como parametro a los controladores
 	function prepararParametrosFechas(){
 		var url = "";
@@ -245,6 +264,25 @@
 				paginarEventos();
 			});
 	  }
+	  
+	  function pintarMapaContextData() {
+		    
+			var bounds = map.getBounds();				
+			var esLng = bounds.getSouthEast().lng;
+			var esLat = bounds.getSouthEast().lat;
+			var wnLng = bounds.getNorthWest().lng;
+			var wnLat = bounds.getNorthWest().lat;
+			
+			var url = url_contextData;
+			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
+			
+			$http.get(url).success(function(data) {
+				vm.events = data;		
+				pintarPuntosContextData(vm.events);
+				paginarEventos();
+			
+			});
+		  }
 	  
 	 function onTimeSetStart() {
 		    vm.showCalendarStart = !vm.showCalendarStart;

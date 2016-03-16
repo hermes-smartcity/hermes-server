@@ -215,6 +215,7 @@ create sequence contextdata_id_seq;
 CREATE TABLE contextdata (
   id bigint NOT NULL DEFAULT nextval('contextdata_id_seq'::regclass),
   eventId VARCHAR(50) NOT NULL,
+  position geometry(POINT, 4326),
   timelog timestamp without time zone,
   latitude double precision,
   longitude double precision,

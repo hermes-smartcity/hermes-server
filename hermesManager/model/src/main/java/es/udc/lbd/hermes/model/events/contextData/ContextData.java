@@ -15,7 +15,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.vividsolutions.jts.geom.Point;
+
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
+import es.udc.lbd.hermes.model.util.jackson.CustomGeometrySerializer;
+import es.udc.lbd.hermes.model.util.jackson.CustomPointDeserializer;
 
 @Entity
 @SequenceGenerator(name = "xeradorId", sequenceName = "contextdata_id_seq")
@@ -38,10 +46,24 @@ public class ContextData implements Serializable {
 	
 	private Integer accuracy;
 
+	@Type(type="org.hibernate.spatial.GeometryType")
+	@JsonSerialize(using = CustomGeometrySerializer.class)
+    @JsonDeserialize(using = CustomPointDeserializer.class)	
+    private Point position;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUsuarioMovil")
 	private UsuarioMovil usuarioMovil;
 
+	public ContextData() {
+    }
+	
+	public ContextData(Calendar timeLog, String eventId, Point position) {
+    	this.timeLog= timeLog;
+    	this.eventId= eventId;
+    	this.position= position;
+    }
+	
 	public Long getId() {
 		return id;
 	}
@@ -104,6 +126,14 @@ public class ContextData implements Serializable {
 
 	public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
 		this.usuarioMovil = usuarioMovil;
+	}
+
+	public Point getPosition() {
+		return position;
+	}
+
+	public void setPosition(Point position) {
+		this.position = position;
 	}
 
 }

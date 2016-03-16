@@ -73,3 +73,8 @@ var url_eventosPorDiaDS = url_dataS+'json/eventosPorDia?';
 var url_measurement = url_servidor+'api/measurement/';
 var url_measurements = url_measurement+'json/measurements';
 var url_eventosPorDiaM = url_measurement+'json/eventosPorDia?';
+
+//Controlador contextdata
+var url_contextD = url_servidor+'api/contextdata/';
+var url_contextData = url_contextD+'json/contextData?';
+var url_eventosPorDiaVL = url_contextD+'json/eventosPorDia?';
