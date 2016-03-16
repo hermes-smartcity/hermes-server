@@ -203,3 +203,25 @@ CREATE TABLE logs
     level   VARCHAR(10)    NOT NULL,
     message VARCHAR(1000)  NOT NULL
    );
+
+   
+--
+-- SmartCitizen: Context Data
+--
+drop table if exists contextdata cascade;
+drop sequence if exists contextdata_id_seq cascade;
+create sequence contextdata_id_seq;
+
+CREATE TABLE contextdata (
+  id bigint NOT NULL DEFAULT nextval('contextdata_id_seq'::regclass),
+  eventId VARCHAR(50) NOT NULL,
+  timelog timestamp without time zone,
+  latitude double precision,
+  longitude double precision,
+  detectedActivity VARCHAR(50),
+  accuracy integer,
+  idUsuarioMovil bigint,
+  CONSTRAINT idcontextdata_pk PRIMARY KEY (id),
+  CONSTRAINT idcontextdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+)
+;
