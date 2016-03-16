@@ -72,7 +72,12 @@ public class HelpersModel {
 	}
 	
 	public static Geometry prepararPunto(Double latitude, Double longitude){
-		return wktToGeometry("POINT("+ longitude.toString() + " "+ latitude.toString() + ")");
+		if (longitude!=null && latitude!=null){
+			return wktToGeometry("POINT("+ longitude.toString() + " "+ latitude.toString() + ")");	
+		}else{
+			return null;
+		}
+		
 	}
 	
 	public static Geometry prepararPoligono(Double wnLng, Double wnLat, Double esLng, Double esLat){
