@@ -24,6 +24,7 @@ public class EventDataSerializer extends StdSerializer<EventData> {
 		registerEventType(ZtreamyDriverFeatures.class, "Driver Features");
 		registerEventType(ZtreamyDataSection.class, "Data Section");
 		registerEventType(ZtreamyStepsData.class, "Steps Data");
+		registerEventType(ZtreamyContextDataList.class, "Context Data");
 		registerEventType(ZtreamySleepData.class, "Sleep Data");
 		registerEventType(ZtreamyHeartRateData.class, "Heart Rate Data");
 	}

@@ -22,6 +22,7 @@ CREATE TABLE usuario_web(
   email VARCHAR(160),
   password VARCHAR(160),
   id_usuario_movil bigint,
+  activado boolean DEFAULT true,
   CONSTRAINT usuario_web_u UNIQUE (email),
   CONSTRAINT usuario_web_pk PRIMARY KEY (id),
   CONSTRAINT usuario_movil_fk_usuario_web FOREIGN KEY (id_usuario_movil) REFERENCES usuario_movil(id) ON DELETE CASCADE
@@ -131,7 +132,7 @@ CREATE TABLE eventoProcesado (
   id bigint NOT NULL DEFAULT nextval('eventoProcesado_id_seq'::regclass),
   timestamp timestamp without time zone,
   eventId VARCHAR(50) NOT NULL, 
-  tipo VARCHAR(20) NOT NULL)
+  tipo VARCHAR(20))
 ;
 
 --
@@ -202,3 +203,24 @@ CREATE TABLE logs
     level   VARCHAR(10)    NOT NULL,
     message VARCHAR(1000)  NOT NULL
    );
+
+   
+--
+-- SmartCitizen: Context Data
+--
+drop table if exists contextdata cascade;
+drop sequence if exists contextdata_id_seq cascade;
+create sequence contextdata_id_seq;
+
+CREATE TABLE contextdata (
+  id bigint NOT NULL DEFAULT nextval('contextdata_id_seq'::regclass),
+  eventId VARCHAR(50) NOT NULL,
+  position geometry(POINT, 4326),
+  timelog timestamp without time zone,
+  detectedActivity VARCHAR(50),
+  accuracy integer,
+  idUsuarioMovil bigint,
+  CONSTRAINT idcontextdata_pk PRIMARY KEY (id),
+  CONSTRAINT idcontextdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+)
+;

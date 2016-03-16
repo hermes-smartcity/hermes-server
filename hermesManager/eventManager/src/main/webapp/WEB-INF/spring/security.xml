@@ -61,6 +61,10 @@
 		<!-- dataSection -->
 		<security:intercept-url method="GET" pattern="/api/dataSection/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />	
 			
+		<!-- contextdata -->
+		<security:intercept-url method="GET" pattern="/api/contextdata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		
 		<security:csrf disabled="true"/>
 	</security:http>
 	

@@ -26,6 +26,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 		registerEventType("Driver Features", ZtreamyDriverFeatures.class);
 		registerEventType("Data Section", ZtreamyDataSection.class);
 		registerEventType("Steps Data", ZtreamyStepsData.class);
+		registerEventType("Context Data", ZtreamyContextDataList.class);
 		registerEventType("Sleep Data", ZtreamySleepData.class);
 		registerEventType("Heart Rate Data", ZtreamyHeartRateData.class);
 	}
