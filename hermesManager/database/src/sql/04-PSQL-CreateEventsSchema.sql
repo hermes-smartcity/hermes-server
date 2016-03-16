@@ -132,7 +132,7 @@ CREATE TABLE eventoProcesado (
   id bigint NOT NULL DEFAULT nextval('eventoProcesado_id_seq'::regclass),
   timestamp timestamp without time zone,
   eventId VARCHAR(50) NOT NULL, 
-  tipo VARCHAR(20) NOT NULL)
+  tipo VARCHAR(20))
 ;
 
 --
