@@ -17,4 +17,6 @@ public interface StepsDataService {
 	public List<StepsData> obterStepsData();
 	
 	public List<StepsData> obterStepsDataSegunUsuario(Long idUsuario);
+	
+	public long contar();
 }

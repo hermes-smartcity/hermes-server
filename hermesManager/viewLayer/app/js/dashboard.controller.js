@@ -5,10 +5,11 @@
 
 	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 'numberActiveUsers',
 	                               'measurementsType', 'eventsToday', 'eventoProcesado' ,'totalL', 'totalDS', 
-	                               'totalM', 'totalDF', '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope'];
+	                               'totalM', 'totalDF', 'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope'];
 
 	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, numberActiveUsers, measurementsType,  
-			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF , $http, $timeout, $log, $filter, eventsService, $rootScope) {
+			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
+			$http, $timeout, $log, $filter, eventsService, $rootScope) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -31,6 +32,10 @@
 	vm.totalDS = totalDS;
 	vm.totalM = totalM;
 	vm.totalDF = totalDF;
+	vm.totalSTD = totalSTD;
+	vm.totalSLD = totalSLD;
+	vm.totalHRD = totalHRD;
+	vm.totalCD = totalCD;
 	vm.mostrarMapa = mostrarMapa;
 	vm.mostrarTabla = mostrarTabla;
 	vm.showMap = true;

@@ -20,6 +20,9 @@
 			getTotalDataScts: getTotalDataScts,
 			getTotalMeasurements: getTotalMeasurements,
 			getTotalDriversF: getTotalDriversF,
+			getTotalStepsData: getTotalStepsData,
+			getTotalSleepData: getTotalSleepData,
+			getTotalHeartRateData: getTotalHeartRateData,
 			getTotalContextData: getTotalContextData,
 			getEventosPorDia: getEventosPorDia
 		};
@@ -170,6 +173,42 @@
 			}
 		}
 		
+		function getTotalStepsData() {
+			return $http.get(url_totalStepsData)
+				.then(getTotalStepsDataComplete)
+				.catch(getTotalStepsDataFailed);
+			function getTotalStepsDataComplete(response) {
+				return response.data;
+			}
+			function getTotalStepsDataFailed(error) {
+				$log.error('XHR Failed getTotalStepsData.' + error.data);
+			}
+		}
+		
+		function getTotalSleepData() {
+			return $http.get(url_totalSleepData)
+				.then(getTotalSleepDataComplete)
+				.catch(getTotalSleepDataFailed);
+			function getTotalSleepDataComplete(response) {
+				return response.data;
+			}
+			function getTotalSleepDataFailed(error) {
+				$log.error('XHR Failed getTotalSleepDataFailed.' + error.data);
+			}
+		}
+		
+		function getTotalHeartRateData() {
+			return $http.get(url_totalHeartRateData)
+				.then(getTotalHeartRateDataComplete)
+				.catch(getTotalHeartRateDataFailed);
+			function getTotalHeartRateDataComplete(response) {
+				return response.data;
+			}
+			function getTotalHeartRateDataFailed(error) {
+				$log.error('XHR Failed for getTotalHeartRateDataFailed.' + error.data);
+			}
+		}
+		
 		function getTotalContextData() {
 			return $http.get(url_totalContextData)
 				.then(getTotalContextDataComplete)
@@ -177,8 +216,8 @@
 			function getTotalContextDataComplete(response) {
 				return response.data;
 			}
-			function getTotalVLocationsFailed(error) {
-				$log.error('XHR Failed for getTotalVLocations.' + error.data);
+			function getTotalContextDataFailed(error) {
+				$log.error('XHR Failed forgetTotalContextDataFailed.' + error.data);
 			}
 		}
 		

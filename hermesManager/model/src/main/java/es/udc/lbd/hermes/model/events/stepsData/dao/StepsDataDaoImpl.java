@@ -30,4 +30,11 @@ public class StepsDataDaoImpl extends GenericDaoHibernate<StepsData, Long> imple
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
 		}		
 	}	
+	
+	@Override
+	public long contar() {
+		return (Long) getSession()
+				.createQuery("select count(*) from StepsData")
+				.uniqueResult();
+	}
 }

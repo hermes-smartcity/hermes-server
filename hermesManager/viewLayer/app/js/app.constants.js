@@ -57,6 +57,9 @@ var url_totalVLocations = url_dashboard+'json/totalVLocations';
 var url_totalDataScts = url_dashboard+'json/totalDataScts';
 var url_totalMeasurements = url_dashboard+'json/totalMeasurements';
 var url_totalDriversF = url_dashboard+'json/totalDriversF';
+var url_totalStepsData = url_dashboard+'json/totalStepsData';
+var url_totalSleepData = url_dashboard+'json/totalSleepData';
+var url_totalHeartRateData = url_dashboard+'json/totalHeartRateData';
 var url_totalContextData = url_dashboard+'json/totalContextData';
 
 //Controlador vehicleLocation

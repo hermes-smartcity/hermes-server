@@ -9,4 +9,5 @@ public interface SleepDataDao extends GenericDao<SleepData, Long> {
 	
 	public List<SleepData> obterSleepData();
 	public List<SleepData> obterSleepDataSegunUsuario(Long idUsuario);
+	public long contar();
 }

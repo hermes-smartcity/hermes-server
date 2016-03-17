@@ -101,6 +101,18 @@
 				}],
 				totalDF: ['eventsService', function(eventsService) {
 					return eventsService.getTotalMeasurements();
+				}],
+				totalSTD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalStepsData();
+				}],
+				totalSLD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalSleepData();
+				}],
+				totalHRD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalHeartRateData();
+				}],
+				totalCD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalContextData();
 				}]
 			},
 			data: {
