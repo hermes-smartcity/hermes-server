@@ -20,6 +20,7 @@
 			getTotalDataScts: getTotalDataScts,
 			getTotalMeasurements: getTotalMeasurements,
 			getTotalDriversF: getTotalDriversF,
+			getTotalContextData: getTotalContextData,
 			getEventosPorDia: getEventosPorDia
 		};
 
@@ -166,6 +167,18 @@
 			}
 			function getTotalDriversFFailed(error) {
 				$log.error('XHR Failed for getTotalDriversF.' + error.data);
+			}
+		}
+		
+		function getTotalContextData() {
+			return $http.get(url_totalContextData)
+				.then(getTotalContextDataComplete)
+				.catch(getTotalContextDataFailed);
+			function getTotalContextDataComplete(response) {
+				return response.data;
+			}
+			function getTotalVLocationsFailed(error) {
+				$log.error('XHR Failed for getTotalVLocations.' + error.data);
 			}
 		}
 		

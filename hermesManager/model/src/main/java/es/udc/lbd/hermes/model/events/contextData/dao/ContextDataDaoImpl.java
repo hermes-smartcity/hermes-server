@@ -98,4 +98,11 @@ public class ContextDataDaoImpl extends GenericDaoHibernate<ContextData, Long> i
 		query.setResultTransformer(Transformers.aliasToBean(EventosPorDia.class));
 		return (List<EventosPorDia>) query.list();
 	}
+	
+	@Override
+	public long contar() {
+		return (Long) getSession()
+				.createQuery("select count(*) from ContextData")
+				.uniqueResult();
+	}
 }

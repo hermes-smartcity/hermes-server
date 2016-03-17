@@ -19,6 +19,7 @@
 		vm.pintarGraficoDataSections = pintarGraficoDataSections;
 		vm.pintarGraficoMeasurements = pintarGraficoMeasurements;
 		vm.recuperarYpintarEventos = recuperarYpintarEventos;
+		vm.pintarGraficoContextData = pintarGraficoContextData;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
 		vm.getLiveChartData = getLiveChartData;
@@ -131,6 +132,12 @@
 			vm.recuperarYpintarEventos(url);
 		}
 		
+		function pintarGraficoContextData() {
+			var url = url_eventosPorDiaCD;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
 		function aplicarFiltros() {
 			var pos = vm.eventTypeSelected.indexOf('_');
 			var value = vm.eventTypeSelected.substr(0, pos);
@@ -142,6 +149,8 @@
 				vm.pintarGraficoVehicleLocations();
 			else if (angular.equals(vm.eventTypeSelected, "DATA_SECTION"))
 				vm.pintarGraficoDataSections();
+			else if (angular.equals(vm.eventTypeSelected, "CONTEXT_DATA"))
+				vm.pintarGraficoContextData();
 			else if (vm.measurementsType.indexOf(vm.eventTypeSelected) > -1) {
 				vm.pintarGraficoMeasurements();
 			} else

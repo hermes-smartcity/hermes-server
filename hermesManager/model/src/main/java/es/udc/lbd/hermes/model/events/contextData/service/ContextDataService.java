@@ -23,5 +23,7 @@ public interface ContextDataService {
 	public List<ContextData> obterContextData(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat);
 	
+	public long contar();
+	
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 }

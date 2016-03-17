@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.events.EventType;
-
+import es.udc.lbd.hermes.model.events.contextData.service.ContextDataService;
 import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 import es.udc.lbd.hermes.model.events.driverFeatures.service.DriverFeaturesService;
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
@@ -45,6 +45,8 @@ public class DashboardJSONController extends MainResource {
 	@Autowired private MeasurementService measurementService;
 	
 	@Autowired private DriverFeaturesService driverFeaturesService;
+	
+	@Autowired private ContextDataService contextDataService;
 
 		@RequestMapping(value="/json/eventsType", method = RequestMethod.GET)
 		public List<EventType> eventsType() {
@@ -119,6 +121,13 @@ public class DashboardJSONController extends MainResource {
 		public JSONData getTotalDriversF() {
 			JSONData jsonData = new JSONData();
 			jsonData.setValueL(driverFeaturesService.contar());
+			return jsonData;
+		}
+		
+		@RequestMapping(value="/json/totalContextData", method = RequestMethod.GET)
+		public JSONData getTotalContextData() {
+			JSONData jsonData = new JSONData();
+			jsonData.setValueL(contextDataService.contar());
 			return jsonData;
 		}
 	}

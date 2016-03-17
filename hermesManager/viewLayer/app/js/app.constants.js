@@ -57,6 +57,7 @@ var url_totalVLocations = url_dashboard+'json/totalVLocations';
 var url_totalDataScts = url_dashboard+'json/totalDataScts';
 var url_totalMeasurements = url_dashboard+'json/totalMeasurements';
 var url_totalDriversF = url_dashboard+'json/totalDriversF';
+var url_totalContextData = url_dashboard+'json/totalContextData';
 
 //Controlador vehicleLocation
 var url_vehicleL = url_servidor+'api/vehiclelocation/';
@@ -77,4 +78,4 @@ var url_eventosPorDiaM = url_measurement+'json/eventosPorDia?';
 //Controlador contextdata
 var url_contextD = url_servidor+'api/contextdata/';
 var url_contextData = url_contextD+'json/contextData?';
-var url_eventosPorDiaVL = url_contextD+'json/eventosPorDia?';
+var url_eventosPorDiaCD = url_contextD+'json/eventosPorDia?';

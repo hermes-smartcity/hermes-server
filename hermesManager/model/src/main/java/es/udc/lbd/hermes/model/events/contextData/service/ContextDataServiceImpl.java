@@ -87,6 +87,12 @@ public class ContextDataServiceImpl implements ContextDataService {
 	
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public long contar(){
+		return contextDataDao.contar();
+	}
+	
+	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin) {		
 		ListaEventosYdias listaEventosDias = new ListaEventosYdias();
 		List<String> listaDias = new ArrayList<String>();
