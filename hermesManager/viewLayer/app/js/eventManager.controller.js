@@ -4,10 +4,14 @@
 	angular.module('app').controller('EventManagerController', EventManagerController);
 
 	EventManagerController.$inject = ['$state', '$interval', '$scope', 'eventsType', 'usuarios' ,'measurementsType', 
-	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope'];
+	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope',
+	                                  'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
+	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
+	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
 
 	function EventManagerController($state, $interval, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
-			eventsService, $rootScope) {
+			eventsService, $rootScope, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
+			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD) {
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
 		vm.eventsType = eventsType;
@@ -25,6 +29,20 @@
 		vm.getLiveChartData = getLiveChartData;
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
+		
+		vm.totalMUsers = totalMUsers;
+		vm.totalWebUsers = totalWebUsers;
+		vm.numberActiveUsers = numberActiveUsers;
+		vm.eventsToday = eventsToday;
+		vm.eventoProcesado = eventoProcesado;
+		vm.totalL = totalL;	
+		vm.totalDS = totalDS;
+		vm.totalM = totalM;
+		vm.totalDF = totalDF;
+		vm.totalSTD = totalSTD;
+		vm.totalSLD = totalSLD;
+		vm.totalHRD = totalHRD;
+		vm.totalCD = totalCD;
 		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){

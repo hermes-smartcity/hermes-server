@@ -4,9 +4,15 @@
 	angular.module('app').controller('UserManagerController', UserManagerController);
 
 	UserManagerController.$inject = ['$scope', '$http', '$timeout', '$log', '$filter',
-	                                 'userService', '$state'];
+	                                 'userService', '$state', '$rootScope', 'eventsService', 
+	                                 'eventsType', 'usuarios' ,'measurementsType',
+	                                 'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
+	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
+	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
 
-	function UserManagerController($scope, $http, $timeout, $log, $filter, userService, $state) {
+	function UserManagerController($scope, $http, $timeout, $log, $filter, userService, $state, $rootScope,
+			eventsService, eventsType, usuarios, measurementsType, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
+			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD) {
 	
 	var vm = this;
 	vm.showAdmins = showAdmins;
@@ -19,8 +25,37 @@
 	vm.admins = [];
 	vm.searchText ='';
 	vm.searchTextAdmin='';
+	vm.arrancar = arrancar;
+	vm.parar = parar;
+	
+	vm.eventsType = eventsType;
+	vm.usuarios = usuarios;
+	vm.measurementsType = measurementsType;
+	vm.totalMUsers = totalMUsers;
+	vm.totalWebUsers = totalWebUsers;
+	vm.numberActiveUsers = numberActiveUsers;
+	vm.eventsToday = eventsToday;
+	vm.eventoProcesado = eventoProcesado;
+	vm.totalL = totalL;	
+	vm.totalDS = totalDS;
+	vm.totalM = totalM;
+	vm.totalDF = totalDF;
+	vm.totalSTD = totalSTD;
+	vm.totalSLD = totalSLD;
+	vm.totalHRD = totalHRD;
+	vm.totalCD = totalCD;
 	
 	vm.showUsers();
+	
+	// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
+	if($rootScope.hasRole('ROLE_ADMIN')){
+		eventsService.getStateActualizado().then(getStateActualizadoComplete);	
+	}
+	
+	function getStateActualizadoComplete(response) {				
+		vm.active = response.data;
+	}
+	
 	
 	function deleteUser(usuario) {
 
@@ -70,10 +105,20 @@
 	}
 
 	  
-	  function paginarUsuarios() {
+	function paginarUsuarios() {
 		  vm.currentPage = 1;
 		  vm.pageSize = 10;
-	  }
+	}
 	 
+	function arrancar() {
+		eventsService.arrancar();
+		$state.go('dashboard');
+	}
+	
+	function parar() {
+		eventsService.parar();
+		$state.go('dashboard');
+	}
+	
 	}
 })();

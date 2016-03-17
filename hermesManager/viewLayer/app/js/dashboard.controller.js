@@ -5,11 +5,11 @@
 
 	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 'numberActiveUsers',
 	                               'measurementsType', 'eventsToday', 'eventoProcesado' ,'totalL', 'totalDS', 
-	                               'totalM', 'totalDF', 'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope'];
+	                               'totalM', 'totalDF', 'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state'];
 
 	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, numberActiveUsers, measurementsType,  
 			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
-			$http, $timeout, $log, $filter, eventsService, $rootScope) {
+			$http, $timeout, $log, $filter, eventsService, $rootScope, $state) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -45,6 +45,8 @@
 	vm.showCalendarStart = false;
 	vm.showCalendarEnd = false;
 	vm.activeInput = 'Mapa';
+	vm.arrancar = arrancar;
+	vm.parar = parar;
 	
 	// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 	if($rootScope.hasRole('ROLE_ADMIN')){
@@ -99,6 +101,16 @@
 		vm.showMap = false;
 		vm.showTab = true;
 		vm.activeInput = 'Tabla';
+	}
+	
+	function arrancar() {
+		eventsService.arrancar();
+		$state.go('dashboard');
+	}
+	
+	function parar() {
+		eventsService.parar();
+		$state.go('dashboard');
 	}
 	
 	function aplicarFiltros() {		
