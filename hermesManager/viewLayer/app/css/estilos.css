@@ -183,7 +183,7 @@ fieldset table.alternable {
     clear: both;
 }
 
-/* Página de Login */
+/* Pï¿½gina de Login */
 
 .form-signin
 {
@@ -275,4 +275,8 @@ ol.submenu li.activo a,ol.submenu li.activo span {
 
 #overAnything{
 	z-index:10000;
+}
+
+.fondoBlanco{
+	background-color:white;
 }

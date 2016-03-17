@@ -1,174 +1,181 @@
-	<div class="row">
-		<div class="cabecera col-md-3">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div class="row">
-						<div ng-if="hasRole('ROLE_ADMIN')" class="col-xs-12">
-							<strong>Event Manager:</strong><span class="pull-right">{{vm.active.value}}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Events today:</strong><span class="pull-right">{{vm.eventsToday.valueL}}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Last event:</strong>
-							<span class="pull-right">{{vm.eventoProcesado.timestamp | date : 'dd/MM/yyyy HH:mm'}}</span>
-						</div>
+
+<div class="row">
+	<div class="cabecera col-md-3">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div ng-if="hasRole('ROLE_ADMIN')" class="col-xs-12">
+						<strong>Event Manager:</strong><span class="pull-right">{{vm.active.value}}</span>
 					</div>
 				</div>
-				<div class="panel-footer">
-					<span style="color: #337AB7;"  ui-sref="eventManager" class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-					</i></span>
-					<div class="clearfix">
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Events today:</strong><span class="pull-right">{{vm.eventsToday.valueL}}</span>
 					</div>
 				</div>
-			</div> 
-		</div>
-		<div class="cabecera col-md-3">
-			<div class="panel panel-green">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Total mobile users: </strong><span class="pull-right">{{vm.totalMUsers.valueL}}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Active users: </strong><span class="pull-right">{{vm.numberActiveUsers.valueL}}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Total web users:</strong><span class="pull-right">{{vm.totalWebUsers.valueL}}</span>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div class="panel-footer">
-						<span  ui-sref="userManager" class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-						</i></span>
-						<div class="clearfix">
-						</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Last event:</strong> <span class="pull-right">{{vm.eventoProcesado.timestamp
+							| date : 'dd/MM/yyyy HH:mm'}}</span>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="cabecera col-md-3">
-			<div class="panel panel-yellow">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Locations:</strong><span class="pull-right">{{vm.totalL.valueL}}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Measurements:</strong><span class="pull-right">{{vm.totalM.valueL}}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Data sections:</strong> <span class="pull-right">{{vm.totalDS.valueL}}</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Driver features:</strong> <span class="pull-right">{{vm.totalDF.valueL}}</span>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer">
-					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-					</i></span>
-					<div class="clearfix">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="cabecera col-md-3">
-			<div class="panel panel-red">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Future: </strong>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Future: </strong>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-12">
-							<strong>Future: </strong>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer">
-					<span class="pull-left">View Details</span> <span class="pull-right"><i class="fa"> <!--  -->
-					</i></span>
-					<div class="clearfix">
-					</div>
-				</div>
+			<div class="panel-footer">
+				<span style="color: #337AB7;" ui-sref="eventManager"
+					class="pull-left">View Details</span> <span class="pull-right"><i
+					class="fa"> <!--  -->
+				</i></span>
+				<div class="clearfix"></div>
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-9">
+	<div class="cabecera col-md-3">
+		<div class="panel panel-green">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Total mobile users: </strong><span class="pull-right">{{vm.totalMUsers.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Active users: </strong><span class="pull-right">{{vm.numberActiveUsers.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Total web users:</strong><span class="pull-right">{{vm.totalWebUsers.valueL}}</span>
+					</div>
+				</div>
+			</div>
 			<div>
-			
-			<div class="panel panel-default">
-                       <div class="panel-heading">	
-                            <i class="fa glyphicon fa-fw"></i>
-                           <div class="pull-left">
-                           		<i class="fa glyphicon glyphicon glyphicon-eye-open fa-fw"></i> 
-                               <div class="btn-group">
-                                   <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                       {{vm.activeInput}}
-                                       <span class="caret"></span>
-                                   </button>
-                                   <ul id="overAnything" class="dropdown-menu pull-right" role="menu">
-                                       <li ng-click="vm.mostrarMapa()" ><a>Mapa</a>
-                                       </li>
-                                       <li ng-click="vm.mostrarTabla()"><a>Tabla</a>
-                                       </li>
-                                       
-                                   </ul>
-                               </div>
-                           </div>
-                           <div ng-if="vm.showAdmin" class="pull-right">
-                           <!--  --><i class="fa glyphicon  fa-fw"></i>
-                            </div>
-                       </div>
-                       <!-- /.panel-heading -->
-                       <div class="panel-body">
-	                       <div ng-show="vm.showMap">
-								<div id="map">
-								</div>
-							</div>
-                       		<div ng-show="vm.showTab">
-	                        	<div ng-show="vm.eventTypeSelected == 'VEHICLE_LOCATION'">
-										<div ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'"></div>
-									</div>
-									<div ng-show="vm.eventTypeSelected == 'DATA_SECTION'">
-									<div ng-include="'./partials/dataSection/dataSectionListar.html'"></div>
-									</div>
-									<div ng-show="((vm.eventTypeSelected == 'HIGH_SPEED') || (vm.eventTypeSelected == 'HIGH_SPEED') || 
-							     				(vm.eventTypeSelected == 'HIGH_ACCELERATION') || (vm.eventTypeSelected == 'HIGH_DECELERATION') || (vm.eventTypeSelected == 'HIGH_HEART_RATE'))">
-										<div ng-include="'./partials/measurement/measurementListar.html'"></div>
-									</div>
-							</div>
-                       </div>
-                       <!-- /.panel-body -->
-                   </div>
+				<div class="panel-footer">
+					<span ui-sref="userManager" class="pull-left">View Details</span> <span
+						class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix"></div>
+				</div>
 			</div>
 		</div>
-			<div class="cabeceraFiltro col-md-3">
-			 <div class="slide-animate" ng-include="'./partials/filtros.html'"></div>
-    	 </div>   
-		</div>
-		
 	</div>
+	<div class="cabecera col-md-3">
+		<div class="panel panel-yellow">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Locations:</strong><span class="pull-right">{{vm.totalL.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Measurements:</strong><span class="pull-right">{{vm.totalM.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Data sections:</strong> <span class="pull-right">{{vm.totalDS.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Driver features:</strong> <span class="pull-right">{{vm.totalDF.valueL}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<span class="pull-left">View Details</span> <span class="pull-right"><i
+					class="fa"> <!--  -->
+				</i></span>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<div class="cabecera col-md-3">
+		<div class="panel panel-red">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Future: </strong>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Future: </strong>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Future: </strong>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<span class="pull-left">View Details</span> <span class="pull-right"><i
+					class="fa"> <!--  -->
+				</i></span>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-9">
+		<div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa glyphicon fa-fw"></i>
+					<div class="pull-left">
+						<i class="fa glyphicon glyphicon glyphicon-eye-open fa-fw"></i>
+						<div class="btn-group">
+							<button type="button"
+								class="btn btn-default btn-xs dropdown-toggle"
+								data-toggle="dropdown">
+								{{vm.activeInput}} <span class="caret"></span>
+							</button>
+							<ul id="overAnything" class="dropdown-menu pull-right"
+								role="menu">
+								<li ng-click="vm.mostrarMapa()"><a>Mapa</a></li>
+								<li ng-click="vm.mostrarTabla()"><a>Tabla</a></li>
+
+							</ul>
+						</div>
+					</div>
+					<div ng-if="vm.showAdmin" class="pull-right">
+						<!--  -->
+						<i class="fa glyphicon  fa-fw"></i>
+					</div>
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<div ng-show="vm.showMap">
+						<div id="map"></div>
+					</div>
+					<div ng-show="vm.showTab">
+						<div ng-show="vm.eventTypeSelected == 'VEHICLE_LOCATION'">
+							<div
+								ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'"></div>
+						</div>
+						<div ng-show="vm.eventTypeSelected == 'DATA_SECTION'">
+							<div ng-include="'./partials/dataSection/dataSectionListar.html'"></div>
+						</div>
+						<div ng-show="vm.eventTypeSelected == 'CONTEXT_DATA'">
+							<div ng-include="'./partials/contextData/contextDataListar.html'"></div>
+						</div>
+						<div
+							ng-show="((vm.eventTypeSelected == 'HIGH_SPEED') || (vm.eventTypeSelected == 'HIGH_SPEED') || 
+							     				(vm.eventTypeSelected == 'HIGH_ACCELERATION') || (vm.eventTypeSelected == 'HIGH_DECELERATION') || (vm.eventTypeSelected == 'HIGH_HEART_RATE'))">
+							<div ng-include="'./partials/measurement/measurementListar.html'"></div>
+						</div>
+					</div>
+				</div>
+				<!-- /.panel-body -->
+			</div>
+		</div>
+	</div>
+	<div class="cabeceraFiltro col-md-3">
+		<div class="slide-animate" ng-include="'./partials/filtros.html'"></div>
+	</div>
+</div>
+
+</div>
