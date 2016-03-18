@@ -100,7 +100,7 @@
 					return eventsService.getTotalMeasurements();
 				}],
 				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
+					return eventsService.getTotalDriversF();
 				}],
 				totalSTD: ['eventsService', function(eventsService) {
 					return eventsService.getTotalStepsData();
@@ -161,7 +161,7 @@
 					return eventsService.getTotalMeasurements();
 				}],
 				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
+					return eventsService.getTotalDriversF();
 				}],
 				totalSTD: ['eventsService', function(eventsService) {
 					return eventsService.getTotalStepsData();
@@ -222,7 +222,7 @@
 					return eventsService.getTotalMeasurements();
 				}],
 				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
+					return eventsService.getTotalDriversF();
 				}],
 				totalSTD: ['eventsService', function(eventsService) {
 					return eventsService.getTotalStepsData();
