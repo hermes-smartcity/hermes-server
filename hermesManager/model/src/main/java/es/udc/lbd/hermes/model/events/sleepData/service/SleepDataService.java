@@ -17,4 +17,6 @@ public interface SleepDataService {
 	public List<SleepData> obterSleepData();
 	
 	public List<SleepData> obterSleepDataSegunUsuario(Long idUsuario);
+	
+	public long contar();
 }

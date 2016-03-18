@@ -3,8 +3,10 @@ package es.udc.lbd.hermes.model.events.sleepData.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 
 import es.udc.lbd.hermes.model.events.sleepData.SleepData;
@@ -67,5 +69,11 @@ public class SleepDataServiceImpl implements SleepDataService {
 	public List<SleepData> obterSleepDataSegunUsuario(Long idUsuario) {
 		 List<SleepData> sleepData = sleepDataDao.obterSleepDataSegunUsuario(idUsuario);
 		return sleepData;
+	}
+	
+	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public long contar(){
+		return sleepDataDao.contar();
 	}
 }

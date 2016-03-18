@@ -1,29 +1,27 @@
 
 <div ng-if="!vm.events.length">There are not events to show</div>
 <div class="table-responsive">
-	<table ng-if="vm.events.length"
-		class="table table-hover table-responsiv">
+	<table ng-if="vm.events.length" class="table table-hover">
 		<thead>
 			<tr>
 				<th colspan="2">UserId</th>
 				<th colspan="2">Date</th>
 				<th colspan="2">Time</th>
-				<th colspan="2">Speed</th>
+				<th colspan="2">Detected activity</th>
 				<th colspan="2">Accuracy</th>
 			</tr>
 		</thead>
 		<tr>
 		<tbody
-			dir-paginate="vehicleLocation in vm.events | filter:searchText | itemsPerPage: vm.pageSize"
+			dir-paginate="contextData in vm.events | filter:searchText | itemsPerPage: vm.pageSize"
 			current-page="vm.currentPage">
 			<tr>
-				<th colspan="2">{{vehicleLocation.usuarioMovil.id}}</th>
-				<td colspan="2">{{ vehicleLocation.timestamp | date : format
-					:timezone}}</td>
-				<td colspan="2">{{ vehicleLocation.timestamp | date :
-					'shortTime'}}</td>
-				<th colspan="2">{{vehicleLocation.speed}}</th>
-				<th colspan="2">{{vehicleLocation.accuracy}}</th>
+				<th colspan="2">{{contextData.usuarioMovil.id}}</th>
+				<td colspan="2">{{ contextData.timeLog | date : format :
+					timezone}}</td>
+				<td colspan="2">{{ contextData.timeLog | date : 'shortTime'}}</td>
+				<td colspan="2">{{contextData.detectedActivity}}</td>
+				<td colspan="2">{{contextData.accuracy}}</td>
 			</tr>
 		</tbody>
 

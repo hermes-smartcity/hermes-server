@@ -1,0 +1,146 @@
+<div class="row">
+	<div class="cabecera col-md-3">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div ng-if="hasRole('ROLE_ADMIN')" class="col-xs-12">
+						<strong>Event Manager:</strong><span class="pull-right">{{vm.active.value}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Events today:</strong><span class="pull-right">{{vm.eventsToday.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Last event:</strong> <span class="pull-right">{{vm.eventoProcesado.timestamp
+							| date : 'dd/MM/yyyy HH:mm'}}</span>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="panel-footer">
+					
+					<div ng-show="vm.active.value == 'Stopped'" class="panel panel-primary">
+						<a ng-click="vm.arrancar()">
+							<div class="panel-footer">
+								<span class="pull-left"></span> 
+								<span class="pull-right">
+									<i class="fa fa-arrow-circle-right"> Start</i>
+								</span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+					
+					<div ng-show="vm.active.value == 'Running'" class="panel panel-red">				
+						<a ng-click="vm.parar()">
+							<div class="panel-footer">
+								<span class="pull-left"></span> 
+								<span class="pull-right">
+									<i class="fa fa-arrow-circle-right"> Stop</i>
+								</span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cabecera col-md-3">
+		<div class="panel panel-green">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Total mobile users: </strong><span class="pull-right">{{vm.totalMUsers.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Active users: </strong><span class="pull-right">{{vm.numberActiveUsers.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Total web users:</strong><span class="pull-right">{{vm.totalWebUsers.valueL}}</span>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="panel-footer">
+					<span ui-sref="userManager" class="pull-left">View Details</span> <span
+						class="pull-right"><i class="fa"> <!--  -->
+					</i></span>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cabecera col-md-3">
+		<div class="panel panel-yellow">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Locations:</strong><span class="pull-right">{{vm.totalL.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Measurements:</strong><span class="pull-right">{{vm.totalM.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Data sections:</strong> <span class="pull-right">{{vm.totalDS.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Driver features:</strong> <span class="pull-right">{{vm.totalDF.valueL}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<span class="pull-left">View Details</span> <span class="pull-right"><i
+					class="fa"> <!--  -->
+				</i></span>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<div class="cabecera col-md-3">
+		<div class="panel panel-red">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Steps Data:</strong><span class="pull-right">{{vm.totalSTD.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Sleep Data:</strong><span class="pull-right">{{vm.totalSLD.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Heart Rate Data:</strong><span class="pull-right">{{vm.totalHRD.valueL}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<strong>Context Data:</strong><span class="pull-right">{{vm.totalCD.valueL}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<span class="pull-left">View Details</span> <span class="pull-right"><i
+					class="fa"> <!--  -->
+				</i></span>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,20 +1,15 @@
 <div class="panel panel-default">
 		<div class="panel-heading"><strong>Filters</strong></div>
 		<div class="panel-body">
-			<div class="row">
-				<div ng-if="hasRole('ROLE_ADMIN')" class="col-xs-12">
-					<label for="singleSelect">User:</label><br />
-					<!-- Filtro usuarios  -->
-					<select id="selectUsers" ng-model="vm.usuarioSelected" ng-change="changedValue(vm.usuarioSelected)" data-ng-options="usuario as usuario.sourceId for usuario in vm.usuarios">
-						<option value="">Todos</option>
-					</select>
-				</div>
-			</div>
+			
 			<div class="row margin-top-20">
 				<div class="col-xs-12">
-					<label for="singleSelect">Event Type:</label><br />
+					<label for="singleSelect">Error Type:</label><br />
 					<!-- Filtro event type -->
-					<select id="selectEvent" ng-model="vm.eventTypeSelected" data-ng-options="eventType as eventType for eventType in vm.eventsType">
+					<select id="selectType" data-ng-model="vm.errorTypeSelected">
+						<option value="INFO">INFO</option>
+						<option value="WARN">WARN</option>
+						<option value="ERROR">ERROR</option>
 					</select>
 				</div>
 			</div>

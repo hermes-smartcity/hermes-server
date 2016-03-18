@@ -9,4 +9,5 @@ public interface HeartRateDataDao extends GenericDao<HeartRateData, Long> {
 	
 	public List<HeartRateData> obterHeartRateData();
 	public List<HeartRateData> obterHeartRateDataSegunUsuario(Long idUsuario);
+	public long contar();
 }

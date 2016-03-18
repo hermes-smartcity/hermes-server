@@ -100,7 +100,19 @@
 					return eventsService.getTotalMeasurements();
 				}],
 				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
+					return eventsService.getTotalDriversF();
+				}],
+				totalSTD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalStepsData();
+				}],
+				totalSLD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalSleepData();
+				}],
+				totalHRD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalHeartRateData();
+				}],
+				totalCD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalContextData();
 				}]
 			},
 			data: {
@@ -114,6 +126,56 @@
 			templateUrl: 'partials/user/userManager.html',
 			controller: 'UserManagerController',
 			controllerAs: 'vm',
+			resolve: {
+				eventsType: ['eventsService', function(eventsService) {
+					return eventsService.getEvensType();
+				}],
+				usuarios: ['eventsService', function(eventsService) {
+					return eventsService.getUsuarios();
+				}],
+				measurementsType: ['eventsService', function(eventsService) {
+					return eventsService.getMeasurementsType();
+				}],
+				totalMUsers: ['userService', function(userService) {
+					return userService.getTotalMUsers();
+				}],
+				totalWebUsers: ['userService', function(userService) {
+					return userService.getTotalWebUsers();
+				}],
+				numberActiveUsers: ['userService', function(userService) {
+					return userService.getNumberActiveUsers();
+				}],
+				eventoProcesado: ['eventsService', function(eventsService) {
+					return eventsService.getEventoProcesado();
+				}],
+				eventsToday: ['eventsService', function(eventsService) {
+					return eventsService.getEventsToday();
+				}],				
+				totalL: ['eventsService', function(eventsService) {
+					return eventsService.getTotalVLocations();
+				}],
+				totalDS: ['eventsService', function(eventsService) {
+					return eventsService.getTotalDataScts();
+				}],
+				totalM: ['eventsService', function(eventsService) {
+					return eventsService.getTotalMeasurements();
+				}],
+				totalDF: ['eventsService', function(eventsService) {
+					return eventsService.getTotalDriversF();
+				}],
+				totalSTD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalStepsData();
+				}],
+				totalSLD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalSleepData();
+				}],
+				totalHRD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalHeartRateData();
+				}],
+				totalCD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalContextData();
+				}]
+			},
 			data: {
 			      permissions: {
 			          only: ['ROLE_ADMIN'],
@@ -134,11 +196,61 @@
 				}],
 				measurementsType: ['eventsService', function(eventsService) {
 					return eventsService.getMeasurementsType();
+				}],
+				totalMUsers: ['userService', function(userService) {
+					return userService.getTotalMUsers();
+				}],
+				totalWebUsers: ['userService', function(userService) {
+					return userService.getTotalWebUsers();
+				}],
+				numberActiveUsers: ['userService', function(userService) {
+					return userService.getNumberActiveUsers();
+				}],
+				eventoProcesado: ['eventsService', function(eventsService) {
+					return eventsService.getEventoProcesado();
+				}],
+				eventsToday: ['eventsService', function(eventsService) {
+					return eventsService.getEventsToday();
+				}],				
+				totalL: ['eventsService', function(eventsService) {
+					return eventsService.getTotalVLocations();
+				}],
+				totalDS: ['eventsService', function(eventsService) {
+					return eventsService.getTotalDataScts();
+				}],
+				totalM: ['eventsService', function(eventsService) {
+					return eventsService.getTotalMeasurements();
+				}],
+				totalDF: ['eventsService', function(eventsService) {
+					return eventsService.getTotalDriversF();
+				}],
+				totalSTD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalStepsData();
+				}],
+				totalSLD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalSleepData();
+				}],
+				totalHRD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalHeartRateData();
+				}],
+				totalCD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalContextData();
 				}]
 			},
 			data: {
 			      permissions: {
 			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
+		}).state('systemLogs', {
+			url: '/systemLogs',
+			templateUrl:'partials/systemLogs/systemLogs.html',
+			controller: 'SystemLogsController',
+			controllerAs: 'vm',
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
 						redirectTo: 'login'
 			        }
 			}

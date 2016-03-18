@@ -9,4 +9,5 @@ public interface StepsDataDao extends GenericDao<StepsData, Long> {
 	
 	public List<StepsData> obterStepsData();
 	public List<StepsData> obterStepsDataSegunUsuario(Long idUsuario);
+	public long contar();
 }

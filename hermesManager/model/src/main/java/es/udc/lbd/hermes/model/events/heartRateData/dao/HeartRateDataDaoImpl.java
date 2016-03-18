@@ -30,4 +30,11 @@ public class HeartRateDataDaoImpl extends GenericDaoHibernate<HeartRateData, Lon
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
 		}		
 	}	
+	
+	@Override
+	public long contar() {
+		return (Long) getSession()
+				.createQuery("select count(*) from HeartRateData")
+				.uniqueResult();
+	}
 }

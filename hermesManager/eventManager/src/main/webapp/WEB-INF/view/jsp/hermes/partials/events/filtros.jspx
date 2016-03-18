@@ -28,7 +28,7 @@
 					<label for="singleSelect">Start date: </label>&amp;nbsp;
 					<button class="btn btn-default btn-xs" ng-click="vm.showCalendarStart = !vm.showCalendarStart">Change</button>
 					<br /> {{ startDate | date:'dd/MM/yyyy HH:mm' }}<br />
-					<div ng-show="vm.showCalendarStart" class="pull-right">
+					<div ng-show="vm.showCalendarStart" class="pull-right fondoBlanco">
 						<datetimepicker data-on-set-time="vm.onTimeSetStart(newDate, oldDate)" id="calendarioHoras" data-ng-model="startDate"> <!--  --></datetimepicker>
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 					<label for="singleSelect">End date:</label>&amp;nbsp;
 					<button class="btn btn-default btn-xs" ng-click="vm.showCalendarEnd = !vm.showCalendarEnd">Change</button>
 					<br /> {{ endDate | date:'dd/MM/yyyy HH:mm' }}<br />
-					<div ng-show="vm.showCalendarEnd" class="pull-right">
+					<div ng-show="vm.showCalendarEnd" class="pull-right fondoBlanco">
 						<datetimepicker data-on-set-time="vm.onTimeSetEnd(newDate, oldDate)" id="calendarioHoras" data-ng-model="endDate"> <!--  --></datetimepicker>
 					</div>
 				</div>

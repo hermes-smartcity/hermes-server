@@ -30,4 +30,11 @@ public class SleepDataDaoImpl extends GenericDaoHibernate<SleepData, Long> imple
 			throw SessionFactoryUtils.convertHibernateAccessException(e);
 		}		
 	}	
+	
+	@Override
+	public long contar() {
+		return (Long) getSession()
+				.createQuery("select count(*) from SleepData")
+				.uniqueResult();
+	}
 }

@@ -4,10 +4,14 @@
 	angular.module('app').controller('EventManagerController', EventManagerController);
 
 	EventManagerController.$inject = ['$state', '$interval', '$scope', 'eventsType', 'usuarios' ,'measurementsType', 
-	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope'];
+	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope',
+	                                  'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
+	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
+	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
 
 	function EventManagerController($state, $interval, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
-			eventsService, $rootScope) {
+			eventsService, $rootScope, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
+			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD) {
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
 		vm.eventsType = eventsType;
@@ -19,11 +23,26 @@
 		vm.pintarGraficoDataSections = pintarGraficoDataSections;
 		vm.pintarGraficoMeasurements = pintarGraficoMeasurements;
 		vm.recuperarYpintarEventos = recuperarYpintarEventos;
+		vm.pintarGraficoContextData = pintarGraficoContextData;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
 		vm.getLiveChartData = getLiveChartData;
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
+		
+		vm.totalMUsers = totalMUsers;
+		vm.totalWebUsers = totalWebUsers;
+		vm.numberActiveUsers = numberActiveUsers;
+		vm.eventsToday = eventsToday;
+		vm.eventoProcesado = eventoProcesado;
+		vm.totalL = totalL;	
+		vm.totalDS = totalDS;
+		vm.totalM = totalM;
+		vm.totalDF = totalDF;
+		vm.totalSTD = totalSTD;
+		vm.totalSLD = totalSLD;
+		vm.totalHRD = totalHRD;
+		vm.totalCD = totalCD;
 		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
@@ -131,6 +150,12 @@
 			vm.recuperarYpintarEventos(url);
 		}
 		
+		function pintarGraficoContextData() {
+			var url = url_eventosPorDiaCD;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
 		function aplicarFiltros() {
 			var pos = vm.eventTypeSelected.indexOf('_');
 			var value = vm.eventTypeSelected.substr(0, pos);
@@ -142,6 +167,8 @@
 				vm.pintarGraficoVehicleLocations();
 			else if (angular.equals(vm.eventTypeSelected, "DATA_SECTION"))
 				vm.pintarGraficoDataSections();
+			else if (angular.equals(vm.eventTypeSelected, "CONTEXT_DATA"))
+				vm.pintarGraficoContextData();
 			else if (vm.measurementsType.indexOf(vm.eventTypeSelected) > -1) {
 				vm.pintarGraficoMeasurements();
 			} else
