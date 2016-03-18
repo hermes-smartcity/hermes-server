@@ -243,6 +243,17 @@
 						redirectTo: 'login'
 			        }
 			}
+		}).state('systemLogs', {
+			url: '/systemLogs',
+			templateUrl:'partials/systemLogs/systemLogs.html',
+			controller: 'SystemLogsController',
+			controllerAs: 'vm',
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
+			}
 		});
 		
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

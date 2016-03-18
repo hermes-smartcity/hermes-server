@@ -82,3 +82,7 @@ var url_eventosPorDiaM = url_measurement+'json/eventosPorDia?';
 var url_contextD = url_servidor+'api/contextdata/';
 var url_contextData = url_contextD+'json/contextData?';
 var url_eventosPorDiaCD = url_contextD+'json/eventosPorDia?';
+
+//Controlador systemLogs
+var url_systemL = url_servidor+'api/systemlog/';
+var url_systemLogs = url_systemL+'json/systemLogs?';
