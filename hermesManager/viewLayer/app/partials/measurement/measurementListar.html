@@ -1,35 +1,35 @@
-<div ng-if="!vm.events.length">No hay eventos para mostrar</div>
-<table  ng-if="vm.events.length" class="table table-hover">
-		 <thead>
-		    <tr>				   
-		      <th colspan="2">IdEvento</th>
-		      <th colspan="3">Timestamp</th>
-		       <th colspan="3">Coordenadas</th>
-		      <th colspan="2">Valor</th>
-		       <th colspan="2">Tipo</th>
-		    </tr>
-		  </thead>
+<div ng-if="!vm.events.length">Thre are not events to show</div>
+<div class="table-responsive">
+	<table ng-if="vm.events.length" class="table table-hover">
+		<thead>
+			<tr>
+				<th colspan="2">UserId</th>
+				<th colspan="2">Date</th>
+				<th colspan="2">Time</th>
+				<th colspan="2">Value</th>
+				<th colspan="2">Speed</th>
+				<th colspan="2">Accuracy</th>
+			</tr>
+		</thead>
 		<tr>
-		  <tbody dir-paginate="measurement in vm.events | filter:searchText | itemsPerPage: vm.pageSize" 
-  		current-page="vm.currentPage">
-		     <tr>
-		      <th colspan="2">{{measurement.eventId}}</th>
-		      <td colspan="3">{{ measurement.timestamp  | date : format : timezone}}</td>
-		      <td colspan="3">
-	      		{{measurement.position.coordinates}}
-			  </td>
-			  <td colspan="2">
-	      		{{measurement.value}}
-			  </td>
-			   <td colspan="2">
-	      		{{measurement.tipo}}
-			  </td>
-			  	
-		    </tr>
-		  </tbody>				  
-		
-</table>
+		<tbody
+			dir-paginate="measurement in vm.events | filter:searchText | itemsPerPage: vm.pageSize"
+			current-page="vm.currentPage">
+			<tr>
+				<th colspan="2">{{measurement.usuarioMovil.id}}</th>
+				<td colspan="2">{{ measurement.timestamp | date : format :
+					timezone}}</td>
+				<td colspan="2">{{ measurement.timestamp | date : 'shortTime'}}</td>
+				<td colspan="2">{{measurement.value}}</td>
+				<td colspan="2">{{measurement.speed}}</td>
+				<td colspan="2">{{measurement.accuracy}}</td>
+			</tr>
+		</tbody>
 
-  <div class="text-center">
- 		<dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
- </div>
+	</table>
+</div>
+<div class="text-center">
+	<dir-pagination-controls boundary-links="true"
+		on-page-change="pageChangeHandler(newPageNumber)"
+		template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+</div>
