@@ -62,7 +62,7 @@
 	}
 	
 	//Inicializar options de la tabla
-	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("/translations/datatables-locale_en.json");
+	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
 	
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	vm.eventTypeSelected = "VEHICLE_LOCATION";

@@ -40,10 +40,11 @@ gulp.task('copy-bower-components', function () {
   gulp.src('./app/bower_components/**')
     .pipe(gulp.dest('dist/bower_components'));
 });
-gulp.task('copy-html-files', function () {
+gulp.task('copy-files', function () {
 	gulp.src('./app/login.html').pipe(gulp.dest('dist/'));
 	gulp.src('./app/partials/*.html').pipe(gulp.dest('dist/partials/'));
 	gulp.src('./app/partials/**/*.html').pipe(gulp.dest('dist/partials/'));
+	gulp.src('./app/translations/*.json').pipe(gulp.dest('dist/translations/'));
 });
 
 gulp.task('connect', function () {
@@ -83,17 +84,18 @@ gulp.task('reload', function () {
 
 gulp.task('watch', function () {
   gulp.watch(['./app/partials/*.html'], ['wiredep:app', 'reload']);
-  gulp.watch(['./app/partials/**/*.html'], ['copy-html-files', 'reload']);
+  gulp.watch(['./app/partials/**/*.html'], ['copy-files', 'reload']);
+  gulp.watch(['./app/translations/*.json'], ['copy-files', 'reload']);
   gulp.watch(['./app/js/*.js'], ['minify-js', 'reload']);
   gulp.watch(['./app/css/*.css'], ['minify-css', 'reload']);
 });
 
 // default task
 gulp.task('default',
-  ['lint','wiredep:app', 'html:app', 'connect', 'watch']
+  ['lint','wiredep:app','connect', 'watch']
 );
 
 gulp.task('build', function(cb) {
 	  runSequence(['clean'], 
-			  ['wiredep:app'] ,['lint', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components'], 'connect', 'watch', cb);
+			  ['wiredep:app'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
 	});
