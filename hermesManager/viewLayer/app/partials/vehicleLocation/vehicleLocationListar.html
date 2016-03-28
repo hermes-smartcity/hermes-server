@@ -5,21 +5,21 @@
 			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
-				<th colspan="2">UserId</th>
-				<th colspan="2">Date</th>
-				<th colspan="2">Time</th>
-				<th colspan="2">Speed</th>
-				<th colspan="2">Accuracy</th>
+				<th>UserId</th>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Speed</th>
+				<th>Accuracy</th>
 			</tr>
 		</thead>
-		<tr>
+
 		<tbody>
 			<tr data-ng-repeat="vehicleLocation in vm.events track by $index">
-				<td colspan="2">{{vehicleLocation.usuarioMovil.id}}</td>
-				<td colspan="2">{{vehicleLocation.timestamp | date : format:timezone}}</td>
-				<td colspan="2">{{vehicleLocation.timestamp | date :'shortTime'}}</td>
-				<td colspan="2">{{vehicleLocation.speed}}</td>
-				<td colspan="2">{{vehicleLocation.accuracy}}</td>
+				<td>{{vehicleLocation.usuarioMovil.id}}</td>
+				<td>{{vehicleLocation.timestamp | date : format:timezone}}</td>
+				<td>{{vehicleLocation.timestamp | date :'shortTime'}}</td>
+				<td>{{vehicleLocation.speed}}</td>
+				<td>{{vehicleLocation.accuracy}}</td>
 			</tr>
 		</tbody>
 

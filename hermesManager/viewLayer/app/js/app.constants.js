@@ -86,3 +86,4 @@ var url_eventosPorDiaCD = url_contextD+'json/eventosPorDia?';
 //Controlador systemLogs
 var url_systemL = url_servidor+'api/systemlog/';
 var url_systemLogs = url_systemL+'json/systemLogs?';
+var url_delete_log = url_systemL+"deleteLog";

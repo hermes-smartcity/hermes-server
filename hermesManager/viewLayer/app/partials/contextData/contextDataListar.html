@@ -1,34 +1,26 @@
-
-<div ng-if="!vm.events.length">There are not events to show</div>
+<div data-ng-if="!vm.events.length">There are not events to show</div>
 <div class="table-responsive">
-	<table ng-if="vm.events.length" class="table table-hover">
+	<table data-ng-if="vm.events.length" class="table table-hover"
+			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
-				<th colspan="2">UserId</th>
-				<th colspan="2">Date</th>
-				<th colspan="2">Time</th>
-				<th colspan="2">Detected activity</th>
-				<th colspan="2">Accuracy</th>
+				<th>UserId</th>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Detected activity</th>
+				<th>Accuracy</th>
 			</tr>
 		</thead>
-		<tr>
-		<tbody
-			dir-paginate="contextData in vm.events | filter:searchText | itemsPerPage: vm.pageSize"
-			current-page="vm.currentPage">
-			<tr>
-				<th colspan="2">{{contextData.usuarioMovil.id}}</th>
-				<td colspan="2">{{ contextData.timeLog | date : format :
-					timezone}}</td>
-				<td colspan="2">{{ contextData.timeLog | date : 'shortTime'}}</td>
-				<td colspan="2">{{contextData.detectedActivity}}</td>
-				<td colspan="2">{{contextData.accuracy}}</td>
+
+		<tbody>
+			<tr data-ng-repeat="contextData in vm.events track by $index">
+				<td>{{contextData.usuarioMovil.id}}</td>
+				<td>{{contextData.timeLog | date : format:timezone}}</td>
+				<td>{{contextData.timeLog | date :'shortTime'}}</td>
+				<td>{{contextData.detectedActivity}}</td>
+				<td>{{contextData.accuracy}}</td>
 			</tr>
 		</tbody>
 
 	</table>
-</div>
-<div class="text-center">
-	<dir-pagination-controls boundary-links="true"
-		on-page-change="pageChangeHandler(newPageNumber)"
-		template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
 </div>

@@ -7,18 +7,19 @@
 
 	function RegisterUserController($rootScope, $scope, $http, $location, $state, userService) {
 		
-	var vm = this;
-	vm.register = register;
-	
-	function register() {
-		var usuarioNuevo = {email: vm.email, password: vm.password};		
-		userService.registerUser(usuarioNuevo).then(registerUserComplete);	
+		var vm = this;
+		vm.register = register;
 		
-		function registerUserComplete(response) {	
-			vm.infoCuenta = response.data;
+		function register() {
+			var usuarioNuevo = {email: vm.email, password: vm.password};		
+			userService.registerUser(usuarioNuevo).then(registerUserComplete);	
+			
+			function registerUserComplete(response) {	
+				vm.infoCuenta = response.data;
+			}
+			
 		}
 		
-	}
 
-	 }
+	}
 })();
