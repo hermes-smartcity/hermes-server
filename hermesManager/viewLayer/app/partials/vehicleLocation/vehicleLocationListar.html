@@ -1,8 +1,8 @@
 
-<div ng-if="!vm.events.length">There are not events to show</div>
+<div data-ng-if="!vm.events.length">There are not events to show</div>
 <div class="table-responsive">
-	<table ng-if="vm.events.length"
-		class="table table-hover table-responsiv">
+	<table data-ng-if="vm.events.length" class="table table-hover"
+			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
 				<th colspan="2">UserId</th>
@@ -13,24 +13,15 @@
 			</tr>
 		</thead>
 		<tr>
-		<tbody
-			dir-paginate="vehicleLocation in vm.events | filter:searchText | itemsPerPage: vm.pageSize"
-			current-page="vm.currentPage">
-			<tr>
-				<th colspan="2">{{vehicleLocation.usuarioMovil.id}}</th>
-				<td colspan="2">{{ vehicleLocation.timestamp | date : format
-					:timezone}}</td>
-				<td colspan="2">{{ vehicleLocation.timestamp | date :
-					'shortTime'}}</td>
-				<th colspan="2">{{vehicleLocation.speed}}</th>
-				<th colspan="2">{{vehicleLocation.accuracy}}</th>
+		<tbody>
+			<tr data-ng-repeat="vehicleLocation in vm.events track by $index">
+				<td colspan="2">{{vehicleLocation.usuarioMovil.id}}</td>
+				<td colspan="2">{{vehicleLocation.timestamp | date : format:timezone}}</td>
+				<td colspan="2">{{vehicleLocation.timestamp | date :'shortTime'}}</td>
+				<td colspan="2">{{vehicleLocation.speed}}</td>
+				<td colspan="2">{{vehicleLocation.accuracy}}</td>
 			</tr>
 		</tbody>
 
 	</table>
-</div>
-<div class="text-center">
-	<dir-pagination-controls boundary-links="true"
-		on-page-change="pageChangeHandler(newPageNumber)"
-		template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
 </div>
