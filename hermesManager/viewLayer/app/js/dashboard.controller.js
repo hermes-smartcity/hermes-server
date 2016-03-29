@@ -3,13 +3,17 @@
 
 	angular.module('app').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 'numberActiveUsers',
-	                               'measurementsType', 'eventsToday', 'eventoProcesado' ,'totalL', 'totalDS', 
-	                               'totalM', 'totalDF', 'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state'];
+	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 
+	                               'numberActiveUsers', 'measurementsType', 'eventsToday', 
+	                               'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
+	                               'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', 
+	                               '$log', '$filter', 'eventsService', '$rootScope', '$state',
+	                               'DTOptionsBuilder'];
 
-	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, numberActiveUsers, measurementsType,  
-			eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
-			$http, $timeout, $log, $filter, eventsService, $rootScope, $state) {
+	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, 
+			numberActiveUsers, measurementsType, eventsToday, eventoProcesado, totalL, totalDS, 
+			totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD, $http, $timeout, $log, $filter, 
+			eventsService, $rootScope, $state, DTOptionsBuilder) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -56,6 +60,9 @@
 	function getStateActualizadoComplete(response) {				
 		vm.active = response.data;		
 	}
+	
+	//Inicializar options de la tabla
+	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
 	
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	vm.eventTypeSelected = "VEHICLE_LOCATION";

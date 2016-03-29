@@ -10,6 +10,7 @@
 		'ui.bootstrap.datetimepicker',
 		'ngAnimate',
 		'angularUtils.directives.dirPagination',
+		'datatables',
 		'ngCookies', 'permission'
 	]).config(routeConfig).run(appRun);
 

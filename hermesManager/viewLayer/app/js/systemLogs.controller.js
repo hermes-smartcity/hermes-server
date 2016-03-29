@@ -3,9 +3,9 @@
 
 	angular.module('app').controller('SystemLogsController', SystemLogsController);
 
-	SystemLogsController.$inject = ['$scope', '$filter', '$http'];
+	SystemLogsController.$inject = ['$scope', '$filter', '$http', 'DTOptionsBuilder', 'logService'];
 
-	function SystemLogsController($scope, $filter, $http) {
+	function SystemLogsController($scope, $filter, $http, DTOptionsBuilder, logService) {
 	
 		var vm = this;
 		
@@ -15,6 +15,8 @@
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
 		
+		vm.deleteLog = deleteLog;
+		
 		// Inicializamos el filtro de error type para que inicialmente liste warning
 		vm.errorTypeSelected = "WARN";
 
@@ -23,6 +25,9 @@
 		vm.startDate.setDate(vm.startDate.getDate()-1);
 		vm.endDate = new Date();
 		
+		//Inicializar options de la tabla
+		vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
+				
 		// Preparar la url que va a llamar al controlador
 		function prepararUrl(){
 			var url = "";
@@ -44,7 +49,6 @@
 			
 			$http.get(url).success(function(data) {
 				vm.events = data;
-				paginarEventos();
 			});
 		}
 		
@@ -53,15 +57,28 @@
 		}
 		 
 		function onTimeSetEnd() {
-			    vm.showCalendarEnd = !vm.showCalendarEnd;
+			 vm.showCalendarEnd = !vm.showCalendarEnd;
 		}
 		
-		// Inicialmente sé que voy a pintar los WARN (la opción por defecto en el select)
+
+		function deleteLog(log){
+			var idLogs = -1;
+			
+			if(typeof vm.events != "undefined")
+				idLogs = vm.events.indexOf(log);
+			
+			logService.deleteLog(log.id).then(deleteLogComplete);	
+			
+			function deleteLogComplete(response) {
+				if(idLogs!=-1)
+					vm.events.splice(idLogs,1);
+			}
+		 }
+		
+		 
+		 // Inicialmente sé que voy a pintar los WARN (la opción por defecto en el select)
 		 vm.aplicarFiltros();
 		 
-		 function paginarEventos() {		  
-			  vm.currentPage = 1;
-			  vm.pageSize = 10;
-		  }
+
 	}
 })();
