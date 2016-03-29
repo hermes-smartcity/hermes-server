@@ -26,6 +26,7 @@
   "dependencies": {
     "bower": "^1.7.2",
     "gulp": "^3.9.0",
+    "gulp-change": "^1.0.0",
     "gulp-clean": "^0.3.1",
     "gulp-connect": "^2.3.1",
     "gulp-jshint": "^2.0.0",
