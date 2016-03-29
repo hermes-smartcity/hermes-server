@@ -5,8 +5,7 @@ var no_concrete_routing = true;
 
 var debug_mode = true;
 
-//var url_servidor = 'http://localhost:8080/eventManager/';
-var url_servidor = 'http://localhost:8080/eventManager/';
+var url_servidor = '%%SERVER_URL%%';
 
 
 ////Controlador authenticate

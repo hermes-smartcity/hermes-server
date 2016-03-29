@@ -23,14 +23,23 @@ function changeDist(content) {
 gulp.task('changeBuildTask', function() {
     return gulp.src('./app/js/app.constants.js')
         .pipe(change(changeBuild))
-        .pipe(gulp.dest('./app/js/'))
+        .pipe(uglify({
+        	// inSourceMap:
+        	// outSourceMap: "app.js.map"
+        }))
+        .pipe(gulp.dest('./dist/js/'))
 });
 
 gulp.task('changeDistTask', function() {
     return gulp.src('./app/js/app.constants.js')
         .pipe(change(changeDist))
-        .pipe(gulp.dest('./app/js/'))
+        .pipe(uglify({
+        	// inSourceMap:
+        	// outSourceMap: "app.js.map"
+        }))
+        .pipe(gulp.dest('./dist/js/'))
 });
+
 
 // tasks
 gulp.task('lint', function() {
@@ -50,7 +59,7 @@ gulp.task('minify-css', function() {
     .pipe(gulp.dest('./dist/'))
 });
 gulp.task('minify-js', function() {
-  gulp.src(['./app/**/*.js', '!./app/bower_components/**'])
+  gulp.src(['./app/**/*.js', '!./app/bower_components/**', '!./app/js/app.constants.js'])
     .pipe(uglify({
       // inSourceMap:
       // outSourceMap: "app.js.map"
@@ -123,5 +132,5 @@ gulp.task('build', function(cb) {
 
 gulp.task('buildDist', function(cb) {
 	  runSequence(['clean'],  
-			  ['wiredep:app', 'changeDistTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
+			  ['wiredep:app'], ['changeDistTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
 	});
