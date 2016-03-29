@@ -10,6 +10,27 @@ var clean = require('gulp-clean');
 var wiredep = require('wiredep').stream;
 var inject = require('gulp-inject');
 var runSequence = require('run-sequence');
+var change = require('gulp-change');
+
+function changeBuild(content) {
+    return content.replace('%%SERVER_URL%%', 'http://localhost:8080/eventManager/');
+}
+
+function changeDist(content) {
+    return content.replace('%%SERVER_URL%%', 'http://cronos.lbd.org.es/hermes/');
+}
+
+gulp.task('changeBuildTask', function() {
+    return gulp.src('./app/js/app.constants.js')
+        .pipe(change(changeBuild))
+        .pipe(gulp.dest('./app/js/'))
+});
+
+gulp.task('changeDistTask', function() {
+    return gulp.src('./app/js/app.constants.js')
+        .pipe(change(changeDist))
+        .pipe(gulp.dest('./app/js/'))
+});
 
 // tasks
 gulp.task('lint', function() {
@@ -97,5 +118,10 @@ gulp.task('default',
 
 gulp.task('build', function(cb) {
 	  runSequence(['clean'], 
-			  ['wiredep:app'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
+			  ['wiredep:app'], ['changeBuildTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
+	});
+
+gulp.task('buildDist', function(cb) {
+	  runSequence(['clean'],  
+			  ['wiredep:app', 'changeDistTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
 	});
