@@ -126,8 +126,6 @@ gulp.task('watch', function () {
   gulp.watch(['./app/partials/*.html'], ['wiredep:app', 'reload']);
   gulp.watch(['./app/partials/**/*.html'], ['copy-files', 'reload']);
   gulp.watch(['./app/translations/*.json'], ['copy-files', 'reload']);
-  gulp.watch(['./app/js/*.js'], ['minify-js', 'reload']);
-  gulp.watch(['./app/css/*.css'], ['minify-css', 'reload']);
 });
 
 // default task
@@ -142,5 +140,5 @@ gulp.task('build', function(cb) {
 
 gulp.task('buildDist', function(cb) {
 	  runSequence(['clean'],  
-			  ['wiredep:app'], ['changeDistTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
+			  ['wiredep:app'], ['changeDistTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], cb);
 	});
