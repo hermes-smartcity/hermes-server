@@ -289,7 +289,7 @@
 	}]);
 
 	
-	angular.module('app').factory('TokenAuthInterceptor',["$q", "$rootScope", "$location", 'userService', function($q, $rootScope, $location, userService) {
+	angular.module('app').factory('TokenAuthInterceptor',["$q", "$rootScope", "$location", '$injector', function($q, $rootScope, $location, $injector) {
 		 return {
 	        	'request': function(config) {
 	        		var isRestCall = config.url.indexOf('api') > -1;
@@ -305,21 +305,24 @@
 	        			var d = new Date();
 	        			var timeActual = d.getMilliseconds();
 	        			
+	        			$q.when($injector.get('userService').renewToken(authToken)).then(function(response){
+        					authToken = response.token;	
+        					config.headers['X-Auth-Token'] = authToken;
+        				});
+	        			
 	        			if (time < timeActual) {
-	        				//Hay que realizar una peticion de renovacion del token
-	        				/*userService.renewToken(authToken).then(getNewTokenComplete);
-	        				function getNewTokenComplete(response) {
-	        					authToken = response.token;			
-	        				}*/
-	        				
-	        				userService.renewToken(authToken).then(function(response){
+	        				//Hay que realizar una peticion de renovacion del token	        				
+	        				$q.when($injector.get('userService').renewToken(authToken)).then(function(response){
 	        					authToken = response.token;	
+	        					config.headers['X-Auth-Token'] = authToken;
 	        				});
 	        				
+	        			}else{
+	        				config.headers['X-Auth-Token'] = authToken;
 	        			}
 	        			
 //	        			if (exampleAppConfig.useAuthTokenHeader) {
-	        				config.headers['X-Auth-Token'] = authToken;
+	        			//	config.headers['X-Auth-Token'] = authToken;
 //	        			} else {
 //	        				config.url = config.url + "?token=" + authToken;
 //	        			}
