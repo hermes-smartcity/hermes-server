@@ -293,7 +293,8 @@
 		 return {
 	        	'request': function(config) {
 	        		var isRestCall = config.url.indexOf('api') > -1;
-	        		if (isRestCall && angular.isDefined($rootScope.authToken)) {
+	        		var isUrlNewToken = config.url.indexOf("renewToken") > -1;
+	        		if (isRestCall && angular.isDefined($rootScope.authToken) && !isUrlNewToken) {
 	        			var authToken = $rootScope.authToken;
 	        			
 	        			//Comprobamos si el token ha caducado extrayendo la fecha de expiracion
@@ -304,11 +305,6 @@
 	        			
 	        			var d = new Date();
 	        			var timeActual = d.getTime();
-	        			
-	        			/*$injector.get('userService').renewToken(authToken).then(function(response){
-        					authToken = response.token;	
-        					config.headers['X-Auth-Token'] = authToken;
-        				});*/
 	        			
 	        			if (time < timeActual) {
 	        				//Hay que realizar una peticion de renovacion del token	        				

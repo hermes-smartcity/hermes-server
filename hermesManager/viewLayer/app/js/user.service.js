@@ -144,7 +144,8 @@
 		function renewToken (oldToken) {		
 			return $http({
 				method : 'POST',
-				url : url_renewToken+"/"+oldToken
+				url : url_renewToken,
+				data: oldToken
 			});
 		}
 	}

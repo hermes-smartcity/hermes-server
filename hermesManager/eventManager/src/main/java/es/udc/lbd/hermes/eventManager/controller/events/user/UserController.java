@@ -190,7 +190,7 @@ public class UserController extends MainResource {
 
 	// Generar nuevo token
 	@RequestMapping(value = "/renewToken/{oldToken}", method = RequestMethod.POST)
-	public ResponseEntity<TokenTransfer> renewToken(@PathVariable String oldToken) {
+	public ResponseEntity<TokenTransfer> renewToken(@RequestBody String oldToken) {
 		
 		String userName = TokenUtils.getUserNameFromToken(oldToken);
 
