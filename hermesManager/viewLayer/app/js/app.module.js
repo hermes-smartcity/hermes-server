@@ -303,12 +303,12 @@
 	        			var time = parseFloat(expires);
 	        			
 	        			var d = new Date();
-	        			var timeActual = d.getMilliseconds();
+	        			var timeActual = d.getTime();
 	        			
-	        			$injector.get('userService').renewToken(authToken).then(function(response){
+	        			/*$injector.get('userService').renewToken(authToken).then(function(response){
         					authToken = response.token;	
         					config.headers['X-Auth-Token'] = authToken;
-        				});
+        				});*/
 	        			
 	        			if (time < timeActual) {
 	        				//Hay que realizar una peticion de renovacion del token	        				
