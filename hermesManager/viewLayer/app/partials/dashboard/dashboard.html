@@ -36,21 +36,12 @@
 						<div id="map"></div>
 					</div>
 					<div ng-show="vm.showTab">
-						<div ng-show="vm.eventTypeSelected == 'VEHICLE_LOCATION'">
-							<div
-								ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'"></div>
-						</div>
-						<div ng-show="vm.eventTypeSelected == 'DATA_SECTION'">
-							<div ng-include="'./partials/dataSection/dataSectionListar.html'"></div>
-						</div>
-						<div ng-show="vm.eventTypeSelected == 'CONTEXT_DATA'">
-							<div ng-include="'./partials/contextData/contextDataListar.html'"></div>
-						</div>
+							<div ng-if="vm.eventTypeSelected == 'VEHICLE_LOCATION'" ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'"></div>
+						<div ng-if="vm.eventTypeSelected == 'DATA_SECTION'" ng-include="'./partials/dataSection/dataSectionListar.html'"></div>
+						<div ng-if="vm.eventTypeSelected == 'CONTEXT_DATA'" ng-include="'./partials/contextData/contextDataListar.html'"></div>
 						<div
-							ng-show="((vm.eventTypeSelected == 'HIGH_SPEED') || (vm.eventTypeSelected == 'HIGH_SPEED') || 
-							     				(vm.eventTypeSelected == 'HIGH_ACCELERATION') || (vm.eventTypeSelected == 'HIGH_DECELERATION') || (vm.eventTypeSelected == 'HIGH_HEART_RATE'))">
-							<div ng-include="'./partials/measurement/measurementListar.html'"></div>
-						</div>
+							ng-if="((vm.eventTypeSelected == 'HIGH_SPEED') || (vm.eventTypeSelected == 'HIGH_SPEED') ||
+							     				(vm.eventTypeSelected == 'HIGH_ACCELERATION') || (vm.eventTypeSelected == 'HIGH_DECELERATION') || (vm.eventTypeSelected == 'HIGH_HEART_RATE'))" ng-include="'./partials/measurement/measurementListar.html'"></div>
 					</div>
 				</div>
 				<!-- /.panel-body -->
