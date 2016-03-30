@@ -188,7 +188,35 @@ public class UserController extends MainResource {
 
 	}
 
+	// Generar nuevo token
+	@RequestMapping(value = "/renewToken/{oldToken}", method = RequestMethod.POST)
+	public ResponseEntity<TokenTransfer> renewToken(@PathVariable String oldToken) {
+		
+		String userName = TokenUtils.getUserNameFromToken(oldToken);
 
+		if (userName != null) {
+
+			UserDetails userDetails = this.usuarioWebService.loadUserByUsername(userName);
+			
+			String[] parts = oldToken.split(":");
+			long expires = Long.parseLong(parts[1]);
+			String signature = parts[2];
+			
+			boolean tokenValido = TokenUtils.compareTokenWithCredentials(signature, userDetails, expires);
+			
+			if (tokenValido){
+				//Como la firma es valida, generamos un nuevo token
+				return new ResponseEntity<>(new TokenTransfer(TokenUtils.createToken(userDetails)), HttpStatus.OK);
+			}else{
+				logger.info("Token no Valido");
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+			}
+		}else{
+			logger.info("Bad credentials");
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+		}
+	}
+	
 	private Map<String, Boolean> createRoleMap(UserDetails userDetails) {
 		Map<String, Boolean> roles = new HashMap<String, Boolean>();
 		for (GrantedAuthority authority : userDetails.getAuthorities()) {

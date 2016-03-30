@@ -289,12 +289,35 @@
 	}]);
 
 	
-	angular.module('app').factory('TokenAuthInterceptor',["$q", "$rootScope", "$location", function($q, $rootScope, $location) {
+	angular.module('app').factory('TokenAuthInterceptor',["$q", "$rootScope", "$location", 'userService', function($q, $rootScope, $location, userService) {
 		 return {
 	        	'request': function(config) {
 	        		var isRestCall = config.url.indexOf('api') > -1;
 	        		if (isRestCall && angular.isDefined($rootScope.authToken)) {
 	        			var authToken = $rootScope.authToken;
+	        			
+	        			//Comprobamos si el token ha caducado extrayendo la fecha de expiracion
+	        			//y comparando con la actual
+	        			var res = authToken.split(":"); 
+	        			var expires = res[1];
+	        			var time = parseFloat(expires);
+	        			
+	        			var d = new Date();
+	        			var timeActual = d.getMilliseconds();
+	        			
+	        			if (time < timeActual) {
+	        				//Hay que realizar una peticion de renovacion del token
+	        				/*userService.renewToken(authToken).then(getNewTokenComplete);
+	        				function getNewTokenComplete(response) {
+	        					authToken = response.token;			
+	        				}*/
+	        				
+	        				userService.renewToken(authToken).then(function(response){
+	        					authToken = response.token;	
+	        				});
+	        				
+	        			}
+	        			
 //	        			if (exampleAppConfig.useAuthTokenHeader) {
 	        				config.headers['X-Auth-Token'] = authToken;
 //	        			} else {
@@ -311,8 +334,8 @@
 		$location.path(originalPath);
 	}
 	
-	appRun.$inject = ['$rootScope', '$location', '$cookieStore',  'userService', 'PermissionStore'];
-	function appRun($rootScope, $location, $cookieStore, userService, PermissionStore) {
+	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore'];
+	function appRun($rootScope, $location, $cookieStore, PermissionStore) {
 		
 		angular.isUndefinedOrNull = function(val) {
 			return angular.isUndefined(val) || val === null;
