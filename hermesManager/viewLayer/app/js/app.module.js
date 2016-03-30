@@ -307,11 +307,25 @@
 	        			var timeActual = d.getTime();
 	        			
 	        			if (time < timeActual) {
-	        				//Hay que realizar una peticion de renovacion del token	        				
-	        				$injector.get('userService').renewToken(authToken).then(function(response){
+	        				
+	        				var promise = $injector.get('userService').renewToken(authToken);
+	        				
+	        				promise.then(function(resultado) {
+	        					authToken = resultado.token;	
+	        					config.headers['X-Auth-Token'] = authToken;
+	        				}, function(error) {
+	        						config.headers['X-Auth-Token'] = authToken;
+	        				});
+	        				
+	        				//Hay que realizar una peticion de renovacion del token	    
+	        				/*$q.when($injector.get('userService').renewToken(authToken)).then(function(response){
 	        					authToken = response.token;	
 	        					config.headers['X-Auth-Token'] = authToken;
-	        				});
+	        				});*/
+	        				/*$injector.get('userService').renewToken(authToken).then(function(response){
+	        					authToken = response.token;	
+	        					config.headers['X-Auth-Token'] = authToken;
+	        				});*/
 	        				
 	        			}else{
 	        				config.headers['X-Auth-Token'] = authToken;
