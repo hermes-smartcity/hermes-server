@@ -35,7 +35,7 @@ var url_roles = url_user+'json/roles';
 var url_userToModify = url_user+'json/userToModify';
 var url_infoCuenta = url_user+'activarCuenta';
 var url_renewToken = url_user+"renewToken";
-
+var url_change_password = url_user+"changePassword";
 
 // Controlador event manager
 var url_eventManager = url_servidor+'api/eventManager/';

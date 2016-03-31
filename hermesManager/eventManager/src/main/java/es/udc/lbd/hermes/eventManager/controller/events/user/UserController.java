@@ -20,6 +20,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
+import es.udc.lbd.hermes.eventManager.controller.util.JSONDataType;
 import es.udc.lbd.hermes.eventManager.transfer.TokenTransfer;
 import es.udc.lbd.hermes.eventManager.transfer.UserTransfer;
 import es.udc.lbd.hermes.eventManager.util.TokenUtils;
@@ -38,10 +41,12 @@ import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
 import es.udc.lbd.hermes.model.usuario.exceptions.EnlaceCaducadoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.PasswordJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
+import es.udc.lbd.hermes.model.util.HashUtil;
 import es.udc.lbd.hermes.model.util.exceptions.DuplicateEmailException;
 
 @CrossOrigin
@@ -217,6 +222,41 @@ public class UserController extends MainResource {
 		}
 	}
 	
+	// Registrar usuario
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public JSONDataType changePassword(@RequestBody PasswordJSON passwordJSON) {
+		JSONDataType jsonD = new JSONDataType();
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		String passwordBD = usuario.getPassword();
+
+		//Si la contrasena antigua no coincide
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Boolean sonIguales = passwordEncoder.matches(passwordJSON.getPasswordOld(), passwordBD);
+		
+		if (!sonIguales){
+			jsonD.setValue("The old password is not correct");
+			jsonD.setType("error");
+			logger.error("Contraseña vieja no coincide");
+		}else{
+			//Si las nuevas contrasenas no son iguales avisamos
+			if (!passwordJSON.getPasswordNew1().equals(passwordJSON.getPasswordNew2())){
+				jsonD.setValue("New passwords are not the same");
+				jsonD.setType("error");
+				logger.error("Las contraseñas no son iguales");
+			}else{
+				usuarioWebService.changePassword(passwordJSON, usuario);
+				jsonD.setValue("Password changed satisfactory");
+				jsonD.setType("info");
+				logger.info("Contraseña cambiada correctamente");
+			}
+
+		}
+		
+		return jsonD;
+	}
+		
 	private Map<String, Boolean> createRoleMap(UserDetails userDetails) {
 		Map<String, Boolean> roles = new HashMap<String, Boolean>();
 		for (GrantedAuthority authority : userDetails.getAuthorities()) {

@@ -44,6 +44,7 @@
 		<security:intercept-url method="DELETE" pattern="/api/user/deleteUser/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="GET" pattern="/api/user/json/**" access="hasRole('ADMIN')" />
 		<security:intercept-url method="POST" pattern="/api/user/renewToken" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="POST" pattern="/api/user/changePassword" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
 		<!-- dashboard -->
 		<security:intercept-url method="GET" pattern="/api/dashboard/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />

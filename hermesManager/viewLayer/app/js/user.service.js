@@ -19,7 +19,8 @@
 			getTotalMUsers: getTotalMUsers,
 			getTotalWebUsers: getTotalWebUsers,
 			getNumberActiveUsers: getNumberActiveUsers,
-			renewToken: renewToken
+			renewToken: renewToken,
+			changePassword: changePassword
 		};
 
 		return service;
@@ -149,5 +150,14 @@
 				data: oldToken
 			});
 		}
+		
+		function changePassword (newPassword) {		
+			return $http({
+				method : 'POST',
+				url : url_change_password,
+				data : newPassword
+			});
+		}
+				
 	}
 })();

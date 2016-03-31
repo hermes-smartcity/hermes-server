@@ -255,6 +255,11 @@
 						redirectTo: 'login'
 			        }
 			}
+		}).state('changePassword', {
+			url: '/changePassword',
+			templateUrl:'partials/user/changePassword.html',
+			controller: 'ChangePasswordController',
+			controllerAs: 'vm'
 		});
 		
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -342,21 +347,7 @@
 						$state.go("dashboard");	
 					});
 				});
-				
-				/*var promise = userService.renewToken($localStorage.authToken);
-				
-				promise.then(function(resultado) {
-					//Asignamos el nuevo valor de token
-					$localStorage.authToken = resultado.token;
-					
-					//Redirigimos a la pantalla de dashboard
-					userService.getUser(url_get_user).then(getUserComplete);
-					function getUserComplete(response) {
-						$rootScope.user = response.data;
-						$location.path("/");
-						$state.go("dashboard");				
-					}
-				});*/
+			
 			}
 		}
 		
