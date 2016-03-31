@@ -16,8 +16,10 @@ public class TokenUtils
 	{
 		/* Expires in one hour */
 		//long expires = System.currentTimeMillis() + 1000L * 60 * 60;
-		long expires = System.currentTimeMillis() + 1000L * 60;
-
+		
+		/* Expires in one week */
+		long expires = System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7;
+		
 		StringBuilder tokenBuilder = new StringBuilder();
 		tokenBuilder.append(userDetails.getUsername());
 		tokenBuilder.append(":");

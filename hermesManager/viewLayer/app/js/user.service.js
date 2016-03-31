@@ -143,21 +143,11 @@
 		
 		function renewToken (oldToken) {
 			
-			var defered = $q.defer();
-			var promise = defered.promise;
-			
-			defered.resolve($http({
+			return $http({
 				method : 'POST',
 				url : url_renewToken,
 				data: oldToken
-			}));
-			
-			return promise;
-			/*return $http({
-				method : 'POST',
-				url : url_renewToken,
-				data: oldToken
-			});*/
+			});
 		}
 	}
 })();

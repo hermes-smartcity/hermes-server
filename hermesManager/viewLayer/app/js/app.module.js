@@ -11,7 +11,7 @@
 		'ngAnimate',
 		'angularUtils.directives.dirPagination',
 		'datatables',
-		'ngCookies', 'permission'
+		'ngCookies', 'permission','ngStorage'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
@@ -289,47 +289,14 @@
 	}]);
 
 	
-	angular.module('app').factory('TokenAuthInterceptor',["$q", "$rootScope", "$location", '$injector', function($q, $rootScope, $location, $injector) {
+	angular.module('app').factory('TokenAuthInterceptor',["$q", "$rootScope", "$location", function($q, $rootScope, $location) {
 		 return {
 	        	'request': function(config) {
 	        		var isRestCall = config.url.indexOf('api') > -1;
-	        		var isUrlNewToken = config.url.indexOf("renewToken") > -1;
-	        		if (isRestCall && angular.isDefined($rootScope.authToken) && !isUrlNewToken) {
+	        		if (isRestCall && angular.isDefined($rootScope.authToken)) {
 	        			var authToken = $rootScope.authToken;
 	        			
-	        			//Comprobamos si el token ha caducado extrayendo la fecha de expiracion
-	        			//y comparando con la actual
-	        			var res = authToken.split(":"); 
-	        			var expires = res[1];
-	        			var time = parseFloat(expires);
-	        			
-	        			var d = new Date();
-	        			var timeActual = d.getTime();
-	        			
-	        			if (time < timeActual) {
-	        				
-	        				var promise = $injector.get('userService').renewToken(authToken);
-	        				
-	        				promise.then(function(resultado) {
-	        					authToken = resultado.token;	
-	        					config.headers['X-Auth-Token'] = authToken;
-	        				}, function(error) {
-	        						config.headers['X-Auth-Token'] = authToken;
-	        				});
-	        				
-	        				//Hay que realizar una peticion de renovacion del token	    
-	        				/*$q.when($injector.get('userService').renewToken(authToken)).then(function(response){
-	        					authToken = response.token;	
-	        					config.headers['X-Auth-Token'] = authToken;
-	        				});*/
-	        				/*$injector.get('userService').renewToken(authToken).then(function(response){
-	        					authToken = response.token;	
-	        					config.headers['X-Auth-Token'] = authToken;
-	        				});*/
-	        				
-	        			}else{
-	        				config.headers['X-Auth-Token'] = authToken;
-	        			}
+	        			config.headers['X-Auth-Token'] = authToken;
 	        			
 //	        			if (exampleAppConfig.useAuthTokenHeader) {
 	        			//	config.headers['X-Auth-Token'] = authToken;
@@ -347,8 +314,51 @@
 		$location.path(originalPath);
 	}
 	
-	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore'];
-	function appRun($rootScope, $location, $cookieStore, PermissionStore) {
+	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', '$state'];
+	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, userService, $state) {
+		
+		//Si existe el token guardado en $localStorage y no ha caducado aun, se renueva
+		if ($localStorage.authToken){
+			//para que al hacer TokenAuthInterceptor tengo el valor
+			$rootScope.authToken = $localStorage.authToken; 
+			
+			var res = $localStorage.authToken.split(":"); 
+			var expires = res[1];
+			var time = parseFloat(expires);
+			
+			var d = new Date();
+			var timeActual = d.getTime();
+			
+			if (time >= timeActual) {
+				
+				userService.renewToken($localStorage.authToken).then(function(response){
+					//Asignamos el nuevo valor de token
+					$localStorage.authToken = response.token;
+					
+					//Redirigimos a la pantalla de dashboard
+					userService.getUser(url_get_user).then(function(response){
+						$rootScope.user = response.data;
+						$location.path("/");
+						$state.go("dashboard");	
+					});
+				});
+				
+				/*var promise = userService.renewToken($localStorage.authToken);
+				
+				promise.then(function(resultado) {
+					//Asignamos el nuevo valor de token
+					$localStorage.authToken = resultado.token;
+					
+					//Redirigimos a la pantalla de dashboard
+					userService.getUser(url_get_user).then(getUserComplete);
+					function getUserComplete(response) {
+						$rootScope.user = response.data;
+						$location.path("/");
+						$state.go("dashboard");				
+					}
+				});*/
+			}
+		}
 		
 		angular.isUndefinedOrNull = function(val) {
 			return angular.isUndefined(val) || val === null;
@@ -370,7 +380,8 @@
 			delete $rootScope.user;
 			delete $rootScope.error;
 			delete $rootScope.authToken;
-			$cookieStore.remove('authToken');
+			delete $localStorage.authToken;
+			
 			$location.path("/login");
 		};
 		

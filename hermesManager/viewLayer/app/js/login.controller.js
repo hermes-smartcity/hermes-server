@@ -3,9 +3,9 @@
 
 	angular.module('app').controller('LoginController', LoginController);
 
-	LoginController.$inject = ['$rootScope','$scope', '$http', '$location','$state', 'authenticateService', 'userService'];
+	LoginController.$inject = ['$rootScope','$scope', '$http', '$location','$state', 'authenticateService', 'userService', '$localStorage'];
 
-	function LoginController($rootScope, $scope, $http, $location, $state, authenticateService, userService) {
+	function LoginController($rootScope, $scope, $http, $location, $state, authenticateService, userService, $localStorage) {
 		
 	var vm = this;
 	vm.login = login;
@@ -17,9 +17,8 @@
 			var authToken = authenticationResult.token;
 			$rootScope.authToken = authToken;
 			
-			
-			if ($scope.rememberMe) {
-				$cookieStore.put('authToken', authToken);
+			if (vm.rememberMe) {
+				$localStorage.authToken = authToken;
 			}
 			
 			userService.getUser(url_get_user).then(getUserComplete);
