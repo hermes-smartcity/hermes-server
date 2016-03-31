@@ -75,7 +75,7 @@ gulp.task('copy-js', function() {
 	  gulp.src(['./app/**/*.js', '!./app/bower_components/**', '!./app/js/app.constants.js'])
 	    .pipe(gulp.dest('./dist/'))
 	});
-	
+
 gulp.task('copy-bower-components', function () {
   gulp.src('./app/bower_components/**')
     .pipe(gulp.dest('dist/bower_components'));
@@ -119,13 +119,15 @@ gulp.task('wiredep:app', function() {
 
 gulp.task('reload', function () {
 	 return gulp.src('./dist/')
-	    .pipe(connect.reload());	
+	    .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
   gulp.watch(['./app/partials/*.html'], ['wiredep:app', 'reload']);
   gulp.watch(['./app/partials/**/*.html'], ['copy-files', 'reload']);
   gulp.watch(['./app/translations/*.json'], ['copy-files', 'reload']);
+  gulp.watch(['./app/js/*.js'], ['copy-js', 'reload']);
+  gulp.watch(['./app/css/*.css'], ['copy-css', 'reload']);
 });
 
 // default task
@@ -134,11 +136,11 @@ gulp.task('default',
 );
 
 gulp.task('build', function(cb) {
-	  runSequence(['clean'], 
+	  runSequence(['clean'],
 			  ['wiredep:app'], ['changeBuildTask'] ,['lint', 'copy-css', 'copy-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
 	});
 
 gulp.task('buildDist', function(cb) {
-	  runSequence(['clean'],  
+	  runSequence(['clean'],
 			  ['wiredep:app'], ['changeDistTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], cb);
 	});
