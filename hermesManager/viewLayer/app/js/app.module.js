@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	
+
 	angular.module('app', [
 		'ui.router',
 		'ngResource',
@@ -16,7 +16,7 @@
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
 	function routeConfig($stateProvider, $urlRouterProvider, $httpProvider) {
-	
+
 		// TODO luego hacer states abstractos y que hereden de el
 		$urlRouterProvider.otherwise('login');
 		$stateProvider.state('login', {
@@ -24,7 +24,7 @@
 			templateUrl:'login.html',
 			controller: 'LoginController',
 			controllerAs: 'vm'
-		}).state('activarCuenta', { 
+		}).state('activarCuenta', {
 			url: '/activarCuenta/email/:email/hash/:hash',
 			templateUrl: 'partials/user/activarCuenta.html',
 			controller: 'ActivateUserController',
@@ -50,7 +50,7 @@
 			templateUrl:'partials/user/edit.html',
 			controller: 'EditUserController',
 			controllerAs: 'vm',
-			resolve: {				
+			resolve: {
 				usuariosMoviles: ['eventsService', function(eventsService) {
 					return eventsService.getUsuarios();
 				}]
@@ -90,7 +90,7 @@
 				}],
 				eventsToday: ['eventsService', function(eventsService) {
 					return eventsService.getEventsToday();
-				}],				
+				}],
 				totalL: ['eventsService', function(eventsService) {
 					return eventsService.getTotalVLocations();
 				}],
@@ -122,7 +122,7 @@
 						redirectTo: 'login'
 			        }
 			}
-		}).state('userManager', { 
+		}).state('userManager', {
 			url: '/userManager',
 			templateUrl: 'partials/user/userManager.html',
 			controller: 'UserManagerController',
@@ -151,7 +151,7 @@
 				}],
 				eventsToday: ['eventsService', function(eventsService) {
 					return eventsService.getEventsToday();
-				}],				
+				}],
 				totalL: ['eventsService', function(eventsService) {
 					return eventsService.getTotalVLocations();
 				}],
@@ -212,7 +212,7 @@
 				}],
 				eventsToday: ['eventsService', function(eventsService) {
 					return eventsService.getEventsToday();
-				}],				
+				}],
 				totalL: ['eventsService', function(eventsService) {
 					return eventsService.getTotalVLocations();
 				}],
@@ -261,13 +261,13 @@
 			controller: 'ChangePasswordController',
 			controllerAs: 'vm'
 		});
-		
+
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 		$httpProvider.interceptors.push('ErrorInterceptor');
 		$httpProvider.interceptors.push('TokenAuthInterceptor');
-		
+
 	}
-	
+
 	angular.module('app').factory('ErrorInterceptor',["$q", "$rootScope", "$location", function($q, $rootScope, $location) {
 		  return {
 	        	'responseError': function(rejection) {
@@ -275,34 +275,36 @@
 	        		var config = rejection.config;
 	        		var method = config.method;
 	        		var url = config.url;
-	      
+
 	        		if (status == 401) {
-	        			$location.path( "/login" );
+	        			$location.path("/login");
 	        			$rootScope.error="401";
 	        		} if (status == 403) {
-	        			$location.path( "/login" );
+	        			$location.path("/login");
 	        			$rootScope.error="Email/password incorrectos";
 	        		} else if (status == -1){
-	        			$rootScope.error = "No tienes permisos, inicia sesión con otras credenciales.";
+								delete $rootScope.user;
+								delete $rootScope.error;
+								delete $rootScope.authToken;
+								$location.path("/login");
 	        		} else {
 	        			$rootScope.error = method + " on " + url + " failed with status " + status;
 	        		}
-	              
 	        		return $q.reject(rejection);
 	        	}
 	        };
 	}]);
 
-	
+
 	angular.module('app').factory('TokenAuthInterceptor',["$q", "$rootScope", "$location", function($q, $rootScope, $location) {
 		 return {
 	        	'request': function(config) {
 	        		var isRestCall = config.url.indexOf('api') > -1;
 	        		if (isRestCall && angular.isDefined($rootScope.authToken)) {
 	        			var authToken = $rootScope.authToken;
-	        			
+
 	        			config.headers['X-Auth-Token'] = authToken;
-	        			
+
 //	        			if (exampleAppConfig.useAuthTokenHeader) {
 	        			//	config.headers['X-Auth-Token'] = authToken;
 //	        			} else {
@@ -313,77 +315,77 @@
 	        	}
 	        };
 	}]);
-	
+
 	function getUserComplete(response) {
 		$rootScope.user = response.data;
 		$location.path(originalPath);
 	}
-	
+
 	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', '$state'];
 	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, userService, $state) {
-		
+
 		//Si existe el token guardado en $localStorage y no ha caducado aun, se renueva
 		if ($localStorage.authToken){
 			//para que al hacer TokenAuthInterceptor tengo el valor
-			$rootScope.authToken = $localStorage.authToken; 
-			
-			var res = $localStorage.authToken.split(":"); 
+			$rootScope.authToken = $localStorage.authToken;
+
+			var res = $localStorage.authToken.split(":");
 			var expires = res[1];
 			var time = parseFloat(expires);
-			
+
 			var d = new Date();
 			var timeActual = d.getTime();
-			
+
 			if (time >= timeActual) {
-				
+
 				userService.renewToken($localStorage.authToken).then(function(response){
 					//Asignamos el nuevo valor de token
 					$localStorage.authToken = response.token;
-					
+
 					//Redirigimos a la pantalla de dashboard
 					userService.getUser(url_get_user).then(function(response){
 						$rootScope.user = response.data;
 						$location.path("/");
-						$state.go("dashboard");	
+						$state.go("dashboard");
 					});
 				});
-			
+
 			}
 		}
-		
+
 		angular.isUndefinedOrNull = function(val) {
 			return angular.isUndefined(val) || val === null;
 		};
-		
+
 		$rootScope.hasRole = function(role) {
-		
+
 			if ($rootScope.user === undefined) {
 				return false;
 			}
-			
+
 			if ($rootScope.user.roles[role] === undefined) {
 				return false;
 			}
 			return $rootScope.user.roles[role];
 		};
-		
+
 		$rootScope.logout = function() {
 			delete $rootScope.user;
 			delete $rootScope.error;
 			delete $rootScope.authToken;
 			delete $localStorage.authToken;
-			
+
 			$location.path("/login");
 		};
-		
+
 
 		$rootScope.initialized = true;
 		var ROLES_POSIBLES = ["ROLE_ADMIN", "ROLE_CONSULTA"];
-		
+
 		PermissionStore.defineManyPermissions(ROLES_POSIBLES, function (stateParams, permissionName) {
 			  return  $rootScope.hasRole(permissionName);
 		});
-	
+
 
 	}
 })();
