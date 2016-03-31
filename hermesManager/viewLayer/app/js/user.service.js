@@ -18,7 +18,9 @@
 			getInfoCuenta: getInfoCuenta,
 			getTotalMUsers: getTotalMUsers,
 			getTotalWebUsers: getTotalWebUsers,
-			getNumberActiveUsers: getNumberActiveUsers
+			getNumberActiveUsers: getNumberActiveUsers,
+			renewToken: renewToken,
+			changePassword: changePassword
 		};
 
 		return service;
@@ -139,5 +141,23 @@
 				$log.error('XHR Failed for getNumberActiveUsers.' + error.data);
 			}
 		}
+		
+		function renewToken (oldToken) {
+			
+			return $http({
+				method : 'POST',
+				url : url_renewToken,
+				data: oldToken
+			});
+		}
+		
+		function changePassword (newPassword) {		
+			return $http({
+				method : 'POST',
+				url : url_change_password,
+				data : newPassword
+			});
+		}
+				
 	}
 })();

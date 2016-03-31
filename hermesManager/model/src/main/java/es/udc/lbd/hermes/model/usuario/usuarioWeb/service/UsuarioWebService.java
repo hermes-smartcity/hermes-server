@@ -10,6 +10,7 @@ import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
 import es.udc.lbd.hermes.model.usuario.exceptions.EnlaceCaducadoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoException;
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.PasswordJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
@@ -44,4 +45,5 @@ public interface UsuarioWebService extends UserDetailsService {
 	
 	public void activarCuenta(String email, String hash) throws ActivarCuentaException, EnlaceCaducadoException;
 	
+	public void changePassword(PasswordJSON passwordJSON, UsuarioWeb usuario);
 }

@@ -4,16 +4,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +20,12 @@ import es.udc.lbd.hermes.model.usuario.exceptions.NoEsPosibleBorrarseASiMismoExc
 import es.udc.lbd.hermes.model.usuario.exceptions.NoExiteNingunUsuarioMovilConSourceIdException;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.PasswordJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.dao.UsuarioWebDao;
+import es.udc.lbd.hermes.model.util.HashUtil;
 import es.udc.lbd.hermes.model.util.ReadPropertiesFile;
 import es.udc.lbd.hermes.model.util.UserUtils;
 import es.udc.lbd.hermes.model.util.VerificationToken;
@@ -141,7 +139,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		// Existe un usuario movil con ese email, podemos crear el usuario web y asociarlo
 		if(usuarioMovil!=null){			
 			usuario.setEmail(userJSON.getEmail());
-			usuario.setPassword(generarHashPassword(userJSON.getPassword()));
+			usuario.setPassword(HashUtil.generarHashPassword(userJSON.getPassword()));
 			
 			if(isAdmin)
 				usuario.setRol(Rol.ROLE_ADMIN);
@@ -174,7 +172,7 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		
 		// Modificamos la contraseña
 		if(userJSON.getPassword()!=null && !userJSON.getPassword().isEmpty())
-			usuarioWeb.setPassword(generarHashPassword(userJSON.getPassword()));
+			usuarioWeb.setPassword(HashUtil.generarHashPassword(userJSON.getPassword()));
 		
 		// Modificamos id_usuario_movil
 		if(userJSON.getSourceIdUsuarioMovilNuevo()!=null && !userJSON.getSourceIdUsuarioMovilNuevo().isEmpty()){
@@ -207,22 +205,19 @@ public class UsuarioWebServiceImpl implements UsuarioWebService {
 		usuario.setActivado(true);
 	}
 	
-	private String generarHash(String cadena){
-			String hash = new String(Hex.encodeHex(DigestUtils.sha256(cadena)));
-			return hash;
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public void changePassword(PasswordJSON passwordJSON, UsuarioWeb usuario){
+		//Comprobamos que la contrasena vieja indicada corresponda con la de base de datos
+		usuario.setPassword(HashUtil.generarHashPassword(passwordJSON.getPasswordNew1()));
+		usuarioWebDao.update(usuario);
 	}
-	
+		
 	private UsuarioMovil recuperarUsarioMovilExistente(String email){
-		String emailCifrado = generarHash(email);
+		String emailCifrado = HashUtil.generarHash(email);
 		return usuarioMovilDao.findBySourceId(emailCifrado);
 		
 	}
-	
-	private String generarHashPassword(String cadena){
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-		return passwordEncoder.encode(cadena.toString());  
-	}
-	
+		
 	private void enviarMail(UsuarioWeb usuarioWeb, Locale locale){
 		//TODO falta normalizar login
 //		String emailNormalizado = UserUtils.normalizarLogin(usuarioWeb.getEmail());

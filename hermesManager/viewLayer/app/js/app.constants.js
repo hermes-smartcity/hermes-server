@@ -5,7 +5,8 @@ var no_concrete_routing = true;
 
 var debug_mode = true;
 
-var url_servidor = 'http://localhost:8080/eventManager/';
+var url_servidor = '%%SERVER_URL%%';
+
 
 ////Controlador authenticate
 //var url_authenticate = url_servidor+'api/authenticate';
@@ -33,8 +34,8 @@ var url_admins = url_user+'json/admins';
 var url_roles = url_user+'json/roles';
 var url_userToModify = url_user+'json/userToModify';
 var url_infoCuenta = url_user+'activarCuenta';
-
-
+var url_renewToken = url_user+"renewToken";
+var url_change_password = url_user+"changePassword";
 
 // Controlador event manager
 var url_eventManager = url_servidor+'api/eventManager/';

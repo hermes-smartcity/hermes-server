@@ -10,6 +10,36 @@ var clean = require('gulp-clean');
 var wiredep = require('wiredep').stream;
 var inject = require('gulp-inject');
 var runSequence = require('run-sequence');
+var change = require('gulp-change');
+
+function changeBuild(content) {
+    return content.replace('%%SERVER_URL%%', 'http://localhost:8080/eventManager/');
+}
+
+function changeDist(content) {
+    return content.replace('%%SERVER_URL%%', 'http://cronos.lbd.org.es/hermes/');
+}
+
+gulp.task('changeBuildTask', function() {
+    return gulp.src('./app/js/app.constants.js')
+        .pipe(change(changeBuild))
+        .pipe(uglify({
+        	// inSourceMap:
+        	// outSourceMap: "app.js.map"
+        }))
+        .pipe(gulp.dest('./dist/js/'))
+});
+
+gulp.task('changeDistTask', function() {
+    return gulp.src('./app/js/app.constants.js')
+        .pipe(change(changeDist))
+        .pipe(uglify({
+        	// inSourceMap:
+        	// outSourceMap: "app.js.map"
+        }))
+        .pipe(gulp.dest('./dist/js/'))
+});
+
 
 // tasks
 gulp.task('lint', function() {
@@ -29,13 +59,23 @@ gulp.task('minify-css', function() {
     .pipe(gulp.dest('./dist/'))
 });
 gulp.task('minify-js', function() {
-  gulp.src(['./app/**/*.js', '!./app/bower_components/**'])
+  gulp.src(['./app/**/*.js', '!./app/bower_components/**', '!./app/js/app.constants.js'])
     .pipe(uglify({
       // inSourceMap:
       // outSourceMap: "app.js.map"
     }))
     .pipe(gulp.dest('./dist/'))
 });
+
+gulp.task('copy-css', function() {
+	  gulp.src(['./app/**/*.css', '!./app/bower_components/**'])
+	    .pipe(gulp.dest('./dist/'))
+	});
+gulp.task('copy-js', function() {
+	  gulp.src(['./app/**/*.js', '!./app/bower_components/**', '!./app/js/app.constants.js'])
+	    .pipe(gulp.dest('./dist/'))
+	});
+
 gulp.task('copy-bower-components', function () {
   gulp.src('./app/bower_components/**')
     .pipe(gulp.dest('dist/bower_components'));
@@ -79,15 +119,15 @@ gulp.task('wiredep:app', function() {
 
 gulp.task('reload', function () {
 	 return gulp.src('./dist/')
-	    .pipe(connect.reload());	
+	    .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
   gulp.watch(['./app/partials/*.html'], ['wiredep:app', 'reload']);
   gulp.watch(['./app/partials/**/*.html'], ['copy-files', 'reload']);
   gulp.watch(['./app/translations/*.json'], ['copy-files', 'reload']);
-  gulp.watch(['./app/js/*.js'], ['minify-js', 'reload']);
-  gulp.watch(['./app/css/*.css'], ['minify-css', 'reload']);
+  gulp.watch(['./app/js/*.js'], ['copy-js', 'reload']);
+  gulp.watch(['./app/css/*.css'], ['copy-css', 'reload']);
 });
 
 // default task
@@ -96,6 +136,11 @@ gulp.task('default',
 );
 
 gulp.task('build', function(cb) {
-	  runSequence(['clean'], 
-			  ['wiredep:app'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
+	  runSequence(['clean'],
+			  ['wiredep:app'], ['changeBuildTask'] ,['lint', 'copy-css', 'copy-js', 'copy-files', 'copy-bower-components'], 'connect', 'watch', cb);
+	});
+
+gulp.task('buildDist', function(cb) {
+	  runSequence(['clean'],
+			  ['wiredep:app'], ['changeDistTask'] ,['lint', 'minify-css', 'minify-js', 'copy-files', 'copy-bower-components'], cb);
 	});
