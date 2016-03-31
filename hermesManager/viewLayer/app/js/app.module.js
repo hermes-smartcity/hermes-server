@@ -260,6 +260,11 @@
 			templateUrl:'partials/user/changePassword.html',
 			controller: 'ChangePasswordController',
 			controllerAs: 'vm'
+		}).state('settings', {
+			url: '/settings',
+			templateUrl:'partials/settings/settings.html',
+			controller: 'SettingsController',
+			controllerAs: 'vm'
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

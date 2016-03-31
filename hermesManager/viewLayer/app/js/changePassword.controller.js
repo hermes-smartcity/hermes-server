@@ -3,9 +3,9 @@
 
 	angular.module('app').controller('ChangePasswordController', ChangePasswordController);
 
-	ChangePasswordController.$inject = ['$rootScope','$scope', '$http', '$location','$state', 'userService'];
+	ChangePasswordController.$inject = ['userService'];
 
-	function ChangePasswordController($rootScope, $scope, $http, $location, $state, userService) {
+	function ChangePasswordController(userService) {
 		
 		var vm = this;
 		vm.change = change;
