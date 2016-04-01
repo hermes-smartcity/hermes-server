@@ -6,7 +6,6 @@
 			<tr>
 				<th>{{'dataSection.userId' | translate}}</th>
 				<th>{{'dataSection.date' | translate}}</th>
-				<th>{{'dataSection.time' | translate}}</th>
 				<th>{{'dataSection.minimimSpeed' | translate}}</th>
 				<th>{{'dataSection.maximumSpeed' | translate}}</th>
 				<th>{{'dataSection.medianSpeed' | translate}}</th>
@@ -24,8 +23,7 @@
 		<tbody>
 			<tr data-ng-repeat="dataSection in vm.events track by $index">
 				<td>{{dataSection.usuarioMovil.id}}</td>
-				<td>{{dataSection.timestamp | date : format:timezone}}</td>
-				<td>{{dataSection.timestamp | date :'shortTime'}}</td>
+				<td>{{dataSection.timestamp | date : "MM/dd/yyyy h:mm a"}}</td>
 				<td>{{dataSection.minSpeed}}</td>
 				<td>{{dataSection.maxSpeed}}</td>
 				<td>{{dataSection.medianSpeed}}</td>

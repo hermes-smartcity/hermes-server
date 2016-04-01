@@ -6,7 +6,6 @@
 			<tr>
 				<th>{{'measurement.userId' | translate}}</th>
 				<th>{{'measurement.date' | translate}}</th>
-				<th>{{'measurement.time' | translate}}</th>
 				<th>{{'measurement.value' | translate}}</th>
 				<th>{{'measurement.speed' | translate}}</th>
 				<th>{{'measurement.accuracy' | translate}}</th>
@@ -16,8 +15,7 @@
 		<tbody>
 			<tr data-ng-repeat="measurement in vm.events track by $index">
 				<td>{{measurement.usuarioMovil.id}}</td>
-				<td>{{measurement.timestamp | date : format:timezone}}</td>
-				<td>{{measurement.timestamp| date :'shortTime'}}</td>
+				<td>{{measurement.timestamp | date : "MM/dd/yyyy h:mm a"}}</td>
 				<td>{{measurement.value}}</td>
 				<td>{{measurement.speed}}</td>
 				<td>{{measurement.accuracy}}</td>

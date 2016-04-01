@@ -5,7 +5,6 @@
 		<thead>
 			<tr>
 				<th>{{'contextData.userId' | translate}}</th>
-				<th>{{'contextData.date' | translate}}</th>
 				<th>{{'contextData.time' | translate}}</th>
 				<th>{{'contextData.detectedActivity' | translate}}</th>
 				<th>{{'contextData.accuracy' | translate}}</th>
@@ -15,8 +14,7 @@
 		<tbody>
 			<tr data-ng-repeat="contextData in vm.events track by $index">
 				<td>{{contextData.usuarioMovil.id}}</td>
-				<td>{{contextData.timeLog | date : format:timezone}}</td>
-				<td>{{contextData.timeLog | date :'shortTime'}}</td>
+				<td>{{contextData.timeLog | date : "MM/dd/yyyy h:mm a"}}</td>
 				<td>{{contextData.detectedActivity}}</td>
 				<td>{{contextData.accuracy}}</td>
 			</tr>

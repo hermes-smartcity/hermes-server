@@ -6,7 +6,6 @@
 			<tr>
 				<th>{{'systemLogs.idLog' | translate}}</th>
 				<th>{{'systemLogs.dated' | translate}}</th>
-				<th>{{'systemLogs.message' | translate}}</th>
 				<th style="width:20px;"></th>
 			</tr>
 		</thead>
@@ -14,7 +13,7 @@
 		<tbody>
 			<tr data-ng-repeat="log in vm.events track by $index">
 				<td>{{log.id}}</td>
-				<td>{{log.dated | date : format:timezone}}</td>
+				<td>{{log.dated | date : "MM/dd/yyyy h:mm a"}}</td>
 				<td>{{log.message}}</td>
 				<td style="width:20px;">
 					<a data-ng-click="vm.deleteLog(log)">
