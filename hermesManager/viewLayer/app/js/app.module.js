@@ -265,6 +265,16 @@
 			templateUrl:'partials/settings/settings.html',
 			controller: 'SettingsController',
 			controllerAs: 'vm'
+		}).state('userProfile', {
+			url: '/userProfile',
+			templateUrl:'partials/user/userProfile.html',
+			controller: 'UserProfileController',
+			controllerAs: 'vm',
+			resolve: {
+				datosUsuario: ['userService', function(userService) {
+					return userService.getUserProfile();
+				}]
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

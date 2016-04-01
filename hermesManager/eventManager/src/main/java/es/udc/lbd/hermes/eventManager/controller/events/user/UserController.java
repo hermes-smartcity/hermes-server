@@ -256,6 +256,15 @@ public class UserController extends MainResource {
 		
 		return jsonD;
 	}
+	
+	// Listar usuarios consulta - Sólo administradores
+	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
+	public UsuarioWeb userProfile() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		
+		return usuario;
+	}
 		
 	private Map<String, Boolean> createRoleMap(UserDetails userDetails) {
 		Map<String, Boolean> roles = new HashMap<String, Boolean>();
