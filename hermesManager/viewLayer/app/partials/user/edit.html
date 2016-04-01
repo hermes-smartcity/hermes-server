@@ -1,4 +1,4 @@
-<h1  class="col-md-12" id="breadcrumbs" class="page-header"> {{'user.edit' | translate}} </h1>
+<h1  class="col-md-12" id="breadcrumbs" class="page-header"> {{'user.editar' | translate}} </h1>
 <form  class="col-md-4" data-role="form" data-ng-submit="vm.edit()">
 	<div class="form-group">
 		<label for="username">{{'user.email' | translate}}</label> {{vm.usuario.email}}
@@ -13,12 +13,12 @@
 	</div>
 
 	<div class="form-group">		
-		<label for="singleSelect">{{'user.user' | translate}}</label><br />
+		<label for="singleSelect">{{'user.usuario' | translate}}</label><br />
 		<!-- Filtro usuarios  -->
 		<select id="selectUsers" data-ng-model="vm.usuarioSelected" 
 			data-ng-change="changedValue(vm.usuarioSelected)" 
 			data-ng-options="usuario as usuario.sourceId for usuario in vm.usuariosMoviles">
-			<option value="">{{'user.todo' | translate}}</option>
+			<option value="">{{'user.todos' | translate}}</option>
 		</select>
 	</div>
 	

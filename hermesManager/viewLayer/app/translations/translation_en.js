@@ -139,7 +139,7 @@
 				"rol": "Role",
 				"contrasena": "Password",
 				"usuario": "User",
-				"Todo": "Everyone",
+				"todos": "Everyone",
 				"registro": "Record",
 				"registrar": "Register",
 				"noUsuariosRegistrados": "There are no registered users",
