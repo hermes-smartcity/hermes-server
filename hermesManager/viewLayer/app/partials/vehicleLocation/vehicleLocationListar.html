@@ -1,15 +1,15 @@
 
-<div data-ng-if="!vm.events.length">There are not events to show</div>
+<div data-ng-if="!vm.events.length">{{'vehicleLocation.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
 			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
-				<th>UserId</th>
-				<th>Date</th>
-				<th>Time</th>
-				<th>Speed</th>
-				<th>Accuracy</th>
+				<th>{{'vehicleLocation.userId' | translate}}</th>
+				<th>{{'vehicleLocation.date' | translate}}</th>
+				<th>{{'vehicleLocation.time' | translate}}</th>
+				<th>{{'vehicleLocation.speed' | translate}}</th>
+				<th>{{'vehicleLocation.accuracy' | translate}}</th>
 			</tr>
 		</thead>
 

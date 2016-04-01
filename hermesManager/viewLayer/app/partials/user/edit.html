@@ -1,32 +1,35 @@
-<h1  class="col-md-12" id="breadcrumbs" class="page-header"> Editar </h1>
-<form  class="col-md-4" role="form" ng-submit="vm.edit()">
+<h1  class="col-md-12" id="breadcrumbs" class="page-header"> {{'user.edit' | translate}} </h1>
+<form  class="col-md-4" data-role="form" data-ng-submit="vm.edit()">
 	<div class="form-group">
-		<label for="username">Email:</label> {{vm.usuario.email}}
+		<label for="username">{{'user.email' | translate}}</label> {{vm.usuario.email}}
 	</div>
 	<div class="form-group">
-		<label for="username">Rol:</label> {{vm.usuario.rol}}
+		<label for="username">{{'user.rol' | translate}}</label> {{vm.usuario.rol}}
 	</div>
 	
 	<div class="form-group">
-		<label for="password">Password:</label> <input type="password"
-			class="form-control" id="password" name="password" ng-model="vm.password"/>
+		<label for="password">{{'user.contrasena' | translate}}</label> <input type="password"
+			class="form-control" id="password" name="password" data-ng-model="vm.password"/>
 	</div>
 
 	<div class="form-group">		
-		<label for="singleSelect">User:</label><br />
+		<label for="singleSelect">{{'user.user' | translate}}</label><br />
 		<!-- Filtro usuarios  -->
-		<select id="selectUsers" ng-model="vm.usuarioSelected" ng-change="changedValue(vm.usuarioSelected)" data-ng-options="usuario as usuario.sourceId for usuario in vm.usuariosMoviles">
-			<option value="">Todos</option>
+		<select id="selectUsers" data-ng-model="vm.usuarioSelected" 
+			data-ng-change="changedValue(vm.usuarioSelected)" 
+			data-ng-options="usuario as usuario.sourceId for usuario in vm.usuariosMoviles">
+			<option value="">{{'user.todo' | translate}}</option>
 		</select>
 	</div>
 	
 	<div class="form-group">
-		<button type="submit" class="btn btn-primary">Editar</button> <button ui-sref="userManager" class="btn btn-primary">Volver</button>
+		<button type="submit" class="btn btn-primary">{{'editar' | translate}}</button> 
+		<button data-ui-sref="userManager" class="btn btn-primary">{{'volver' | translate}}</button>
 	</div>
 	
 	
 	<div class="form-group">
-		<div ng-if="vm.infoCuenta" class="pull-center alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
+		<div data-ng-if="vm.infoCuenta" class="pull-center alert alert-info" data-role="alert">{{vm.infoCuenta.value}}</div>
 	</div>
 	
 </form>

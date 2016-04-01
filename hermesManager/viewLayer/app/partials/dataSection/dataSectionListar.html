@@ -1,23 +1,23 @@
-<div data-ng-if="!vm.events.length">There are not events to show</div>
+<div data-ng-if="!vm.events.length">{{'dataSection.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
 			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
-				<th>UserId</th>
-				<th>Date</th>
-				<th>Time</th>
-				<th>Minimum Speed</th>
-				<th>Maximun Speed</th>
-				<th>Median Speed</th>
-				<th>Average Speed</th>
-				<th>Std. Dev. Speed</th>
-				<th>Average Acceleration</th>
-				<th>Average Deceleration</th>
-				<th>High Acceleration</th>
-				<th>Hig Decceleration</th>
-				<th>Average Heart Rate</th>
-				<th>Std. Dev. Heart Rate</th>
+				<th>{{'dataSection.userId' | translate}}</th>
+				<th>{{'dataSection.date' | translate}}</th>
+				<th>{{'dataSection.time' | translate}}</th>
+				<th>{{'dataSection.minimimSpeed' | translate}}</th>
+				<th>{{'dataSection.maximumSpeed' | translate}}</th>
+				<th>{{'dataSection.medianSpeed' | translate}}</th>
+				<th>{{'dataSection.averageSpeed' | translate}}</th>
+				<th>{{'dataSection.stdDevSpeed' | translate}}</th>
+				<th>{{'dataSection.averageAcceleration' | translate}}</th>
+				<th>{{'dataSection.averageDeceleration' | translate}}n</th>
+				<th>{{'dataSection.highAcceleration' | translate}}</th>
+				<th>{{'dataSection.highDecceleration' | translate}}</th>
+				<th>{{'dataSection.averageHeartRate' | translate}}</th>
+				<th>{{'dataSection.stdDevHeartRate' | translate}}</th>
 			</tr>
 		</thead>
 

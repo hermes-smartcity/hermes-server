@@ -8,12 +8,12 @@
 	                               'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
 	                               'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', 
 	                               '$log', '$filter', 'eventsService', '$rootScope', '$state',
-	                               'DTOptionsBuilder'];
+	                               'DTOptionsBuilder', '$translate'];
 
 	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, 
 			numberActiveUsers, measurementsType, eventsToday, eventoProcesado, totalL, totalDS, 
 			totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD, $http, $timeout, $log, $filter, 
-			eventsService, $rootScope, $state, DTOptionsBuilder) {
+			eventsService, $rootScope, $state, DTOptionsBuilder, $translate) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -48,7 +48,7 @@
 	vm.onTimeSetEnd = onTimeSetEnd;
 	vm.showCalendarStart = false;
 	vm.showCalendarEnd = false;
-	vm.activeInput = 'Mapa';
+	vm.activeInput = $translate.instant('dashboard.mapa');
 	vm.arrancar = arrancar;
 	vm.parar = parar;
 	
@@ -101,13 +101,13 @@
 	function mostrarMapa() {	
 		vm.showMap = true;
 		vm.showTab = false;
-		vm.activeInput = 'Mapa';
+		vm.activeInput = $translate.instant('dashboard.mapa');
 	}
 	
 	function mostrarTabla() {	
 		vm.showMap = false;
 		vm.showTab = true;
-		vm.activeInput = 'Tabla';
+		vm.activeInput = $translate.instant('dashboard.tabla');
 	}
 	
 	function arrancar() {

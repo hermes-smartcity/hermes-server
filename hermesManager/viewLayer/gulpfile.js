@@ -108,7 +108,9 @@ gulp.task('wiredep:app', function() {
 	      './app/js/app.js',
 	      './app/js/**/*.js',
 		  './app/js/*.js',
-	      './app/css/*.css'
+	      './app/css/*.css',
+	      './app/translations/translation_*.js',
+	      './app/translations/angular-locale_*.js'
 	    ], {
 	      read: false
 	    }), {

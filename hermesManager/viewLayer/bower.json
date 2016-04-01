@@ -30,7 +30,9 @@
     "angular-cookies": "~1.4.9",
     "angular-permission": "^2.0.1",
     "angular-datatables": "^0.5.3",
-    "ngstorage": "^0.3.10"
+    "ngstorage": "^0.3.10",
+    "angular-translate": "^2.11.0",
+    "angular-dynamic-locale": "^0.1.30"
   },
   "authors": [
     "cmartinez <cristinacmp1988@gmail.com>"

@@ -1,15 +1,15 @@
-<div data-ng-if="!vm.events.length">There are not events to show</div>
+<div data-ng-if="!vm.events.length">{{'measurement.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
 			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
-				<th>UserId</th>
-				<th>Date</th>
-				<th>Time</th>
-				<th>Value</th>
-				<th>Speed</th>
-				<th>Accuracy</th>
+				<th>{{'measurement.userId' | translate}}</th>
+				<th>{{'measurement.date' | translate}}</th>
+				<th>{{'measurement.time' | translate}}</th>
+				<th>{{'measurement.value' | translate}}</th>
+				<th>{{'measurement.speed' | translate}}</th>
+				<th>{{'measurement.accuracy' | translate}}</th>
 			</tr>
 		</thead>
 
