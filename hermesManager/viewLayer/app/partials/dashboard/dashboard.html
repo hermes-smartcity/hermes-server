@@ -33,8 +33,10 @@
 					<div data-ng-show="vm.showMap">
 						<div id="map"></div>
 					</div>
-					<div data-ng-show="vm.showTab">
-						<div data-ng-if="vm.eventTypeSelected == 'VEHICLE_LOCATION'"
+					<div data-ng-show="vm.showTab"> 
+						<div data-ng-include="vm.listadoCarga"></div>
+						
+						<!-- <div data-ng-if="vm.eventTypeSelected == 'VEHICLE_LOCATION'"
 							data-ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'">
 						</div>
 						<div data-ng-if="vm.eventTypeSelected == 'DATA_SECTION'"
@@ -49,7 +51,7 @@
 							     		(vm.eventTypeSelected == 'HIGH_DECELERATION') || 
 							     		(vm.eventTypeSelected == 'HIGH_HEART_RATE'))"
 							data-ng-include="'./partials/measurement/measurementListar.html'">
-						</div>
+						</div>-->
 					</div>
 				</div>
 				<!-- /.panel-body -->

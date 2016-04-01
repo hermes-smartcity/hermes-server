@@ -51,7 +51,7 @@
 	vm.activeInput = $translate.instant('dashboard.mapa');
 	vm.arrancar = arrancar;
 	vm.parar = parar;
-	
+
 	// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 	if($rootScope.hasRole('ROLE_ADMIN')){
 		eventsService.getStateActualizado().then(getStateActualizadoComplete);		
@@ -66,6 +66,8 @@
 	
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	vm.eventTypeSelected = "VEHICLE_LOCATION";
+	vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
+	
 	vm.startDate = new Date();
 	// Inicializamos la fecha de inicio a la de ayer 
 	vm.startDate.setDate(vm.startDate.getDate()-1);
@@ -128,21 +130,27 @@
 
 		if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
 			vm.pintarMapaVehicleLocations();
+			vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
 			vm.pintarMapaDataSections();
+			vm.listadoCarga = "./partials/dataSection/dataSectionListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
 			vm.pintarMapaContextData();
+			vm.listadoCarga = "./partials/contextData/contextDataListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
 				angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
 				angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
 				angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
 			vm.pintarMapaHigh();
+			vm.listadoCarga = "./partials/measurement/measurementListar.html";
 		}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 			vm.pintarMapaMeasurements();
+			vm.listadoCarga = "./partials/measurement/measurementListar.html";
 		} else{
 			console.log("No corresponde a ningún tipo --> En construcción");
 		}
 		
+	
 	}
 	
 	function infoPopup(userId, timestamp, eventType, eventValue) {
