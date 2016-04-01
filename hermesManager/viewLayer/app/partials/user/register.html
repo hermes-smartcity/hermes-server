@@ -1,26 +1,26 @@
-<h1 class="col-md-12" id="breadcrumbs" class="page-header"> Registro </h1>
+<h1 class="col-md-12" id="breadcrumbs" class="page-header"> {{'user.registro' | translate}} </h1>
 
-<form name="registerForm" class="col-md-4" role="form" ng-submit="vm.register()">
+<form name="registerForm" class="col-md-4" data-role="form" data-ng-submit="vm.register()">
 	<fieldset  class="form-group">
-		<label for="username">Email:</label> <input type="email"
-			class="form-control"  id="email" name="email" ng-model="vm.email" required/>
+		<label for="username">{{'user.email' | translate}}</label> <input type="email"
+			class="form-control"  id="email" name="email" data-ng-model="vm.email" required/>
 	</fieldset >
 	
 <!-- 	<div  ng-show="{{registerForm.email.$valid}} == false" class="alert alert-danger form-group"> -->
-<!-- 		Formato email erróneo -->
+<!-- 		Formato email errï¿½neo -->
 <!-- 	</div> -->
 	
 	<fieldset  class="form-group">
-		<label for="password">Password:</label> <input type="password"
-			class="form-control" id="password" name="password" ng-model="vm.password"/>
+		<label for="password">{{'user.contrasena' | translate}}</label> <input type="password"
+			class="form-control" id="password" name="password" data-ng-model="vm.password"/>
 	</fieldset >
 
 	<fieldset  class="form-group">
-		<button type="submit" class="btn btn-primary">Registrar</button>
+		<button type="submit" class="btn btn-primary">{{'user.registrar' | translate}}</button>
 	</fieldset >
 	
 	<fieldset  class="form-group">
-		<div ng-if="vm.infoCuenta" class="alert alert-info" role="alert">{{vm.infoCuenta.value}}</div>
+		<div data-ng-if="vm.infoCuenta" class="alert alert-info" data-role="alert">{{vm.infoCuenta.value}}</div>
 	</fieldset >
 		
 </form>

@@ -280,3 +280,15 @@ ol.submenu li.activo a,ol.submenu li.activo span {
 .fondoBlanco{
 	background-color:white;
 }
+
+.bordeGreen{
+	border:1px solid #5cb85c !important;
+}
+
+.bordeYellow{
+	border:1px solid #f0ad4e !important;
+}
+
+.bordeRed{
+	border:1px solid #d9534f !important;
+}

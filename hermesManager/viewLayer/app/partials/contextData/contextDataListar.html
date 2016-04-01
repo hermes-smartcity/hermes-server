@@ -1,22 +1,20 @@
-<div data-ng-if="!vm.events.length">There are not events to show</div>
+<div data-ng-if="!vm.events.length">{{'contextData.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
 			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
-				<th>UserId</th>
-				<th>Date</th>
-				<th>Time</th>
-				<th>Detected activity</th>
-				<th>Accuracy</th>
+				<th>{{'contextData.userId' | translate}}</th>
+				<th>{{'contextData.time' | translate}}</th>
+				<th>{{'contextData.detectedActivity' | translate}}</th>
+				<th>{{'contextData.accuracy' | translate}}</th>
 			</tr>
 		</thead>
 
 		<tbody>
 			<tr data-ng-repeat="contextData in vm.events track by $index">
 				<td>{{contextData.usuarioMovil.id}}</td>
-				<td>{{contextData.timeLog | date : format:timezone}}</td>
-				<td>{{contextData.timeLog | date :'shortTime'}}</td>
+				<td>{{contextData.timeLog | date : "MM/dd/yyyy h:mm a"}}</td>
 				<td>{{contextData.detectedActivity}}</td>
 				<td>{{contextData.accuracy}}</td>
 			</tr>

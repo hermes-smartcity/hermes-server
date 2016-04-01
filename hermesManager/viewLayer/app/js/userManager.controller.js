@@ -8,11 +8,12 @@
 	                                 'eventsType', 'usuarios' ,'measurementsType',
 	                                 'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
 	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
+	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$translate'];
 
 	function UserManagerController($scope, $http, $timeout, $log, $filter, userService, $state, $rootScope,
 			eventsService, eventsType, usuarios, measurementsType, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
-			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD) {
+			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
+			$translate) {
 	
 	var vm = this;
 	vm.showAdmins = showAdmins;
@@ -20,7 +21,7 @@
 	vm.deleteUser = deleteUser;
 	vm.showAdmin = false;
 	vm.showUser = true;
-	vm.activeInput = 'Users';
+	vm.activeInput = $translate.instant('user.usuarios');
 	vm.users = [];
 	vm.admins = [];
 	vm.searchText ='';
@@ -87,7 +88,7 @@
 	function showAdmins() {	
 		vm.showAdmin = true;
 		vm.showUser = false;
-		vm.activeInput = 'Admins';
+		vm.activeInput = $translate.instant('user.administradores'); 
 		$http.get(url_admins).success(function(data) {
 			vm.admins = data;				
 		});
@@ -97,7 +98,7 @@
 	function showUsers() {	
 		vm.showAdmin = false;
 		vm.showUser = true;
-		vm.activeInput = 'Users';
+		vm.activeInput = $translate.instant('user.usuarios');
 		$http.get(url_users).success(function(data) {
 			vm.users = data;					
 		});

@@ -1,25 +1,33 @@
 
 <div class="row">
-		<div class="alert alert-danger col-sm-6 col-md-4 col-md-offset-3" ng-show="error.length > 0">
-			{{error}}
+	<div class="alert alert-danger col-sm-6 col-md-4 col-md-offset-3" data-ng-show="error.length > 0">
+		{{error}}
+	</div>
+	
+	<div class="col-sm-6 col-md-4 col-md-offset-3">
+		<div class="account-wall">
+
+			<form data-role="form" data-ng-submit="vm.login()" class="form-signin">
+			
+				<input type="text" class="form-control" id="username"
+					placeholder="{{'email' | translate}}" name="username"
+					data-ng-model="vm.username" autofocus /> 
+				
+				<input type="password"
+					placeholder="{{'password' | translate}}" class="form-control"
+					id="password" name="password" data-ng-model="vm.password" />
+
+				<button class="btn btn-primary btn-block" type="submit">
+					{{'entrar' | translate}}</button>
+					
+				<label class="checkbox pull-left"> 
+					<input type="checkbox" value="remember-me" ng-model="vm.rememberMe"> {{'recordar'| translate}}
+				</label> 
+				
+				<a data-ui-sref="registerUser" class="pull-right need-help">{{'registrarse'| translate}} </a>
+					
+				<span class="clearfix"></span>
+			</form>
 		</div>
-        <div class="col-sm-6 col-md-4 col-md-offset-3">
-            <div class="account-wall">
-              
-                <form role="form" ng-submit="vm.login()" class="form-signin">
-                <input type="text" class="form-control" id="username" placeholder="Email" name="username" ng-model="vm.username" autofocus/>
-               
-               <input type="password" placeholder="Password" class="form-control" id="password" name="password" ng-model="vm.password"/>
-                
-                <button class="btn btn-primary btn-block"  type="submit">
-                    Entrar</button>
-                <label class="checkbox pull-left">
-                    <input type="checkbox" value="remember-me" ng-model="vm.rememberMe">
-                    Remember me
-                </label>
-                <a ui-sref="registerUser"class="pull-right need-help">Registrarse </a><span class="clearfix"></span>
-                </form>
-            </div>
-           
-        </div>
-    </div>
+	</div>
+</div>

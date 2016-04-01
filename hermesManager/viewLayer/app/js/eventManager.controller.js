@@ -7,11 +7,12 @@
 	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope',
 	                                  'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
 	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
+	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$translate'];
 
 	function EventManagerController($state, $interval, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
 			eventsService, $rootScope, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
-			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD) {
+			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
+			$translate) {
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
 		vm.eventsType = eventsType;
@@ -61,7 +62,7 @@
 
 				vm.eventosPorDia = response.data;
 				vm.labels = vm.eventosPorDia.fechas;
-				vm.series = [ 'Número eventos'];
+				vm.series = [ $translate.instant('numeroEventos')];
 				vm.data = [vm.eventosPorDia.nEventos];
 			
 

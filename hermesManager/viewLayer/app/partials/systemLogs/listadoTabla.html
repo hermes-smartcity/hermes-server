@@ -1,12 +1,11 @@
-<div data-ng-if="!vm.events.length">There are not events to show</div>
+<div data-ng-if="!vm.events.length">{{'systemLogs.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
 			data-dt-options="vm.dtOptions" data-datatable="" >
 		<thead>
 			<tr>
-				<th>IdLog</th>
-				<th>Dated</th>
-				<th>Message</th>
+				<th>{{'systemLogs.idLog' | translate}}</th>
+				<th>{{'systemLogs.dated' | translate}}</th>
 				<th style="width:20px;"></th>
 			</tr>
 		</thead>
@@ -14,12 +13,12 @@
 		<tbody>
 			<tr data-ng-repeat="log in vm.events track by $index">
 				<td>{{log.id}}</td>
-				<td>{{log.dated | date : format:timezone}}</td>
+				<td>{{log.dated | date : "MM/dd/yyyy h:mm a"}}</td>
 				<td>{{log.message}}</td>
 				<td style="width:20px;">
 					<a data-ng-click="vm.deleteLog(log)">
 						<i class="fa fa-remove"><!--  --></i> 
-						Delete
+						{{'delete' | translate}}
 					</a>
 				</td>
 			</tr>

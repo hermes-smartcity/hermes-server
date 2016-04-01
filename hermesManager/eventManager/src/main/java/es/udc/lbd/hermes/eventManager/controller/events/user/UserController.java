@@ -46,7 +46,6 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UserJSON;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
-import es.udc.lbd.hermes.model.util.HashUtil;
 import es.udc.lbd.hermes.model.util.exceptions.DuplicateEmailException;
 
 @CrossOrigin
@@ -236,18 +235,18 @@ public class UserController extends MainResource {
 		Boolean sonIguales = passwordEncoder.matches(passwordJSON.getPasswordOld(), passwordBD);
 		
 		if (!sonIguales){
-			jsonD.setValue("The old password is not correct");
+			jsonD.setKey("user.oldPasswordNotCorrect"); //corresponde con el translation_xx.js
 			jsonD.setType("error");
 			logger.error("Contraseña vieja no coincide");
 		}else{
 			//Si las nuevas contrasenas no son iguales avisamos
 			if (!passwordJSON.getPasswordNew1().equals(passwordJSON.getPasswordNew2())){
-				jsonD.setValue("New passwords are not the same");
+				jsonD.setKey("user.passwordsNotSame"); //corresponde con el translation_xx.js
 				jsonD.setType("error");
 				logger.error("Las contraseñas no son iguales");
 			}else{
 				usuarioWebService.changePassword(passwordJSON, usuario);
-				jsonD.setValue("Password changed satisfactory");
+				jsonD.setKey("user.passwordOk"); //corresponde con el translation_xx.js
 				jsonD.setType("info");
 				logger.info("Contraseña cambiada correctamente");
 			}
@@ -255,6 +254,15 @@ public class UserController extends MainResource {
 		}
 		
 		return jsonD;
+	}
+	
+	// Listar usuarios consulta - Sólo administradores
+	@RequestMapping(value = "/userProfile", method = RequestMethod.GET)
+	public UsuarioWeb userProfile() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		
+		return usuario;
 	}
 		
 	private Map<String, Boolean> createRoleMap(UserDetails userDetails) {

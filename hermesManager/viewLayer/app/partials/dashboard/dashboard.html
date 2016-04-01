@@ -5,7 +5,6 @@
 <div class="row">
 	<div class="col-md-9">
 		<div>
-
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa glyphicon fa-fw"></i>
@@ -18,30 +17,41 @@
 								{{vm.activeInput}} <span class="caret"></span>
 							</button>
 							<ul id="overAnything" class="dropdown-menu pull-right"
-								role="menu">
-								<li ng-click="vm.mostrarMapa()"><a>Mapa</a></li>
-								<li ng-click="vm.mostrarTabla()"><a>Tabla</a></li>
-
+								data-role="menu">
+								<li data-ng-click="vm.mostrarMapa()"><a>{{'dashboard.mapa' | translate}}</a></li>
+								<li data-ng-click="vm.mostrarTabla()"><a>{{'dashboard.tabla' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>
-					<div ng-if="vm.showAdmin" class="pull-right">
+					<div data-ng-if="vm.showAdmin" class="pull-right">
 						<!--  -->
 						<i class="fa glyphicon  fa-fw"></i>
 					</div>
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-					<div ng-show="vm.showMap">
+					<div data-ng-show="vm.showMap">
 						<div id="map"></div>
 					</div>
-					<div ng-show="vm.showTab">
-							<div ng-if="vm.eventTypeSelected == 'VEHICLE_LOCATION'" ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'"></div>
-						<div ng-if="vm.eventTypeSelected == 'DATA_SECTION'" ng-include="'./partials/dataSection/dataSectionListar.html'"></div>
-						<div ng-if="vm.eventTypeSelected == 'CONTEXT_DATA'" ng-include="'./partials/contextData/contextDataListar.html'"></div>
-						<div
-							ng-if="((vm.eventTypeSelected == 'HIGH_SPEED') || (vm.eventTypeSelected == 'HIGH_SPEED') ||
-							     				(vm.eventTypeSelected == 'HIGH_ACCELERATION') || (vm.eventTypeSelected == 'HIGH_DECELERATION') || (vm.eventTypeSelected == 'HIGH_HEART_RATE'))" ng-include="'./partials/measurement/measurementListar.html'"></div>
+					<div data-ng-show="vm.showTab"> 
+						<div data-ng-include="vm.listadoCarga"></div>
+						
+						<!-- <div data-ng-if="vm.eventTypeSelected == 'VEHICLE_LOCATION'"
+							data-ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'">
+						</div>
+						<div data-ng-if="vm.eventTypeSelected == 'DATA_SECTION'"
+							data-ng-include="'./partials/dataSection/dataSectionListar.html'">
+						</div>
+						<div data-ng-if="vm.eventTypeSelected == 'CONTEXT_DATA'"
+							data-ng-include="'./partials/contextData/contextDataListar.html'">
+						</div>
+						<div data-ng-if="((vm.eventTypeSelected == 'HIGH_SPEED') || 
+										(vm.eventTypeSelected == 'HIGH_SPEED') ||
+							     		(vm.eventTypeSelected == 'HIGH_ACCELERATION') || 
+							     		(vm.eventTypeSelected == 'HIGH_DECELERATION') || 
+							     		(vm.eventTypeSelected == 'HIGH_HEART_RATE'))"
+							data-ng-include="'./partials/measurement/measurementListar.html'">
+						</div>-->
 					</div>
 				</div>
 				<!-- /.panel-body -->
@@ -49,6 +59,6 @@
 		</div>
 	</div>
 	<div class="cabeceraFiltro col-md-3">
-		<div class="slide-animate" ng-include="'./partials/filtros.html'"></div>
+		<div class="slide-animate" data-ng-include="'./partials/filtros.html'"></div>
 	</div>
 </div>

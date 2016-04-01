@@ -11,7 +11,8 @@
 		'ngAnimate',
 		'angularUtils.directives.dirPagination',
 		'datatables',
-		'ngCookies', 'permission','ngStorage'
+		'ngCookies', 'permission','ngStorage', 
+		'pascalprecht.translate', 'tmh.dynamicLocale'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
@@ -249,6 +250,56 @@
 			templateUrl:'partials/systemLogs/systemLogs.html',
 			controller: 'SystemLogsController',
 			controllerAs: 'vm',
+			resolve: {
+				eventsType: ['eventsService', function(eventsService) {
+					return eventsService.getEvensType();
+				}],
+				usuarios: ['eventsService', function(eventsService) {
+					return eventsService.getUsuarios();
+				}],
+				measurementsType: ['eventsService', function(eventsService) {
+					return eventsService.getMeasurementsType();
+				}],
+				totalMUsers: ['userService', function(userService) {
+					return userService.getTotalMUsers();
+				}],
+				totalWebUsers: ['userService', function(userService) {
+					return userService.getTotalWebUsers();
+				}],
+				numberActiveUsers: ['userService', function(userService) {
+					return userService.getNumberActiveUsers();
+				}],
+				eventoProcesado: ['eventsService', function(eventsService) {
+					return eventsService.getEventoProcesado();
+				}],
+				eventsToday: ['eventsService', function(eventsService) {
+					return eventsService.getEventsToday();
+				}],
+				totalL: ['eventsService', function(eventsService) {
+					return eventsService.getTotalVLocations();
+				}],
+				totalDS: ['eventsService', function(eventsService) {
+					return eventsService.getTotalDataScts();
+				}],
+				totalM: ['eventsService', function(eventsService) {
+					return eventsService.getTotalMeasurements();
+				}],
+				totalDF: ['eventsService', function(eventsService) {
+					return eventsService.getTotalDriversF();
+				}],
+				totalSTD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalStepsData();
+				}],
+				totalSLD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalSleepData();
+				}],
+				totalHRD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalHeartRateData();
+				}],
+				totalCD: ['eventsService', function(eventsService) {
+					return eventsService.getTotalContextData();
+				}]
+			},
 			data: {
 			      permissions: {
 			          only: ['ROLE_ADMIN'],
@@ -265,6 +316,16 @@
 			templateUrl:'partials/settings/settings.html',
 			controller: 'SettingsController',
 			controllerAs: 'vm'
+		}).state('userProfile', {
+			url: '/userProfile',
+			templateUrl:'partials/user/userProfile.html',
+			controller: 'UserProfileController',
+			controllerAs: 'vm',
+			resolve: {
+				datosUsuario: ['userService', function(userService) {
+					return userService.getUserProfile();
+				}]
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -273,7 +334,17 @@
 
 	}
 
-	angular.module('app').factory('ErrorInterceptor',["$q", "$rootScope", "$location", function($q, $rootScope, $location) {
+	angular.module('app').config(function($translateProvider) {
+		// Tell the module what language to use by default
+		$translateProvider.preferredLanguage('en');
+		$translateProvider.useSanitizeValueStrategy('escaped');
+	});
+	
+	angular.module('app').config(function(tmhDynamicLocaleProvider) {
+		tmhDynamicLocaleProvider.localeLocationPattern("./translations/angular-locale_{{ locale }}.js");
+	});
+	
+	angular.module('app').factory('ErrorInterceptor',["$q", "$rootScope", "$location", '$translate', function($q, $rootScope, $location, $translate) {
 		  return {
 	        	'responseError': function(rejection) {
 	        		var status = rejection.status;
@@ -286,14 +357,14 @@
 	        			$rootScope.error="401";
 	        		} if (status == 403) {
 	        			$location.path("/login");
-	        			$rootScope.error="Email/password incorrectos";
+	        			$rootScope.error=  $translate.instant('emailPasswordIncorrectos'); 
 	        		} else if (status == -1){
 								delete $rootScope.user;
 								delete $rootScope.error;
 								delete $rootScope.authToken;
 								$location.path("/login");
 	        		} else {
-	        			$rootScope.error = method + " on " + url + " failed with status " + status;
+	        			$rootScope.error = method + $translate.instant('en') + url + $translate.instant('falloConEstado') + status;
 	        		}
 	        		return $q.reject(rejection);
 	        	}
@@ -326,9 +397,18 @@
 		$location.path(originalPath);
 	}
 
-	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', '$state'];
-	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, userService, $state) {
+	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', '$state', '$translate', 'tmhDynamicLocale'];
+	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, 
+			userService, $state, $translate, tmhDynamicLocale) {
 
+		//Configuramos el idioma por defecto
+		if (angular.isDefined($localStorage.lang)) {
+			$translate.use( $localStorage.lang);
+			tmhDynamicLocale.set( $localStorage.lang);
+		}else{
+			$localStorage.lang = 'en';
+		}
+		
 		//Si existe el token guardado en $localStorage y no ha caducado aun, se renueva
 		if ($localStorage.authToken){
 			//para que al hacer TokenAuthInterceptor tengo el valor

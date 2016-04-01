@@ -3,9 +3,17 @@
 
 	angular.module('app').controller('SystemLogsController', SystemLogsController);
 
-	SystemLogsController.$inject = ['$scope', '$filter', '$http', 'DTOptionsBuilder', 'logService'];
+	SystemLogsController.$inject = ['$scope', '$filter', '$http', 'DTOptionsBuilder', 'logService',
+	                                '$state', '$rootScope', 'eventsService', 'eventsType', 'usuarios',
+	                                'measurementsType', 'totalMUsers', 'totalWebUsers', 
+	                                'numberActiveUsers', 'eventsToday', 
+	                                'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
+	                                'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
 
-	function SystemLogsController($scope, $filter, $http, DTOptionsBuilder, logService) {
+	function SystemLogsController($scope, $filter, $http, DTOptionsBuilder, logService, $state, 
+			$rootScope, eventsService, eventsType, usuarios, measurementsType, totalMUsers, totalWebUsers, 
+			numberActiveUsers, eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, 
+			totalSTD, totalSLD, totalHRD, totalCD) {
 	
 		var vm = this;
 		
@@ -27,7 +35,36 @@
 		
 		//Inicializar options de la tabla
 		vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
-				
+			
+		vm.eventsType = eventsType;
+		vm.usuarios = usuarios;
+		vm.measurementsType = measurementsType;
+		vm.totalMUsers = totalMUsers;
+		vm.totalWebUsers = totalWebUsers;
+		vm.numberActiveUsers = numberActiveUsers;
+		vm.eventsToday = eventsToday;
+		vm.eventoProcesado = eventoProcesado;
+		vm.totalL = totalL;	
+		vm.totalDS = totalDS;
+		vm.totalM = totalM;
+		vm.totalDF = totalDF;
+		vm.totalSTD = totalSTD;
+		vm.totalSLD = totalSLD;
+		vm.totalHRD = totalHRD;
+		vm.totalCD = totalCD;
+		
+		vm.arrancar = arrancar;
+		vm.parar = parar;
+		
+		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
+		if($rootScope.hasRole('ROLE_ADMIN')){
+			eventsService.getStateActualizado().then(getStateActualizadoComplete);	
+		}
+		
+		function getStateActualizadoComplete(response) {				
+			vm.active = response.data;
+		}
+		
 		// Preparar la url que va a llamar al controlador
 		function prepararUrl(){
 			var url = "";
@@ -75,7 +112,16 @@
 			}
 		 }
 		
-		 
+		function arrancar() {
+			eventsService.arrancar();
+			$state.go('dashboard');
+		}
+		
+		function parar() {
+			eventsService.parar();
+			$state.go('dashboard');
+		}
+		
 		 // Inicialmente sé que voy a pintar los WARN (la opción por defecto en el select)
 		 vm.aplicarFiltros();
 		 

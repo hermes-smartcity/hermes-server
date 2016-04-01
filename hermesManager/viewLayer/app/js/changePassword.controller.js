@@ -3,9 +3,9 @@
 
 	angular.module('app').controller('ChangePasswordController', ChangePasswordController);
 
-	ChangePasswordController.$inject = ['userService'];
+	ChangePasswordController.$inject = ['userService', '$translate'];
 
-	function ChangePasswordController(userService) {
+	function ChangePasswordController(userService, $translate) {
 		
 		var vm = this;
 		vm.change = change;
@@ -15,7 +15,13 @@
 			userService.changePassword(newPassword).then(changePasswordComplete);	
 			
 			function changePasswordComplete(response) {	
+				//Cambiar el value por la internacionalizacion
+				var key = response.data.key;
+				var newValue = $translate.instant(key);
+				response.data.value = newValue;
+				
 				vm.infoChange = response.data;
+				
 			}
 			
 		}

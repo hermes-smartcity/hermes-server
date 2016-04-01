@@ -20,7 +20,8 @@
 			getTotalWebUsers: getTotalWebUsers,
 			getNumberActiveUsers: getNumberActiveUsers,
 			renewToken: renewToken,
-			changePassword: changePassword
+			changePassword: changePassword,
+			getUserProfile: getUserProfile
 		};
 
 		return service;
@@ -158,6 +159,16 @@
 				data : newPassword
 			});
 		}
+		
+		// Listar usuarios ROL_CONSULTA
+		function getUserProfile() {
+			return $http.get(url_user_profile).then(getUserProfileComplete);
+			
+			function getUserProfileComplete(response) {
+				return response.data;
+			}
+		}
+		
 				
 	}
 })();
