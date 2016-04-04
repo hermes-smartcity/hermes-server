@@ -23,7 +23,7 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping(value = "/api/measurement")
 public class MeasurementsController extends MainResource {
