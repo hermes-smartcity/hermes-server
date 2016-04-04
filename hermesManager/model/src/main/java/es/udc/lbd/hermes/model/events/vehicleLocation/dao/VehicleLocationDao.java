@@ -21,5 +21,5 @@ public interface VehicleLocationDao extends GenericDao<VehicleLocation, Long> {
 	public Long contarVehicleLocations(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds);
 	
 	public List<VehicleLocation> obterVehicleLocationsWithLimit(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds,
-			int startIndex, int count, Integer limit);
+			int startIndex, Integer limit);
 }

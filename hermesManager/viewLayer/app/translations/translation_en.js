@@ -101,7 +101,8 @@
 				"filtrar": "Filter",
 			},
 			"resultados": {
-				"titulo": "Results"
+				"titulo": "Results",
+				"de": " of "
 			},
 			"estadisticas":{
 				"eventManager": "Event Manager:",

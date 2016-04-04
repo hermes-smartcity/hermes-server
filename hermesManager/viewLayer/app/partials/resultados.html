@@ -1,4 +1,4 @@
-<div data-ng-show="{{vm.returnedResults && vm.totalResults}}" class="panel panel-default">
+<div data-ng-if="vm.totalResults"  data-ng-class="{'panel panel-default ng-hide' : vm.totalResults <= 0, 'panel panel-default ng-show' : vm.totalResults > 0}" >
 	<div class="panel-heading">
 		<strong>{{'resultados.titulo' | translate}}</strong>
 	</div>

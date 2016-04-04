@@ -132,7 +132,7 @@ VehicleLocationDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<VehicleLocation> obterVehicleLocationsWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
-			int startIndex, int count, Integer limit){
+			int startIndex, Integer limit){
 
 		List<VehicleLocation> elementos = null;
 
@@ -142,9 +142,6 @@ VehicleLocationDao {
 
 		queryStr += "and timestamp > :fechaIni ";
 		queryStr += "and timestamp < :fechaFin ";
-
-		if(limit!=null)
-			queryStr += "ORDER BY timestamp DESC LIMIT :limit ";
 
 		Query query = getSession().createQuery(queryStr);
 
@@ -156,13 +153,14 @@ VehicleLocationDao {
 		query.setCalendar("fechaIni", fechaIni);
 		query.setCalendar("fechaFin", fechaFin);
 
-		if(limit!=null)
-			query.setInteger("limit", limit);
-
-		if(startIndex!=-1 && count!=-1)
-			query.setFirstResult(startIndex).setMaxResults(count);
+		if(startIndex!=-1)
+            query.setFirstResult(startIndex);
+     
+		if(limit!=-1)                                
+            query.setMaxResults(limit);
 
 		elementos = query.list();
+		
 		return elementos;
 	}
 }

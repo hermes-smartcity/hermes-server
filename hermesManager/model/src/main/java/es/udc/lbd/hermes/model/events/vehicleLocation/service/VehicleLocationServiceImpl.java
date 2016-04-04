@@ -89,7 +89,7 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 		}
 		
 		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsWithLimit(idUsuario, fechaIni, 
-				fechaFin, polygon, -1, -1, returnedResults);	
+				fechaFin, polygon, -1, returnedResults);	
 		
 		ListaVehicleLocations listado = new ListaVehicleLocations(totalResults, returnedResults, vehicleLocations);
 		
