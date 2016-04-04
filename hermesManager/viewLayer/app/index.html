@@ -6,55 +6,39 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{{'dashboard.titulo' | translate}}</title>
-	
-	<!-- bower:css -->
-	<!-- endbower -->
+
 
     <!-- inject:css -->
     <!-- endinject -->
-	
-			<!-- Estilos no incluidos con inject y están en bower -->	
-	
-			<!-- Bootstrap Core CSS -->
-			<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-			<!-- MetisMenu CSS -->
-			<link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+	  <!-- bower:css -->
+	  <!-- endbower -->
 
-			<!-- Morris Charts CSS -->
-			<link href="bower_components/morrisjs/morris.css" rel="stylesheet">
+    <!-- Estilos no incluidos con inject y están en bower -->
+    <!-- Date picker -->
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+    <!-- Marker cluster -->
+    <link rel="StyleSheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" type="text/css" media="all"/>
+    <link rel="StyleSheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" type="text/css" media="all"/>
 
-			<!-- Custom Fonts -->
-			<link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-			
-			<!-- Date picker -->
-			<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-			
-			<link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
-			
-			<!-- Marker cluster -->
-			<link rel="StyleSheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.css" type="text/css" media="all"/>
-				
-			<link rel="StyleSheet" href="bower_components/leaflet.markercluster/dist/MarkerCluster.Default.css" type="text/css" media="all"/>
 
-			
-   
+
   </head>
   <body>
-  
+
      <div id="wrapper">
 
 			<div class="slide-animate" data-ng-include="'./partials/menu.html'"></div>
-	        
+
 	        <div id="page-wrapper"> <!-- TODO no sé porque al anadirle esta parte deja de funcionar el desplegable ?¿ FALTA por revisar -->
-		         
-		        <!-- <div class="row">  
-		                <div class="col-lg-12"> 
+
+		        <!-- <div class="row">
+		                <div class="col-lg-12">
 		                    <h1 class="page-header">Dashboard</h1>
 		                </div>
 		    	</div> -->
 		    	<div id="contido" class="row">
-	
+
 			      <div class="view" ui-view=""><!-- --></div>
 				</div>
 	            <!-- /.row -->
@@ -63,19 +47,19 @@
 
     </div>
 
-	
-	
+
+
 	 <!-- bower:js -->
 	 <!-- endbower -->
-	 	
-	 <!-- inject:js -->    
+
+	 <!-- inject:js -->
     <!-- endinject -->
-    
-	<!-- JS no incluidos con inject y están en bower  o en node_modules-->	
+
+	<!-- JS no incluidos con inject y están en bower  o en node_modules-->
 	 <script src="bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
-	 
+
 	<!-- Date picker -->
 	<script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
-	
+
   </body>
 </html>
