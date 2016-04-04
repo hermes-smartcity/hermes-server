@@ -1,6 +1,34 @@
 <h1 class="col-md-12" id="breadcrumbs" class="page-header"> {{'settings.titulo' | translate}} </h1>
 
-<form name="settingsForm" class="col-md-4" data-role="form">
+<form name="settingsForm" class="col-md-4" data-role="form" data-ng-submit="vm.update()" novalidate>
 	
+	<div class="form-group">	
+		<ul class="list-unstyled">
+			<li data-ng-repeat="setting in vm.datosSettings track by setting.id">
+			
+			
+				<label for="name">{{setting.name}}</label> 
+				<input type="{{setting.type}}" class="form-control"  id="value{{setting.id}}" name="value{{setting.id}}" 
+					data-ng-if="setting.type === 'text'" data-ng-model="setting.valueChar"
+					data-ng-required="setting.type === 'text'" data-ng-minlength="1"/>
+				<input type="{{setting.type}}" class="form-control"  id="value{{setting.id}}" name="value{{setting.id}}" 
+					data-ng-if="setting.type === 'number'" data-ng-model="setting.valueNumber"
+					data-ng-required="setting.type === 'number'"/>
+				
+				<span class="avisoError" data-ng-if="setting.type === 'text'" data-ng-show="settingsForm.value{{setting.id}}.$error.required && settingsForm.value{{setting.id}}.$dirty">{{'settings.required' | translate}}</span>
+				<span class="avisoError" data-ng-if="setting.type === 'number'" data-ng-show="settingsForm.value{{setting.id}}.$error.required && settingsForm.value{{setting.id}}.$dirty">{{'settings.required' | translate}}</span>
+				<span class="avisoError" data-ng-if="setting.type === 'number'" data-ng-show="settingsForm.value{{setting.id}}.$error.number&& settingsForm.value{{setting.id}}.$dirty" >{{'settings.numberError' | translate}}</span>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary" data-ng-disabled="settingsForm.$invalid">{{'aceptar' | translate}}</button> 
+		<button data-ui-sref="dashboard" class="btn btn-danger">{{'volver' | translate}}</button>
+	</div>
+	
+	<fieldset  class="form-group">
+		<div data-ng-if="vm.infoUpdate" data-ng-class="{'alert alert-info' : vm.infoUpdate.type === 'info', 'alert alert-danger' : vm.infoUpdate.type === 'error'}" data-role="alert">{{vm.infoUpdate.value}}</div>
+	</fieldset >
 	
 </form>

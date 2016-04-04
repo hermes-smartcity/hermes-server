@@ -9,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
+import es.udc.lbd.hermes.model.events.ListaVehicleLocations;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
+import es.udc.lbd.hermes.model.setting.Setting;
+import es.udc.lbd.hermes.model.setting.dao.SettingDao;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
@@ -29,6 +33,9 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	
 	@Autowired
 	private UsuarioMovilDao usuarioMovilDao;
+	
+	@Autowired
+	private SettingDao settingDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -66,12 +73,27 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
-	public List<VehicleLocation> obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+	public ListaVehicleLocations obterVehicleLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
 		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
-				fechaFin, polygon, -1, -1);		
-		return vehicleLocations;
+		
+		//Recuperamos cuantos resultados devolveria en total
+		Long totalResults = vehicleLocationDao.contarVehicleLocations(idUsuario, fechaIni, fechaFin, polygon);
+				
+		//Tenemos que limiar la consulta a un tamano maximo		
+		//Para ello, recuperamos el valor limitQuery
+		Setting settingLimit = settingDao.get(new Long(1));
+		Integer returnedResults = totalResults.intValue();
+		if (settingLimit != null){
+			returnedResults = settingLimit.getValueNumber().intValue();
+		}
+		
+		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsWithLimit(idUsuario, fechaIni, 
+				fechaFin, polygon, -1, returnedResults);	
+		
+		ListaVehicleLocations listado = new ListaVehicleLocations(totalResults, returnedResults, vehicleLocations);
+		
+		return listado;
 	}
 	
 	@Transactional(readOnly = true)

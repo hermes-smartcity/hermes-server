@@ -315,7 +315,18 @@
 			url: '/settings',
 			templateUrl:'partials/settings/settings.html',
 			controller: 'SettingsController',
-			controllerAs: 'vm'
+			controllerAs: 'vm',
+			resolve: {
+				datosSettings: ['settingsService', function(settingsService) {
+					return settingsService.getSettings();
+				}]
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
+			}
 		}).state('userProfile', {
 			url: '/userProfile',
 			templateUrl:'partials/user/userProfile.html',
