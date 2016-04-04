@@ -9,10 +9,10 @@
 			
 				<label for="name">{{setting.name}}</label> 
 				<input type="{{setting.type}}" class="form-control"  id="value{{setting.id}}" name="value{{setting.id}}" 
-					data-ng-show="setting.type === 'text'" data-ng-model="setting.valueChar"
+					data-ng-if="setting.type === 'text'" data-ng-model="setting.valueChar"
 					data-ng-required="setting.type === 'text'" data-ng-minlength="1"/>
 				<input type="{{setting.type}}" class="form-control"  id="value{{setting.id}}" name="value{{setting.id}}" 
-					data-ng-show="setting.type === 'number'" data-ng-model="setting.valueNumber"
+					data-ng-if="setting.type === 'number'" data-ng-model="setting.valueNumber"
 					data-ng-required="setting.type === 'number'"/>
 				
 				<span class="avisoError" data-ng-if="setting.type === 'text'" data-ng-show="settingsForm.value{{setting.id}}.$error.required && settingsForm.value{{setting.id}}.$dirty">{{'settings.required' | translate}}</span>
