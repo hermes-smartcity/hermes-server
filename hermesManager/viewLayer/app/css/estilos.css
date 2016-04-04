@@ -292,3 +292,7 @@ ol.submenu li.activo a,ol.submenu li.activo span {
 .bordeRed{
 	border:1px solid #d9534f !important;
 }
+
+.avisoError{
+	color:red;
+}

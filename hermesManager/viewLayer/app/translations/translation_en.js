@@ -12,6 +12,7 @@
 			"borrar": "Delete",
 			"volver": "Back",
 			"editar": "Edit",
+			"aceptar": "Ok",
 			"emailPasswordIncorrectos": "Incorrect Email/password",
 			"en": " on ",
 			"falloConEstado": " failed with status ",
@@ -56,7 +57,10 @@
 				"accuracy": "Accuracy"
 			},
 			"settings": {
-				"titulo": "Settings"
+				"titulo": "Settings",
+				"numberError": "Only numbers",
+				"required": "This field is required",
+				"updateOk": "Settings updated" 
 			},
 			"systemLogs": {
 				"filtros": "Filters",
@@ -95,6 +99,9 @@
 				"fechaFin": "End date:",
 				"cambiar": "Change",
 				"filtrar": "Filter",
+			},
+			"resultados": {
+				"titulo": "Results"
 			},
 			"estadisticas":{
 				"eventManager": "Event Manager:",
