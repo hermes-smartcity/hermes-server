@@ -23,7 +23,6 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/vehiclelocation")
 public class VehicleLocationsController extends MainResource {

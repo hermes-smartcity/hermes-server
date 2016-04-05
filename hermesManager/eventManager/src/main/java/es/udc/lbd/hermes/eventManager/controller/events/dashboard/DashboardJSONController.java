@@ -28,7 +28,6 @@ import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.service.UsuarioMovilService;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/dashboard")
 public class DashboardJSONController extends MainResource {

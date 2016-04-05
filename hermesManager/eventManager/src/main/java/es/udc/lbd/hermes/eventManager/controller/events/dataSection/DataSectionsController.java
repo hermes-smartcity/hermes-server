@@ -25,7 +25,7 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
 
-@CrossOrigin
+
 @RestController
 @RequestMapping(value = "/api/datasection")
 public class DataSectionsController extends MainResource {

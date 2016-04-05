@@ -351,8 +351,12 @@
 		$translateProvider.useSanitizeValueStrategy('escaped');
 	});
 	
-	angular.module('app').config(function(tmhDynamicLocaleProvider) {
+	angular.module('app').config(function(tmhDynamicLocaleProvider, $httpProvider) {
 		tmhDynamicLocaleProvider.localeLocationPattern("./translations/angular-locale_{{ locale }}.js");
+		  $httpProvider.defaults.headers.common = {};
+		  $httpProvider.defaults.headers.post = {};
+		  $httpProvider.defaults.headers.put = {};
+		  $httpProvider.defaults.headers.patch = {};
 	});
 	
 	angular.module('app').factory('ErrorInterceptor',["$q", "$rootScope", "$location", '$translate', function($q, $rootScope, $location, $translate) {
@@ -366,6 +370,8 @@
 	        		if (status == 401) {
 	        			$location.path("/login");
 	        			$rootScope.error="401";
+						delete $rootScope.user;
+						delete $rootScope.authToken;
 	        		} if (status == 403) {
 	        			$location.path("/login");
 	        			$rootScope.error=  $translate.instant('emailPasswordIncorrectos'); 

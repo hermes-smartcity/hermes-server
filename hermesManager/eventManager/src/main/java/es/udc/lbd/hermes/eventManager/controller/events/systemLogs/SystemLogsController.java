@@ -20,7 +20,7 @@ import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.events.log.Log;
 import es.udc.lbd.hermes.model.events.log.service.LogService;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping(value = "/api/systemlog")
 public class SystemLogsController extends MainResource {

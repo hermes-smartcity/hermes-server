@@ -33,6 +33,7 @@
 			entry-point-ref="unauthorizedEntryPoint"
 			authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
+		<security:custom-filter ref="corsHandler" after="PRE_AUTH_FILTER"/>
 		<!-- Acceso anónimo autenticarse - registrar usuario consulta - activar cuenta -->
 		<security:intercept-url method="POST" pattern="/api/user/registerUser" access="permitAll" />				
 		<security:intercept-url pattern="/api/user/activarCuenta" access="permitAll" />
@@ -75,4 +76,5 @@
 	 <bean class="es.udc.lbd.hermes.eventManager.util.AuthenticationTokenProcessingFilter" id="authenticationTokenProcessingFilter">
 		<constructor-arg ref="usuarioWebService" />
 	</bean>
+	<bean id="corsHandler" class="es.udc.lbd.hermes.eventManager.util.CORSFilter" />
 </beans>

@@ -12,7 +12,6 @@ import es.udc.lbd.hermes.eventManager.EventManager;
 import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/eventManager")
 public class EventManagerJSONController extends MainResource {
