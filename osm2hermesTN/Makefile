@@ -4,82 +4,112 @@ DB_USER=***REMOVED***
 DB_PASS=***REMOVED***
 DB_NAME=meco1401_prod
 DB_SCHEMA=network
-PSQL_FLAGS=-h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER) $(DB_NAME)
+DB_SCHEMA_PUBLIC=public
+PSQL_FLAGS=-h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER) "dbname=$(DB_NAME) options=--search_path=$(DB_SCHEMA),$(DB_SCHEMA_PUBLIC)"
 
-all: download osmosis osm2po hermes osm2HermesTN
+all: download_sw download_spa osmosis osm2po hermes osm2HermesTN
 
-target:
-	mkdir target
+bin:
+	mkdir bin
 
-download_osmosis: target
+data:
+	mkdir data
+
+download_sw: download_osmosis download_osm2po
+
+download_osmosis: bin
 	@echo '==='
 	@echo '=== Download osmosis'
 	@echo '==='
 	wget http://bretth.dev.openstreetmap.org/osmosis-build/osmosis-latest.zip
-	mv osmosis-latest.zip target
-	rm -rf target/osmosis
-	unzip target/osmosis-latest.zip -d target/osmosis
-	rm -f target/osmosis-latest.zip
+	mv osmosis-latest.zip bin
+	rm -rf bin/osmosis
+	unzip bin/osmosis-latest.zip -d bin/osmosis
+	rm -f bin/osmosis-latest.zip
 
-download_osm: target
+download_osm2po: bin
+	@echo '==='
+	@echo '=== Download osm2po'
+	@echo '==='
+	wget http://osm2po.de/releases/osm2po-5.1.0.zip
+	mv osm2po-5.1.0.zip bin
+	rm -rf bin/osm2po
+	unzip bin/osm2po-5.1.0.zip -x osm2po.config -d bin/osm2po
+	rm -f bin/osm2po-5.1.0.zip
+	cp osm2po.config bin/osm2po
+
+download_cor: data
 	@echo '==='
 	@echo '=== Download OSM data'
 	@echo '==='
 	wget https://s3.amazonaws.com/metro-extracts.mapzen.com/acoruna_spain.osm.bz2
-	mv acoruna_spain.osm.bz2 target
-	bzip2 -f -d target/acoruna_spain.osm.bz2
+	mv acoruna_spain.osm.bz2 data
+	bzip2 -f -d data/acoruna_spain.osm.bz2
 	rm -f acoruna_spain.osm.bz2
 
-download_osm2po: target
+download_spa: data
 	@echo '==='
-	@echo '=== Download osm2po'
+	@echo '=== Download OSM data'
 	@echo '==='
-	wget http://osm2po.de/dld/osm2po-5.0.0.zip
-	mv osm2po-5.0.0.zip target
-	rm -rf target/osm2po
-	unzip target/osm2po-5.0.0.zip -x osm2po.config -d target/osm2po
-	rm -f target/osm2po-5.0.0.zip
-	cp osm2po.config target/osm2po
-
-download: download_osmosis download_osm download_osm2po
+	wget http://download.geofabrik.de/europe/spain-latest.osm.bz2
+	mv spain-latest.osm.bz2 data
+	bzip2 -f -d data/spain-latest.osm.bz2
+	rm -f spain-latest.osm.bz2
 
 osmosis: 
 	@echo '==='
 	@echo '=== pgsnapshot_schema'
 	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f target/osmosis/script/pgsnapshot_schema_0.6.sql
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f bin/osmosis/script/pgsnapshot_schema_0.6.sql
+
+	@echo '==='
+	@echo '=== pgsnapshot_schema_bbox'
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f bin/osmosis/script/pgsnapshot_schema_0.6_bbox.sql
 
 	@echo '==='
 	@echo '=== pgsnapshot_schema_linestring'
 	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f target/osmosis/script/pgsnapshot_schema_0.6_linestring.sql
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f bin/osmosis/script/pgsnapshot_schema_0.6_linestring.sql
 
 	@echo '==='
 	@echo '=== Import OSM Data to DB'
 	@echo '==='
-	./target/osmosis/bin/osmosis --read-xml target/acoruna_spain.osm --write-pgsql host=$(DB_HOST) database=$(DB_NAME) user=$(DB_USER) password=$(DB_PASS)
+	./bin/osmosis/bin/osmosis --read-xml data/acoruna_spain.osm --write-pgsql-dump directory=data enableLinestringBuilder=yes enableBboxBuilder=yes
+	cd data; PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f ../bin/osmosis/script/pgsnapshot_load_0.6.sql
+	cd ..
 
 	@echo '==='
 	@echo '=== Create index'
 	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE INDEX ways_i_tags ON ways USING gist (tags);'
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS)  -c 'CREATE INDEX ways_i_tags ON ways USING gist (tags);'
 
 osm2po: 
 	@echo '==='
 	@echo '===  Split OSM ways'
 	@echo '==='
-	java -Xmx1408m -jar target/osm2po/osm2po-core-5.0.0-signed.jar workDir=target/es_cor prefix=es_cor tileSize=x,c cmd=c target/acoruna_spain.osm
+	java -Xmx1408m -jar bin/osm2po/osm2po-core-5.1.0-signed.jar workDir=data/es_cor prefix=es_cor tileSize=x cmd=tjsp data/acoruna_spain.osm
 
 	@echo '==='
 	@echo '===  Insert into PSQL'
 	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f target/es_cor/es_cor_2po_4pgr.sql
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f data/es_cor/es_cor_2po_4pgr.sql
+
+	@echo '==='
+	@echo '=== Create index'
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS)  -c 'CREATE INDEX idx_es_cor_2po_4pgr_geom_way ON network.es_cor_2po_4pgr USING gist(geom_way);'
 
 hermes: 
 	@echo '==='
+	@echo '===  Creating Hermes Utility'
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f ./hermes_utility.sql
+
+	@echo '==='
 	@echo '===  Creating Hermes Schema'
 	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f ../common/hermes_schema.sql
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -f ./hermes_schema.sql
 
 osm2HermesTN: osm2hermes.sql
 	@echo '==='
@@ -111,7 +141,7 @@ initschema:
 	@echo '==='
 	@echo '=== Drop Schema' $(DB_NAME) '.' $(DB_SCHEMA)
 	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'DROP SCHEMA IF EXISTS $(DB_SCHEMA)'
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'DROP SCHEMA IF EXISTS $(DB_SCHEMA) CASCADE'
 
 	@echo '==='
 	@echo '=== Create Schema' $(DB_NAME) '.' $(DB_SCHEMA)
