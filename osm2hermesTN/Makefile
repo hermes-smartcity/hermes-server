@@ -2,10 +2,11 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_USER=***REMOVED***
 DB_PASS=***REMOVED***
-DB_NAME=meco1401
+DB_NAME=meco1401_prod
+DB_SCHEMA=network
 PSQL_FLAGS=-h $(DB_HOST) -p $(DB_PORT) -U $(DB_USER) $(DB_NAME)
 
-all: initdb download osmosis osm2po hermes osm2HermesTN
+all: download osmosis osm2po hermes osm2HermesTN
 
 target:
 	mkdir target
@@ -41,23 +42,6 @@ download_osm2po: target
 	cp osm2po.config target/osm2po
 
 download: download_osmosis download_osm download_osm2po
-
-dropdb:
-	@echo '==='
-	@echo '=== Drop DB' $(DB_NAME)
-	@echo '==='
-	PGPASSWORD=$(DB_PASS) dropdb $(PSQL_FLAGS) --if-exists
-
-initdb: dropdb
-	@echo '==='
-	@echo '=== Create DB' $(DB_NAME)
-	@echo '==='
-	PGPASSWORD=$(DB_PASS) createdb $(PSQL_FLAGS)
-
-	@echo '==='
-	@echo '=== Create extensions'
-	@echo '==='
-	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION pgRouting;'
 
 osmosis: 
 	@echo '==='
@@ -105,3 +89,32 @@ osm2HermesTN: osm2hermes.sql
 
 clean: 
 	rm -rf target
+
+dropdb:
+	@echo '==='
+	@echo '=== Drop DB' $(DB_NAME)
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) dropdb $(PSQL_FLAGS) --if-exists
+
+initdb: dropdb
+	@echo '==='
+	@echo '=== Create DB' $(DB_NAME)
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) createdb $(PSQL_FLAGS)
+
+	@echo '==='
+	@echo '=== Create extensions'
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE EXTENSION postgis; CREATE EXTENSION hstore; CREATE EXTENSION pgRouting;'
+
+initschema:
+	@echo '==='
+	@echo '=== Drop Schema' $(DB_NAME) '.' $(DB_SCHEMA)
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'DROP SCHEMA IF EXISTS $(DB_SCHEMA)'
+
+	@echo '==='
+	@echo '=== Create Schema' $(DB_NAME) '.' $(DB_SCHEMA)
+	@echo '==='
+	PGPASSWORD=$(DB_PASS) psql $(PSQL_FLAGS) -c 'CREATE SCHEMA $(DB_SCHEMA)'
+	
