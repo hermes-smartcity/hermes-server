@@ -67,6 +67,13 @@ gulp.task('minify-js', function() {
     .pipe(gulp.dest('./dist/'))
 });
 
+gulp.task('copy-temporal2', function () {
+	  gulp.src([
+	            './app/js/app.module.js',
+	           ])
+	    .pipe(gulp.dest('./dist/js/'));
+	});
+
 gulp.task('copy-css', function() {
 	  gulp.src(['./app/**/*.css', '!./app/bower_components/**'])
 	    .pipe(gulp.dest('./dist/'))

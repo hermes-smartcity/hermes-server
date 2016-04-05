@@ -1,8 +1,12 @@
 (function() {
 	'use strict';
 
-	angular.module('app').config(function($translateProvider) {
-
+	angular.module('app').config(translateConfig);
+	
+	translateConfig.$inject = ['$translateProvider'];
+	
+	function translateConfig($translateProvider) {
+		
 		$translateProvider.translations('en', {
 			"entrar": "Enter",
 			"recordar": "Remember me",
@@ -166,7 +170,6 @@
 				"passwordOk": "Password changed satisfactory"
 			}
 		});
-
-	});
+	}
 
 })();
