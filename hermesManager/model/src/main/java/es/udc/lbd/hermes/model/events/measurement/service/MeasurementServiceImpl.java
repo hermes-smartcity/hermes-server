@@ -14,9 +14,12 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
+import es.udc.lbd.hermes.model.events.ListaMeasurement;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.dao.MeasurementDao;
+import es.udc.lbd.hermes.model.setting.Setting;
+import es.udc.lbd.hermes.model.setting.dao.SettingDao;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
@@ -24,13 +27,16 @@ import es.udc.lbd.hermes.model.util.HelpersModel;
 @Service("measurementService")
 @Transactional
 public class MeasurementServiceImpl implements MeasurementService {
-	
+
 	@Autowired
 	private MeasurementDao measurementDao;
-	
+
 	@Autowired
 	private UsuarioMovilDao usuarioMovilDao;
-	
+
+	@Autowired
+	private SettingDao settingDao;
+
 	@Override
 	@Transactional(readOnly = true)
 	public Measurement get(Long id) {
@@ -47,7 +53,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 		}
 		measurement.setUsuarioMovil(usuarioMovil);
 		measurementDao.create(measurement);
-		
+
 	}
 
 	@Override
@@ -62,22 +68,37 @@ public class MeasurementServiceImpl implements MeasurementService {
 			measurementDao.delete(id);
 		}
 	}
-	
+
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
-	public List<Measurement> obterMeasurementsSegunTipo(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+	public ListaMeasurement obterMeasurementsSegunTipo(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
 		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipo(tipo, idUsuario, fechaIni, fechaFin, polygon, -1, -1);
-		return measurements;
+
+		//Recuperamos cuantos resultados devolveria en total
+		Long totalResults = measurementDao.contarMeasurementsSegunTipo(tipo, idUsuario, fechaIni, fechaFin, polygon);
+
+		//Tenemos que limitar la consulta a un tamano maximo		
+		//Para ello, recuperamos el valor limitQuery
+		Setting settingLimit = settingDao.get(new Long(1));
+		Integer returnedResults = totalResults.intValue();
+		if (settingLimit != null){
+			returnedResults = settingLimit.getValueNumber().intValue();
+		}
+
+		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipoWithLimit(tipo, idUsuario, fechaIni, fechaFin, polygon, -1, -1);
+
+		ListaMeasurement listado = new ListaMeasurement(totalResults, returnedResults, measurements);
+
+		return listado;
 	}
-	
+
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public long contar() {
 		return measurementDao.contar(null);
 	}
-	
+
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public ListaEventosYdias obterEventosPorDia(MeasurementType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin) {		
@@ -89,11 +110,11 @@ public class MeasurementServiceImpl implements MeasurementService {
 			listaDias.add(e.getFecha());
 			listaN.add(e.getNeventos());
 		}
-		
+
 		listaEventosDias.setFechas(listaDias);
 		listaEventosDias.setnEventos(listaN);
-		
+
 		return listaEventosDias;
-		
+
 	}
 }

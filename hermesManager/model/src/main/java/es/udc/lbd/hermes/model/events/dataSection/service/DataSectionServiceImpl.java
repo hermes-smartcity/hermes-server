@@ -13,9 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.ListaDataSection;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.events.dataSection.dao.DataSectionDao;
+import es.udc.lbd.hermes.model.setting.Setting;
+import es.udc.lbd.hermes.model.setting.dao.SettingDao;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
@@ -30,6 +33,9 @@ public class DataSectionServiceImpl implements DataSectionService {
 	
 	@Autowired
 	private UsuarioMovilDao usuarioMovilDao;
+	
+	@Autowired
+	private SettingDao settingDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -64,11 +70,27 @@ public class DataSectionServiceImpl implements DataSectionService {
 	
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
-	public List<DataSection> obterDataSections(Long idUsuarioMovil, Calendar fechaIni, Calendar fechaFin,
+	public ListaDataSection obterDataSections(Long idUsuarioMovil, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat) {
 		Geometry polygon =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
-		List<DataSection> dataSections = dataSectionDao.obterDataSections(idUsuarioMovil, fechaIni, fechaFin, polygon, -1, -1);
-		return dataSections;
+
+		//Recuperamos cuantos resultados devolveria en total
+		Long totalResults = dataSectionDao.contarDataSections(idUsuarioMovil, fechaIni, fechaFin, polygon);
+
+		//Tenemos que limitar la consulta a un tamano maximo		
+		//Para ello, recuperamos el valor limitQuery
+		Setting settingLimit = settingDao.get(new Long(1));
+		Integer returnedResults = totalResults.intValue();
+		if (settingLimit != null){
+			returnedResults = settingLimit.getValueNumber().intValue();
+		}
+
+		List<DataSection> dataSections = dataSectionDao.obterDataSectionsWithLimit(idUsuarioMovil, fechaIni, fechaFin, polygon, -1, returnedResults);
+
+		ListaDataSection listado = new ListaDataSection(totalResults, returnedResults, dataSections);
+
+		return listado;
+		
 	}
 	
 	@Transactional(readOnly = true)

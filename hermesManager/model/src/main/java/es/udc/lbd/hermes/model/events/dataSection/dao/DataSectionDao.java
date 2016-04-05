@@ -14,4 +14,8 @@ public interface DataSectionDao extends GenericDao<DataSection, Long> {
 			int startIndex, int count);
 	public long contar();
 	public List<EventosPorDia> eventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	
+	public Long contarDataSections(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds);
+	public List<DataSection> obterDataSectionsWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
+			int startIndex, Integer limit);
 }

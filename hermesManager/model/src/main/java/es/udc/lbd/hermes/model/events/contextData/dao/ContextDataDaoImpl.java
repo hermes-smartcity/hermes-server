@@ -105,4 +105,62 @@ public class ContextDataDaoImpl extends GenericDaoHibernate<ContextData, Long> i
 				.createQuery("select count(*) from ContextData")
 				.uniqueResult();
 	}
+	
+	public Long contarContextData(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds){
+
+		String queryStr =  "select count(*) from ContextData where within(position, :bounds) = true ";
+		if(idUsuario!=null)
+			queryStr += "and usuarioMovil.id = :idUsuario ";
+
+		queryStr += "and timeLog > :fechaIni ";
+		queryStr += "and timeLog < :fechaFin";
+
+		Query query = getSession().createQuery(queryStr);
+
+		query.setParameter("bounds", bounds);
+
+		if(idUsuario!=null)
+			query.setParameter("idUsuario", idUsuario);
+
+		query.setCalendar("fechaIni", fechaIni);
+		query.setCalendar("fechaFin", fechaFin);
+
+		Long numero  = (Long) query.uniqueResult();
+
+		return numero;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<ContextData> obterContextDataWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
+			int startIndex, Integer limit){
+
+		List<ContextData> elementos = null;
+
+		String queryStr =  "from ContextData where within(position, :bounds) = true ";
+		if(idUsuario!=null)
+			queryStr += "and usuarioMovil.id = :idUsuario ";
+
+		queryStr += "and timeLog > :fechaIni ";
+		queryStr += "and timeLog < :fechaFin";
+
+		Query query = getSession().createQuery(queryStr);
+
+		query.setParameter("bounds", bounds);
+
+		if(idUsuario!=null)
+			query.setParameter("idUsuario", idUsuario);
+
+		query.setCalendar("fechaIni", fechaIni);
+		query.setCalendar("fechaFin", fechaFin);
+
+		if(startIndex!=-1)
+            query.setFirstResult(startIndex);
+     
+		if(limit!=-1)                                
+            query.setMaxResults(limit);
+
+		elementos = query.list();
+		return elementos;
+	}
 }

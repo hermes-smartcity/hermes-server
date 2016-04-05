@@ -80,7 +80,7 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 		//Recuperamos cuantos resultados devolveria en total
 		Long totalResults = vehicleLocationDao.contarVehicleLocations(idUsuario, fechaIni, fechaFin, polygon);
 				
-		//Tenemos que limiar la consulta a un tamano maximo		
+		//Tenemos que limitar la consulta a un tamano maximo		
 		//Para ello, recuperamos el valor limitQuery
 		Setting settingLimit = settingDao.get(new Long(1));
 		Integer returnedResults = totalResults.intValue();

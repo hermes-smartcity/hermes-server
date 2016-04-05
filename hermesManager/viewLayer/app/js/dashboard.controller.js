@@ -386,7 +386,9 @@
 			
 			
 			$http.get(url).success(function(data) {
-				vm.events = data;
+				vm.events = data.results;	
+				vm.totalResults = data.totalResults;
+				vm.returnedResults = data.returnedResults;
 				pintarLineasDataSection(vm.events);
 				paginarEventos();			
 			});
@@ -410,7 +412,9 @@
 			};
 			
 			$http.get(url).success(function(data) {
-				vm.events = data;									
+				vm.events = data.results;	
+				vm.totalResults = data.totalResults;
+				vm.returnedResults = data.returnedResults;								
 				pintarPuntos(vm.events);
 				paginarEventos();
 			});
@@ -428,7 +432,9 @@
 			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
 			
 			$http.get(url).success(function(data) {
-				vm.events = data;		
+				vm.events = data.results;	
+				vm.totalResults = data.totalResults;
+				vm.returnedResults = data.returnedResults;		
 				pintarPuntosContextData(vm.events);
 				paginarEventos();
 			
@@ -452,7 +458,9 @@
 			};
 			
 			$http.get(url).success(function(data) {
-				vm.events = data;									
+				vm.events = data.results;	
+				vm.totalResults = data.totalResults;
+				vm.returnedResults = data.returnedResults;											
 				pintarPuntosHigh(vm.events);
 				paginarEventos();
 			});

@@ -18,4 +18,11 @@ public interface MeasurementDao extends GenericDao<Measurement, Long> {
 	public long contar(MeasurementType tipo);
 	
 	public List<EventosPorDia> eventosPorDia(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+		
+	public Long contarMeasurementsSegunTipo(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, Geometry bounds);
+	
+	public List<Measurement> obterMeasurementsSegunTipoWithLimit(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, Geometry bounds, int startIndex, Integer limit);
+	
 }
