@@ -8,12 +8,13 @@
 	                                 'eventsType', 'usuarios' ,'measurementsType',
 	                                 'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
 	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$translate'];
+	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$translate',
+	                                  'DTOptionsBuilder'];
 
 	function UserManagerController($scope, $http, $timeout, $log, $filter, userService, $state, $rootScope,
 			eventsService, eventsType, usuarios, measurementsType, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
 			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
-			$translate) {
+			$translate, DTOptionsBuilder) {
 	
 	var vm = this;
 	vm.showAdmins = showAdmins;
@@ -45,6 +46,9 @@
 	vm.totalSLD = totalSLD;
 	vm.totalHRD = totalHRD;
 	vm.totalCD = totalCD;
+	
+	//Inicializar options de la tabla
+	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
 	
 	vm.showUsers();
 	
@@ -92,7 +96,6 @@
 		$http.get(url_admins).success(function(data) {
 			vm.admins = data;				
 		});
-		paginarUsuarios();	
 	}
 	
 	function showUsers() {	
@@ -101,15 +104,9 @@
 		vm.activeInput = $translate.instant('user.usuarios');
 		$http.get(url_users).success(function(data) {
 			vm.users = data;					
-		});
-		paginarUsuarios();	
+		});	
 	}
 
-	  
-	function paginarUsuarios() {
-		  vm.currentPage = 1;
-		  vm.pageSize = 10;
-	}
 	 
 	function arrancar() {
 		eventsService.arrancar();

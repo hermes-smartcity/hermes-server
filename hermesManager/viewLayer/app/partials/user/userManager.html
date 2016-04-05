@@ -41,23 +41,6 @@
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col-md-6">
-      		<dir-pagination-controls data-ng-if="(vm.users.length > 1) || (vm.admins.length > 1)" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="bower_components/angularUtils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
-      	</div>
-      	<div class="col-md-3">
-      		<!-- Buscador/filtro para usuarios consulta -->
-      		<div data-ng-if="!vm.showAdmin" class="buscador"><input placeholder="{{'user.buscar' | translate}}" data-ng-model="vm.searchText"></div>
-      		<!-- Buscador/filtro para administradores -->
-      		<div data-ng-if="vm.showAdmin" class="buscador"><input placeholder="{{'user.buscar' | translate}}" data-ng-model="vm.searchTextAdmin"></div>
-      	</div>
-    </div>
-      
-  <!--  <div id="buscadorMasIcono" class="text-rigth">		       	 							 	
-		<div ng-show="vm.admins" class="buscador"><input placeholder="Buscar..." ng-model="searchText"></div>		
-		<div id="iconoAnadir" class="glyphicon glyphicon-plus right"  ui-sref="registerAdmin"></div>			
-	</div>  -->
-	
 	<!-- Mostrar mensajes informativos al usuario: Error, acci�n completada correctamente, etc. -->	
 	<div class="row">
 		<div class="col-md-9">

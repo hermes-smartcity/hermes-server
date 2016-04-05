@@ -1,25 +1,30 @@
 <div data-ng-if="!vm.admins.length">{{'user.noAdminRegistrados' | translate}}</div>
-<table data-ng-if="vm.admins.length" class="table table-hover">
-		 <thead>
-		    <tr>				   
-		      <th colspan="8">{{'user.email' | translate}}</th>
-		      <th colspan="2">{{'user.movil' | translate}}</th>
-		      <th colspan="2">{{'user.acciones' | translate}}</th>
-		    </tr>
-		  </thead>
-		<tr>
-	
-		  <tbody data-dir-paginate="user in vm.admins | orderBy:'email' | filter:vm.searchTextAdmin | itemsPerPage: vm.pageSize"  
-  		data-current-page="vm.currentPage">
-		     <tr>
-		      <th colspan="8">{{user.email}}</th>
-		      <td colspan="2">{{user.usuarioMovil.id}}</td>
-		      <td colspan="2">
-	      		<div class="glyphicon glyphicon-pencil icono-boton" data-ui-sref="editUser({idUser: user.id})" title="{{'user.editarUsuario' | translate}}"></div>
-			 	<div class="glyphicon glyphicon-trash icono-boton" data-ng-click="vm.deleteUser(user)" title="{{'user.eliminarUsuario' | translate}}"></div>
-			  </td>
-		    </tr>
-		  </tbody>				  
 		
-</table>
-		
+<div class="table-responsive">
+	<table data-ng-if="vm.admins.length" class="table table-hover"
+		data-dt-options="vm.dtOptions" data-datatable="">
+
+		<thead>
+			<tr>
+				<th style="width:60px;">{{'user.email' | translate}}</th>
+				<th style="width:20px;">{{'user.movil' | translate}}</th>
+				<th style="width:20px;">{{'user.acciones' | translate}}</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr data-ng-repeat="user in vm.admins track by $index">
+				<th style="width:60px;">{{user.email}}</th>
+				<td style="width:20px;">{{user.usuarioMovil.id}}</td>
+				<td style="width:20px;">
+					<div class="glyphicon glyphicon-pencil icono-boton"
+						data-ui-sref="editUser({idUser: user.id})"
+						title="{{'user.editarUsuario' | translate}}"></div>
+					<div class="glyphicon glyphicon-trash icono-boton"
+						data-ng-click="vm.deleteUser(user)"
+						title="{{'user.eliminarUsuario' | translate}}"></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>		
