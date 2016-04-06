@@ -67,6 +67,7 @@
 				"updateOk": "Settings updated" 
 			},
 			"systemLogs": {
+				"titulo": "System logs",
 				"filtros": "Filters",
 				"tipoError": "Error Type:",
 				"info": "INFO",
