@@ -2,7 +2,7 @@ package es.udc.lbd.hermes.model.smartdriver;
 
 import java.io.Serializable;
 
-public class NetworkLine implements Serializable {
+public class NetworkLinkVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -15,9 +15,9 @@ public class NetworkLine implements Serializable {
 	private Double previousPosition;
 	private Integer direction;
 		
-	public NetworkLine(){}
+	public NetworkLinkVO(){}
 
-	public NetworkLine(Long linkId, Double maxSpeed, String linkName,
+	public NetworkLinkVO(Long linkId, Double maxSpeed, String linkName,
 			String linkType, Double length, Double position,
 			Double previousPosition, Integer direction) {
 		super();

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.model.smartdriver.Method;
-import es.udc.lbd.hermes.model.smartdriver.NetworkLine;
+import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.smartdriver.service.NetworkService;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
@@ -31,7 +31,7 @@ public class SmartDriverController {
 	}
 	
 	@RequestMapping(value="/network/link", method = RequestMethod.GET)
-	public NetworkLine getNetworkLine(@RequestParam(value = "currentLong", required = true) Double currentLong,
+	public NetworkLinkVO getNetworkLine(@RequestParam(value = "currentLong", required = true) Double currentLong,
 			@RequestParam(value = "currentLat", required = true) Double currentLat,
 			@RequestParam(value = "previousLong", required = true) Double previousLong, 
 			@RequestParam(value = "previousLat", required = true) Double previousLat) { 

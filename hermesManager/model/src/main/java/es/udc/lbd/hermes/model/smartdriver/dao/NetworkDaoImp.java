@@ -4,14 +4,14 @@ import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
-import es.udc.lbd.hermes.model.smartdriver.Network;
-import es.udc.lbd.hermes.model.smartdriver.NetworkLine;
+import es.udc.lbd.hermes.model.smartdriver.NetworkLink;
+import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 @Repository
-public class NetworkDaoImp extends GenericDaoHibernate<Network, Long> implements NetworkDao {
+public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implements NetworkDao {
 
-	public NetworkLine getLinkInformation(Double currentLong, Double currentLat, Double previousLong, Double previousLat){
+	public NetworkLinkVO getLinkInformation(Double currentLong, Double currentLat, Double previousLong, Double previousLat){
 		
 		String queryString = "select osm_id as linkId, kmh as maxSpeed, osm_name as linkName, " +
 								"case " +
@@ -38,25 +38,27 @@ public class NetworkDaoImp extends GenericDaoHibernate<Network, Long> implements
 								    "when clazz = 21 then 'steps' " +
 							    "end as linkType, " +
 								"st_length(geom_way, true) as length, " +
-								"st_lineLocatePoint(geom_way, st_geometryfromtext('POINT(:currentLong :currentLat)', 4326)) as position, " +
-								"st_lineLocatePoint(geom_way, st_geometryfromtext('POINT(:previousLong :previousLat)', 4326)) as previousPosition, " +
+								"st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326)) as position, " +
+								"st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :previouslong || ' ' ||:previouslat ||')', 4326)) as previousPosition, " +
 								"case " +
-									"when st_lineLocatePoint(geom_way, st_geometryfromtext('POINT(-8.3295453 43.3020971)', 4326)) - st_lineLocatePoint(geom_way, st_geometryfromtext('POINT(-8.32540213 43.30151523)', 4326)) > 0 then 0 " +
+									"when st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326)) - st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :previouslong || ' ' ||:previouslat ||')', 4326)) > 0 then 0 " +
 									"else 1 " +
 								"end as direction " +
-								"from network " +
-								"where st_geometryfromtext('POINT(-8.3295453 43.3020971)', 4326) && geom_way " +
-								"and st_distance(st_geometryfromtext('POINT(-8.3295453 43.3020971)', 4326), geom_way, true) < 10";
-				
+								"from network.es_cor_2po_4pgr " +
+								"where st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326) && geom_way " +
+								"and st_distance(st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326), geom_way, true) < 10";
+		
 		Query query = getSession().createSQLQuery(queryString);
-		query.setResultTransformer(Transformers.aliasToBean(NetworkLine.class));
+		query.setResultTransformer(Transformers.aliasToBean(NetworkLinkVO.class));
 		
-		query.setParameter("currentLong", currentLong);
-		query.setParameter("currentLat", currentLat);
-		query.setParameter("previousLong", previousLong);
-		query.setParameter("previousLat", previousLat);
+		query.setParameter("currentlong", currentLong);
+		query.setParameter("currentlat", currentLat);
+		query.setParameter("previouslong", previousLong);
+		query.setParameter("previouslat", previousLat);
 		
-		NetworkLine resultado = (NetworkLine) query.uniqueResult();
+		NetworkLinkVO resultado = (NetworkLinkVO) query.uniqueResult();
+		
+		System.out.println(queryString);
 		
 		return resultado;
 	}

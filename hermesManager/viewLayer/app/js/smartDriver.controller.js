@@ -67,8 +67,8 @@
 		
 		map.fitBounds([[-180,-90],[180,90]]);
 
-		map.on('dragend', aplicarFiltros);
-		map.on('zoomend', aplicarFiltros);
+		//map.on('dragend', aplicarFiltros);
+		//map.on('zoomend', aplicarFiltros);
 			
 		//Anadimos la edit toolbar
 		// Initialise the FeatureGroup to store editable layers
