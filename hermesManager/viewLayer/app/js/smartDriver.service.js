@@ -7,7 +7,8 @@
 
 	function smartDriverService($http, $log, $q) {
 		var service = {
-				getMethods: getMethods
+				getMethods: getMethods,
+				getLinkInformation: getLinkInformation
 		};
 
 		return service;
@@ -24,5 +25,12 @@
 			}
 		}
 		
+		function getLinkInformation (currentLong, currentLat, previousLong, previousLat) {		
+			return $http({
+				method : 'GET',
+				url : url_network_link + "c=" + currentLat + "," + currentLong + "&p=" + previousLat + "," + previousLong
+			});
+		}
+
 	}
 })();

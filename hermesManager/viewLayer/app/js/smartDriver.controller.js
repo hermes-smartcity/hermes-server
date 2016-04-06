@@ -8,12 +8,12 @@
 	                                'measurementsType', 'totalMUsers', 'totalWebUsers', 
 	                                'numberActiveUsers', 'eventsToday', 
 	                                'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
+	                                'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', 'smartDriverService'];
 
 	function SmartDriverController($scope, $filter, $http, $translate, $state, 
 			$rootScope, eventsService,methods, measurementsType, totalMUsers, totalWebUsers, 
 			numberActiveUsers, eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, 
-			totalSTD, totalSLD, totalHRD, totalCD) {
+			totalSTD, totalSLD, totalHRD, totalCD, smartDriverService) {
 	
 		var vm = this;
 		
@@ -173,17 +173,39 @@
 			return url;
 		}
 		
+		function ejecutarPeticion(){
+			switch (vm.methodSelected) {
+			  case "GET_INFORMATION_LINK":
+				  	smartDriverService.getLinkInformation(vm.currentLong, vm.currentLat, vm.previousLong, vm.previousLat).then(getLinkInformationComplete);
+					
+					function getLinkInformationComplete(response) {
+						vm.result = data;
+					}
+					
+			    break;
+			 
+			  default:
+				 break;
+			}
+		}
+		
 		function aplicarFiltros() {	
 			
 			if (vm.previousLong === undefined || vm.previousLat === undefined || 
 				vm.currentLong === undefined || vm.currentLat === undefined){
 				alert($translate.instant('smartdriver.selectSegment'));
 			}else{
-				var url = prepararUrl();
+				
+				ejecutarPeticion();
+				
+				/*var url = prepararUrl();
 				
 				$http.get(url).success(function(data) {
 					vm.result = data;
-				});	
+				});*/	
+				
+				
+				
 			}
 			
 		}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,11 +31,9 @@ public class SmartDriverController {
 		return Arrays.asList(Method.values());
 	}
 	
-	@RequestMapping(value="/network/link", method = RequestMethod.GET)
-	public NetworkLinkVO getLinkInformation(@RequestParam(value = "currentLong", required = true) Double currentLong,
-			@RequestParam(value = "currentLat", required = true) Double currentLat,
-			@RequestParam(value = "previousLong", required = true) Double previousLong, 
-			@RequestParam(value = "previousLat", required = true) Double previousLat) { 
+	@RequestMapping(value="/network/link?c={currentLat},{currentLong}&p={previousLat},{previousLong}", method = RequestMethod.GET)
+	public NetworkLinkVO getLinkInformation(@PathVariable Double currentLong, @PathVariable Double currentLat,
+			@PathVariable Double previousLong, @PathVariable Double previousLat) { 
 
 		return networkServicio.getLinkInformation(currentLong, currentLat, previousLong, previousLat);
 
