@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,11 +33,20 @@ public class SmartDriverController {
 		return Arrays.asList(Method.values());
 	}
 	
-	@RequestMapping(value="/network/link?c={currentLat},{currentLong}&p={previousLat},{previousLong}", method = RequestMethod.GET)
-	public NetworkLinkVO getLinkInformation(@PathVariable Double currentLong, @PathVariable Double currentLat,
-			@PathVariable Double previousLong, @PathVariable Double previousLat) { 
+	@RequestMapping(value="/network/link", method = RequestMethod.GET, params = {"c", "p"})
+	public NetworkLinkVO getLinkInformation(@RequestParam String c, @RequestParam String p) { 
 
-		return networkServicio.getLinkInformation(currentLong, currentLat, previousLong, previousLat);
-
+		String[] current = c.split(",");
+		if (current.length==2) {
+			String[] previous = c.split(",");
+			if (previous.length==2) {
+				Double currentLat = Double.parseDouble(current[0]);
+				Double currentLong = Double.parseDouble(current[1]);
+				Double previousLat = Double.parseDouble(previous[0]);
+				Double previousLong = Double.parseDouble(previous[1]);
+				return networkServicio.getLinkInformation(currentLat, currentLong, previousLat, previousLong);
+			}
+		}
+		return null;
 	}
 }
