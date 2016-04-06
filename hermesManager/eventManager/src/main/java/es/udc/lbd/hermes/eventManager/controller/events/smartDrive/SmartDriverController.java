@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.eventManager.controller.events.smartDrive;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -8,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.udc.lbd.hermes.model.smartdriver.Method;
+import es.udc.lbd.hermes.model.dataservice.Method;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.smartdriver.service.NetworkService;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
@@ -28,7 +28,14 @@ public class SmartDriverController {
 	
 	@RequestMapping(value="/json/methods", method = RequestMethod.GET)
 	public List<Method> methods() {
-		return Arrays.asList(Method.values());
+		EnumSet<Method> metodos = Method.smartDriver;
+		List<Method> lista = new ArrayList<Method>(metodos.size());
+		for(Method metodo: metodos){
+			lista.add(metodo);
+			
+		}
+		
+		return lista;
 	}
 	
 	@RequestMapping(value="/network/link?c={currentLat},{currentLong}&p={previousLat},{previousLong}", method = RequestMethod.GET)
