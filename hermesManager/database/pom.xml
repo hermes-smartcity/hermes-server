@@ -49,8 +49,6 @@
 								<basedir>${basedir}</basedir>
 								<includes>
 									<include>src/sql/${datasource.setupDBScript}</include>
-									<include>src/sql/${datasource.createTNUtilityScript}</include>
-									<include>src/sql/${datasource.createTNSchemaScript}</include>
 									<include>src/sql/${datasource.createEventsSchemaScript}</include>
 									<include>src/sql/${datasource.createEventsDataScript}</include>
 								</includes>
