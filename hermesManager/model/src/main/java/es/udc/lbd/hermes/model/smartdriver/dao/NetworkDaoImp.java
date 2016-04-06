@@ -13,7 +13,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 
 	public NetworkLinkVO getLinkInformation(Double currentLong, Double currentLat, Double previousLong, Double previousLat){
 		
-		String queryString = "select osm_id as linkId, kmh as maxSpeed, osm_name as linkName, " +
+		String queryString = "select osm_id as \"linkId\", kmh as \"maxSpeed\", osm_name as \"linkName\", " +
 								"case " +
 								    "when clazz = 1 then 'highway' " +
 								    "when clazz = 2 then 'highway_link' " + 
@@ -36,10 +36,10 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 								    "when clazz = 19 then 'cicleway' " + 
 								    "when clazz = 20 then 'footway' " + 
 								    "when clazz = 21 then 'steps' " +
-							    "end as linkType, " +
+							    "end as \"linkType\", " +
 								"st_length(geom_way, true) as length, " +
 								"st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326)) as position, " +
-								"st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :previouslong || ' ' ||:previouslat ||')', 4326)) as previousPosition, " +
+								"st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :previouslong || ' ' ||:previouslat ||')', 4326)) as \"previousPosition\", " +
 								"case " +
 									"when st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326)) - st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :previouslong || ' ' ||:previouslat ||')', 4326)) > 0 then 0 " +
 									"else 1 " +
