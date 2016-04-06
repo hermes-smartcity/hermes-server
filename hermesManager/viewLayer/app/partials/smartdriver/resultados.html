@@ -7,30 +7,32 @@
 		
 		<div data-ng-if="vm.result.length" class="row margin-top-20">
 			<div class="col-xs-12">
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.linkId' | translate}}</strong> {{vm.result.linkId}} 
-				</label>
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.maxSpeed' | translate}}</strong> {{vm.result.maxSpeed}} 
-				</label>
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.linkName' | translate}}</strong> {{vm.result.linkName}} 
-				</label>
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.linkType' | translate}}</strong> {{vm.result.linkType}} 
-				</label>
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.length' | translate}}</strong> {{vm.result.length}} 
-				</label>
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.position' | translate}}</strong> {{vm.result.position}} 
-				</label>
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.previousposition' | translate}}</strong> {{vm.result.previousPosition}} 
-				</label>
-				<label for="singleSelect"> 
-					<strong>{{'smartdriver.direction' | translate}}</strong> {{vm.result.direction}} 
-				</label>				
+				<ul class="list-unstyled">
+					<li>
+						<strong>{{'smartdriver.linkId' | translate}}</strong> {{vm.result.linkId}} 
+					</li>
+					<li> 
+						<strong>{{'smartdriver.maxSpeed' | translate}}</strong> {{vm.result.maxSpeed}} 
+					</li>
+					<li> 
+						<strong>{{'smartdriver.linkName' | translate}}</strong> {{vm.result.linkName}} 
+					</li>
+					<li>
+						<strong>{{'smartdriver.linkType' | translate}}</strong> {{vm.result.linkType}} 
+					</li>
+					<li>
+						<strong>{{'smartdriver.length' | translate}}</strong> {{vm.result.length}} 
+					</li>
+					<li>
+						<strong>{{'smartdriver.position' | translate}}</strong> {{vm.result.position}} 
+					</li>
+					<li>
+						<strong>{{'smartdriver.previousposition' | translate}}</strong> {{vm.result.previousPosition}} 
+					</li>
+					<li>
+						<strong>{{'smartdriver.direction' | translate}}</strong> {{vm.result.direction}} 	
+					</li>
+				</ul>
 			</div>
 		</div>
 

@@ -46,7 +46,8 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 								"end as direction " +
 								"from network.es_cor_2po_4pgr " +
 								"where st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326) && geom_way " +
-								"and st_distance(st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326), geom_way, true) < 10";
+								"and st_distance(st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326), geom_way, true) < 10 " +
+								"order by st_distance(st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326), geom_way, true) limit 1";
 		
 		Query query = getSession().createSQLQuery(queryString);
 		query.setResultTransformer(Transformers.aliasToBean(NetworkLinkVO.class));

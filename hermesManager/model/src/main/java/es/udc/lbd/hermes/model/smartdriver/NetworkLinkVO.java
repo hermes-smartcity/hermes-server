@@ -1,13 +1,14 @@
 package es.udc.lbd.hermes.model.smartdriver;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 public class NetworkLinkVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Long linkId;
-	private Double maxSpeed;
+	private BigInteger linkId;
+	private Integer maxSpeed;
 	private String linkName;
 	private String linkType;
 	private Double length;
@@ -17,7 +18,7 @@ public class NetworkLinkVO implements Serializable {
 		
 	public NetworkLinkVO(){}
 
-	public NetworkLinkVO(Long linkId, Double maxSpeed, String linkName,
+	public NetworkLinkVO(BigInteger linkId, Integer maxSpeed, String linkName,
 			String linkType, Double length, Double position,
 			Double previousPosition, Integer direction) {
 		super();
@@ -31,19 +32,19 @@ public class NetworkLinkVO implements Serializable {
 		this.direction = direction;
 	}
 
-	public Long getLinkId() {
+	public BigInteger getLinkId() {
 		return linkId;
 	}
 
-	public void setLinkId(Long linkId) {
+	public void setLinkId(BigInteger linkId) {
 		this.linkId = linkId;
 	}
 
-	public Double getMaxSpeed() {
+	public Integer getMaxSpeed() {
 		return maxSpeed;
 	}
 
-	public void setMaxSpeed(Double maxSpeed) {
+	public void setMaxSpeed(Integer maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
 

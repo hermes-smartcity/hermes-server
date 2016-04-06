@@ -176,14 +176,14 @@
 				"methods": "Methods",
 				"results": "Results",
 				"noResults": "There are not results",
-				"linkId": "Identifier",
-				"maxSpeed": "Maximium Speed",
-				"linkName": "Name",
-				"linkType": "Type",
-				"position": "Position",
-				"direction": "direction",
-				"length": "Length",
-				"previousposition": "Previous position",
+				"linkId": "Identifier: ",
+				"maxSpeed": "Maximium Speed: ",
+				"linkName": "Name: ",
+				"linkType": "Type: ",
+				"position": "Position: ",
+				"direction": "Direction: ",
+				"length": "Length: ",
+				"previousposition": "Previous position: ",
 				"selectSegment": "Select a segment"
 			}
 		});
