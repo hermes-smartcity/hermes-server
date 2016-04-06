@@ -31,7 +31,7 @@ public class SmartDriverController {
 	}
 	
 	@RequestMapping(value="/network/link", method = RequestMethod.GET)
-	public NetworkLinkVO getNetworkLine(@RequestParam(value = "currentLong", required = true) Double currentLong,
+	public NetworkLinkVO getNetworkLink(@RequestParam(value = "currentLong", required = true) Double currentLong,
 			@RequestParam(value = "currentLat", required = true) Double currentLat,
 			@RequestParam(value = "previousLong", required = true) Double previousLong, 
 			@RequestParam(value = "previousLat", required = true) Double previousLat) { 
