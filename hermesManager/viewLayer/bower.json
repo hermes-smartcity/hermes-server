@@ -32,7 +32,8 @@
     "angular-dynamic-locale": "^0.1.30",
     "angular-datatables": "^0.5.3",
     "fontawesome": "fontawesome#~4.5.0",
-    "leaflet": "~0.7.3"
+    "leaflet": "~0.7.3",
+    "leaflet-draw": "leaflet.draw#^0.3.0"
   },
   "authors": [
     "cmartinez <cristinacmp1988@gmail.com>"

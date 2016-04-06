@@ -203,6 +203,34 @@
 			resolve: {
 				datosUsuario: datosUsuario
 			}
+		}).state('smartdriver', {
+			url: '/smartdriver',
+			templateUrl: 'partials/smartdriver/smartdriver.html',
+			controller: 'SmartDriverController',
+			controllerAs: 'vm',
+			resolve: {
+				methods: methods,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				measurementsType: measurementsType,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -305,6 +333,11 @@
 	datosUsuario.$inject = ['userService'];
 	function datosUsuario(userService) {
 		return userService.getUserProfile();
+	}
+	
+	methods.$inject = ['smartDriverService'];
+	function methods(smartDriverService) {
+		return smartDriverService.getMethods();
 	}
 	
 	

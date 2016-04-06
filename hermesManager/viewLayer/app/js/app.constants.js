@@ -94,3 +94,8 @@ var url_delete_log = url_systemL+"deleteLog";
 var url_setting = url_servidor+'api/setting/';
 var url_settings = url_setting+'json/settings';
 var url_update_settings = url_setting + "updateSettings";
+
+//Controlador smartdrive
+var url_smartdriver = url_servidor+'api/smartdriver/';
+var url_methods = url_smartdriver+'json/methods';
+var url_network_link = url_smartdriver+'network/link?';

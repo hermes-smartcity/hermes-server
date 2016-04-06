@@ -402,3 +402,21 @@ CREATE TABLE setting (
 ;
 		
 INSERT INTO setting(name,valueNumber,type) VALUES ('limitQuery',1000, 'number');
+
+
+drop table if exists network cascade;
+drop sequence if exists network_id_seq cascade;
+create sequence network_id_seq;
+
+CREATE TABLE network (
+  linkid bigint NOT NULL DEFAULT nextval('network_id_seq'::regclass),
+  maxspeed decimal,
+  linkname VARCHAR(100),
+  linktype VARCHAR(100),
+  length decimal,
+  position decimal,
+  previousposition decimal,
+  direction integer,
+  CONSTRAINT idnetwork_pk PRIMARY KEY (id)
+)
+;

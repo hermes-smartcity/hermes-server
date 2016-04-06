@@ -86,6 +86,13 @@
 				</a>
 				</li>
 
+				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
+					<!--  --> <a data-ui-sref="smartdriver"> <i
+						class="fa fa-wrench fa-fw">
+							<!--  -->
+					</i> <span>{{'menu.smartdriver' | translate}}</span>
+				</a>
+				</li>
 
 			</ul>
 		</div>

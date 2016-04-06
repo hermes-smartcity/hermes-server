@@ -93,6 +93,7 @@
 				"userManager": "User Manager",
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
+				"smartdriver": "Smart Driver"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -168,6 +169,22 @@
 				"oldPasswordNotCorrect": "The old password is not correct",
 				"passwordsNotSame": "New passwords are not the same",
 				"passwordOk": "Password changed satisfactory"
+			},
+			"smartdriver":{
+				"filtros": "Filters",
+				"filtrar": "Filter",
+				"methods": "Methods",
+				"results": "Results",
+				"noResults": "There are not results",
+				"linkId": "Identifier",
+				"maxSpeed": "Maximium Speed",
+				"linkName": "Name",
+				"linkType": "Type",
+				"position": "Position",
+				"direction": "direction",
+				"length": "Length",
+				"previousposition": "Previous position",
+				"selectSegment": "Select a segment"
 			}
 		});
 	}
