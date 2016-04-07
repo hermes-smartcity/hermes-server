@@ -113,13 +113,21 @@
 		 }
 		
 		function arrancar() {
+			var resultado = {
+					value : "Running",
+					valueInt : 0
+			};
+			vm.active = resultado;
 			eventsService.arrancar();
-			$state.go('dashboard');
 		}
 		
 		function parar() {
+			var resultado = {
+					value : "Stopped",
+					valueInt : 0
+			};
+			vm.active = resultado;
 			eventsService.parar();
-			$state.go('dashboard');
 		}
 		
 		 // Inicialmente sé que voy a pintar los WARN (la opción por defecto en el select)
