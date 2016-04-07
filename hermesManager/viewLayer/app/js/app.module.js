@@ -231,6 +231,33 @@
 						redirectTo: 'login'
 			        }
 			}
+		}).state('dataServices', {
+			url: '/dataServices',
+			templateUrl:'partials/dataServices/dataServices.html',
+			controller: 'DataServicesController',
+			controllerAs: 'vm',
+			resolve: {
+				services: services,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -340,6 +367,10 @@
 		return smartDriverService.getMethods();
 	}
 	
+	services.$inject = ['dataServicesService'];
+	function services(dataServicesService) {
+		return dataServicesService.getServices();
+	}
 	
 	angular.module('app').config(translateAppConfig);
 	translateAppConfig.$inject = ['$translateProvider'];

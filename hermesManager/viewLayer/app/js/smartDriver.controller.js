@@ -154,32 +154,13 @@
 			vm.active = response.data;
 		}
 		
-		// Preparar la url que va a llamar al controlador
-		function prepararUrl(){
-			var url = "";
-			
-			switch (vm.methodSelected) {
-			  case "GET_INFORMATION_LINK":
-				  url = url_network_link;
-				 
-				  url+="currentLong="+vm.currentLong+"&currentLat="+vm.currentLat+"&previousLong="+vm.previousLong+"&previousLat="+vm.previousLat;
-				  
-			    break;
-			 
-			  default:
-				  url = url_network_link;
-			}
-			
-			return url;
-		}
-		
 		function ejecutarPeticion(){
 			switch (vm.methodSelected) {
 			  case "GET_INFORMATION_LINK":
 				  	smartDriverService.getLinkInformation(vm.currentLong, vm.currentLat, vm.previousLong, vm.previousLat).then(getLinkInformationComplete);
 					
 					function getLinkInformationComplete(response) {
-						vm.result = data;
+						vm.result = response.data;
 					}
 					
 			    break;
@@ -195,17 +176,7 @@
 				vm.currentLong === undefined || vm.currentLat === undefined){
 				alert($translate.instant('smartdriver.selectSegment'));
 			}else{
-				
 				ejecutarPeticion();
-				
-				/*var url = prepararUrl();
-				
-				$http.get(url).success(function(data) {
-					vm.result = data;
-				});*/	
-				
-				
-				
 			}
 			
 		}

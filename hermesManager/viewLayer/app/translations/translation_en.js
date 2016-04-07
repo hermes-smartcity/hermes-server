@@ -21,6 +21,7 @@
 			"en": " on ",
 			"falloConEstado": " failed with status ",
 			"numeroEventos": "Events number",
+			"numeroPeticiones": "Request number",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
@@ -105,6 +106,9 @@
 				"fechaFin": "End date:",
 				"cambiar": "Change",
 				"filtrar": "Filter",
+				"servicios": "Services",
+				"operaciones": "Type of operations",
+				"chooseService": "Choose a service first"
 			},
 			"resultados": {
 				"titulo": "Results",

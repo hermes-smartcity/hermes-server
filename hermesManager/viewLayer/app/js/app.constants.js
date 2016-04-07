@@ -99,3 +99,9 @@ var url_update_settings = url_setting + "updateSettings";
 var url_smartdriver = url_servidor+'api/smartdriver/';
 var url_methods = url_smartdriver+'json/methods';
 var url_network_link = url_smartdriver+'network/link?';
+
+//Controlador dataservice
+var url_dataservice = url_servidor+'api/dataservice/';
+var url_services = url_dataservice+'json/services';
+var url_operations = url_dataservice+'json/operations';
+var url_peticionesPorDia = url_dataservice+'json/peticionesPorDia?';

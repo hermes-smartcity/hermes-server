@@ -25,10 +25,10 @@
 			}
 		}
 		
-		function getLinkInformation (currentLong, currentLat, previousLong, previousLat) {		
+		function getLinkInformation (currentLong, currentLat, previousLong, previousLat) {
 			return $http({
 				method : 'GET',
-				url : url_network_link + "c=" + currentLat + "," + currentLong + "&p=" + previousLat + "," + previousLong
+				url : url_network_link + "currentLat=" + currentLat + "&currentLong=" + currentLong + "&previousLat=" + previousLat + "&previousLong=" + previousLong
 			});
 		}
 

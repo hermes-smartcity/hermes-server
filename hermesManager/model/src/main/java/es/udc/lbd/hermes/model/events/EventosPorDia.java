@@ -5,6 +5,8 @@ import java.math.BigInteger;
 
 public class EventosPorDia implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private Double dia;
 	private Double mes;
 	private Double anio;

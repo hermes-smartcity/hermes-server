@@ -59,8 +59,6 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 		
 		NetworkLinkVO resultado = (NetworkLinkVO) query.uniqueResult();
 		
-		System.out.println(queryString);
-		
 		return resultado;
 	}
 }

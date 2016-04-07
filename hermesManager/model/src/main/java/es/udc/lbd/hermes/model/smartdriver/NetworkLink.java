@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import com.vividsolutions.jts.geom.LineString;
 
 @Entity
@@ -34,6 +36,7 @@ public class NetworkLink implements Serializable{
 	private Double x2;
 	private Double y2;
 	
+	@Type(type="org.hibernate.spatial.GeometryType")
 	private LineString geom_way;
 	
 	public NetworkLink(){}
