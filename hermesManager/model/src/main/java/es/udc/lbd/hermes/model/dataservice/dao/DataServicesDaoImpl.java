@@ -54,7 +54,4 @@ public class DataServicesDaoImpl extends GenericDaoHibernate<DataServices, Long>
 		return (List<EventosPorDia>) query.list();
 	}
 	
-	private String obtainNameService(String nameOriginal){
-		return null;
-	}
 }
