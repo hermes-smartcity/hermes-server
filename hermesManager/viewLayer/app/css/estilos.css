@@ -296,3 +296,8 @@ ol.submenu li.activo a,ol.submenu li.activo span {
 .avisoError{
 	color:red;
 }
+
+.col-xs-12 i {
+    display:block;
+    text-align:center
+}
