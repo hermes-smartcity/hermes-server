@@ -83,9 +83,18 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 		//Tenemos que limitar la consulta a un tamano maximo		
 		//Para ello, recuperamos el valor limitQuery
 		Setting settingLimit = settingDao.get(new Long(1));
-		Integer returnedResults = totalResults.intValue();
+		Integer returnedResults = null;
 		if (settingLimit != null){
 			returnedResults = settingLimit.getValueNumber().intValue();
+		}
+
+		//Si el total de resultados es menor que el limite, establecemos el limite a ese valor
+		if (returnedResults != null){
+			if (totalResults.intValue() < returnedResults){
+				returnedResults = totalResults.intValue();
+			}
+		}else{
+			returnedResults = totalResults.intValue();
 		}
 		
 		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsWithLimit(idUsuario, fechaIni, 

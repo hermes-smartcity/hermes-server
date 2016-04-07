@@ -22,6 +22,7 @@
 			"falloConEstado": " failed with status ",
 			"numeroEventos": "Events number",
 			"numeroPeticiones": "Request number",
+			"noResults": "There are not results",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
