@@ -173,7 +173,7 @@ VehicleLocationDao {
 								"avg(speed) as average, " + 
 								"stddev(speed) as \"standardDeviation\" " +
 							"from vehicleLocation " +
-							"where st_distance(position, st_geometryfromtext('POINT('|| :lon || ' ' ||:lat ||')', 4326)) < 10 " +
+							"where st_distance(position, st_geometryfromtext('POINT('|| :lon || ' ' ||:lat ||')', 4326), true) < 10 " +
 							"and EXTRACT(DOW FROM timestamp) = :day " +
 							"and EXTRACT(HOUR FROM timestamp) = :hora";
 		
