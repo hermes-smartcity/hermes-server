@@ -22,4 +22,14 @@ public class RegistroPeticionesHelper {
 		
 		dataServiceDao.create(dataService);
 	}
+	
+	public void aggregateMeasurementSmartDriver(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTDRIVER.toString());
+		dataService.setMethod(Method.AGGREGATE_MEASUREMENT.toString());
+		dataService.setTimelog(HelpersModel.getHoy());
+
+		
+		dataServiceDao.create(dataService);
+	}
 }

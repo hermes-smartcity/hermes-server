@@ -190,7 +190,28 @@
 				"direction": "Direction: ",
 				"length": "Length: ",
 				"previousposition": "Previous position: ",
-				"selectSegment": "Select a segment"
+				"selectSegment": "Select a segment",
+				"types": "Types",
+				"time": "Time",
+				"day": "Day",
+				"selectType": "Select type",
+				"selectPoint": "Select point",
+				"selectDay": "Select day",
+				"selectTime": "Select time",
+				"lunes": "Monday",
+				"martes": "Tuesday",
+				"miercoles": "Wednesday",
+				"jueves": "Thursday",
+				"viernes": "Friday",
+				"sabado": "Saturday",
+				"domingo": "Sunday",
+				"selectDataSection": "Select Data Section",
+				"datasection": "Data Section",
+				"numberOfValues": "Number of values: ",
+				"maximium": "Maximium ",
+				"minimium": "Minimium: ",
+				"average": "Average: ",
+				"standardDeviation": "Standard Deviation: "
 			}
 		});
 	}

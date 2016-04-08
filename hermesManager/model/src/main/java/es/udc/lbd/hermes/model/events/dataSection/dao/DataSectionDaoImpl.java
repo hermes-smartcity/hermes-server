@@ -12,6 +12,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
+import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 
@@ -150,6 +151,33 @@ DataSectionDao {
 
 		elementos = query.list();
 		return elementos;
+	}
+	
+	@Override
+	public AggregateMeasurementVO getAggregateValue(String campo, Double lat, Double lon, Integer day, Integer time){
+		String queryStr =  "select count(*) as \"numberOfValues\", " +
+				"max(" + campo + ") as max, " + 
+				"min(" + campo + ") as min, " +
+				"avg(" + campo + ") as average, " + 
+				"stddev(" + campo + ") as \"standardDeviation\" " +
+			"from dataSection " +
+			"where st_distance(roadSection, st_geometryfromtext('POINT('|| :lon || ' ' ||:lat ||')', 4326)) < 10 " +
+			"and EXTRACT(DOW FROM timestamp) = :day " +
+			"and EXTRACT(HOUR FROM timestamp) = :hora";
+
+		Query query = getSession().createSQLQuery(queryStr);
+		query.setResultTransformer(Transformers.aliasToBean(AggregateMeasurementVO.class));
+		
+		//query.setParameter("campo", campo);
+		query.setParameter("lon", lon);
+		query.setParameter("lat", lat);
+		query.setParameter("day", day);
+		query.setParameter("hora", time);
+		
+		AggregateMeasurementVO resultado = (AggregateMeasurementVO) query.uniqueResult();
+		
+		
+		return resultado;
 	}
 
 }

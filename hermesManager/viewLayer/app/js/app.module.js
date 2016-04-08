@@ -210,6 +210,8 @@
 			controllerAs: 'vm',
 			resolve: {
 				methods: methods,
+				types: types,
+				dataSections: dataSections,
 				totalMUsers: totalMUsers,
 				totalWebUsers: totalWebUsers,
 				numberActiveUsers: numberActiveUsers,
@@ -365,6 +367,16 @@
 	methods.$inject = ['smartDriverService'];
 	function methods(smartDriverService) {
 		return smartDriverService.getMethods();
+	}
+	
+	types.$inject = ['smartDriverService'];
+	function types(smartDriverService) {
+		return smartDriverService.getTypes();
+	}
+	
+	dataSections.$inject = ['smartDriverService'];
+	function dataSections(smartDriverService) {
+		return smartDriverService.getDataSections();
 	}
 	
 	services.$inject = ['dataServicesService'];

@@ -5,7 +5,7 @@
 				<div data-ng-if="hasRole('ROLE_ADMIN')" class="col-xs-12">
 					<label for="singleSelect">{{'filtros.usuario' | translate}}</label><br />
 					<!-- Filtro usuarios  -->
-					<select id="selectUsers" data-ng-model="vm.usuarioSelected" 
+					<select id="selectUsers" data-ng-model="vm.usuarioSelected" class="form-control"
 						data-ng-change="changedValue(vm.usuarioSelected)" 
 						data-ng-options="usuario as usuario.sourceId for usuario in vm.usuarios">
 						<option value="">{{'filtros.todos' | translate}}</option>
@@ -16,7 +16,7 @@
 				<div class="col-xs-12">
 					<label for="singleSelect">{{'filtros.tipoEvento' | translate}}</label><br />
 					<!-- Filtro event type -->
-					<select id="selectEvent" data-ng-model="vm.eventTypeSelected" 
+					<select id="selectEvent" data-ng-model="vm.eventTypeSelected" class="form-control"
 						data-ng-options="eventType as eventType for eventType in vm.eventsType">
 					</select>
 				</div>

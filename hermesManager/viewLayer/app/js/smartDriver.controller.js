@@ -4,14 +4,14 @@
 	angular.module('app').controller('SmartDriverController', SmartDriverController);
 
 	SmartDriverController.$inject = ['$scope', '$filter', '$http', '$translate', 
-	                                '$state', '$rootScope', 'eventsService', 'methods',
-	                                'measurementsType', 'totalMUsers', 'totalWebUsers', 
+	                                '$state', '$rootScope', 'eventsService', 'methods', 
+	                                'types', 'dataSections', 'totalMUsers', 'totalWebUsers', 
 	                                'numberActiveUsers', 'eventsToday', 
 	                                'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
 	                                'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', 'smartDriverService'];
 
 	function SmartDriverController($scope, $filter, $http, $translate, $state, 
-			$rootScope, eventsService,methods, measurementsType, totalMUsers, totalWebUsers, 
+			$rootScope, eventsService, methods, types, dataSections, totalMUsers, totalWebUsers, 
 			numberActiveUsers, eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, 
 			totalSTD, totalSLD, totalHRD, totalCD, smartDriverService) {
 	
@@ -23,7 +23,8 @@
 		vm.methodSelected = "GET_INFORMATION_LINK";
 		
 		vm.methods = methods;
-		vm.measurementsType = measurementsType;
+		vm.types = types;
+		vm.dataSections = dataSections;
 		vm.totalMUsers = totalMUsers;
 		vm.totalWebUsers = totalWebUsers;
 		vm.numberActiveUsers = numberActiveUsers;
@@ -46,6 +47,29 @@
 		vm.currentLong = undefined;
 		vm.currentLat = undefined;
 		
+		
+		
+		vm.change = change;
+		vm.changeToolbar = changeToolbar;
+		vm.changeFilter = changeFilter;
+				
+		vm.filtroConcreto = undefined;
+		vm.resultadoConcreto = undefined;
+		
+		//Filtros de la seccion aggregateMeasurement
+		vm.typeSelected = undefined;
+		vm.pointLng = undefined;
+		vm.pointLat = undefined;
+		vm.daySelected = undefined;
+		vm.timeSelected = undefined;
+		vm.dataSectionSelected = undefined;
+		
+		var hours = [];
+	    for (var i = 0; i <= 23; i++) {
+	    	hours.push(i);
+	    }
+	    vm.hours = hours;
+	    
 		//mapa
 		var map = L.map( 'map', {
 			  minZoom: 2,
@@ -109,15 +133,29 @@
 
 		    drawnItems.addLayer(layer);
 		    
-		    //Asignamos las coordenadas seleccionadas
-		    asignarCoordenadasSegmento(layer);
+		    switch (vm.methodSelected) {
+		    case "GET_INFORMATION_LINK":
+		    	asignarCoordenadasSegmento(layer);
+		    	break;
+		    case "AGGREGATE_MEASUREMENT":
+		    	asignarCoordenadasPunto(layer);
+		    	break;
+		    }
+		   
 		});
 		
 		map.on('draw:edited', function (e) {
 		    var layers = e.layers;
 		    //Esto realmente solo se va a ejecutar una unica vez porque solo hay una capa
 		    layers.eachLayer(function (layer) {
-		    	asignarCoordenadasSegmento(layer);
+		    	switch (vm.methodSelected) {
+			    case "GET_INFORMATION_LINK":
+			    	asignarCoordenadasSegmento(layer);
+			    	break;
+			    case "AGGREGATE_MEASUREMENT":
+			    	asignarCoordenadasPunto(layer);
+			    	break;
+			    }
 		    });
 		});
 		
@@ -133,6 +171,75 @@
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);	
 		}
+		
+		function change(){
+			vm.changeToolbar();
+			vm.changeFilter();
+		}
+		
+		function changeToolbar(){
+			
+			//eliminamos el toolbar previo
+			map.removeControl(drawControl);
+			
+			//eliminamos lo que habia pintado
+			map.removeLayer(drawnItems);
+			
+			switch (vm.methodSelected) {
+			  case "GET_INFORMATION_LINK":
+				// Initialise the draw control and pass it the FeatureGroup of editable layers
+					drawControl = new L.Control.Draw({
+						draw: {
+					        polygon: false,
+					        rectangle: false,
+					        circle: false,
+					        marker: false
+					    },
+					    edit: {
+					        featureGroup: drawnItems
+					    }
+					});
+			    break;
+			  case "AGGREGATE_MEASUREMENT":
+				  drawControl = new L.Control.Draw({
+						draw: {
+							polyline: false,
+					        polygon: false,
+					        rectangle: false,
+					        marker: false
+					    },
+					    edit: {
+					        featureGroup: drawnItems
+					    }
+					});
+			    break;
+			  default:
+				  drawControl = new L.Control.Draw({
+					    edit: {
+					        featureGroup: drawnItems
+					    }
+					});
+			}
+			
+			map.addControl(drawControl);
+			
+		}
+		
+		function changeFilter(){
+			
+			switch (vm.methodSelected) {
+			  case "GET_INFORMATION_LINK":
+				vm.filtroConcreto = undefined;
+			    break;
+			  case "AGGREGATE_MEASUREMENT":
+				  vm.filtroConcreto = "./partials/smartdriver/filtrosAggregateMeasurement.html";
+			    break;
+			  default:
+				  vm.filtroConcreto = undefined;
+			}
+			
+		}
+		
 		
 		function asignarCoordenadasSegmento(layer){
 			 var numPuntosSegmento = layer._latlngs.length;
@@ -150,6 +257,11 @@
 			 
 		}
 		
+		function asignarCoordenadasPunto(layer){
+			vm.pointLng = layer._latlng.lng;
+			vm.pointLat = layer._latlng.lat;
+		}
+		
 		function getStateActualizadoComplete(response) {				
 			vm.active = response.data;
 		}
@@ -161,27 +273,75 @@
 					
 					function getLinkInformationComplete(response) {
 						vm.result = response.data;
+						vm.resultadoConcreto = './partials/smartdriver/resultadosInformationLink.html';
 					}
 					
-			    break;
-			 
+					break;
+			  case "AGGREGATE_MEASUREMENT":
+				  	smartDriverService.getAggregateMeasurement(vm.typeSelected, vm.pointLat, vm.pointLng, vm.daySelected, vm.timeSelected, vm.dataSectionSelected).then(getAggregateMeasurementComplete);
+					
+					function getAggregateMeasurementComplete(response) {
+						vm.result = response.data;
+						vm.resultadoConcreto = './partials/smartdriver/resultadosAggregateMeasurement.html';
+					}
+					
+				  break;
+				  
 			  default:
 				 break;
 			}
 		}
 		
-		function aplicarFiltros() {	
-			
+		function validacionLinkInformation(){
 			if (vm.previousLong === undefined || vm.previousLat === undefined || 
 				vm.currentLong === undefined || vm.currentLat === undefined){
 				alert($translate.instant('smartdriver.selectSegment'));
 			}else{
 				ejecutarPeticion();
 			}
-			
 		}
 		
-	
+		function validacionAggregateMeasurement(){
+			var texto = "";
+			if (vm.typeSelected === undefined){
+				texto = texto + $translate.instant('smartdriver.selectType') + '\n';
+			}else{
+				if (vm.typeSelected === 'DATA_SECTION' && vm.dataSectionSelected === undefined){
+					texto = texto + $translate.instant('smartdriver.selectDataSection') + '\n';
+				}
+			}
+			
+			if (vm.pointLat === undefined || vm.pointLng === undefined){
+				texto = texto + $translate.instant('smartdriver.selectPoint') + '\n';
+			}
+			
+			if (vm.daySelected === undefined){
+				texto = texto + $translate.instant('smartdriver.selectDay') + '\n'; 
+			}
+			
+			if (vm.timeSelected === undefined){
+				texto = texto + $translate.instant('smartdriver.selectTime') + '\n'; 
+			}
+			
+			if (texto !== ""){
+				alert(texto);
+			}else{
+				ejecutarPeticion();
+			}
+		}
+
+		function aplicarFiltros() {	
+			//Aplicamos el filtro que corresponda
+			switch (vm.methodSelected) {
+			  case "GET_INFORMATION_LINK":
+				  	validacionLinkInformation();
+					break;
+					
+			  case "AGGREGATE_MEASUREMENT":
+				  	validacionAggregateMeasurement();
+				  	break;
+			}	
+		}
 		
 		function arrancar() {
 			var resultado = {

@@ -98,7 +98,10 @@ var url_update_settings = url_setting + "updateSettings";
 //Controlador smartdrive
 var url_smartdriver = url_servidor+'api/smartdriver/';
 var url_methods = url_smartdriver+'json/methods';
+var url_types = url_smartdriver+'json/types';
+var url_datasections = url_smartdriver+'json/datasections';
 var url_network_link = url_smartdriver+'network/link?';
+var url_measurement_aggregate = url_smartdriver+'measurement/aggregate?';
 
 //Controlador dataservice
 var url_dataservice = url_servidor+'api/dataservice/';

@@ -7,6 +7,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.dataSection.DataSection;
+import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.util.dao.GenericDao;
 
 public interface DataSectionDao extends GenericDao<DataSection, Long> {	
@@ -18,4 +19,6 @@ public interface DataSectionDao extends GenericDao<DataSection, Long> {
 	public Long contarDataSections(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds);
 	public List<DataSection> obterDataSectionsWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
 			int startIndex, Integer limit);
+	
+	public AggregateMeasurementVO getAggregateValue(String campo, Double lat, Double lon, Integer day, Integer time);
 }

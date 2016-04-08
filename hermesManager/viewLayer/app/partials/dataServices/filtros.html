@@ -5,7 +5,7 @@
 				<div class="col-xs-12">
 					<label for="singleSelect">{{'filtros.servicios' | translate}}</label><br />
 					<!-- Filtro event type -->
-					<select id="selectService" data-ng-model="vm.serviceSelected" 
+					<select id="selectService" class="form-control" data-ng-model="vm.serviceSelected" 
 						data-ng-options="service as service for service in vm.services"
 						data-ng-change="vm.changeMethod()" >
 						<option value="">{{'filtros.todos' | translate}}</option>
@@ -16,12 +16,12 @@
 				<div class="col-xs-12">
 					<label for="singleSelect">{{'filtros.operaciones' | translate}}</label><br />
 					<!-- Filtro event type -->
-					<select ng-show="vm.serviceSelected === undefined" id="selectMethod" data-ng-model="vm.methodSelected" 
+					<select data-ng-show="vm.serviceSelected === undefined" class="form-control" id="selectMethod" data-ng-model="vm.methodSelected" 
 						data-ng-options="method as method for method in vm.methods">
 						<option value="">{{'filtros.chooseService' | translate}}</option>
 					</select>
 					
-					<select ng-show="vm.serviceSelected !== undefined" id="selectMethod" data-ng-model="vm.methodSelected" 
+					<select data-ng-show="vm.serviceSelected !== undefined" class="form-control" id="selectMethod" data-ng-model="vm.methodSelected" 
 						data-ng-options="method as method for method in vm.methods">
 						<option value="">{{'filtros.todos' | translate}}</option>
 					</select>

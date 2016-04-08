@@ -13,6 +13,8 @@ import com.vividsolutions.jts.geom.Geometry;
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
+import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
+import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 @Repository
 public class MeasurementDaoImpl extends GenericDaoHibernate<Measurement, Long> implements
@@ -178,5 +180,32 @@ MeasurementDao {
 		elementos = query.list();
 		return elementos;
 
+	}
+	
+	@Override
+	public AggregateMeasurementVO getAggregateValue(Type type, Double lat, Double lon, Integer day, Integer time){
+		String queryStr =  "select count(*) as \"numberOfValues\", " +
+								"max(value) as max, " + 
+								"min(value) as min, " +
+								"avg(value) as average, " + 
+								"stddev(value) as \"standardDeviation\" " +
+							"from measurement " +
+							"where st_distance(position, st_geometryfromtext('POINT('|| :lon || ' ' ||:lat ||')', 4326)) < 10 " +
+							"and tipo LIKE :type " +
+							"and EXTRACT(DOW FROM timestamp) = :day " +
+							"and EXTRACT(HOUR FROM timestamp) = :hora";
+		
+		Query query = getSession().createSQLQuery(queryStr);
+		query.setResultTransformer(Transformers.aliasToBean(AggregateMeasurementVO.class));
+		
+		query.setParameter("lon", lon);
+		query.setParameter("lat", lat);
+		query.setParameter("type", type.getName());
+		query.setParameter("day", day);
+		query.setParameter("hora", time);
+		
+		AggregateMeasurementVO resultado = (AggregateMeasurementVO) query.uniqueResult();
+
+		return resultado;
 	}
 }
