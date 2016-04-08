@@ -224,3 +224,18 @@ CREATE TABLE contextdata (
   CONSTRAINT idcontextdata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
 )
 ;
+
+drop table if exists dataservices cascade;
+drop sequence if exists dataservices_id_seq cascade;
+create sequence dataservices_id_seq;
+
+CREATE TABLE dataservices (
+	id bigint NOT NULL DEFAULT nextval('dataservices_id_seq'::regclass),
+  	service varchar NOT NULL,
+	method varchar NOT NULL,
+	timelog timestamp without time zone NOT NULL,
+  	CONSTRAINT idsdataservices_pk PRIMARY KEY (id)
+)
+;
+
+CREATE OR REPLACE VIEW network.link as select * from network.es_cor_2po_4pgr;

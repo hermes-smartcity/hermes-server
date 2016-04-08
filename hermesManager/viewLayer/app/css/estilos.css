@@ -2,7 +2,7 @@
 @import url("tablas.css");
 /*@import url("../jquery-ui.min.css");*/
 
-/* Leaftlet 
+/* Leaftlet
 @import url("../leaflet.css");*/
 
 /*listado entidades*/
@@ -18,7 +18,7 @@ td.enum, th.enum{
 	width:180px;
 }
 
-/* Taboa de tramos 
+/* Taboa de tramos
 table.tramos td {
 	vertical-align: top;
 	padding-left: 9px;
@@ -55,7 +55,7 @@ table tr.borde th{
 }
 
 .infoRejillaHoras{
-	margin-top: 5px; 
+	margin-top: 5px;
 	font-size: 11px;
 }
 
@@ -119,7 +119,7 @@ td.categoriaver a{
 	text-decoration: none;
 }
 */
-/* Taboas alternable 
+/* Taboas alternable
 
 fieldset table.alternable {
 	margin: 10px;
@@ -127,7 +127,7 @@ fieldset table.alternable {
 }
 
 
- 
+
 #calendarioHoras {
 	background-color: white;
 }
@@ -176,7 +176,7 @@ fieldset table.alternable {
 	float: right;
    padding: 2px 0 0px 19px;
 }
- 
+
 #buscadorMasIcono{
 	height: 20px;
     margin-top: 17px;
@@ -291,4 +291,13 @@ ol.submenu li.activo a,ol.submenu li.activo span {
 
 .bordeRed{
 	border:1px solid #d9534f !important;
+}
+
+.avisoError{
+	color:red;
+}
+
+.col-xs-12 i {
+    display:block;
+    text-align:center
 }

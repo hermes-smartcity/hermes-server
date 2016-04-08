@@ -1,8 +1,12 @@
 (function() {
 	'use strict';
 
-	angular.module('app').config(function($translateProvider) {
-
+	angular.module('app').config(translateConfig);
+	
+	translateConfig.$inject = ['$translateProvider'];
+	
+	function translateConfig($translateProvider) {
+		
 		$translateProvider.translations('en', {
 			"entrar": "Enter",
 			"recordar": "Remember me",
@@ -12,10 +16,13 @@
 			"borrar": "Delete",
 			"volver": "Back",
 			"editar": "Edit",
+			"aceptar": "Ok",
 			"emailPasswordIncorrectos": "Incorrect Email/password",
 			"en": " on ",
 			"falloConEstado": " failed with status ",
 			"numeroEventos": "Events number",
+			"numeroPeticiones": "Request number",
+			"noResults": "There are not results",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
@@ -56,9 +63,13 @@
 				"accuracy": "Accuracy"
 			},
 			"settings": {
-				"titulo": "Settings"
+				"titulo": "Settings",
+				"numberError": "Only numbers",
+				"required": "This field is required",
+				"updateOk": "Settings updated" 
 			},
 			"systemLogs": {
+				"titulo": "System logs",
 				"filtros": "Filters",
 				"tipoError": "Error Type:",
 				"info": "INFO",
@@ -85,6 +96,7 @@
 				"userManager": "User Manager",
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
+				"smartdriver": "Smart Driver"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -95,6 +107,13 @@
 				"fechaFin": "End date:",
 				"cambiar": "Change",
 				"filtrar": "Filter",
+				"servicios": "Services",
+				"operaciones": "Type of operations",
+				"chooseService": "Choose a service first"
+			},
+			"resultados": {
+				"titulo": "Results",
+				"de": " of "
 			},
 			"estadisticas":{
 				"eventManager": "Event Manager:",
@@ -156,9 +175,45 @@
 				"oldPasswordNotCorrect": "The old password is not correct",
 				"passwordsNotSame": "New passwords are not the same",
 				"passwordOk": "Password changed satisfactory"
+			},
+			"smartdriver":{
+				"filtros": "Filters",
+				"filtrar": "Filter",
+				"methods": "Methods",
+				"results": "Results",
+				"noResults": "There are not results",
+				"linkId": "Identifier: ",
+				"maxSpeed": "Maximium Speed: ",
+				"linkName": "Name: ",
+				"linkType": "Type: ",
+				"position": "Position: ",
+				"direction": "Direction: ",
+				"length": "Length: ",
+				"previousposition": "Previous position: ",
+				"selectSegment": "Select a segment",
+				"types": "Types",
+				"time": "Time",
+				"day": "Day",
+				"selectType": "Select type",
+				"selectPoint": "Select point",
+				"selectDay": "Select day",
+				"selectTime": "Select time",
+				"lunes": "Monday",
+				"martes": "Tuesday",
+				"miercoles": "Wednesday",
+				"jueves": "Thursday",
+				"viernes": "Friday",
+				"sabado": "Saturday",
+				"domingo": "Sunday",
+				"selectDataSection": "Select Data Section",
+				"datasection": "Data Section",
+				"numberOfValues": "Number of values: ",
+				"maximium": "Maximium ",
+				"minimium": "Minimium: ",
+				"average": "Average: ",
+				"standardDeviation": "Standard Deviation: "
 			}
 		});
-
-	});
+	}
 
 })();

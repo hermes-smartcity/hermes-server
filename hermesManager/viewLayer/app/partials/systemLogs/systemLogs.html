@@ -1,7 +1,11 @@
 <div class="slide-animate" data-ng-include="'./partials/estadisticas.html'"></div>
 
 <div class="col-lg-9">
-	<div class="slide-animate" data-ng-include="'./partials/systemLogs/listadoTabla.html'"></div>
+	<div class="panel panel-default">
+		<div class="panel-heading">{{'systemLogs.titulo' | translate}}</div>
+		<div class="panel-body" data-ng-include="'./partials/systemLogs/listadoTabla.html'">
+		</div>
+	</div>	
 </div>
 
 <div class="col-lg-3">

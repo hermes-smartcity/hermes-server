@@ -52,9 +52,7 @@
 			controller: 'EditUserController',
 			controllerAs: 'vm',
 			resolve: {
-				usuariosMoviles: ['eventsService', function(eventsService) {
-					return eventsService.getUsuarios();
-				}]
+				usuariosMoviles: usuariosMoviles
 			},
 			data: {
 			      permissions: {
@@ -68,54 +66,22 @@
 			controller: 'DashboardController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: ['eventsService', function(eventsService) {
-					return eventsService.getEvensType();
-				}],
-				usuarios: ['eventsService', function(eventsService) {
-					return eventsService.getUsuarios();
-				}],
-				totalMUsers: ['userService', function(userService) {
-					return userService.getTotalMUsers();
-				}],
-				totalWebUsers: ['userService', function(userService) {
-					return userService.getTotalWebUsers();
-				}],
-				numberActiveUsers: ['userService', function(userService) {
-					return userService.getNumberActiveUsers();
-				}],
-				measurementsType: ['eventsService', function(eventsService) {
-					return eventsService.getMeasurementsType();
-				}],
-				eventoProcesado: ['eventsService', function(eventsService) {
-					return eventsService.getEventoProcesado();
-				}],
-				eventsToday: ['eventsService', function(eventsService) {
-					return eventsService.getEventsToday();
-				}],
-				totalL: ['eventsService', function(eventsService) {
-					return eventsService.getTotalVLocations();
-				}],
-				totalDS: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDataScts();
-				}],
-				totalM: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
-				}],
-				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDriversF();
-				}],
-				totalSTD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalStepsData();
-				}],
-				totalSLD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalSleepData();
-				}],
-				totalHRD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalHeartRateData();
-				}],
-				totalCD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalContextData();
-				}]
+				eventsType: eventsType,
+				usuarios: usuarios,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				measurementsType: measurementsType,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
 			},
 			data: {
 			      permissions: {
@@ -129,54 +95,22 @@
 			controller: 'UserManagerController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: ['eventsService', function(eventsService) {
-					return eventsService.getEvensType();
-				}],
-				usuarios: ['eventsService', function(eventsService) {
-					return eventsService.getUsuarios();
-				}],
-				measurementsType: ['eventsService', function(eventsService) {
-					return eventsService.getMeasurementsType();
-				}],
-				totalMUsers: ['userService', function(userService) {
-					return userService.getTotalMUsers();
-				}],
-				totalWebUsers: ['userService', function(userService) {
-					return userService.getTotalWebUsers();
-				}],
-				numberActiveUsers: ['userService', function(userService) {
-					return userService.getNumberActiveUsers();
-				}],
-				eventoProcesado: ['eventsService', function(eventsService) {
-					return eventsService.getEventoProcesado();
-				}],
-				eventsToday: ['eventsService', function(eventsService) {
-					return eventsService.getEventsToday();
-				}],
-				totalL: ['eventsService', function(eventsService) {
-					return eventsService.getTotalVLocations();
-				}],
-				totalDS: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDataScts();
-				}],
-				totalM: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
-				}],
-				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDriversF();
-				}],
-				totalSTD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalStepsData();
-				}],
-				totalSLD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalSleepData();
-				}],
-				totalHRD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalHeartRateData();
-				}],
-				totalCD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalContextData();
-				}]
+				eventsType: eventsType,
+				usuarios: usuarios,
+				measurementsType: measurementsType,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
 			},
 			data: {
 			      permissions: {
@@ -190,54 +124,22 @@
 			controller: 'EventManagerController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: ['eventsService', function(eventsService) {
-					return eventsService.getEvensType();
-				}],
-				usuarios: ['eventsService', function(eventsService) {
-					return eventsService.getUsuarios();
-				}],
-				measurementsType: ['eventsService', function(eventsService) {
-					return eventsService.getMeasurementsType();
-				}],
-				totalMUsers: ['userService', function(userService) {
-					return userService.getTotalMUsers();
-				}],
-				totalWebUsers: ['userService', function(userService) {
-					return userService.getTotalWebUsers();
-				}],
-				numberActiveUsers: ['userService', function(userService) {
-					return userService.getNumberActiveUsers();
-				}],
-				eventoProcesado: ['eventsService', function(eventsService) {
-					return eventsService.getEventoProcesado();
-				}],
-				eventsToday: ['eventsService', function(eventsService) {
-					return eventsService.getEventsToday();
-				}],
-				totalL: ['eventsService', function(eventsService) {
-					return eventsService.getTotalVLocations();
-				}],
-				totalDS: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDataScts();
-				}],
-				totalM: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
-				}],
-				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDriversF();
-				}],
-				totalSTD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalStepsData();
-				}],
-				totalSLD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalSleepData();
-				}],
-				totalHRD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalHeartRateData();
-				}],
-				totalCD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalContextData();
-				}]
+				eventsType: eventsType,
+				usuarios: usuarios,
+				measurementsType: measurementsType,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
 			},
 			data: {
 			      permissions: {
@@ -251,54 +153,22 @@
 			controller: 'SystemLogsController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: ['eventsService', function(eventsService) {
-					return eventsService.getEvensType();
-				}],
-				usuarios: ['eventsService', function(eventsService) {
-					return eventsService.getUsuarios();
-				}],
-				measurementsType: ['eventsService', function(eventsService) {
-					return eventsService.getMeasurementsType();
-				}],
-				totalMUsers: ['userService', function(userService) {
-					return userService.getTotalMUsers();
-				}],
-				totalWebUsers: ['userService', function(userService) {
-					return userService.getTotalWebUsers();
-				}],
-				numberActiveUsers: ['userService', function(userService) {
-					return userService.getNumberActiveUsers();
-				}],
-				eventoProcesado: ['eventsService', function(eventsService) {
-					return eventsService.getEventoProcesado();
-				}],
-				eventsToday: ['eventsService', function(eventsService) {
-					return eventsService.getEventsToday();
-				}],
-				totalL: ['eventsService', function(eventsService) {
-					return eventsService.getTotalVLocations();
-				}],
-				totalDS: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDataScts();
-				}],
-				totalM: ['eventsService', function(eventsService) {
-					return eventsService.getTotalMeasurements();
-				}],
-				totalDF: ['eventsService', function(eventsService) {
-					return eventsService.getTotalDriversF();
-				}],
-				totalSTD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalStepsData();
-				}],
-				totalSLD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalSleepData();
-				}],
-				totalHRD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalHeartRateData();
-				}],
-				totalCD: ['eventsService', function(eventsService) {
-					return eventsService.getTotalContextData();
-				}]
+				eventsType: eventsType,
+				usuarios: usuarios,
+				measurementsType: measurementsType,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
 			},
 			data: {
 			      permissions: {
@@ -315,16 +185,80 @@
 			url: '/settings',
 			templateUrl:'partials/settings/settings.html',
 			controller: 'SettingsController',
-			controllerAs: 'vm'
+			controllerAs: 'vm',
+			resolve: {
+				datosSettings: datosSettings
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
+			}
 		}).state('userProfile', {
 			url: '/userProfile',
 			templateUrl:'partials/user/userProfile.html',
 			controller: 'UserProfileController',
 			controllerAs: 'vm',
 			resolve: {
-				datosUsuario: ['userService', function(userService) {
-					return userService.getUserProfile();
-				}]
+				datosUsuario: datosUsuario
+			}
+		}).state('smartdriver', {
+			url: '/smartdriver',
+			templateUrl: 'partials/smartdriver/smartdriver.html',
+			controller: 'SmartDriverController',
+			controllerAs: 'vm',
+			resolve: {
+				methods: methods,
+				types: types,
+				dataSections: dataSections,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				measurementsType: measurementsType,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
+		}).state('dataServices', {
+			url: '/dataServices',
+			templateUrl:'partials/dataServices/dataServices.html',
+			controller: 'DataServicesController',
+			controllerAs: 'vm',
+			resolve: {
+				services: services,
+				totalMUsers: totalMUsers,
+				totalWebUsers: totalWebUsers,
+				numberActiveUsers: numberActiveUsers,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				totalL: totalL,
+				totalDS: totalDS,
+				totalM: totalM,
+				totalDF: totalDF,
+				totalSTD: totalSTD,
+				totalSLD: totalSLD,
+				totalHRD: totalHRD,
+				totalCD: totalCD
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		});
 
@@ -334,15 +268,138 @@
 
 	}
 
-	angular.module('app').config(function($translateProvider) {
-		// Tell the module what language to use by default
+	
+	usuariosMoviles.$inject = ['eventsService'];
+	function usuariosMoviles(eventsService) {
+	    return eventsService.getUsuarios();
+	}
+	
+	eventsType.$inject = ['eventsService'];
+	function eventsType(eventsService) {
+		return eventsService.getEvensType();
+	}
+	
+	usuarios.$inject = ['eventsService'];
+	function usuarios(eventsService) {
+		return eventsService.getUsuarios();
+	}
+	
+	totalMUsers.$inject = ['userService'];
+	function totalMUsers(userService) {
+		return userService.getTotalMUsers();
+	}
+	
+	totalWebUsers.$inject = ['userService'];
+	function totalWebUsers(userService) {
+		return userService.getTotalWebUsers();
+	}
+	
+	numberActiveUsers.$inject = ['userService'];
+	function numberActiveUsers(userService) {
+		return userService.getNumberActiveUsers();
+	}
+	
+	measurementsType.$inject = ['eventsService'];
+	function measurementsType(eventsService) {
+		return eventsService.getMeasurementsType();
+	}
+	
+	eventoProcesado.$inject = ['eventsService'];
+	function eventoProcesado(eventsService) {
+		return eventsService.getEventoProcesado();
+	}
+	
+	eventsToday.$inject = ['eventsService'];
+	function eventsToday(eventsService) {
+		return eventsService.getEventsToday();
+	}
+	
+	totalL.$inject = ['eventsService'];
+	function totalL(eventsService) {
+		return eventsService.getTotalVLocations();
+	}
+	
+	totalDS.$inject = ['eventsService'];
+	function totalDS(eventsService) {
+		return eventsService.getTotalDataScts();
+	}
+	
+	totalM.$inject = ['eventsService'];
+	function totalM(eventsService) {
+		return eventsService.getTotalMeasurements();
+	}
+	
+	totalDF.$inject = ['eventsService'];
+	function totalDF(eventsService) {
+		return eventsService.getTotalDriversF();
+	}
+	
+	totalSTD.$inject = ['eventsService'];
+	function totalSTD(eventsService) {
+		return eventsService.getTotalStepsData();
+	}
+	
+	totalSLD.$inject = ['eventsService'];
+	function totalSLD(eventsService) {
+		return eventsService.getTotalSleepData();
+	}
+	
+	totalHRD.$inject = ['eventsService'];
+	function totalHRD(eventsService) {
+		return eventsService.getTotalHeartRateData();
+	}
+	
+	totalCD.$inject = ['eventsService'];
+	function totalCD(eventsService) {
+		return eventsService.getTotalContextData();
+	}
+	
+	datosSettings.$inject = ['settingsService'];
+	function datosSettings(settingsService) {
+		return settingsService.getSettings();
+	}
+	
+	datosUsuario.$inject = ['userService'];
+	function datosUsuario(userService) {
+		return userService.getUserProfile();
+	}
+	
+	methods.$inject = ['smartDriverService'];
+	function methods(smartDriverService) {
+		return smartDriverService.getMethods();
+	}
+	
+	types.$inject = ['smartDriverService'];
+	function types(smartDriverService) {
+		return smartDriverService.getTypes();
+	}
+	
+	dataSections.$inject = ['smartDriverService'];
+	function dataSections(smartDriverService) {
+		return smartDriverService.getDataSections();
+	}
+	
+	services.$inject = ['dataServicesService'];
+	function services(dataServicesService) {
+		return dataServicesService.getServices();
+	}
+	
+	angular.module('app').config(translateAppConfig);
+	translateAppConfig.$inject = ['$translateProvider'];
+	function translateAppConfig($translateProvider) {
 		$translateProvider.preferredLanguage('en');
 		$translateProvider.useSanitizeValueStrategy('escaped');
-	});
+	}
 	
-	angular.module('app').config(function(tmhDynamicLocaleProvider) {
+	angular.module('app').config(dynamicConfig);
+	dynamicConfig.$inject = ['tmhDynamicLocaleProvider', '$httpProvider'];
+	function dynamicConfig(tmhDynamicLocaleProvider, $httpProvider) {
 		tmhDynamicLocaleProvider.localeLocationPattern("./translations/angular-locale_{{ locale }}.js");
-	});
+		  $httpProvider.defaults.headers.common = {};
+		  $httpProvider.defaults.headers.post = {};
+		  $httpProvider.defaults.headers.put = {};
+		  $httpProvider.defaults.headers.patch = {};
+	}
 	
 	angular.module('app').factory('ErrorInterceptor',["$q", "$rootScope", "$location", '$translate', function($q, $rootScope, $location, $translate) {
 		  return {
@@ -355,6 +412,8 @@
 	        		if (status == 401) {
 	        			$location.path("/login");
 	        			$rootScope.error="401";
+						delete $rootScope.user;
+						delete $rootScope.authToken;
 	        		} if (status == 403) {
 	        			$location.path("/login");
 	        			$rootScope.error=  $translate.instant('emailPasswordIncorrectos'); 

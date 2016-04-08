@@ -48,7 +48,6 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 import es.udc.lbd.hermes.model.util.exceptions.DuplicateEmailException;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/user")
 public class UserController extends MainResource {

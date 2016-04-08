@@ -16,4 +16,7 @@ public interface ContextDataDao extends GenericDao<ContextData, Long> {
 	public List<ContextData> obterContextData(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds, int startIndex, int count);
 	public List<EventosPorDia> eventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 	public long contar();
+	
+	public Long contarContextData(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds);
+	public List<ContextData> obterContextDataWithLimit(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds, int startIndex, Integer limit);
 }

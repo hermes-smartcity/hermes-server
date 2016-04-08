@@ -2,7 +2,6 @@ package es.udc.lbd.hermes.model.events.dataSection;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +17,6 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.LineString;

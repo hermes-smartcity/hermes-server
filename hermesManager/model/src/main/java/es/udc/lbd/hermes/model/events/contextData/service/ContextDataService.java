@@ -3,6 +3,7 @@ package es.udc.lbd.hermes.model.events.contextData.service;
 import java.util.Calendar;
 import java.util.List;
 
+import es.udc.lbd.hermes.model.events.ListaContextData;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.contextData.ContextData;
 
@@ -20,7 +21,7 @@ public interface ContextDataService {
 	
 	public List<ContextData> obterContextDataSegunUsuario(Long idUsuario);
 	
-	public List<ContextData> obterContextData(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
+	public ListaContextData obterContextData(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double wnLng, Double wnLat,	Double esLng, Double esLat);
 	
 	public long contar();

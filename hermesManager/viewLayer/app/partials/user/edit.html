@@ -15,7 +15,7 @@
 	<div class="form-group">		
 		<label for="singleSelect">{{'user.usuario' | translate}}</label><br />
 		<!-- Filtro usuarios  -->
-		<select id="selectUsers" data-ng-model="vm.usuarioSelected" 
+		<select id="selectUsers" data-ng-model="vm.usuarioSelected" class="form-control"
 			data-ng-change="changedValue(vm.usuarioSelected)" 
 			data-ng-options="usuario as usuario.sourceId for usuario in vm.usuariosMoviles">
 			<option value="">{{'user.todos' | translate}}</option>

@@ -1,0 +1,56 @@
+<div class="panel panel-default">
+		<div class="panel-heading"><strong>{{'filtros.titulo' | translate}}</strong></div>
+		<div class="panel-body">
+			<div class="row margin-top-20">
+				<div class="col-xs-12">
+					<label for="singleSelect">{{'filtros.servicios' | translate}}</label><br />
+					<!-- Filtro event type -->
+					<select id="selectService" class="form-control" data-ng-model="vm.serviceSelected" 
+						data-ng-options="service as service for service in vm.services"
+						data-ng-change="vm.changeMethod()" >
+						<option value="">{{'filtros.todos' | translate}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row margin-top-20">
+				<div class="col-xs-12">
+					<label for="singleSelect">{{'filtros.operaciones' | translate}}</label><br />
+					<!-- Filtro event type -->
+					<select data-ng-show="vm.serviceSelected === undefined" class="form-control" id="selectMethod" data-ng-model="vm.methodSelected" 
+						data-ng-options="method as method for method in vm.methods">
+						<option value="">{{'filtros.chooseService' | translate}}</option>
+					</select>
+					
+					<select data-ng-show="vm.serviceSelected !== undefined" class="form-control" id="selectMethod" data-ng-model="vm.methodSelected" 
+						data-ng-options="method as method for method in vm.methods">
+						<option value="">{{'filtros.todos' | translate}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row margin-top-20">
+				<div class="col-xs-12">
+					<label for="singleSelect">{{'filtros.fechaInicio' | translate}}</label>
+					<button class="btn btn-default btn-xs" data-ng-click="vm.showCalendarStart = !vm.showCalendarStart">{{'filtros.cambiar' | translate}}</button>
+					<br /> {{ vm.startDate | date:'dd/MM/yyyy HH:mm' }}<br />
+					<div data-ng-show="vm.showCalendarStart" class="pull-right fondoBlanco">
+						<datetimepicker data-on-set-time="vm.onTimeSetStart()" id="calendarioHoras" data-ng-model="vm.startDate"></datetimepicker>
+					</div>
+				</div>
+			</div>
+			<div class="row margin-top-20">
+				<div class="col-xs-12">
+					<label for="singleSelect">{{'filtros.fechaFin' | translate}}</label>
+					<button class="btn btn-default btn-xs" data-ng-click="vm.showCalendarEnd = !vm.showCalendarEnd">{{'filtros.cambiar' | translate}}</button>
+					<br /> {{ vm.endDate | date:'dd/MM/yyyy HH:mm' }}<br />
+					<div data-ng-show="vm.showCalendarEnd" class="pull-right fondoBlanco">
+						<datetimepicker data-on-set-time="vm.onTimeSetEnd()" id="calendarioHoras" data-ng-model="vm.endDate"></datetimepicker>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 text-center">
+			<button id="btnFilter" class="btn btn-primary" data-ng-click="vm.aplicarFiltros()">{{'filtros.filtrar' | translate}}</button>
+				</div>
+			</div>
+		</div>
+	</div>

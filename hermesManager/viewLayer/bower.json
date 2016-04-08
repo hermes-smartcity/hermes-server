@@ -7,21 +7,19 @@
   "private": true,
   "dependencies": {
     "jquery": "~2.2.0",
+    "bootstrap": "~3.3.6",
     "angular": "~1.4.8",
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "angular-animate": "~1.4.8",
     "animate.css": "~3.5.1",
-    "bootstrap": "~3.3.6",
-    "fontawesome": "fontawesome#~4.5.0",
     "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.4.8",
     "angular-sanitize": "~1.4.8",
     "angularUtils-pagination": "angular-utils-pagination#~0.9.4",
     "angular-bootstrap": "~1.0.3",
     "angular-chart.js": "~0.8.8",
-    "leaflet": "~0.7.3",
     "leaflet.markercluster": "~0.4.0",
     "moment": "~2.11.1",
     "angular-bootstrap-datetimepicker": "~0.4.0",
@@ -29,10 +27,13 @@
     "angular-route": "~1.4.8",
     "angular-cookies": "~1.4.9",
     "angular-permission": "^2.0.1",
-    "angular-datatables": "^0.5.3",
     "ngstorage": "^0.3.10",
     "angular-translate": "^2.11.0",
-    "angular-dynamic-locale": "^0.1.30"
+    "angular-dynamic-locale": "^0.1.30",
+    "angular-datatables": "^0.5.3",
+    "fontawesome": "fontawesome#~4.5.0",
+    "leaflet": "~0.7.3",
+    "leaflet-draw": "leaflet.draw#^0.3.0"
   },
   "authors": [
     "cmartinez <cristinacmp1988@gmail.com>"
@@ -46,5 +47,14 @@
     "app/bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "less/bootstrap.less"
+      ]
+    }
+  }
 }

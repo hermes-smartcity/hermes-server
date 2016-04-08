@@ -1,0 +1,13 @@
+<div class="panel panel-default" >
+	<div class="panel-heading">
+		<strong>{{'smartdriver.results' | translate}}</strong>
+	</div>
+	<div class="panel-body">
+		<div data-ng-if="!vm.result">{{'smartdriver.noResults' | translate}}</div>
+		
+		<div data-ng-if="vm.result" class="row margin-top-20">
+			<div data-ng-include="vm.resultadoConcreto"></div>
+		</div>
+
+	</div>
+</div>

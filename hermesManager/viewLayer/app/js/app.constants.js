@@ -89,3 +89,22 @@ var url_eventosPorDiaCD = url_contextD+'json/eventosPorDia?';
 var url_systemL = url_servidor+'api/systemlog/';
 var url_systemLogs = url_systemL+'json/systemLogs?';
 var url_delete_log = url_systemL+"deleteLog";
+
+//Controlador settings
+var url_setting = url_servidor+'api/setting/';
+var url_settings = url_setting+'json/settings';
+var url_update_settings = url_setting + "updateSettings";
+
+//Controlador smartdrive
+var url_smartdriver = url_servidor+'api/smartdriver/';
+var url_methods = url_smartdriver+'json/methods';
+var url_types = url_smartdriver+'json/types';
+var url_datasections = url_smartdriver+'json/datasections';
+var url_network_link = url_smartdriver+'network/link?';
+var url_measurement_aggregate = url_smartdriver+'measurement/aggregate?';
+
+//Controlador dataservice
+var url_dataservice = url_servidor+'api/dataservice/';
+var url_services = url_dataservice+'json/services';
+var url_operations = url_dataservice+'json/operations';
+var url_peticionesPorDia = url_dataservice+'json/peticionesPorDia?';

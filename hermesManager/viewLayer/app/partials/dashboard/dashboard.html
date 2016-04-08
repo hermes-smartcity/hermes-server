@@ -9,7 +9,7 @@
 				<div class="panel-heading">
 					<i class="fa glyphicon fa-fw"></i>
 					<div class="pull-left">
-						<i class="fa glyphicon glyphicon glyphicon-eye-open fa-fw"></i>
+						<span class="glyphicon glyphicon-eye-open"></span>
 						<div class="btn-group">
 							<button type="button"
 								class="btn btn-default btn-xs dropdown-toggle"
@@ -25,7 +25,7 @@
 					</div>
 					<div data-ng-if="vm.showAdmin" class="pull-right">
 						<!--  -->
-						<i class="fa glyphicon  fa-fw"></i>
+						<span class="glyphicon"></span>
 					</div>
 				</div>
 				<!-- /.panel-heading -->
@@ -33,25 +33,8 @@
 					<div data-ng-show="vm.showMap">
 						<div id="map"></div>
 					</div>
-					<div data-ng-show="vm.showTab"> 
+					<div data-ng-show="vm.showTab">
 						<div data-ng-include="vm.listadoCarga"></div>
-						
-						<!-- <div data-ng-if="vm.eventTypeSelected == 'VEHICLE_LOCATION'"
-							data-ng-include="'./partials/vehicleLocation/vehicleLocationListar.html'">
-						</div>
-						<div data-ng-if="vm.eventTypeSelected == 'DATA_SECTION'"
-							data-ng-include="'./partials/dataSection/dataSectionListar.html'">
-						</div>
-						<div data-ng-if="vm.eventTypeSelected == 'CONTEXT_DATA'"
-							data-ng-include="'./partials/contextData/contextDataListar.html'">
-						</div>
-						<div data-ng-if="((vm.eventTypeSelected == 'HIGH_SPEED') || 
-										(vm.eventTypeSelected == 'HIGH_SPEED') ||
-							     		(vm.eventTypeSelected == 'HIGH_ACCELERATION') || 
-							     		(vm.eventTypeSelected == 'HIGH_DECELERATION') || 
-							     		(vm.eventTypeSelected == 'HIGH_HEART_RATE'))"
-							data-ng-include="'./partials/measurement/measurementListar.html'">
-						</div>-->
 					</div>
 				</div>
 				<!-- /.panel-body -->
@@ -60,5 +43,6 @@
 	</div>
 	<div class="cabeceraFiltro col-md-3">
 		<div class="slide-animate" data-ng-include="'./partials/filtros.html'"></div>
+		<div class="slide-animate" data-ng-include="'./partials/resultados.html'"></div>
 	</div>
 </div>
