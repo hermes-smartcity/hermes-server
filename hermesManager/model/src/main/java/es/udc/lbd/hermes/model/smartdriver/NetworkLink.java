@@ -11,7 +11,7 @@ import org.hibernate.annotations.Type;
 import com.vividsolutions.jts.geom.LineString;
 
 @Entity
-@Table(schema="\"network\"", name = "es_cor_2po_4pgr")
+@Table(schema="\"network\"", name = "link")
 @SuppressWarnings("serial")
 public class NetworkLink implements Serializable{
 

@@ -237,3 +237,5 @@ CREATE TABLE dataservices (
   	CONSTRAINT idsdataservices_pk PRIMARY KEY (id)
 )
 ;
+
+CREATE OR REPLACE VIEW network.link as select * from network.es_cor_2po_4pgr;
