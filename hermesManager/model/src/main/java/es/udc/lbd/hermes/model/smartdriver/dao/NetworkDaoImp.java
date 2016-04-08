@@ -44,7 +44,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 									"when st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326)) - st_lineLocatePoint(geom_way, st_geometryfromtext('POINT('|| :previouslong || ' ' ||:previouslat ||')', 4326)) > 0 then 0 " +
 									"else 1 " +
 								"end as direction " +
-								"from network.es_cor_2po_4pgr " +
+								"from network.link " +
 								"where st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326) && geom_way " +
 								"and st_distance(st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326), geom_way, true) < 10 " +
 								"order by st_distance(st_geometryfromtext('POINT('|| :currentlong || ' ' ||:currentlat ||')', 4326), geom_way, true) limit 1";
