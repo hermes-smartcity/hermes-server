@@ -154,12 +154,12 @@ DataSectionDao {
 	}
 	
 	@Override
-	public AggregateMeasurementVO getAggregateValue(String campo, Double lat, Double lon, Integer day, Integer time){
+	public AggregateMeasurementVO getAggregateValue(String value, Double lat, Double lon, Integer day, Integer time){
 		String queryStr =  "select count(*) as \"numberOfValues\", " +
-				"max(" + campo + ") as max, " + 
-				"min(" + campo + ") as min, " +
-				"avg(" + campo + ") as average, " + 
-				"stddev(" + campo + ") as \"standardDeviation\" " +
+				"max(" + value + ") as max, " + 
+				"min(" + value + ") as min, " +
+				"avg(" + value + ") as average, " + 
+				"stddev(" + value + ") as \"standardDeviation\" " +
 			"from dataSection " +
 			"where st_distance(roadSection, st_geometryfromtext('POINT('|| :lon || ' ' ||:lat ||')', 4326), true) < 10 " +
 			"and EXTRACT(DOW FROM timestamp) = :day " +
@@ -168,7 +168,7 @@ DataSectionDao {
 		Query query = getSession().createSQLQuery(queryStr);
 		query.setResultTransformer(Transformers.aliasToBean(AggregateMeasurementVO.class));
 		
-		//query.setParameter("campo", campo);
+		//query.setParameter("value", value);
 		query.setParameter("lon", lon);
 		query.setParameter("lat", lat);
 		query.setParameter("day", day);

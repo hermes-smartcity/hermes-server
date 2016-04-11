@@ -68,8 +68,8 @@ public class SmartDriverController {
 			@RequestParam(value = "lon", required = true) Double lon, 
 			@RequestParam(value = "day", required = true) Integer day,
 			@RequestParam(value = "time", required = true) Integer time,
-			@RequestParam(value = "campo", required = false) String campo) { 
+			@RequestParam(value = "value", required = false) String value) { 
 
-		return networkServicio.getAggregateMeasurement(type, lat, lon, day, time, campo);
+		return networkServicio.getAggregateMeasurement(type, lat, lon, day, time, value);
 	}
 }
