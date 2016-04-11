@@ -3,17 +3,13 @@
 
 	angular.module('app').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 
-	                               'numberActiveUsers', 'measurementsType', 'eventsToday', 
-	                               'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                               'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', 
-	                               '$log', '$filter', 'eventsService', '$rootScope', '$state',
+	DashboardController.$inject = ['$scope', 'usuarios', 'eventoProcesado', 'eventsToday', 'statistics', 
+	                               '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state',
 	                               'DTOptionsBuilder', '$translate'];
 
-	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, 
-			numberActiveUsers, measurementsType, eventsToday, eventoProcesado, totalL, totalDS, 
-			totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD, $http, $timeout, $log, $filter, 
-			eventsService, $rootScope, $state, DTOptionsBuilder, $translate) {
+	function DashboardController($scope, usuarios, eventoProcesado, eventsToday, statistics, 
+			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, 
+			$translate) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -24,22 +20,24 @@
 	vm.pintarPuntos = pintarPuntos;
 	vm.pintarLineas = pintarLineas;
 	vm.aplicarFiltros = aplicarFiltros;
-	vm.eventsType = eventsType;
+	vm.eventsType = $rootScope.eventsType;
+	vm.measurementsType = $rootScope.measurementsType;
 	vm.usuarios = usuarios;
-	vm.totalMUsers = totalMUsers;
-	vm.totalWebUsers = totalWebUsers;
-	vm.numberActiveUsers = numberActiveUsers;
-	vm.measurementsType = measurementsType;
 	vm.eventsToday = eventsToday;
 	vm.eventoProcesado = eventoProcesado;
-	vm.totalL = totalL;	
-	vm.totalDS = totalDS;
-	vm.totalM = totalM;
-	vm.totalDF = totalDF;
-	vm.totalSTD = totalSTD;
-	vm.totalSLD = totalSLD;
-	vm.totalHRD = totalHRD;
-	vm.totalCD = totalCD;
+	
+	vm.totalMUsers = statistics.contarUsuariosMovil;
+	vm.totalWebUsers = statistics.contarUsuariosWeb;
+	vm.numberActiveUsers = statistics.numberActiveUsers;
+	vm.totalL = statistics.totalVLocations;	
+	vm.totalDS = statistics.totalDataScts;
+	vm.totalM = statistics.totalMeasurements;
+	vm.totalDF = statistics.totalDriversF;
+	vm.totalSTD = statistics.totalStepsData;
+	vm.totalSLD = statistics.totalSleepData;
+	vm.totalHRD = statistics.totalHeartRateData;
+	vm.totalCD = statistics.totalContextData;
+	
 	vm.mostrarMapa = mostrarMapa;
 	vm.mostrarTabla = mostrarTabla;
 	vm.showMap = true;
@@ -189,9 +187,10 @@
 		var date = new Date(timestamp);
 		var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 		var hourEvento = $filter('date')(date, 'HH:mm:ss');
+		var speedEvento = $filter('number')(eventSpeed, 2);
 		var datosEvento = L.DomUtil.create('datosEvento');
-
-		datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Speed:</b> '+eventSpeed +'<br/><b>Accuracy:</b> '+eventAccuracy;
+		
+		datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Speed:</b> '+speedEvento +'<br/><b>Accuracy:</b> '+eventAccuracy;
 		return datosEvento;
 	}
 	
@@ -199,10 +198,11 @@
 		var date = new Date(timestamp);
 		var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 		var hourEvento = $filter('date')(date, 'HH:mm:ss');
+		var valueEvento = $filter('number')(eventValue, 2);
+		var speedEvento = $filter('number')(eventSpeed, 2);
 		var datosEvento = L.DomUtil.create('datosEvento');
-
-		
-		datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Value:</b> '+eventValue+'<br/><b>Speed:</b> '+eventSpeed +'<br/><b>Accuracy:</b> '+eventAccuracy;
+				
+		datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Value:</b> '+valueEvento+'<br/><b>Speed:</b> '+speedEvento +'<br/><b>Accuracy:</b> '+eventAccuracy;
 		return datosEvento;
 	}
 	
@@ -210,23 +210,38 @@
 		var date = new Date(timestamp);
 		var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 		var hourEvento = $filter('date')(date, 'HH:mm:ss');
+		var minSpeedEvento = $filter('number')(eventMinSpeed, 2);
+		var maxSpeedEvento = $filter('number')(eventMaxSpeed, 2);
+		var medianSpeedEvento = $filter('number')(eventMedianSpeed, 2);
+		var averageSpeedEvento = $filter('number')(eventAverageSpeed, 2);
+		var averageErEvento = $filter('number')(eventAverageEr, 2);
+		var averageHearRateEvento = $filter('number')(eventAverageHearRate, 2);
+		var standardDeviationSpeedEvento = $filter('number')(eventStandardDeviationSpeed, 2);
+		var standardDeviationRrEvento = $filter('number')(eventStandardDeviationRr, 2);
+		var standardDeviationHeartRateEvento = $filter('number')(eventStandardDeviationHeartRate, 2);
+		var pkeEvento = $filter('number')(eventPke, 2);
+		var numHighAccelerationsEvento = $filter('number')(eventNumHighAccelerations, 2);
+		var numHighDecelerationsEvento = $filter('number')(eventNumHighDecelerations, 2);
+		var averageAccelerationEvento = $filter('number')(eventAverageAcceleration, 2);
+		var averageDecelerationEvento = $filter('number')(eventAverageDeceleration, 2);
+		
 		var datosEvento = L.DomUtil.create('datosEvento');
 
 		datosEvento.innerHTML = '<b>UserId:</b> ' + userId +
 								'<br/><b>Date:</b> '+dateEvento+
 								'<br/><b>Time:</b> '+hourEvento+
 								'<br/><b>Speed:</b>' +
-								'<br/>Minimum: '+eventMinSpeed +'<br/>Maximum: '+eventMaxSpeed +
-								'<br/>Median: '+eventMedianSpeed +'<br/>Average: '+eventAverageSpeed +
-								'<br/>Std. Dev.:'+eventStandardDeviationSpeed + 
+								'<br/>Minimum: '+minSpeedEvento +'<br/>Maximum: '+maxSpeedEvento +
+								'<br/>Median: '+medianSpeedEvento +'<br/>Average: '+averageSpeedEvento +
+								'<br/>Std. Dev.:'+standardDeviationSpeedEvento + 
 								'<br/><b>Acceleration:</b>'+
-								'<br/>Average acceleration:'+eventAverageAcceleration +
-								'<br/>Average deceleration:'+eventAverageDeceleration +
-								'<br/>High accelerations:'+eventNumHighAccelerations +
-								'<br/>High decelerations:'+eventNumHighDecelerations +
+								'<br/>Average acceleration:'+averageAccelerationEvento +
+								'<br/>Average deceleration:'+averageDecelerationEvento +
+								'<br/>High accelerations:'+numHighAccelerationsEvento +
+								'<br/>High decelerations:'+numHighDecelerationsEvento +
 								'<br/><b>Heart rate:</b>'+
-								'<br/>Average:'+eventAverageHearRate +
-								'<br/>Std. Dev.:'+eventStandardDeviationHeartRate;
+								'<br/>Average:'+averageHearRateEvento +
+								'<br/>Std. Dev.:'+standardDeviationHeartRateEvento;
 	
 		return datosEvento;
 	}

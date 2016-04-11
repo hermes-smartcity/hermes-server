@@ -59,10 +59,10 @@
 			});
 		}
 		
-		function getAggregateMeasurement (type, lat, long, day, time, campo) {
+		function getAggregateMeasurement (type, lat, long, day, time, value) {
 			return $http({
 				method : 'GET',
-				url : url_measurement_aggregate + "type=" + type + "&lat=" + lat + "&lon=" + long + "&day=" + day + "&time=" + time + "&campo=" + campo
+				url : url_measurement_aggregate + "type=" + type + "&lat=" + lat + "&lon=" + long + "&day=" + day + "&time=" + time + "&value=" + value
 			});
 		}
 

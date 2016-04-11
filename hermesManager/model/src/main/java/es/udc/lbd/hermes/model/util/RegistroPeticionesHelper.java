@@ -17,8 +17,8 @@ public class RegistroPeticionesHelper {
 		DataServices dataService = new DataServices();
 		dataService.setService(Service.SMARTDRIVER.toString());
 		dataService.setMethod(Method.GET_INFORMATION_LINK.toString());
-		dataService.setTimelog(HelpersModel.getHoy());
-
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato("yyyy-MM-dd HH:mm:ss");
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy));
 		
 		dataServiceDao.create(dataService);
 	}
@@ -27,8 +27,8 @@ public class RegistroPeticionesHelper {
 		DataServices dataService = new DataServices();
 		dataService.setService(Service.SMARTDRIVER.toString());
 		dataService.setMethod(Method.AGGREGATE_MEASUREMENT.toString());
-		dataService.setTimelog(HelpersModel.getHoy());
-
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato("yyyy-MM-dd HH:mm:ss");
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy));
 		
 		dataServiceDao.create(dataService);
 	}

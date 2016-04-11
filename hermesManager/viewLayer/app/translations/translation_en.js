@@ -22,7 +22,7 @@
 			"falloConEstado": " failed with status ",
 			"numeroEventos": "Events number",
 			"numeroPeticiones": "Request number",
-			"noResults": "There are not results",
+			"noResults": "There are no results",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
@@ -181,9 +181,9 @@
 				"filtrar": "Filter",
 				"methods": "Methods",
 				"results": "Results",
-				"noResults": "There are not results",
+				"noResults": "There are no results",
 				"linkId": "Identifier: ",
-				"maxSpeed": "Maximium Speed: ",
+				"maxSpeed": "Maximum Speed: ",
 				"linkName": "Name: ",
 				"linkType": "Type: ",
 				"position": "Position: ",
@@ -208,8 +208,8 @@
 				"selectDataSection": "Select Data Section",
 				"datasection": "Data Section",
 				"numberOfValues": "Number of values: ",
-				"maximium": "Maximium ",
-				"minimium": "Minimium: ",
+				"maximium": "Maximum ",
+				"minimium": "Minimum: ",
 				"average": "Average: ",
 				"standardDeviation": "Standard Deviation: "
 			}

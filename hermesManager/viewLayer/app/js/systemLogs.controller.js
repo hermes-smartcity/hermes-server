@@ -4,16 +4,11 @@
 	angular.module('app').controller('SystemLogsController', SystemLogsController);
 
 	SystemLogsController.$inject = ['$scope', '$filter', '$http', 'DTOptionsBuilder', 'logService',
-	                                '$state', '$rootScope', 'eventsService', 'eventsType', 'usuarios',
-	                                'measurementsType', 'totalMUsers', 'totalWebUsers', 
-	                                'numberActiveUsers', 'eventsToday', 
-	                                'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                'totalSTD', 'totalSLD', 'totalHRD', 'totalCD'];
+	                                '$state', '$rootScope', 'eventsService', 'usuarios', 'eventsToday', 
+	                                'eventoProcesado', 'statistics'];
 
 	function SystemLogsController($scope, $filter, $http, DTOptionsBuilder, logService, $state, 
-			$rootScope, eventsService, eventsType, usuarios, measurementsType, totalMUsers, totalWebUsers, 
-			numberActiveUsers, eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, 
-			totalSTD, totalSLD, totalHRD, totalCD) {
+			$rootScope, eventsService, usuarios, eventsToday, eventoProcesado, statistics) {
 	
 		var vm = this;
 		
@@ -36,22 +31,23 @@
 		//Inicializar options de la tabla
 		vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
 			
-		vm.eventsType = eventsType;
+		vm.eventsType = $rootScope.eventsType;
 		vm.usuarios = usuarios;
-		vm.measurementsType = measurementsType;
-		vm.totalMUsers = totalMUsers;
-		vm.totalWebUsers = totalWebUsers;
-		vm.numberActiveUsers = numberActiveUsers;
+		vm.measurementsType = $rootScope.measurementsType;
 		vm.eventsToday = eventsToday;
 		vm.eventoProcesado = eventoProcesado;
-		vm.totalL = totalL;	
-		vm.totalDS = totalDS;
-		vm.totalM = totalM;
-		vm.totalDF = totalDF;
-		vm.totalSTD = totalSTD;
-		vm.totalSLD = totalSLD;
-		vm.totalHRD = totalHRD;
-		vm.totalCD = totalCD;
+		
+		vm.totalMUsers = statistics.contarUsuariosMovil;
+		vm.totalWebUsers = statistics.contarUsuariosWeb;
+		vm.numberActiveUsers = statistics.numberActiveUsers;
+		vm.totalL = statistics.totalVLocations;	
+		vm.totalDS = statistics.totalDataScts;
+		vm.totalM = statistics.totalMeasurements;
+		vm.totalDF = statistics.totalDriversF;
+		vm.totalSTD = statistics.totalStepsData;
+		vm.totalSLD = statistics.totalSleepData;
+		vm.totalHRD = statistics.totalHeartRateData;
+		vm.totalCD = statistics.totalContextData;
 		
 		vm.arrancar = arrancar;
 		vm.parar = parar;

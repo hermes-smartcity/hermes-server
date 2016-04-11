@@ -67,6 +67,17 @@
 		<!-- contextdata -->
 		<security:intercept-url method="GET" pattern="/api/contextdata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
+		<!-- systemlog -->
+		<security:intercept-url method="GET" pattern="/api/systemlog/**" access="hasAnyRole('ADMIN')" />
+		
+		<!-- setting -->
+		<security:intercept-url method="GET" pattern="setting" access="hasAnyRole('ADMIN')" />
+		
+		<!-- smartdriver -->
+		<security:intercept-url method="GET" pattern="/api/smartdriver/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- dataservice -->
+		<security:intercept-url method="GET" pattern="/api/dataservice/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
 		<security:csrf disabled="true"/>
 	</security:http>

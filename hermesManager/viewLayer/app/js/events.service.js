@@ -16,14 +16,6 @@
 			getUsuarios: getUsuarios,
 			getMeasurementsType: getMeasurementsType,
 			getEventoProcesado: getEventoProcesado,
-			getTotalVLocations: getTotalVLocations,
-			getTotalDataScts: getTotalDataScts,
-			getTotalMeasurements: getTotalMeasurements,
-			getTotalDriversF: getTotalDriversF,
-			getTotalStepsData: getTotalStepsData,
-			getTotalSleepData: getTotalSleepData,
-			getTotalHeartRateData: getTotalHeartRateData,
-			getTotalContextData: getTotalContextData,
 			getEventosPorDia: getEventosPorDia
 		};
 
@@ -122,102 +114,6 @@
 			}
 			function getEventoProcesadoFailed(error) {
 				$log.error('XHR Failed for getEventoProcesado.' + error.data);
-			}
-		}
-		
-		function getTotalVLocations() {
-			return $http.get(url_totalVLocations)
-				.then(getTotalVLocationsComplete)
-				.catch(getTotalVLocationsFailed);
-			function getTotalVLocationsComplete(response) {
-				return response.data;
-			}
-			function getTotalVLocationsFailed(error) {
-				$log.error('XHR Failed for getTotalVLocations.' + error.data);
-			}
-		}
-		
-		function getTotalDataScts() {
-			return $http.get(url_totalDataScts)
-				.then(getTotalDataSctsComplete)
-				.catch(getTotalDataSctsFailed);
-			function getTotalDataSctsComplete(response) {
-				return response.data;
-			}
-			function getTotalDataSctsFailed(error) {
-				$log.error('XHR Failed for getTotalDataScts.' + error.data);
-			}
-		}
-	
-		function getTotalMeasurements() {
-			return $http.get(url_totalMeasurements)
-				.then(getUsuariosComplete)
-				.catch(getUsuariosFailed);
-			function getUsuariosComplete(response) {
-				return response.data;
-			}
-			function getUsuariosFailed(error) {
-				$log.error('XHR Failed for getTotalMeasurements.' + error.data);
-			}
-		}
-		
-		function getTotalDriversF() {
-			return $http.get(url_totalDriversF)
-				.then(getTotalDriversFComplete)
-				.catch(getTotalDriversFFailed);
-			function getTotalDriversFComplete(response) {
-				return response.data;
-			}
-			function getTotalDriversFFailed(error) {
-				$log.error('XHR Failed for getTotalDriversF.' + error.data);
-			}
-		}
-		
-		function getTotalStepsData() {
-			return $http.get(url_totalStepsData)
-				.then(getTotalStepsDataComplete)
-				.catch(getTotalStepsDataFailed);
-			function getTotalStepsDataComplete(response) {
-				return response.data;
-			}
-			function getTotalStepsDataFailed(error) {
-				$log.error('XHR Failed getTotalStepsData.' + error.data);
-			}
-		}
-		
-		function getTotalSleepData() {
-			return $http.get(url_totalSleepData)
-				.then(getTotalSleepDataComplete)
-				.catch(getTotalSleepDataFailed);
-			function getTotalSleepDataComplete(response) {
-				return response.data;
-			}
-			function getTotalSleepDataFailed(error) {
-				$log.error('XHR Failed getTotalSleepDataFailed.' + error.data);
-			}
-		}
-		
-		function getTotalHeartRateData() {
-			return $http.get(url_totalHeartRateData)
-				.then(getTotalHeartRateDataComplete)
-				.catch(getTotalHeartRateDataFailed);
-			function getTotalHeartRateDataComplete(response) {
-				return response.data;
-			}
-			function getTotalHeartRateDataFailed(error) {
-				$log.error('XHR Failed for getTotalHeartRateDataFailed.' + error.data);
-			}
-		}
-		
-		function getTotalContextData() {
-			return $http.get(url_totalContextData)
-				.then(getTotalContextDataComplete)
-				.catch(getTotalContextDataFailed);
-			function getTotalContextDataComplete(response) {
-				return response.data;
-			}
-			function getTotalContextDataFailed(error) {
-				$log.error('XHR Failed forgetTotalContextDataFailed.' + error.data);
 			}
 		}
 		

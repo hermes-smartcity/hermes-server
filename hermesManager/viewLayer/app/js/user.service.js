@@ -16,12 +16,10 @@
 			getUsers : getUsers,
 			getUserToModify: getUserToModify,
 			getInfoCuenta: getInfoCuenta,
-			getTotalMUsers: getTotalMUsers,
-			getTotalWebUsers: getTotalWebUsers,
-			getNumberActiveUsers: getNumberActiveUsers,
 			renewToken: renewToken,
 			changePassword: changePassword,
-			getUserProfile: getUserProfile
+			getUserProfile: getUserProfile,
+			getParametersStatistics: getParametersStatistics
 		};
 
 		return service;
@@ -107,39 +105,15 @@
 			});
 		}
 		
-		function getTotalMUsers() {
-			return $http.get(url_contarUsuariosMovil)
-				.then(getTotalMUsersComplete)
-				.catch(getTotalMUsersFailed);
-			function getTotalMUsersComplete(response) {
+		function getParametersStatistics() {
+			return $http.get(url_parameters_statistics)
+				.then(getParametersStatisticsComplete)
+				.catch(getParametersStatisticsFailed);
+			function getParametersStatisticsComplete(response) {
 				return response.data;
 			}
-			function getTotalMUsersFailed(error) {
-				$log.error('XHR Failed for getTotalMUsers.' + error.data);
-			}
-		}
-		
-		function getTotalWebUsers() {
-			return $http.get(url_contarUsuariosWeb)
-				.then(getTotalWebUsersComplete)
-				.catch(getTotalWebUsersFailed);
-			function getTotalWebUsersComplete(response) {
-				return response.data;
-			}
-			function getTotalWebUsersFailed(error) {
-				$log.error('XHR Failed for getTotalWebUsers.' + error.data);
-			}
-		}
-		
-		function getNumberActiveUsers() {
-			return $http.get(url_numberActiveUsers)
-				.then(getNumberActiveUsersComplete)
-				.catch(getNumberActiveUsersFailed);
-			function getNumberActiveUsersComplete(response) {
-				return response.data;
-			}
-			function getNumberActiveUsersFailed(error) {
-				$log.error('XHR Failed for getNumberActiveUsers.' + error.data);
+			function getParametersStatisticsFailed(error) {
+				$log.error('XHR Failed for getParametersStatistics.' + error.data);
 			}
 		}
 		

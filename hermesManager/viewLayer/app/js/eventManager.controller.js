@@ -3,21 +3,18 @@
 
 	angular.module('app').controller('EventManagerController', EventManagerController);
 
-	EventManagerController.$inject = ['$state', '$interval', '$scope', 'eventsType', 'usuarios' ,'measurementsType', 
+	EventManagerController.$inject = ['$state', '$interval', '$scope', 'usuarios', 
 	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope',
-	                                  'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
-	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$translate'];
+	                                  'eventsToday', 'eventoProcesado', 'statistics', '$translate'];
 
-	function EventManagerController($state, $interval, $scope, eventsType, usuarios, measurementsType,  $http, $timeout, $log, $filter,
-			eventsService, $rootScope, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
-			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
+	function EventManagerController($state, $interval, $scope, usuarios, $http, $timeout, $log, $filter,
+			eventsService, $rootScope, eventsToday, eventoProcesado, statistics,
 			$translate) {
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
-		vm.eventsType = eventsType;
+		vm.eventsType = $rootScope.eventsType;
 		vm.usuarios = usuarios;
-		vm.measurementsType = measurementsType;
+		vm.measurementsType = $rootScope.measurementsType;
 		vm.arrancar = arrancar;
 		vm.parar = parar;
 		vm.pintarGraficoVehicleLocations = pintarGraficoVehicleLocations;
@@ -31,19 +28,20 @@
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
 		
-		vm.totalMUsers = totalMUsers;
-		vm.totalWebUsers = totalWebUsers;
-		vm.numberActiveUsers = numberActiveUsers;
 		vm.eventsToday = eventsToday;
 		vm.eventoProcesado = eventoProcesado;
-		vm.totalL = totalL;	
-		vm.totalDS = totalDS;
-		vm.totalM = totalM;
-		vm.totalDF = totalDF;
-		vm.totalSTD = totalSTD;
-		vm.totalSLD = totalSLD;
-		vm.totalHRD = totalHRD;
-		vm.totalCD = totalCD;
+		
+		vm.totalMUsers = statistics.contarUsuariosMovil;
+		vm.totalWebUsers = statistics.contarUsuariosWeb;
+		vm.numberActiveUsers = statistics.numberActiveUsers;
+		vm.totalL = statistics.totalVLocations;	
+		vm.totalDS = statistics.totalDataScts;
+		vm.totalM = statistics.totalMeasurements;
+		vm.totalDF = statistics.totalDriversF;
+		vm.totalSTD = statistics.totalStepsData;
+		vm.totalSLD = statistics.totalSleepData;
+		vm.totalHRD = statistics.totalHeartRateData;
+		vm.totalCD = statistics.totalContextData;
 		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){

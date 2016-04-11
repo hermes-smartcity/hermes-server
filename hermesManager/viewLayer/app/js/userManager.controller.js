@@ -5,15 +5,11 @@
 
 	UserManagerController.$inject = ['$scope', '$http', '$timeout', '$log', '$filter',
 	                                 'userService', '$state', '$rootScope', 'eventsService', 
-	                                 'eventsType', 'usuarios' ,'measurementsType',
-	                                 'totalMUsers', 'totalWebUsers', 'numberActiveUsers', 'eventsToday', 
-	                                  'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                  'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$translate',
+	                                 'usuarios', 'eventsToday', 'eventoProcesado', 'statistics', '$translate',
 	                                  'DTOptionsBuilder'];
 
 	function UserManagerController($scope, $http, $timeout, $log, $filter, userService, $state, $rootScope,
-			eventsService, eventsType, usuarios, measurementsType, totalMUsers, totalWebUsers, numberActiveUsers, eventsToday, 
-			eventoProcesado, totalL, totalDS, totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD,
+			eventsService, usuarios, eventsToday, eventoProcesado, statistics,
 			$translate, DTOptionsBuilder) {
 	
 	var vm = this;
@@ -30,22 +26,23 @@
 	vm.arrancar = arrancar;
 	vm.parar = parar;
 	
-	vm.eventsType = eventsType;
+	vm.eventsType = $rootScope.eventsType;
 	vm.usuarios = usuarios;
-	vm.measurementsType = measurementsType;
-	vm.totalMUsers = totalMUsers;
-	vm.totalWebUsers = totalWebUsers;
-	vm.numberActiveUsers = numberActiveUsers;
+	vm.measurementsType = $rootScope.measurementsType;
 	vm.eventsToday = eventsToday;
 	vm.eventoProcesado = eventoProcesado;
-	vm.totalL = totalL;	
-	vm.totalDS = totalDS;
-	vm.totalM = totalM;
-	vm.totalDF = totalDF;
-	vm.totalSTD = totalSTD;
-	vm.totalSLD = totalSLD;
-	vm.totalHRD = totalHRD;
-	vm.totalCD = totalCD;
+	
+	vm.totalMUsers = statistics.contarUsuariosMovil;
+	vm.totalWebUsers = statistics.contarUsuariosWeb;
+	vm.numberActiveUsers = statistics.numberActiveUsers;
+	vm.totalL = statistics.totalVLocations;	
+	vm.totalDS = statistics.totalDataScts;
+	vm.totalM = statistics.totalMeasurements;
+	vm.totalDF = statistics.totalDriversF;
+	vm.totalSTD = statistics.totalStepsData;
+	vm.totalSLD = statistics.totalSleepData;
+	vm.totalHRD = statistics.totalHeartRateData;
+	vm.totalCD = statistics.totalContextData;
 	
 	//Inicializar options de la tabla
 	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");

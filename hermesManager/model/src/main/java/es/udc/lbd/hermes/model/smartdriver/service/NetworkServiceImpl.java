@@ -47,7 +47,7 @@ public class NetworkServiceImpl implements NetworkService{
 	}
 	
 	@Override
-	public AggregateMeasurementVO getAggregateMeasurement(Type type, Double lat, Double lon, Integer day, Integer time, String campo){
+	public AggregateMeasurementVO getAggregateMeasurement(Type type, Double lat, Double lon, Integer day, Integer time, String value){
 		
 		AggregateMeasurementVO resultado = null;
 		//En funcion del tipo haremos la consulta en vehiclelocations o en measurement
@@ -73,7 +73,7 @@ public class NetworkServiceImpl implements NetworkService{
 			break;
 			
 		case DATA_SECTION:
-			resultado = dataSectionDao.getAggregateValue(campo, lat, lon, day, time);
+			resultado = dataSectionDao.getAggregateValue(value, lat, lon, day, time);
 			break;
 		
 		default:

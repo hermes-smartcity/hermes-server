@@ -5,15 +5,11 @@
 
 	DataServicesController.$inject = ['$scope', '$filter', '$http', '$translate', 
 	                                 '$state', '$rootScope', 'eventsService', 'services',
-	                                 'totalMUsers', 'totalWebUsers', 
-	                                 'numberActiveUsers', 'eventsToday', 
-	                                 'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                 'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', 'dataServicesService'];
+	                                 'eventsToday', 'eventoProcesado',
+	                                 'statistics', 'dataServicesService'];
 
 	function DataServicesController($scope, $filter, $http, $translate, $state, 
-			$rootScope, eventsService, services, totalMUsers, totalWebUsers, 
-			numberActiveUsers, eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, 
-			totalSTD, totalSLD, totalHRD, totalCD, dataServicesService) {
+			$rootScope, eventsService, services, eventsToday, eventoProcesado, statistics, dataServicesService) {
 
 		var vm = this;
 
@@ -25,19 +21,20 @@
 		vm.methodSelected = undefined;
 
 		vm.services = services;
-		vm.totalMUsers = totalMUsers;
-		vm.totalWebUsers = totalWebUsers;
-		vm.numberActiveUsers = numberActiveUsers;
 		vm.eventsToday = eventsToday;
 		vm.eventoProcesado = eventoProcesado;
-		vm.totalL = totalL;	
-		vm.totalDS = totalDS;
-		vm.totalM = totalM;
-		vm.totalDF = totalDF;
-		vm.totalSTD = totalSTD;
-		vm.totalSLD = totalSLD;
-		vm.totalHRD = totalHRD;
-		vm.totalCD = totalCD;
+		
+		vm.totalMUsers = statistics.contarUsuariosMovil;
+		vm.totalWebUsers = statistics.contarUsuariosWeb;
+		vm.numberActiveUsers = statistics.numberActiveUsers;
+		vm.totalL = statistics.totalVLocations;	
+		vm.totalDS = statistics.totalDataScts;
+		vm.totalM = statistics.totalMeasurements;
+		vm.totalDF = statistics.totalDriversF;
+		vm.totalSTD = statistics.totalStepsData;
+		vm.totalSLD = statistics.totalSleepData;
+		vm.totalHRD = statistics.totalHeartRateData;
+		vm.totalCD = statistics.totalContextData;
 
 		vm.recuperarYpintarPeticiones = recuperarYpintarPeticiones;
 		vm.onTimeSetStart = onTimeSetStart;

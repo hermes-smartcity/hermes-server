@@ -16,7 +16,7 @@
 			<tr data-ng-repeat="vehicleLocation in vm.events track by $index">
 				<td>{{vehicleLocation.usuarioMovil.id}}</td>
 				<td>{{vehicleLocation.timestamp | date : "MM/dd/yyyy h:mm a"}}</td>
-				<td>{{vehicleLocation.speed}}</td>
+				<td>{{vehicleLocation.speed | number:2}}</td>
 				<td>{{vehicleLocation.accuracy}}</td>
 			</tr>
 		</tbody>

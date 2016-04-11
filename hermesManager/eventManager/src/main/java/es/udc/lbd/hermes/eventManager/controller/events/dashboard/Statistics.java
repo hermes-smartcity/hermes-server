@@ -1,0 +1,160 @@
+package es.udc.lbd.hermes.eventManager.controller.events.dashboard;
+
+import java.io.Serializable;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import es.udc.lbd.hermes.model.events.contextData.service.ContextDataService;
+import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
+import es.udc.lbd.hermes.model.events.driverFeatures.service.DriverFeaturesService;
+import es.udc.lbd.hermes.model.events.heartRateData.service.HeartRateDataService;
+import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
+import es.udc.lbd.hermes.model.events.sleepData.service.SleepDataService;
+import es.udc.lbd.hermes.model.events.stepsData.service.StepsDataService;
+import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.service.UsuarioMovilService;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
+
+@Component("statisticsComponent")
+public class Statistics implements Serializable{
+
+	private static final long serialVersionUID = -6945193694192799509L;
+
+	@Autowired private UsuarioMovilService usuarioMovilService;
+
+	@Autowired private UsuarioWebService usuarioWebService;
+
+	@Autowired private VehicleLocationService vehicleLocationService;
+
+	@Autowired private DataSectionService dataSectionService;
+
+	@Autowired private MeasurementService measurementService;
+
+	@Autowired private DriverFeaturesService driverFeaturesService;
+
+	@Autowired private StepsDataService stepsDataService;
+
+	@Autowired private SleepDataService sleepDataService;
+
+	@Autowired private HeartRateDataService heartRateDataService;
+
+	@Autowired private ContextDataService contextDataService;
+	
+	private long contarUsuariosMovil;
+	private long contarUsuariosWeb;
+	private long numberActiveUsers;
+	private long totalVLocations;
+	private long totalDataScts;
+	private long totalMeasurements;
+	private long totalDriversF;
+	private long totalStepsData;
+	private long totalSleepData;
+	private long totalHeartRateData;
+	private long totalContextData;
+
+	public Statistics() {}
+	
+	public void updateStatistics() {
+		this.contarUsuariosMovil = usuarioMovilService.contar();
+		this.contarUsuariosWeb = usuarioWebService.contar();
+		this.numberActiveUsers = usuarioMovilService.getNumberActiveUsers();
+		this.totalVLocations = vehicleLocationService.contar();
+		this.totalDataScts = dataSectionService.contar();
+		this.totalMeasurements = measurementService.contar();
+		this.totalDriversF = driverFeaturesService.contar();
+		this.totalStepsData = stepsDataService.contar();
+		this.totalSleepData = sleepDataService.contar();
+		this.totalHeartRateData = heartRateDataService.contar();
+		this.totalContextData = contextDataService.contar();
+	}
+
+	public long getContarUsuariosMovil() {
+		return contarUsuariosMovil;
+	}
+
+	public void setContarUsuariosMovil(long contarUsuariosMovil) {
+		this.contarUsuariosMovil = contarUsuariosMovil;
+	}
+
+	public long getContarUsuariosWeb() {
+		return contarUsuariosWeb;
+	}
+
+	public void setContarUsuariosWeb(long contarUsuariosWeb) {
+		this.contarUsuariosWeb = contarUsuariosWeb;
+	}
+	
+	public long getNumberActiveUsers() {
+		return numberActiveUsers;
+	}
+
+	public void setNumberActiveUsers(long numberActiveUsers) {
+		this.numberActiveUsers = numberActiveUsers;
+	}
+
+	public long getTotalVLocations() {
+		return totalVLocations;
+	}
+
+	public void setTotalVLocations(long totalVLocations) {
+		this.totalVLocations = totalVLocations;
+	}
+
+	public long getTotalDataScts() {
+		return totalDataScts;
+	}
+
+	public void setTotalDataScts(long totalDataScts) {
+		this.totalDataScts = totalDataScts;
+	}
+
+	public long getTotalMeasurements() {
+		return totalMeasurements;
+	}
+
+	public void setTotalMeasurements(long totalMeasurements) {
+		this.totalMeasurements = totalMeasurements;
+	}
+
+	public long getTotalDriversF() {
+		return totalDriversF;
+	}
+
+	public void setTotalDriversF(long totalDriversF) {
+		this.totalDriversF = totalDriversF;
+	}
+
+	public long getTotalStepsData() {
+		return totalStepsData;
+	}
+
+	public void setTotalStepsData(long totalStepsData) {
+		this.totalStepsData = totalStepsData;
+	}
+
+	public long getTotalSleepData() {
+		return totalSleepData;
+	}
+
+	public void setTotalSleepData(long totalSleepData) {
+		this.totalSleepData = totalSleepData;
+	}
+
+	public long getTotalHeartRateData() {
+		return totalHeartRateData;
+	}
+
+	public void setTotalHeartRateData(long totalHeartRateData) {
+		this.totalHeartRateData = totalHeartRateData;
+	}
+
+	public long getTotalContextData() {
+		return totalContextData;
+	}
+
+	public void setTotalContextData(long totalContextData) {
+		this.totalContextData = totalContextData;
+	}
+		
+}

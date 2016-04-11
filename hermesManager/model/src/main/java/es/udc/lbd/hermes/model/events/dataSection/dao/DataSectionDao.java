@@ -20,5 +20,5 @@ public interface DataSectionDao extends GenericDao<DataSection, Long> {
 	public List<DataSection> obterDataSectionsWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
 			int startIndex, Integer limit);
 	
-	public AggregateMeasurementVO getAggregateValue(String campo, Double lat, Double lon, Integer day, Integer time);
+	public AggregateMeasurementVO getAggregateValue(String value, Double lat, Double lon, Integer day, Integer time);
 }

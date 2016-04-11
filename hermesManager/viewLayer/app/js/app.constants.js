@@ -49,20 +49,10 @@ var url_state = url_eventManager+'json/stateEventManager';
 var url_dashboard = url_servidor+'api/dashboard/';
 var url_eventsToday = url_dashboard+'json/eventsToday';
 var url_eventsType = url_dashboard+'json/eventsType';
-var url_contarUsuariosMovil = url_dashboard+'json/contarUsuariosMovil';
-var url_contarUsuariosWeb = url_dashboard+'json/contarUsuariosWeb';
-var url_numberActiveUsers = url_dashboard+'json/numberActiveUsers';
-var url_usuarios = url_dashboard+'json/usuarios';
 var url_measurementTypes = url_dashboard+'json/measurementTypes';
+var url_usuarios = url_dashboard+'json/usuarios';
 var url_eventoProcesado = url_dashboard+'json/eventoProcesado';
-var url_totalVLocations = url_dashboard+'json/totalVLocations';
-var url_totalDataScts = url_dashboard+'json/totalDataScts';
-var url_totalMeasurements = url_dashboard+'json/totalMeasurements';
-var url_totalDriversF = url_dashboard+'json/totalDriversF';
-var url_totalStepsData = url_dashboard+'json/totalStepsData';
-var url_totalSleepData = url_dashboard+'json/totalSleepData';
-var url_totalHeartRateData = url_dashboard+'json/totalHeartRateData';
-var url_totalContextData = url_dashboard+'json/totalContextData';
+var url_parameters_statistics = url_dashboard+'json/parametersStatistics';
 
 //Controlador vehicleLocation
 var url_vehicleL = url_servidor+'api/vehiclelocation/';

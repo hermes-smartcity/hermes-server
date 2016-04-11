@@ -29,7 +29,7 @@
 				<li><a data-ui-sref="userProfile"><i class="fa fa-user fa-fw">
 							<!--  -->
 					</i> {{'menu.perfilUsuario' | translate}}</a></li>
-				<li><a data-ui-sref="settings"><i class="fa fa-gear fa-fw">
+				<li data-ng-if="hasRole('ROLE_ADMIN')"><a data-ui-sref="settings"><i class="fa fa-gear fa-fw">
 							<!--  -->
 					</i> {{'menu.ajustes' | translate}}</a></li>
 				<li><a data-ui-sref="changePassword"><i class="fa fa-pencil-square-o fa-fw">
@@ -71,8 +71,8 @@
 				</a>
 				</li>
 
-				<li data-ng-if="hasRole('ROLE_ADMIN')">
-					<a data-ui-sref="dataServices"> <i class="fa fa-edit fa-fw">
+				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
+					<a data-ui-sref="dataServices"> <i class="fa fa-bar-chart-o fa-fw">
 							<!--  -->
 					</i> <span>{{'menu.dataServices' | translate}}</span>
 				</a>
