@@ -5,15 +5,11 @@
 
 	SmartDriverController.$inject = ['$scope', '$filter', '$http', '$translate', 
 	                                '$state', '$rootScope', 'eventsService', 'methods', 
-	                                'types', 'dataSections', 'totalMUsers', 'totalWebUsers', 
-	                                'numberActiveUsers', 'eventsToday', 
-	                                'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                                'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', 'smartDriverService'];
+	                                'types', 'dataSections', 'eventsToday', 
+	                                'eventoProcesado', 'statistics', 'smartDriverService'];
 
 	function SmartDriverController($scope, $filter, $http, $translate, $state, 
-			$rootScope, eventsService, methods, types, dataSections, totalMUsers, totalWebUsers, 
-			numberActiveUsers, eventsToday, eventoProcesado, totalL, totalDS, totalM, totalDF, 
-			totalSTD, totalSLD, totalHRD, totalCD, smartDriverService) {
+			$rootScope, eventsService, methods, types, dataSections, eventsToday, eventoProcesado, statistics, smartDriverService) {
 	
 		var vm = this;
 		
@@ -25,19 +21,20 @@
 		vm.methods = methods;
 		vm.types = types;
 		vm.dataSections = dataSections;
-		vm.totalMUsers = totalMUsers;
-		vm.totalWebUsers = totalWebUsers;
-		vm.numberActiveUsers = numberActiveUsers;
 		vm.eventsToday = eventsToday;
 		vm.eventoProcesado = eventoProcesado;
-		vm.totalL = totalL;	
-		vm.totalDS = totalDS;
-		vm.totalM = totalM;
-		vm.totalDF = totalDF;
-		vm.totalSTD = totalSTD;
-		vm.totalSLD = totalSLD;
-		vm.totalHRD = totalHRD;
-		vm.totalCD = totalCD;
+		
+		vm.totalMUsers = statistics.contarUsuariosMovil;
+		vm.totalWebUsers = statistics.contarUsuariosWeb;
+		vm.numberActiveUsers = statistics.numberActiveUsers;
+		vm.totalL = statistics.totalVLocations;	
+		vm.totalDS = statistics.totalDataScts;
+		vm.totalM = statistics.totalMeasurements;
+		vm.totalDF = statistics.totalDriversF;
+		vm.totalSTD = statistics.totalStepsData;
+		vm.totalSLD = statistics.totalSleepData;
+		vm.totalHRD = statistics.totalHeartRateData;
+		vm.totalCD = statistics.totalContextData;
 		
 		vm.arrancar = arrancar;
 		vm.parar = parar;

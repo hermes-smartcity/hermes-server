@@ -66,22 +66,10 @@
 			controller: 'DashboardController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: eventsType,
 				usuarios: usuarios,
-				totalMUsers: totalMUsers,
-				totalWebUsers: totalWebUsers,
-				numberActiveUsers: numberActiveUsers,
-				measurementsType: measurementsType,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
-				totalL: totalL,
-				totalDS: totalDS,
-				totalM: totalM,
-				totalDF: totalDF,
-				totalSTD: totalSTD,
-				totalSLD: totalSLD,
-				totalHRD: totalHRD,
-				totalCD: totalCD
+				statistics: statistics
 			},
 			data: {
 			      permissions: {
@@ -95,22 +83,10 @@
 			controller: 'UserManagerController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: eventsType,
 				usuarios: usuarios,
-				measurementsType: measurementsType,
-				totalMUsers: totalMUsers,
-				totalWebUsers: totalWebUsers,
-				numberActiveUsers: numberActiveUsers,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
-				totalL: totalL,
-				totalDS: totalDS,
-				totalM: totalM,
-				totalDF: totalDF,
-				totalSTD: totalSTD,
-				totalSLD: totalSLD,
-				totalHRD: totalHRD,
-				totalCD: totalCD
+				statistics: statistics
 			},
 			data: {
 			      permissions: {
@@ -124,22 +100,10 @@
 			controller: 'EventManagerController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: eventsType,
 				usuarios: usuarios,
-				measurementsType: measurementsType,
-				totalMUsers: totalMUsers,
-				totalWebUsers: totalWebUsers,
-				numberActiveUsers: numberActiveUsers,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
-				totalL: totalL,
-				totalDS: totalDS,
-				totalM: totalM,
-				totalDF: totalDF,
-				totalSTD: totalSTD,
-				totalSLD: totalSLD,
-				totalHRD: totalHRD,
-				totalCD: totalCD
+				statistics: statistics
 			},
 			data: {
 			      permissions: {
@@ -153,22 +117,10 @@
 			controller: 'SystemLogsController',
 			controllerAs: 'vm',
 			resolve: {
-				eventsType: eventsType,
 				usuarios: usuarios,
-				measurementsType: measurementsType,
-				totalMUsers: totalMUsers,
-				totalWebUsers: totalWebUsers,
-				numberActiveUsers: numberActiveUsers,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
-				totalL: totalL,
-				totalDS: totalDS,
-				totalM: totalM,
-				totalDF: totalDF,
-				totalSTD: totalSTD,
-				totalSLD: totalSLD,
-				totalHRD: totalHRD,
-				totalCD: totalCD
+				statistics: statistics
 			},
 			data: {
 			      permissions: {
@@ -212,20 +164,9 @@
 				methods: methods,
 				types: types,
 				dataSections: dataSections,
-				totalMUsers: totalMUsers,
-				totalWebUsers: totalWebUsers,
-				numberActiveUsers: numberActiveUsers,
-				measurementsType: measurementsType,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
-				totalL: totalL,
-				totalDS: totalDS,
-				totalM: totalM,
-				totalDF: totalDF,
-				totalSTD: totalSTD,
-				totalSLD: totalSLD,
-				totalHRD: totalHRD,
-				totalCD: totalCD
+				statistics: statistics
 			},
 			data: {
 			      permissions: {
@@ -240,19 +181,9 @@
 			controllerAs: 'vm',
 			resolve: {
 				services: services,
-				totalMUsers: totalMUsers,
-				totalWebUsers: totalWebUsers,
-				numberActiveUsers: numberActiveUsers,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
-				totalL: totalL,
-				totalDS: totalDS,
-				totalM: totalM,
-				totalDF: totalDF,
-				totalSTD: totalSTD,
-				totalSLD: totalSLD,
-				totalHRD: totalHRD,
-				totalCD: totalCD
+				statistics: statistics
 			},
 			data: {
 			      permissions: {
@@ -274,34 +205,9 @@
 	    return eventsService.getUsuarios();
 	}
 	
-	eventsType.$inject = ['eventsService'];
-	function eventsType(eventsService) {
-		return eventsService.getEvensType();
-	}
-	
 	usuarios.$inject = ['eventsService'];
 	function usuarios(eventsService) {
 		return eventsService.getUsuarios();
-	}
-	
-	totalMUsers.$inject = ['userService'];
-	function totalMUsers(userService) {
-		return userService.getTotalMUsers();
-	}
-	
-	totalWebUsers.$inject = ['userService'];
-	function totalWebUsers(userService) {
-		return userService.getTotalWebUsers();
-	}
-	
-	numberActiveUsers.$inject = ['userService'];
-	function numberActiveUsers(userService) {
-		return userService.getNumberActiveUsers();
-	}
-	
-	measurementsType.$inject = ['eventsService'];
-	function measurementsType(eventsService) {
-		return eventsService.getMeasurementsType();
 	}
 	
 	eventoProcesado.$inject = ['eventsService'];
@@ -314,44 +220,9 @@
 		return eventsService.getEventsToday();
 	}
 	
-	totalL.$inject = ['eventsService'];
-	function totalL(eventsService) {
-		return eventsService.getTotalVLocations();
-	}
-	
-	totalDS.$inject = ['eventsService'];
-	function totalDS(eventsService) {
-		return eventsService.getTotalDataScts();
-	}
-	
-	totalM.$inject = ['eventsService'];
-	function totalM(eventsService) {
-		return eventsService.getTotalMeasurements();
-	}
-	
-	totalDF.$inject = ['eventsService'];
-	function totalDF(eventsService) {
-		return eventsService.getTotalDriversF();
-	}
-	
-	totalSTD.$inject = ['eventsService'];
-	function totalSTD(eventsService) {
-		return eventsService.getTotalStepsData();
-	}
-	
-	totalSLD.$inject = ['eventsService'];
-	function totalSLD(eventsService) {
-		return eventsService.getTotalSleepData();
-	}
-	
-	totalHRD.$inject = ['eventsService'];
-	function totalHRD(eventsService) {
-		return eventsService.getTotalHeartRateData();
-	}
-	
-	totalCD.$inject = ['eventsService'];
-	function totalCD(eventsService) {
-		return eventsService.getTotalContextData();
+	statistics.$inject = ['userService'];
+	function statistics(userService) {
+		return userService.getParametersStatistics();
 	}
 	
 	datosSettings.$inject = ['settingsService'];
@@ -456,7 +327,8 @@
 		$location.path(originalPath);
 	}
 
-	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', '$state', '$translate', 'tmhDynamicLocale'];
+	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', 
+	                  '$state', '$translate', 'tmhDynamicLocale'];
 	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, 
 			userService, $state, $translate, tmhDynamicLocale) {
 

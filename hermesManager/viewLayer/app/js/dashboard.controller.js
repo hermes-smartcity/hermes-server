@@ -3,17 +3,13 @@
 
 	angular.module('app').controller('DashboardController', DashboardController);
 
-	DashboardController.$inject = ['$scope', 'eventsType', 'usuarios', 'totalMUsers', 'totalWebUsers', 
-	                               'numberActiveUsers', 'measurementsType', 'eventsToday', 
-	                               'eventoProcesado' ,'totalL', 'totalDS', 'totalM', 'totalDF', 
-	                               'totalSTD', 'totalSLD', 'totalHRD', 'totalCD', '$http', '$timeout', 
-	                               '$log', '$filter', 'eventsService', '$rootScope', '$state',
-	                               'DTOptionsBuilder', '$translate'];
+	DashboardController.$inject = ['$scope', 'usuarios', 'eventoProcesado', 'eventsToday', 'statistics', 
+	                               '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state',
+	                               'DTOptionsBuilder', '$translate', '$localStorage'];
 
-	function DashboardController($scope, eventsType, usuarios, totalMUsers, totalWebUsers, 
-			numberActiveUsers, measurementsType, eventsToday, eventoProcesado, totalL, totalDS, 
-			totalM, totalDF, totalSTD, totalSLD, totalHRD, totalCD, $http, $timeout, $log, $filter, 
-			eventsService, $rootScope, $state, DTOptionsBuilder, $translate) {
+	function DashboardController($scope, usuarios, eventoProcesado, eventsToday, statistics, 
+			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, 
+			$translate, $localStorage) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -24,22 +20,24 @@
 	vm.pintarPuntos = pintarPuntos;
 	vm.pintarLineas = pintarLineas;
 	vm.aplicarFiltros = aplicarFiltros;
-	vm.eventsType = eventsType;
+	vm.eventsType = $localStorage.eventsType;
+	vm.measurementsType = $localStorage.measurementsType;
 	vm.usuarios = usuarios;
-	vm.totalMUsers = totalMUsers;
-	vm.totalWebUsers = totalWebUsers;
-	vm.numberActiveUsers = numberActiveUsers;
-	vm.measurementsType = measurementsType;
 	vm.eventsToday = eventsToday;
 	vm.eventoProcesado = eventoProcesado;
-	vm.totalL = totalL;	
-	vm.totalDS = totalDS;
-	vm.totalM = totalM;
-	vm.totalDF = totalDF;
-	vm.totalSTD = totalSTD;
-	vm.totalSLD = totalSLD;
-	vm.totalHRD = totalHRD;
-	vm.totalCD = totalCD;
+	
+	vm.totalMUsers = statistics.contarUsuariosMovil;
+	vm.totalWebUsers = statistics.contarUsuariosWeb;
+	vm.numberActiveUsers = statistics.numberActiveUsers;
+	vm.totalL = statistics.totalVLocations;	
+	vm.totalDS = statistics.totalDataScts;
+	vm.totalM = statistics.totalMeasurements;
+	vm.totalDF = statistics.totalDriversF;
+	vm.totalSTD = statistics.totalStepsData;
+	vm.totalSLD = statistics.totalSleepData;
+	vm.totalHRD = statistics.totalHeartRateData;
+	vm.totalCD = statistics.totalContextData;
+	
 	vm.mostrarMapa = mostrarMapa;
 	vm.mostrarTabla = mostrarTabla;
 	vm.showMap = true;
