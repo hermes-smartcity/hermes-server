@@ -183,7 +183,7 @@
 				"results": "Results",
 				"noResults": "There are no results",
 				"linkId": "Identifier: ",
-				"maxSpeed": "Maximium Speed: ",
+				"maxSpeed": "Maximum Speed: ",
 				"linkName": "Name: ",
 				"linkType": "Type: ",
 				"position": "Position: ",
@@ -208,8 +208,8 @@
 				"selectDataSection": "Select Data Section",
 				"datasection": "Data Section",
 				"numberOfValues": "Number of values: ",
-				"maximium": "Maximium ",
-				"minimium": "Minimium: ",
+				"maximium": "Maximum ",
+				"minimium": "Minimum: ",
 				"average": "Average: ",
 				"standardDeviation": "Standard Deviation: "
 			}
