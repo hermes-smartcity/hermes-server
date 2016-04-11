@@ -5,16 +5,16 @@
 
 	EventManagerController.$inject = ['$state', '$interval', '$scope', 'usuarios', 
 	                                  '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope',
-	                                  'eventsToday', 'eventoProcesado', 'statistics', '$translate', '$localStorage'];
+	                                  'eventsToday', 'eventoProcesado', 'statistics', '$translate'];
 
 	function EventManagerController($state, $interval, $scope, usuarios, $http, $timeout, $log, $filter,
 			eventsService, $rootScope, eventsToday, eventoProcesado, statistics,
-			$translate, $localStorage) {
+			$translate) {
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
-		vm.eventsType = $localStorage.eventsType;
+		vm.eventsType = $rootScope.eventsType;
 		vm.usuarios = usuarios;
-		vm.measurementsType = $localStorage.measurementsType;
+		vm.measurementsType = $rootScope.measurementsType;
 		vm.arrancar = arrancar;
 		vm.parar = parar;
 		vm.pintarGraficoVehicleLocations = pintarGraficoVehicleLocations;

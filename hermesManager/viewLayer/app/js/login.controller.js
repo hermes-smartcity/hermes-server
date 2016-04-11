@@ -25,11 +25,11 @@
 				//y lo almacenamos en la variable local
 				eventsService.getEvensType().then(getEventsTypeComplete);
 				function getEventsTypeComplete(response){
-					$localStorage.eventsType = response;
+					$rootScope.eventsType = response;
 
 					eventsService.getMeasurementsType().then(getMeasurementsTypeComplete);
 					function getMeasurementsTypeComplete(response){
-						$localStorage.measurementsType = response;
+						$rootScope.measurementsType = response;
 
 						userService.getUser(url_get_user).then(getUserComplete);
 						function getUserComplete(response) {

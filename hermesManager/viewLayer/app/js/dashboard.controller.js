@@ -5,11 +5,11 @@
 
 	DashboardController.$inject = ['$scope', 'usuarios', 'eventoProcesado', 'eventsToday', 'statistics', 
 	                               '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state',
-	                               'DTOptionsBuilder', '$translate', '$localStorage'];
+	                               'DTOptionsBuilder', '$translate'];
 
 	function DashboardController($scope, usuarios, eventoProcesado, eventsToday, statistics, 
 			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, 
-			$translate, $localStorage) {
+			$translate) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -20,8 +20,8 @@
 	vm.pintarPuntos = pintarPuntos;
 	vm.pintarLineas = pintarLineas;
 	vm.aplicarFiltros = aplicarFiltros;
-	vm.eventsType = $localStorage.eventsType;
-	vm.measurementsType = $localStorage.measurementsType;
+	vm.eventsType = $rootScope.eventsType;
+	vm.measurementsType = $rootScope.measurementsType;
 	vm.usuarios = usuarios;
 	vm.eventsToday = eventsToday;
 	vm.eventoProcesado = eventoProcesado;

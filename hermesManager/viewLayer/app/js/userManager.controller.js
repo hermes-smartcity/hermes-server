@@ -6,11 +6,11 @@
 	UserManagerController.$inject = ['$scope', '$http', '$timeout', '$log', '$filter',
 	                                 'userService', '$state', '$rootScope', 'eventsService', 
 	                                 'usuarios', 'eventsToday', 'eventoProcesado', 'statistics', '$translate',
-	                                  'DTOptionsBuilder', '$localStorage'];
+	                                  'DTOptionsBuilder'];
 
 	function UserManagerController($scope, $http, $timeout, $log, $filter, userService, $state, $rootScope,
 			eventsService, usuarios, eventsToday, eventoProcesado, statistics,
-			$translate, DTOptionsBuilder, $localStorage) {
+			$translate, DTOptionsBuilder) {
 	
 	var vm = this;
 	vm.showAdmins = showAdmins;
@@ -26,9 +26,9 @@
 	vm.arrancar = arrancar;
 	vm.parar = parar;
 	
-	vm.eventsType = $localStorage.eventsType;
+	vm.eventsType = $rootScope.eventsType;
 	vm.usuarios = usuarios;
-	vm.measurementsType = $localStorage.measurementsType;
+	vm.measurementsType = $rootScope.measurementsType;
 	vm.eventsToday = eventsToday;
 	vm.eventoProcesado = eventoProcesado;
 	

@@ -5,10 +5,10 @@
 
 	SystemLogsController.$inject = ['$scope', '$filter', '$http', 'DTOptionsBuilder', 'logService',
 	                                '$state', '$rootScope', 'eventsService', 'usuarios', 'eventsToday', 
-	                                'eventoProcesado', 'statistics', '$localStorage'];
+	                                'eventoProcesado', 'statistics'];
 
 	function SystemLogsController($scope, $filter, $http, DTOptionsBuilder, logService, $state, 
-			$rootScope, eventsService, usuarios, eventsToday, eventoProcesado, statistics, $localStorage) {
+			$rootScope, eventsService, usuarios, eventsToday, eventoProcesado, statistics) {
 	
 		var vm = this;
 		
@@ -31,9 +31,9 @@
 		//Inicializar options de la tabla
 		vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
 			
-		vm.eventsType = $localStorage.eventsType;
+		vm.eventsType = $rootScope.eventsType;
 		vm.usuarios = usuarios;
-		vm.measurementsType = $localStorage.measurementsType;
+		vm.measurementsType = $rootScope.measurementsType;
 		vm.eventsToday = eventsToday;
 		vm.eventoProcesado = eventoProcesado;
 		
