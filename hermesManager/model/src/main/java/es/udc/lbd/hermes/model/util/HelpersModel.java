@@ -60,7 +60,7 @@ public class HelpersModel {
 
 	public static Calendar getFecha(String fecha) {
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
 		try {
 			cal.setTime(sdf.parse(fecha));
 		} catch (java.text.ParseException e) {			
@@ -69,6 +69,15 @@ public class HelpersModel {
 		}
 
 		return cal;
+	}
+	
+	public static String obtenerHoySegunFormato(String formato){
+		Calendar cal = Calendar.getInstance();
+
+		SimpleDateFormat sdf = new SimpleDateFormat(formato);
+		String strDate = sdf.format(cal.getTime());
+
+		return strDate;
 	}
 	
 	public static Geometry prepararPunto(Double latitude, Double longitude){
