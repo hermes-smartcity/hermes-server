@@ -5,11 +5,11 @@
 
 	DashboardController.$inject = ['$scope', 'usuarios', 'eventoProcesado', 'eventsToday', 'statistics', 
 	                               '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state',
-	                               'DTOptionsBuilder', '$translate', 'dashboardService'];
+	                               'DTOptionsBuilder', 'DTColumnBuilder', '$translate', 'dashboardService', '$q'];
 
 	function DashboardController($scope, usuarios, eventoProcesado, eventsToday, statistics, 
-			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, 
-			$translate, dashboardService) {
+			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, DTColumnBuilder,
+			$translate, dashboardService, $q) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -49,6 +49,8 @@
 	vm.activeInput = $translate.instant('dashboard.mapa');
 	vm.arrancar = arrancar;
 	vm.parar = parar;
+	
+	vm.datosPromise = datosPromise;
 
 	// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 	if($rootScope.hasRole('ROLE_ADMIN')){
@@ -60,7 +62,18 @@
 	}
 	
 	//Inicializar options de la tabla
-	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
+	//vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
+	vm.dtOptions = DTOptionsBuilder.fromFnPromise(datosPromise);
+	vm.dtColumns  = [
+	                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('vehicleLocation.userId')),
+	                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('vehicleLocation.time')).renderWith(function(data, type, full) {
+	                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+	                }),
+	                DTColumnBuilder.newColumn('speed').withTitle($translate.instant('vehicleLocation.speed')).renderWith(function(data, type, full) {
+	                    return $filter('number')(data, 2);   
+	                }),
+	                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
+	            ];
 	
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	vm.eventTypeSelected = "VEHICLE_LOCATION";
@@ -161,25 +174,22 @@
 
 		if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
 			vm.pintarMapaVehicleLocations();
-			//vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
 			vm.pintarMapaDataSections();
-			//vm.listadoCarga = "./partials/dataSection/dataSectionListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
 			vm.pintarMapaContextData();
-			//vm.listadoCarga = "./partials/contextData/contextDataListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
 				angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
 				angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
 				angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
 			vm.pintarMapaHigh();
-			//vm.listadoCarga = "./partials/measurement/measurementListar.html";
 		}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 			vm.pintarMapaMeasurements();
-			//vm.listadoCarga = "./partials/measurement/measurementListar.html";
 		} else{
 			console.log("No corresponde a ningún tipo --> En construcción");
 		}
+		
+		vm.dtInstance.changeData(datosPromise);
 	}
 	
 	function infoPopup(userId, timestamp, eventType, eventValue) {
@@ -368,6 +378,51 @@
 			}).addTo(map).addTo(markers).bindPopup(info);
 			
 		});
+	}
+	
+	function datosPromise(){
+		
+		var dfd = $q.defer();
+		
+		dfd.resolve(vm.events);
+		
+		return dfd.promise;
+		
+		/*if (vm.events){
+			dfd.resolve(vm.events);
+		}else{
+			
+			var urlToLoad = url_vehicleLocations;
+			if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
+				urlToLoad = url_vehicleLocations;
+			}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
+				urlToLoad = url_dataSections;
+			}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
+				urlToLoad = url_contextData;
+			}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
+					angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
+					angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
+					angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
+				urlToLoad = url_measurements + '?tipo='+vm.eventTypeSelected+'&';
+			}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
+				urlToLoad = url_measurements + '?tipo='+vm.eventTypeSelected+'&';
+			} 
+			
+			var bounds = map.getBounds();				
+			var esLng = bounds.getSouthEast().lng;
+			var esLat = bounds.getSouthEast().lat;
+			var wnLng = bounds.getNorthWest().lng;
+			var wnLat = bounds.getNorthWest().lat;
+			
+			dashboardService.recuperarDatosPeticion(urlToLoad, esLng, esLat, wnLng, wnLat, vm.startDate, 
+					vm.endDate, vm.usuarioSelected).then(function(response){
+						vm.events = response.results;
+						dfd.resolve(JSON.stringify(vm.events));
+					});
+			
+		 }
+		
+		 return dfd.promise;*/
 	}
 	
 	function pintarMapaVehicleLocations() {
