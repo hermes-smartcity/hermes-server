@@ -12,6 +12,8 @@ public class Event {
 	private String eventId;
 	@JsonProperty("Application-Id")
 	private String applicationId;
+	@JsonProperty("Syntax")
+	private String syntax;
 	@JsonProperty("Source-Id")
 	private String sourceId;
 	@JsonProperty("Timestamp")
@@ -69,5 +71,11 @@ public class Event {
 		this.eventData = eventData;
 	}
 
-	
+	public String getSyntax() {
+		return syntax;
+	}
+
+	public void setSyntax(String syntax) {
+		this.syntax = syntax;
+	}
 }
