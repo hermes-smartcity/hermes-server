@@ -64,7 +64,7 @@
 	
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	vm.eventTypeSelected = "VEHICLE_LOCATION";
-	vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
+	vm.listadoCarga = undefined;
 	
 	vm.startDate = new Date();
 	// Inicializamos la fecha de inicio a la de ayer 
@@ -102,12 +102,33 @@
 		vm.showMap = true;
 		vm.showTab = false;
 		vm.activeInput = $translate.instant('dashboard.mapa');
+		
+		//Para evitar que se carguen las tablas de la parte Table
+		vm.listadoCarga = undefined;
 	}
 	
 	function mostrarTabla() {	
 		vm.showMap = false;
 		vm.showTab = true;
 		vm.activeInput = $translate.instant('dashboard.tabla');
+		
+		//Para mostrar la tabla correspondiente
+		if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
+			vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
+		}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
+			vm.listadoCarga = "./partials/dataSection/dataSectionListar.html";
+		}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
+			vm.listadoCarga = "./partials/contextData/contextDataListar.html";
+		}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
+				angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
+				angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
+				angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
+			vm.listadoCarga = "./partials/measurement/measurementListar.html";
+		}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
+			vm.listadoCarga = "./partials/measurement/measurementListar.html";
+		} else{
+			vm.listadoCarga = undefined;
+		}
 	}
 	
 	function arrancar() {
@@ -140,27 +161,25 @@
 
 		if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
 			vm.pintarMapaVehicleLocations();
-			vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
+			//vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
 			vm.pintarMapaDataSections();
-			vm.listadoCarga = "./partials/dataSection/dataSectionListar.html";
+			//vm.listadoCarga = "./partials/dataSection/dataSectionListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
 			vm.pintarMapaContextData();
-			vm.listadoCarga = "./partials/contextData/contextDataListar.html";
+			//vm.listadoCarga = "./partials/contextData/contextDataListar.html";
 		}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
 				angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
 				angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
 				angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
 			vm.pintarMapaHigh();
-			vm.listadoCarga = "./partials/measurement/measurementListar.html";
+			//vm.listadoCarga = "./partials/measurement/measurementListar.html";
 		}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 			vm.pintarMapaMeasurements();
-			vm.listadoCarga = "./partials/measurement/measurementListar.html";
+			//vm.listadoCarga = "./partials/measurement/measurementListar.html";
 		} else{
 			console.log("No corresponde a ningún tipo --> En construcción");
 		}
-		
-	
 	}
 	
 	function infoPopup(userId, timestamp, eventType, eventValue) {
@@ -387,7 +406,7 @@
 		url+=prepararUrl(esLng, esLat, wnLng, wnLat);
 		
 		$http.get(url).success(function(data) {
-			vm.events = data.results;	
+			vm.events = data.results;
 			vm.totalResults = data.totalResults;
 			vm.returnedResults = data.returnedResults;
 			pintarPuntosVehicleLocation(vm.events);
