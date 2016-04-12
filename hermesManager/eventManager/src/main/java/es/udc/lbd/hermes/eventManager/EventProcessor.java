@@ -89,21 +89,25 @@ public class EventProcessor extends Thread {
 		
 		try {
 			Event event = eventParser.parse(chunk);
-			if (event.getEventType() != null) {
-				EventType tipoEvento = EventType.getTipo((String) event.getEventType());
-				EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
-				if (estrategia != null) {
-					try {
-						estrategia.processEvent(event);
-					} catch (ClassCastException e) {
-						logger.error("Event-Type no coincide con el tipo especificado en el body\n"+chunk, e);
+			if (!"ztreamy-command".equals(event.getSyntax())) {
+				if (event.getEventType() != null) {
+					EventType tipoEvento = EventType.getTipo((String) event.getEventType());
+					EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
+					if (estrategia != null) {
+						try {
+							estrategia.processEvent(event);
+						} catch (ClassCastException e) {
+							logger.error("Event-Type no coincide con el tipo especificado en el body\n"+chunk, e);
+						}
+						logger.info("Guardado el evento con Event-Type: " + tipoEvento.getName());
+					} else {
+						logger.warn("EventType desconocido: " + chunk);
 					}
-					logger.info("Guardado el evento con Event-Type: " + tipoEvento.getName());
 				} else {
-					logger.warn("EventType desconocido: " + chunk);
+					logger.warn("EventType is null: " + chunk);
 				}
 			} else {
-				logger.warn("EventType is null: " + chunk);
+				logger.info("Evento ignorado: " + chunk);
 			}
 		} catch (IOException e) {
 			logger.error("Error convirtiendo chunk a JSON", e);
