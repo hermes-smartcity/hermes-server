@@ -14,7 +14,7 @@
 
 		<tbody>
 			<tr data-ng-repeat="vehicleLocation in vm.events track by $index">
-				<td>{{vehicleLocation.usuarioMovil.id}}</td>
+				<td>{{vehicleLocation.userId.substring(0,10)+'...'}}</td>
 				<td>{{vehicleLocation.timestamp | date : "dd/MM/yyyy HH:mm:ss"}}</td>
 				<td>{{vehicleLocation.speed | number:2}}</td>
 				<td>{{vehicleLocation.accuracy}}</td>
