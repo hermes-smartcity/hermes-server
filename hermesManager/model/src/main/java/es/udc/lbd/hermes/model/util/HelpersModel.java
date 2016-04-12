@@ -58,9 +58,9 @@ public class HelpersModel {
 		return getLimiteDiaInferior(fecha);
 	}
 
-	public static Calendar getFecha(String fecha) {
+	public static Calendar getFecha(String fecha, String formato) {
 		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat(formato);
 		try {
 			cal.setTime(sdf.parse(fecha));
 		} catch (java.text.ParseException e) {			
