@@ -1,7 +1,7 @@
 <div data-ng-if="!vm.events.length">{{'systemLogs.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
-			data-dt-options="vm.dtOptions" data-datatable="" >
+			data-dt-options="vm.dtOptions" data-datatable="ng" >
 		<thead>
 			<tr>
 				<th>{{'systemLogs.idLog' | translate}}</th>
@@ -14,7 +14,7 @@
 		<tbody>
 			<tr data-ng-repeat="log in vm.events track by $index">
 				<td>{{log.id}}</td>
-				<td>{{log.dated | date : "dd/MM/yyyy h:mm a"}}</td>
+				<td>{{log.dated | date : "dd/MM/yyyy h:mm:ss a"}}</td>
 				<td>{{log.message}}</td>
 				<td style="width:20px;">
 					<a data-ng-click="vm.deleteLog(log)">

@@ -410,8 +410,6 @@
 			vm.totalResults = data.totalResults;
 			vm.returnedResults = data.returnedResults;
 			pintarPuntosVehicleLocation(vm.events);
-			paginarEventos();
-		
 		});
 	  }
 	  
@@ -435,8 +433,7 @@
 				vm.events = data.results;	
 				vm.totalResults = data.totalResults;
 				vm.returnedResults = data.returnedResults;
-				pintarLineasDataSection(vm.events);
-				paginarEventos();			
+				pintarLineasDataSection(vm.events);			
 			});
 	  }
 	  
@@ -462,7 +459,6 @@
 				vm.totalResults = data.totalResults;
 				vm.returnedResults = data.returnedResults;								
 				pintarPuntos(vm.events);
-				paginarEventos();
 			});
 	  }
 	  
@@ -482,8 +478,6 @@
 				vm.totalResults = data.totalResults;
 				vm.returnedResults = data.returnedResults;		
 				pintarPuntosContextData(vm.events);
-				paginarEventos();
-			
 			});
 		  }
 	  
@@ -508,7 +502,7 @@
 				vm.totalResults = data.totalResults;
 				vm.returnedResults = data.returnedResults;											
 				pintarPuntosHigh(vm.events);
-				paginarEventos();
+				
 			});
 	  }
 	  
@@ -522,11 +516,6 @@
 		  
 	// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 	  vm.aplicarFiltros();
-	  
-	  function paginarEventos() {		  
-		  vm.currentPage = 1;
-		  vm.pageSize = 10;
-	  }
 	 
 	}
 })();
