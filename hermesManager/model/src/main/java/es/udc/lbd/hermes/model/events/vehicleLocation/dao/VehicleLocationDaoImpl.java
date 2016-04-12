@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.spatial.GeometryType;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
@@ -148,8 +149,7 @@ VehicleLocationDao {
 		queryStr += "and timestamp < :fechaFin ";
 		queryStr += "group by round(cast(st_x(position) as numeric) ,1), round(cast(st_y(position) as numeric), 1) ";
 
-		Query query = getSession().createSQLQuery(queryStr);
-
+		Query query = getSession().createSQLQuery(queryStr).addScalar("position", GeometryType.INSTANCE);
 		query.setParameter("bounds", bounds);
 
 		if(idUsuario!=null)
