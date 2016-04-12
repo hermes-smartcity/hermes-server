@@ -16,6 +16,7 @@ function getVF(n, opt_precision) {
 
   var base = Math.pow(10, v);
   var f = ((n * base) | 0) % base;
+
   return {v: v, f: f};
 }
 
