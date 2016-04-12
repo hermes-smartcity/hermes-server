@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.spatial.GeometryType;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
@@ -137,15 +138,18 @@ VehicleLocationDao {
 
 		List<VehicleLocation> elementos = null;
 
-		String queryStr =  "from VehicleLocation where within(position, :bounds) = true ";
+		String queryStr = "select last(id) as id, last(timestamp) as timestamp, last(position) as position, "
+				+ "last(eventId) as \"eventId\", last(idUsuarioMovil) as \"idUsuarioMovil\", "
+				+ "last(accuracy) as accuracy, last(speed) as speed "
+				+ "from vehicleLocation where st_within(position, :bounds) = true ";
 		if(idUsuario!=null)
-			queryStr += "and usuarioMovil.id = :idUsuario ";
+			queryStr += "and idUsuarioMovil = :idUsuario ";
 
 		queryStr += "and timestamp > :fechaIni ";
 		queryStr += "and timestamp < :fechaFin ";
+		queryStr += "group by round(cast(st_x(position) as numeric) ,1), round(cast(st_y(position) as numeric), 1) ";
 
-		Query query = getSession().createQuery(queryStr);
-
+		Query query = getSession().createSQLQuery(queryStr).addScalar("position", GeometryType.INSTANCE);
 		query.setParameter("bounds", bounds);
 
 		if(idUsuario!=null)
@@ -160,6 +164,7 @@ VehicleLocationDao {
 		if(limit!=-1)                                
             query.setMaxResults(limit);
 
+		query.setResultTransformer(Transformers.aliasToBean(VehicleLocation.class));
 		elementos = query.list();
 		
 		return elementos;
