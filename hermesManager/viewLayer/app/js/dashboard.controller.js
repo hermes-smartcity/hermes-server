@@ -5,11 +5,11 @@
 
 	DashboardController.$inject = ['$scope', 'usuarios', 'eventoProcesado', 'eventsToday', 'statistics', 
 	                               '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state',
-	                               'DTOptionsBuilder', '$translate'];
+	                               'DTOptionsBuilder', '$translate', 'dashboardService'];
 
 	function DashboardController($scope, usuarios, eventoProcesado, eventsToday, statistics, 
 			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, 
-			$translate) {
+			$translate, dashboardService) {
 	
 	var vm = this;
 	vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -370,30 +370,6 @@
 		});
 	}
 	
-	// Preparar las fechas para pasarlas como parametro a los controladores
-	function prepararParametrosFechas(){
-		var url = "";
-		if(vm.startDate!==null){
-			var _startDate = $filter('date')(vm.startDate, 'yyyy-MM-dd HH:mm:ss');
-			url += "fechaIni="+ _startDate+"&";
-		}
-		if(vm.endDate!==null){
-			var _endDate = $filter('date')(vm.endDate, 'yyyy-MM-dd HH:mm:ss');
-			url += "fechaFin="+ _endDate+"&";
-		}
-		return url;
-	}
-	
-	// Preparar la url que va a llamar al controlador. TODO falta buscar una manera menos chapuza. y en el futuro se va a cambiar a hacer más REST
-	function prepararUrl(esLng, esLat, wnLng, wnLat){		
-		var url ="";
-		if (typeof vm.usuarioSelected != 'undefined' && vm.usuarioSelected !== null)
-			url+="idUsuario="+ vm.usuarioSelected.id+"&";		
-		url+=prepararParametrosFechas();		
-		url+="wnLng="+wnLng+"&wnLat="+wnLat+"&esLng="+esLng+"&esLat="+esLat;	
-		return url;
-	}
-	
 	function pintarMapaVehicleLocations() {
 	    
 		var bounds = map.getBounds();				
@@ -402,17 +378,14 @@
 		var wnLng = bounds.getNorthWest().lng;
 		var wnLat = bounds.getNorthWest().lat;
 		
-		var url = url_vehicleLocations;
-		url+=prepararUrl(esLng, esLat, wnLng, wnLat);
-		
-		$http.get(url).success(function(data) {
-			vm.events = data.results;
-			vm.totalResults = data.totalResults;
-			vm.returnedResults = data.returnedResults;
+		dashboardService.recuperarDatosPeticion(url_vehicleLocations, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionMapaVehicleLocationsComplete);
+		// En cuanto tenga los eventos los pinto
+		function getPeticionMapaVehicleLocationsComplete(response) {
+			vm.events = response.results;
+			vm.totalResults = response.totalResults;
+			vm.returnedResults = response.returnedResults;
 			pintarPuntosVehicleLocation(vm.events);
-			paginarEventos();
-		
-		});
+		}
 	  }
 	  
 	  function pintarMapaDataSections() {
@@ -422,22 +395,14 @@
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
 			
-			var url = url_dataSections;
-			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
-						
-			var mystyles = {
-					color: 'red',
-					fillOpacity: 0.1
-			};
-			
-			
-			$http.get(url).success(function(data) {
-				vm.events = data.results;	
-				vm.totalResults = data.totalResults;
-				vm.returnedResults = data.returnedResults;
+			dashboardService.recuperarDatosPeticion(url_dataSections, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionMapaDataSectionsComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionMapaDataSectionsComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
 				pintarLineasDataSection(vm.events);
-				paginarEventos();			
-			});
+			}
 	  }
 	  
 	  
@@ -450,20 +415,16 @@
 			
 			var url = url_measurements;
 			url+='?tipo='+vm.eventTypeSelected+'&';
-			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
 			
-			var mystyles = {
-					color: 'red',
-					fillOpacity: 0.1
-			};
-			
-			$http.get(url).success(function(data) {
-				vm.events = data.results;	
-				vm.totalResults = data.totalResults;
-				vm.returnedResults = data.returnedResults;								
+			dashboardService.recuperarDatosPeticion(url, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionMapaMeasurementsComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionMapaMeasurementsComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
 				pintarPuntos(vm.events);
-				paginarEventos();
-			});
+			}
+			
 	  }
 	  
 	  function pintarMapaContextData() {
@@ -473,18 +434,15 @@
 			var esLat = bounds.getSouthEast().lat;
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
-			
-			var url = url_contextData;
-			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
-			
-			$http.get(url).success(function(data) {
-				vm.events = data.results;	
-				vm.totalResults = data.totalResults;
-				vm.returnedResults = data.returnedResults;		
+		
+			dashboardService.recuperarDatosPeticion(url_contextData, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionMapaContextDataComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionMapaContextDataComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
 				pintarPuntosContextData(vm.events);
-				paginarEventos();
-			
-			});
+			}
 		  }
 	  
 	  function pintarMapaHigh() {
@@ -493,23 +451,18 @@
 			var esLat = bounds.getSouthEast().lat;
 			var wnLng = bounds.getNorthWest().lng;
 			var wnLat = bounds.getNorthWest().lat;
-			
+					
 			var url = url_measurements;
 			url+='?tipo='+vm.eventTypeSelected+'&';
-			url+=prepararUrl(esLng, esLat, wnLng, wnLat);
 			
-			var mystyles = {
-					color: 'red',
-					fillOpacity: 0.1
-			};
-			
-			$http.get(url).success(function(data) {
-				vm.events = data.results;	
-				vm.totalResults = data.totalResults;
-				vm.returnedResults = data.returnedResults;											
+			dashboardService.recuperarDatosPeticion(url, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionMapaHighComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionMapaHighComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
 				pintarPuntosHigh(vm.events);
-				paginarEventos();
-			});
+			}
 	  }
 	  
 	 function onTimeSetStart() {
@@ -522,11 +475,6 @@
 		  
 	// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 	  vm.aplicarFiltros();
-	  
-	  function paginarEventos() {		  
-		  vm.currentPage = 1;
-		  vm.pageSize = 10;
-	  }
 	 
 	}
 })();

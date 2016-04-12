@@ -1,7 +1,7 @@
 <div data-ng-if="!vm.events.length">{{'contextData.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
-			data-dt-options="vm.dtOptions" data-datatable="" >
+			data-dt-options="vm.dtOptions" data-datatable="ng" >
 		<thead>
 			<tr>
 				<th>{{'contextData.userId' | translate}}</th>
@@ -14,7 +14,7 @@
 		<tbody>
 			<tr data-ng-repeat="contextData in vm.events track by $index">
 				<td>{{contextData.usuarioMovil.id}}</td>
-				<td>{{contextData.timeLog | date : "MM/dd/yyyy h:mm a"}}</td>
+				<td>{{contextData.timeLog | date : "dd/MM/yyyy hh:mm:ss a"}}</td>
 				<td>{{contextData.detectedActivity}}</td>
 				<td>{{contextData.accuracy}}</td>
 			</tr>

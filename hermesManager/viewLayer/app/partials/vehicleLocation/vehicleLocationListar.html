@@ -2,7 +2,7 @@
 <div data-ng-if="!vm.events.length">{{'vehicleLocation.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
-			data-dt-options="vm.dtOptions" data-datatable="" >
+			data-dt-options="vm.dtOptions" data-datatable="ng" >
 		<thead>
 			<tr>
 				<th>{{'vehicleLocation.userId' | translate}}</th>
@@ -15,7 +15,7 @@
 		<tbody>
 			<tr data-ng-repeat="vehicleLocation in vm.events track by $index">
 				<td>{{vehicleLocation.usuarioMovil.id}}</td>
-				<td>{{vehicleLocation.timestamp | date : "MM/dd/yyyy h:mm a"}}</td>
+				<td>{{vehicleLocation.timestamp | date : "dd/MM/yyyy hh:mm:ss a"}}</td>
 				<td>{{vehicleLocation.speed | number:2}}</td>
 				<td>{{vehicleLocation.accuracy}}</td>
 			</tr>

@@ -1,7 +1,7 @@
 <div data-ng-if="!vm.events.length">{{'measurement.noEvents' | translate}}</div>
 <div class="table-responsive">
 	<table data-ng-if="vm.events.length" class="table table-hover"
-			data-dt-options="vm.dtOptions" data-datatable="" >
+			data-dt-options="vm.dtOptions" data-datatable="ng" >
 		<thead>
 			<tr>
 				<th>{{'measurement.userId' | translate}}</th>
@@ -15,7 +15,7 @@
 		<tbody>
 			<tr data-ng-repeat="measurement in vm.events track by $index">
 				<td>{{measurement.usuarioMovil.id}}</td>
-				<td>{{measurement.timestamp | date : "MM/dd/yyyy h:mm a"}}</td>
+				<td>{{measurement.timestamp | date : "dd/MM/yyyy hh:mm:ss a"}}</td>
 				<td>{{measurement.value | number:2}}</td>
 				<td>{{measurement.speed | number:2}}</td>
 				<td>{{measurement.accuracy}}</td>
