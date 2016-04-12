@@ -16,6 +16,7 @@ import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.ListaVehicleLocations;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocationDTO;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.setting.Setting;
 import es.udc.lbd.hermes.model.setting.dao.SettingDao;
@@ -97,7 +98,7 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 			returnedResults = totalResults.intValue();
 		}
 		
-		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocationsWithLimit(idUsuario, fechaIni, 
+		List<VehicleLocationDTO> vehicleLocations = vehicleLocationDao.obterVehicleLocationsWithLimit(idUsuario, fechaIni, 
 				fechaFin, polygon, -1, returnedResults);	
 		
 		ListaVehicleLocations listado = new ListaVehicleLocations(totalResults, returnedResults, vehicleLocations);
