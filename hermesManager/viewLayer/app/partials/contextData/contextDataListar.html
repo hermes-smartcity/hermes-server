@@ -14,7 +14,7 @@
 		<tbody>
 			<tr data-ng-repeat="contextData in vm.events track by $index">
 				<td>{{contextData.usuarioMovil.id}}</td>
-				<td>{{contextData.timeLog | date : "dd/MM/yyyy hh:mm:ss a"}}</td>
+				<td>{{contextData.timeLog | date : "dd/MM/yyyy HH:mm:ss"}}</td>
 				<td>{{contextData.detectedActivity}}</td>
 				<td>{{contextData.accuracy}}</td>
 			</tr>

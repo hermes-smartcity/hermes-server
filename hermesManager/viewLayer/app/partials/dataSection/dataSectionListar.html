@@ -23,7 +23,7 @@
 		<tbody>
 			<tr data-ng-repeat="dataSection in vm.events track by $index">
 				<td>{{dataSection.usuarioMovil.id}}</td>
-				<td>{{dataSection.timestamp | date : "dd/MM/yyyy hh:mm:ss a"}}</td>
+				<td>{{dataSection.timestamp | date : "dd/MM/yyyy HH:mm:ss"}}</td>
 				<td>{{dataSection.minSpeed | number:2}}</td>
 				<td>{{dataSection.maxSpeed | number:2}}</td>
 				<td>{{dataSection.medianSpeed | number:2}}</td>
