@@ -14,7 +14,7 @@
 		<tbody>
 			<tr data-ng-repeat="log in vm.events track by $index">
 				<td>{{log.id}}</td>
-				<td>{{log.dated | date : "MM/dd/yyyy h:mm a"}}</td>
+				<td>{{log.dated | date : "dd/MM/yyyy h:mm a"}}</td>
 				<td>{{log.message}}</td>
 				<td style="width:20px;">
 					<a data-ng-click="vm.deleteLog(log)">
