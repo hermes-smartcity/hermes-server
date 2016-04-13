@@ -51,7 +51,10 @@
 	vm.parar = parar;
 	
 	vm.datosPromise = datosPromise;
-
+	vm.cargarListadoTabla = cargarListadoTabla;
+	vm.recargarTabla = recargarTabla;
+	vm.cargarColumnasTabla = cargarColumnasTabla;	
+	
 	// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 	if($rootScope.hasRole('ROLE_ADMIN')){
 		eventsService.getStateActualizado().then(getStateActualizadoComplete);		
@@ -62,22 +65,97 @@
 	}
 	
 	//Inicializar options de la tabla
-	//vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
-	vm.dtOptions = DTOptionsBuilder.fromFnPromise(datosPromise);
-	vm.dtColumns  = [
-	                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('vehicleLocation.userId')),
-	                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('vehicleLocation.time')).renderWith(function(data, type, full) {
-	                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
-	                }),
-	                DTColumnBuilder.newColumn('speed').withTitle($translate.instant('vehicleLocation.speed')).renderWith(function(data, type, full) {
-	                    return $filter('number')(data, 2);   
-	                }),
-	                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
-	            ];
+	vm.dtInstance = null;
 	
+	//vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json").fromFnPromise(datosPromise);
+	vm.dtOptions = DTOptionsBuilder.fromFnPromise(datosPromise);
+		
+	vm.dtInstanceCallback = function(_dtInstance){
+        vm.dtInstance = _dtInstance;
+    };
+        
+    vm.dtColumnsVL  = [
+		                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('vehicleLocation.userId')),
+		                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('vehicleLocation.time')).renderWith(function(data, type, full) {
+		                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                }),
+		                DTColumnBuilder.newColumn('speed').withTitle($translate.instant('vehicleLocation.speed')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
+		            ];
+	
+    vm.dtColumnsM  = [
+		                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('measurement.userId')),
+		                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('measurement.time')).renderWith(function(data, type, full) {
+		                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                }),
+		                DTColumnBuilder.newColumn('value').withTitle($translate.instant('measurement.value')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('speed').withTitle($translate.instant('measurement.speed')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('measurement.accuracy'))
+		            ];
+    
+    vm.dtColumnsDS  = [
+		                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('dataSection.userId')),
+		                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('dataSection.date')).renderWith(function(data, type, full) {
+		                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                }),
+		                DTColumnBuilder.newColumn('minSpeed').withTitle($translate.instant('dataSection.minimimSpeed')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('maxSpeed').withTitle($translate.instant('dataSection.maximumSpeed')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('medianSpeed').withTitle($translate.instant('dataSection.medianSpeed')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('averageSpeed').withTitle($translate.instant('dataSection.averageSpeed')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('standardDeviationSpeed').withTitle($translate.instant('dataSection.stdDevSpeed')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('averageAcceleration').withTitle($translate.instant('dataSection.averageAcceleration')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('averageDeceleration').withTitle($translate.instant('dataSection.averageDeceleration')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('numHighAccelerations').withTitle($translate.instant('dataSection.highAcceleration')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('numHighDecelerations').withTitle($translate.instant('dataSection.highDecceleration')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('averageHeartRate').withTitle($translate.instant('dataSection.averageHeartRate')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                }),
+		                DTColumnBuilder.newColumn('standardDeviationHeartRate').withTitle($translate.instant('dataSection.stdDevHeartRate')).renderWith(function(data, type, full) {
+		                    return $filter('number')(data, 2);   
+		                })
+		            ];
+    
+    vm.dtColumnsCD  = [
+		                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('contextData.userId')),
+		                DTColumnBuilder.newColumn('timeLog').withTitle($translate.instant('contextData.time')).renderWith(function(data, type, full) {
+		                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                }),
+		                DTColumnBuilder.newColumn('detectedActivity').withTitle($translate.instant('contextData.detectedActivity')),
+		                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('contextData.accuracy'))
+		            ];
+    
+    
 	// Inicializamos el filtro de event type para que inicialmente liste vehicle Locations
 	vm.eventTypeSelected = "VEHICLE_LOCATION";
 	vm.listadoCarga = undefined;
+	
+	//Inicializamos dtcolumsn segund el tipo seleccionado
+	vm.cargarColumnasTabla();
+	
 	
 	vm.startDate = new Date();
 	// Inicializamos la fecha de inicio a la de ayer 
@@ -111,20 +189,114 @@
 	map.on('dragend', aplicarFiltros);
 	map.on('zoomend', aplicarFiltros);
 
-	function mostrarMapa() {	
-		vm.showMap = true;
-		vm.showTab = false;
-		vm.activeInput = $translate.instant('dashboard.mapa');
+	
+	function cargarColumnasTabla(){
+		//Para mostrar la tabla correspondiente
+		if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
+			vm.dtColumns  = [
+				                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('vehicleLocation.userId')),
+				                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('vehicleLocation.time')).renderWith(function(data, type, full) {
+				                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                }),
+				                DTColumnBuilder.newColumn('speed').withTitle($translate.instant('vehicleLocation.speed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
+				            ];
+			
+		}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
+			
+			vm.dtColumns  = [
+				                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('dataSection.userId')),
+				                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('dataSection.date')).renderWith(function(data, type, full) {
+				                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                }),
+				                DTColumnBuilder.newColumn('minSpeed').withTitle($translate.instant('dataSection.minimimSpeed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('maxSpeed').withTitle($translate.instant('dataSection.maximumSpeed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('medianSpeed').withTitle($translate.instant('dataSection.medianSpeed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('averageSpeed').withTitle($translate.instant('dataSection.averageSpeed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('standardDeviationSpeed').withTitle($translate.instant('dataSection.stdDevSpeed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('averageAcceleration').withTitle($translate.instant('dataSection.averageAcceleration')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('averageDeceleration').withTitle($translate.instant('dataSection.averageDeceleration')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('numHighAccelerations').withTitle($translate.instant('dataSection.highAcceleration')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('numHighDecelerations').withTitle($translate.instant('dataSection.highDecceleration')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('averageHeartRate').withTitle($translate.instant('dataSection.averageHeartRate')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('standardDeviationHeartRate').withTitle($translate.instant('dataSection.stdDevHeartRate')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                })
+				            ];
+			
+		}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
+			
+			vm.dtColumns  = [
+				                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('contextData.userId')),
+				                DTColumnBuilder.newColumn('timeLog').withTitle($translate.instant('contextData.time')).renderWith(function(data, type, full) {
+				                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                }),
+				                DTColumnBuilder.newColumn('detectedActivity').withTitle($translate.instant('contextData.detectedActivity')),
+				                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('contextData.accuracy'))
+				            ];
+			
 		
-		//Para evitar que se carguen las tablas de la parte Table
-		vm.listadoCarga = undefined;
+		}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
+				angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
+				angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
+				angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
+			
+			vm.dtColumns  = [
+				                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('measurement.userId')),
+				                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('measurement.time')).renderWith(function(data, type, full) {
+				                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                }),
+				                DTColumnBuilder.newColumn('value').withTitle($translate.instant('measurement.value')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('speed').withTitle($translate.instant('measurement.speed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('measurement.accuracy'))
+				            ];
+			
+		}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
+			
+			vm.dtColumns  = [
+				                DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('measurement.userId')),
+				                DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('measurement.time')).renderWith(function(data, type, full) {
+				                    return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                }),
+				                DTColumnBuilder.newColumn('value').withTitle($translate.instant('measurement.value')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('speed').withTitle($translate.instant('measurement.speed')).renderWith(function(data, type, full) {
+				                    return $filter('number')(data, 2);   
+				                }),
+				                DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('measurement.accuracy'))
+				            ];
+			
+		} 
 	}
 	
-	function mostrarTabla() {	
-		vm.showMap = false;
-		vm.showTab = true;
-		vm.activeInput = $translate.instant('dashboard.tabla');
-		
+	function cargarListadoTabla(){
 		//Para mostrar la tabla correspondiente
 		if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
 			vm.listadoCarga = "./partials/vehicleLocation/vehicleLocationListar.html";
@@ -142,7 +314,26 @@
 		} else{
 			vm.listadoCarga = undefined;
 		}
+		
 	}
+	
+	function mostrarMapa() {	
+		vm.showMap = true;
+		vm.showTab = false;
+		vm.activeInput = $translate.instant('dashboard.mapa');
+		
+		//Para evitar que se carguen las tablas de la parte Table
+		vm.listadoCarga = undefined;
+	}
+	
+	function mostrarTabla() {	
+		vm.showMap = false;
+		vm.showTab = true;
+		vm.activeInput = $translate.instant('dashboard.tabla');
+		
+		vm.cargarListadoTabla();
+	}
+	
 	
 	function arrancar() {
 		var resultado = {
@@ -166,6 +357,7 @@
 		$state.go('dashboard');
 	}
 	
+    
 	function aplicarFiltros() {		
 		var pos = vm.eventTypeSelected.indexOf('_'); 
 		var value = vm.eventTypeSelected.substr(0, pos);
@@ -189,7 +381,38 @@
 			console.log("No corresponde a ningún tipo --> En construcción");
 		}
 		
-		vm.dtInstance.changeData(datosPromise);
+	}
+	
+	function recargarTabla(){
+		
+		if (vm.dtInstance !== null){
+			if (vm.showTab === true){
+				
+				//Reasignamos el valor de dtcolumns
+				//vm.cargarColumnasTabla();
+				
+				var nuevosDatos = datosPromise;
+				
+				//Asignamos el nuevo dato a donde corresponda
+				if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
+					vm.dtInstance.changeData(nuevosDatos);
+				}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
+					vm.dtInstance.changeData(nuevosDatos);
+				}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
+					vm.dtInstance.changeData(nuevosDatos);
+				}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
+						angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
+						angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
+						angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
+					vm.dtInstance.changeData(nuevosDatos);	
+				}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
+					vm.dtInstance.changeData(nuevosDatos);	
+				}
+				
+			}
+		
+		}
+
 	}
 	
 	function infoPopup(userId, timestamp, eventType, eventValue) {
@@ -381,48 +604,10 @@
 	}
 	
 	function datosPromise(){
-		
-		var dfd = $q.defer();
-		
+		var dfd = $q.defer();		
 		dfd.resolve(vm.events);
-		
+	
 		return dfd.promise;
-		
-		/*if (vm.events){
-			dfd.resolve(vm.events);
-		}else{
-			
-			var urlToLoad = url_vehicleLocations;
-			if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
-				urlToLoad = url_vehicleLocations;
-			}else if(angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
-				urlToLoad = url_dataSections;
-			}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
-				urlToLoad = url_contextData;
-			}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
-					angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
-					angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
-					angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
-				urlToLoad = url_measurements + '?tipo='+vm.eventTypeSelected+'&';
-			}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
-				urlToLoad = url_measurements + '?tipo='+vm.eventTypeSelected+'&';
-			} 
-			
-			var bounds = map.getBounds();				
-			var esLng = bounds.getSouthEast().lng;
-			var esLat = bounds.getSouthEast().lat;
-			var wnLng = bounds.getNorthWest().lng;
-			var wnLat = bounds.getNorthWest().lat;
-			
-			dashboardService.recuperarDatosPeticion(urlToLoad, esLng, esLat, wnLng, wnLat, vm.startDate, 
-					vm.endDate, vm.usuarioSelected).then(function(response){
-						vm.events = response.results;
-						dfd.resolve(JSON.stringify(vm.events));
-					});
-			
-		 }
-		
-		 return dfd.promise;*/
 	}
 	
 	function pintarMapaVehicleLocations() {
@@ -440,6 +625,8 @@
 			vm.totalResults = response.totalResults;
 			vm.returnedResults = response.returnedResults;
 			pintarPuntosVehicleLocation(vm.events);
+			
+			vm.recargarTabla();
 		}
 	  }
 	  
@@ -457,6 +644,8 @@
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
 				pintarLineasDataSection(vm.events);
+				
+				vm.recargarTabla();
 			}
 	  }
 	  
@@ -478,6 +667,8 @@
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
 				pintarPuntos(vm.events);
+				
+				vm.recargarTabla();
 			}
 			
 	  }
@@ -497,6 +688,8 @@
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
 				pintarPuntosContextData(vm.events);
+				
+				vm.recargarTabla();
 			}
 		  }
 	  
@@ -517,6 +710,8 @@
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
 				pintarPuntosHigh(vm.events);
+				
+				vm.recargarTabla();
 			}
 	  }
 	  
@@ -528,7 +723,7 @@
 		    vm.showCalendarEnd = !vm.showCalendarEnd;
 	 }
 		  
-	// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
+	 // Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 	  vm.aplicarFiltros();
 	 
 	}

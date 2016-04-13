@@ -23,6 +23,7 @@
 			"numeroEventos": "Events number",
 			"numeroPeticiones": "Request number",
 			"noResults": "There are no results",
+			"noEvents": "There are not events to show",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
