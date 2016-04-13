@@ -3,7 +3,7 @@ package es.udc.lbd.hermes.model.events;
 import java.io.Serializable;
 import java.util.List;
 
-import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocationDTO;
 
 public class ListaVehicleLocations implements Serializable{
 
@@ -11,12 +11,12 @@ public class ListaVehicleLocations implements Serializable{
 	
 	private Long totalResults;
 	private Integer returnedResults;
-	private List<VehicleLocation> results;
+	private List<VehicleLocationDTO> results;
 		
 	public ListaVehicleLocations(){}
 
 	public ListaVehicleLocations(Long totalResults, Integer returnedResults,
-			List<VehicleLocation> results) {
+			List<VehicleLocationDTO> results) {
 		super();
 		this.totalResults = totalResults;
 		this.returnedResults = returnedResults;
@@ -39,11 +39,11 @@ public class ListaVehicleLocations implements Serializable{
 		this.returnedResults = returnedResults;
 	}
 
-	public List<VehicleLocation> getResults() {
+	public List<VehicleLocationDTO> getResults() {
 		return results;
 	}
 
-	public void setResults(List<VehicleLocation> results) {
+	public void setResults(List<VehicleLocationDTO> results) {
 		this.results = results;
 	}
 	

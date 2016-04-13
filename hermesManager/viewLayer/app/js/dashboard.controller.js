@@ -542,7 +542,7 @@
 		
 		markers.clearLayers();
 		angular.forEach(events, function(value, key) {
-			var info = infoPopupVehicleLocation(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.speed, value.accuracy);			
+			var info = infoPopupVehicleLocation(value.userId.substring(0,10) + "...", value.timestamp, value.speed, value.accuracy);			
 			//Convierto el punto que quiero pintar para tener su lat y log
 			var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 			//Añado al mapa el punto

@@ -7,13 +7,19 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.spatial.GeometryType;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.CalendarType;
+import org.hibernate.type.DoubleType;
+import org.hibernate.type.LongType;
+import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocationDTO;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
+import es.udc.lbd.hermes.model.util.GeomUtil;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 
@@ -133,13 +139,14 @@ VehicleLocationDao {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<VehicleLocation> obterVehicleLocationsWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
+	public List<VehicleLocationDTO> obterVehicleLocationsWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
 			int startIndex, Integer limit){
 
-		List<VehicleLocation> elementos = null;
-
+		List<VehicleLocationDTO> elementos = null;
+		int significantDecimals = GeomUtil.computeSignificantDecimals(bounds);
+		
 		String queryStr = "select last(id) as id, last(timestamp) as timestamp, last(position) as position, "
-				+ "last(eventId) as \"eventId\", last(idUsuarioMovil) as \"idUsuarioMovil\", "
+				+ "(select sourceid from usuario_movil where id = last(idUsuarioMovil)) as \"userId\", "
 				+ "last(accuracy) as accuracy, last(speed) as speed "
 				+ "from vehicleLocation where st_within(position, :bounds) = true ";
 		if(idUsuario!=null)
@@ -147,9 +154,15 @@ VehicleLocationDao {
 
 		queryStr += "and timestamp > :fechaIni ";
 		queryStr += "and timestamp < :fechaFin ";
-		queryStr += "group by round(cast(st_x(position) as numeric) ,1), round(cast(st_y(position) as numeric), 1) ";
+		queryStr += "group by round(cast(st_x(position) as numeric), " + significantDecimals + "), round(cast(st_y(position) as numeric), " + significantDecimals + ") ";
 
-		Query query = getSession().createSQLQuery(queryStr).addScalar("position", GeometryType.INSTANCE);
+		SQLQuery query = getSession().createSQLQuery(queryStr);
+		query.addScalar("id", LongType.INSTANCE);
+		query.addScalar("timestamp", CalendarType.INSTANCE);
+		query.addScalar("position", GeometryType.INSTANCE);		
+		query.addScalar("userId", StringType.INSTANCE);
+		query.addScalar("accuracy", DoubleType.INSTANCE);
+		query.addScalar("speed", DoubleType.INSTANCE);		
 		query.setParameter("bounds", bounds);
 
 		if(idUsuario!=null)
@@ -164,7 +177,7 @@ VehicleLocationDao {
 		if(limit!=-1)                                
             query.setMaxResults(limit);
 
-		query.setResultTransformer(Transformers.aliasToBean(VehicleLocation.class));
+		query.setResultTransformer(Transformers.aliasToBean(VehicleLocationDTO.class));
 		elementos = query.list();
 		
 		return elementos;
