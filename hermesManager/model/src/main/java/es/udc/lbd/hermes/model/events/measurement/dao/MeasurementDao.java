@@ -7,6 +7,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementDTO;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.Type;
@@ -24,7 +25,7 @@ public interface MeasurementDao extends GenericDao<Measurement, Long> {
 	public Long contarMeasurementsSegunTipo(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, Geometry bounds);
 	
-	public List<Measurement> obterMeasurementsSegunTipoWithLimit(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
+	public List<MeasurementDTO> obterMeasurementsSegunTipoWithLimit(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, Geometry bounds, int startIndex, Integer limit);
 	
 	public AggregateMeasurementVO getAggregateValue(Type type, Double lat, Double lon, Integer day, Integer time);

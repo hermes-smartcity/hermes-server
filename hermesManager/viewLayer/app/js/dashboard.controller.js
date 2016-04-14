@@ -53,7 +53,7 @@
 		vm.datosPromise = datosPromise;
 		vm.cargarListadoTabla = cargarListadoTabla;
 		vm.recargarTabla = recargarTabla;
-				
+		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);		
@@ -124,7 +124,7 @@
 		                   ];
 
 		vm.dtColumnsM  = [
-		                  DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('measurement.userId')),
+		                  DTColumnBuilder.newColumn('userId').withTitle($translate.instant('measurement.userId')),
 		                  DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('measurement.time')).renderWith(function(data, type, full) {
 		                	  return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                  }),
@@ -178,15 +178,14 @@
 		                   ];
 
 		vm.dtColumnsCD  = [
-		                   DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('contextData.userId')),
+		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('contextData.userId')),
 		                   DTColumnBuilder.newColumn('timeLog').withTitle($translate.instant('contextData.time')).renderWith(function(data, type, full) {
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
 		                   DTColumnBuilder.newColumn('detectedActivity').withTitle($translate.instant('contextData.detectedActivity')),
 		                   DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('contextData.accuracy'))
 		                   ];
-
-
+		
 		function cargarListadoTabla(){
 			//Para mostrar la tabla correspondiente
 			if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
@@ -438,7 +437,7 @@
 
 			markers.clearLayers();
 			angular.forEach(events, function(value, key) {
-				var info = infoPopupContextData(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timeLog, value.detectedActivity, value.accuracy);			
+				var info = infoPopupContextData(value.userId.substring(0,10) + "...", value.timeLog, value.detectedActivity, value.accuracy);			
 				//Convierto el punto que quiero pintar para tener su lat y log
 				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 				//Añado al mapa el punto
@@ -454,7 +453,7 @@
 
 			markers.clearLayers();
 			angular.forEach(events, function(value, key) {
-				var info = infoPopupHigh(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.value, value.speed, value.accuracy);			
+				var info = infoPopupHigh(value.userId.substring(0,10) + "...", value.timestamp, value.value, value.speed, value.accuracy);			
 				//Convierto el punto que quiero pintar para tener su lat y log
 				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 				//Añado al mapa el punto

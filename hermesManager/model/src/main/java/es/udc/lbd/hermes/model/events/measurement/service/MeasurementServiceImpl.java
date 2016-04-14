@@ -16,6 +16,7 @@ import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.ListaMeasurement;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementDTO;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.measurement.dao.MeasurementDao;
 import es.udc.lbd.hermes.model.setting.Setting;
@@ -95,7 +96,7 @@ public class MeasurementServiceImpl implements MeasurementService {
 			returnedResults = totalResults.intValue();
 		}
 
-		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipoWithLimit(tipo, idUsuario, fechaIni, fechaFin, polygon, -1, -1);
+		List<MeasurementDTO> measurements = measurementDao.obterMeasurementsSegunTipoWithLimit(tipo, idUsuario, fechaIni, fechaFin, polygon, -1, -1);
 
 		ListaMeasurement listado = new ListaMeasurement(totalResults, returnedResults, measurements);
 

@@ -14,7 +14,7 @@
 
 		<tbody>
 			<tr data-ng-repeat="measurement in vm.events track by $index">
-				<td>{{measurement.usuarioMovil.id}}</td>
+				<td>{{measurement.userId.substring(0,10)+'...'}}</td>
 				<td>{{measurement.timestamp | date : "dd/MM/yyyy HH:mm:ss"}}</td>
 				<td>{{measurement.value | number:2}}</td>
 				<td>{{measurement.speed | number:2}}</td>

@@ -5,16 +5,23 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
+import org.hibernate.spatial.GeometryType;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.CalendarType;
+import org.hibernate.type.DoubleType;
+import org.hibernate.type.LongType;
+import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementDTO;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.Type;
+import es.udc.lbd.hermes.model.util.GeomUtil;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 @Repository
 public class MeasurementDaoImpl extends GenericDaoHibernate<Measurement, Long> implements
@@ -142,14 +149,20 @@ MeasurementDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Measurement> obterMeasurementsSegunTipoWithLimit(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
+	public List<MeasurementDTO> obterMeasurementsSegunTipoWithLimit(MeasurementType tipo, Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, Geometry bounds, int startIndex, Integer limit) {
 
-		List<Measurement> elementos = null;
-
-		String queryStr =  "from Measurement where  within(position, :bounds) = true ";
+		List<MeasurementDTO> elementos = null;
+		int significantDecimals = GeomUtil.computeSignificantDecimals(bounds);
+				
+		String queryStr = "select last(id) as id, last(timestamp) as timestamp, last(position) as position, "
+				+ "(select sourceid from usuario_movil where id = last(idUsuarioMovil)) as \"userId\", "
+				+ "last(accuracy) as accuracy, last(speed) as speed, " 
+				+ "last(tipo) as tipo, last(value) as value "  
+				+ "from measurement where st_within(position, :bounds) = true ";
+		
 		if(idUsuario!=null)
-			queryStr += "and usuarioMovil.id = :idUsuario";
+			queryStr += "and idUsuarioMovil = :idUsuario";
 
 		queryStr += " and tipo LIKE :tipo ";
 
@@ -157,10 +170,20 @@ MeasurementDao {
 			queryStr += "and timestamp > :fechaIni ";
 
 		if(fechaFin!=null)
-			queryStr += "and timestamp < :fechaFin";
+			queryStr += "and timestamp < :fechaFin ";
+		
+		queryStr += "group by round(cast(st_x(position) as numeric), " + significantDecimals + "), round(cast(st_y(position) as numeric), " + significantDecimals + ") ";
 
-		Query query = getSession().createQuery(queryStr);
-
+		SQLQuery query = getSession().createSQLQuery(queryStr);
+		query.addScalar("id", LongType.INSTANCE);
+		query.addScalar("timestamp", CalendarType.INSTANCE);
+		query.addScalar("position", GeometryType.INSTANCE);		
+		query.addScalar("userId", StringType.INSTANCE);
+		query.addScalar("accuracy", DoubleType.INSTANCE);
+		query.addScalar("speed", DoubleType.INSTANCE);
+		query.addScalar("tipo", StringType.INSTANCE);
+		query.addScalar("value", DoubleType.INSTANCE);
+		
 		query.setParameter("bounds", bounds);
 
 		if(idUsuario!=null)
@@ -177,6 +200,9 @@ MeasurementDao {
 			query.setMaxResults(limit);
 
 		query.setString("tipo", tipo.getName());
+		
+		query.setResultTransformer(Transformers.aliasToBean(MeasurementDTO.class));
+		
 		elementos = query.list();
 		return elementos;
 

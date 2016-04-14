@@ -16,6 +16,7 @@ import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.ListaContextData;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.contextData.ContextData;
+import es.udc.lbd.hermes.model.events.contextData.ContextDataDTO;
 import es.udc.lbd.hermes.model.events.contextData.dao.ContextDataDao;
 import es.udc.lbd.hermes.model.setting.Setting;
 import es.udc.lbd.hermes.model.setting.dao.SettingDao;
@@ -107,7 +108,7 @@ public class ContextDataServiceImpl implements ContextDataService {
 			returnedResults = totalResults.intValue();
 		}
 		
-		List<ContextData> contextData = contextDataDao.obterContextDataWithLimit(idUsuario, fechaIni, 
+		List<ContextDataDTO> contextData = contextDataDao.obterContextDataWithLimit(idUsuario, fechaIni, 
 				fechaFin, polygon, -1, returnedResults);
 
 		ListaContextData listado = new ListaContextData(totalResults, returnedResults, contextData);

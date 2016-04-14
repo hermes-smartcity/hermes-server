@@ -3,7 +3,7 @@ package es.udc.lbd.hermes.model.events;
 import java.io.Serializable;
 import java.util.List;
 
-import es.udc.lbd.hermes.model.events.contextData.ContextData;
+import es.udc.lbd.hermes.model.events.contextData.ContextDataDTO;
 
 public class ListaContextData implements Serializable{
 
@@ -11,12 +11,12 @@ public class ListaContextData implements Serializable{
 	
 	private Long totalResults;
 	private Integer returnedResults;
-	private List<ContextData> results;
+	private List<ContextDataDTO> results;
 		
 	public ListaContextData(){}
 
 	public ListaContextData(Long totalResults, Integer returnedResults,
-			List<ContextData> results) {
+			List<ContextDataDTO> results) {
 		super();
 		this.totalResults = totalResults;
 		this.returnedResults = returnedResults;
@@ -39,11 +39,11 @@ public class ListaContextData implements Serializable{
 		this.returnedResults = returnedResults;
 	}
 
-	public List<ContextData> getResults() {
+	public List<ContextDataDTO> getResults() {
 		return results;
 	}
 
-	public void setResults(List<ContextData> results) {
+	public void setResults(List<ContextDataDTO> results) {
 		this.results = results;
 	}
 	
