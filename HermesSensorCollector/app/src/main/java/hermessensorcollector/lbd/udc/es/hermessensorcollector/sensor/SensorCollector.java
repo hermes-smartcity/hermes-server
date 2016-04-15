@@ -45,7 +45,7 @@ public class SensorCollector implements SensorEventListener {
 
     //static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
     static final int UPDATE_INTERVAL = 60000; //5 Minutos
-    private Timer timer = new Timer();
+    private Timer timer = null;
 
     public SensorCollector(Activity activity, SensorManager mgr, Sensor sensor, int numValues){
         this.activity = activity;
@@ -115,7 +115,18 @@ public class SensorCollector implements SensorEventListener {
         }
     }
 
+    private Timer getTimer(){
+        if (timer == null){
+            timer = new Timer();
+        }else{
+            return timer;
+        }
+
+        return timer;
+    }
+
     public void launchTask(){
+        timer = getTimer();
 
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
@@ -128,9 +139,8 @@ public class SensorCollector implements SensorEventListener {
     }
 
     public void stopTask(){
-        if (timer != null) {
-            timer.cancel();
-        }
+        timer.cancel();
+        timer = null;
     }
 
     /**
