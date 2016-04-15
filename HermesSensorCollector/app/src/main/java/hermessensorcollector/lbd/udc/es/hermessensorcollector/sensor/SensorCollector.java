@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.MainActivity;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
@@ -41,7 +43,9 @@ public class SensorCollector implements SensorEventListener {
     private Sensor sensor;
     private int numValues;
 
-    private SendInformationTask tarea;
+    //static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
+    static final int UPDATE_INTERVAL = 60000; //5 Minutos
+    private Timer timer = new Timer();
 
     public SensorCollector(Activity activity, SensorManager mgr, Sensor sensor, int numValues){
         this.activity = activity;
@@ -112,12 +116,21 @@ public class SensorCollector implements SensorEventListener {
     }
 
     public void launchTask(){
-        tarea = new SendInformationTask();
-        tarea.execute();
+
+        timer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run() {
+                SendInformationTask tarea = new SendInformationTask();
+                tarea.execute();
+            }
+        },0, UPDATE_INTERVAL);
+
     }
 
     public void stopTask(){
-        tarea.cancel(true);
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     /**
