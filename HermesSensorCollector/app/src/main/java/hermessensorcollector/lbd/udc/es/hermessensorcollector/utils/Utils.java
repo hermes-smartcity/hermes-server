@@ -79,9 +79,6 @@ public class Utils {
             editor.putString("nombreUsuario", nombreUsuario);
             editor.commit();
 
-            //Nota: cuando queramos recuperarla haremos algo tal que
-            //SharedPreferences prefs = getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-            //String nombreUsuario = prefs.getString("nombreUsuario", null);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             Log.e("MainActivity", "Error creando el hash del email");
@@ -90,6 +87,13 @@ public class Utils {
             Log.e("MainActivity", "Error creando el hash del email");
         }
 
+    }
+
+    public static String recuperarNombreUsuario(Activity activity){
+        SharedPreferences prefs = activity.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        String nombreUsuario = prefs.getString("nombreUsuario", null);
+
+        return nombreUsuario;
     }
 
     public static String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException{

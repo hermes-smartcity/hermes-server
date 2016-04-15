@@ -12,9 +12,9 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.SensorDTO;
 /**
  * Created by Leticia on 14/04/2016.
  */
-public class SensonJSON extends JSONObject {
+public class SensorJSON extends JSONObject {
 
-    public SensonJSON(String userId, List<SensorDTO> sensores) throws InternalErrorException {
+    public SensorJSON(String userId, List<SensorDTO> sensores) throws InternalErrorException {
         try {
 
             this.put(ConstantsJSON.PARAM_USERID, userId);

@@ -8,17 +8,13 @@ import java.util.Calendar;
 public class SensorDTO {
 
     private Calendar timeStamp;
-    private Double valueX;
-    private Double valueY;
-    private Double valueZ;
+    private float[] values;
 
     public SensorDTO(){}
 
-    public SensorDTO(Calendar timeStamp, Double valueX, Double valueY, Double valueZ) {
+    public SensorDTO(Calendar timeStamp, float[] values) {
         this.timeStamp = timeStamp;
-        this.valueX = valueX;
-        this.valueY = valueY;
-        this.valueZ = valueZ;
+        this.values = values;
     }
 
     public Calendar getTimeStamp() {
@@ -29,27 +25,11 @@ public class SensorDTO {
         this.timeStamp = timeStamp;
     }
 
-    public Double getValueX() {
-        return valueX;
+    public float[] getValues() {
+        return values;
     }
 
-    public void setValueX(Double valueX) {
-        this.valueX = valueX;
-    }
-
-    public Double getValueY() {
-        return valueY;
-    }
-
-    public void setValueY(Double valueY) {
-        this.valueY = valueY;
-    }
-
-    public Double getValueZ() {
-        return valueZ;
-    }
-
-    public void setValueZ(Double valueZ) {
-        this.valueZ = valueZ;
+    public void setValues(float[] values) {
+        this.values = values;
     }
 }

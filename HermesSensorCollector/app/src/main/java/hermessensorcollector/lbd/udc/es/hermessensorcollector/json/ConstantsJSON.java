@@ -11,9 +11,6 @@ public class ConstantsJSON {
     public static String PARAM_USERID = "userID";
     public static String PARAM_SENSORDATA = "sensorData";
     public static String PARAM_TIMESTAMP = "timeStamp";
-    public static String PARAM_VALUEX = "valueX";
-    public static String PARAM_VALUEY = "valueY";
-    public static String PARAM_VALUEZ = "valueZ";
-
+    public static String PARAM_VALUES = "values";
 
 }

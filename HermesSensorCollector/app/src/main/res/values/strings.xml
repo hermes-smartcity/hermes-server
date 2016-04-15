@@ -45,4 +45,6 @@
     <string name="writeEmail">Write your email</string>
     <string name="email">Email</string>
     <string name="emailIncorrect">The format of this email is not correct</string>
+
+    <string name="album_name">Photos</string>
 </resources>

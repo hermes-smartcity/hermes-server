@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import java.util.List;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor.SensorCollector;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor.SensorInterface;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
@@ -62,18 +64,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private LinearLayout layout_real_time_data;
 
     // Dynamic (real-time views)
-    TextView delay_view;
-    TextView event_count_view;
-    TextView timestamp_view;
-    TextView accuracy_view;
+    private TextView delay_view;
+    private TextView event_count_view;
+    private TextView timestamp_view;
+    private TextView accuracy_view;
 
-    ArrayList<TextView> data_value_views;
+    private ArrayList<TextView> data_value_views;
+
+    private Button buttonDataCollection;
 
     private int delay = -1;
     private int event_counter = 0;
 
+    //The sensor to use
+    private Sensor sensor;
     // The sensor interface to this sensor
     private SensorInterface si;
+    //The sensor collector to shis sensor
+    private SensorCollector sc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Acquire sensor manager
         mgr = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 
+        //Recuperamos el email del dispositivo
         getLoaderManager().initLoader(0, null, this);
 
         //Recuperamos los objetos de la pantalla
@@ -104,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         sensor_range_layout = (LinearLayout) findViewById(R.id.sensor_range_layout);
         sensor_resolution_layout = (LinearLayout) findViewById(R.id.sensor_resolution_layout);
         layout_real_time_data = (LinearLayout) findViewById(R.id.layout_real_time_data);
+
+        buttonDataCollection = (Button) findViewById(R.id.buttonDataCollection);
+        //Asociamos evento al boton
+        buttonDataCollection.setOnClickListener(dataCollectionOnClickListener);
 
         Sensor typeLinearAcceleration = mgr.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         Sensor typeAccelerometer = mgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -122,8 +135,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             sensor_resolution_layout.setVisibility(View.VISIBLE);
             layout_real_time_data.setVisibility(View.VISIBLE);
 
-            //Determinamos el sensor que estamos cargando
+            //Determinamos el sensor que usaremos
             getSensor(typeLinearAcceleration, typeAccelerometer);
+
+            //Determinamos el sensor intefaz correspondiente
+            getSensorInterface();
+
+            //Creamos la instancia de sensorCollection
+            createSensorCollection();
 
             // Initialize basic (static) sensor view
             loadStaticView();
@@ -259,10 +278,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void getSensor(Sensor typeLinearAcceleration, Sensor typeAccelerometer){
 
         if (typeLinearAcceleration != null){
-            si = new SensorInterface(typeLinearAcceleration);
+            sensor = typeLinearAcceleration;
         }else{
-            si = new SensorInterface(typeAccelerometer);
+            sensor = typeAccelerometer;
         }
+    }
+
+    private void getSensorInterface(){
+        si = new SensorInterface(sensor);
+    }
+
+    private void createSensorCollection(){
+        sc = new SensorCollector(MainActivity.this, mgr, sensor, si.getNumValues());
     }
 
     // method to load in the static sensor information
@@ -539,4 +566,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return;
     }
 
+    private Button.OnClickListener dataCollectionOnClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View arg0) {
+            //Datos casos: si el texto del boton pone start o pone stop
+            //a) Si el texto que pone en el boton es Start:
+            // Cambiar el texto del boton por Stop
+            // Registar el sensorcollector para que empieze a tomar datos.
+            // Lanzar la tarea periodica que envia la informacion al servidor
+
+            //b) Si el texto que pone en el boton es Stop
+            // Cambiar el texto por Start
+            // Deregistar el sensorcollector
+            // Para la tarea periodica
+            // Enviar el ultimo bloque de eventos capturados
+
+            if (buttonDataCollection.getText().toString().equals(getString(R.string.start))){
+                //Caso a
+                buttonDataCollection.setText(R.string.stop);
+                sc.registerSensorCollector();
+                sc.launchTask();
+            }else{
+                //Caso b
+                buttonDataCollection.setText(R.string.start);
+                sc.unregisterSensorCollector();
+                sc.stopTask();
+            }
+        }
+    };
 }
