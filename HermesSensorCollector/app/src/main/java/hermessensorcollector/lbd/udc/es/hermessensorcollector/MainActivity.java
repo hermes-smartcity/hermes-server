@@ -1,5 +1,6 @@
 package hermessensorcollector.lbd.udc.es.hermessensorcollector;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private SensorCollector sc;
     //The type of the sensor
     String typeSensor;
+
+    private static final int REQUEST_SETTING = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this,SettingsActivity.class);
 
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_SETTING);
 
             return true;
         }
@@ -252,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     //como no lo hay, lanzo el dialogo
                     FragmentManager fm = getSupportFragmentManager();
                     DialogFragment createDialog = DialogEmail.newInstance();
+                    createDialog.setCancelable(false);
                     createDialog.show(getSupportFragmentManager(), Constants.TAG_DIALOG_EMAIL);
                 }
 
@@ -545,6 +549,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Log.d(TAG, "onDestroy\n");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+
+            case REQUEST_SETTING:{
+                delay = -1;
+                break;
+            }
+
+
+        }
+    }
     // Helper function to register and unregister a sensor listener
     private void registerSensorListener(int d, boolean notify) {
 
