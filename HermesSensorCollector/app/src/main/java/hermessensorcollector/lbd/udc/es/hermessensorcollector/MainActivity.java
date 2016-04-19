@@ -1,26 +1,20 @@
 package hermessensorcollector.lbd.udc.es.hermessensorcollector;
 
-import android.app.Activity;
-import android.app.LoaderManager;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -30,9 +24,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
@@ -43,7 +37,7 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private static final String TAG = "SensorView";
 
@@ -104,9 +98,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Acquire sensor manager
         mgr = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
 
-        //Recuperamos el email del dispositivo
-        getLoaderManager().initLoader(0, null, this);
-
         //Recuperamos los objetos de la pantalla
         no_sensor_details = (TextView) findViewById(R.id.no_sensor_details);
         sensor_icon = (ImageView) findViewById(R.id.sensor_icon);
@@ -140,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             sensor_resolution_layout.setVisibility(View.VISIBLE);
             layout_real_time_data.setVisibility(View.VISIBLE);
 
+            //Recuperamos el email del usuario
+            obtainEmail();
+
             //Determinamos el sensor que usaremos
             getSensor(typeLinearAcceleration, typeAccelerometer);
 
@@ -170,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             layout_real_time_data.setVisibility(View.INVISIBLE);
         }
 
-
     }
 
     @Override
@@ -199,36 +192,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(
-                        ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY),
-                ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE + " = ?",
-                new String[]{ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        List<String> emails = new ArrayList<String>();
-        data.moveToFirst();
-        while (!data.isAfterLast()) {
-            emails.add(data.getString(ProfileQuery.ADDRESS));
-            // Potentially filter on ProfileQuery.IS_PRIMARY
-            data.moveToNext();
-        }
-
-        if (emails.size()>0){
-            Utils.guardarNombreUsuario(this, emails.get(0));
+    private void saveEmail(String emailDevice){
+        if (emailDevice!=null){
+            Utils.guardarNombreUsuario(this, emailDevice);
         }else{
             //Si no hay email, compruebo si en base de datos lo hay
             try {
@@ -259,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     createDialog.show(getSupportFragmentManager(), Constants.TAG_DIALOG_EMAIL);
                 }
 
-
             } catch (InternalErrorException e) {
                 Log.e("MainActivity", "Error recuperando los parametros de la base de datos");
             }
@@ -267,19 +232,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    private void obtainEmail(){
+        String email = null;
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+        Account[] accounts = AccountManager.get(getApplicationContext()).getAccounts();
+        for (Account account : accounts) {
+            if (emailPattern.matcher(account.name).matches()) {
+                email = account.name;
+                break;
+            }
+        }
 
-    }
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
+        saveEmail(email);
     }
 
     private void getSensor(Sensor typeLinearAcceleration, Sensor typeAccelerometer){
@@ -525,6 +489,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onPause();
         Log.d(TAG, "onPause\n");
 
+        delay = -1;
+
         // Unregister ourself from sensor stream
         mgr.unregisterListener(this);
     }
@@ -557,8 +523,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 delay = -1;
                 break;
             }
-
-
         }
     }
     // Helper function to register and unregister a sensor listener
