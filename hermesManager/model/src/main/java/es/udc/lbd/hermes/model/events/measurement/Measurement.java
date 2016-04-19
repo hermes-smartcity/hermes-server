@@ -56,7 +56,7 @@ public class Measurement implements Serializable{
         
         private Double speed;
 
-		@Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+		@Type(type = "es.udc.lbd.hermes.model.util.hibernate.DoubleArrayUserType")
 		private Double[] rrLast10Seconds;
         
         @ManyToOne(fetch = FetchType.EAGER)

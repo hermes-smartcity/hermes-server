@@ -55,7 +55,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
 			        + TablesDB.PARAM_COLUMNA_NAME + ","
 				    + TablesDB.PARAM_COLUMNA_VALUE + ")"
-				+ " VALUES ('" + Constants.SERVICE_URL +"','https://192.168.1.119:1401')";
+				+ " VALUES ('" + Constants.SERVICE_URL +"','http://192.168.1.100:8080/eventManager/')";
 
 		db.execSQL(sqlInsert);
     }

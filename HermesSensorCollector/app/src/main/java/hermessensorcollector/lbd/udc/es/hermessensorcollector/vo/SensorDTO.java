@@ -7,21 +7,21 @@ import java.util.Calendar;
  */
 public class SensorDTO {
 
-    private Calendar timeStamp;
+    private long timeStamp;
     private float[] values;
 
     public SensorDTO(){}
 
-    public SensorDTO(Calendar timeStamp, float[] values) {
+    public SensorDTO(long timeStamp, float[] values) {
         this.timeStamp = timeStamp;
         this.values = values;
     }
 
-    public Calendar getTimeStamp() {
+    public long getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(Calendar timeStamp) {
+    public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
     }
 

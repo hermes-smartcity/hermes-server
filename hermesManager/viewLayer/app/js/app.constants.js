@@ -98,3 +98,7 @@ var url_dataservice = url_servidor+'api/dataservice/';
 var url_services = url_dataservice+'json/services';
 var url_operations = url_dataservice+'json/operations';
 var url_peticionesPorDia = url_dataservice+'json/peticionesPorDia?';
+
+//Controlador de peticiones desde android
+var url_sensordata = url_servidor + 'api/sensordata/';
+var url_request_sensors = url_sensordata + 'sensors';

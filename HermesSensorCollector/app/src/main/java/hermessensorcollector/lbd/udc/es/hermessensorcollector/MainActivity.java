@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private SensorInterface si;
     //The sensor collector to shis sensor
     private SensorCollector sc;
+    //The type of the sensor
+    String typeSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,6 +241,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     Parameter param = listadoParam.get(i);
                     if (param.getName().equals(Constants.EMAIL)){
                         email = param.getValue();
+                        break;
                     }
                 }
 
@@ -279,8 +282,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (typeLinearAcceleration != null){
             sensor = typeLinearAcceleration;
+            typeSensor = "TYPE_LINEAR_ACCELERATION";
         }else{
             sensor = typeAccelerometer;
+            typeSensor = "TYPE_ACCELEROMETER";
         }
     }
 
@@ -289,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void createSensorCollection(){
-        sc = new SensorCollector(MainActivity.this, mgr, sensor, si.getNumValues());
+        sc = new SensorCollector(facadeSettings, MainActivity.this, mgr, sensor, si.getNumValues(), typeSensor);
     }
 
     // method to load in the static sensor information
@@ -448,7 +453,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 text += String.format(getString(R.string.sensor_value_format),
                         si.getLabel(i), si.getUnits());
                 text += String.valueOf(event.values[i]) + "\n";
-                Log.d(TAG, text);
+
             }
         }
     }

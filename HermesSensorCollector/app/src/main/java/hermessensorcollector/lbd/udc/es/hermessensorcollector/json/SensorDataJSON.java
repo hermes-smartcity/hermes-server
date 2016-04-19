@@ -16,7 +16,9 @@ public class SensorDataJSON extends JSONObject {
         try {
 
             this.put(ConstantsJSON.PARAM_TIMESTAMP, sensorDTO.getTimeStamp());
-            this.put(ConstantsJSON.PARAM_VALUES, sensorDTO.getValues());
+
+            ValuesJSON valuesJSON = new ValuesJSON(sensorDTO.getValues());
+            this.put(ConstantsJSON.PARAM_VALUES, valuesJSON);
 
         } catch (JSONException e) {
             throw new InternalErrorException(e);

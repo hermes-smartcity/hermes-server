@@ -68,7 +68,7 @@ public class DataSection implements Serializable{
 		
 		private Double averageDeceleration;
 		
-		@Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+		@Type(type = "es.udc.lbd.hermes.model.util.hibernate.DoubleArrayUserType")
 		private Double[] rrSection;
 		
         @Type(type="org.hibernate.spatial.GeometryType")
@@ -76,10 +76,10 @@ public class DataSection implements Serializable{
         @JsonDeserialize(using = CustomMultiLineStringDeserializer.class)       
         private LineString roadSection;
         
-        @Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+        @Type(type = "es.udc.lbd.hermes.model.util.hibernate.DoubleArrayUserType")
         private Double[] accuracy;
 
-        @Type(type = "es.udc.lbd.hermes.model.events.dataSection.DoubleArrayUserType")
+        @Type(type = "es.udc.lbd.hermes.model.util.hibernate.DoubleArrayUserType")
         private Double[] speed;
         
         @ManyToOne(fetch = FetchType.EAGER)

@@ -7,26 +7,39 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.PowerManager;
 import android.util.Log;
 
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.MainActivity;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.ZipErrorException;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.json.ConstantsJSON;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.json.JSONParser;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.json.SensorJSON;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Compress;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.DirectoryPaths;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.SensorDTO;
 
 /**
@@ -38,20 +51,26 @@ public class SensorCollector implements SensorEventListener {
 
     private Queue<SensorDTO> valuesToSend = new ArrayDeque<SensorDTO>();
 
+    private FacadeSettings facadeSettings;
     private Activity activity;
     private SensorManager mgr;
     private Sensor sensor;
     private int numValues;
+    private String typeSensor;
 
-    //static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
-    static final int UPDATE_INTERVAL = 60000; //5 Minutos
+    static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
     private Timer timer = null;
 
-    public SensorCollector(Activity activity, SensorManager mgr, Sensor sensor, int numValues){
+    private PowerManager.WakeLock wakeLock;
+    private int responseCode;
+
+    public SensorCollector(FacadeSettings facadeSetting, Activity activity, SensorManager mgr, Sensor sensor, int numValues, String typeSensor){
+        this.facadeSettings = facadeSetting;
         this.activity = activity;
         this.mgr = mgr;
         this.sensor = sensor;
         this.numValues = numValues;
+        this.typeSensor = typeSensor;
 
         //Inicializamos previousValues segun el numero de elementos del sensor
         previousValues = new Double[numValues];
@@ -98,13 +117,11 @@ public class SensorCollector implements SensorEventListener {
     }
 
     private void asignarValoresEnviar(SensorEvent event){
-        long tiempo = event.timestamp;
+        //long tiempo = event.timestamp;
+        long tiempo = System.currentTimeMillis();
         float[] valores = event.values;
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(tiempo);
-
-        SensorDTO sensorDTO = new SensorDTO(cal, valores);
+        SensorDTO sensorDTO = new SensorDTO(tiempo, valores);
         valuesToSend.add(sensorDTO);
     }
 
@@ -141,6 +158,10 @@ public class SensorCollector implements SensorEventListener {
     public void stopTask(){
         timer.cancel();
         timer = null;
+
+        //Lanzamos la tarea por si quedaban cosas sin enviar
+        SendInformationTask tarea = new SendInformationTask();
+        tarea.execute();
     }
 
     /**
@@ -176,23 +197,62 @@ public class SensorCollector implements SensorEventListener {
         }
     }
 
-    private class SendInformationTask extends AsyncTask<Void, Void, Boolean> {
+    /**
+     * Metodo para borrar el archivo de la carpeta indicada
+     * @param directory Ruta donde estan los json
+     * @param nameFile Nombre del archivo a eliminar
+     */
+    private void deleteFile(File directory, String nameFile){
+        File file = new File(directory + File.separator + nameFile);
+        file.delete();
+    }
+
+
+    private String recuperarURLServicio(){
+        String serviceUrl = null;
+
+        try {
+            //Recuperamos la lista de parametros que nos interesa
+            List<String> paramBuscar = new ArrayList<String>();
+            paramBuscar.add(Constants.SERVICE_URL);
+
+            List<Parameter> listadoParam = facadeSettings.getListValueParameters(paramBuscar);
+
+            for (int i=0;i<listadoParam.size();i++){
+                Parameter param = listadoParam.get(i);
+                if (param.getName().equals(Constants.SERVICE_URL)){
+                    serviceUrl = param.getValue();
+                    break;
+                }
+            }
+
+
+        } catch (InternalErrorException e) {
+            Log.e("MainActivity", "Error recuperando los parametros de la base de datos");
+        }
+
+        return serviceUrl;
+    }
+    private class SendInformationTask extends AsyncTask<Void, Void, String> {
+
+        DirectoryPaths rutasDirectorios = new DirectoryPaths(activity);
+        File rutaZip = rutasDirectorios.getZipDir();
+        File rutaJson = rutasDirectorios.getJSONDir();
+        String jsonName = rutasDirectorios.getJSONName();
+        String zipName = rutasDirectorios.getZipName();
+        String terminacionJson = ".json";
+        String rutaDirectorioZip;
+
+        String nombre_fichero_json;
+        String nombre_zip;
+
+
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
 
             JSONParser jsonParser = new JSONParser();
 
-            DirectoryPaths rutasDirectorios = new DirectoryPaths(activity);
-            File rutaZip = rutasDirectorios.getZipDir();
-            File rutaJson = rutasDirectorios.getJSONDir();
-            String jsonName = rutasDirectorios.getJSONName();
-            String zipName = rutasDirectorios.getZipName();
-            String terminacionJson = ".json";
-
             try {
-                //Borramos el directorio json y el zip
-                inicializarDirectorioJSON(rutaJson);
-                inicializarDirectorioZip(rutaZip);
 
                 //Recuperamos la lista de elementos a enviar
                 int numElementos = valuesToSend.size();
@@ -206,14 +266,17 @@ public class SensorCollector implements SensorEventListener {
                 String nombreUsuario = Utils.recuperarNombreUsuario(activity);
 
                 //Creamos el json a enviar
-                SensorJSON sensorJsonToSend = new SensorJSON(nombreUsuario, elementsToSend);
+                SensorJSON sensorJsonToSend = new SensorJSON(nombreUsuario, typeSensor, elementsToSend);
+
+                //Creamos un numero aleatorio para concatenar al nombre
+                Random generator = new Random();
+                int n1 = Math.abs(generator.nextInt() % 6);
 
                 //Creamos un fichero json con el contenido de dicho json
                 File directorio_json = rutaJson;
-                String nombre_fichero_json = jsonName;
-                String terminacion = terminacionJson;
+                nombre_fichero_json = jsonName + "_" + String.valueOf(n1);
                 String fileName = directorio_json.getAbsolutePath() + File.separator +
-                        nombre_fichero_json + terminacion;
+                        nombre_fichero_json + terminacionJson;
                 String[] files = new String[1];
                 files[0] = fileName;
 
@@ -221,46 +284,129 @@ public class SensorCollector implements SensorEventListener {
 
                 //Creamos el zip en la ruta indicada
                 File directorio_zip = rutaZip;
-                String nombre_zip = zipName;
-                String rutaDirectorioZip = directorio_zip + File.separator + nombre_zip;
+                nombre_zip = zipName + "_" + String.valueOf(n1);
+                rutaDirectorioZip = directorio_zip + File.separator + nombre_zip;
                 Compress c = new Compress(files, rutaDirectorioZip);
                 c.zip();
 
             } catch(InternalErrorException e) {
                 Log.e("SendInformationTask", "Problemas interno " + e.getMessage());
                 e.printStackTrace();
-                return false;
+                return e.toString();
             } catch (ZipErrorException e) {
                 Log.e("SendInformationTask", "Problemas creanzo zip " + e.getMessage());
                 e.printStackTrace();
-                return false;
+                return e.toString();
             } catch (IOException e) {
                 Log.e("SendInformationTask", "Problemas accediendo al fichero " + e.getMessage());
                 e.printStackTrace();
-                return false;
+                return e.toString();
             }
 
-            return true;
+            //Enviamos el zip
+            try {
+                HttpURLConnection conn = null;
+                DataOutputStream dOut = null;
+                String lineEnd = "\r\n";
+                String twoHyphens = "--";
+                String boundary = "*****";
+                int bytesRead, bytesAvailable, bufferSize;
+                byte[] buffer;
+                int maxBuffersize = 1*1024*1024;
+                File file = new File(rutaDirectorioZip);
+
+                FileInputStream fileIn = new FileInputStream(file);
+                String serviceUrl = recuperarURLServicio();
+                URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_SENSORS);
+
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setUseCaches(false);
+
+                if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
+                    conn.setRequestProperty("Connection", "close");
+                }
+
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                conn.setRequestProperty("fileupload", rutaDirectorioZip);
+
+                dOut = new DataOutputStream(conn.getOutputStream());
+                dOut.writeBytes(twoHyphens + boundary + lineEnd);
+                dOut.writeBytes("Content-Disposition: form-data; name=\"fileupload\";filename=\"" + rutaDirectorioZip + "\"" + lineEnd);
+
+                dOut.writeBytes(lineEnd);
+
+                bytesAvailable = fileIn.available();
+                bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                buffer = new byte[bufferSize];
+                bytesRead = fileIn.read(buffer, 0, bufferSize);
+
+                while(bytesRead > 0)
+                {
+                    dOut.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileIn.available();
+                    bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                    bytesRead = fileIn.read(buffer, 0, bufferSize);
+                }
+
+                dOut.writeBytes(lineEnd);
+                dOut.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                responseCode = conn.getResponseCode();
+                String responseMessage = conn.getResponseMessage();
+
+                Log.i("UPLOAD", "HTTP Response is: " + responseCode + ": " + responseMessage);
+
+                if(responseCode == 200) {
+                    return null;
+                }
+
+                fileIn.close();
+                dOut.flush();
+                dOut.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return responseCode + "";
         }
 
         @Override
         protected void onPreExecute() {
-
+            PowerManager pm = (PowerManager) activity.getApplicationContext().getSystemService(Context.POWER_SERVICE);
+            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
+            wakeLock.acquire();
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if (result){
+        protected void onPostExecute(String result) {
+            wakeLock.release();
+
+            if (result != null){
                 //Informamos de que el envio ha sido correcto
+                Log.i("SendInformationTask", "Datos enviados correctamente: " + result);
             }else{
                 //Informamos de que ha habido algun error enviando los ficheros
+                Log.e("SendInformationTask", "Datos enviados incorrectamente: " + result);
             }
+
+            //Borramos los archivos enviados de la tablet
+            deleteFile(rutaJson, nombre_fichero_json + terminacionJson);
+            deleteFile(rutaZip, nombre_zip);
+
         }
 
         @Override
         protected void onCancelled() {
-            //hacer algo??
-            Utils.crearMensajeToast(activity, "Se ha cancelado la tarea");
+            wakeLock.release();
         }
     }
 }

@@ -225,6 +225,7 @@ CREATE TABLE contextdata (
 )
 ;
 
+-- DataServices
 drop table if exists dataservices cascade;
 drop sequence if exists dataservices_id_seq cascade;
 create sequence dataservices_id_seq;
@@ -238,4 +239,22 @@ CREATE TABLE dataservices (
 )
 ;
 
+-- NetworkLink
 CREATE OR REPLACE VIEW network.link as select * from network.es_cor_2po_4pgr;
+
+-- SensorData
+drop table if exists sensordata cascade;
+drop sequence if exists sensordata_id_seq cascade;
+create sequence sensordata_id_seq;
+
+CREATE TABLE sensordata (
+	id bigint NOT NULL DEFAULT nextval('sensordata_id_seq'::regclass),
+  	userid varchar NOT NULL,
+  	typesensor varchar NOT NULL,
+	startime timestamp without time zone NOT NULL,
+	enditme timestamp without time zone NOT NULL,
+  	values numeric[] NOT NULL,
+	
+  	CONSTRAINT idssensordata_pk PRIMARY KEY (id)
+)
+;
