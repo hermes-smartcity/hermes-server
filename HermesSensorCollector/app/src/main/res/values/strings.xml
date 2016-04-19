@@ -34,7 +34,7 @@
     <string name="service">Service</string>
     <string name="url">URL</string>
 
-    <string name="acept">Acept</string>
+    <string name="acept">Accept</string>
     <string name="cancel">Cancel</string>
 
     <string name="urlRequired">URL service required</string>
