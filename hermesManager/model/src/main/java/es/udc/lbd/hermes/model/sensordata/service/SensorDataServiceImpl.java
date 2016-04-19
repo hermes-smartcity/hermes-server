@@ -11,6 +11,8 @@ import es.udc.lbd.hermes.model.sensordata.SensorData;
 import es.udc.lbd.hermes.model.sensordata.SensorDataJson;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
 import es.udc.lbd.hermes.model.sensordata.dao.SensorDataDao;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 
 @Service("sensorDataService")
 @Transactional
@@ -19,8 +21,19 @@ public class SensorDataServiceImpl implements SensorDataService{
 	@Autowired
 	private SensorDataDao sensorDataDao;
 	
+	@Autowired
+	private UsuarioMovilDao usuarioMovilDao;
+	
 	@Override
-	public void create(SensorData sensorData) {
+	public void create(SensorData sensorData, String userId) {
+				
+		UsuarioMovil usuarioMovil= usuarioMovilDao.findBySourceId(userId);
+		if(usuarioMovil == null){
+			usuarioMovil = new UsuarioMovil();
+			usuarioMovil.setSourceId(userId);
+			usuarioMovilDao.create(usuarioMovil);
+		}
+		sensorData.setUsuarioMovil(usuarioMovil);
 		sensorDataDao.create(sensorData);
 	}
 	
@@ -54,8 +67,8 @@ public class SensorDataServiceImpl implements SensorDataService{
 				valoresActuales = sensorDataJson.getValues();
 				
 				//Creamos el sensorData
-				SensorData sensorData = new SensorData(userId, typeSensor, tiempoAnterior, tiempoActual, valoresAnteriores);
-				sensorDataDao.create(sensorData);
+				SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoActual, valoresAnteriores);
+				create(sensorData, userId);
 				
 				//Reasignamos los valores
 				tiempoAnterior = tiempoActual;
@@ -63,8 +76,8 @@ public class SensorDataServiceImpl implements SensorDataService{
 			}
 			
 			//Insertamos el ultimo
-			SensorData sensorData = new SensorData(userId, typeSensor, tiempoAnterior, tiempoAnterior, valoresAnteriores);
-			sensorDataDao.create(sensorData);
+			SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoAnterior, valoresAnteriores);
+			create(sensorData,userId);
 		}
 		
 	}

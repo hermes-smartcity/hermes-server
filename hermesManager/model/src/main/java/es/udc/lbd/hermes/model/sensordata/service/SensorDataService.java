@@ -5,6 +5,6 @@ import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
 
 public interface SensorDataService {
 
-	public void create(SensorData sensorData);
+	public void create(SensorData sensorData, String userId);
 	public void parserSensors(SensorsDataJson sensorsDataJson);
 }

@@ -4,15 +4,20 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
+
+import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 
 @Entity
 @SequenceGenerator(name = "xeradorId", sequenceName = "sensordata_id_seq")
@@ -24,7 +29,9 @@ public class SensorData implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "xeradorId")
 	private Long id;
 	
-	private String userid;
+	 @ManyToOne(fetch = FetchType.EAGER)
+ 	@JoinColumn(name = "idUsuarioMovil")
+ 	private UsuarioMovil usuarioMovil;
 	
 	private String typesensor;
 	
@@ -39,20 +46,19 @@ public class SensorData implements Serializable{
 	
 	public SensorData(){}
 
-	public SensorData(Long id, String userid, String typesensor,
+	public SensorData(Long id, UsuarioMovil usuarioMovil, String typesensor,
 			Calendar startime, Calendar enditme, Double[] values) {
 		super();
 		this.id = id;
-		this.userid = userid;
+		this.usuarioMovil = usuarioMovil;
 		this.typesensor = typesensor;
 		this.startime = startime;
 		this.enditme = enditme;
 		this.values = values;
 	}
 	
-	public SensorData(String userid, String typesensor, Calendar startime, Calendar enditme, Double[] values) {
+	public SensorData(String typesensor, Calendar startime, Calendar enditme, Double[] values) {
 		super();
-		this.userid = userid;
 		this.typesensor = typesensor;
 		this.startime = startime;
 		this.enditme = enditme;
@@ -67,12 +73,12 @@ public class SensorData implements Serializable{
 		this.id = id;
 	}
 
-	public String getUserid() {
-		return userid;
+	public UsuarioMovil getUsuarioMovil() {
+		return usuarioMovil;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
+		this.usuarioMovil = usuarioMovil;
 	}
 
 	public String getTypesensor() {
