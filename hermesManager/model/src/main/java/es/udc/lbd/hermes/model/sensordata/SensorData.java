@@ -40,7 +40,7 @@ public class SensorData implements Serializable{
 	private Calendar startime;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar enditme;
+	private Calendar endtime;
 	
 	@Type(type = "es.udc.lbd.hermes.model.util.hibernate.NumericArrayUserType")
 	private BigDecimal[] values;
@@ -48,21 +48,21 @@ public class SensorData implements Serializable{
 	public SensorData(){}
 
 	public SensorData(Long id, UsuarioMovil usuarioMovil, String typesensor,
-			Calendar startime, Calendar enditme, BigDecimal[] values) {
+			Calendar startime, Calendar endtime, BigDecimal[] values) {
 		super();
 		this.id = id;
 		this.usuarioMovil = usuarioMovil;
 		this.typesensor = typesensor;
 		this.startime = startime;
-		this.enditme = enditme;
+		this.endtime = endtime;
 		this.values = values;
 	}
 	
-	public SensorData(String typesensor, Calendar startime, Calendar enditme, BigDecimal[] values) {
+	public SensorData(String typesensor, Calendar startime, Calendar endtime, BigDecimal[] values) {
 		super();
 		this.typesensor = typesensor;
 		this.startime = startime;
-		this.enditme = enditme;
+		this.endtime = endtime;
 		this.values = values;
 	}
 	
@@ -98,12 +98,12 @@ public class SensorData implements Serializable{
 		this.startime = startime;
 	}
 
-	public Calendar getEnditme() {
-		return enditme;
+	public Calendar getEndtime() {
+		return endtime;
 	}
 
-	public void setEnditme(Calendar enditme) {
-		this.enditme = enditme;
+	public void setEndtime(Calendar endtime) {
+		this.endtime = endtime;
 	}
 
 	public BigDecimal[] getValues() {

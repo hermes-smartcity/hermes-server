@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
-import es.udc.lbd.hermes.model.events.ListaEventosYdias;
+import es.udc.lbd.hermes.model.events.GraficasSensorData;
 import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
 import es.udc.lbd.hermes.model.sensordata.service.SensorDataService;
@@ -94,7 +94,7 @@ public class SensorDataController  extends MainResource{
 	
 	
 	@RequestMapping(value="/json/infoPorDia", method = RequestMethod.GET)
-	public ListaEventosYdias getInfoPorDia(
+	public GraficasSensorData getInfoPorDia(
 			@RequestParam(required = true) SensorDataType sensor,
 			@RequestParam(value = "idUsuario", required = false) Long idUsuario,		
 			@RequestParam(value = "fechaIni", required = true) String fechaIni,
@@ -108,9 +108,8 @@ public class SensorDataController  extends MainResource{
 		}
 		Calendar ini = Helpers.getFecha(fechaIni);
 		Calendar fin = Helpers.getFecha(fechaFin);
-		//return measurementServicio.obterEventosPorDia(tipo, idUsuario, ini, fin);
 		
-		return null;
+		return sensorDataServicio.obtenerInfoPorDia(sensor, idUsuario, ini, fin);
 		
 	}
 }

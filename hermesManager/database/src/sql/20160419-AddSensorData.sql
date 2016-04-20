@@ -6,7 +6,7 @@ CREATE TABLE sensordata (
 	id bigint NOT NULL DEFAULT nextval('sensordata_id_seq'::regclass),
   	typesensor varchar NOT NULL,
 	startime timestamp without time zone NOT NULL,
-	enditme timestamp without time zone,
+	endtime timestamp without time zone,
   	values numeric[] NOT NULL,
 	idUsuarioMovil BIGINT,
   	CONSTRAINT idssensordata_pk PRIMARY KEY (id),

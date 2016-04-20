@@ -58,8 +58,8 @@ public class SensorCollector implements SensorEventListener {
     private int numValues;
     private String typeSensor;
 
-    static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
-    //static final int UPDATE_INTERVAL = 60000*2; //5 Minutos
+    //static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
+    static final int UPDATE_INTERVAL = 60000*2; //5 Minutos
     private Timer timer = null;
 
     private PowerManager.WakeLock wakeLock;
@@ -165,7 +165,9 @@ public class SensorCollector implements SensorEventListener {
     }
 
     public void stopTask(){
-        timer.cancel();
+        if (timer!=null) {
+            timer.cancel();
+        }
         timer = null;
 
         //indicamos que es el ultimo envio

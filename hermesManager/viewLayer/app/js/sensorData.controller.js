@@ -59,12 +59,11 @@
 			// En cuanto tenga los eventos los pinto
 			function getInfoSensoresPorDiaComplete(response) {
 
-				vm.eventosPorDia = response.data;
-				vm.labels = vm.eventosPorDia.fechas;
-				vm.series = [ $translate.instant('numeroEventos')];
-				vm.data = [vm.eventosPorDia.nEventos];
-			
-
+				vm.infoPorDia = response.data;
+				vm.labels = vm.infoPorDia.labels;
+				vm.series = vm.infoPorDia.series;
+				vm.data = vm.infoPorDia.data;
+				
 				vm.onClick = function (points, evt) {
 				    console.log(points, evt);
 				};
@@ -144,7 +143,7 @@
 			var url = url_infoPorDia;	
 			url +="sensor="+vm.sensorTypeSelected+"&";
 			url+=prepararUrl();
-			//vm.recuperarYpintarSensores(url);
+			vm.recuperarYpintarSensores(url);
 		}
 		
 		function aplicarFiltros() {

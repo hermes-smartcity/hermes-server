@@ -1,15 +1,20 @@
 package es.udc.lbd.hermes.model.sensordata.service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.lbd.hermes.model.events.GraficasSensorData;
 import es.udc.lbd.hermes.model.sensordata.SensorData;
 import es.udc.lbd.hermes.model.sensordata.SensorDataJson;
+import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
 import es.udc.lbd.hermes.model.sensordata.dao.SensorDataDao;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
@@ -67,7 +72,7 @@ public class SensorDataServiceImpl implements SensorDataService{
 				if (usuarioMovil != null){
 					SensorData lastSensor = sensorDataDao.findLast(usuarioMovil.getId(), typeSensor);
 					if (lastSensor != null){
-						lastSensor.setEnditme(tiempoAnterior);
+						lastSensor.setEndtime(tiempoAnterior);
 						sensorDataDao.update(lastSensor);
 					}
 				}
@@ -104,4 +109,62 @@ public class SensorDataServiceImpl implements SensorDataService{
 		}
 		
 	}
+	
+	@Transactional(readOnly = true)
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public GraficasSensorData obtenerInfoPorDia(SensorDataType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin){
+		
+		List<String> labels = new ArrayList<String>();
+		List<String> series = new ArrayList<String>();
+		List<SensorData> informacion = sensorDataDao.informacionPorDia(tipo, idUsuario, fechaIni, fechaFin);
+		
+		//En primer lugar construimos las series
+		if (informacion.size()>0){
+			SensorData sensorData = informacion.get(0);
+			int numValues = sensorData.getValues().length;
+			
+			for (int i = 0; i < numValues; i++) {
+				series.add(String.valueOf(i));
+			}
+		}
+
+		//inicializamos el objeto que tendra los resultos
+		List<List<BigDecimal>> data = new ArrayList<List<BigDecimal>>(series.size());
+		for (int i=0;i<series.size();i++) {
+			data.add(i,new ArrayList<BigDecimal>());
+		}
+		
+		for (SensorData sensorData : informacion) {
+			//Tomamos la fecha de startime que sera la que ira en labels
+			Calendar startTime = sensorData.getStartime();
+			String fecha = calendarToString(startTime, "yyyy-MM-dd HH:mm:ss.SSS");
+			labels.add(fecha);
+			
+			BigDecimal[] valores = sensorData.getValues();
+			for(int i=0;i<valores.length;i++){
+				//Recuperamos del data, la lista que corresponda
+				List<BigDecimal> values = data.get(i);
+				//Le anadimos a esa lista el elemento
+				values.add(valores[i]);
+			}
+			
+		}
+		
+		
+		GraficasSensorData grafica = new GraficasSensorData(labels, series, data);
+		return grafica;
+		
+	}
+	
+	private String calendarToString(Calendar calendar, String formato){
+		String strdate = null;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(formato);
+		strdate = sdf.format(calendar.getTime());
+		
+		return strdate;
+	}
+	
+	
+	
 }
