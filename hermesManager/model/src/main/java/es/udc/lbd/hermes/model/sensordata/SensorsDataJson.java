@@ -14,6 +14,12 @@ public class SensorsDataJson {
 	@JsonProperty("typeSensor")
 	private String typesensor;
 	
+	@JsonProperty("firstSend")
+	private Boolean firstSend;
+	
+	@JsonProperty("lastSend")
+	private Boolean lastSend;
+	
 	@JsonProperty("sensorData")
 	private List<SensorDataJson> sensorData;
 
@@ -31,6 +37,22 @@ public class SensorsDataJson {
 
 	public void setTypesensor(String typesensor) {
 		this.typesensor = typesensor;
+	}
+
+	public Boolean getFirstSend() {
+		return firstSend;
+	}
+
+	public void setFirstSend(Boolean firstSend) {
+		this.firstSend = firstSend;
+	}
+
+	public Boolean getLastSend() {
+		return lastSend;
+	}
+
+	public void setLastSend(Boolean lastSend) {
+		this.lastSend = lastSend;
 	}
 
 	public List<SensorDataJson> getSensorData() {

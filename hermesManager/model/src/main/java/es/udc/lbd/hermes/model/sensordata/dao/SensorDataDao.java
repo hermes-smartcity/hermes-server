@@ -5,4 +5,5 @@ import es.udc.lbd.hermes.model.util.dao.GenericDao;
 
 public interface SensorDataDao extends GenericDao<SensorData, Long>{
 
+	public SensorData findLast(Long userId, String type);
 }

@@ -2,10 +2,13 @@ package es.udc.lbd.hermes.eventManager.controller.events.android;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Calendar;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,15 +18,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
+import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
 import es.udc.lbd.hermes.model.sensordata.service.SensorDataService;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.Rol;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
+import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
 @RestController
 @RequestMapping(value = "/api/sensordata")
 public class SensorDataController  extends MainResource{
 
 	@Autowired private SensorDataService sensorDataServicio;
+	@Autowired private UsuarioWebService usuarioWebService;
 	
 	@RequestMapping(value = "/sensors", method = RequestMethod.POST)
     @ResponseBody
@@ -82,4 +92,25 @@ public class SensorDataController  extends MainResource{
         return null;
 	}
 	
+	
+	@RequestMapping(value="/json/infoPorDia", method = RequestMethod.GET)
+	public ListaEventosYdias getInfoPorDia(
+			@RequestParam(required = true) SensorDataType sensor,
+			@RequestParam(value = "idUsuario", required = false) Long idUsuario,		
+			@RequestParam(value = "fechaIni", required = true) String fechaIni,
+			@RequestParam(value = "fechaFin", required = true) String fechaFin) {
+		
+		// Un usuario tipo consulta solo puede ver sus propios eventos
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		if(usuario.getRol().equals(Rol.ROLE_CONSULTA)){
+			idUsuario = usuario.getUsuarioMovil().getId();			
+		}
+		Calendar ini = Helpers.getFecha(fechaIni);
+		Calendar fin = Helpers.getFecha(fechaFin);
+		//return measurementServicio.obterEventosPorDia(tipo, idUsuario, ini, fin);
+		
+		return null;
+		
+	}
 }

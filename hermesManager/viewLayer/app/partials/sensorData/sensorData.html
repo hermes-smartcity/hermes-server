@@ -1,0 +1,14 @@
+<div class="slide-animate" data-ng-include="'./partials/estadisticas.html'"></div>
+
+<div class="col-lg-9">
+
+	<div>
+		<canvas id="line" class="chart chart-line" data-chart-data="vm.data"
+			data-chart-labels="vm.labels" data-chart-legend="true" data-chart-series="vm.series"
+			data-chart-click="vm.onClick">
+		</canvas>
+	</div>
+</div>
+<div class="col-lg-3">
+	<div class="slide-animate" data-ng-include="'./partials/sensorData/filtros.html'"></div>
+</div>

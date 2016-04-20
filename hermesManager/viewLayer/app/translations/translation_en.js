@@ -97,7 +97,8 @@
 				"userManager": "User Manager",
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
-				"smartdriver": "Smart Driver"
+				"smartdriver": "Smart Driver",
+				"sensorData": "Sensor Data"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -110,7 +111,8 @@
 				"filtrar": "Filter",
 				"servicios": "Services",
 				"operaciones": "Type of operations",
-				"chooseService": "Choose a service first"
+				"chooseService": "Choose a service first",
+				"tipoSensor": "Sensor Type: "
 			},
 			"resultados": {
 				"titulo": "Results",

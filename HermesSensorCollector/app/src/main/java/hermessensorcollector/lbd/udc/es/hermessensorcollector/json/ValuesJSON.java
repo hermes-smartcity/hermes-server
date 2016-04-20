@@ -3,6 +3,8 @@ package hermessensorcollector.lbd.udc.es.hermessensorcollector.json;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.math.BigDecimal;
+
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.SensorDTO;
 
@@ -15,7 +17,7 @@ public class ValuesJSON extends JSONArray{
     public ValuesJSON(float[] values) throws InternalErrorException {
 
         for (float value: values) {
-            Double valor = Double.parseDouble(String.valueOf(value));
+            BigDecimal valor = new BigDecimal(String.valueOf(value));
             this.put(valor);
         }
     }

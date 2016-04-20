@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.model.util.hibernate;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,8 +22,8 @@ public class NumericArrayUserType implements UserType {
 	}
 
 	@Override
-	public Class<Double[]> returnedClass() {
-		return Double[].class;
+	public Class<BigDecimal[]> returnedClass() {
+		return BigDecimal[].class;
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class NumericArrayUserType implements UserType {
 	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner) throws HibernateException, SQLException {
 		// get the first column names
 		if (names != null && names.length > 0 && rs != null && rs.getArray(names[0]) != null) {
-			Double[] results = (Double[]) rs.getArray(names[0]).getArray();
+			BigDecimal[] results = (BigDecimal[]) rs.getArray(names[0]).getArray();
 			return results;
 		}
 		return null;
@@ -50,7 +51,7 @@ public class NumericArrayUserType implements UserType {
 	SQLException {
 		// setting the column with string array
 		if (value != null && st != null) {
-			Double[] castObject = (Double[]) value;
+			BigDecimal[] castObject = (BigDecimal[]) value;
 			Array array = session.connection().createArrayOf("numeric", castObject);
 			st.setArray(index, array);
 		} else {
@@ -60,7 +61,7 @@ public class NumericArrayUserType implements UserType {
 
 	@Override
 	public Object deepCopy(Object value) throws HibernateException {
-		return value == null ? null : ((Double[]) value).clone();
+		return value == null ? null : ((BigDecimal[]) value).clone();
 	}
 
 	@Override

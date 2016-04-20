@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.model.sensordata;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -42,12 +43,12 @@ public class SensorData implements Serializable{
 	private Calendar enditme;
 	
 	@Type(type = "es.udc.lbd.hermes.model.util.hibernate.NumericArrayUserType")
-	private Double[] values;
+	private BigDecimal[] values;
 	
 	public SensorData(){}
 
 	public SensorData(Long id, UsuarioMovil usuarioMovil, String typesensor,
-			Calendar startime, Calendar enditme, Double[] values) {
+			Calendar startime, Calendar enditme, BigDecimal[] values) {
 		super();
 		this.id = id;
 		this.usuarioMovil = usuarioMovil;
@@ -57,7 +58,7 @@ public class SensorData implements Serializable{
 		this.values = values;
 	}
 	
-	public SensorData(String typesensor, Calendar startime, Calendar enditme, Double[] values) {
+	public SensorData(String typesensor, Calendar startime, Calendar enditme, BigDecimal[] values) {
 		super();
 		this.typesensor = typesensor;
 		this.startime = startime;
@@ -105,11 +106,11 @@ public class SensorData implements Serializable{
 		this.enditme = enditme;
 	}
 
-	public Double[] getValues() {
+	public BigDecimal[] getValues() {
 		return values;
 	}
 
-	public void setValues(Double[] values) {
+	public void setValues(BigDecimal[] values) {
 		this.values = values;
 	}
 

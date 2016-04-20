@@ -1,5 +1,7 @@
 package es.udc.lbd.hermes.model.sensordata;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,7 +12,7 @@ public class SensorDataJson {
 	private long timeStamp;
 	
 	@JsonProperty("values")
-	private Double[] values;
+	private BigDecimal[] values;
 
 	public long getTimeStamp() {
 		return timeStamp;
@@ -20,11 +22,11 @@ public class SensorDataJson {
 		this.timeStamp = timeStamp;
 	}
 
-	public Double[] getValues() {
+	public BigDecimal[] getValues() {
 		return values;
 	}
 
-	public void setValues(Double[] values) {
+	public void setValues(BigDecimal[] values) {
 		this.values = values;
 	}
 	

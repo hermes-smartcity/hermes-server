@@ -509,6 +509,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     // Called at the end of the full lifetime.
     @Override
     public void onDestroy() {
+        //Cuando se para la aplicacion, tenemos que asegurarnos de
+        //enviar el ultimo paquete
+        sc.stopTask();
+
         // Clean up any resources including ending threads,
         // closing database connections etc.
         super.onDestroy();

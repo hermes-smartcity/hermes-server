@@ -58,11 +58,16 @@ public class SensorCollector implements SensorEventListener {
     private int numValues;
     private String typeSensor;
 
-    static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
+    //static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
+    static final int UPDATE_INTERVAL = 60000*2; //5 Minutos
     private Timer timer = null;
 
     private PowerManager.WakeLock wakeLock;
     private int responseCode;
+
+    //variable para saber cuando es el primer envio y el ultimo
+    private Boolean firstSend = false;
+    private Boolean lastSend = false;
 
     public SensorCollector(FacadeSettings facadeSetting, Activity activity, SensorManager mgr, Sensor sensor, int numValues, String typeSensor){
         this.facadeSettings = facadeSetting;
@@ -143,6 +148,10 @@ public class SensorCollector implements SensorEventListener {
     }
 
     public void launchTask(){
+        //indicamos que es el primer envio
+        firstSend = true;
+        lastSend = false;
+
         timer = getTimer();
 
         timer.scheduleAtFixedRate(new TimerTask(){
@@ -158,6 +167,10 @@ public class SensorCollector implements SensorEventListener {
     public void stopTask(){
         timer.cancel();
         timer = null;
+
+        //indicamos que es el ultimo envio
+        firstSend = false;
+        lastSend = true;
 
         //Lanzamos la tarea por si quedaban cosas sin enviar
         SendInformationTask tarea = new SendInformationTask();
@@ -233,7 +246,7 @@ public class SensorCollector implements SensorEventListener {
 
         return serviceUrl;
     }
-    private class SendInformationTask extends AsyncTask<Void, Void, String> {
+    private class SendInformationTask extends AsyncTask<Void, Void, Boolean> {
 
         DirectoryPaths rutasDirectorios = new DirectoryPaths(activity);
         File rutaZip = rutasDirectorios.getZipDir();
@@ -248,135 +261,146 @@ public class SensorCollector implements SensorEventListener {
 
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
 
             JSONParser jsonParser = new JSONParser();
 
-            try {
+            //Recuperamos la lista de elementos a enviar
+            int numElementos = valuesToSend.size();
 
-                //Recuperamos la lista de elementos a enviar
-                int numElementos = valuesToSend.size();
-                List<SensorDTO> elementsToSend = new ArrayList<SensorDTO>();
-                for (int i = 0; i < numElementos; i++) {
-                    SensorDTO e = valuesToSend.remove();
-                    elementsToSend.add(e);
+            //Si no hay elementos, no haremos nada  y tampoco cambiaremos
+            //el valor del primer envio
+            if (numElementos == 0){
+                return false;
+            }else{
+                try {
+
+                    List<SensorDTO> elementsToSend = new ArrayList<SensorDTO>();
+                    for (int i = 0; i < numElementos; i++) {
+                        SensorDTO e = valuesToSend.remove();
+                        elementsToSend.add(e);
+                    }
+
+                    //Recuperamos del shared preferences el email
+                    String nombreUsuario = Utils.recuperarNombreUsuario(activity);
+
+                    //Creamos el json a enviar
+                    SensorJSON sensorJsonToSend = new SensorJSON(nombreUsuario, typeSensor, firstSend, lastSend, elementsToSend);
+
+                    //Creamos un numero aleatorio para concatenar al nombre
+                    Random generator = new Random();
+                    int n1 = Math.abs(generator.nextInt() % 6);
+
+                    //Creamos un fichero json con el contenido de dicho json
+                    File directorio_json = rutaJson;
+                    nombre_fichero_json = jsonName + "_" + String.valueOf(n1);
+                    String fileName = directorio_json.getAbsolutePath() + File.separator +
+                            nombre_fichero_json + terminacionJson;
+                    String[] files = new String[1];
+                    files[0] = fileName;
+
+                    jsonParser.crearFileJSON(sensorJsonToSend, fileName);
+
+                    //Creamos el zip en la ruta indicada
+                    File directorio_zip = rutaZip;
+                    nombre_zip = zipName + "_" + String.valueOf(n1);
+                    rutaDirectorioZip = directorio_zip + File.separator + nombre_zip;
+                    Compress c = new Compress(files, rutaDirectorioZip);
+                    c.zip();
+
+                } catch(InternalErrorException e) {
+                    Log.e("SendInformationTask", "Problemas interno " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                } catch (ZipErrorException e) {
+                    Log.e("SendInformationTask", "Problemas creanzo zip " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
+                } catch (IOException e) {
+                    Log.e("SendInformationTask", "Problemas accediendo al fichero " + e.getMessage());
+                    e.printStackTrace();
+                    return false;
                 }
 
-                //Recuperamos del shared preferences el email
-                String nombreUsuario = Utils.recuperarNombreUsuario(activity);
+                //Enviamos el zip
+                try {
+                    HttpURLConnection conn = null;
+                    DataOutputStream dOut = null;
+                    String lineEnd = "\r\n";
+                    String twoHyphens = "--";
+                    String boundary = "*****";
+                    int bytesRead, bytesAvailable, bufferSize;
+                    byte[] buffer;
+                    int maxBuffersize = 1*1024*1024;
+                    File file = new File(rutaDirectorioZip);
 
-                //Creamos el json a enviar
-                SensorJSON sensorJsonToSend = new SensorJSON(nombreUsuario, typeSensor, elementsToSend);
+                    FileInputStream fileIn = new FileInputStream(file);
+                    String serviceUrl = recuperarURLServicio();
+                    URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_SENSORS);
 
-                //Creamos un numero aleatorio para concatenar al nombre
-                Random generator = new Random();
-                int n1 = Math.abs(generator.nextInt() % 6);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+                    conn.setUseCaches(false);
 
-                //Creamos un fichero json con el contenido de dicho json
-                File directorio_json = rutaJson;
-                nombre_fichero_json = jsonName + "_" + String.valueOf(n1);
-                String fileName = directorio_json.getAbsolutePath() + File.separator +
-                        nombre_fichero_json + terminacionJson;
-                String[] files = new String[1];
-                files[0] = fileName;
+                    if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
+                        conn.setRequestProperty("Connection", "close");
+                    }
 
-                jsonParser.crearFileJSON(sensorJsonToSend, fileName);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                    conn.setRequestProperty("fileupload", rutaDirectorioZip);
 
-                //Creamos el zip en la ruta indicada
-                File directorio_zip = rutaZip;
-                nombre_zip = zipName + "_" + String.valueOf(n1);
-                rutaDirectorioZip = directorio_zip + File.separator + nombre_zip;
-                Compress c = new Compress(files, rutaDirectorioZip);
-                c.zip();
+                    dOut = new DataOutputStream(conn.getOutputStream());
+                    dOut.writeBytes(twoHyphens + boundary + lineEnd);
+                    dOut.writeBytes("Content-Disposition: form-data; name=\"fileupload\";filename=\"" + rutaDirectorioZip + "\"" + lineEnd);
 
-            } catch(InternalErrorException e) {
-                Log.e("SendInformationTask", "Problemas interno " + e.getMessage());
-                e.printStackTrace();
-                return e.toString();
-            } catch (ZipErrorException e) {
-                Log.e("SendInformationTask", "Problemas creanzo zip " + e.getMessage());
-                e.printStackTrace();
-                return e.toString();
-            } catch (IOException e) {
-                Log.e("SendInformationTask", "Problemas accediendo al fichero " + e.getMessage());
-                e.printStackTrace();
-                return e.toString();
-            }
+                    dOut.writeBytes(lineEnd);
 
-            //Enviamos el zip
-            try {
-                HttpURLConnection conn = null;
-                DataOutputStream dOut = null;
-                String lineEnd = "\r\n";
-                String twoHyphens = "--";
-                String boundary = "*****";
-                int bytesRead, bytesAvailable, bufferSize;
-                byte[] buffer;
-                int maxBuffersize = 1*1024*1024;
-                File file = new File(rutaDirectorioZip);
-
-                FileInputStream fileIn = new FileInputStream(file);
-                String serviceUrl = recuperarURLServicio();
-                URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_SENSORS);
-
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setUseCaches(false);
-
-                if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
-                    conn.setRequestProperty("Connection", "close");
-                }
-
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                conn.setRequestProperty("fileupload", rutaDirectorioZip);
-
-                dOut = new DataOutputStream(conn.getOutputStream());
-                dOut.writeBytes(twoHyphens + boundary + lineEnd);
-                dOut.writeBytes("Content-Disposition: form-data; name=\"fileupload\";filename=\"" + rutaDirectorioZip + "\"" + lineEnd);
-
-                dOut.writeBytes(lineEnd);
-
-                bytesAvailable = fileIn.available();
-                bufferSize = Math.min(bytesAvailable, maxBuffersize);
-                buffer = new byte[bufferSize];
-                bytesRead = fileIn.read(buffer, 0, bufferSize);
-
-                while(bytesRead > 0)
-                {
-                    dOut.write(buffer, 0, bufferSize);
                     bytesAvailable = fileIn.available();
                     bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                    buffer = new byte[bufferSize];
                     bytesRead = fileIn.read(buffer, 0, bufferSize);
+
+                    while(bytesRead > 0)
+                    {
+                        dOut.write(buffer, 0, bufferSize);
+                        bytesAvailable = fileIn.available();
+                        bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                        bytesRead = fileIn.read(buffer, 0, bufferSize);
+                    }
+
+                    dOut.writeBytes(lineEnd);
+                    dOut.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                    responseCode = conn.getResponseCode();
+                    String responseMessage = conn.getResponseMessage();
+
+                    Log.i("UPLOAD", "HTTP Response is: " + responseCode + ": " + responseMessage);
+
+                    if(responseCode == 200) {
+                        return true;
+                    }
+
+                    fileIn.close();
+                    dOut.flush();
+                    dOut.close();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    return false;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    return false;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
                 }
 
-                dOut.writeBytes(lineEnd);
-                dOut.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                responseCode = conn.getResponseCode();
-                String responseMessage = conn.getResponseMessage();
-
-                Log.i("UPLOAD", "HTTP Response is: " + responseCode + ": " + responseMessage);
-
-                if(responseCode == 200) {
-                    return null;
-                }
-
-                fileIn.close();
-                dOut.flush();
-                dOut.close();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                return true;
             }
 
-            return responseCode + "";
         }
 
         @Override
@@ -387,15 +411,18 @@ public class SensorCollector implements SensorEventListener {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
             wakeLock.release();
 
-            if (result != null){
-                //Informamos de que el envio ha sido correcto
-                Log.i("SendInformationTask", "Datos enviados correctamente: " + result);
+            //Despues de lanzarla, indicamos que ya no es el primer envio
+            //Si result es true es porque fue bien el envio y se cambia la variable de primer envio
+            //Si result es false es porque hubo algo mal y no se cambia la variable de primer envio
+            if (result) {
+                firstSend = false;
+                lastSend = false;
             }else{
-                //Informamos de que ha habido algun error enviando los ficheros
-                Log.e("SendInformationTask", "Datos enviados incorrectamente: " + result);
+                firstSend = true;
+                lastSend = false;
             }
 
             //Borramos los archivos enviados de la tablet

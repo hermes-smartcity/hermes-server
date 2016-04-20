@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.sensordata.service;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -40,22 +41,37 @@ public class SensorDataServiceImpl implements SensorDataService{
 	public void parserSensors(SensorsDataJson sensorsDataJson){
 		String userId = sensorsDataJson.getUserid();
 		String typeSensor = sensorsDataJson.getTypesensor();
+		Boolean firstSend = sensorsDataJson.getFirstSend();
+		Boolean lastSend = sensorsDataJson.getLastSend();
 		List<SensorDataJson> sensoresJson = sensorsDataJson.getSensorData();
 		
 		Calendar tiempoAnterior;
-		Double[] valoresAnteriores;
+		BigDecimal[] valoresAnteriores;
 		
 		Calendar tiempoActual;
-		Double[] valoresActuales;
+		BigDecimal[] valoresActuales;
 		
 		if (sensoresJson.size()>0){
-			//Se lee el primer para <tiempo, evento>
+			//Se lee el primer <tiempo, evento>
 			SensorDataJson sensorDataJson = sensoresJson.get(0);
 			
 			tiempoAnterior = Calendar.getInstance();
 			tiempoAnterior.setTimeInMillis(sensorDataJson.getTimeStamp());
 			
 			valoresAnteriores = sensorDataJson.getValues();
+			
+			//Si el envio es el del medio o el ultimo, hay que encontrar el ultimo evento del mismo
+			//usuario en la base de datos y actualizar su endtime con el tiempo de este envio
+			if((!firstSend && !lastSend) || lastSend){
+				UsuarioMovil usuarioMovil= usuarioMovilDao.findBySourceId(userId);
+				if (usuarioMovil != null){
+					SensorData lastSensor = sensorDataDao.findLast(usuarioMovil.getId(), typeSensor);
+					if (lastSensor != null){
+						lastSensor.setEnditme(tiempoAnterior);
+						sensorDataDao.update(lastSensor);
+					}
+				}
+			}
 			
 			//Mientras queden eventos
 			for (int i = 1; i < sensoresJson.size(); i++) {
@@ -76,8 +92,15 @@ public class SensorDataServiceImpl implements SensorDataService{
 			}
 			
 			//Insertamos el ultimo
-			SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoAnterior, valoresAnteriores);
-			create(sensorData,userId);
+			//Consideraciones: si es el primer envio o el del medio, el tiempo final sera nulo. Si es el final sera el valor
+			if (firstSend || (!firstSend && !lastSend)){
+				SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, null, valoresAnteriores);
+				create(sensorData,userId);
+			}else{
+				SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoAnterior, valoresAnteriores);
+				create(sensorData,userId);
+			}
+			
 		}
 		
 	}

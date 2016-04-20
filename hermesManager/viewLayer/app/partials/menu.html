@@ -58,8 +58,8 @@
 				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
 					<a data-ui-sref="eventManager"> <i class="fa fa-bar-chart-o fa-fw">
 							<!--  -->
-					</i> <span> {{'menu.eventManager' | translate}}</span>
-				</a>
+						</i> <span> {{'menu.eventManager' | translate}}</span>
+					</a>
 				</li>
 
 
@@ -92,6 +92,13 @@
 							<!--  -->
 					</i> <span>{{'menu.smartdriver' | translate}}</span>
 				</a>
+				</li>
+				
+				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
+					<a data-ui-sref="sensorData"> <i class="fa fa-bar-chart-o fa-fw">
+							<!--  -->
+						</i> <span> {{'menu.sensorData' | translate}}</span>
+					</a>
 				</li>
 
 			</ul>

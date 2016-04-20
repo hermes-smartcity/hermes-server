@@ -16,7 +16,8 @@
 			getUsuarios: getUsuarios,
 			getMeasurementsType: getMeasurementsType,
 			getEventoProcesado: getEventoProcesado,
-			getEventosPorDia: getEventosPorDia
+			getEventosPorDia: getEventosPorDia,
+			getSensorsType: getSensorsType
 		};
 
 		return service;
@@ -123,6 +124,18 @@
 				method : 'GET',
 				url : urlEv
 			});
+		}
+		
+		function getSensorsType() {
+			return $http.get(url_sensorsTypes)
+				.then(getSensorsTypeComplete)
+				.catch(getSensorsTypeFailed);
+			function getSensorsTypeComplete(response) {
+				return response.data;
+			}
+			function getSensorsTypeFailed(error) {
+				$log.error('XHR Failed for getSensorsType.' + error.data);
+			}
 		}
 	}
 })();

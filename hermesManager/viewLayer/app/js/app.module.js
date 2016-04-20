@@ -191,6 +191,23 @@
 						redirectTo: 'login'
 			        }
 			}
+		}).state('sensorData', {
+			url: '/sensorData',
+			templateUrl:'partials/sensorData/sensorData.html',
+			controller: 'SensorDataController',
+			controllerAs: 'vm',
+			resolve: {
+				usuarios: usuarios,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
