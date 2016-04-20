@@ -87,7 +87,7 @@
 		
 		  
 		function getLiveChartData () {
-		      if (!vm.data[0].length) {
+		      if (vm.data.length === 0) {
 		    	vm.labels = [0];
 		        vm.data[0] = [0];
 		      }
