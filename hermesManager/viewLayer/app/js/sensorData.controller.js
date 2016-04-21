@@ -69,7 +69,7 @@
 				};
 				  
 				// Si no hay eventos que cumplan los requisitos marcados en los filtros entonces se actualiza con el gráfico
-				getLiveChartData();
+				//getLiveChartData();
 				  
 				  
 				
@@ -88,8 +88,8 @@
 		  
 		function getLiveChartData () {
 		      if (vm.data.length === 0) {
-		    	vm.labels = [0];
-		        vm.data[0] = [0];
+		    	  vm.labels = [0];
+		    	  vm.data[0] = [0];
 		      }
 		}
 		

@@ -24,6 +24,7 @@
 			"numeroPeticiones": "Request number",
 			"noResults": "There are no results",
 			"noEvents": "There are not events to show",
+			"noData": "There are no data",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
