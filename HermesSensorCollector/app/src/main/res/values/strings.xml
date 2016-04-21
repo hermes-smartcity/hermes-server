@@ -47,4 +47,9 @@
     <string name="emailIncorrect">The format of this email is not correct</string>
 
     <string name="album_name">Photos</string>
+
+    <string name="noGPS">We have detected that you do not have the GPS activated. Would you like to activate it?</string>
+    <string name="yesPlease">Yes, please</string>
+    <string name="noThanks">No, thanks</string>
+
 </resources>
