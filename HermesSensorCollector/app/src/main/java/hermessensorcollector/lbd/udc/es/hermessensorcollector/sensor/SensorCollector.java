@@ -53,7 +53,7 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.SensorDTO;
  */
 public class SensorCollector implements SensorEventListener, LocationListener {
 
-    private Double[] previousValues;
+    private float[] previousValues;
 
     private Queue<SensorDTO> valuesSensorToSend = new ArrayDeque<SensorDTO>();
     private Queue<LocationDTO> valuesLocationToSend = new ArrayDeque<LocationDTO>();
@@ -96,9 +96,9 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         this.provider = provider;
 
         //Inicializamos previousValues segun el numero de elementos del sensor
-        previousValues = new Double[numValues];
+        previousValues = new float[numValues];
         for (int i = 0; i < numValues; i++) {
-            previousValues[i] = Double.MAX_VALUE;
+            previousValues[i] = Float.MAX_VALUE;
         }
     }
 
@@ -135,7 +135,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
     private void asignarValoresEnviar(SensorEvent event){
         //long tiempo = event.timestamp;
         long tiempo = System.currentTimeMillis();
-        float[] valores = event.values;
+        float[] valores = event.values.clone();
 
         SensorDTO sensorDTO = new SensorDTO(tiempo, valores);
         valuesSensorToSend.add(sensorDTO);
@@ -173,13 +173,6 @@ public class SensorCollector implements SensorEventListener, LocationListener {
             valuesLocationToSend.add(locationDto);
         }
 
-    }
-
-    private void actualizarValoresAnteriores(float[] newValues){
-        for (int i = 0; (i < newValues.length); i++) {
-            float newValue = newValues[i];
-            previousValues[i] = Double.parseDouble(Float.toString(newValue));;
-        }
     }
 
     private Timer getTimer(){
@@ -307,10 +300,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
             for (int i = 0; (i < event.values.length); i++) {
                 //Recuperamos el valor anterior
-                Double previousValue = previousValues[i];
-                float actualValueFloat = event.values[i];
-                Double actualValue = Double.parseDouble(Float.toString(actualValueFloat));
-
+                float previousValue = previousValues[i];
+                float actualValue = event.values[i];
                 if (Math.abs( actualValue - previousValue) > sensor.getResolution()){
                     //Si alguno de ellos lo cumple, entonces:
                     //a - asignamos los valores a enviar
@@ -318,7 +309,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     //c - salimos del bucle porque no queremos que se ejecute para los
                     //siguientes puesto que ya se ha hecho en los pasos a y b
                     asignarValoresEnviar(event);
-                    actualizarValoresAnteriores(event.values);
+                    previousValues = event.values.clone();
                     break;
                 }
             }
