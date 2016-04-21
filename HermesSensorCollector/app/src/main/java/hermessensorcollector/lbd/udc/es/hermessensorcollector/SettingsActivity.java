@@ -23,6 +23,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     //Objetos de la pantalla
     private EditText editTextUrlServidor;
+    private EditText editTextWaitingTime;
+    private EditText editTextMinimumTime;
+    private EditText editTextMinimumDistance;
+
     private Button buttonAceptarConfiguracion;
     private Button buttonCancelarConfiguracion;
 
@@ -35,6 +39,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Recuperamos los objeto de la vista
         editTextUrlServidor = (EditText) this.findViewById(R.id.editTextUrlServidor);
+        editTextWaitingTime = (EditText) this.findViewById(R.id.editTextWaitingTime);
+        editTextMinimumTime = (EditText) this.findViewById(R.id.editTextMinimumTime);
+        editTextMinimumDistance = (EditText) this.findViewById(R.id.editTextMinimumDistance);
+
         buttonAceptarConfiguracion = (Button) this.findViewById(R.id.buttonAceptarConfiguracion);
         buttonCancelarConfiguracion = (Button) this.findViewById(R.id.buttonCancelarConfiguracion);
 
@@ -53,14 +61,32 @@ public class SettingsActivity extends AppCompatActivity {
             //Recuperamos la lista de parametros que nos interesa
             List<String> paramBuscar = new ArrayList<String>();
             paramBuscar.add(Constants.SERVICE_URL);
+            paramBuscar.add(Constants.WAITING_TIME);
+            paramBuscar.add(Constants.MINIMUM_DISTANCE);
+            paramBuscar.add(Constants.MINIMUM_TIME);
 
             List<Parameter> listadoParam = facadeSettings.getListValueParameters(paramBuscar);
             String servidorURL = null;
+            Integer waitingTime = null;
+            Long minimumTime = null;
+            Long minimumDistance = null;
 
             for (int i=0;i<listadoParam.size();i++){
                 Parameter param = listadoParam.get(i);
                 if (param.getName().equals(Constants.SERVICE_URL)){
                     servidorURL = param.getValue();
+                }
+
+                if (param.getName().equals(Constants.WAITING_TIME)){
+                    waitingTime = Integer.parseInt(param.getValue());
+                }
+
+                if (param.getName().equals(Constants.MINIMUM_DISTANCE)){
+                    minimumTime = Long.parseLong(param.getValue());
+                }
+
+                if (param.getName().equals(Constants.MINIMUM_TIME)){
+                    minimumDistance = Long.parseLong(param.getValue());
                 }
             }
 
@@ -68,8 +94,21 @@ public class SettingsActivity extends AppCompatActivity {
                 editTextUrlServidor.setText(servidorURL);
             }
 
+            if (waitingTime != null){
+                editTextWaitingTime.setText(String.valueOf(waitingTime));
+            }
+
+            if (minimumTime != null){
+                editTextMinimumTime.setText(String.valueOf(minimumTime));
+            }
+
+            if (minimumDistance != null){
+                editTextMinimumDistance.setText(String.valueOf(minimumDistance));
+            }
+
 
         } catch (InternalErrorException e) {
+            e.printStackTrace();
             Log.e("SettingsActivity", "Error recuperando los parametros de la base de datos");
         }
 
@@ -92,14 +131,64 @@ public class SettingsActivity extends AppCompatActivity {
                 View focusView = null;
 
                 editTextUrlServidor.setError(null);
-
-                String url = editTextUrlServidor.getText().toString();
+                editTextWaitingTime.setError(null);
+                editTextMinimumTime.setError(null);
+                editTextMinimumDistance.setError(null);
 
                 // Compramos que la url no es vacia
+                String url = editTextUrlServidor.getText().toString();
                 if (TextUtils.isEmpty(url)) {
                     editTextUrlServidor.setError(getString(R.string.urlRequired));
                     focusView = editTextUrlServidor;
                     cancel = true;
+                }
+
+                //Comprobamos que waitingtime no es vacio y que es un numero (entero)
+                String waitingTime = editTextWaitingTime.getText().toString();
+                if (TextUtils.isEmpty(waitingTime)) {
+                    editTextWaitingTime.setError(getString(R.string.waitingTimeRequired));
+                    focusView = editTextWaitingTime;
+                    cancel = true;
+                }else{
+                    try{
+                        Integer.parseInt(waitingTime);
+                    }catch(NumberFormatException e){
+                        editTextWaitingTime.setError(getString(R.string.waitingTimeFormat));
+                        focusView = editTextWaitingTime;
+                        cancel = true;
+                    }
+                }
+
+                //Comprobamos que miniumtime no es vacio y que es un numero (puede ser doble)
+                String miniumTime = editTextMinimumTime.getText().toString();
+                if (TextUtils.isEmpty(miniumTime)) {
+                    editTextMinimumTime.setError(getString(R.string.minimumTimeRequired));
+                    focusView = editTextMinimumTime;
+                    cancel = true;
+                }else{
+                    try{
+                        Double.parseDouble(miniumTime);
+                    }catch(NumberFormatException e){
+                        editTextMinimumTime.setError(getString(R.string.minimumTimeFormat));
+                        focusView = editTextMinimumTime;
+                        cancel = true;
+                    }
+                }
+
+                //Comprobamos que miniumdistance no es vacio y que es un numero (puede ser doble)
+                String minimumDistance = editTextMinimumDistance.getText().toString();
+                if (TextUtils.isEmpty(minimumDistance)) {
+                    editTextMinimumDistance.setError(getString(R.string.minimumDistanceRequired));
+                    focusView = editTextMinimumDistance;
+                    cancel = true;
+                }else{
+                    try{
+                        Double.parseDouble(minimumDistance);
+                    }catch(NumberFormatException e){
+                        editTextMinimumDistance.setError(getString(R.string.minimumDistanceFormat));
+                        focusView = editTextMinimumTime;
+                        cancel = true;
+                    }
                 }
 
                 if (cancel) {
@@ -126,6 +215,18 @@ public class SettingsActivity extends AppCompatActivity {
         Parameter paramUrl = new Parameter();
         paramUrl.setName(Constants.SERVICE_URL);
         paramUrl.setValue(editTextUrlServidor.getText().toString());
+
+        Parameter paramWaitingTime = new Parameter();
+        paramWaitingTime.setName(Constants.WAITING_TIME);
+        paramWaitingTime.setValue(editTextWaitingTime.getText().toString());
+
+        Parameter paramMinimumTime = new Parameter();
+        paramMinimumTime.setName(Constants.MINIMUM_TIME);
+        paramMinimumTime.setValue(editTextMinimumTime.getText().toString());
+
+        Parameter paramMinimumDistance = new Parameter();
+        paramMinimumDistance.setName(Constants.MINIMUM_DISTANCE);
+        paramMinimumDistance.setValue(editTextMinimumDistance.getText().toString());
 
         List<Parameter> listadoParametros = new ArrayList<Parameter>();
         listadoParametros.add(paramUrl);

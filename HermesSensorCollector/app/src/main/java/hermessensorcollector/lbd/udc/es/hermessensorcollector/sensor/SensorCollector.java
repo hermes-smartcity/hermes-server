@@ -67,13 +67,20 @@ public class SensorCollector implements SensorEventListener, LocationListener {
     private LocationManager lmgr;
     private String provider;
 
-    private static final int UPDATE_INTERVAL = 60000*5; //5 Minutos
+    //URL del servidor
+    private String SERVICE_URL = null;
+
+    //Tiempo de esperar entre cada llamada al servidor
+    //Le ponemos un tiempo por defecto por si no esta en el settings (que deberia)
+    private int UPDATE_INTERVAL = 60000*5; //5 Minutos
 
     //The minimum distance to change updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 5 meters
+    //Le ponemos un tiempo por defecto por si no esta en el settings (que deberia)
+    private long MIN_DISTANCE_CHANGE_FOR_UPDATES = 5; // 5 meters
 
     //The minimum time beetwen updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;  // 1 minute
+    //Le ponemos un tiempo por defecto por si no esta en el settings (que deberia)
+    private long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;  // 1 minute
 
     private Timer timer = null;
 
@@ -100,8 +107,49 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         for (int i = 0; i < numValues; i++) {
             previousValues[i] = Float.MAX_VALUE;
         }
+
+        //Al arrancar, obtenemos los parametros de servidor, tiempo de espera, distancia minima y tiempo minimo
+        recuperarParametros();
     }
 
+    private void recuperarParametros(){
+
+        try {
+            //Recuperamos la lista de parametros que nos interesa
+            List<String> paramBuscar = new ArrayList<String>();
+            paramBuscar.add(Constants.SERVICE_URL);
+            paramBuscar.add(Constants.WAITING_TIME);
+            paramBuscar.add(Constants.MINIMUM_DISTANCE);
+            paramBuscar.add(Constants.MINIMUM_TIME);
+
+            List<Parameter> listadoParam = facadeSettings.getListValueParameters(paramBuscar);
+
+            for (int i=0;i<listadoParam.size();i++){
+                Parameter param = listadoParam.get(i);
+                if (param.getName().equals(Constants.SERVICE_URL)){
+                    SERVICE_URL = param.getValue();
+                }
+
+                if (param.getName().equals(Constants.WAITING_TIME)){
+                    UPDATE_INTERVAL = Integer.parseInt(param.getValue());
+                }
+
+                if (param.getName().equals(Constants.MINIMUM_DISTANCE)){
+                    MIN_DISTANCE_CHANGE_FOR_UPDATES = Long.parseLong(param.getValue());
+                }
+
+                if (param.getName().equals(Constants.MINIMUM_TIME)){
+                    MIN_TIME_BW_UPDATES = Long.parseLong(param.getValue());
+                }
+
+            }
+
+
+        } catch (InternalErrorException e) {
+            Log.e("MainActivity", "Error recuperando los parametros de la base de datos");
+        }
+
+    }
 
     public void registerSensorCollector() {
         //Registramos el listener de sensores
@@ -266,33 +314,6 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         file.delete();
     }
 
-
-    private String recuperarURLServicio(){
-        String serviceUrl = null;
-
-        try {
-            //Recuperamos la lista de parametros que nos interesa
-            List<String> paramBuscar = new ArrayList<String>();
-            paramBuscar.add(Constants.SERVICE_URL);
-
-            List<Parameter> listadoParam = facadeSettings.getListValueParameters(paramBuscar);
-
-            for (int i=0;i<listadoParam.size();i++){
-                Parameter param = listadoParam.get(i);
-                if (param.getName().equals(Constants.SERVICE_URL)){
-                    serviceUrl = param.getValue();
-                    break;
-                }
-            }
-
-
-        } catch (InternalErrorException e) {
-            Log.e("MainActivity", "Error recuperando los parametros de la base de datos");
-        }
-
-        return serviceUrl;
-    }
-
     //Metodos debidos a sensorlistener
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -432,7 +453,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     File file = new File(rutaDirectorioZip);
 
                     FileInputStream fileIn = new FileInputStream(file);
-                    String serviceUrl = recuperarURLServicio();
+                    //String serviceUrl = recuperarURLServicio();
+                    String serviceUrl = SERVICE_URL;
                     URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_SENSORS);
 
                     conn = (HttpURLConnection) url.openConnection();
@@ -624,7 +646,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     File file = new File(rutaDirectorioZip);
 
                     FileInputStream fileIn = new FileInputStream(file);
-                    String serviceUrl = recuperarURLServicio();
+                    //String serviceUrl = recuperarURLServicio();
+                    String serviceUrl = SERVICE_URL;
                     URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_GPS);
 
                     conn = (HttpURLConnection) url.openConnection();

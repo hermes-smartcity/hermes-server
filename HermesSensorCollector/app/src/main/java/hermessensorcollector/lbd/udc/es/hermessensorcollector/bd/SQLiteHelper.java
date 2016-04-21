@@ -31,6 +31,12 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
         //url del servidor
         insertarUrlService(db);
+        //tiempo de espera para enviar eventos al servidor
+        insertarWaitingTime(db);
+        //metros entre listener del gps
+        insertarMinimunDistance(db);
+        //tiempo entre listener del gps
+        insertarMinimunTime(db);
     }
 
     private void construirTablaParametros(SQLiteDatabase db) {
@@ -60,8 +66,58 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 		db.execSQL(sqlInsert);
     }
 
+    private void insertarWaitingTime(SQLiteDatabase db){
+
+        if (db.isReadOnly()) {
+            db = getWritableDatabase();
+        }
+
+        String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
+                + TablesDB.PARAM_COLUMNA_NAME + ","
+                + TablesDB.PARAM_COLUMNA_VALUE + ")"
+                + " VALUES ('" + Constants.WAITING_TIME +"','300000')";
+
+        db.execSQL(sqlInsert);
+    }
+
+    private void insertarMinimunDistance(SQLiteDatabase db){
+
+        if (db.isReadOnly()) {
+            db = getWritableDatabase();
+        }
+
+        String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
+                + TablesDB.PARAM_COLUMNA_NAME + ","
+                + TablesDB.PARAM_COLUMNA_VALUE + ")"
+                + " VALUES ('" + Constants.MINIMUM_DISTANCE +"','5')";
+
+        db.execSQL(sqlInsert);
+    }
+
+    private void insertarMinimunTime(SQLiteDatabase db){
+
+        if (db.isReadOnly()) {
+            db = getWritableDatabase();
+        }
+
+        String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
+                + TablesDB.PARAM_COLUMNA_NAME + ","
+                + TablesDB.PARAM_COLUMNA_VALUE + ")"
+                + " VALUES ('" + Constants.MINIMUM_TIME +"','60000')";
+
+        db.execSQL(sqlInsert);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionNueva) {
 
+        if (versionNueva > versionAnterior) {
+            //tiempo de espera para enviar eventos al servidor
+            insertarWaitingTime(db);
+            //metros entre listener del gps
+            insertarMinimunDistance(db);
+            //tiempo entre listener del gps
+            insertarMinimunTime(db);
+        }
     }
 }

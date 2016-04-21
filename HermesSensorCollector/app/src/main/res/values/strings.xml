@@ -32,13 +32,21 @@
     <string name="stop">STOP</string>
 
     <string name="service">Service</string>
-    <string name="url">URL</string>
+    <string name="settings">Settings</string>
+
+    <string name="url">URL Service</string>
 
     <string name="acept">Accept</string>
     <string name="cancel">Cancel</string>
 
     <string name="urlRequired">URL service required</string>
     <string name="emailRequired">Email required</string>
+    <string name="waitingTimeRequired">Waiting time required</string>
+    <string name="minimumTimeRequired">Minimum time required</string>
+    <string name="minimumDistanceRequired">Minimum distance required</string>
+    <string name="waitingTimeFormat">Waiting time format incorrect</string>
+    <string name="minimumTimeFormat">Minimum time format incorrect</string>
+    <string name="minimumDistanceFormat">Minimum distance format incorrect</string>
 
     <string name="updateOK">Information updated</string>
 
@@ -52,4 +60,7 @@
     <string name="yesPlease">Yes, please</string>
     <string name="noThanks">No, thanks</string>
 
+    <string name="waitingTime">Transfer data: Waiting time</string>
+    <string name="minimumTime">GPS: Minimum time</string>
+    <string name="minimumDistance">GPS: Minimum distance</string>
 </resources>
