@@ -21,11 +21,13 @@ public abstract class AlbumStorageDirFactory {
 	
 	// Atributos para la generacion del json
 	public static final String JSON_DIR = "/json/";
-	public static final String NAME_FILE_JSON = "metadatos";
+	public static final String NAME_FILE_JSON_SENSOR = "metadatosSensor";
+	public static final String NAME_FILE_JSON_GPS = "metadatosGps";
 
 	//Atributos para la generacion del zip
 	public static final String ZIP_DIR = "/zip/";
-	public static final String NAME_FILE_ZIP = "zipSincronizacion";
+	public static final String NAME_FILE_ZIP_SENSOR = "zipSensor";
+	public static final String NAME_FILE_ZIP_GPS = "zipGps";
 	
 	//Atributos para la generacion del log
 	public static final String LOG_DIR = "/LOG/";
@@ -53,11 +55,13 @@ public abstract class AlbumStorageDirFactory {
 	
 	// Metodo para el directorio con el JSON
 	public abstract File getJSONStorageDir();
-	public abstract String getNameFileJSON();
+	public abstract String getNameFileSensorJSON();
+	public abstract String getNameFileGpsJSON();
 		
 	//Metodo para el directorio con el zip
 	public abstract File getZipStorageDir();
-	public abstract String getNameFileZip();
+	public abstract String getNameFileSensorZip();
+	public abstract String getNameFileGpsZip();
 	
 	//Metodo para el directorio con el log
 	public abstract File getLogStorageDir();

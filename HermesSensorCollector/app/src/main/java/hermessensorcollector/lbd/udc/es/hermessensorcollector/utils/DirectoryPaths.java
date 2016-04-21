@@ -7,7 +7,6 @@ import android.util.Log;
 
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.R;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.structure.AlbumStorageDirFactory;
@@ -122,25 +121,43 @@ public class DirectoryPaths {
     }
     
     /**
-     * Recuperar el nombre del fichero JSON a generar
+     * Recuperar el nombre del fichero JSON a generar para los sensores
      * 
      * @return String Nombre del fichero
      */
-    public String getJSONName(){
-    	return mAlbumStorageDirFactory.getNameFileJSON();
+    public String getJSONSensorName(){
+    	return mAlbumStorageDirFactory.getNameFileSensorJSON();
     }
+
+	/**
+	 * Recuperar el nombre del fichero JSON a generar para los gps
+	 *
+	 * @return String Nombre del fichero
+	 */
+	public String getJSONGpsName(){
+		return mAlbumStorageDirFactory.getNameFileGpsJSON();
+	}
     
     /**
-     * Recuperar el nombre del fichero Zip a generar
+     * Recuperar el nombre del fichero Zip a generar para los sensors
      * 
      * @return String Nombre del fichero
      */
-    public String getZipName(){
-    	return mAlbumStorageDirFactory.getNameFileZip();
+    public String getZipSensorName(){
+    	return mAlbumStorageDirFactory.getNameFileSensorZip();
     }
-    
-    
-    /**
+
+	/**
+	 * Recuperar el nombre del fichero Zip a generar para los gps
+	 *
+	 * @return String Nombre del fichero
+	 */
+	public String getZipGpsName(){
+		return mAlbumStorageDirFactory.getNameFileGpsZip();
+	}
+
+
+	/**
      * Recuperar el directorio donde se guarda el fichero ZIP
      * 
      * @return File Directorio con la ruta donde se guarda el fichero

@@ -104,4 +104,5 @@ var url_peticionesPorDia = url_dataservice+'json/peticionesPorDia?';
 //Controlador de sensordata
 var url_sensordata = url_servidor + 'api/sensordata/';
 var url_request_sensors = url_sensordata + 'sensors';
+var url_request_gps = url_sensordata + 'gps';
 var url_infoPorDia = url_sensordata + 'json/infoPorDia?';

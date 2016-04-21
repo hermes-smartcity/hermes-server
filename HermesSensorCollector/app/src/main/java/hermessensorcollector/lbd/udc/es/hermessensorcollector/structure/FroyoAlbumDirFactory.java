@@ -58,8 +58,12 @@ public final class FroyoAlbumDirFactory extends AlbumStorageDirFactory {
 		);
 	}
 	
-	public String getNameFileJSON(){
-		return NAME_FILE_JSON;
+	public String getNameFileSensorJSON(){
+		return NAME_FILE_JSON_SENSOR;
+	}
+
+	public String getNameFileGpsJSON(){
+		return NAME_FILE_JSON_GPS;
 	}
 	
 	public File getZipStorageDir(){
@@ -69,8 +73,12 @@ public final class FroyoAlbumDirFactory extends AlbumStorageDirFactory {
 		);
 	}
 	
-	public String getNameFileZip(){
-		return NAME_FILE_ZIP;
+	public String getNameFileSensorZip(){
+		return NAME_FILE_ZIP_SENSOR;
+	}
+
+	public String getNameFileGpsZip(){
+		return NAME_FILE_ZIP_GPS;
 	}
 	
 	public File getLogStorageDir(){

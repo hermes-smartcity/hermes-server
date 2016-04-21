@@ -1,16 +1,21 @@
 package hermessensorcollector.lbd.udc.es.hermessensorcollector;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -43,8 +48,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private FacadeSettings facadeSettings;
 
-    // Sensor Manager
+    // Sensor Manager (para los sensores)
     private SensorManager mgr;
+    // Location Manager (para el gps)
+    private LocationManager lmgr;
 
     //Objetos de la pantalla
     private TextView no_sensor_details;
@@ -81,6 +88,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     String typeSensor;
 
     private static final int REQUEST_SETTING = 1;
+    private static final int REQUEST_GPS = 2;
+
+    /* GPS Constant Permission */
+    private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
+    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
+
+    private Boolean isGPSEnabled = false;
+    private Boolean isNetworkEnabled = false;
+    private Boolean firstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         // Acquire sensor manager
         mgr = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+
+        //Acquire location manager
+        lmgr = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         //Recuperamos los objetos de la pantalla
         no_sensor_details = (TextView) findViewById(R.id.no_sensor_details);
@@ -140,8 +159,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //Determinamos el sensor intefaz correspondiente
             getSensorInterface();
 
-            //Creamos la instancia de sensorCollection
-            createSensorCollection();
+            //Determinamos la forma de obtener el gps que usaremos
+            //y una vez determinado (dentro), crearemos la instancia
+            //de sensorCollection (puesto que necesitamos saber el provider de gps
+            //antes de crear la instancia de sensorcollection
+            getGpsProvider();
 
             // Initialize basic (static) sensor view
             loadStaticView();
@@ -261,8 +283,62 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         si = new SensorInterface(sensor);
     }
 
+    private void getGpsProvider(){
+
+        // API 23: we have to check if ACCESS_FINE_LOCATION and/or ACCESS_COARSE_LOCATION permission are granted
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+               || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            // getting GPS status
+            isGPSEnabled = lmgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            //Si esta habilitado no hacemos nada mas
+            //Si no esta habilitado y es la primera vez, lanzamos el intent para solicitar permiso
+            //Si no esta habilitado y no es la primera vez, comprobamos si tiene networkenabled
+            if (isGPSEnabled){
+                //Creamos la instancia de sensorCollection
+                createSensorCollection();
+            }else if (!isGPSEnabled && firstTime){
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_GPS);
+            }else if (!isGPSEnabled && !firstTime){
+                // getting network status
+                isNetworkEnabled = lmgr.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+                //Creamos la instancia de sensorCollection
+                createSensorCollection();
+            }
+
+
+        }else{
+            // One or both permissions are denied.
+            // The ACCESS_COARSE_LOCATION is denied, then I request it and manage the result in
+            // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSION_ACCESS_COARSE_LOCATION);
+            }
+
+            // The ACCESS_FINE_LOCATION is denied, then I request it and manage the result in
+            // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                ActivityCompat.requestPermissions(this,
+                        new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                        MY_PERMISSION_ACCESS_FINE_LOCATION);
+            }
+        }
+    }
     private void createSensorCollection(){
-        sc = new SensorCollector(facadeSettings, MainActivity.this, mgr, sensor, si.getNumValues(), typeSensor);
+
+        String provider = null;
+        if (isGPSEnabled || isNetworkEnabled){
+            if (isGPSEnabled){
+                provider = LocationManager.GPS_PROVIDER;
+            }else{
+                provider = LocationManager.NETWORK_PROVIDER;
+            }
+        }
+        sc = new SensorCollector(facadeSettings, MainActivity.this, mgr, sensor, si.getNumValues(), typeSensor, lmgr, provider);
     }
 
     // method to load in the static sensor information
@@ -527,8 +603,51 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 delay = -1;
                 break;
             }
+
+            case REQUEST_GPS:{
+                firstTime = false;
+                getGpsProvider();
+            }
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_ACCESS_COARSE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                    isNetworkEnabled = true;
+                } else {
+                    // permission denied
+                    isNetworkEnabled = false;
+                }
+
+                //volvemos a llamar a la pantalla para recuperar el provide
+                getGpsProvider();
+
+                break;
+            }
+
+            case MY_PERMISSION_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                    isGPSEnabled = true;
+                } else {
+                    // permission denied
+                    isGPSEnabled = false;
+                }
+
+                //volvemos a llamar a la pantalla para recuperar el provide
+                getGpsProvider();
+
+                break;
+            }
+
+        }
+    }
+
+
     // Helper function to register and unregister a sensor listener
     private void registerSensorListener(int d, boolean notify) {
 

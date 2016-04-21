@@ -21,6 +21,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.events.GraficasSensorData;
+import es.udc.lbd.hermes.model.gps.GpssJson;
+import es.udc.lbd.hermes.model.gps.service.GpsService;
 import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
 import es.udc.lbd.hermes.model.sensordata.service.SensorDataService;
@@ -33,6 +35,7 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 public class SensorDataController  extends MainResource{
 
 	@Autowired private SensorDataService sensorDataServicio;
+	@Autowired private GpsService gpsServicio;
 	@Autowired private UsuarioWebService usuarioWebService;
 	
 	@RequestMapping(value = "/sensors", method = RequestMethod.POST)
@@ -84,7 +87,7 @@ public class SensorDataController  extends MainResource{
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new Exception("Error while loading the file");
+				throw new Exception("Error while loading the file sensors");
 			}
 		}
 		
@@ -111,5 +114,62 @@ public class SensorDataController  extends MainResource{
 		
 		return sensorDataServicio.obtenerInfoPorDia(sensor, idUsuario, ini, fin);
 		
+	}
+	
+	@RequestMapping(value = "/gps", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadInformationGps(@RequestParam("fileupload") MultipartFile fileupload) throws Exception {
+	
+		if (!fileupload.isEmpty()) {
+			
+			try {
+				byte[] buf = new byte[1024];
+				
+				//Descomprimimos el zip
+				//get the zip file content
+		    	ZipInputStream zis = new ZipInputStream(fileupload.getInputStream());
+		    	//get the zipped file list entry
+		    	ZipEntry ze = null;
+		    	
+		    	while((ze=zis.getNextEntry())!=null){
+		    		int n;
+		    		
+		    		//Solo procesamos si el archivo dentro del zip es .json
+		    		String nameFile = ze.getName();
+		    		
+		    		String terminacion = nameFile.substring(nameFile.length()-4);
+		    		
+		    		if (terminacion.equals("json")){
+		    			File fileJson = File.createTempFile("json", null);
+			    		FileOutputStream fileoutputstream = new FileOutputStream(fileJson);
+		    			
+		    			while ((n = zis.read(buf, 0, 1024)) > -1) {
+		                    fileoutputstream.write(buf, 0, n);
+		                }
+		    			
+		    			fileoutputstream.flush();
+		    			fileoutputstream.close();
+		    			
+		    			//Recuperamos el file json que viene en el zip
+						ObjectMapper mapper = new ObjectMapper();
+
+						//JSON from file to Object
+						GpssJson gpssJson = mapper.readValue(fileJson, GpssJson.class);
+
+						gpsServicio.parserGpss(gpssJson);
+		    		}
+		    		
+		    	}
+		     	   
+		    
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new Exception("Error while loading the file gps");
+			}
+		}
+		
+	                
+        return null;
 	}
 }

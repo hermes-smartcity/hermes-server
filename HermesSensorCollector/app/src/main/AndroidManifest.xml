@@ -2,10 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hermessensorcollector.lbd.udc.es.hermessensorcollector">
 
+    <!-- Permiso para el gps -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- Permiso para obtener email del usuario -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
+    <!-- Permiso para guardar en disco el json y el zip a enviar al servidor -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Permiso para bloquear la pantalla -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Permiso para poder tener acceso a internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
