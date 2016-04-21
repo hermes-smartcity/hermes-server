@@ -11,4 +11,7 @@ public class Constants {
 
     //Tags de dialogos
     public static String TAG_DIALOG_EMAIL = "DialogoEmail";
+
+    //Para cuando gira la pantalla
+    public static String PROVIDER_CHOOSEN = "providerChoosen";
 }

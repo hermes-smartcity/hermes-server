@@ -3,7 +3,9 @@ package hermessensorcollector.lbd.udc.es.hermessensorcollector;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -12,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -98,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Boolean isNetworkEnabled = false;
     private Boolean firstTime = true;
 
+    private String providerChoosen = null; //para si gira la pantalla
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,6 +140,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Sensor typeLinearAcceleration = mgr.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         Sensor typeAccelerometer = mgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        //Informacion pasada el intent (si gira la pantalla)
+        if (savedInstanceState!=null) {
+            providerChoosen = savedInstanceState.getString(Constants.PROVIDER_CHOOSEN);
+        }
 
         //Recuperamos la lista de sensores de tipo TYPE_LINEAR_ACCELERATION
         if (typeLinearAcceleration != null || typeAccelerometer != null){
@@ -283,51 +293,93 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         si = new SensorInterface(sensor);
     }
 
-    private void getGpsProvider(){
+    private void showDialogGps(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(getString(R.string.noGPS));
+        alertDialogBuilder.setCancelable(false);
 
-        // API 23: we have to check if ACCESS_FINE_LOCATION and/or ACCESS_COARSE_LOCATION permission are granted
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-               || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            // getting GPS status
-            isGPSEnabled = lmgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            //Si esta habilitado no hacemos nada mas
-            //Si no esta habilitado y es la primera vez, lanzamos el intent para solicitar permiso
-            //Si no esta habilitado y no es la primera vez, comprobamos si tiene networkenabled
-            if (isGPSEnabled){
-                //Creamos la instancia de sensorCollection
-                createSensorCollection();
-            }else if (!isGPSEnabled && firstTime){
+        alertDialogBuilder.setPositiveButton(getString(R.string.yesPlease), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                //Lanzamos el intent de configuracion de red
                 startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_GPS);
-            }else if (!isGPSEnabled && !firstTime){
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton(getString(R.string.noThanks),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
                 // getting network status
                 isNetworkEnabled = lmgr.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
                 //Creamos la instancia de sensorCollection
                 createSensorCollection();
             }
+        });
 
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
-        }else{
-            // One or both permissions are denied.
-            // The ACCESS_COARSE_LOCATION is denied, then I request it and manage the result in
-            // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSION_ACCESS_COARSE_LOCATION);
+    private void getGpsProvider(){
+
+        if (providerChoosen != null){
+            //Si ya tiene uno elegido es porque giro la pantalla y no queremos volver a pedirle el dato
+            if (providerChoosen.equals(LocationManager.GPS_PROVIDER))  {
+                isGPSEnabled = true;
+            }else{
+                isNetworkEnabled = true;
             }
 
-            // The ACCESS_FINE_LOCATION is denied, then I request it and manage the result in
-            // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
-                ActivityCompat.requestPermissions(this,
-                        new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
-                        MY_PERMISSION_ACCESS_FINE_LOCATION);
+            //Creamos la instancia de sensorCollection
+            createSensorCollection();
+        }else{
+            // API 23: we have to check if ACCESS_FINE_LOCATION and/or ACCESS_COARSE_LOCATION permission are granted
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                // getting GPS status
+                isGPSEnabled = lmgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+                //Si esta habilitado no hacemos nada mas
+                //Si no esta habilitado y es la primera vez, lanzamos el intent para solicitar permiso
+                //Si no esta habilitado y no es la primera vez, comprobamos si tiene networkenabled
+                if (isGPSEnabled){
+                    //Creamos la instancia de sensorCollection
+                    createSensorCollection();
+                }else if (!isGPSEnabled && firstTime){
+                    showDialogGps();
+                }else if (!isGPSEnabled && !firstTime){
+                    // getting network status
+                    isNetworkEnabled = lmgr.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+                    //Creamos la instancia de sensorCollection
+                    createSensorCollection();
+                }
+
+
+            }else{
+                // One or both permissions are denied.
+                // The ACCESS_COARSE_LOCATION is denied, then I request it and manage the result in
+                // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                            MY_PERMISSION_ACCESS_COARSE_LOCATION);
+                }
+
+                // The ACCESS_FINE_LOCATION is denied, then I request it and manage the result in
+                // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                    ActivityCompat.requestPermissions(this,
+                            new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                            MY_PERMISSION_ACCESS_FINE_LOCATION);
+                }
             }
         }
+
     }
+
     private void createSensorCollection(){
 
         String provider = null;
@@ -526,6 +578,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         registerSensorListener(SensorManager.SENSOR_DELAY_NORMAL, false);
     }
 
+    // Called to save UI state changes at the
+    // end of the active life cycle.
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        super.onSaveInstanceState(savedInstanceState);
+        Log.d(TAG, "onSaveInstanceState\n");
+
+        //Guardamos el tipo de provider a usar (por si giran la pantalla para
+        //no volver a pedirlo
+        if (isGPSEnabled) {
+            savedInstanceState.putString(Constants.PROVIDER_CHOOSEN, LocationManager.GPS_PROVIDER);
+        }else{
+            savedInstanceState.putString(Constants.PROVIDER_CHOOSEN, LocationManager.NETWORK_PROVIDER);
+        }
+    }
+
     // Called after onCreate has finished, use to restore UI state
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -533,6 +604,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Restore UI state from the savedInstanceState.
         // This bundle has also been passed to onCreate.
         Log.d(TAG, "onRestoreInstanceState\n");
+
+        providerChoosen = savedInstanceState.getString(Constants.PROVIDER_CHOOSEN);
     }
 
     // Called before subsequent visible lifetimes
@@ -543,17 +616,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Load changes knowing that the activity has already
         // been visible within this process.
         Log.d(TAG, "onRestart\n");
-    }
-
-    // Called to save UI state changes at the
-    // end of the active life cycle.
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-        super.onSaveInstanceState(savedInstanceState);
-        Log.d(TAG, "onSaveInstanceState\n");
     }
 
     // Called at the end of the active lifetime.
@@ -587,7 +649,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onDestroy() {
         //Cuando se para la aplicacion, tenemos que asegurarnos de
         //enviar el ultimo paquete
-        sc.stopTask();
+        if (sc!=null) {
+            sc.stopTask();
+        }
 
         // Clean up any resources including ending threads,
         // closing database connections etc.
