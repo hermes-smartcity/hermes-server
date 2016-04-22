@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.events.GraficasSensorData;
+import es.udc.lbd.hermes.model.events.ListaGpsLocation;
 import es.udc.lbd.hermes.model.gps.GpssJson;
 import es.udc.lbd.hermes.model.gps.service.GpsService;
 import es.udc.lbd.hermes.model.sensordata.SensorDataType;
@@ -171,5 +172,27 @@ public class SensorDataController  extends MainResource{
 		
 	                
         return null;
+	}
+	
+	@RequestMapping(value="/json/gpslocations", method = RequestMethod.GET)
+	public ListaGpsLocation getGpsLocations(@RequestParam(value = "idUsuario", required = false) Long idUsuario,			
+			@RequestParam(value = "fechaIni", required = true) String fechaIni,
+			@RequestParam(value = "fechaFin", required = true) String fechaFin,
+			@RequestParam(value = "wnLng", required = true) Double wnLng,
+			@RequestParam(value = "wnLat", required = true) Double wnLat,
+			@RequestParam(value = "esLng", required = true) Double esLng, 
+			@RequestParam(value = "esLat", required = true) Double esLat) {
+
+		// Un usuario tipo consulta solo puede ver sus propios eventos
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		if(usuario.getRol().equals(Rol.ROLE_CONSULTA)){
+			idUsuario = usuario.getUsuarioMovil().getId();			
+		}
+		
+		Calendar ini = Helpers.getFecha(fechaIni);
+		Calendar fin = Helpers.getFecha(fechaFin);
+		return gpsServicio.obterGpsLocations(idUsuario, ini, fin, wnLng, wnLat,esLng, esLat);
+		
 	}
 }

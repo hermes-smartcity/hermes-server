@@ -300,7 +300,11 @@
 			var hourEvento = $filter('date')(date, 'HH:mm:ss');
 			var datosEvento = L.DomUtil.create('datosEvento');
 
-			datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Type:</b> '+eventType+'<br/><b>Value:</b> '+eventValue;
+			datosEvento.innerHTML = '<b>' + $translate.instant('measurement.userId') + ':</b> ' + userId + 
+						'<br/><b>' + $translate.instant('measurement.date') + ':</b> '+dateEvento+
+						'<br/><b>' + $translate.instant('measurement.time') + ':</b> '+hourEvento+
+						'<br/><b>' + $translate.instant('measurement.type') + ':</b> '+eventType+
+						'<br/><b>' + $translate.instant('measurement.value') + ':</b> '+eventValue;
 			return datosEvento;
 		}
 
@@ -310,7 +314,11 @@
 			var hourEvento = $filter('date')(date, 'HH:mm:ss');
 			var datosEvento = L.DomUtil.create('datosEvento');
 
-			datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Detected Activity:</b> '+eventActivity +'<br/><b>Accuracy:</b> '+eventAccuracy;
+			datosEvento.innerHTML = '<b>' + $translate.instant('contextData.userId') + ':</b> ' + userId +
+						'<br/><b>' + $translate.instant('contextData.date') + ':</b> '+dateEvento+
+						'<br/><b>' + $translate.instant('contextData.time') + ':</b> '+hourEvento+
+						'<br/><b>' + $translate.instant('contextData.detectedActivity') + ':</b> '+eventActivity +
+						'<br/><b>' + $translate.instant('contextData.accuracy') + ':</b> '+eventAccuracy;
 			return datosEvento;
 		}
 
@@ -318,10 +326,19 @@
 			var date = new Date(timestamp);
 			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 			var hourEvento = $filter('date')(date, 'HH:mm:ss');
-			var speedEvento = $filter('number')(eventSpeed, 2);
+			
+			var speedEvento = "";
+			if (eventSpeed !== null){
+				speedEvento = $filter('number')(eventSpeed, 2);	
+			}
+			
 			var datosEvento = L.DomUtil.create('datosEvento');
 
-			datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Speed:</b> '+speedEvento +'<br/><b>Accuracy:</b> '+eventAccuracy;
+			datosEvento.innerHTML = '<b>' + $translate.instant('vehicleLocation.userId') + ':</b> ' + userId +
+				'<br/><b>' + $translate.instant('vehicleLocation.date') + ':</b> '+dateEvento+
+				'<br/><b>' + $translate.instant('vehicleLocation.time') + ':</b> '+hourEvento+
+				'<br/><b>' + $translate.instant('vehicleLocation.speed') + ':</b> '+speedEvento +
+				'<br/><b>' + $translate.instant('vehicleLocation.accuracy') + ':</b> '+eventAccuracy;
 			return datosEvento;
 		}
 
@@ -329,11 +346,25 @@
 			var date = new Date(timestamp);
 			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 			var hourEvento = $filter('date')(date, 'HH:mm:ss');
-			var valueEvento = $filter('number')(eventValue, 2);
-			var speedEvento = $filter('number')(eventSpeed, 2);
+			
+			var valueEvento = "";
+			if (eventValue !== null){
+				valueEvento = $filter('number')(eventValue, 2);	
+			}
+			
+			var speedEvento = "";
+			if (eventSpeed !== null){
+				speedEvento = $filter('number')(eventSpeed, 2);	
+			}
+			
 			var datosEvento = L.DomUtil.create('datosEvento');
 
-			datosEvento.innerHTML = '<b>UserId:</b> ' + userId +' <br/><b>Date:</b> '+dateEvento+'<br/><b>Time:</b> '+hourEvento+'<br/><b>Value:</b> '+valueEvento+'<br/><b>Speed:</b> '+speedEvento +'<br/><b>Accuracy:</b> '+eventAccuracy;
+			datosEvento.innerHTML = '<b>' + $translate.instant('measurement.userId') + ':</b> ' + userId +
+				'<br/><b>' + $translate.instant('measurement.date') + ':</b> '+dateEvento+
+				'<br/><b>' + $translate.instant('measurement.time') + ':</b> '+hourEvento+
+				'<br/><b>' + $translate.instant('measurement.value') + ':</b> '+valueEvento+
+				'<br/><b>' + $translate.instant('measurement.speed') + ':</b> '+speedEvento +
+				'<br/><b>' + $translate.instant('measurement.accuracy') + ':</b> '+eventAccuracy;
 			return datosEvento;
 		}
 
@@ -341,38 +372,96 @@
 			var date = new Date(timestamp);
 			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 			var hourEvento = $filter('date')(date, 'HH:mm:ss');
-			var minSpeedEvento = $filter('number')(eventMinSpeed, 2);
-			var maxSpeedEvento = $filter('number')(eventMaxSpeed, 2);
-			var medianSpeedEvento = $filter('number')(eventMedianSpeed, 2);
-			var averageSpeedEvento = $filter('number')(eventAverageSpeed, 2);
-			var averageErEvento = $filter('number')(eventAverageEr, 2);
-			var averageHearRateEvento = $filter('number')(eventAverageHearRate, 2);
-			var standardDeviationSpeedEvento = $filter('number')(eventStandardDeviationSpeed, 2);
-			var standardDeviationRrEvento = $filter('number')(eventStandardDeviationRr, 2);
-			var standardDeviationHeartRateEvento = $filter('number')(eventStandardDeviationHeartRate, 2);
-			var pkeEvento = $filter('number')(eventPke, 2);
-			var numHighAccelerationsEvento = $filter('number')(eventNumHighAccelerations, 2);
-			var numHighDecelerationsEvento = $filter('number')(eventNumHighDecelerations, 2);
-			var averageAccelerationEvento = $filter('number')(eventAverageAcceleration, 2);
-			var averageDecelerationEvento = $filter('number')(eventAverageDeceleration, 2);
-
+			
+			var minSpeedEvento = "";
+			if (eventMinSpeed !== null){
+				minSpeedEvento = $filter('number')(eventMinSpeed, 2);	
+			}
+			
+			var maxSpeedEvento = "";
+			if (eventMaxSpeed !== null){
+				maxSpeedEvento = $filter('number')(eventMaxSpeed, 2);
+			}
+			
+			var medianSpeedEvento = "";
+			if (eventMedianSpeed !== null){
+				medianSpeedEvento = $filter('number')(eventMedianSpeed, 2);
+			}
+			
+			var averageSpeedEvento = "";
+			if (eventAverageSpeed !== null){
+				averageSpeedEvento = $filter('number')(eventAverageSpeed, 2);	
+			}
+			
+			var averageErEvento = "";
+			if (eventAverageEr !== null){
+				averageErEvento = $filter('number')(eventAverageEr, 2);	
+			}
+			
+			var averageHearRateEvento = "";
+			if (eventAverageHearRate !== null){
+				averageHearRateEvento = $filter('number')(eventAverageHearRate, 2);	
+			}
+			
+			var standardDeviationSpeedEvento = "";
+			if (eventStandardDeviationSpeed !== null){
+				standardDeviationSpeedEvento = $filter('number')(eventStandardDeviationSpeed, 2);	
+			}
+			
+			var standardDeviationRrEvento = "";
+			if (eventStandardDeviationRr !== null){
+				standardDeviationRrEvento = $filter('number')(eventStandardDeviationRr, 2);	
+			}
+			
+			var standardDeviationHeartRateEvento = "";
+			if (eventStandardDeviationHeartRate !== null){
+				standardDeviationHeartRateEvento = $filter('number')(eventStandardDeviationHeartRate, 2);
+			}
+			
+			var pkeEvento = "";
+			if (eventPke !== null){
+				pkeEvento = $filter('number')(eventPke, 2);				
+			}
+			
+			var numHighAccelerationsEvento = "";
+			if (eventNumHighAccelerations !== null){
+				numHighAccelerationsEvento = $filter('number')(eventNumHighAccelerations, 2);
+			}
+			
+			var numHighDecelerationsEvento = "";
+			if (eventNumHighDecelerations !== null){
+				numHighDecelerationsEvento = $filter('number')(eventNumHighDecelerations, 2);	
+			}
+			
+			var averageAccelerationEvento = "";
+			if (eventAverageAcceleration !== null){
+				averageAccelerationEvento = $filter('number')(eventAverageAcceleration, 2);	
+			}
+			
+			var averageDecelerationEvento = "";
+			if (eventAverageDeceleration !== null){
+				averageDecelerationEvento = $filter('number')(eventAverageDeceleration, 2);	
+			}
+			
 			var datosEvento = L.DomUtil.create('datosEvento');
 
-			datosEvento.innerHTML = '<b>UserId:</b> ' + userId +
-			'<br/><b>Date:</b> '+dateEvento+
-			'<br/><b>Time:</b> '+hourEvento+
-			'<br/><b>Speed:</b>' +
-			'<br/>Minimum: '+minSpeedEvento +'<br/>Maximum: '+maxSpeedEvento +
-			'<br/>Median: '+medianSpeedEvento +'<br/>Average: '+averageSpeedEvento +
-			'<br/>Std. Dev.:'+standardDeviationSpeedEvento + 
-			'<br/><b>Acceleration:</b>'+
-			'<br/>Average acceleration:'+averageAccelerationEvento +
-			'<br/>Average deceleration:'+averageDecelerationEvento +
-			'<br/>High accelerations:'+numHighAccelerationsEvento +
-			'<br/>High decelerations:'+numHighDecelerationsEvento +
-			'<br/><b>Heart rate:</b>'+
-			'<br/>Average:'+averageHearRateEvento +
-			'<br/>Std. Dev.:'+standardDeviationHeartRateEvento;
+			datosEvento.innerHTML = '<b>' + $translate.instant('dataSection.userId') + ':</b> ' + userId +
+			'<br/><b>' + $translate.instant('dataSection.date') + ':</b> '+dateEvento+
+			'<br/><b>' + $translate.instant('dataSection.time') + ':</b> '+hourEvento+
+			'<br/><b>' + $translate.instant('dataSection.speed') + ':</b>' +
+			'<br/>' + $translate.instant('dataSection.minimum') + ': '+minSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.maximum') + ': '+maxSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.median') + ': '+medianSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.average') + ': '+averageSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.stdDev') + ':'+standardDeviationSpeedEvento + 
+			'<br/><b>' + $translate.instant('dataSection.acceleration') + ':</b>'+
+			'<br/>' + $translate.instant('dataSection.averageAcceleration') + ':'+averageAccelerationEvento +
+			'<br/>' + $translate.instant('dataSection.averageDeceleration') + ':'+averageDecelerationEvento +
+			'<br/>' + $translate.instant('dataSection.highAcceleration') + ':'+numHighAccelerationsEvento +
+			'<br/>' + $translate.instant('dataSection.highDecceleration') + ':'+numHighDecelerationsEvento +
+			'<br/><b>' + $translate.instant('dataSection.hearRate') + ':</b>'+
+			'<br/>' + $translate.instant('dataSection.average') + ':'+averageHearRateEvento +
+			'<br/>' + $translate.instant('dataSection.stdDev') + ':'+standardDeviationHeartRateEvento;
 
 			return datosEvento;
 		}

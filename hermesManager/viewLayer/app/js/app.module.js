@@ -208,6 +208,23 @@
 						redirectTo: 'login'
 			        }
 			}
+		}).state('gpsLocation', {
+			url: '/gpsLocation',
+			templateUrl: 'partials/gpsLocation/gpsLocation.html',
+			controller: 'GPSLocationController',
+			controllerAs: 'vm',
+			resolve: {
+				usuarios: usuarios,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

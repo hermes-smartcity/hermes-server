@@ -44,7 +44,7 @@
 				"date": "Date",
 				"time": "Time",
 				"minimimSpeed": "Minimum Speed",
-				"maximumSpeed": "Maximun Speed",
+				"maximumSpeed": "Maximum Speed",
 				"medianSpeed": "Median Speed",
 				"averageSpeed": "Average Speed",
 				"stdDevSpeed": "Std. Dev. Speed",
@@ -53,7 +53,15 @@
 				"highAcceleration": "High Acceleration",
 				"highDecceleration": "Hig Decceleration",
 				"averageHeartRate": "Average Heart Rate",
-				"stdDevHeartRate": "Std. Dev. Heart Rate"
+				"stdDevHeartRate": "Std. Dev. Heart Rate",
+				"minimum": "Minimum",
+				"maximum": "Maximum",
+				"median": "Median",
+				"acceleration": "Acceleration",
+				"hearRate": "Heart rate",
+				"average": "Average",
+				"stdDev": "Std. Dev.",
+				"speed": "Speed"
 			},
 			"measurement":{
 				"noEvents": "There are not events to show",
@@ -62,7 +70,8 @@
 				"time": "Time",
 				"value": "Value",
 				"speed": "Speed",
-				"accuracy": "Accuracy"
+				"accuracy": "Accuracy",
+				"type": "Type"
 			},
 			"settings": {
 				"titulo": "Settings",
@@ -99,7 +108,8 @@
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
 				"smartdriver": "Smart Driver",
-				"sensorData": "Sensor Data"
+				"sensorData": "Sensor Data",
+				"gpsLocation": "GPS Location"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -216,7 +226,21 @@
 				"minimium": "Minimum: ",
 				"average": "Average: ",
 				"standardDeviation": "Standard Deviation: "
-			}
+			},
+			"gpsLocation":{
+				"titulo": "Dashboard",
+				"mapa": "Map",
+				"tabla": "Table",
+				"userId": "UserId",
+				"time": "Time",
+				"date": "Date",
+				"speed": "Speed",
+				"accuracy": "Accuracy",
+				"bearing": "Bearing",
+				"altitude": "Altitude",
+				"provider": "Provider",
+				"noData": "There are not data to show",
+			},
 		});
 	}
 

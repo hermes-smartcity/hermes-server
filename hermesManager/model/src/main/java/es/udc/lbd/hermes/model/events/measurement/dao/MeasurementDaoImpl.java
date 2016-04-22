@@ -36,7 +36,7 @@ MeasurementDao {
 
 		String queryStr =  "from Measurement where  within(position, :bounds) = true ";
 		if(idUsuario!=null)
-			queryStr += "and usuarioMovil.id = :idUsuario";
+			queryStr += "and usuarioMovil.id = :idUsuario ";
 
 		queryStr += " and tipo LIKE :tipo ";
 
@@ -118,7 +118,7 @@ MeasurementDao {
 
 		String queryStr =  "select count(*) from Measurement where  within(position, :bounds) = true ";
 		if(idUsuario!=null)
-			queryStr += "and usuarioMovil.id = :idUsuario";
+			queryStr += "and usuarioMovil.id = :idUsuario ";
 
 		queryStr += " and tipo LIKE :tipo ";
 
@@ -162,7 +162,7 @@ MeasurementDao {
 				+ "from measurement where st_within(position, :bounds) = true ";
 		
 		if(idUsuario!=null)
-			queryStr += "and idUsuarioMovil = :idUsuario";
+			queryStr += "and idUsuarioMovil = :idUsuario ";
 
 		queryStr += " and tipo LIKE :tipo ";
 

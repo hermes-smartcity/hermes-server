@@ -101,6 +101,12 @@
 					</a>
 				</li>
 
+				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
+					<a data-ui-sref="gpsLocation"> <i class="fa fa-dashboard fa-fw">
+							<!--  -->
+						</i> <span>{{'menu.gpsLocation' | translate}}</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 		<!-- /.sidebar-collapse -->
