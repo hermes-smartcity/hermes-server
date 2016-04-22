@@ -60,7 +60,7 @@
     <string name="yesPlease">Yes, please</string>
     <string name="noThanks">No, thanks</string>
 
-    <string name="waitingTime">Transfer data: Waiting time</string>
-    <string name="minimumTime">GPS: Minimum time</string>
-    <string name="minimumDistance">GPS: Minimum distance</string>
+    <string name="waitingTime">Transfer data: Waiting time (minutes)</string>
+    <string name="minimumTime">GPS: Minimum time (minutes)</string>
+    <string name="minimumDistance">GPS: Minimum distance (metres)</string>
 </resources>

@@ -81,11 +81,11 @@ public class SettingsActivity extends AppCompatActivity {
                     waitingTime = Integer.parseInt(param.getValue());
                 }
 
-                if (param.getName().equals(Constants.MINIMUM_DISTANCE)){
+                if (param.getName().equals(Constants.MINIMUM_TIME)){
                     minimumTime = Long.parseLong(param.getValue());
                 }
 
-                if (param.getName().equals(Constants.MINIMUM_TIME)){
+                if (param.getName().equals(Constants.MINIMUM_DISTANCE)){
                     minimumDistance = Long.parseLong(param.getValue());
                 }
             }
@@ -230,6 +230,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         List<Parameter> listadoParametros = new ArrayList<Parameter>();
         listadoParametros.add(paramUrl);
+        listadoParametros.add(paramWaitingTime);
+        listadoParametros.add(paramMinimumTime);
+        listadoParametros.add(paramMinimumDistance);
 
         try {
             facadeSettings.updateParametersSettings(listadoParametros);

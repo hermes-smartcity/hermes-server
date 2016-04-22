@@ -75,7 +75,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
                 + TablesDB.PARAM_COLUMNA_NAME + ","
                 + TablesDB.PARAM_COLUMNA_VALUE + ")"
-                + " VALUES ('" + Constants.WAITING_TIME +"','300000')";
+                + " VALUES ('" + Constants.WAITING_TIME +"','5')";
 
         db.execSQL(sqlInsert);
     }
@@ -103,7 +103,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
                 + TablesDB.PARAM_COLUMNA_NAME + ","
                 + TablesDB.PARAM_COLUMNA_VALUE + ")"
-                + " VALUES ('" + Constants.MINIMUM_TIME +"','60000')";
+                + " VALUES ('" + Constants.MINIMUM_TIME +"','1')";
 
         db.execSQL(sqlInsert);
     }

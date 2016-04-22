@@ -80,7 +80,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
     //The minimum time beetwen updates in milliseconds
     //Le ponemos un tiempo por defecto por si no esta en el settings (que deberia)
-    private long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;  // 1 minute
+    private long MIN_TIME_BW_UPDATES = 60000 * 1;  // 1 minute
 
     private Timer timer = null;
 
@@ -131,7 +131,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                 }
 
                 if (param.getName().equals(Constants.WAITING_TIME)){
-                    UPDATE_INTERVAL = Integer.parseInt(param.getValue());
+                    //El tiempo viene en minutos asi que lo multiplicamos por 60000 para pasarlo a milisegundos
+                    UPDATE_INTERVAL = 60000 * Integer.parseInt(param.getValue());
                 }
 
                 if (param.getName().equals(Constants.MINIMUM_DISTANCE)){
@@ -139,7 +140,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                 }
 
                 if (param.getName().equals(Constants.MINIMUM_TIME)){
-                    MIN_TIME_BW_UPDATES = Long.parseLong(param.getValue());
+                    //El tiempo viene en minutos asi que lo multiplicamos por 60000 para pasarlo a milisegundos
+                    MIN_TIME_BW_UPDATES = 60000 * Long.parseLong(param.getValue());
                 }
 
             }
