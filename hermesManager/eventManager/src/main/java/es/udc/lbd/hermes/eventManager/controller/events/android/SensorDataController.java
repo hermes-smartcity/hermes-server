@@ -64,6 +64,7 @@ public class SensorDataController  extends MainResource{
 		    		
 		    		if (terminacion.equals("json")){
 		    			File fileJson = File.createTempFile("json", null);
+		    			fileJson.deleteOnExit();
 			    		FileOutputStream fileoutputstream = new FileOutputStream(fileJson);
 		    			
 		    			while ((n = zis.read(buf, 0, 1024)) > -1) {
