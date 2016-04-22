@@ -16,10 +16,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
@@ -31,6 +35,8 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
  * A simple {@link Fragment} subclass.
  */
 public class DialogEmail extends DialogFragment {
+
+    static private final Logger LOG = LoggerFactory.getLogger(DialogEmail.class);
 
     private InputMethodManager imm;
 
@@ -142,6 +148,7 @@ public class DialogEmail extends DialogFragment {
             facadeSettings.updateParametersSettings(listadoParametros);
         } catch (InternalErrorException e) {
             Log.e("DialogEmail", "Error insertando email");
+            LOG.error("DialogEmail: Error insertando email");
         }
 
     }

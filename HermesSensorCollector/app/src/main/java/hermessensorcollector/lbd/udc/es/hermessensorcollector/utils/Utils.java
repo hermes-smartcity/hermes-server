@@ -9,10 +9,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 
 /**
  * Clase con algunas utilidades genericas para ser usadas desde cualquier lugar
@@ -22,6 +27,8 @@ import java.text.DecimalFormat;
  *
  */
 public class Utils {
+
+    static private final Logger LOG = LoggerFactory.getLogger(Utils.class);
 
     /**
      * Metodo para mostrar un mensaje de tipo Toast
@@ -81,10 +88,12 @@ public class Utils {
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            Log.e("MainActivity", "Error creando el hash del email");
+            Log.e("Utils", "Error creando el hash del email");
+            LOG.error("Utils: Error creando el hash del email");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            Log.e("MainActivity", "Error creando el hash del email");
+            Log.e("Utils", "Error creando el hash del email");
+            LOG.error("Utils: Error creando el hash del email");
         }
 
     }

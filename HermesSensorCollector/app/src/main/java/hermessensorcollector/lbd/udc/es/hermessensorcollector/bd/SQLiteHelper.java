@@ -6,6 +6,10 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.slf4j.LoggerFactory;
+
+import java.util.logging.Logger;
+
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
 
 /**
@@ -14,6 +18,8 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
  * Created by Leticia on 14/04/2016.
  */
 public class SQLiteHelper extends SQLiteOpenHelper{
+
+    static private final org.slf4j.Logger LOG = LoggerFactory.getLogger(SQLiteHelper.class);
 
     private static int version = 1;
     private static String name = "HermesDb";
@@ -49,7 +55,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         db.execSQL(sqlCreate);
 
         Log.i(this.getClass().toString(), "Table " + TablesDB.TABLA_PARAMETERS + " created");
-
+        LOG.info("Table " + TablesDB.TABLA_PARAMETERS + " created");
     }
 
     private void insertarUrlService(SQLiteDatabase db){
@@ -112,12 +118,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionNueva) {
 
         if (versionNueva > versionAnterior) {
-            //tiempo de espera para enviar eventos al servidor
-            insertarWaitingTime(db);
-            //metros entre listener del gps
-            insertarMinimunDistance(db);
-            //tiempo entre listener del gps
-            insertarMinimunTime(db);
+
         }
     }
 }

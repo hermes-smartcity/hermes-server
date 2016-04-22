@@ -1,0 +1,26 @@
+<configuration>
+  <property name="LOG_DIR" value="/sdcard/MECO1401/LOG" />
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- active log file -->
+    <file>${LOG_DIR}/log.txt</file>
+   
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover period -->
+      <fileNamePattern>${LOG_DIR}/log.%d.txt</fileNamePattern>
+
+      <!-- keep 30 days' worth of history -->
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    
+    <encoder>
+      <pattern>%d{dd MMM yyyy HH:mm:ss,GMT+1} %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+    
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="FILE" />
+  </root>
+  
+</configuration>

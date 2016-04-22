@@ -9,6 +9,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,8 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    static private final Logger LOG = LoggerFactory.getLogger(SettingsActivity.class);
 
     //Objetos de la pantalla
     private EditText editTextUrlServidor;
@@ -110,6 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
         } catch (InternalErrorException e) {
             e.printStackTrace();
             Log.e("SettingsActivity", "Error recuperando los parametros de la base de datos");
+            LOG.error("SettingsActivity", "Error recuperando los parametros de la base de datos");
         }
 
         //Asociamos el evento al pulsar cancelar
@@ -238,6 +244,7 @@ public class SettingsActivity extends AppCompatActivity {
             facadeSettings.updateParametersSettings(listadoParametros);
         } catch (InternalErrorException e) {
             Log.e("SettingsActivity", "Error actualizando la informacion de los parametros");
+            LOG.error("SettingsActivity: Error actualizando la informacion de los parametros");
         }
 
     }

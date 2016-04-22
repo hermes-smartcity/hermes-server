@@ -17,6 +17,9 @@ import android.os.PowerManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +36,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.ZipErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
@@ -52,6 +56,8 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.SensorDTO;
  * Created by Leticia on 15/04/2016.
  */
 public class SensorCollector implements SensorEventListener, LocationListener {
+
+    static private final Logger LOG = LoggerFactory.getLogger(SensorCollector.class);
 
     private float[] previousValues;
 
@@ -148,7 +154,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
 
         } catch (InternalErrorException e) {
-            Log.e("MainActivity", "Error recuperando los parametros de la base de datos");
+            Log.e("SensorCollector", "Error recuperando los parametros de la base de datos");
+            LOG.error("SensorCollector: Error recuperando los parametros de la base de datos");
         }
 
     }
@@ -236,6 +243,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
     }
 
     public void launchTask(){
+        LOG.info("SensorCollector: Lanzando la tarea de sincronizacion con el servidor");
         //indicamos que es el primer envio
         firstSend = true;
         lastSend = false;
@@ -256,6 +264,9 @@ public class SensorCollector implements SensorEventListener, LocationListener {
     }
 
     public void stopTask(){
+
+        LOG.info("SensorCollector: Parando la tarea de sincronizacion con el servidor");
+
         if (timer!=null) {
             timer.cancel();
         }
@@ -430,14 +441,17 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
                 } catch(InternalErrorException e) {
                     Log.e("SensorTask", "Problemas interno " + e.getMessage());
+                    LOG.error("SensorTask: Problemas interno " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (ZipErrorException e) {
                     Log.e("SensorTask", "Problemas creanzo zip " + e.getMessage());
+                    LOG.error("SensorTask: Problemas creanzo zip " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (IOException e) {
                     Log.e("SensorTask", "Problemas accediendo al fichero " + e.getMessage());
+                    LOG.error("SensorTask: Problemas accediendo al fichero " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 }
@@ -499,6 +513,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     String responseMessage = conn.getResponseMessage();
 
                     Log.i("UPLOAD SENSOR", "HTTP Response is: " + responseCode + ": " + responseMessage);
+                    LOG.info("UPLOAD SENSOR: HTTP Response is: " + responseCode + ": " + responseMessage);
 
                     if(responseCode == 200) {
                         return true;
@@ -509,12 +524,18 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     dOut.close();
 
                 } catch (FileNotFoundException e) {
+                    Log.e("SensorTask", "FileNotFoundException " + e.getMessage());
+                    LOG.error("SensorTask: FileNotFoundException " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (MalformedURLException e) {
+                    Log.e("SensorTask", "MalformedURLException " + e.getMessage());
+                    LOG.error("SensorTask: MalformedURLException " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (IOException e) {
+                    Log.e("SensorTask", "IOException " + e.getMessage());
+                    LOG.error("SensorTask: IOException " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 }
@@ -623,14 +644,17 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
                 } catch(InternalErrorException e) {
                     Log.e("GpsTask", "Problemas interno " + e.getMessage());
+                    LOG.error("GpsTask: Problemas interno " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (ZipErrorException e) {
                     Log.e("GpsTask", "Problemas creanzo zip " + e.getMessage());
+                    LOG.error("GpsTask: Problemas creanzo zip " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (IOException e) {
                     Log.e("GpsTask", "Problemas accediendo al fichero " + e.getMessage());
+                    LOG.error("GpsTask: Problemas accediendo al fichero " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 }
@@ -692,6 +716,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     String responseMessage = conn.getResponseMessage();
 
                     Log.i("UPLOAD GPS", "HTTP Response is: " + responseCode + ": " + responseMessage);
+                    LOG.info("UPLOAD GPS: HTTP Response is: " + responseCode + ": " + responseMessage);
 
                     if(responseCode == 200) {
                         return true;
@@ -702,15 +727,22 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     dOut.close();
 
                 } catch (FileNotFoundException e) {
+                    Log.e("GpsTask", "FileNotFoundException " + e.getMessage());
+                    LOG.error("GpsTask: FileNotFoundException " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (MalformedURLException e) {
+                    Log.e("GpsTask", "MalformedURLException " + e.getMessage());
+                    LOG.error("GpsTask: MalformedURLException " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (IOException e) {
+                    Log.e("GpsTask", "IOException " + e.getMessage());
+                    LOG.error("GpsTask: IOException " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 }
+
 
                 return true;
             }

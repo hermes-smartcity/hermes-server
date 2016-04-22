@@ -32,11 +32,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor.SensorCollector;
@@ -46,6 +51,8 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
+
+    static private final Logger LOG = LoggerFactory.getLogger(MainActivity.class);
 
     private static final String TAG = "SensorView";
 
@@ -259,6 +266,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             } catch (InternalErrorException e) {
                 Log.e("MainActivity", "Error recuperando los parametros de la base de datos");
+                LOG.error("MainActivity", "Error recuperando los parametros de la base de datos");
             }
 
         }
@@ -565,6 +573,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onStart();
         // Apply any required UI change now that the Activity is visible.
         Log.d(TAG, "onStart\n");
+        LOG.debug(TAG + " onStart\n");
     }
 
     @Override
@@ -573,6 +582,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Resume any paused UI updates, threads, or processes required
         // by the activity but suspended when it was inactive.
         Log.d(TAG, "onResume\n");
+        LOG.debug(TAG + "onResume\n");
 
         // Register sensor listener at normal rate until changed
         registerSensorListener(SensorManager.SENSOR_DELAY_NORMAL, false);
@@ -587,6 +597,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // killed and restarted.
         super.onSaveInstanceState(savedInstanceState);
         Log.d(TAG, "onSaveInstanceState\n");
+        LOG.debug(TAG + "onSaveInstanceState\n");
 
         //Guardamos el tipo de provider a usar (por si giran la pantalla para
         //no volver a pedirlo
@@ -604,6 +615,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Restore UI state from the savedInstanceState.
         // This bundle has also been passed to onCreate.
         Log.d(TAG, "onRestoreInstanceState\n");
+        LOG.debug(TAG + "onRestoreInstanceState\n");
 
         providerChoosen = savedInstanceState.getString(Constants.PROVIDER_CHOOSEN);
     }
@@ -616,6 +628,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Load changes knowing that the activity has already
         // been visible within this process.
         Log.d(TAG, "onRestart\n");
+        LOG.debug(TAG + "onRestart\n");
     }
 
     // Called at the end of the active lifetime.
@@ -626,6 +639,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // the active foreground activity.
         super.onPause();
         Log.d(TAG, "onPause\n");
+        LOG.debug(TAG + "onPause\n");
 
         delay = -1;
 
@@ -642,6 +656,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // as after this call the process is likely to be killed.
         super.onStop();
         Log.d(TAG, "onStop\n");
+        LOG.debug(TAG + "onStop\n");
     }
 
     // Called at the end of the full lifetime.
@@ -657,6 +672,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // closing database connections etc.
         super.onDestroy();
         Log.d(TAG, "onDestroy\n");
+        LOG.debug(TAG + "onDestroy\n");
     }
 
     @Override

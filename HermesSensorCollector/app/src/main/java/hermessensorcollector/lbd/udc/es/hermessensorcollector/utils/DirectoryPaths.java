@@ -6,9 +6,13 @@ import android.os.Environment;
 import android.util.Log;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.R;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.structure.AlbumStorageDirFactory;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.structure.BaseAlbumDirFactory;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.structure.FroyoAlbumDirFactory;
@@ -22,6 +26,8 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.structure.FroyoAlb
  *
  */
 public class DirectoryPaths {
+
+	static private final Logger LOG = LoggerFactory.getLogger(DirectoryPaths.class);
 
 	private AlbumStorageDirFactory mAlbumStorageDirFactory;
 	private Activity activity;
@@ -77,6 +83,7 @@ public class DirectoryPaths {
 				if (!storageDir.mkdirs()) {
 					if (!storageDir.exists()) {
 						Log.d("DirectoryPaths", "failed to create directory");
+						LOG.error("DirectoryPaths: failed to create directory");
 						return null;
 					}
 				}
@@ -84,6 +91,7 @@ public class DirectoryPaths {
 
 		} else {
 			Log.v(activity.getString(R.string.app_name),"External storage is not mounted READ/WRITE.");
+			LOG.info("External storage is not mounted READ/WRITE.");
 		}
 
 		return storageDir;
@@ -107,6 +115,7 @@ public class DirectoryPaths {
 				if (!storageDir.mkdirs()) {
 					if (!storageDir.exists()) {
 						Log.d("DirectoryPaths", "failed to create directory");
+						LOG.error("DirectoryPaths: failed to create directory");
 						return null;
 					}
 				}
@@ -114,6 +123,7 @@ public class DirectoryPaths {
 
 		} else {
 			Log.v(activity.getString(R.string.app_name),"External storage is not mounted READ/WRITE.");
+			LOG.info("External storage is not mounted READ/WRITE.");
 		}
 
 		return storageDir;
@@ -175,6 +185,7 @@ public class DirectoryPaths {
 				if (!storageDir.mkdirs()) {
 					if (!storageDir.exists()) {
 						Log.d("DirectoryPaths", "failed to create directory");
+						LOG.error("DirectoryPaths: failed to create directory");
 						return null;
 					}
 				}
@@ -182,6 +193,7 @@ public class DirectoryPaths {
 
 		} else {
 			Log.v(activity.getString(R.string.app_name),"External storage is not mounted READ/WRITE.");
+			LOG.info("External storage is not mounted READ/WRITE.");
 		}
 
 		return storageDir;
@@ -205,6 +217,7 @@ public class DirectoryPaths {
 				if (!storageDir.mkdirs()) {
 					if (!storageDir.exists()) {
 						Log.d("DirectoryPaths", "failed to create directory");
+						LOG.error("DirectoryPaths: failed to create directory");
 						return null;
 					}
 				}
@@ -212,6 +225,7 @@ public class DirectoryPaths {
 
 		} else {
 			Log.v(activity.getString(R.string.app_name),"External storage is not mounted READ/WRITE.");
+			LOG.info("External storage is not mounted READ/WRITE.");
 		}
 
 		return storageDir;
