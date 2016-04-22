@@ -37,7 +37,7 @@ public class SensorDataDaoImpl extends GenericDaoHibernate<SensorData, Long> imp
 						"and d.typesensor LIKE :tipo ";
 
 		if(idUsuario!=null)
-			queryStr += " and d.idusuariomovil = :idUsuario ";
+			queryStr += " and d.usuarioMovil.id = :idUsuario ";
 		
 		Query query = getSession().createQuery(queryStr);
 				
