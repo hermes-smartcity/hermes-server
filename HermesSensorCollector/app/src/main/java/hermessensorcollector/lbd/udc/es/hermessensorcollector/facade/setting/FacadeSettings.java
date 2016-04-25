@@ -1,4 +1,4 @@
-package hermessensorcollector.lbd.udc.es.hermessensorcollector.facade;
+package hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.setting;
 
 import android.database.sqlite.SQLiteDatabase;
 
@@ -6,8 +6,8 @@ import java.util.List;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.action.GetListValueParametersByNameAction;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.action.UpdateParametersSettingsAction;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.setting.action.GetListValueParametersByNameAction;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.setting.action.UpdateParametersSettingsAction;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.sql.PlainActionProcessor;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
 

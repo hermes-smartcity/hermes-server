@@ -14,7 +14,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -41,9 +40,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.FacadeSendings;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.setting.FacadeSettings;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor.SensorCollector;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor.SensorInterface;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String TAG = "SensorView";
 
     private FacadeSettings facadeSettings;
+    private FacadeSendings facadeSendings;
 
     // Sensor Manager (para los sensores)
     private SensorManager mgr;
@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private static final int REQUEST_SETTING = 1;
     private static final int REQUEST_GPS = 2;
+    private static final int REQUEST_SENDING = 3;
 
     /* GPS Constant Permission */
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
@@ -122,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //Instanciamos la facada
         facadeSettings = new FacadeSettings(aController);
+        facadeSendings =  new FacadeSendings(aController);
 
         // Acquire sensor manager
         mgr = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
@@ -219,13 +221,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this,SettingsActivity.class);
+        switch (item.getItemId()) {
 
-            startActivityForResult(intent, REQUEST_SETTING);
+            case R.id.action_settings:{
+                Intent intent = new Intent(this,SettingsActivity.class);
 
-            return true;
+                startActivityForResult(intent, REQUEST_SETTING);
+
+                break;
+            }
+
+            case R.id.action_hanging_sendings:{
+                Intent intent = new Intent(this,HangingSendingsActivity.class);
+
+                startActivityForResult(intent, REQUEST_SENDING);
+
+                break;
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -398,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 provider = LocationManager.NETWORK_PROVIDER;
             }
         }
-        sc = new SensorCollector(facadeSettings, MainActivity.this, mgr, sensor, si.getNumValues(), typeSensor, lmgr, provider);
+        sc = new SensorCollector(facadeSettings, facadeSendings, MainActivity.this, mgr, sensor, si.getNumValues(), typeSensor, lmgr, provider);
     }
 
     // method to load in the static sensor information
@@ -687,6 +699,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             case REQUEST_GPS:{
                 firstTime = false;
                 getGpsProvider();
+            }
+
+            case REQUEST_SENDING:{
+                delay = -1;
+                break;
             }
         }
     }

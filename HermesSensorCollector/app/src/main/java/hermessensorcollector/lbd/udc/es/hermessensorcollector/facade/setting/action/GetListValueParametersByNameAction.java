@@ -1,4 +1,4 @@
-package hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.action;
+package hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.setting.action;
 
 import android.database.sqlite.SQLiteDatabase;
 

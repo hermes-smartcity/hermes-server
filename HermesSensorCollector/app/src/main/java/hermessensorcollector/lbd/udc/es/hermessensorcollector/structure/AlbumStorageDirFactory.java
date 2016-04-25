@@ -12,7 +12,7 @@ import java.io.File;
 public abstract class AlbumStorageDirFactory {
 	
 	//Atributos para la generacion de la carpeta padre
-	public static final String DIRECTORIO_PRINCIPAL = "/MECO401";
+	public static final String DIRECTORIO_PRINCIPAL = "/MECO1401";
 	public static final String DIRECTORIO_PICTURES = "/Pictures";
 
 	//Atributos para la generacion del XML

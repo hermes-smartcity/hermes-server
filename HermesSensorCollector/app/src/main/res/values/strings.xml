@@ -36,8 +36,9 @@
 
     <string name="url">URL Service</string>
 
-    <string name="acept">Accept</string>
+    <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
+    <string name="deleteAll">Delete all</string>
 
     <string name="urlRequired">URL service required</string>
     <string name="emailRequired">Email required</string>
@@ -49,6 +50,7 @@
     <string name="minimumDistanceFormat">Minimum distance format incorrect</string>
 
     <string name="updateOK">Information updated</string>
+    <string name="deleteOK">Information deleted</string>
 
     <string name="writeEmail">Write your email</string>
     <string name="email">Email</string>
@@ -63,4 +65,8 @@
     <string name="waitingTime">Transfer data: Waiting time (minutes)</string>
     <string name="minimumTime">GPS: Minimum time (minutes)</string>
     <string name="minimumDistance">GPS: Minimum distance (metres)</string>
+
+    <string name="hangingSendings">Hanging sendings</string>
+    <string name="noEnvios">There are not hanging sendings</string>
+
 </resources>
