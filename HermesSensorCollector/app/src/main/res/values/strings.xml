@@ -48,6 +48,10 @@
     <string name="waitingTimeFormat">Waiting time format incorrect</string>
     <string name="minimumTimeFormat">Minimum time format incorrect</string>
     <string name="minimumDistanceFormat">Minimum distance format incorrect</string>
+    <string name="waitingTimeNegative">Waiting time can not be negative</string>
+    <string name="minimumTimeNegative">Minimum time can not be negative</string>
+    <string name="minimumDistanceNegative">Minimum distance can not be negative</string>
+
 
     <string name="updateOK">Information updated</string>
     <string name="deleteOK">Information deleted</string>
@@ -63,7 +67,7 @@
     <string name="noThanks">No, thanks</string>
 
     <string name="waitingTime">Transfer data: Waiting time (minutes)</string>
-    <string name="minimumTime">GPS: Minimum time (minutes)</string>
+    <string name="minimumTime">GPS: Minimum time (seconds)</string>
     <string name="minimumDistance">GPS: Minimum distance (metres)</string>
 
     <string name="hangingSendings">Hanging sendings</string>

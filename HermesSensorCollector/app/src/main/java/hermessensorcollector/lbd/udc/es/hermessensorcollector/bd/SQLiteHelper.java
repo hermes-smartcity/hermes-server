@@ -121,7 +121,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
                 + TablesDB.PARAMETERS_COLUMNA_NAME + ","
                 + TablesDB.PARAMETERS_COLUMNA_VALUE + ")"
-                + " VALUES ('" + Constants.MINIMUM_TIME +"','1')";
+                + " VALUES ('" + Constants.MINIMUM_TIME +"','30')";
 
         db.execSQL(sqlInsert);
     }

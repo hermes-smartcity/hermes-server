@@ -89,7 +89,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
     //The minimum time beetwen updates in milliseconds
     //Le ponemos un tiempo por defecto por si no esta en el settings (que deberia)
-    private long MIN_TIME_BW_UPDATES = 60000 * 1;  // 1 minute
+    private long MIN_TIME_BW_UPDATES = 60000 * 30 * 1;  // 30 seconds
 
     private Timer timer = null;
 
@@ -150,8 +150,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                 }
 
                 if (param.getName().equals(Constants.MINIMUM_TIME)){
-                    //El tiempo viene en minutos asi que lo multiplicamos por 60000 para pasarlo a milisegundos
-                    MIN_TIME_BW_UPDATES = 60000 * Long.parseLong(param.getValue());
+                    //El tiempo viene en segundos asi que lo multiplicamos por 180000 para pasarlo a milisegundos
+                    MIN_TIME_BW_UPDATES = 180000 * Long.parseLong(param.getValue());
                 }
 
             }
@@ -266,6 +266,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
                 SendInformationGpsTask tareaGps = new SendInformationGpsTask();
                 tareaGps.execute();
+
             }
         },0, UPDATE_INTERVAL);
 
@@ -816,7 +817,6 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
         @Override
         protected void onPostExecute(Boolean result) {
-
 
             //Borramos los archivos enviados de la tablet
             deleteFile(rutaJson, nombre_fichero_json + terminacionJson);
