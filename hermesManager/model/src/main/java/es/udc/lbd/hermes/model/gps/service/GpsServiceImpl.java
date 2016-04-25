@@ -54,17 +54,19 @@ public class GpsServiceImpl implements GpsService{
 		String provider = gpssJson.getProvider();
 		List<GpsJson> navegadoresJson = gpssJson.getGps();
 		
-		for (GpsJson gpsJson : navegadoresJson) {
-			//Creamos el gps
-			Calendar time = Calendar.getInstance();
-			time.setTimeInMillis(gpsJson.getTime());
-			
-			Geometry position =  HelpersModel.prepararPunto(gpsJson.getLatitude(), gpsJson.getLongitude());
-			
-			Gps gps = new Gps(provider, time, (Point)position, gpsJson.getAltitude(), 
-					gpsJson.getSpeed(), gpsJson.getBearing(), gpsJson.getAccuracy());
-			
-			create(gps, userId);
+		if (navegadoresJson != null){
+			for (GpsJson gpsJson : navegadoresJson) {
+				//Creamos el gps
+				Calendar time = Calendar.getInstance();
+				time.setTimeInMillis(gpsJson.getTime());
+				
+				Geometry position =  HelpersModel.prepararPunto(gpsJson.getLatitude(), gpsJson.getLongitude());
+				
+				Gps gps = new Gps(provider, time, (Point)position, gpsJson.getAltitude(), 
+						gpsJson.getSpeed(), gpsJson.getBearing(), gpsJson.getAccuracy());
+				
+				create(gps, userId);
+			}
 		}
 		
 	}

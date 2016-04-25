@@ -15,7 +15,7 @@ public class TablesDB {
 
     public static String TABLA_TAILSENDING = "tailsending";
     public static String TAILSENDING_COLUMNA_ID = "id";
+    public static String TAILSENDING_COLUMNA_TYPE = "type";
     public static String TAILSENDING_COLUMNA_DATE = "date";
     public static String TAILSENDING_COLUMNA_ROUTEZIP = "routezip";
-
 }

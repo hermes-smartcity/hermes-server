@@ -21,8 +21,10 @@ public class TailSendingDataSource {
     private SQLiteDatabase db;
 
     private String[] columnasColaEnvio = { TablesDB.TAILSENDING_COLUMNA_ID,
+            TablesDB.TAILSENDING_COLUMNA_TYPE,
             TablesDB.TAILSENDING_COLUMNA_DATE,
             TablesDB.TAILSENDING_COLUMNA_ROUTEZIP
+
     };
 
     public TailSendingDataSource(SQLiteDatabase db) {
@@ -41,7 +43,7 @@ public class TailSendingDataSource {
      *
      * @param id Identificador del envio a eliminar
      */
-    public void deleteSending(int id) {
+    public void deleteSending(Long id) {
         db.delete(TablesDB.TABLA_TAILSENDING, TablesDB.TAILSENDING_COLUMNA_ID + " = " + id, null);
     }
 
@@ -52,7 +54,7 @@ public class TailSendingDataSource {
      * @param routezip Ruta del zip
      * @return long identificador de la entrada creada
      */
-    public long createTailSending(Date date, String routezip) {
+    public long createTailSending(String type, Date date, String routezip) {
 
         ContentValues values = new ContentValues();
 
@@ -60,6 +62,7 @@ public class TailSendingDataSource {
         SimpleDateFormat dateFormat = new SimpleDateFormat(Utils.FECHA_SQLITE, locale);
         String fecha = dateFormat.format(date);
 
+        values.put(TablesDB.TAILSENDING_COLUMNA_TYPE, type);
         values.put(TablesDB.TAILSENDING_COLUMNA_DATE, fecha);
         values.put(TablesDB.TAILSENDING_COLUMNA_ROUTEZIP, routezip);
 
@@ -93,6 +96,31 @@ public class TailSendingDataSource {
     }
 
     /**
+     * Listar todas las colas de envio de la base de datos
+     *
+     * @param type Tipo de elemento a recuperar
+     * @return List<TailSending> Listado con la informacion de cada una de las colas de envio
+     * existentes
+     */
+    public List<TailSending> getAllFromType(String type) {
+
+        List<TailSending> lista = new ArrayList<TailSending>();
+
+        Cursor cursor = db.query(TablesDB.TABLA_TAILSENDING, columnasColaEnvio, null, null,
+                null, null, TablesDB.TAILSENDING_COLUMNA_DATE);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            TailSending nuevo = cursorToTailSending(cursor);
+            lista.add(nuevo);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        return lista;
+    }
+
+    /**
      * Cursor para movernos por la cola de envio y recuperar la informacion asociada a la misma
      * @param cursor Cursor a utilizar
      * @return TailSending Objeto TailSending con la informacion
@@ -102,15 +130,14 @@ public class TailSendingDataSource {
         if (cursor.getCount()!=0){ //por si buscan un parametro que no existe
             objeto.setId(cursor.getLong(0));
 
-            String fecha = cursor.getString(1);
+            objeto.setType(cursor.getString(1));
+
+            String fecha = cursor.getString(2);
             Locale locale = Utils.getLocale();
             Date fechaEnvio = Utils.obtenerDateSegunFormato(fecha,Utils.FECHA_SQLITE, locale );
             objeto.setDate(fechaEnvio);
 
-            //SimpleDateFormat dateFormat = new SimpleDateFormat(Utils.FECHA_SQLITE, spanish);
-            //objeto.setDate(dateFormat.parse(fecha, new ParsePosition(0)));
-
-            objeto.setRoutezip(cursor.getString(2));
+            objeto.setRoutezip(cursor.getString(3));
 
             return objeto;
         }else{

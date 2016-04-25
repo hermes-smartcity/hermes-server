@@ -56,57 +56,60 @@ public class SensorDataServiceImpl implements SensorDataService{
 		Calendar tiempoActual;
 		BigDecimal[] valoresActuales;
 		
-		if (sensoresJson.size()>0){
-			//Se lee el primer <tiempo, evento>
-			SensorDataJson sensorDataJson = sensoresJson.get(0);
-			
-			tiempoAnterior = Calendar.getInstance();
-			tiempoAnterior.setTimeInMillis(sensorDataJson.getTimeStamp());
-			
-			valoresAnteriores = sensorDataJson.getValues();
-			
-			//Si el envio es el del medio o el ultimo, hay que encontrar el ultimo evento del mismo
-			//usuario en la base de datos y actualizar su endtime con el tiempo de este envio
-			if((!firstSend && !lastSend) || lastSend){
-				UsuarioMovil usuarioMovil= usuarioMovilDao.findBySourceId(userId);
-				if (usuarioMovil != null){
-					SensorData lastSensor = sensorDataDao.findLast(usuarioMovil.getId(), typeSensor);
-					if (lastSensor != null){
-						lastSensor.setEndtime(tiempoAnterior);
-						sensorDataDao.update(lastSensor);
+		if (sensoresJson != null){
+			if (sensoresJson.size()>0){
+				//Se lee el primer <tiempo, evento>
+				SensorDataJson sensorDataJson = sensoresJson.get(0);
+				
+				tiempoAnterior = Calendar.getInstance();
+				tiempoAnterior.setTimeInMillis(sensorDataJson.getTimeStamp());
+				
+				valoresAnteriores = sensorDataJson.getValues();
+				
+				//Si el envio es el del medio o el ultimo, hay que encontrar el ultimo evento del mismo
+				//usuario en la base de datos y actualizar su endtime con el tiempo de este envio
+				if((!firstSend && !lastSend) || lastSend){
+					UsuarioMovil usuarioMovil= usuarioMovilDao.findBySourceId(userId);
+					if (usuarioMovil != null){
+						SensorData lastSensor = sensorDataDao.findLast(usuarioMovil.getId(), typeSensor);
+						if (lastSensor != null){
+							lastSensor.setEndtime(tiempoAnterior);
+							sensorDataDao.update(lastSensor);
+						}
 					}
 				}
-			}
-			
-			//Mientras queden eventos
-			for (int i = 1; i < sensoresJson.size(); i++) {
-				sensorDataJson = sensoresJson.get(i);
 				
-				tiempoActual = Calendar.getInstance();
-				tiempoActual.setTimeInMillis(sensorDataJson.getTimeStamp());
+				//Mientras queden eventos
+				for (int i = 1; i < sensoresJson.size(); i++) {
+					sensorDataJson = sensoresJson.get(i);
+					
+					tiempoActual = Calendar.getInstance();
+					tiempoActual.setTimeInMillis(sensorDataJson.getTimeStamp());
 
-				valoresActuales = sensorDataJson.getValues();
+					valoresActuales = sensorDataJson.getValues();
+					
+					//Creamos el sensorData
+					SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoActual, valoresAnteriores);
+					create(sensorData, userId);
+					
+					//Reasignamos los valores
+					tiempoAnterior = tiempoActual;
+					valoresAnteriores = valoresActuales;
+				}
 				
-				//Creamos el sensorData
-				SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoActual, valoresAnteriores);
-				create(sensorData, userId);
+				//Insertamos el ultimo
+				//Consideraciones: si es el primer envio o el del medio, el tiempo final sera nulo. Si es el final sera el valor
+				if (firstSend || (!firstSend && !lastSend)){
+					SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, null, valoresAnteriores);
+					create(sensorData,userId);
+				}else{
+					SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoAnterior, valoresAnteriores);
+					create(sensorData,userId);
+				}
 				
-				//Reasignamos los valores
-				tiempoAnterior = tiempoActual;
-				valoresAnteriores = valoresActuales;
 			}
-			
-			//Insertamos el ultimo
-			//Consideraciones: si es el primer envio o el del medio, el tiempo final sera nulo. Si es el final sera el valor
-			if (firstSend || (!firstSend && !lastSend)){
-				SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, null, valoresAnteriores);
-				create(sensorData,userId);
-			}else{
-				SensorData sensorData = new SensorData(typeSensor, tiempoAnterior, tiempoAnterior, valoresAnteriores);
-				create(sensorData,userId);
-			}
-			
 		}
+		
 		
 	}
 	

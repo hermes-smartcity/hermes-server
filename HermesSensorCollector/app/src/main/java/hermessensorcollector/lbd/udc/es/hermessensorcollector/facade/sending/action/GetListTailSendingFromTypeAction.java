@@ -2,31 +2,23 @@ package hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.ac
 
 import android.database.sqlite.SQLiteDatabase;
 
-import java.io.File;
-import java.util.Date;
-import java.util.List;
-
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.TailSendingDataSource;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.ModelException;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.sql.TransactionalPlainAction;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.TailSending;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.sql.NonTransactionalPlainAction;
+
 
 /**
- * Accion para crear un envio pendiente
+ * Accion que se encarga de recuperar la lista de envios pendientes
  *
- * Created by Leticia on 25/04/2016.
+ * Created by Leticia on 14/04/2016.
  */
-public class CreateTailSendingAction implements TransactionalPlainAction {
+public class GetListTailSendingFromTypeAction implements NonTransactionalPlainAction {
 
     private String type;
-    private Date date;
-    private String routeZip;
 
-    public CreateTailSendingAction(String type, Date date, String routeZip){
+    public GetListTailSendingFromTypeAction(String type){
         this.type = type;
-        this.date = date;
-        this.routeZip = routeZip;
     }
 
     @Override
@@ -35,8 +27,7 @@ public class CreateTailSendingAction implements TransactionalPlainAction {
 
         TailSendingDataSource tailDataSource = new TailSendingDataSource(db);
 
-        tailDataSource.createTailSending(type, date, routeZip);
-
-        return null;
+        return tailDataSource.getAllFromType(type);
     }
+
 }

@@ -17,10 +17,10 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.TailSending;
  */
 public class DeleteTailSendingAction implements TransactionalPlainAction {
 
-    private Long id;
+    private TailSending sending;
 
-    public DeleteTailSendingAction(Long id){
-        this.id = id;
+    public DeleteTailSendingAction(TailSending sending){
+        this.sending = sending;
     }
 
     @Override
@@ -29,18 +29,12 @@ public class DeleteTailSendingAction implements TransactionalPlainAction {
 
         TailSendingDataSource tailDataSource = new TailSendingDataSource(db);
 
-        //Recuperamos la lista de fotos a enviar (para poder tener la ruta del zip a borrar)
-        List<TailSending> listado = tailDataSource.getAll();
-        for (TailSending envio:listado) {
-            String ruta = envio.getRoutezip();
-
-            //Borramos todas las fotos del disco
-            File file = new File(ruta);
-            file.delete();
-        }
+        //Borramos de disco el zip
+        File file = new File(sending.getRoutezip());
+        file.delete();
 
         //Borramos todos los envios de la base de datos
-        tailDataSource.deleteAll();
+        tailDataSource.deleteSending(sending.getId());
 
         return null;
     }

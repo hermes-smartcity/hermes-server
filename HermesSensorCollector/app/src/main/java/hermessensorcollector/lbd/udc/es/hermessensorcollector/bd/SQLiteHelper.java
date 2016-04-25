@@ -61,6 +61,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         String sqlCreate = "CREATE TABLE " + TablesDB.TABLA_TAILSENDING
                 + " (" + TablesDB.TAILSENDING_COLUMNA_ID
                 + " INTEGER PRIMARY KEY, "
+                + TablesDB.TAILSENDING_COLUMNA_TYPE + " TEXT NOT NULL, "
                 + TablesDB.TAILSENDING_COLUMNA_DATE + " DATE NOT NULL, "
                 + TablesDB.TAILSENDING_COLUMNA_ROUTEZIP + " TEXT NOT NULL )";
 

@@ -11,6 +11,7 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.act
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.action.DeleteAllSendingsAction;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.action.DeleteTailSendingAction;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.action.GetListTailSendingAction;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.action.GetListTailSendingFromTypeAction;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.sql.PlainActionProcessor;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.TailSending;
 
@@ -45,6 +46,24 @@ public class FacadeSendings {
         return listado;
     }
 
+    public List<TailSending> getListTailSendingFromType(String type) throws InternalErrorException {
+        List<TailSending> listado;
+        try {
+            GetListTailSendingFromTypeAction action = new GetListTailSendingFromTypeAction(type);
+
+            SQLiteDatabase db = applicationContext.getDataBase();
+
+            listado = (List<TailSending>) PlainActionProcessor.process(db,action);
+
+        } catch (InternalErrorException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new InternalErrorException(e);
+        }
+
+        return listado;
+    }
+
     public void deleteAllSendings()throws InternalErrorException{
 
         try {
@@ -62,10 +81,10 @@ public class FacadeSendings {
 
     }
 
-    public void createTailSending(Date date, String routeZip)throws InternalErrorException{
+    public void createTailSending(String type, Date date, String routeZip)throws InternalErrorException{
 
         try {
-            CreateTailSendingAction action = new CreateTailSendingAction(date, routeZip);
+            CreateTailSendingAction action = new CreateTailSendingAction(type, date, routeZip);
 
             SQLiteDatabase db = applicationContext.getDataBase();
 
@@ -79,10 +98,10 @@ public class FacadeSendings {
 
     }
 
-    public void deleteTailSending(Long id)throws InternalErrorException{
+    public void deleteTailSending(TailSending sending)throws InternalErrorException{
 
         try {
-            DeleteTailSendingAction action = new DeleteTailSendingAction(id);
+            DeleteTailSendingAction action = new DeleteTailSendingAction(sending);
 
             SQLiteDatabase db = applicationContext.getDataBase();
 

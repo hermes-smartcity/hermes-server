@@ -12,9 +12,6 @@
     <!-- Permiso para guardar en disco el json y el zip a enviar al servidor -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- Permiso para bloquear la pantalla -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <!-- Permiso para poder tener acceso a internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
