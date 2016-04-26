@@ -378,7 +378,7 @@
 		}else{
 			$localStorage.hermesmanager = {
 					lang : 'en'
-			}
+			};
 			
 		}
 		
