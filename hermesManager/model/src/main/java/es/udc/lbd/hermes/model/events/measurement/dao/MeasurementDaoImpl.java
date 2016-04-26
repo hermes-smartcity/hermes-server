@@ -213,7 +213,7 @@ MeasurementDao {
 		String queryStr =  "select count(*) as \"numberOfValues\", " +
 								"max(value) as max, " + 
 								"min(value) as min, " +
-								"average(value) as average, " + 
+								"avg(value) as average, " + 
 								"stddev(value) as \"standardDeviation\" " +
 							"from measurement " +
 							"where st_distance(position, st_geometryfromtext('POINT('|| :lon || ' ' ||:lat ||')', 4326), true) < 10 " +
