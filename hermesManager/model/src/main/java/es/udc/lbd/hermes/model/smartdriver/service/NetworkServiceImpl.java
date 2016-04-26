@@ -73,7 +73,13 @@ public class NetworkServiceImpl implements NetworkService{
 			break;
 			
 		case DATA_SECTION:
-			resultado = dataSectionDao.getAggregateValue(value, lat, lon, day, time);
+			
+			if (value != null){
+				resultado = dataSectionDao.getAggregateValue(value, lat, lon, day, time);
+			}else{
+				resultado = new AggregateMeasurementVO();
+			}
+			
 			break;
 		
 		default:
