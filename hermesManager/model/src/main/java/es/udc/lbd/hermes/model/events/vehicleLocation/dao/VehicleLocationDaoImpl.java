@@ -188,7 +188,7 @@ VehicleLocationDao {
 		String queryStr =  "select count(*) as \"numberOfValues\", " +
 								"max(speed) as max, " + 
 								"min(speed) as min, " +
-								"avg(speed) as average, " + 
+								"average(speed) as average, " + 
 								"stddev(speed) as \"standardDeviation\" " +
 							"from vehicleLocation " +
 							"where st_distance(position, st_geometryfromtext('POINT('|| :lon || ' ' ||:lat ||')', 4326), true) < 10 " +
