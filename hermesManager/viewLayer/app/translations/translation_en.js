@@ -23,6 +23,8 @@
 			"numeroEventos": "Events number",
 			"numeroPeticiones": "Request number",
 			"noResults": "There are no results",
+			"noEvents": "There are not events to show",
+			"noData": "There are no data",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
@@ -42,7 +44,7 @@
 				"date": "Date",
 				"time": "Time",
 				"minimimSpeed": "Minimum Speed",
-				"maximumSpeed": "Maximun Speed",
+				"maximumSpeed": "Maximum Speed",
 				"medianSpeed": "Median Speed",
 				"averageSpeed": "Average Speed",
 				"stdDevSpeed": "Std. Dev. Speed",
@@ -51,7 +53,15 @@
 				"highAcceleration": "High Acceleration",
 				"highDecceleration": "Hig Decceleration",
 				"averageHeartRate": "Average Heart Rate",
-				"stdDevHeartRate": "Std. Dev. Heart Rate"
+				"stdDevHeartRate": "Std. Dev. Heart Rate",
+				"minimum": "Minimum",
+				"maximum": "Maximum",
+				"median": "Median",
+				"acceleration": "Acceleration",
+				"hearRate": "Heart rate",
+				"average": "Average",
+				"stdDev": "Std. Dev.",
+				"speed": "Speed"
 			},
 			"measurement":{
 				"noEvents": "There are not events to show",
@@ -60,7 +70,8 @@
 				"time": "Time",
 				"value": "Value",
 				"speed": "Speed",
-				"accuracy": "Accuracy"
+				"accuracy": "Accuracy",
+				"type": "Type"
 			},
 			"settings": {
 				"titulo": "Settings",
@@ -96,7 +107,9 @@
 				"userManager": "User Manager",
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
-				"smartdriver": "Smart Driver"
+				"smartdriver": "Smart Driver",
+				"sensorData": "Sensor Data",
+				"gpsLocation": "GPS Location"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -109,7 +122,8 @@
 				"filtrar": "Filter",
 				"servicios": "Services",
 				"operaciones": "Type of operations",
-				"chooseService": "Choose a service first"
+				"chooseService": "Choose a service first",
+				"tipoSensor": "Sensor Type: "
 			},
 			"resultados": {
 				"titulo": "Results",
@@ -212,7 +226,21 @@
 				"minimium": "Minimum: ",
 				"average": "Average: ",
 				"standardDeviation": "Standard Deviation: "
-			}
+			},
+			"gpsLocation":{
+				"titulo": "Dashboard",
+				"mapa": "Map",
+				"tabla": "Table",
+				"userId": "UserId",
+				"time": "Time",
+				"date": "Date",
+				"speed": "Speed",
+				"accuracy": "Accuracy",
+				"bearing": "Bearing",
+				"altitude": "Altitude",
+				"provider": "Provider",
+				"noData": "There are not data to show",
+			},
 		});
 	}
 

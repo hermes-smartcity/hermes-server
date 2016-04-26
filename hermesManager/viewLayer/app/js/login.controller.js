@@ -21,7 +21,7 @@
 					$localStorage.authToken = authToken;
 				}
 
-				//Calculamos e valor de eventsType y measurementTypes
+				//Calculamos e valor de eventsType, measurementTypes, sensor type
 				//y lo almacenamos en la variable local
 				eventsService.getEvensType().then(getEventsTypeComplete);
 				function getEventsTypeComplete(response){
@@ -31,12 +31,19 @@
 					function getMeasurementsTypeComplete(response){
 						$rootScope.measurementsType = response;
 
-						userService.getUser(url_get_user).then(getUserComplete);
-						function getUserComplete(response) {
-							$rootScope.user = response.data;
-							$location.path("/");
-							$state.go("dashboard");				
+						
+						eventsService.getSensorsType().then(getSensorsTypeComplete);
+						function getSensorsTypeComplete(response){
+							$rootScope.sensorsType = response;
+						
+							userService.getUser(url_get_user).then(getUserComplete);
+							function getUserComplete(response) {
+								$rootScope.user = response.data;
+								$location.path("/");
+								$state.go("dashboard");				
+							}
 						}
+						
 					}
 
 				}

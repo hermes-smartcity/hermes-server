@@ -121,6 +121,7 @@ DataSectionDao {
 	@Override
 	public List<DataSection> obterDataSectionsWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
 			int startIndex, Integer limit){
+		
 		List<DataSection> elementos = null;
 
 		String queryStr =  "from DataSection d where intersects(roadSection, :bounds) = true ";

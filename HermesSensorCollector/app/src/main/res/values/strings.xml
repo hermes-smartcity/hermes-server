@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Hermes Sensor Collector</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="no_sensor_type_linear_acceleration">This device has not TYPE_LINEAR_ACCELERATION sensor</string>
+
+    <string name="sensor_details">Sensor Details</string>
+    <string name="sensor_name_tag">"Name: "</string>
+    <string name="sensor_vendor_tag">"Vendor: "</string>
+    <string name="sensor_version_tag">"Version: "</string>
+    <string name="sensor_type_tag">"Type: "</string>
+    <string name="sensor_power_tag">"Power: "</string>
+    <string name="sensor_range_tag">"Range: "</string>
+    <string name="sensor_resolution_tag">"Resolution: "</string>
+
+    <string name="real_time_data">Real-Time Data</string>
+    <string name="sensor_delay_tag">"Event Delay: "</string>
+    <string name="sensor_events_tag">"Events: "</string>
+    <string name="sensor_timestamp_tag">"Timestamp(s): "</string>
+    <string name="sensor_accuracy_tag">"Accuracy: "</string>
+
+    <string name="sensor_value_format">"%1$s (%2$s) = "</string>
+    <string name="sensor_data_format">"d[%1$d] = "</string>
+
+    <string name="sensor_log">"Sensor: %1$s %2$s %3$s Version:%4$d\n"</string>
+
+    <string name="sensor_lateral">d[0] = Lateral (m/s2) = </string>
+    <string name="sensor_longitudinal">d[1] = Longitudinal (m/s2) = </string>
+    <string name="sensor_vertical">d[2] = Vertical (m/s2) = </string>
+
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
+
+    <string name="service">Service</string>
+    <string name="settings">Settings</string>
+
+    <string name="url">URL Service</string>
+
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="deleteAll">Delete all</string>
+
+    <string name="urlRequired">URL service required</string>
+    <string name="emailRequired">Email required</string>
+    <string name="waitingTimeRequired">Waiting time required</string>
+    <string name="minimumTimeRequired">Minimum time required</string>
+    <string name="minimumDistanceRequired">Minimum distance required</string>
+    <string name="waitingTimeFormat">Waiting time format incorrect</string>
+    <string name="minimumTimeFormat">Minimum time format incorrect</string>
+    <string name="minimumDistanceFormat">Minimum distance format incorrect</string>
+    <string name="waitingTimeNegative">Waiting time can not be negative</string>
+    <string name="minimumTimeNegative">Minimum time can not be negative</string>
+    <string name="minimumDistanceNegative">Minimum distance can not be negative</string>
+
+
+    <string name="updateOK">Information updated</string>
+    <string name="deleteOK">Information deleted</string>
+
+    <string name="writeEmail">Write your email</string>
+    <string name="email">Email</string>
+    <string name="emailIncorrect">The format of this email is not correct</string>
+
+    <string name="album_name">Photos</string>
+
+    <string name="noGPS">We have detected that you do not have the GPS activated. Would you like to activate it?</string>
+    <string name="yesPlease">Yes, please</string>
+    <string name="noThanks">No, thanks</string>
+
+    <string name="waitingTime">Transfer data: Waiting time (minutes)</string>
+    <string name="minimumTime">GPS: Minimum time (seconds)</string>
+    <string name="minimumDistance">GPS: Minimum distance (metres)</string>
+
+    <string name="hangingSendings">Hanging sendings</string>
+    <string name="noEnvios">There are not hanging sendings</string>
+
+</resources>

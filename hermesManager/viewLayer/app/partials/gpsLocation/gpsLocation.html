@@ -1,0 +1,46 @@
+<div class="slide-animate" data-ng-include="'./partials/estadisticas.html'"></div>
+
+<div class="row">
+	<div class="col-md-9">
+		<div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa glyphicon fa-fw"></i>
+					<div class="pull-left">
+						<span class="glyphicon glyphicon-eye-open"></span>
+						<div class="btn-group">
+							<button type="button"
+								class="btn btn-default btn-xs dropdown-toggle"
+								data-toggle="dropdown">
+								{{vm.activeInput}} <span class="caret"></span>
+							</button>
+							<ul id="overAnything" class="dropdown-menu pull-right"
+								data-role="menu">
+								<li data-ng-click="vm.mostrarMapa()"><a>{{'gpsLocation.mapa' | translate}}</a></li>
+								<li data-ng-click="vm.mostrarTabla()"><a>{{'gpsLocation.tabla' | translate}}</a></li>
+							</ul>
+						</div>
+					</div>
+					<div data-ng-if="vm.showAdmin" class="pull-right">
+						<!--  -->
+						<span class="glyphicon"></span>
+					</div>
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<div data-ng-show="vm.showMap">
+						<div id="map"></div>
+					</div>
+					<div data-ng-show="vm.showTab">
+						<div data-ng-include="vm.tabla"></div>
+					</div>
+				</div>
+				<!-- /.panel-body -->
+			</div>
+		</div>
+	</div>
+	<div class="cabeceraFiltro col-md-3">
+		<div class="slide-animate" data-ng-include="'./partials/gpsLocation/filtros.html'"></div>
+		<div class="slide-animate" data-ng-include="'./partials/gpsLocation/resultados.html'"></div>
+	</div>
+</div>

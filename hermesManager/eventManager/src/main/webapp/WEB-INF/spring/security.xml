@@ -79,6 +79,9 @@
 		<!-- dataservice -->
 		<security:intercept-url method="GET" pattern="/api/dataservice/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
+		<!-- sensordata -->
+		<security:intercept-url method="GET" pattern="/api/sensordata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
 		<security:csrf disabled="true"/>
 	</security:http>
 	

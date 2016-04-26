@@ -55,10 +55,18 @@ public class Helpers {
 			fin.setTime(parsedEndDate);
 			return fin;
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 		
+	}
+	
+	public static String calendarToString(Calendar calendar, String formato){
+		String strdate = null;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(formato);
+		strdate = sdf.format(calendar.getTime());
+		
+		return strdate;
 	}
 }

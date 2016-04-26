@@ -53,6 +53,8 @@ var url_measurementTypes = url_dashboard+'json/measurementTypes';
 var url_usuarios = url_dashboard+'json/usuarios';
 var url_eventoProcesado = url_dashboard+'json/eventoProcesado';
 var url_parameters_statistics = url_dashboard+'json/parametersStatistics';
+var url_sensorsTypes = url_dashboard+'json/sensorsType';
+
 
 //Controlador vehicleLocation
 var url_vehicleL = url_servidor+'api/vehiclelocation/';
@@ -98,3 +100,10 @@ var url_dataservice = url_servidor+'api/dataservice/';
 var url_services = url_dataservice+'json/services';
 var url_operations = url_dataservice+'json/operations';
 var url_peticionesPorDia = url_dataservice+'json/peticionesPorDia?';
+
+//Controlador de sensordata
+var url_sensordata = url_servidor + 'api/sensordata/';
+var url_request_sensors = url_sensordata + 'sensors';
+var url_request_gps = url_sensordata + 'gps';
+var url_infoPorDia = url_sensordata + 'json/infoPorDia?';
+var url_gpslocation = url_sensordata+'json/gpslocations?';

@@ -7,7 +7,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.spatial.GeometryType;
 import org.hibernate.transform.Transformers;
+import org.hibernate.type.CalendarType;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.LongType;
+import org.hibernate.type.StringType;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +20,8 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
 import es.udc.lbd.hermes.model.events.contextData.ContextData;
+import es.udc.lbd.hermes.model.events.contextData.ContextDataDTO;
+import es.udc.lbd.hermes.model.util.GeomUtil;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 
 
@@ -132,20 +139,33 @@ public class ContextDataDaoImpl extends GenericDaoHibernate<ContextData, Long> i
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<ContextData> obterContextDataWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
+	public List<ContextDataDTO> obterContextDataWithLimit(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
 			int startIndex, Integer limit){
 
-		List<ContextData> elementos = null;
+		List<ContextDataDTO> elementos = null;
+		int significantDecimals = GeomUtil.computeSignificantDecimals(bounds);
 
-		String queryStr =  "from ContextData where within(position, :bounds) = true ";
+		String queryStr = "select last(id) as id, last(timelog) as \"timeLog\", last(position) as position, "
+				+ "(select sourceid from usuario_movil where id = last(idUsuarioMovil)) as \"userId\", "
+				+ "last(accuracy) as accuracy, last(detectedactivity) as \"detectedActivity\" "
+				+ "from contextdata where st_within(position, :bounds) = true ";
+		
 		if(idUsuario!=null)
-			queryStr += "and usuarioMovil.id = :idUsuario ";
+			queryStr += "and idUsuarioMovil = :idUsuario ";
 
 		queryStr += "and timeLog > :fechaIni ";
-		queryStr += "and timeLog < :fechaFin";
+		queryStr += "and timeLog < :fechaFin ";
+		
+		queryStr += "group by round(cast(st_x(position) as numeric), " + significantDecimals + "), round(cast(st_y(position) as numeric), " + significantDecimals + ") ";
 
-		Query query = getSession().createQuery(queryStr);
-
+		SQLQuery query = getSession().createSQLQuery(queryStr);
+		query.addScalar("id", LongType.INSTANCE);
+		query.addScalar("timeLog", CalendarType.INSTANCE);
+		query.addScalar("position", GeometryType.INSTANCE);		
+		query.addScalar("userId", StringType.INSTANCE);
+		query.addScalar("accuracy", IntegerType.INSTANCE);
+		query.addScalar("detectedActivity", StringType.INSTANCE);
+				
 		query.setParameter("bounds", bounds);
 
 		if(idUsuario!=null)
@@ -160,6 +180,8 @@ public class ContextDataDaoImpl extends GenericDaoHibernate<ContextData, Long> i
 		if(limit!=-1)                                
             query.setMaxResults(limit);
 
+		query.setResultTransformer(Transformers.aliasToBean(ContextDataDTO.class));
+		
 		elementos = query.list();
 		return elementos;
 	}

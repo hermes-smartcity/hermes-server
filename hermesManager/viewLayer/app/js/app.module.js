@@ -191,6 +191,40 @@
 						redirectTo: 'login'
 			        }
 			}
+		}).state('sensorData', {
+			url: '/sensorData',
+			templateUrl:'partials/sensorData/sensorData.html',
+			controller: 'SensorDataController',
+			controllerAs: 'vm',
+			resolve: {
+				usuarios: usuarios,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
+		}).state('gpsLocation', {
+			url: '/gpsLocation',
+			templateUrl: 'partials/gpsLocation/gpsLocation.html',
+			controller: 'GPSLocationController',
+			controllerAs: 'vm',
+			resolve: {
+				usuarios: usuarios,
+				eventoProcesado: eventoProcesado,
+				eventsToday: eventsToday,
+				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -332,13 +366,22 @@
 	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, 
 			userService, $state, $translate, tmhDynamicLocale) {
 
+		
 		//Configuramos el idioma por defecto
-		if (angular.isDefined($localStorage.lang)) {
-			$translate.use( $localStorage.lang);
-			tmhDynamicLocale.set( $localStorage.lang);
+		if (angular.isDefined($localStorage.hermesmanager)) {
+			if (angular.isDefined($localStorage.hermesmanager.lang)) {
+				$translate.use( $localStorage.hermesmanager.lang);
+				tmhDynamicLocale.set( $localStorage.hermesmanager.lang);
+			}else{
+				$localStorage.hermesmanager.lang = 'en';
+			}
 		}else{
-			$localStorage.lang = 'en';
+			$localStorage.hermesmanager = {
+					lang : 'en'
+			}
+			
 		}
+		
 		
 		//Si existe el token guardado en $localStorage y no ha caducado aun, se renueva
 		if ($localStorage.authToken){

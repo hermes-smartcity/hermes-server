@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.model.events.dataSection;
+package es.udc.lbd.hermes.model.util.hibernate;
 
 import java.io.Serializable;
 import java.sql.Array;
@@ -33,7 +33,7 @@ public class DoubleArrayUserType implements UserType {
 	 * 
 	 * @return Class
 	 */
-	public final Class returnedClass() {
+	public final Class<Double[]> returnedClass() {
 		return Double[].class;
 	}
 
@@ -109,13 +109,11 @@ public class DoubleArrayUserType implements UserType {
 
 	@Override
 	public final Object assemble(final Serializable arg0, final Object arg1) throws HibernateException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public final Serializable disassemble(final Object arg0) throws HibernateException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

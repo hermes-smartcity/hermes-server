@@ -3,7 +3,7 @@ package es.udc.lbd.hermes.model.events;
 import java.io.Serializable;
 import java.util.List;
 
-import es.udc.lbd.hermes.model.events.measurement.Measurement;
+import es.udc.lbd.hermes.model.events.measurement.MeasurementDTO;
 
 public class ListaMeasurement implements Serializable{
 
@@ -11,12 +11,12 @@ public class ListaMeasurement implements Serializable{
 	
 	private Long totalResults;
 	private Integer returnedResults;
-	private List<Measurement> results;
+	private List<MeasurementDTO> results;
 		
 	public ListaMeasurement(){}
 
 	public ListaMeasurement(Long totalResults, Integer returnedResults,
-			List<Measurement> results) {
+			List<MeasurementDTO> results) {
 		super();
 		this.totalResults = totalResults;
 		this.returnedResults = returnedResults;
@@ -39,11 +39,11 @@ public class ListaMeasurement implements Serializable{
 		this.returnedResults = returnedResults;
 	}
 
-	public List<Measurement> getResults() {
+	public List<MeasurementDTO> getResults() {
 		return results;
 	}
 
-	public void setResults(List<Measurement> results) {
+	public void setResults(List<MeasurementDTO> results) {
 		this.results = results;
 	}
 	
