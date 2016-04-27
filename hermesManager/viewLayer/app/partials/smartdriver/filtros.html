@@ -4,8 +4,20 @@
 			
 			<div class="row margin-top-20">
 				<div class="col-xs-12">
+					<label for="singleSelect">{{'filtros.servicios' | translate}}</label><br />
+					<!-- Filtro event type -->
+					<select id="selectService" class="form-control" data-ng-model="vm.serviceSelected" 
+						data-ng-options="service as service for service in vm.services"
+						data-ng-change="vm.changeMethod()" >
+						<option value="">{{'filtros.chooseOne' | translate}}</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row margin-top-20">
+				<div class="col-xs-12">
 					<label for="singleSelect">{{'smartdriver.methods' | translate}}</label><br />
-					<!-- Filtro methoed -->
+					<!-- Filtro method -->
 					<select id="selectEvent" class="form-control" data-ng-model="vm.methodSelected" 
 						data-ng-options="method as method for method in vm.methods"
 						data-ng-change="vm.change()">
