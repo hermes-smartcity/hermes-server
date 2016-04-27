@@ -1,5 +1,7 @@
 package es.udc.lbd.hermes.model.smartdriver.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,7 @@ import es.udc.lbd.hermes.model.events.measurement.dao.MeasurementDao;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
+import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
 import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.smartdriver.dao.NetworkDao;
 import es.udc.lbd.hermes.model.util.RegistroPeticionesHelper;
@@ -91,5 +94,18 @@ public class NetworkServiceImpl implements NetworkService{
 		registro.aggregateMeasurementSmartDriver();
 		
 		return resultado;
+	}
+	
+	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng){
+		//Obtenemos el id de origen
+		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
+		
+		//Obtenemos el id de destino
+		Integer destinyPoint = networkDao.obtainDestinyPoint(toLat, toLng);
+		
+		//Obtenemos la lista de tramos
+		List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint);
+		
+		return listado;
 	}
 }

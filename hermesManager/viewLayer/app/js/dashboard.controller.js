@@ -49,7 +49,7 @@
 		vm.activeInput = $translate.instant('dashboard.mapa');
 		vm.arrancar = arrancar;
 		vm.parar = parar;
-
+		
 		vm.datosPromise = datosPromise;
 		vm.cargarListadoTabla = cargarListadoTabla;
 		vm.recargarTabla = recargarTabla;

@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.model.dataservice.Method;
+import es.udc.lbd.hermes.model.dataservice.Service;
 import es.udc.lbd.hermes.model.events.dataSection.EnumDataSection;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
+import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
 import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.smartdriver.service.NetworkService;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
@@ -29,10 +31,25 @@ public class SmartDriverController {
 	@Autowired private NetworkService networkServicio;
 	
 	@Autowired private UsuarioWebService usuarioWebService;
+		
+	@RequestMapping(value="/json/services", method = RequestMethod.GET)
+	public List<Service> getServices() {
+		return Arrays.asList(Service.values());
+	}
 	
-	@RequestMapping(value="/json/methods", method = RequestMethod.GET)
-	public List<Method> methods() {
+	@RequestMapping(value = "/json/methods", method = RequestMethod.GET)
+	public List<Method> getOperations(@RequestParam(value = "service", required = true) Service service) {
 		EnumSet<Method> metodos = Method.smartDriver;
+		switch (service) {
+		case SMARTDRIVER:
+			metodos = Method.smartDriver;
+			break;
+
+		case SMARTCITIZEN:
+			metodos = Method.smartCitizen;
+			break;
+		}
+				
 		List<Method> lista = new ArrayList<Method>(metodos.size());
 		for(Method metodo: metodos){
 			lista.add(metodo);
@@ -41,7 +58,7 @@ public class SmartDriverController {
 		
 		return lista;
 	}
-		
+	
 	@RequestMapping(value="/network/link", method = RequestMethod.GET)
 	public NetworkLinkVO getLinkInformation(@RequestParam(value = "currentLong", required = true) Double currentLong,
 			@RequestParam(value = "currentLat", required = true) Double currentLat,
@@ -71,5 +88,15 @@ public class SmartDriverController {
 			@RequestParam(value = "value", required = false) String value) { 
 
 		return networkServicio.getAggregateMeasurement(type, lat, lon, day, time, value);
+	}
+	
+	@RequestMapping(value="/network/route", method = RequestMethod.GET)
+	public List<RouteSegment> getComputeRoute(@RequestParam(value = "fromLat", required = true) Double fromLat,
+			@RequestParam(value = "fromLng", required = true) Double fromLng,
+			@RequestParam(value = "toLat", required = true) Double toLat, 
+			@RequestParam(value = "toLng", required = true) Double toLng) { 
+
+		return networkServicio.getComputeRoute(fromLat, fromLng, toLat, toLng);
+
 	}
 }

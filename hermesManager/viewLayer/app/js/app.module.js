@@ -161,7 +161,7 @@
 			controller: 'SmartDriverController',
 			controllerAs: 'vm',
 			resolve: {
-				methods: methods,
+				services: services,
 				types: types,
 				dataSections: dataSections,
 				eventoProcesado: eventoProcesado,

@@ -123,7 +123,8 @@
 				"servicios": "Services",
 				"operaciones": "Type of operations",
 				"chooseService": "Choose a service first",
-				"tipoSensor": "Sensor Type: "
+				"tipoSensor": "Sensor Type: ",
+				"chooseOne": "Choose one"
 			},
 			"resultados": {
 				"titulo": "Results",
@@ -225,7 +226,18 @@
 				"maximium": "Maximum ",
 				"minimium": "Minimum: ",
 				"average": "Average: ",
-				"standardDeviation": "Standard Deviation: "
+				"standardDeviation": "Standard Deviation: ",
+				"selectOriginPoint": "Select origin point",
+				"selectDestinyPoint": "Select destiny point",
+				"clickDrag": "Click and drag to draw circle.",
+				"releaseMouse": "Release mouse to finish drawing.",
+				"radius": "Radius: ",
+				"drawOriginPoint": "Draw origin point",
+				"drawDestinyPoint": "Draw destiny point",
+				"mapa": "Map",
+				"tabla": "Table",
+				"cost": "Cost: ",
+				"noData": "There are not data to show"
 			},
 			"gpsLocation":{
 				"titulo": "Dashboard",

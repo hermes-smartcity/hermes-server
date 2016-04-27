@@ -63,7 +63,7 @@
 		}
 
 		function changeMethod(){
-			if (vm.serviceSelected !== undefined && vm.serviceSelected !== ""){
+			if (vm.serviceSelected !== undefined && vm.serviceSelected !== null && vm.serviceSelected !== ""){
 				dataServicesService.getMethods(vm.serviceSelected).then(function(response){
 					vm.methods = response.data;
 				});
