@@ -1,7 +1,6 @@
 package hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -13,7 +12,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -30,16 +28,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.ZipErrorException;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.sending.FacadeSendings;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.setting.FacadeSettings;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.json.ConstantsJSON;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.json.GpsJSON;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.json.JSONParser;
@@ -51,6 +50,7 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.LocationDTO;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.SensorDTO;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.TailSending;
 
 /**
  * Created by Leticia on 15/04/2016.
@@ -65,6 +65,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
     private Queue<LocationDTO> valuesLocationToSend = new ArrayDeque<LocationDTO>();
 
     private FacadeSettings facadeSettings;
+    private FacadeSendings facadeSendings;
     private Activity activity;
     private SensorManager mgr;
     private Sensor sensor;
@@ -86,20 +87,20 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
     //The minimum time beetwen updates in milliseconds
     //Le ponemos un tiempo por defecto por si no esta en el settings (que deberia)
-    private long MIN_TIME_BW_UPDATES = 60000 * 1;  // 1 minute
+    private long MIN_TIME_BW_UPDATES = 60000 * 30 * 1;  // 30 seconds
 
     private Timer timer = null;
 
-    private PowerManager.WakeLock wakeLock;
     private int responseCode;
 
     //variable para saber cuando es el primer envio y el ultimo
     private Boolean firstSend = false;
     private Boolean lastSend = false;
 
-    public SensorCollector(FacadeSettings facadeSetting, Activity activity, SensorManager mgr, Sensor sensor,
+    public SensorCollector(FacadeSettings facadeSetting, FacadeSendings facadeSendings, Activity activity, SensorManager mgr, Sensor sensor,
                            int numValues, String typeSensor, LocationManager lmgr, String provider) {
         this.facadeSettings = facadeSetting;
+        this.facadeSendings = facadeSendings;
         this.activity = activity;
         this.mgr = mgr;
         this.sensor = sensor;
@@ -146,8 +147,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                 }
 
                 if (param.getName().equals(Constants.MINIMUM_TIME)){
-                    //El tiempo viene en minutos asi que lo multiplicamos por 60000 para pasarlo a milisegundos
-                    MIN_TIME_BW_UPDATES = 60000 * Long.parseLong(param.getValue());
+                    //El tiempo viene en segundos asi que lo multiplicamos por 180000 para pasarlo a milisegundos
+                    MIN_TIME_BW_UPDATES = 180000 * Long.parseLong(param.getValue());
                 }
 
             }
@@ -243,7 +244,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
     }
 
     public void launchTask(){
-        LOG.info("SensorCollector: Lanzando la tarea de sincronizacion con el servidor");
+        LOG.info("SensorCollector: Lanzando la tarea de sincronizacion con el servidor cada " + UPDATE_INTERVAL);
         //indicamos que es el primer envio
         firstSend = true;
         lastSend = false;
@@ -253,11 +254,19 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {
-                SendInformationSensorTask tareaSensor = new SendInformationSensorTask();
-                tareaSensor.execute();
+
+                CreateInformationSensorTask tareaCreateSensor = new CreateInformationSensorTask();
+                tareaCreateSensor.execute();
+
+                SendInformationSensorTask tareaEnvioSensor = new SendInformationSensorTask();
+                tareaEnvioSensor.execute();
+
+                CreateInformationGpsTask tareaCreateGps = new  CreateInformationGpsTask();
+                tareaCreateGps.execute();
 
                 SendInformationGpsTask tareaGps = new SendInformationGpsTask();
                 tareaGps.execute();
+
             }
         },0, UPDATE_INTERVAL);
 
@@ -277,8 +286,14 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         lastSend = true;
 
         //Lanzamos las tarea por si quedaban cosas sin enviar
-        SendInformationSensorTask tarea = new SendInformationSensorTask();
-        tarea.execute();
+        CreateInformationSensorTask tareaCreateSensor = new CreateInformationSensorTask();
+        tareaCreateSensor.execute();
+
+        SendInformationSensorTask tareaEnvioSensor = new SendInformationSensorTask();
+        tareaEnvioSensor.execute();
+
+        CreateInformationGpsTask tareaCreateGps = new  CreateInformationGpsTask();
+        tareaCreateGps.execute();
 
         SendInformationGpsTask tareaGps = new SendInformationGpsTask();
         tareaGps.execute();
@@ -323,8 +338,10 @@ public class SensorCollector implements SensorEventListener, LocationListener {
      * @param nameFile Nombre del archivo a eliminar
      */
     private void deleteFile(File directory, String nameFile){
-        File file = new File(directory + File.separator + nameFile);
-        file.delete();
+        if (!nameFile.equals("null.json")){
+            File file = new File(directory + File.separator + nameFile);
+            file.delete();
+        }
     }
 
     //Metodos debidos a sensorlistener
@@ -376,8 +393,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
     }
 
-    //Tarea asincrona para enviar informacion de los sensores al servidor
-    private class SendInformationSensorTask extends AsyncTask<Void, Void, Boolean> {
+    //Tarea asincrona para crear la informacion de los sensores al servidor
+    private class CreateInformationSensorTask extends AsyncTask<Void, Void, Boolean> {
 
         DirectoryPaths rutasDirectorios = new DirectoryPaths(activity);
         File rutaZip = rutasDirectorios.getZipDir();
@@ -393,6 +410,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
+            LOG.info("CreateInformationSensorTask: lanzada tarea cada " + UPDATE_INTERVAL);
 
             JSONParser jsonParser = new JSONParser();
 
@@ -439,103 +458,26 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     Compress c = new Compress(files, rutaDirectorioZip);
                     c.zip();
 
+                    //Insertamos en la tabla coladeenvio la informacion del envio
+                    Date date = new Date();
+                    facadeSendings.createTailSending(Constants.TYPE_ZIP, date, rutaDirectorioZip);
+
+                    //Borramos el json
+                    deleteFile(rutaJson, nombre_fichero_json + terminacionJson);
+
                 } catch(InternalErrorException e) {
-                    Log.e("SensorTask", "Problemas interno " + e.getMessage());
-                    LOG.error("SensorTask: Problemas interno " + e.getMessage());
+                    Log.e("CreateSensorTask", "Problemas interno " + e.getMessage());
+                    LOG.error("CreateSensorTask: Problemas interno " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (ZipErrorException e) {
-                    Log.e("SensorTask", "Problemas creanzo zip " + e.getMessage());
-                    LOG.error("SensorTask: Problemas creanzo zip " + e.getMessage());
+                    Log.e("CreateSensorTask", "Problemas creanzo zip " + e.getMessage());
+                    LOG.error("CreateSensorTask: Problemas creanzo zip " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (IOException e) {
-                    Log.e("SensorTask", "Problemas accediendo al fichero " + e.getMessage());
-                    LOG.error("SensorTask: Problemas accediendo al fichero " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                }
-
-                //Enviamos el zip
-                try {
-                    HttpURLConnection conn = null;
-                    DataOutputStream dOut = null;
-                    String lineEnd = "\r\n";
-                    String twoHyphens = "--";
-                    String boundary = "*****";
-                    int bytesRead, bytesAvailable, bufferSize;
-                    byte[] buffer;
-                    int maxBuffersize = 1*1024*1024;
-                    File file = new File(rutaDirectorioZip);
-
-                    FileInputStream fileIn = new FileInputStream(file);
-                    //String serviceUrl = recuperarURLServicio();
-                    String serviceUrl = SERVICE_URL;
-                    URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_SENSORS);
-
-                    conn = (HttpURLConnection) url.openConnection();
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    conn.setUseCaches(false);
-
-                    if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
-                        conn.setRequestProperty("Connection", "close");
-                    }
-
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                    conn.setRequestProperty("fileupload", rutaDirectorioZip);
-
-                    dOut = new DataOutputStream(conn.getOutputStream());
-                    dOut.writeBytes(twoHyphens + boundary + lineEnd);
-                    dOut.writeBytes("Content-Disposition: form-data; name=\"fileupload\";filename=\"" + rutaDirectorioZip + "\"" + lineEnd);
-
-                    dOut.writeBytes(lineEnd);
-
-                    bytesAvailable = fileIn.available();
-                    bufferSize = Math.min(bytesAvailable, maxBuffersize);
-                    buffer = new byte[bufferSize];
-                    bytesRead = fileIn.read(buffer, 0, bufferSize);
-
-                    while(bytesRead > 0)
-                    {
-                        dOut.write(buffer, 0, bufferSize);
-                        bytesAvailable = fileIn.available();
-                        bufferSize = Math.min(bytesAvailable, maxBuffersize);
-                        bytesRead = fileIn.read(buffer, 0, bufferSize);
-                    }
-
-                    dOut.writeBytes(lineEnd);
-                    dOut.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                    responseCode = conn.getResponseCode();
-                    String responseMessage = conn.getResponseMessage();
-
-                    Log.i("UPLOAD SENSOR", "HTTP Response is: " + responseCode + ": " + responseMessage);
-                    LOG.info("UPLOAD SENSOR: HTTP Response is: " + responseCode + ": " + responseMessage);
-
-                    if(responseCode == 200) {
-                        return true;
-                    }
-
-                    fileIn.close();
-                    dOut.flush();
-                    dOut.close();
-
-                } catch (FileNotFoundException e) {
-                    Log.e("SensorTask", "FileNotFoundException " + e.getMessage());
-                    LOG.error("SensorTask: FileNotFoundException " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                } catch (MalformedURLException e) {
-                    Log.e("SensorTask", "MalformedURLException " + e.getMessage());
-                    LOG.error("SensorTask: MalformedURLException " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                } catch (IOException e) {
-                    Log.e("SensorTask", "IOException " + e.getMessage());
-                    LOG.error("SensorTask: IOException " + e.getMessage());
+                    Log.e("CreateSensorTask", "Problemas accediendo al fichero " + e.getMessage());
+                    LOG.error("CreateSensorTask: Problemas accediendo al fichero " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 }
@@ -547,14 +489,10 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
         @Override
         protected void onPreExecute() {
-            PowerManager pm = (PowerManager) activity.getApplicationContext().getSystemService(Context.POWER_SERVICE);
-            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
-            wakeLock.acquire();
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            wakeLock.release();
 
             //Despues de lanzarla, indicamos que ya no es el primer envio
             //Si result es true es porque fue bien el envio y se cambia la variable de primer envio
@@ -567,21 +505,150 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                 lastSend = false;
             }
 
-            //Borramos los archivos enviados de la tablet
-            deleteFile(rutaJson, nombre_fichero_json + terminacionJson);
-            deleteFile(rutaZip, nombre_zip);
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
+    }
+
+    //Tarea asincrona para enviar informacion de los sensores al servidor
+    private class SendInformationSensorTask extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            LOG.info("SendInformationSensorTask: lanzada tarea cada " + UPDATE_INTERVAL);
+
+            try {
+                //Recuperamos la lista de elementos a enviar
+                List<TailSending> lista = facadeSendings.getListTailSendingFromType(Constants.TYPE_ZIP);
+
+                //Mientras haya datos, vamos enviando
+                for (TailSending envio: lista) {
+
+                    //Enviamos el zip
+                    try {
+                        HttpURLConnection conn = null;
+                        DataOutputStream dOut = null;
+                        String lineEnd = "\r\n";
+                        String twoHyphens = "--";
+                        String boundary = "*****";
+                        int bytesRead, bytesAvailable, bufferSize;
+                        byte[] buffer;
+                        int maxBuffersize = 1*1024*1024;
+                        File file = new File(envio.getRoutezip());
+
+                        FileInputStream fileIn = new FileInputStream(file);
+
+                        String serviceUrl = SERVICE_URL;
+                        URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_SENSORS);
+
+                        conn = (HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.setDoOutput(true);
+                        conn.setUseCaches(false);
+
+                        if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
+                            conn.setRequestProperty("Connection", "close");
+                        }
+
+                        conn.setRequestMethod("POST");
+                        conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                        conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                        conn.setRequestProperty("fileupload", envio.getRoutezip());
+
+                        dOut = new DataOutputStream(conn.getOutputStream());
+                        dOut.writeBytes(twoHyphens + boundary + lineEnd);
+                        dOut.writeBytes("Content-Disposition: form-data; name=\"fileupload\";filename=\"" + envio.getRoutezip() + "\"" + lineEnd);
+
+                        dOut.writeBytes(lineEnd);
+
+                        bytesAvailable = fileIn.available();
+                        bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                        buffer = new byte[bufferSize];
+                        bytesRead = fileIn.read(buffer, 0, bufferSize);
+
+                        while(bytesRead > 0)
+                        {
+                            dOut.write(buffer, 0, bufferSize);
+                            bytesAvailable = fileIn.available();
+                            bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                            bytesRead = fileIn.read(buffer, 0, bufferSize);
+                        }
+
+                        dOut.writeBytes(lineEnd);
+                        dOut.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                        responseCode = conn.getResponseCode();
+                        String responseMessage = conn.getResponseMessage();
+
+                        Log.i("UPLOAD SENSOR", "HTTP Response is: " + responseCode + ": " + responseMessage);
+                        LOG.info("UPLOAD SENSOR: HTTP Response is: " + responseCode + ": " + responseMessage);
+
+                        if(responseCode == 200) {
+                            //el envio fu   e correcto asi que borramos la fila de la base de datos y el zip
+                            facadeSendings.deleteTailSending(envio);
+
+                            //continuamos con el resto
+                        }
+
+                        fileIn.close();
+                        dOut.flush();
+                        dOut.close();
+
+                    } catch (FileNotFoundException e) {
+                        Log.e("SensorTask", "FileNotFoundException " + e.getMessage());
+                        LOG.error("SensorTask: FileNotFoundException " + e.getMessage());
+                        e.printStackTrace();
+
+                        return false;
+                    } catch (MalformedURLException e) {
+                        Log.e("SensorTask", "MalformedURLException " + e.getMessage());
+                        LOG.error("SensorTask: MalformedURLException " + e.getMessage());
+                        e.printStackTrace();
+                        return false;
+                    } catch (IOException e) {
+                        Log.e("SensorTask", "IOException " + e.getMessage());
+                        LOG.error("SensorTask: IOException " + e.getMessage());
+                        e.printStackTrace();
+                        return false;
+                    }
+
+                }
+
+            } catch (InternalErrorException e) {
+                Log.e("SensorTask", "InternalErrorException " + e.getMessage());
+                LOG.error("SensorTask: InternalErrorException " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+
+
+            return true;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
 
         }
 
         @Override
         protected void onCancelled() {
-            wakeLock.release();
+
         }
     }
 
 
-    //Tarea asincrona para enviar informacion de los gps al servidor
-    private class SendInformationGpsTask extends AsyncTask<Void, Void, Boolean> {
+    //Tarea asincrona para crear informacion de los gps al servidor
+    private class CreateInformationGpsTask extends AsyncTask<Void, Void, Boolean> {
 
         DirectoryPaths rutasDirectorios = new DirectoryPaths(activity);
         File rutaZip = rutasDirectorios.getZipDir();
@@ -597,6 +664,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
+            LOG.info("CreateInformationGpsTask: lanzada tarea cada " + UPDATE_INTERVAL);
 
             JSONParser jsonParser = new JSONParser();
 
@@ -642,107 +711,29 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     Compress c = new Compress(files, rutaDirectorioZip);
                     c.zip();
 
+                    //Insertamos en la tabla coladeenvio la informacion del envio
+                    Date date = new Date();
+                    facadeSendings.createTailSending(Constants.TYPE_GPS, date, rutaDirectorioZip);
+
+                    //Borramos los archivos enviados de la tablet
+                    deleteFile(rutaJson, nombre_fichero_json + terminacionJson);
+
                 } catch(InternalErrorException e) {
-                    Log.e("GpsTask", "Problemas interno " + e.getMessage());
-                    LOG.error("GpsTask: Problemas interno " + e.getMessage());
+                    Log.e("CreateGpsTask", "Problemas interno " + e.getMessage());
+                    LOG.error("CreateGpsTask: Problemas interno " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (ZipErrorException e) {
-                    Log.e("GpsTask", "Problemas creanzo zip " + e.getMessage());
-                    LOG.error("GpsTask: Problemas creanzo zip " + e.getMessage());
+                    Log.e("CreateGpsTask", "Problemas creanzo zip " + e.getMessage());
+                    LOG.error("CreateGpsTask: Problemas creanzo zip " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 } catch (IOException e) {
-                    Log.e("GpsTask", "Problemas accediendo al fichero " + e.getMessage());
-                    LOG.error("GpsTask: Problemas accediendo al fichero " + e.getMessage());
+                    Log.e("CreateGpsTask", "Problemas accediendo al fichero " + e.getMessage());
+                    LOG.error("CreateGpsTask: Problemas accediendo al fichero " + e.getMessage());
                     e.printStackTrace();
                     return false;
                 }
-
-                //Enviamos el zip
-                try {
-                    HttpURLConnection conn = null;
-                    DataOutputStream dOut = null;
-                    String lineEnd = "\r\n";
-                    String twoHyphens = "--";
-                    String boundary = "*****";
-                    int bytesRead, bytesAvailable, bufferSize;
-                    byte[] buffer;
-                    int maxBuffersize = 1*1024*1024;
-                    File file = new File(rutaDirectorioZip);
-
-                    FileInputStream fileIn = new FileInputStream(file);
-                    //String serviceUrl = recuperarURLServicio();
-                    String serviceUrl = SERVICE_URL;
-                    URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_GPS);
-
-                    conn = (HttpURLConnection) url.openConnection();
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    conn.setUseCaches(false);
-
-                    if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
-                        conn.setRequestProperty("Connection", "close");
-                    }
-
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-                    conn.setRequestProperty("fileupload", rutaDirectorioZip);
-
-                    dOut = new DataOutputStream(conn.getOutputStream());
-                    dOut.writeBytes(twoHyphens + boundary + lineEnd);
-                    dOut.writeBytes("Content-Disposition: form-data; name=\"fileupload\";filename=\"" + rutaDirectorioZip + "\"" + lineEnd);
-
-                    dOut.writeBytes(lineEnd);
-
-                    bytesAvailable = fileIn.available();
-                    bufferSize = Math.min(bytesAvailable, maxBuffersize);
-                    buffer = new byte[bufferSize];
-                    bytesRead = fileIn.read(buffer, 0, bufferSize);
-
-                    while(bytesRead > 0)
-                    {
-                        dOut.write(buffer, 0, bufferSize);
-                        bytesAvailable = fileIn.available();
-                        bufferSize = Math.min(bytesAvailable, maxBuffersize);
-                        bytesRead = fileIn.read(buffer, 0, bufferSize);
-                    }
-
-                    dOut.writeBytes(lineEnd);
-                    dOut.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-
-                    responseCode = conn.getResponseCode();
-                    String responseMessage = conn.getResponseMessage();
-
-                    Log.i("UPLOAD GPS", "HTTP Response is: " + responseCode + ": " + responseMessage);
-                    LOG.info("UPLOAD GPS: HTTP Response is: " + responseCode + ": " + responseMessage);
-
-                    if(responseCode == 200) {
-                        return true;
-                    }
-
-                    fileIn.close();
-                    dOut.flush();
-                    dOut.close();
-
-                } catch (FileNotFoundException e) {
-                    Log.e("GpsTask", "FileNotFoundException " + e.getMessage());
-                    LOG.error("GpsTask: FileNotFoundException " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                } catch (MalformedURLException e) {
-                    Log.e("GpsTask", "MalformedURLException " + e.getMessage());
-                    LOG.error("GpsTask: MalformedURLException " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                } catch (IOException e) {
-                    Log.e("GpsTask", "IOException " + e.getMessage());
-                    LOG.error("GpsTask: IOException " + e.getMessage());
-                    e.printStackTrace();
-                    return false;
-                }
-
 
                 return true;
             }
@@ -757,16 +748,142 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         @Override
         protected void onPostExecute(Boolean result) {
 
+        }
 
-            //Borramos los archivos enviados de la tablet
-            deleteFile(rutaJson, nombre_fichero_json + terminacionJson);
-            deleteFile(rutaZip, nombre_zip);
+        @Override
+        protected void onCancelled() {
+
+        }
+    }
+
+    //Tarea asincrona para enviar informacion de los gps al servidor
+    private class SendInformationGpsTask extends AsyncTask<Void, Void, Boolean> {
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            try{
+
+                LOG.info("SendInformationGpsTask: lanzada tarea cada " + UPDATE_INTERVAL);
+
+                //Recuperamos la lista de elementos a enviar
+                List<TailSending> lista = facadeSendings.getListTailSendingFromType(Constants.TYPE_GPS);
+
+                //Mientras haya datos, vamos enviando
+                for (TailSending envio: lista) {
+                    //Enviamos el zip
+                    try {
+                        HttpURLConnection conn = null;
+                        DataOutputStream dOut = null;
+                        String lineEnd = "\r\n";
+                        String twoHyphens = "--";
+                        String boundary = "*****";
+                        int bytesRead, bytesAvailable, bufferSize;
+                        byte[] buffer;
+                        int maxBuffersize = 1*1024*1024;
+                        File file = new File(envio.getRoutezip());
+
+                        FileInputStream fileIn = new FileInputStream(file);
+                        //String serviceUrl = recuperarURLServicio();
+                        String serviceUrl = SERVICE_URL;
+                        URL url =  new URL(serviceUrl + ConstantsJSON.REQUEST_GPS);
+
+                        conn = (HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.setDoOutput(true);
+                        conn.setUseCaches(false);
+
+                        if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
+                            conn.setRequestProperty("Connection", "close");
+                        }
+
+                        conn.setRequestMethod("POST");
+                        conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                        conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                        conn.setRequestProperty("fileupload", envio.getRoutezip());
+
+                        dOut = new DataOutputStream(conn.getOutputStream());
+                        dOut.writeBytes(twoHyphens + boundary + lineEnd);
+                        dOut.writeBytes("Content-Disposition: form-data; name=\"fileupload\";filename=\"" + envio.getRoutezip() + "\"" + lineEnd);
+
+                        dOut.writeBytes(lineEnd);
+
+                        bytesAvailable = fileIn.available();
+                        bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                        buffer = new byte[bufferSize];
+                        bytesRead = fileIn.read(buffer, 0, bufferSize);
+
+                        while(bytesRead > 0)
+                        {
+                            dOut.write(buffer, 0, bufferSize);
+                            bytesAvailable = fileIn.available();
+                            bufferSize = Math.min(bytesAvailable, maxBuffersize);
+                            bytesRead = fileIn.read(buffer, 0, bufferSize);
+                        }
+
+                        dOut.writeBytes(lineEnd);
+                        dOut.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                        responseCode = conn.getResponseCode();
+                        String responseMessage = conn.getResponseMessage();
+
+                        Log.i("UPLOAD GPS", "HTTP Response is: " + responseCode + ": " + responseMessage);
+                        LOG.info("UPLOAD GPS: HTTP Response is: " + responseCode + ": " + responseMessage);
+
+                        if(responseCode == 200) {
+                            //el envio fu   e correcto asi que borramos la fila de la base de datos y el zip
+                            facadeSendings.deleteTailSending(envio);
+
+                            //continuamos con el resto
+                        }
+
+                        fileIn.close();
+                        dOut.flush();
+                        dOut.close();
+
+                    } catch (FileNotFoundException e) {
+                        Log.e("GpsTask", "FileNotFoundException " + e.getMessage());
+                        LOG.error("GpsTask: FileNotFoundException " + e.getMessage());
+                        e.printStackTrace();
+                        return false;
+                    } catch (MalformedURLException e) {
+                        Log.e("GpsTask", "MalformedURLException " + e.getMessage());
+                        LOG.error("GpsTask: MalformedURLException " + e.getMessage());
+                        e.printStackTrace();
+                        return false;
+                    } catch (IOException e) {
+                        Log.e("GpsTask", "IOException " + e.getMessage());
+                        LOG.error("GpsTask: IOException " + e.getMessage());
+                        e.printStackTrace();
+                        return false;
+                    }
+
+                }
+            } catch (InternalErrorException e) {
+                Log.e("GpsTask", "InternalErrorException " + e.getMessage());
+                LOG.error("GpsTask: InternalErrorException " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+
+            return true;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
 
         }
 
         @Override
         protected void onCancelled() {
-            wakeLock.release();
+
         }
     }
 }

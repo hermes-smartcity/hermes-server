@@ -8,8 +8,6 @@ import android.util.Log;
 
 import org.slf4j.LoggerFactory;
 
-import java.util.logging.Logger;
-
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
 
 /**
@@ -34,6 +32,7 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
         //Sentencias de creacion de las tablas
         construirTablaParametros(db);
+        construirTablaColaEnvio(db);
 
         //url del servidor
         insertarUrlService(db);
@@ -47,15 +46,29 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 
     private void construirTablaParametros(SQLiteDatabase db) {
         String sqlCreate = "CREATE TABLE " + TablesDB.TABLA_PARAMETERS
-                + " (" + TablesDB.PARAM_COLUMNA_ID
+                + " (" + TablesDB.PARAMETERS_COLUMNA_ID
                 + " INTEGER PRIMARY KEY, "
-                + TablesDB.PARAM_COLUMNA_NAME + " TEXT NOT NULL, "
-                + TablesDB.PARAM_COLUMNA_VALUE + " TEXT NOT NULL )";
+                + TablesDB.PARAMETERS_COLUMNA_NAME + " TEXT NOT NULL, "
+                + TablesDB.PARAMETERS_COLUMNA_VALUE + " TEXT NOT NULL )";
 
         db.execSQL(sqlCreate);
 
         Log.i(this.getClass().toString(), "Table " + TablesDB.TABLA_PARAMETERS + " created");
         LOG.info("Table " + TablesDB.TABLA_PARAMETERS + " created");
+    }
+
+    private void construirTablaColaEnvio(SQLiteDatabase db) {
+        String sqlCreate = "CREATE TABLE " + TablesDB.TABLA_TAILSENDING
+                + " (" + TablesDB.TAILSENDING_COLUMNA_ID
+                + " INTEGER PRIMARY KEY, "
+                + TablesDB.TAILSENDING_COLUMNA_TYPE + " TEXT NOT NULL, "
+                + TablesDB.TAILSENDING_COLUMNA_DATE + " DATE NOT NULL, "
+                + TablesDB.TAILSENDING_COLUMNA_ROUTEZIP + " TEXT NOT NULL )";
+
+        db.execSQL(sqlCreate);
+
+        Log.i(this.getClass().toString(), "Table " + TablesDB.TABLA_TAILSENDING + " created");
+        LOG.info("Table " + TablesDB.TABLA_TAILSENDING + " created");
     }
 
     private void insertarUrlService(SQLiteDatabase db){
@@ -65,8 +78,8 @@ public class SQLiteHelper extends SQLiteOpenHelper{
 		}
 
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
-			        + TablesDB.PARAM_COLUMNA_NAME + ","
-				    + TablesDB.PARAM_COLUMNA_VALUE + ")"
+			        + TablesDB.PARAMETERS_COLUMNA_NAME + ","
+				    + TablesDB.PARAMETERS_COLUMNA_VALUE + ")"
 				+ " VALUES ('" + Constants.SERVICE_URL +"','http://192.168.1.100:8080/eventManager/')";
 
 		db.execSQL(sqlInsert);
@@ -79,8 +92,8 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         }
 
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
-                + TablesDB.PARAM_COLUMNA_NAME + ","
-                + TablesDB.PARAM_COLUMNA_VALUE + ")"
+                + TablesDB.PARAMETERS_COLUMNA_NAME + ","
+                + TablesDB.PARAMETERS_COLUMNA_VALUE + ")"
                 + " VALUES ('" + Constants.WAITING_TIME +"','5')";
 
         db.execSQL(sqlInsert);
@@ -93,8 +106,8 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         }
 
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
-                + TablesDB.PARAM_COLUMNA_NAME + ","
-                + TablesDB.PARAM_COLUMNA_VALUE + ")"
+                + TablesDB.PARAMETERS_COLUMNA_NAME + ","
+                + TablesDB.PARAMETERS_COLUMNA_VALUE + ")"
                 + " VALUES ('" + Constants.MINIMUM_DISTANCE +"','5')";
 
         db.execSQL(sqlInsert);
@@ -107,9 +120,9 @@ public class SQLiteHelper extends SQLiteOpenHelper{
         }
 
         String sqlInsert = "INSERT INTO " + TablesDB.TABLA_PARAMETERS + " ("
-                + TablesDB.PARAM_COLUMNA_NAME + ","
-                + TablesDB.PARAM_COLUMNA_VALUE + ")"
-                + " VALUES ('" + Constants.MINIMUM_TIME +"','1')";
+                + TablesDB.PARAMETERS_COLUMNA_NAME + ","
+                + TablesDB.PARAMETERS_COLUMNA_VALUE + ")"
+                + " VALUES ('" + Constants.MINIMUM_TIME +"','30')";
 
         db.execSQL(sqlInsert);
     }

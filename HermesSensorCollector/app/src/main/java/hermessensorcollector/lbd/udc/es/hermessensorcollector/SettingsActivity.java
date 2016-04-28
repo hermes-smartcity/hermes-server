@@ -17,7 +17,7 @@ import java.util.List;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.exception.InternalErrorException;
-import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.FacadeSettings;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.facade.setting.FacadeSettings;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
@@ -157,7 +157,12 @@ public class SettingsActivity extends AppCompatActivity {
                     cancel = true;
                 }else{
                     try{
-                        Integer.parseInt(waitingTime);
+                        int numero = Integer.parseInt(waitingTime);
+                        if (numero < 0){
+                            editTextWaitingTime.setError(getString(R.string.waitingTimeNegative));
+                            focusView = editTextWaitingTime;
+                            cancel = true;
+                        }
                     }catch(NumberFormatException e){
                         editTextWaitingTime.setError(getString(R.string.waitingTimeFormat));
                         focusView = editTextWaitingTime;
@@ -173,7 +178,12 @@ public class SettingsActivity extends AppCompatActivity {
                     cancel = true;
                 }else{
                     try{
-                        Double.parseDouble(miniumTime);
+                        double numero = Double.parseDouble(miniumTime);
+                        if (numero < 0){
+                            editTextMinimumTime.setError(getString(R.string.minimumTimeNegative));
+                            focusView = editTextMinimumTime;
+                            cancel = true;
+                        }
                     }catch(NumberFormatException e){
                         editTextMinimumTime.setError(getString(R.string.minimumTimeFormat));
                         focusView = editTextMinimumTime;
@@ -189,7 +199,12 @@ public class SettingsActivity extends AppCompatActivity {
                     cancel = true;
                 }else{
                     try{
-                        Double.parseDouble(minimumDistance);
+                        double numero = Double.parseDouble(minimumDistance);
+                        if (numero < 0){
+                            editTextMinimumDistance.setError(getString(R.string.minimumDistanceNegative));
+                            focusView = editTextMinimumDistance;
+                            cancel = true;
+                        }
                     }catch(NumberFormatException e){
                         editTextMinimumDistance.setError(getString(R.string.minimumDistanceFormat));
                         focusView = editTextMinimumTime;

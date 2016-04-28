@@ -4,7 +4,7 @@
 
     <!-- Permiso para el gps -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- Permiso para obtener email del usuario -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -12,14 +12,11 @@
     <!-- Permiso para guardar en disco el json y el zip a enviar al servidor -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- Permiso para bloquear la pantalla -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <!-- Permiso para poder tener acceso a internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="hermessensorcollector.lbd.udc.es.hermessensorcollector.applicationcontext.ApplicationContext"
+        android:name=".applicationcontext.ApplicationContext"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,7 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".HangingSendingsActivity"></activity>
     </application>
 
 </manifest>

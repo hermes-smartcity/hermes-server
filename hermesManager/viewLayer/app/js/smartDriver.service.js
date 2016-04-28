@@ -7,25 +7,36 @@
 
 	function smartDriverService($http, $log, $q) {
 		var service = {
+				getServices: getServices,
 				getMethods: getMethods,
 				getTypes: getTypes,
 				getDataSections: getDataSections,
 				getLinkInformation: getLinkInformation,
-				getAggregateMeasurement: getAggregateMeasurement
+				getAggregateMeasurement: getAggregateMeasurement,
+				getComputeRoute: getComputeRoute
 		};
 
 		return service;
 	
-		function getMethods() {
-			return $http.get(url_methods)
-				.then(getMethodsComplete)
-				.catch(getMethodsFailed);
-			function getMethodsComplete(response) {
+		function getServices() {
+			return $http.get(url_smartdriver_services)
+				.then(getServicesComplete)
+				.catch(getServicesFailed);
+			function getServicesComplete(response) {
 				return response.data;
 			}
-			function getMethodsFailed(error) {
-				$log.error('XHR Failed for getMethods.' + error.data);
+			function getServicesFailed(error) {
+				$log.error('XHR Failed for getServices.' + error.data);
 			}
+		}
+	
+		// Opcion uno, asi, sino con then and catch
+		function getMethods (service) {		
+			return $http({
+				method : 'GET',
+				url : url_smartdriver_methods,
+				params: {"service": service}
+			});
 		}
 		
 		function getTypes() {
@@ -65,6 +76,14 @@
 				url : url_measurement_aggregate + "type=" + type + "&lat=" + lat + "&lon=" + long + "&day=" + day + "&time=" + time + "&value=" + value
 			});
 		}
+		
+		function getComputeRoute (fromLat, fromLng, toLat, toLng) {
+			return $http({
+				method : 'GET',
+				url : url_network_route + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng
+			});
+		}
+		
 
 	}
 })();

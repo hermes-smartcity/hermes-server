@@ -17,9 +17,9 @@ public class ParametersDataSource {
 
     private SQLiteDatabase db;
 
-    private String[] columnasParametros = { TablesDB.PARAM_COLUMNA_ID,
-            TablesDB.PARAM_COLUMNA_NAME,
-            TablesDB.PARAM_COLUMNA_VALUE
+    private String[] columnasParametros = { TablesDB.PARAMETERS_COLUMNA_ID,
+            TablesDB.PARAMETERS_COLUMNA_NAME,
+            TablesDB.PARAMETERS_COLUMNA_VALUE
     };
 
     public ParametersDataSource(SQLiteDatabase db) {
@@ -43,7 +43,7 @@ public class ParametersDataSource {
     public void deleteParameter(Parameter param) {
 
         long id = param.getId();
-        db.delete(TablesDB.TABLA_PARAMETERS, TablesDB.PARAM_COLUMNA_ID + " = " + id,
+        db.delete(TablesDB.TABLA_PARAMETERS, TablesDB.PARAMETERS_COLUMNA_ID + " = " + id,
                 null);
     }
 
@@ -54,7 +54,7 @@ public class ParametersDataSource {
      */
     public void deleteParameter(long idParam) {
 
-        db.delete(TablesDB.TABLA_PARAMETERS, TablesDB.PARAM_COLUMNA_ID + " = " + idParam,
+        db.delete(TablesDB.TABLA_PARAMETERS, TablesDB.PARAMETERS_COLUMNA_ID + " = " + idParam,
                 null);
     }
 
@@ -65,7 +65,7 @@ public class ParametersDataSource {
      */
     public void deleteParameter(String name) {
 
-        db.delete(TablesDB.TABLA_PARAMETERS, TablesDB.PARAM_COLUMNA_NAME + " = '" + name + "'",
+        db.delete(TablesDB.TABLA_PARAMETERS, TablesDB.PARAMETERS_COLUMNA_NAME + " = '" + name + "'",
                 null);
     }
 
@@ -78,8 +78,8 @@ public class ParametersDataSource {
     public long createParameter(String name, String value) {
 
         ContentValues values = new ContentValues();
-        values.put(TablesDB.PARAM_COLUMNA_NAME, name);
-        values.put(TablesDB.PARAM_COLUMNA_VALUE, value);
+        values.put(TablesDB.PARAMETERS_COLUMNA_NAME, name);
+        values.put(TablesDB.PARAMETERS_COLUMNA_VALUE, value);
 
         long id = db.insert(TablesDB.TABLA_PARAMETERS, null, values);
 
@@ -95,7 +95,7 @@ public class ParametersDataSource {
     public Parameter getParameter(int id) {
 
         Cursor cursor = db.query(TablesDB.TABLA_PARAMETERS, columnasParametros,
-                TablesDB.PARAM_COLUMNA_ID + "=?", new String[] { String.valueOf(id) },
+                TablesDB.PARAMETERS_COLUMNA_ID + "=?", new String[] { String.valueOf(id) },
                 null, null, null, null);
 
         if (cursor != null)
@@ -118,7 +118,7 @@ public class ParametersDataSource {
     public Parameter getValueParameter(String name){
 
         Cursor cursor = db.query(TablesDB.TABLA_PARAMETERS, columnasParametros,
-                TablesDB.PARAM_COLUMNA_NAME + "=?", new String[] { String.valueOf(name) },
+                TablesDB.PARAMETERS_COLUMNA_NAME + "=?", new String[] { String.valueOf(name) },
                 null, null, null, null);
 
         if (cursor != null)
@@ -167,12 +167,12 @@ public class ParametersDataSource {
     public int updateParameter(Parameter param) {
 
         ContentValues values = new ContentValues();
-        values.put(TablesDB.PARAM_COLUMNA_NAME, param.getName());
-        values.put(TablesDB.PARAM_COLUMNA_VALUE, param.getValue());
+        values.put(TablesDB.PARAMETERS_COLUMNA_NAME, param.getName());
+        values.put(TablesDB.PARAMETERS_COLUMNA_VALUE, param.getValue());
 
         // Devuelve un entero con el ID de la tabla
         int id = db.update(TablesDB.TABLA_PARAMETERS, values,
-                TablesDB.PARAM_COLUMNA_ID + " = ?",
+                TablesDB.PARAMETERS_COLUMNA_ID + " = ?",
                 new String[] { String.valueOf(param.getId()) });
 
         return id;
@@ -189,11 +189,11 @@ public class ParametersDataSource {
     public int updateValueParameter(String value, long idParam) {
 
         ContentValues values = new ContentValues();
-        values.put(TablesDB.PARAM_COLUMNA_VALUE, value);
+        values.put(TablesDB.PARAMETERS_COLUMNA_VALUE, value);
 
         // Devuelve un entero con el ID de la tabla
         int id = db.update(TablesDB.TABLA_PARAMETERS, values,
-                TablesDB.PARAM_COLUMNA_ID + " = ?",
+                TablesDB.PARAMETERS_COLUMNA_ID + " = ?",
                 new String[] { String.valueOf(idParam) });
 
         return id;
@@ -208,11 +208,11 @@ public class ParametersDataSource {
     public int updateValueParameter(String name, String value) {
 
         ContentValues values = new ContentValues();
-        values.put(TablesDB.PARAM_COLUMNA_VALUE, value);
+        values.put(TablesDB.PARAMETERS_COLUMNA_VALUE, value);
 
         // Devuelve un entero con el ID de la tabla
         int id = db.update(TablesDB.TABLA_PARAMETERS, values,
-                TablesDB.PARAM_COLUMNA_NAME + " = ?",
+                TablesDB.PARAMETERS_COLUMNA_NAME + " = ?",
                 new String[] { String.valueOf(name) });
 
         return id;
@@ -226,7 +226,7 @@ public class ParametersDataSource {
     public Boolean existParameter(String name){
 
         Cursor cursor = db.query(TablesDB.TABLA_PARAMETERS, columnasParametros,
-                TablesDB.PARAM_COLUMNA_NAME + "=?", new String[] { String.valueOf(name) },
+                TablesDB.PARAMETERS_COLUMNA_NAME + "=?", new String[] { String.valueOf(name) },
                 null, null, null, null);
 
         int numero = cursor.getCount();

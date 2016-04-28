@@ -36,4 +36,16 @@ public class RegistroPeticionesHelper {
 		
 		dataServiceDao.create(dataService);
 	}
+	
+	public void computeRouteSmartDriver(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTCITIZEN.toString());
+		dataService.setMethod(Method.COMPUTE_ROUTE.toString());
+		
+		String formato = "yyyy-MM-dd HH:mm:ss";
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato(formato);
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy, formato));
+		
+		dataServiceDao.create(dataService);
+	}
 }

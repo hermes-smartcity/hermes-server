@@ -17,4 +17,8 @@ public class Constants {
 
     //Para cuando gira la pantalla
     public static String PROVIDER_CHOOSEN = "providerChoosen";
+
+    //Tipos para la cola de envio
+    public static String TYPE_ZIP = "zip";
+    public static String TYPE_GPS = "gps";
 }

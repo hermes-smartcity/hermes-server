@@ -16,6 +16,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 
@@ -29,6 +33,8 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.bd.SQLiteHelper;
 public class Utils {
 
     static private final Logger LOG = LoggerFactory.getLogger(Utils.class);
+
+    public static final String FECHA_SQLITE = "yyyy-MM-dd HH:mm:ss";
 
     /**
      * Metodo para mostrar un mensaje de tipo Toast
@@ -118,5 +124,34 @@ public class Utils {
         return sb.toString();
     }
 
+    public static Locale getLocale(){
+        Locale english = new Locale("en", "EN");
+        return english;
+    }
+
+    public static Date obtenerDateSegunFormato(String strFecha, String formato, Locale locale) {
+        SimpleDateFormat df = new SimpleDateFormat(formato, locale);
+
+        Date fecha = null;
+        try {
+
+            fecha = df.parse(strFecha);
+
+        } catch (ParseException ex) {
+
+            ex.printStackTrace();
+
+        }
+
+        return fecha;
+    }
+
+    public static String obtenerFechaSegunFormato(Date fecha, String formato, Locale locale) {
+        SimpleDateFormat df = new SimpleDateFormat(formato, locale);
+
+        String formattedDate = df.format(fecha);
+
+        return formattedDate;
+    }
 
 }
