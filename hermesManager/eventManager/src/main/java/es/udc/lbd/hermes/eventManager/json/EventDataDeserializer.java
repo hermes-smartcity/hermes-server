@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class EventDataDeserializer extends StdDeserializer<EventData> {
 	private Map<String, Class<? extends EventData>> registry = new HashMap<String, Class<? extends EventData>>();
@@ -29,6 +30,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 		registerEventType("Context Data", ZtreamyContextDataList.class);
 		registerEventType("Sleep Data", ZtreamySleepData.class);
 		registerEventType("Heart Rate Data", ZtreamyHeartRateData.class);
+		registerEventType("User Activities", ZtreamyUserActivity.class);
 	}
 
 	void registerEventType(String uniqueName, Class<? extends EventData> eventTypeClass) {
@@ -53,7 +55,15 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 			}
 		}
 		if (eventTypeClass != null) {
-			return mapper.treeToValue(eventTypeData, eventTypeClass);
+			if (eventTypeData instanceof ArrayNode) {
+				try {
+					return new EventDataArray((EventData[])mapper.treeToValue(eventTypeData, Class.forName("[L"+eventTypeClass.getName()+";")));
+				} catch (ClassNotFoundException e) {
+					return null;
+				}
+			} else {
+				return mapper.treeToValue(eventTypeData, eventTypeClass);
+			}
 		} else {
 			return null;
 		}		
