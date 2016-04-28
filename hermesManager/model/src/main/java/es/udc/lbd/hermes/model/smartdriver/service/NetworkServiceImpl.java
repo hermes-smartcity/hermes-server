@@ -106,6 +106,10 @@ public class NetworkServiceImpl implements NetworkService{
 		//Obtenemos la lista de tramos
 		List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint);
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.computeRouteSmartDriver();
+				
 		return listado;
 	}
 }
