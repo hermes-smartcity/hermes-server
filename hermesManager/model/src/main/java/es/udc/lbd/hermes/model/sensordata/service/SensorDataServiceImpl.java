@@ -1,21 +1,33 @@
 package es.udc.lbd.hermes.model.sensordata.service;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import es.udc.lbd.hermes.model.events.GraficasSensorData;
+import es.udc.lbd.hermes.model.sensordata.C;
+import es.udc.lbd.hermes.model.sensordata.Row;
 import es.udc.lbd.hermes.model.sensordata.SensorData;
 import es.udc.lbd.hermes.model.sensordata.SensorDataJson;
 import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
+import es.udc.lbd.hermes.model.sensordata.V;
+import es.udc.lbd.hermes.model.sensordata.VBigDecimal;
+import es.udc.lbd.hermes.model.sensordata.VDate;
 import es.udc.lbd.hermes.model.sensordata.dao.SensorDataDao;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
@@ -112,59 +124,72 @@ public class SensorDataServiceImpl implements SensorDataService{
 	
 	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
-	public GraficasSensorData obtenerInfoPorDia(SensorDataType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin){
-		
-		List<String> labels = new ArrayList<String>();
-		List<String> series = new ArrayList<String>();
+	public Row obtenerInfoPorDia(SensorDataType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin){
+
 		List<SensorData> informacion = sensorDataDao.informacionPorDia(tipo, idUsuario, fechaIni, fechaFin);
 		
-		//En primer lugar construimos las series
-		if (informacion.size()>0){
-			SensorData sensorData = informacion.get(0);
-			int numValues = sensorData.getValues().length;
-			
-			for (int i = 0; i < numValues; i++) {
-				series.add(String.valueOf(i));
-			}
-		}
-
-		//inicializamos el objeto que tendra los resultos
-		List<List<BigDecimal>> data = new ArrayList<List<BigDecimal>>(series.size());
-		for (int i=0;i<series.size();i++) {
-			data.add(i,new ArrayList<BigDecimal>());
-		}
-		
+		Row row = new Row();	
 		for (SensorData sensorData : informacion) {
-			//Tomamos la fecha de startime que sera la que ira en labels
-			Calendar startTime = sensorData.getStartime();
-			String fecha = calendarToString(startTime, "yyyy-MM-dd HH:mm:ss.SSS");
-			labels.add(fecha);
 			
-			BigDecimal[] valores = sensorData.getValues();
-			for(int i=0;i<valores.length;i++){
-				//Recuperamos del data, la lista que corresponda
-				List<BigDecimal> values = data.get(i);
-				//Le anadimos a esa lista el elemento
-				values.add(valores[i]);
+			C puntoStart =new C();
+			C puntoEnd =new C();
+			Calendar start= sensorData.getStartime();
+			Calendar end= sensorData.getEndtime();
+			VDate vDateStart = new VDate(calendarToString(start));
+			VDate vDateEnd = new VDate(calendarToString(end));
+			
+			puntoStart.addV(vDateStart);
+			puntoEnd.addV(vDateEnd);
+			
+			if(sensorData.getValues()!=null && sensorData.getValues().length>2){				
+				VBigDecimal vBigDecimalX = new VBigDecimal();
+				vBigDecimalX.setV(sensorData.getValues()[0]);
+				puntoStart.addV(vBigDecimalX);
+				puntoEnd.addV(vBigDecimalX);
+				
+				VBigDecimal vBigDecimalY = new VBigDecimal();
+				vBigDecimalY.setV(sensorData.getValues()[1]);
+				puntoStart.addV(vBigDecimalY);
+				puntoEnd.addV(vBigDecimalY);
+				
+				VBigDecimal vBigDecimalZ = new VBigDecimal();
+				vBigDecimalZ.setV(sensorData.getValues()[2]);
+				puntoStart.addV(vBigDecimalZ);		
+				puntoEnd.addV(vBigDecimalZ);	
 			}
-			
-		}
+			row.addC(puntoStart);
+			row.addC(puntoEnd);
+		}	
 		
-		
-		GraficasSensorData grafica = new GraficasSensorData(labels, series, data);
-		return grafica;
+		return row;
 		
 	}
+
 	
-	private String calendarToString(Calendar calendar, String formato){
+	private String calendarToString(Calendar calendar){
 		String strdate = null;
-		
-		SimpleDateFormat sdf = new SimpleDateFormat(formato);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		strdate = sdf.format(calendar.getTime());
 		
 		return strdate;
 	}
 	
+	public static Calendar getFecha(String fecha){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Date parsedEndDate;
+		try {
+			parsedEndDate = sdf.parse(fecha);
+			Calendar fin = Calendar.getInstance();
+			fin.setTime(parsedEndDate);
+			return fin;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 	
 	
 }
