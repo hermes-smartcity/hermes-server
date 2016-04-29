@@ -54,6 +54,7 @@
 				 title: 'Data Sensor',
 				 height: 500,
 				 displayAnnotations: false,
+				 displayAnnotationsFilter: true,
 				 displayExactValues: true,
 				 dateFormat: 'HH:mm:ss MMMM dd, yyyy',
 				 displayRangeSelector: true
@@ -125,17 +126,7 @@
 			function getInfoSensoresPorDiaComplete(response) {
 				convertDateStringsToDates(response);
 				vm.rows = response.data.rows;
-//				vm.chart = {};
-//				vm.chart.type = "AnnotationChart";
-//				vm.chart.options =  {
-//						 title: 'Traffic Chart',
-//						 displayAnnotations: true
-//			    };
-//				vm.chart.data = {"cols": [	        {id: "fecha", label: "Fecha", type: "date"},
-//				                         	        {id: "ejeX", label: "Eje X", type: "number"},
-//				                         	        {id: "ejeY", label: "Eje Y", type: "number"},
-//				                         	        {id: "ejeZ", label: "Eje Z", type: "number"}
-//				                         	    ],  rows};
+
 				vm.chart.data.rows = vm.rows;
 				vm.chartLine.data.rows = vm.rows;
 				

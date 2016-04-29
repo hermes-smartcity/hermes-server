@@ -11,8 +11,8 @@
 		'ngAnimate',
 		'angularUtils.directives.dirPagination',
 		'datatables',
-		'ngCookies', 'permission','ngStorage', 
-		'pascalprecht.translate', 'tmh.dynamicLocale', 'googlechart'
+		'ngCookies', 'permission','ngStorage', 'googlechart',
+		'pascalprecht.translate', 'tmh.dynamicLocale'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
@@ -39,7 +39,13 @@
 			url: '/registerAdmin',
 			templateUrl:'partials/user/register.html',
 			controller: 'RegisterAdminController',
-			controllerAs: 'vm'
+			controllerAs: 'vm',
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
+			}
 		}).state('editUser', {
 			url: '/editUser/idUser/:idUser',
 			templateUrl:'partials/user/edit.html',
@@ -47,6 +53,12 @@
 			controllerAs: 'vm',
 			resolve: {
 				usuariosMoviles: usuariosMoviles
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('dashboard', {
 			url: '/dashboard',
@@ -58,6 +70,12 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('userManager', {
 			url: '/userManager',
@@ -69,6 +87,12 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('eventManager', {
 			url: '/eventManager',
@@ -80,6 +104,12 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('systemLogs', {
 			url: '/systemLogs',
@@ -91,6 +121,12 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('changePassword', {
 			url: '/changePassword',
@@ -104,6 +140,12 @@
 			controllerAs: 'vm',
 			resolve: {
 				datosSettings: datosSettings
+			},
+			data: {
+			      permissions: {
+			          only: ['ROLE_ADMIN'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('userProfile', {
 			url: '/userProfile',
@@ -119,12 +161,18 @@
 			controller: 'SmartDriverController',
 			controllerAs: 'vm',
 			resolve: {
-				services: services,
+				methods: methods,
 				types: types,
 				dataSections: dataSections,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('dataServices', {
 			url: '/dataServices',
@@ -136,6 +184,12 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('sensorData', {
 			url: '/sensorData',
@@ -147,6 +201,12 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		}).state('gpsLocation', {
 			url: '/gpsLocation',
@@ -158,6 +218,12 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
+			},
+			data: {
+			      permissions: {
+			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
+						redirectTo: 'login'
+			        }
 			}
 		});
 
@@ -300,22 +366,13 @@
 	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, 
 			userService, $state, $translate, tmhDynamicLocale) {
 
-		
 		//Configuramos el idioma por defecto
-		if (angular.isDefined($localStorage.hermesmanager)) {
-			if (angular.isDefined($localStorage.hermesmanager.lang)) {
-				$translate.use( $localStorage.hermesmanager.lang);
-				tmhDynamicLocale.set( $localStorage.hermesmanager.lang);
-			}else{
-				$localStorage.hermesmanager.lang = 'en';
-			}
+		if (angular.isDefined($localStorage.lang)) {
+			$translate.use( $localStorage.lang);
+			tmhDynamicLocale.set( $localStorage.lang);
 		}else{
-			$localStorage.hermesmanager = {
-					lang : 'en'
-			};
-			
+			$localStorage.lang = 'en';
 		}
-		
 		
 		//Si existe el token guardado en $localStorage y no ha caducado aun, se renueva
 		if ($localStorage.authToken){
