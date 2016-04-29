@@ -9,9 +9,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
 import org.springframework.stereotype.Repository;
 
-import com.vividsolutions.jts.geom.Geometry;
-
-import es.udc.lbd.hermes.model.events.dataSection.DataSection;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.util.FechaUtil;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;

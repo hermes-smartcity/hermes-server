@@ -273,6 +273,40 @@
 				"timeEnd": "Time end",
 				"name": "Name"
 			},
+			"driverFeatures":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"awakefor": "Awake for",
+				"inbed": "In bed",
+				"workingtime": "Working time",
+				"lightsleep": "Light Sleep",
+				"deepsleep": "Deep Sleep",
+				"previousstress": "Previous Stress"
+			},
+			"sleepData":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"awakenings": "Awakenings",
+				"minutesasleep": "Minutes a sleep",
+				"minutesinbed": "Minutes in bed",
+				"starttime": "Start time",
+				"endtime": "End time",
+				"eventid": "Event Id"
+			},
+			"stepData":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"steps": "Steps",
+				"timelog": "Time log",
+				"eventid": "Event Id"
+			},
+			"heartRateData":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"eventid": "Event id",
+				"timelog": "Time log",
+				"heartrate": "Heart rate"
+			},
 		});
 	}
 

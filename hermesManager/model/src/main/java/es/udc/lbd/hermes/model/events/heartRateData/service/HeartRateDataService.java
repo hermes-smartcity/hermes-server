@@ -1,7 +1,10 @@
 package es.udc.lbd.hermes.model.events.heartRateData.service;
 
+import java.util.Calendar;
 import java.util.List;
 
+import es.udc.lbd.hermes.model.events.ListaEventosYdias;
+import es.udc.lbd.hermes.model.events.ListaHeartRateData;
 import es.udc.lbd.hermes.model.events.heartRateData.HeartRateData;
 
 public interface HeartRateDataService {
@@ -19,5 +22,9 @@ public interface HeartRateDataService {
 	public List<HeartRateData> obterHeartRateDataSegunUsuario(Long idUsuario);
 	
 	public long contar();
+	
+	public ListaHeartRateData obterHeartRateData(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	
+	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 }
 

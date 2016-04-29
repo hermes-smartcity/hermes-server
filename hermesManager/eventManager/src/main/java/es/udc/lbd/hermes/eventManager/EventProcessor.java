@@ -122,7 +122,7 @@ public class EventProcessor extends Thread {
 		} catch (InterruptedException e) {
 			// Interrupted. Do nothing
 		}		
-	}
+	} 
 	
 	private byte[] decompress(byte[] compressed) throws DataFormatException, IOException {
 		

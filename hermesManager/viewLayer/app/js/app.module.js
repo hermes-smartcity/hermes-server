@@ -11,7 +11,7 @@
 		'ngAnimate',
 		'angularUtils.directives.dirPagination',
 		'datatables',
-		'ngCookies', 'permission','ngStorage', 
+		'ngCookies', 'permission','ngStorage', 'googlechart',
 		'pascalprecht.translate', 'tmh.dynamicLocale'
 	]).config(routeConfig).run(appRun);
 

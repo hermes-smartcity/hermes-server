@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.udc.lbd.hermes.eventManager.util.ErrorMessage;
 import es.udc.lbd.hermes.model.dataservice.Method;
 import es.udc.lbd.hermes.model.dataservice.Service;
 import es.udc.lbd.hermes.model.events.dataSection.EnumDataSection;
@@ -117,18 +118,20 @@ public class SmartDriverController {
 			Object [] parametros = new Object[] {fromLat, fromLng, fromLat, fromLng};
 
 			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);
 			
 			//El error de debe a que no se encontro punto de origen
-			return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 			
 		}catch (PointDestinyException e) {
 			
 			Object [] parametros = new Object[] {toLat, toLng, toLat, toLng};
 
 			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);
 			
 			//El error de debe a que no se encontro punto de destino
-			return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 		}
 
 	}

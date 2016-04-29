@@ -86,6 +86,26 @@ var url_userA = url_servidor+'api/useractivity/';
 var url_userActivities = url_userA+'json/userActivities?';
 var url_eventosPorDiaUA = url_userA+'json/eventosPorDia?';
 
+//Controlador driverFeatures
+var url_driverF = url_servidor+'api/driverfeature/';
+var url_driverFeatures = url_driverF+'json/driverFeatures?';
+var url_eventosPorDiaDF = url_driverF+'json/eventosPorDia?';
+
+//Controlador sleepData
+var url_sleepD = url_servidor+'api/sleepdata/';
+var url_sleepData = url_sleepD+'json/sleepData?';
+var url_eventosPorDiaSLD = url_sleepD+'json/eventosPorDia?';
+
+//Controlador stepsData
+var url_stepsD = url_servidor+'api/stepsdata/';
+var url_stepsData = url_stepsD+'json/stepsData?';
+var url_eventosPorDiaSTD = url_stepsD+'json/eventosPorDia?';
+
+//Controlador heartRateData
+var url_heartRD = url_servidor+'api/heartratedata/';
+var url_heartRateData = url_heartRD+'json/heartRateData?';
+var url_eventosPorDiaHRD = url_heartRD+'json/eventosPorDia?';
+
 //Controlador systemLogs
 var url_systemL = url_servidor+'api/systemlog/';
 var url_systemLogs = url_systemL+'json/systemLogs?';
@@ -96,7 +116,7 @@ var url_setting = url_servidor+'api/setting/';
 var url_settings = url_setting+'json/settings';
 var url_update_settings = url_setting + "updateSettings";
 
-//Controlador smartdrive
+//Controlador smartdriver
 var url_smartdriver = url_servidor+'api/smartdriver/';
 var url_smartdriver_services = url_smartdriver+'json/services';
 var url_smartdriver_methods = url_smartdriver+'json/methods';

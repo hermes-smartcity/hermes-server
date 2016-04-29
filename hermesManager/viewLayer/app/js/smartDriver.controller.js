@@ -830,7 +830,7 @@
 					
 					function getComputeRouteFailed(error) {
 						vm.errorPoint = true;
-						vm.mensajeErrorPoint = error.data;
+						vm.mensajeErrorPoint = error.data.message;
 					}
 					
 					
