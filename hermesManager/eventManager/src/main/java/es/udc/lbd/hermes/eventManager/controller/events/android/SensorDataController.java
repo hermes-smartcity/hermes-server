@@ -24,6 +24,7 @@ import es.udc.lbd.hermes.model.events.GraficasSensorData;
 import es.udc.lbd.hermes.model.events.ListaGpsLocation;
 import es.udc.lbd.hermes.model.gps.GpssJson;
 import es.udc.lbd.hermes.model.gps.service.GpsService;
+import es.udc.lbd.hermes.model.sensordata.Row;
 import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
 import es.udc.lbd.hermes.model.sensordata.service.SensorDataService;
@@ -99,7 +100,7 @@ public class SensorDataController  extends MainResource{
 	
 	
 	@RequestMapping(value="/json/infoPorDia", method = RequestMethod.GET)
-	public GraficasSensorData getInfoPorDia(
+	public Row getInfoPorDia(
 			@RequestParam(required = true) SensorDataType sensor,
 			@RequestParam(value = "idUsuario", required = false) Long idUsuario,		
 			@RequestParam(value = "fechaIni", required = true) String fechaIni,

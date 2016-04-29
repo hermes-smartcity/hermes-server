@@ -132,67 +132,89 @@ public class SensorDataServiceImpl implements SensorDataService{
 		List<SensorData> informacion = sensorDataDao.informacionPorDia(tipo, idUsuario, fechaIni, fechaFin);
 		
 		Row row = new Row();	
-		for (SensorData sensorData : informacion) {
+		for (int i = 1; i < informacion.size(); i++) {
 			
 			C puntoStart =new C();
 			C puntoEnd =new C();
-			Calendar start= sensorData.getStartime();
-			Calendar end= sensorData.getEndtime();
+			Calendar start= informacion.get(i).getStartime();
+			Calendar end= informacion.get(i).getEndtime();
 			VDate vDateStart = new VDate(calendarToString(start));
 			VDate vDateEnd = new VDate(calendarToString(end));
 			
 			puntoStart.addV(vDateStart);
 			puntoEnd.addV(vDateEnd);
 			
-			if(sensorData.getValues()!=null && sensorData.getValues().length>2){				
+			// Añadimos los puntos inicial y final del intervalo a la gráfica
+			if(informacion.get(i).getValues()!=null && informacion.get(i).getValues().length>2){				
 				VBigDecimal vBigDecimalX = new VBigDecimal();
-				vBigDecimalX.setV(sensorData.getValues()[0]);
+				vBigDecimalX.setV(informacion.get(i).getValues()[0]);
 				puntoStart.addV(vBigDecimalX);
 				puntoEnd.addV(vBigDecimalX);
 				
 				VBigDecimal vBigDecimalY = new VBigDecimal();
-				vBigDecimalY.setV(sensorData.getValues()[1]);
+				vBigDecimalY.setV(informacion.get(i).getValues()[1]);
 				puntoStart.addV(vBigDecimalY);
 				puntoEnd.addV(vBigDecimalY);
 				
 				VBigDecimal vBigDecimalZ = new VBigDecimal();
-				vBigDecimalZ.setV(sensorData.getValues()[2]);
+				vBigDecimalZ.setV(informacion.get(i).getValues()[2]);
 				puntoStart.addV(vBigDecimalZ);		
 				puntoEnd.addV(vBigDecimalZ);	
 			}
+		
 			row.addC(puntoStart);
 			row.addC(puntoEnd);
+			
+			// Comprobamos si un intervalo de tiempo, consecutivo al inspeccionado, no tiene registrado datos de los sensores. Si es así añadimos ese intervalo con valor null 
+			// para la aceleración en el eje X, Y Z
+			if(i+1<informacion.size() && !sensorDataConsecutivos(informacion.get(i), informacion.get(i+1))){
+				C puntoEndAnt =new C(); // Donde finaliza el anterior
+				C puntoStartSig =new C(); // Donde empieza el siguiente intervalo con datos
+		
+				// Si no tiene datos registrados incluimos el intervalo con un null
+				Calendar endAnt= informacion.get(i).getEndtime();
+				Calendar startSig= informacion.get(i+1).getStartime();
+				VDate vDateEndAnt = new VDate(calendarToString(endAnt));
+				VDate vDateStartSig = new VDate(calendarToString(startSig));
+				
+				// Añado la fecha inicio al punto inicio y a la fecha fin al punto fin del intervalo
+				puntoEndAnt.addV(vDateEndAnt);
+				puntoStartSig.addV(vDateStartSig);
+				
+				// Eje X
+				puntoEndAnt.addV(null);
+				puntoStartSig.addV(null);
+				
+				// Eje Y
+				puntoEndAnt.addV(null);
+				puntoStartSig.addV(null);
+				
+				// Eje Z
+				puntoEndAnt.addV(null);		
+				puntoStartSig.addV(null);	
+				
+				// Añado los puntos inicial y final de ese intervalo a la gráfica
+				row.addC(puntoEndAnt);
+				row.addC(puntoStartSig);
+			}
 		}	
 		
 		return row;
 		
 	}
 
+	private boolean sensorDataConsecutivos(SensorData sensorDataAnt, SensorData sensorDataSigu){
+			if(sensorDataAnt.getEndtime().equals(sensorDataSigu.getStartime()))
+					return true;
+			else return false;
+	}
 	
 	private String calendarToString(Calendar calendar){
 		String strdate = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 		strdate = sdf.format(calendar.getTime());
 		
 		return strdate;
 	}
-	
-	public static Calendar getFecha(String fecha){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Date parsedEndDate;
-		try {
-			parsedEndDate = sdf.parse(fecha);
-			Calendar fin = Calendar.getInstance();
-			fin.setTime(parsedEndDate);
-			return fin;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-		
-	}
-	
 	
 }

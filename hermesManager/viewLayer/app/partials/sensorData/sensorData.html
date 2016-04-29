@@ -1,15 +1,25 @@
 <div class="slide-animate" data-ng-include="'./partials/estadisticas.html'"></div>
 
-<div class="col-lg-9">
-
-	<div data-ng-if="!vm.data.length">{{'noData' | translate}}</div>
-	<div data-ng-if="vm.data.length">
-		<canvas id="line" class="chart chart-line" data-chart-data="vm.data"
-			data-chart-labels="vm.labels" data-chart-legend="true" data-chart-series="vm.series"
-			data-chart-click="vm.onClick">
-		</canvas>
+<div class="row">
+	<div class="col-md-9">
+		<div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa glyphicon fa-fw"></i>
+					
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<div google-chart chart="vm.chart" style=" width:100%;"></div>	
+				</div>
+				<div class="panel-body">
+					<div google-chart chart="vm.chartLine" style=" width:100%;"></div>	
+				</div>
+				<!-- /.panel-body -->
+			</div>
+		</div>
 	</div>
-</div>
-<div class="col-lg-3">
-	<div class="slide-animate" data-ng-include="'./partials/sensorData/filtros.html'"></div>
+	<div class="cabeceraFiltro col-md-3">
+		<div class="slide-animate" data-ng-include="'./partials/sensorData/filtros.html'"></div>
+	</div>
 </div>

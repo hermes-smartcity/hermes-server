@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import es.udc.lbd.hermes.model.sensordata.Row;
 import es.udc.lbd.hermes.model.sensordata.SensorData;
 import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
@@ -34,7 +35,7 @@ public class SensorDataDaoImpl extends GenericDaoHibernate<SensorData, Long> imp
 		
 		String queryStr =  "from SensorData d " +
 						"where d.startime > :fechaIni and d.endtime < :fechaFin " +
-						"and d.typesensor LIKE :tipo ";
+						"and d.typesensor LIKE :tipo order by d.startime";
 
 		if(idUsuario!=null)
 			queryStr += " and d.usuarioMovil.id = :idUsuario ";
