@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.model.dataservice.Method;
@@ -21,6 +26,8 @@ import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
 import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.smartdriver.service.NetworkService;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
+import es.udc.lbd.hermes.model.util.exceptions.PointDestinyException;
+import es.udc.lbd.hermes.model.util.exceptions.PointOriginException;
 
 @RestController
 @RequestMapping(value = "/api/smartdriver")
@@ -32,6 +39,8 @@ public class SmartDriverController {
 	
 	@Autowired private UsuarioWebService usuarioWebService;
 		
+	@Autowired private MessageSource messageSource;
+	
 	@RequestMapping(value="/json/services", method = RequestMethod.GET)
 	public List<Service> getServices() {
 		return Arrays.asList(Service.values());
@@ -91,12 +100,36 @@ public class SmartDriverController {
 	}
 	
 	@RequestMapping(value="/network/route", method = RequestMethod.GET)
-	public List<RouteSegment> getComputeRoute(@RequestParam(value = "fromLat", required = true) Double fromLat,
+	@ResponseBody
+	public ResponseEntity<?> getComputeRoute(@RequestParam(value = "fromLat", required = true) Double fromLat,
 			@RequestParam(value = "fromLng", required = true) Double fromLng,
 			@RequestParam(value = "toLat", required = true) Double toLat, 
-			@RequestParam(value = "toLng", required = true) Double toLng) { 
+			@RequestParam(value = "toLng", required = true) Double toLng,
+			Locale locale) { 
 
-		return networkServicio.getComputeRoute(fromLat, fromLng, toLat, toLng);
+		try{
+			List<RouteSegment> lista = networkServicio.getComputeRoute(fromLat, fromLng, toLat, toLng);
+		
+			return new ResponseEntity<List<RouteSegment>>(lista,HttpStatus.OK);
+			
+		}catch (PointOriginException e) {
+			
+			Object [] parametros = new Object[] {fromLat, fromLng, fromLat, fromLng};
+
+			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
+			
+			//El error de debe a que no se encontro punto de origen
+			return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+			
+		}catch (PointDestinyException e) {
+			
+			Object [] parametros = new Object[] {toLat, toLng, toLat, toLng};
+
+			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
+			
+			//El error de debe a que no se encontro punto de destino
+			return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+		}
 
 	}
 }
