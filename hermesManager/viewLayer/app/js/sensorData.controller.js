@@ -72,7 +72,7 @@
 				 title: 'Data Sensor',
 				 height: 600,
 				 displayExactValues: true,
-				 explorer : {axis: 'vertical', actions: ['dragToPan', 'dragToZoom', 'rightClickToReset'], maxZoomIn: 0.75, zoomDelta:2},
+				 explorer : { maxZoomOut:5, keepInBounds: true, maxZoomIn: 20},
 				 dateFormat: 'HH:mm:ss MMMM dd, yyyy'
 				
 	    };
