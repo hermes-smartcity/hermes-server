@@ -20,8 +20,10 @@
 		vm.pintarGraficoVehicleLocations = pintarGraficoVehicleLocations;
 		vm.pintarGraficoDataSections = pintarGraficoDataSections;
 		vm.pintarGraficoMeasurements = pintarGraficoMeasurements;
-		vm.recuperarYpintarEventos = recuperarYpintarEventos;
 		vm.pintarGraficoContextData = pintarGraficoContextData;
+		vm.pintarGraficoUserLocations = pintarGraficoUserLocations;
+		vm.pintarGraficoUserActivities = pintarGraficoUserActivities;
+		vm.recuperarYpintarEventos = recuperarYpintarEventos;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
 		vm.getLiveChartData = getLiveChartData;
@@ -42,6 +44,8 @@
 		vm.totalSLD = statistics.totalSleepData;
 		vm.totalHRD = statistics.totalHeartRateData;
 		vm.totalCD = statistics.totalContextData;
+		vm.totalUL = statistics.totalUserLocations;
+		vm.totalUA = statistics.totalUserActivities;
 		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
@@ -62,8 +66,7 @@
 				vm.labels = vm.eventosPorDia.fechas;
 				vm.series = [ $translate.instant('numeroEventos')];
 				vm.data = [vm.eventosPorDia.nEventos];
-			
-
+		
 				vm.onClick = function (points, evt) {
 				    console.log(points, evt);
 				};
@@ -71,8 +74,6 @@
 				// Si no hay eventos que cumplan los requisitos marcados en los filtros entonces se actualiza con el gráfico
 				getLiveChartData();
 				  
-				  
-				
 			}
 			
 		}
@@ -143,7 +144,7 @@
 			url+=prepararUrl();
 			vm.recuperarYpintarEventos(url);
 		}
-		
+				
 		function pintarGraficoDataSections() {
 			var url = url_eventosPorDiaDS;	
 			url+=prepararUrl();
@@ -163,6 +164,19 @@
 			vm.recuperarYpintarEventos(url);
 		}
 		
+		function pintarGraficoUserLocations() {
+			var url = url_eventosPorDiaUL;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoUserActivities() {
+			var url = url_eventosPorDiaUA;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		
 		function aplicarFiltros() {
 			var pos = vm.eventTypeSelected.indexOf('_');
 			var value = vm.eventTypeSelected.substr(0, pos);
@@ -170,13 +184,17 @@
 					vm.eventTypeSelected.length);
 			value = angular.lowercase(value);
 
-			if (angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION"))
+			if (angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
 				vm.pintarGraficoVehicleLocations();
-			else if (angular.equals(vm.eventTypeSelected, "DATA_SECTION"))
+			}else if (angular.equals(vm.eventTypeSelected, "DATA_SECTION")){
 				vm.pintarGraficoDataSections();
-			else if (angular.equals(vm.eventTypeSelected, "CONTEXT_DATA"))
+			}else if (angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
 				vm.pintarGraficoContextData();
-			else if (vm.measurementsType.indexOf(vm.eventTypeSelected) > -1) {
+			}else if (angular.equals(vm.eventTypeSelected, "USER_LOCATIONS")){
+				vm.pintarGraficoUserLocations();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_ACTIVITIES")){
+				vm.pintarGraficoUserActivities();
+			}else if (vm.measurementsType.indexOf(vm.eventTypeSelected) > -1) {
 				vm.pintarGraficoMeasurements();
 			} else
 				console.log("No corresponde a ningún tipo --> En construcción");

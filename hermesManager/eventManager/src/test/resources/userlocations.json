@@ -1,0 +1,23 @@
+{
+  "Body": {
+    "User Locations": [
+      {
+        "latitude": 37.337658,
+        "endTime": 1461788679382,
+        "longitude": -5.8287835,
+        "startTime": 1461788378813,
+        "accuracy": 30
+      }
+    ]
+  },
+  "Timestamp": "2016-04-27T22:33:02+02:00",
+  "Application-Id": "SmartCitizen",
+  "Syntax": "application\/json",
+  "Event-Id": "acb666e3-1d85-47fd-937e-b145daa3b0d9",
+  "Event-Type": "User Locations",
+  "Aggregator-Ids": [
+    "a0c7119d-6e52-40a2-b4e9-61574241bbdc",
+    "865d1527-a4ab-4069-a67a-f091f800e1c3" 
+  ],
+  "Source-Id": "12FF1519A30C5093836016EC175D381C11B1AF92967B18A0DEFE6C7A9364DC30" 
+}

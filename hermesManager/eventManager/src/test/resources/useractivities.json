@@ -1,0 +1,21 @@
+{
+  "Body": {
+    "User Activities": [
+      {
+        "endTime": 1461790101586,
+        "name": "unknown",
+        "startTime": 1461789182375
+      }
+    ]
+  },
+  "Timestamp": "2016-04-27T22:48:23+02:00",
+  "Application-Id": "SmartCitizen",
+  "Syntax": "application\/json",
+  "Event-Id": "d8e366a0-b02c-4db2-a0fc-133987b954d4",
+  "Event-Type": "User Activities",
+  "Aggregator-Ids": [
+    "a0c7119d-6e52-40a2-b4e9-61574241bbdc",
+    "865d1527-a4ab-4069-a67a-f091f800e1c3" 
+  ],
+  "Source-Id": "12FF1519A30C5093836016EC175D381C11B1AF92967B18A0DEFE6C7A9364DC30" 
+}

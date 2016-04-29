@@ -17,6 +17,8 @@
 		vm.pintarMapaMeasurements = pintarMapaMeasurements;
 		vm.pintarMapaContextData = pintarMapaContextData;
 		vm.pintarMapaHigh = pintarMapaHigh;
+		vm.pintarMapaUserLocations = pintarMapaUserLocations;
+		vm.pintarUserActivities = pintarUserActivities;
 		vm.pintarPuntos = pintarPuntos;
 		vm.pintarLineas = pintarLineas;
 		vm.aplicarFiltros = aplicarFiltros;
@@ -37,6 +39,8 @@
 		vm.totalSLD = statistics.totalSleepData;
 		vm.totalHRD = statistics.totalHeartRateData;
 		vm.totalCD = statistics.totalContextData;
+		vm.totalUL = statistics.totalUserLocations;
+		vm.totalUA = statistics.totalUserActivities;
 
 		vm.mostrarMapa = mostrarMapa;
 		vm.mostrarTabla = mostrarTabla;
@@ -186,6 +190,28 @@
 		                   DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('contextData.accuracy'))
 		                   ];
 		
+		vm.dtColumnsUL  = [
+		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userLocation.userId')),
+		                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userLocation.timeStart')).renderWith(function(data, type, full) {
+		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                   }),
+		                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userLocation.timeEnd')).renderWith(function(data, type, full) {
+		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                   }),
+		                   DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
+		                   ];
+		
+		vm.dtColumnsUA  = [
+		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userActivity.userId')),
+		                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userActivity.timeStart')).renderWith(function(data, type, full) {
+		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                   }),
+		                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userActivity.timeEnd')).renderWith(function(data, type, full) {
+		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                   }),
+		                   DTColumnBuilder.newColumn('name').withTitle($translate.instant('userActivity.name'))
+		                   ];
+		
 		function cargarListadoTabla(){
 			//Para mostrar la tabla correspondiente
 			if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
@@ -199,6 +225,10 @@
 					angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
 					angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
 				vm.listadoCarga = "./partials/measurement/measurementListar.html";
+			}else if (angular.equals(vm.eventTypeSelected, "USER_LOCATIONS")){
+				vm.listadoCarga = "./partials/userLocation/userLocationListar.html";
+			}else if (angular.equals(vm.eventTypeSelected, "USER_ACTIVITIES")){
+				vm.listadoCarga = "./partials/userActivity/userActivityListar.html";
 			}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 				vm.listadoCarga = "./partials/measurement/measurementListar.html";
 			} else{
@@ -273,6 +303,10 @@
 					angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
 					angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
 				vm.pintarMapaHigh();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_LOCATIONS")){
+				vm.pintarMapaUserLocations();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_ACTIVITIES")){
+				vm.pintarUserActivities();
 			}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 				vm.pintarMapaMeasurements();
 			} else{
@@ -466,6 +500,28 @@
 			return datosEvento;
 		}
 
+		function infoPopupUserLocation(userId, startTime, endTime, eventAccuracy) {
+			var dateStart = new Date(startTime);
+			var dateStartEvento = $filter('date')(dateStart, 'yyyy-MM-dd');
+			var hourStartEvento = $filter('date')(dateStart, 'HH:mm:ss');
+			
+			var dateEnd = new Date(endTime);
+			var dateEndEvento = $filter('date')(dateEnd, 'yyyy-MM-dd');
+			var hourEndEvento = $filter('date')(dateEnd, 'HH:mm:ss');
+						
+			var datosEvento = L.DomUtil.create('datosEvento');
+
+			datosEvento.innerHTML = '<b>' + $translate.instant('userLocation.userId') + ':</b> ' + userId +
+				'<br/><b>' + $translate.instant('userLocation.dateStart') + ':</b> '+dateStartEvento+
+				'<br/><b>' + $translate.instant('userLocation.timeStart') + ':</b> '+hourStartEvento+
+				'<br/><b>' + $translate.instant('userLocation.dateEnd') + ':</b> '+dateEndEvento+
+				'<br/><b>' + $translate.instant('userLocation.timeEnd') + ':</b> '+hourEndEvento+
+				'<br/><b>' + $translate.instant('userLocation.accuracy') + ':</b> '+eventAccuracy;
+			
+			return datosEvento;
+		}
+
+		
 		function pintarPuntos(events) {
 			var mystyles = {
 					color: 'red',
@@ -550,7 +606,22 @@
 			});		
 		}
 
+		function pintarPuntosUserLocation(events) {
+			var mystyles = {
+					color: 'red',
+					fillOpacity: 0.5
+			};
 
+			markers.clearLayers();
+			angular.forEach(events, function(value, key) {
+				var info = infoPopupUserLocation(value.userId.substring(0,10) + "...", value.startTime, value.endTime, value.accuracy);			
+				//Convierto el punto que quiero pintar para tener su lat y log
+				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
+				//Añado al mapa el punto
+				markers.addLayer(L.circle(latlng, 10, mystyles).bindPopup(info));
+			});		
+		}
+		
 		function pintarLineasDataSection(events) {
 			markers.clearLayers();
 			angular.forEach(vm.events, function(value, key) {			
@@ -676,6 +747,40 @@
 			}
 		}
 
+		function pintarMapaUserLocations() {
+
+			var bounds = map.getBounds();				
+			var esLng = bounds.getSouthEast().lng;
+			var esLat = bounds.getSouthEast().lat;
+			var wnLng = bounds.getNorthWest().lng;
+			var wnLat = bounds.getNorthWest().lat;
+
+			dashboardService.recuperarDatosPeticion(url_userLocations, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionMapaUserLocationsComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionMapaUserLocationsComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
+				pintarPuntosUserLocation(vm.events);
+
+				vm.recargarTabla();
+			}
+		}
+		
+		function pintarUserActivities() {
+
+			dashboardService.recuperarDatosPeticionSinGeometria(url_userActivities, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionUserActivitiesComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionUserActivitiesComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
+				
+				markers.clearLayers();
+				vm.recargarTabla();
+			}
+		}
+		
 		function onTimeSetStart() {
 			vm.showCalendarStart = !vm.showCalendarStart;
 		}
