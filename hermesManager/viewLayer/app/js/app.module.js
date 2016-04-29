@@ -366,13 +366,22 @@
 	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, 
 			userService, $state, $translate, tmhDynamicLocale) {
 
+		
 		//Configuramos el idioma por defecto
-		if (angular.isDefined($localStorage.lang)) {
-			$translate.use( $localStorage.lang);
-			tmhDynamicLocale.set( $localStorage.lang);
+		if (angular.isDefined($localStorage.hermesmanager)) {
+			if (angular.isDefined($localStorage.hermesmanager.lang)) {
+				$translate.use( $localStorage.hermesmanager.lang);
+				tmhDynamicLocale.set( $localStorage.hermesmanager.lang);
+			}else{
+				$localStorage.hermesmanager.lang = 'en';
+			}
 		}else{
-			$localStorage.lang = 'en';
+			$localStorage.hermesmanager = {
+					lang : 'en'
+			};
+			
 		}
+		
 		
 		//Si existe el token guardado en $localStorage y no ha caducado aun, se renueva
 		if ($localStorage.authToken){
