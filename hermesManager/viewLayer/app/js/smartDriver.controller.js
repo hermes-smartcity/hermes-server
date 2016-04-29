@@ -113,6 +113,9 @@
 		                   })
 		                   ];
 		
+		vm.errorPoint = false;
+		vm.mensajeErrorPoint = undefined;
+		
 		function cargarListadoTabla(){
 			vm.tabla = "./partials/smartdriver/tabla.html";
 		}
@@ -448,6 +451,9 @@
 			
 			vm.events = undefined;
 			vm.result = undefined;
+			
+			vm.errorPoint = false;
+			vm.mensajeErrorPoint = undefined;
 			
 			markers.clearLayers();
 			
@@ -810,7 +816,7 @@
 				  break;
 				
 			  case "COMPUTE_ROUTE":
-				  smartDriverService.getComputeRoute(vm.fromLat, vm.fromLng, vm.toLat, vm.toLng).then(getComputeRouteComplete);
+				  smartDriverService.getComputeRoute(vm.fromLat, vm.fromLng, vm.toLat, vm.toLng).then(getComputeRouteComplete).catch(getComputeRouteFailed);
 					
 					function getComputeRouteComplete(response) {
 						
@@ -821,6 +827,12 @@
 
 						vm.cargarListadoTabla();
 					}
+					
+					function getComputeRouteFailed(error) {
+						vm.errorPoint = true;
+						vm.mensajeErrorPoint = error.data;
+					}
+					
 					
 				  break;
 				  
@@ -885,6 +897,10 @@
 		}
 
 		function aplicarFiltros() {	
+			
+			vm.errorPoint = false;
+			vm.mensajeErrorPoint = undefined;
+			
 			//Aplicamos el filtro que corresponda
 			switch (vm.methodSelected) {
 			  case "GET_INFORMATION_LINK":
