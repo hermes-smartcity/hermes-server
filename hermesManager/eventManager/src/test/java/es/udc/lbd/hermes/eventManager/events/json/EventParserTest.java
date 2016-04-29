@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -14,6 +13,7 @@ import es.udc.lbd.hermes.eventManager.json.EventData;
 import es.udc.lbd.hermes.eventManager.json.EventDataArray;
 import es.udc.lbd.hermes.eventManager.json.EventParser;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserActivity;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyUserLocation;
 
 public class EventParserTest {
 
@@ -214,6 +214,31 @@ public class EventParserTest {
 				for (EventData eventData : eventDataArray.getEvents()) {
 					if (eventData instanceof ZtreamyUserActivity) {
 						Assert.assertEquals("unknown", ((ZtreamyUserActivity)eventData).getName());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+	
+	@Test
+	public void testUserLocations() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/userlocations.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserLocation) {
+						Assert.assertEquals(new Integer(30), ((ZtreamyUserLocation)eventData).getAccuracy());
 					}
 				}
 			}

@@ -8,7 +8,8 @@
 	function dashboardService($http, $log, $q, $filter) {
 
 		var service = {
-				recuperarDatosPeticion: recuperarDatosPeticion
+				recuperarDatosPeticion: recuperarDatosPeticion,
+				recuperarDatosPeticionSinGeometria: recuperarDatosPeticionSinGeometria
 		};
 
 		return service;
@@ -34,11 +35,38 @@
 			url+="wnLng="+wnLng+"&wnLat="+wnLat+"&esLng="+esLng+"&esLat="+esLat;	
 			return url;
 		}
+		
+		function prepararUrlSinGeometria(startDate, endDate, usuarioSelected){		
+			var url ="";
+			if (typeof usuarioSelected != 'undefined' && usuarioSelected !== null)
+				url+="idUsuario="+ usuarioSelected.id+"&";		
+			url+=prepararParametrosFechas(startDate, endDate);		
+				
+			return url;
+		}
 
 		function recuperarDatosPeticion(urlRequest, esLng, esLat, wnLng, wnLat, startDate, endDate, usuarioSelected) {
 
 			var url = urlRequest;
 			url+=prepararUrl(esLng, esLat, wnLng, wnLat, startDate, endDate, usuarioSelected);
+
+			return $http.get(url)
+				.then(getRequestComplete)
+				.catch(getRequestFailed);
+			
+			function getRequestComplete(response) {
+				return response.data;
+			}
+			
+			function getRequestFailed(error) {
+				$log.error('XHR Failed for recuperarDatosPeticion.' + error.data);
+			}
+		}
+		
+		function recuperarDatosPeticionSinGeometria(urlRequest, startDate, endDate, usuarioSelected) {
+
+			var url = urlRequest;
+			url+=prepararUrlSinGeometria(startDate, endDate, usuarioSelected);
 
 			return $http.get(url)
 				.then(getRequestComplete)

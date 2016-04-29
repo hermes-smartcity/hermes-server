@@ -43,6 +43,8 @@
 	vm.totalSLD = statistics.totalSleepData;
 	vm.totalHRD = statistics.totalHeartRateData;
 	vm.totalCD = statistics.totalContextData;
+	vm.totalUL = statistics.totalUserLocations;
+	vm.totalUA = statistics.totalUserActivities;
 	
 	//Inicializar options de la tabla
 	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");

@@ -75,7 +75,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 		
 		String queryString = "select source " +
 							"from network.link " +
-							"where geom_way && st_expand(st_geometryfromtext('POINT('|| :fromLng || ' ' ||:fromLat ||')', 4326), 0.001) " + 
+							"where geom_way && st_expand(st_geometryfromtext('POINT('|| :fromLng || ' ' ||:fromLat ||')', 4326), 0.01) " + 
 							"order by st_distance(geom_way, st_geometryfromtext('POINT('|| :fromLng || ' ' ||:fromLat ||')', 4326)) " + 
 							"limit 1";
 		
@@ -90,7 +90,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 	public Integer obtainDestinyPoint(Double toLat, Double toLng){
 		String queryString = "select source " +
 				"from network.link " +
-				"where geom_way && st_expand(st_geometryfromtext('POINT('|| :toLng || ' ' ||:toLat ||')', 4326), 0.001) " + 
+				"where geom_way && st_expand(st_geometryfromtext('POINT('|| :toLng || ' ' ||:toLat ||')', 4326), 0.01) " + 
 				"order by st_distance(geom_way, st_geometryfromtext('POINT('|| :toLng || ' ' ||:toLat ||')', 4326)) " + 
 				"limit 1";
 

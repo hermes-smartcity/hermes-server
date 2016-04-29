@@ -15,6 +15,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class EventDataDeserializer extends StdDeserializer<EventData> {
+	
+	private static final long serialVersionUID = -4688388124135286016L;
+	
 	private Map<String, Class<? extends EventData>> registry = new HashMap<String, Class<? extends EventData>>();
 
 	public EventDataDeserializer() {
@@ -31,6 +34,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 		registerEventType("Sleep Data", ZtreamySleepData.class);
 		registerEventType("Heart Rate Data", ZtreamyHeartRateData.class);
 		registerEventType("User Activities", ZtreamyUserActivity.class);
+		registerEventType("User Locations", ZtreamyUserLocation.class);
 	}
 
 	void registerEventType(String uniqueName, Class<? extends EventData> eventTypeClass) {

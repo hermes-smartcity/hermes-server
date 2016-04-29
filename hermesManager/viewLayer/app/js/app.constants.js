@@ -60,7 +60,6 @@ var url_sensorsTypes = url_dashboard+'json/sensorsType';
 var url_vehicleL = url_servidor+'api/vehiclelocation/';
 var url_vehicleLocations = url_vehicleL+'json/vehicleLocations?';
 var url_eventosPorDiaVL = url_vehicleL+'json/eventosPorDia?';
-
 		
 //Controlador dataSection
 var url_dataS = url_servidor+'api/datasection/';
@@ -76,6 +75,16 @@ var url_eventosPorDiaM = url_measurement+'json/eventosPorDia?';
 var url_contextD = url_servidor+'api/contextdata/';
 var url_contextData = url_contextD+'json/contextData?';
 var url_eventosPorDiaCD = url_contextD+'json/eventosPorDia?';
+
+//Controlador userLocations
+var url_userL = url_servidor+'api/userlocation/';
+var url_userLocations = url_userL+'json/userLocations?';
+var url_eventosPorDiaUL = url_userL+'json/eventosPorDia?';
+
+//Controlador userActivities
+var url_userA = url_servidor+'api/useractivity/';
+var url_userActivities = url_userA+'json/userActivities?';
+var url_eventosPorDiaUA = url_userA+'json/eventosPorDia?';
 
 //Controlador systemLogs
 var url_systemL = url_servidor+'api/systemlog/';

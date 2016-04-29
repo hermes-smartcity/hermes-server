@@ -14,6 +14,8 @@ import es.udc.lbd.hermes.eventManager.strategy.HighHeartRateEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HighSpeedEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.SleepDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.StepsDataEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.UserActivitiesEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.UserLocationsEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.VehicleLocationEventStrategy;
 import es.udc.lbd.hermes.model.events.EventType;
 
@@ -34,6 +36,8 @@ public class EventFactory {
 		registry.put(EventType.STEPS_DATA, new StepsDataEventStrategy());
 		registry.put(EventType.CONTEXT_DATA, new ContextDataEventStrategy());
 		registry.put(EventType.HEART_RATE_DATA, new HeartRateDataEventStrategy());
+		registry.put(EventType.USER_ACTIVITIES, new UserActivitiesEventStrategy());
+		registry.put(EventType.USER_LOCATIONS, new UserLocationsEventStrategy());
 	}
 
 	private EventFactory() {

@@ -11,9 +11,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 public class EventDataSerializer extends StdSerializer<EventData> {
+	
+	private static final long serialVersionUID = 64731852085278686L;
+	
 	private Map<Class<? extends EventData>, String> registry = new HashMap<Class<? extends EventData>, String>();
-	
-	
+		
 	public EventDataSerializer() {
 		super(EventData.class);
 		registerEventType(ZtreamyVehicleLocation.class, "Location");  
@@ -28,6 +30,7 @@ public class EventDataSerializer extends StdSerializer<EventData> {
 		registerEventType(ZtreamySleepData.class, "Sleep Data");
 		registerEventType(ZtreamyHeartRateData.class, "Heart Rate Data");
 		registerEventType(ZtreamyUserActivity.class, "User Activities");
+		registerEventType(ZtreamyUserLocation.class, "User Locations");
 	}
 	
 	void registerEventType(Class<? extends EventData> eventTypeClass, String uniqueName) {

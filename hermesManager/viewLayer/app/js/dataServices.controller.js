@@ -35,7 +35,9 @@
 		vm.totalSLD = statistics.totalSleepData;
 		vm.totalHRD = statistics.totalHeartRateData;
 		vm.totalCD = statistics.totalContextData;
-
+		vm.totalUL = statistics.totalUserLocations;
+		vm.totalUA = statistics.totalUserActivities;
+		
 		vm.recuperarYpintarPeticiones = recuperarYpintarPeticiones;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;

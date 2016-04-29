@@ -147,7 +147,9 @@
 				"sleepData": "Sleep Data:",
 				"heartRateData": "Heart Rate Data:",
 				"contextData": "Context Data:",
-				"viewDetails": "View Details"
+				"viewDetails": "View Details",
+				"userLocations": "User Locations",
+				"userActivities": "User Activities"
 			},
 			"vehicleLocation":{
 				"noEvents": "There are not events to show",
@@ -252,6 +254,24 @@
 				"altitude": "Altitude",
 				"provider": "Provider",
 				"noData": "There are not data to show",
+			},
+			"userLocation":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"dateStart": "Date end",
+				"timeStart": "Time start",
+				"dateEnd": "Date end",
+				"timeEnd": "Time end",
+				"accuracy": "Accuracy"
+			},
+			"userActivity":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"dateStart": "Date end",
+				"timeStart": "Time start",
+				"dateEnd": "Date end",
+				"timeEnd": "Time end",
+				"name": "Name"
 			},
 		});
 	}
