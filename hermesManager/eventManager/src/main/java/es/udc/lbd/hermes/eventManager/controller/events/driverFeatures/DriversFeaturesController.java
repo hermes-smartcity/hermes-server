@@ -21,7 +21,7 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 
 
 @RestController
-@RequestMapping(value = "/api/driverFeatures")
+@RequestMapping(value = "/api/driverfeature")
 public class DriversFeaturesController extends MainResource {
 //	private final Logger log = LoggerFactory
 //			.getLogger(DriversFeaturesController.class);
@@ -37,7 +37,7 @@ public class DriversFeaturesController extends MainResource {
 		if(usuario.getRol().equals(Rol.ROLE_CONSULTA)){
 			idUsuario = usuario.getUsuarioMovil().getId();			
 		}
-		return driverFeaturesServicio.obterDriverFeaturessSegunUsuario(idUsuario);
+		return driverFeaturesServicio.obterDriverFeaturesSegunUsuario(idUsuario);
 
 	}
 	

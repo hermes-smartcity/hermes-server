@@ -23,6 +23,10 @@
 		vm.pintarGraficoContextData = pintarGraficoContextData;
 		vm.pintarGraficoUserLocations = pintarGraficoUserLocations;
 		vm.pintarGraficoUserActivities = pintarGraficoUserActivities;
+		vm.pintarGraficoDriverFeatures = pintarGraficoDriverFeatures;
+		vm.pintarGraficoStepsData = pintarGraficoStepsData;
+		vm.pintarGraficoSleepData = pintarGraficoSleepData;
+		vm.pintarGraficoHeartRateData = pintarGraficoHeartRateData;
 		vm.recuperarYpintarEventos = recuperarYpintarEventos;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
@@ -176,6 +180,29 @@
 			vm.recuperarYpintarEventos(url);
 		}
 		
+		function pintarGraficoDriverFeatures() {
+			var url = url_eventosPorDiaDF;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoSleepData() {
+			var url = url_eventosPorDiaSLD;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoStepsData() {
+			var url = url_eventosPorDiaSTD;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoHeartRateData() {
+			var url = url_eventosPorDiaHRD;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
 		
 		function aplicarFiltros() {
 			var pos = vm.eventTypeSelected.indexOf('_');
@@ -194,6 +221,14 @@
 				vm.pintarGraficoUserLocations();
 			}else if (angular.equals(vm.eventTypeSelected, "USER_ACTIVITIES")){
 				vm.pintarGraficoUserActivities();
+			}else if (angular.equals(vm.eventTypeSelected, "DRIVER_FEATURES")){
+				vm.pintarGraficoDriverFeatures();
+			}else if (angular.equals(vm.eventTypeSelected, "STEPS_DATA")){
+				vm.pintarGraficoStepsData();
+			}else if (angular.equals(vm.eventTypeSelected, "SLEEP_DATA")){
+				vm.pintarGraficoSleepData();
+			}else if (angular.equals(vm.eventTypeSelected, "HEART_RATE_DATA")){
+				vm.pintarGraficoHeartRateData();
 			}else if (vm.measurementsType.indexOf(vm.eventTypeSelected) > -1) {
 				vm.pintarGraficoMeasurements();
 			} else
