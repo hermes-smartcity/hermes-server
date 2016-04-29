@@ -12,6 +12,8 @@ import es.udc.lbd.hermes.model.events.heartRateData.service.HeartRateDataService
 import es.udc.lbd.hermes.model.events.measurement.service.MeasurementService;
 import es.udc.lbd.hermes.model.events.sleepData.service.SleepDataService;
 import es.udc.lbd.hermes.model.events.stepsData.service.StepsDataService;
+import es.udc.lbd.hermes.model.events.useractivities.service.UserActivitiesService;
+import es.udc.lbd.hermes.model.events.userlocations.service.UserLocationsService;
 import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.service.UsuarioMovilService;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
@@ -41,6 +43,10 @@ public class Statistics implements Serializable{
 
 	@Autowired private ContextDataService contextDataService;
 	
+	@Autowired private UserLocationsService userLocationsService;
+	
+	@Autowired private UserActivitiesService userActivitiesService;
+	
 	private long contarUsuariosMovil;
 	private long contarUsuariosWeb;
 	private long numberActiveUsers;
@@ -52,6 +58,8 @@ public class Statistics implements Serializable{
 	private long totalSleepData;
 	private long totalHeartRateData;
 	private long totalContextData;
+	private long totalUserLocations;
+	private long totalUserActivities;
 
 	public Statistics() {}
 	
@@ -67,6 +75,8 @@ public class Statistics implements Serializable{
 		this.totalSleepData = sleepDataService.contar();
 		this.totalHeartRateData = heartRateDataService.contar();
 		this.totalContextData = contextDataService.contar();
+		this.totalUserLocations = userLocationsService.contar();
+		this.totalUserActivities = userActivitiesService.contar();
 	}
 
 	public long getContarUsuariosMovil() {
@@ -155,6 +165,22 @@ public class Statistics implements Serializable{
 
 	public void setTotalContextData(long totalContextData) {
 		this.totalContextData = totalContextData;
+	}
+	
+	public long getTotalUserLocations() {
+		return totalUserLocations;
+	}
+
+	public void setTotalUserLocations(long totalUserLocations) {
+		this.totalUserLocations = totalUserLocations;
+	}
+	
+	public long getTotalUserActivities() {
+		return totalUserActivities;
+	}
+
+	public void setTotalUserActivities(long totalUserActivities) {
+		this.totalUserActivities = totalUserActivities;
 	}
 		
 }

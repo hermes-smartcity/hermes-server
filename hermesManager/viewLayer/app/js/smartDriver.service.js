@@ -82,6 +82,7 @@
 				method : 'GET',
 				url : url_network_route + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng
 			});
+			
 		}
 		
 

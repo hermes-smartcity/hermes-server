@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
+
 import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHighHeartRate;
 import es.udc.lbd.hermes.model.events.measurement.Measurement;

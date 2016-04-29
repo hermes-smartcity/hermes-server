@@ -16,6 +16,8 @@ import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
 import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.smartdriver.dao.NetworkDao;
 import es.udc.lbd.hermes.model.util.RegistroPeticionesHelper;
+import es.udc.lbd.hermes.model.util.exceptions.PointDestinyException;
+import es.udc.lbd.hermes.model.util.exceptions.PointOriginException;
 
 
 @Service("networkService")
@@ -36,7 +38,7 @@ public class NetworkServiceImpl implements NetworkService{
 	
 	@Autowired
 	private DataServicesDao dataServiceDao;
-	
+		
 	@Override
 	public NetworkLinkVO getLinkInformation(Double currentLong, Double currentLat, Double previousLong, Double previousLat){
 		//Recuperamos el datos
@@ -96,13 +98,17 @@ public class NetworkServiceImpl implements NetworkService{
 		return resultado;
 	}
 	
-	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng){
+	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng) throws PointDestinyException, PointOriginException{
 		//Obtenemos el id de origen
 		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
+		if (originPoint == null)
+			throw new PointOriginException(fromLat, fromLng);
 		
 		//Obtenemos el id de destino
 		Integer destinyPoint = networkDao.obtainDestinyPoint(toLat, toLng);
-		
+		if (destinyPoint == null)
+			throw new PointDestinyException(toLat, toLng);
+				
 		//Obtenemos la lista de tramos
 		List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint);
 		
