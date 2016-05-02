@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 
-	angular.module('app').factory('smartDriverService', smartDriverService);
+	angular.module('app').factory('hermesServicesService', hermesServicesService);
 
-	smartDriverService.$inject = ['$http', '$log', '$q'];
+	hermesServicesService.$inject = ['$http', '$log', '$q'];
 
-	function smartDriverService($http, $log, $q) {
+	function hermesServicesService($http, $log, $q) {
 		var service = {
 				getServices: getServices,
 				getMethods: getMethods,
@@ -19,7 +19,7 @@
 		return service;
 	
 		function getServices() {
-			return $http.get(url_smartdriver_services)
+			return $http.get(url_hermesS_services)
 				.then(getServicesComplete)
 				.catch(getServicesFailed);
 			function getServicesComplete(response) {
@@ -34,7 +34,7 @@
 		function getMethods (service) {		
 			return $http({
 				method : 'GET',
-				url : url_smartdriver_methods,
+				url : url_hermesS_methods,
 				params: {"service": service}
 			});
 		}

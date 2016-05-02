@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.eventManager.controller.events.smartDrive;
+package es.udc.lbd.hermes.eventManager.controller.events.hermesServices;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,10 +31,10 @@ import es.udc.lbd.hermes.model.util.exceptions.PointDestinyException;
 import es.udc.lbd.hermes.model.util.exceptions.PointOriginException;
 
 @RestController
-@RequestMapping(value = "/api/smartdriver")
-public class SmartDriverController {
+@RequestMapping(value = "/api/hermes")
+public class HermesServicesController {
 
-	static Logger logger = Logger.getLogger(SmartDriverController.class);
+	static Logger logger = Logger.getLogger(HermesServicesController.class);
 	
 	@Autowired private NetworkService networkServicio;
 	
@@ -68,17 +68,7 @@ public class SmartDriverController {
 		
 		return lista;
 	}
-	
-	@RequestMapping(value="/network/link", method = RequestMethod.GET)
-	public NetworkLinkVO getLinkInformation(@RequestParam(value = "currentLong", required = true) Double currentLong,
-			@RequestParam(value = "currentLat", required = true) Double currentLat,
-			@RequestParam(value = "previousLong", required = true) Double previousLong, 
-			@RequestParam(value = "previousLat", required = true) Double previousLat) { 
 
-		return networkServicio.getLinkInformation(currentLong, currentLat, previousLong, previousLat);
-
-	}
-	
 	@RequestMapping(value="/json/types", method = RequestMethod.GET)
 	public List<Type> types() {
 		return Arrays.asList(Type.values());
@@ -89,6 +79,16 @@ public class SmartDriverController {
 		return Arrays.asList(EnumDataSection.values());
 	}
 	
+	@RequestMapping(value="/network/link", method = RequestMethod.GET)
+	public NetworkLinkVO getLinkInformation(@RequestParam(value = "currentLong", required = true) Double currentLong,
+			@RequestParam(value = "currentLat", required = true) Double currentLat,
+			@RequestParam(value = "previousLong", required = true) Double previousLong, 
+			@RequestParam(value = "previousLat", required = true) Double previousLat) { 
+
+		return networkServicio.getLinkInformation(currentLong, currentLat, previousLong, previousLat);
+
+	}
+
 	@RequestMapping(value="/measurement/aggregate", method = RequestMethod.GET)
 	public AggregateMeasurementVO getAggregateMeasurement(@RequestParam(value = "type", required = true) Type type,
 			@RequestParam(value = "lat", required = true) Double lat,

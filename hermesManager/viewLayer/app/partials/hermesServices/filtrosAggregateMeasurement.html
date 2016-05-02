@@ -1,0 +1,41 @@
+<div class="col-xs-12">
+	<div>
+		<label for="singleSelect">{{'hermesServices.types' | translate}}</label><br />
+		<!-- Filtro type -->
+		<select id="selectType" class="form-control" data-ng-model="vm.typeSelected" 
+			data-ng-options="type as type for type in vm.types" required>
+			<option value="">{{'hermesServices.selectType' | translate}}</option>
+		</select>
+	</div>
+	
+	<div data-ng-show="vm.typeSelected === 'DATA_SECTION'">
+		<label for="singleSelect">{{'hermesServices.datasection' | translate}}</label><br />
+		<!-- Filtro type -->
+		<select id="selectDataSection" class="form-control" data-ng-model="vm.dataSectionSelected" 
+			data-ng-options="datasection as datasection for datasection in vm.dataSections">
+			<option value="">{{'hermesServices.selectDataSection' | translate}}</option>
+		</select>
+	</div>
+	
+	<div>
+		<label for="singleSelect">{{'hermesServices.day' | translate}}</label><br />
+		<select id="selectDay" class="form-control" data-ng-model="vm.daySelected">
+			<option value="">{{'hermesServices.selectDay' | translate}}</option>
+			<option value="1">{{'hermesServices.lunes' | translate}}</option>
+      		<option value="2">{{'hermesServices.martes' | translate}}</option>
+      		<option value="3">{{'hermesServices.miercoles' | translate}}</option>
+      		<option value="4">{{'hermesServices.jueves' | translate}}</option>
+      		<option value="5">{{'hermesServices.viernes' | translate}}</option>
+      		<option value="6">{{'hermesServices.sabado' | translate}}</option>
+      		<option value="0">{{'hermesServices.domingo' | translate}}</option>
+		</select>
+	</div>
+	
+	<div>
+		<label for="singleSelect">{{'hermesServices.time' | translate}}</label><br />
+		<select id="selectTime" class="form-control" data-ng-model="vm.timeSelected" data-ng-options="hour for hour in vm.hours" required>
+			<option value="">{{'hermesServices.selectTime' | translate}}</option>
+		</select>
+	</div>
+	
+</div>

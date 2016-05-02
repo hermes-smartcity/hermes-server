@@ -1,17 +1,17 @@
 (function() {
 	'use strict';
 
-	angular.module('app').controller('SmartDriverController', SmartDriverController);
+	angular.module('app').controller('HermesServicesController', HermesServicesController);
 
-	SmartDriverController.$inject = ['$scope', '$filter', '$http', '$translate', 
+	HermesServicesController.$inject = ['$scope', '$filter', '$http', '$translate', 
 	                                '$state', '$rootScope', 'eventsService', 'services', 
 	                                'types', 'dataSections', 'eventsToday', 
-	                                'eventoProcesado', 'statistics', 'smartDriverService',
+	                                'eventoProcesado', 'statistics', 'hermesServicesService',
 	                                'DTOptionsBuilder', 'DTColumnBuilder', '$q'];
 
-	function SmartDriverController($scope, $filter, $http, $translate, $state, 
+	function HermesServicesController($scope, $filter, $http, $translate, $state, 
 			$rootScope, eventsService, services, types, dataSections, eventsToday, eventoProcesado, 
-			statistics, smartDriverService, DTOptionsBuilder, DTColumnBuilder, $q) {
+			statistics, hermesServicesService, DTOptionsBuilder, DTColumnBuilder, $q) {
 	
 		var vm = this;
 		
@@ -75,7 +75,7 @@
 		vm.mostrarTabla = mostrarTabla;
 		vm.showMap = true;
 		vm.showTab = false;
-		vm.activeInput = $translate.instant('smartdriver.mapa');
+		vm.activeInput = $translate.instant('hermesServices.mapa');
 		vm.tabla = undefined;
 		
 		vm.pintarLineas = pintarLineas;
@@ -99,16 +99,16 @@
 		};
 
 		vm.dtColumns  = [
-		                   DTColumnBuilder.newColumn('linkId').withTitle($translate.instant('smartdriver.linkId')),
-		                   DTColumnBuilder.newColumn('maxSpeed').withTitle($translate.instant('smartdriver.maxSpeed')).renderWith(function(data, type, full) {
+		                   DTColumnBuilder.newColumn('linkId').withTitle($translate.instant('hermesServices.linkId')),
+		                   DTColumnBuilder.newColumn('maxSpeed').withTitle($translate.instant('hermesServices.maxSpeed')).renderWith(function(data, type, full) {
 		                	   return $filter('number')(data, 2);   
 		                   }),
-		                   DTColumnBuilder.newColumn('linkName').withTitle($translate.instant('smartdriver.linkName')),
-		                   DTColumnBuilder.newColumn('linkType').withTitle($translate.instant('smartdriver.linkType')),
-		                   DTColumnBuilder.newColumn('length').withTitle($translate.instant('smartdriver.length')).renderWith(function(data, type, full) {
+		                   DTColumnBuilder.newColumn('linkName').withTitle($translate.instant('hermesServices.linkName')),
+		                   DTColumnBuilder.newColumn('linkType').withTitle($translate.instant('hermesServices.linkType')),
+		                   DTColumnBuilder.newColumn('length').withTitle($translate.instant('hermesServices.length')).renderWith(function(data, type, full) {
 		                	   return $filter('number')(data, 2);   
 		                   }),
-		                   DTColumnBuilder.newColumn('cost').withTitle($translate.instant('smartdriver.cost')).renderWith(function(data, type, full) {
+		                   DTColumnBuilder.newColumn('cost').withTitle($translate.instant('hermesServices.cost')).renderWith(function(data, type, full) {
 		                	   return $filter('number')(data, 2);   
 		                   })
 		                   ];
@@ -117,7 +117,7 @@
 		vm.mensajeErrorPoint = undefined;
 		
 		function cargarListadoTabla(){
-			vm.tabla = "./partials/smartdriver/tabla.html";
+			vm.tabla = "./partials/hermesServices/tabla.html";
 		}
 
 		function datosPromise(){
@@ -130,7 +130,7 @@
 		function mostrarMapa() {	
 			vm.showMap = true;
 			vm.showTab = false;
-			vm.activeInput = $translate.instant('smartdriver.mapa');
+			vm.activeInput = $translate.instant('hermesServices.mapa');
 
 			//Para evitar que se carguen las tablas de la parte Table
 			vm.tabla = undefined;
@@ -139,7 +139,7 @@
 		function mostrarTabla() {	
 			vm.showMap = false;
 			vm.showTab = true;
-			vm.activeInput = $translate.instant('smartdriver.tabla');
+			vm.activeInput = $translate.instant('hermesServices.tabla');
 
 			vm.cargarListadoTabla();
 		}
@@ -209,7 +209,7 @@
 				L.Draw.SimpleShape.prototype.initialize.call(this, map, options);
 			},
 
-			_initialLabelText: $translate.instant('smartdriver.clickDrag'),
+			_initialLabelText: $translate.instant('hermesServices.clickDrag'),
 
 			_drawShape: function (latlng) {
 				if (!this._shape) {
@@ -237,8 +237,8 @@
 					radius = this._shape.getRadius().toFixed(1);
 
 					this._tooltip.updateContent({
-						text: $translate.instant('smartdriver.releaseMouse'),
-						subtext: $translate.instant('smartdriver.radius') + radius + ' m'
+						text: $translate.instant('hermesServices.releaseMouse'),
+						subtext: $translate.instant('hermesServices.radius') + radius + ' m'
 					});
 				}
 			}
@@ -269,7 +269,7 @@
 				L.Draw.SimpleShape.prototype.initialize.call(this, map, options);
 			},
 
-			_initialLabelText: $translate.instant('smartdriver.clickDrag'),
+			_initialLabelText: $translate.instant('hermesServices.clickDrag'),
 
 			_drawShape: function (latlng) {
 				if (!this._shape) {
@@ -297,8 +297,8 @@
 					radius = this._shape.getRadius().toFixed(1);
 
 					this._tooltip.updateContent({
-						text: $translate.instant('smartdriver.releaseMouse'),
-						subtext: $translate.instant('smartdriver.radius') + radius + ' m'
+						text: $translate.instant('hermesServices.releaseMouse'),
+						subtext: $translate.instant('hermesServices.radius') + radius + ' m'
 					});
 				}
 			}
@@ -432,7 +432,7 @@
 		
 		function changeMethod(){
 			if (vm.serviceSelected !== undefined && vm.serviceSelected !== null && vm.serviceSelected !== ""){
-				smartDriverService.getMethods(vm.serviceSelected).then(function(response){
+				hermesServicesService.getMethods(vm.serviceSelected).then(function(response){
 					vm.methods = response.data;
 				});
 			}else{
@@ -510,12 +510,12 @@
 						        {
 						        	enabled: false,
 						        	handler: new L.Draw.CircleOrigin(map, this.options.circleOrigin),
-						        	title: $translate.instant('smartdriver.drawOriginPoint')
+						        	title: $translate.instant('hermesServices.drawOriginPoint')
 						        },
 						        {
 						        	enabled: false,
 						        	handler: new L.Draw.CircleDestiny(map, this.options.circleDestiny),
-						        	title: $translate.instant('smartdriver.drawDestinyPoint')
+						        	title: $translate.instant('hermesServices.drawDestinyPoint')
 						        }
 						        ];
 					}
@@ -562,12 +562,12 @@
 						        {
 						        	enabled: false,
 						        	handler: new L.Draw.CircleOrigin(map, this.options.circleOrigin),
-						        	title: $translate.instant('smartdriver.drawOriginPoint')
+						        	title: $translate.instant('hermesServices.drawOriginPoint')
 						        },
 						        {
 						        	enabled: false,
 						        	handler: new L.Draw.CircleDestiny(map, this.options.circleDestiny),
-						        	title: $translate.instant('smartdriver.drawDestinyPoint')
+						        	title: $translate.instant('hermesServices.drawDestinyPoint')
 						        }
 						        ];
 					}
@@ -619,12 +619,12 @@
 						        {
 						        	enabled: true,
 						        	handler: new L.Draw.CircleOrigin(map, this.options.circleOrigin),
-						        	title: $translate.instant('smartdriver.drawOriginPoint')
+						        	title: $translate.instant('hermesServices.drawOriginPoint')
 						        },
 						        {
 						        	enabled: true,
 						        	handler: new L.Draw.CircleDestiny(map, this.options.circleDestiny),
-						        	title: $translate.instant('smartdriver.drawDestinyPoint')
+						        	title: $translate.instant('hermesServices.drawDestinyPoint')
 						        }
 						        ];
 					}
@@ -672,12 +672,12 @@
 						        {
 						        	enabled: false,
 						        	handler: new L.Draw.CircleOrigin(map, this.options.circleOrigin),
-						        	title: $translate.instant('smartdriver.drawOriginPoint')
+						        	title: $translate.instant('hermesServices.drawOriginPoint')
 						        },
 						        {
 						        	enabled: false,
 						        	handler: new L.Draw.CircleDestiny(map, this.options.circleDestiny),
-						        	title: $translate.instant('smartdriver.drawDestinyPoint')
+						        	title: $translate.instant('hermesServices.drawDestinyPoint')
 						        }
 						        ];
 					}
@@ -701,7 +701,7 @@
 				vm.filtroConcreto = undefined;
 				break;
 			case "AGGREGATE_MEASUREMENT":
-				vm.filtroConcreto = "./partials/smartdriver/filtrosAggregateMeasurement.html";
+				vm.filtroConcreto = "./partials/hermesServices/filtrosAggregateMeasurement.html";
 				break;
 			case "COMPUTE_ROUTE":
 				vm.filtroConcreto = undefined;
@@ -763,12 +763,12 @@
 			
 			var datosEvento = L.DomUtil.create('datosEvento');
 
-			datosEvento.innerHTML = '<b>' + $translate.instant('smartdriver.linkId') + ':</b> ' + linkId +
-				'<br/><b>' + $translate.instant('smartdriver.maxSpeed') + ':</b> '+maxSpeedEvento+
-				'<br/><b>' + $translate.instant('smartdriver.linkName') + ':</b> '+linkName+
-				'<br/><b>' + $translate.instant('smartdriver.linkType') + ':</b> '+linkType +
-				'<br/><b>' + $translate.instant('smartdriver.length') + ':</b> '+lenghtEvento +
-				'<br/><b>' + $translate.instant('smartdriver.cost') + ':</b> '+costEvento;
+			datosEvento.innerHTML = '<b>' + $translate.instant('hermesServices.linkId') + ':</b> ' + linkId +
+				'<br/><b>' + $translate.instant('hermesServices.maxSpeed') + ':</b> '+maxSpeedEvento+
+				'<br/><b>' + $translate.instant('hermesServices.linkName') + ':</b> '+linkName+
+				'<br/><b>' + $translate.instant('hermesServices.linkType') + ':</b> '+linkType +
+				'<br/><b>' + $translate.instant('hermesServices.length') + ':</b> '+lenghtEvento +
+				'<br/><b>' + $translate.instant('hermesServices.cost') + ':</b> '+costEvento;
 			
 			return datosEvento;
 		}
@@ -797,26 +797,26 @@
 		function ejecutarPeticion(){
 			switch (vm.methodSelected) {
 			  case "GET_INFORMATION_LINK":
-				  	smartDriverService.getLinkInformation(vm.currentLong, vm.currentLat, vm.previousLong, vm.previousLat).then(getLinkInformationComplete);
+				  	hermesServicesService.getLinkInformation(vm.currentLong, vm.currentLat, vm.previousLong, vm.previousLat).then(getLinkInformationComplete);
 					
 					function getLinkInformationComplete(response) {
 						vm.result = response.data;
-						vm.resultadoConcreto = './partials/smartdriver/resultadosInformationLink.html';
+						vm.resultadoConcreto = './partials/hermesServices/resultadosInformationLink.html';
 					}
 					
 					break;
 			  case "AGGREGATE_MEASUREMENT":
-				  	smartDriverService.getAggregateMeasurement(vm.typeSelected, vm.pointLat, vm.pointLng, vm.daySelected, vm.timeSelected, vm.dataSectionSelected).then(getAggregateMeasurementComplete);
+				  	hermesServicesService.getAggregateMeasurement(vm.typeSelected, vm.pointLat, vm.pointLng, vm.daySelected, vm.timeSelected, vm.dataSectionSelected).then(getAggregateMeasurementComplete);
 					
 					function getAggregateMeasurementComplete(response) {
 						vm.result = response.data;
-						vm.resultadoConcreto = './partials/smartdriver/resultadosAggregateMeasurement.html';
+						vm.resultadoConcreto = './partials/hermesServices/resultadosAggregateMeasurement.html';
 					}
 					
 				  break;
 				
 			  case "COMPUTE_ROUTE":
-				  smartDriverService.getComputeRoute(vm.fromLat, vm.fromLng, vm.toLat, vm.toLng).then(getComputeRouteComplete).catch(getComputeRouteFailed);
+				  hermesServicesService.getComputeRoute(vm.fromLat, vm.fromLng, vm.toLat, vm.toLng).then(getComputeRouteComplete).catch(getComputeRouteFailed);
 					
 					function getComputeRouteComplete(response) {
 						
@@ -844,7 +844,7 @@
 		function validacionLinkInformation(){
 			if (vm.previousLong === undefined || vm.previousLat === undefined || 
 				vm.currentLong === undefined || vm.currentLat === undefined){
-				alert($translate.instant('smartdriver.selectSegment'));
+				alert($translate.instant('hermesServices.selectSegment'));
 			}else{
 				ejecutarPeticion();
 			}
@@ -853,23 +853,23 @@
 		function validacionAggregateMeasurement(){
 			var texto = "";
 			if (vm.typeSelected === undefined){
-				texto = texto + $translate.instant('smartdriver.selectType') + '\n';
+				texto = texto + $translate.instant('hermesServices.selectType') + '\n';
 			}else{
 				if (vm.typeSelected === 'DATA_SECTION' && vm.dataSectionSelected === undefined){
-					texto = texto + $translate.instant('smartdriver.selectDataSection') + '\n';
+					texto = texto + $translate.instant('hermesServices.selectDataSection') + '\n';
 				}
 			}
 			
 			if (vm.pointLat === undefined || vm.pointLng === undefined){
-				texto = texto + $translate.instant('smartdriver.selectPoint') + '\n';
+				texto = texto + $translate.instant('hermesServices.selectPoint') + '\n';
 			}
 			
 			if (vm.daySelected === undefined){
-				texto = texto + $translate.instant('smartdriver.selectDay') + '\n'; 
+				texto = texto + $translate.instant('hermesServices.selectDay') + '\n'; 
 			}
 			
 			if (vm.timeSelected === undefined){
-				texto = texto + $translate.instant('smartdriver.selectTime') + '\n'; 
+				texto = texto + $translate.instant('hermesServices.selectTime') + '\n'; 
 			}
 			
 			if (texto !== ""){
@@ -882,11 +882,11 @@
 		function validacionComputeRoute(){
 			var texto = "";
 			if (vm.fromLng === undefined || vm.fromLat === undefined){
-				texto = texto + $translate.instant('smartdriver.selectOriginPoint') + '\n';
+				texto = texto + $translate.instant('hermesServices.selectOriginPoint') + '\n';
 			}
 			
 			if (vm.toLng === undefined || vm.toLat === undefined){
-				texto = texto + $translate.instant('smartdriver.selectDestinyPoint') + '\n';
+				texto = texto + $translate.instant('hermesServices.selectDestinyPoint') + '\n';
 			}
 			
 			if (texto !== ""){

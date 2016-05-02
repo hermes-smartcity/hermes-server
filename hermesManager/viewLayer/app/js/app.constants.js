@@ -116,15 +116,15 @@ var url_setting = url_servidor+'api/setting/';
 var url_settings = url_setting+'json/settings';
 var url_update_settings = url_setting + "updateSettings";
 
-//Controlador smartdriver
-var url_smartdriver = url_servidor+'api/smartdriver/';
-var url_smartdriver_services = url_smartdriver+'json/services';
-var url_smartdriver_methods = url_smartdriver+'json/methods';
-var url_types = url_smartdriver+'json/types';
-var url_datasections = url_smartdriver+'json/datasections';
-var url_network_link = url_smartdriver+'network/link?';
-var url_measurement_aggregate = url_smartdriver+'measurement/aggregate?';
-var url_network_route = url_smartdriver+'network/route?';
+//Controlador hermes services
+var url_hermesS = url_servidor+'api/hermes/';
+var url_hermesS_services = url_hermesS+'json/services';
+var url_hermesS_methods = url_hermesS+'json/methods';
+var url_types = url_hermesS+'json/types';
+var url_datasections = url_hermesS+'json/datasections';
+var url_network_link = url_hermesS+'network/link?';
+var url_measurement_aggregate = url_hermesS+'measurement/aggregate?';
+var url_network_route = url_hermesS+'network/route?';
 
 //Controlador dataservice
 var url_dataservice = url_servidor+'api/dataservice/';

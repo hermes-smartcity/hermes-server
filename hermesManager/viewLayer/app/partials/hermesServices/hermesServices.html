@@ -27,10 +27,10 @@
 						<ul id="overAnything" class="dropdown-menu pull-right"
 							data-role="menu">
 							<li data-ng-click="vm.mostrarMapa()">
-								<a>{{'smartdriver.mapa'| translate}}</a>
+								<a>{{'hermesServices.mapa'| translate}}</a>
 							</li>
 							<li data-ng-click="vm.mostrarTabla()">
-								<a>{{'smartdriver.tabla'| translate}}</a>
+								<a>{{'hermesServices.tabla'| translate}}</a>
 							</li>
 						</ul>
 					</div>
@@ -54,9 +54,9 @@
 	
 	
 	<div class="cabeceraFiltro col-md-3">
-		<div class="slide-animate" data-ng-include="'./partials/smartdriver/filtros.html'"></div>
+		<div class="slide-animate" data-ng-include="'./partials/hermesservices/filtros.html'"></div>
 		<div class="slide-animate" data-ng-if="vm.methodSelected !== 'COMPUTE_ROUTE'" 
-			data-ng-include="'./partials/smartdriver/resultados.html'"></div>
+			data-ng-include="'./partials/hermesservices/resultados.html'"></div>
 	</div>
 </div>
 	

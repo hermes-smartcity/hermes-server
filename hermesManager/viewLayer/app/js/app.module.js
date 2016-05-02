@@ -155,10 +155,10 @@
 			resolve: {
 				datosUsuario: datosUsuario
 			}
-		}).state('smartdriver', {
-			url: '/smartdriver',
-			templateUrl: 'partials/smartdriver/smartdriver.html',
-			controller: 'SmartDriverController',
+		}).state('hermesServices', {
+			url: '/hermesServices',
+			templateUrl: 'partials/hermesServices/hermesServices.html',
+			controller: 'HermesServicesController',
 			controllerAs: 'vm',
 			resolve: {
 				services: services,
@@ -269,19 +269,19 @@
 		return userService.getUserProfile();
 	}
 	
-	methods.$inject = ['smartDriverService'];
-	function methods(smartDriverService) {
-		return smartDriverService.getMethods();
+	methods.$inject = ['hermesServicesService'];
+	function methods(hermesServicesService) {
+		return hermesServicesService.getMethods();
 	}
 	
-	types.$inject = ['smartDriverService'];
-	function types(smartDriverService) {
-		return smartDriverService.getTypes();
+	types.$inject = ['hermesServicesService'];
+	function types(hermesServicesService) {
+		return hermesServicesService.getTypes();
 	}
 	
-	dataSections.$inject = ['smartDriverService'];
-	function dataSections(smartDriverService) {
-		return smartDriverService.getDataSections();
+	dataSections.$inject = ['hermesServicesService'];
+	function dataSections(hermesServicesService) {
+		return hermesServicesService.getDataSections();
 	}
 	
 	services.$inject = ['dataServicesService'];
