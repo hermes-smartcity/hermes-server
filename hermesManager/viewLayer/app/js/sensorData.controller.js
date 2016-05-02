@@ -68,7 +68,8 @@
 		vm.chartLine.type = "LineChart";
 		vm.chartLine.options =  {
 				 title: 'Data Sensor',
-				 height: 600,
+				 height: 800,
+				 width: 800,
 				 displayExactValues: true,
 				 explorer : { maxZoomOut:5, keepInBounds: true, maxZoomIn: 20},
 				 dateFormat: 'HH:mm:ss MMMM dd, yyyy'
