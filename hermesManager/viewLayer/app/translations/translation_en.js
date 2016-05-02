@@ -107,7 +107,7 @@
 				"userManager": "User Manager",
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
-				"smartdriver": "Smart Driver",
+				"hermesServices": "Hermes Services",
 				"sensorData": "Sensor Data",
 				"gpsLocation": "GPS Location"
 			},
@@ -193,7 +193,7 @@
 				"passwordsNotSame": "New passwords are not the same",
 				"passwordOk": "Password changed satisfactory"
 			},
-			"smartdriver":{
+			"hermesServices":{
 				"filtros": "Filters",
 				"filtrar": "Filter",
 				"methods": "Methods",
