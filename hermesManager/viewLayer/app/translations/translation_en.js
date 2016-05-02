@@ -281,7 +281,8 @@
 				"workingtime": "Working time",
 				"lightsleep": "Light Sleep",
 				"deepsleep": "Deep Sleep",
-				"previousstress": "Previous Stress"
+				"previousstress": "Previous Stress",
+				"timestamp": "Time"
 			},
 			"sleepData":{
 				"noEvents": "There are not events to show",

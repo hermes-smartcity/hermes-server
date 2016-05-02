@@ -116,6 +116,7 @@ CREATE TABLE driverFeatures (
   lightSleep integer,
   deepSleep integer,
   previousStress integer,
+  timestamp timestamp without time zone,
   idUsuarioMovil BIGINT,
   CONSTRAINT idDriverFeatures_pk PRIMARY KEY (id),
   CONSTRAINT driverFeatures_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE

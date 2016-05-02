@@ -27,7 +27,9 @@ public class DriverFeaturesEventStrategy extends EventStrategy {
 		driverFeatures.setWorkingTime(ztreamyDriverFeatures.getWorkingTime()); 
 		driverFeatures.setLightSleep(ztreamyDriverFeatures.getLightSleep());
 		driverFeatures.setDeepSleep(ztreamyDriverFeatures.getDeepSleep());
-		driverFeatures.setPreviousStress(ztreamyDriverFeatures.getPreviousStress());		
+		driverFeatures.setPreviousStress(ztreamyDriverFeatures.getPreviousStress());
+		driverFeatures.setTimestamp(event.getTimestamp());
+		
 		driverFeaturesService.create(driverFeatures, event.getSourceId());
 		eventService.create(event.getTimestamp(),event.getEventId());
 		

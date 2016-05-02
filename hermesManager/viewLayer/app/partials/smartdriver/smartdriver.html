@@ -1,13 +1,16 @@
 <div class="slide-animate" data-ng-include="'./partials/estadisticas.html'"></div>
 
+
 <div class="row">
 
-	<div class="col-md-9" data-ng-show="vm.errorPoint">
-			<div class="alert alert-danger fade in">
-				<a href="#" class="close" data-dismiss="alert">&times;</a>
-					{{vm.mensajeErrorPoint}}
-		    </div>
-	    </div>
+	<div class="col-md-9" >
+					    			
+		<div data-ng-show="vm.errorPoint" class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-ng-click="vm.errorPoint = false" data-aria-hidden="true">&times;</button>
+			{{vm.mensajeErrorPoint}}
+		</div>
+		
+	</div>
 	    
 	<div class="col-md-9">
 		<div class="panel panel-default">
