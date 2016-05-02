@@ -1,46 +1,7 @@
-<div data-ng-if="!vm.events.length">{{'dataSection.noEvents' | translate}}</div>
+<div data-ng-hide="!vm.events.length">{{'dataSection.noEvents' | translate}}</div>
 <div class="table-responsive">
-	<!-- <table data-ng-if="vm.events.length" class="table table-hover"
-			data-dt-options="vm.dtOptions" data-datatable="ng" >
-		<thead>
-			<tr>
-				<th>{{'dataSection.userId' | translate}}</th>
-				<th>{{'dataSection.date' | translate}}</th>
-				<th>{{'dataSection.minimimSpeed' | translate}}</th>
-				<th>{{'dataSection.maximumSpeed' | translate}}</th>
-				<th>{{'dataSection.medianSpeed' | translate}}</th>
-				<th>{{'dataSection.averageSpeed' | translate}}</th>
-				<th>{{'dataSection.stdDevSpeed' | translate}}</th>
-				<th>{{'dataSection.averageAcceleration' | translate}}</th>
-				<th>{{'dataSection.averageDeceleration' | translate}}n</th>
-				<th>{{'dataSection.highAcceleration' | translate}}</th>
-				<th>{{'dataSection.highDecceleration' | translate}}</th>
-				<th>{{'dataSection.averageHeartRate' | translate}}</th>
-				<th>{{'dataSection.stdDevHeartRate' | translate}}</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<tr data-ng-repeat="dataSection in vm.events track by $index">
-				<td>{{dataSection.usuarioMovil.id}}</td>
-				<td>{{dataSection.timestamp | date : "dd/MM/yyyy HH:mm:ss"}}</td>
-				<td>{{dataSection.minSpeed | number:2}}</td>
-				<td>{{dataSection.maxSpeed | number:2}}</td>
-				<td>{{dataSection.medianSpeed | number:2}}</td>
-				<td>{{dataSection.averageSpeed | number:2}}</td>
-				<td>{{dataSection.standardDeviationSpeed | number:2}}</td>
-				<td>{{dataSection.averageAcceleration | number:2}}</td>
-				<td>{{dataSection.averageDeceleration | number:2}}</td>
-				<td>{{dataSection.numHighAccelerations | number:2}}</td>
-				<td>{{dataSection.numHighDecelerations | number:2}}</td>
-				<td>{{dataSection.averageHeartRate | number:2}}</td>
-				<td>{{dataSection.standardDeviationHeartRate | number:2}}</td>
-			</tr>
-		</tbody>
-
-	</table>-->
-
-	<table id="tableId" data-ng-if="vm.events.length" class="table table-hover" data-datatable="" 
+	
+	<table id="tableId" data-ng-show="vm.events.length" class="table table-hover" data-datatable="" 
 			data-dt-options="vm.dtOptions" data-dt-columns="vm.dtColumnsDS" data-dt-instance="vm.dtInstanceCallback">
 	</table>
 </div>

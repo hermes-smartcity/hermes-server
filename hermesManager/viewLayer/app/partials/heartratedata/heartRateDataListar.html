@@ -1,8 +1,8 @@
 
-<div data-ng-if="!vm.events.length">{{'userActivity.noEvents' | translate}}</div>
+<div data-ng-hide="!vm.events.length">{{'userActivity.noEvents' | translate}}</div>
 <div class="table-responsive">
 	
-	<table id="tableId" data-ng-if="vm.events.length" class="table table-hover" data-datatable="" 
+	<table id="tableId" data-ng-show="vm.events.length" class="table table-hover" data-datatable="" 
 			data-dt-options="vm.dtOptions" data-dt-columns="vm.dtColumnsHRD" data-dt-instance="vm.dtInstanceCallback">
 	</table>
 </div>

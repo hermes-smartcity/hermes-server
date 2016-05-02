@@ -1,28 +1,7 @@
-<div data-ng-if="!vm.events.length">{{'contextData.noEvents' | translate}}</div>
+<div data-ng-hide="!vm.events.length">{{'contextData.noEvents' | translate}}</div>
 <div class="table-responsive">
-	<!-- <table data-ng-if="vm.events.length" class="table table-hover"
-			data-dt-options="vm.dtOptions" data-datatable="ng" >
-		<thead>
-			<tr>
-				<th>{{'contextData.userId' | translate}}</th>
-				<th>{{'contextData.time' | translate}}</th>
-				<th>{{'contextData.detectedActivity' | translate}}</th>
-				<th>{{'contextData.accuracy' | translate}}</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<tr data-ng-repeat="contextData in vm.events track by $index">
-				<td>{{contextData.userId.substring(0,10)+'...'}}</td>
-				<td>{{contextData.timeLog | date : "dd/MM/yyyy HH:mm:ss"}}</td>
-				<td>{{contextData.detectedActivity}}</td>
-				<td>{{contextData.accuracy}}</td>
-			</tr>
-		</tbody>
-
-	</table>-->
-	
-	<table id="tableId" data-ng-if="vm.events.length" class="table table-hover" data-datatable="" 
+		
+	<table id="tableId" data-ng-show="vm.events.length" class="table table-hover" data-datatable="" 
 			data-dt-options="vm.dtOptions" data-dt-columns="vm.dtColumnsCD" data-dt-instance="vm.dtInstanceCallback">
 	</table>
 </div>
