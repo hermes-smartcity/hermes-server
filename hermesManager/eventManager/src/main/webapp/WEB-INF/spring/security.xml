@@ -73,8 +73,8 @@
 		<!-- setting -->
 		<security:intercept-url method="GET" pattern="setting" access="hasAnyRole('ADMIN')" />
 		
-		<!-- smartdriver -->
-		<security:intercept-url method="GET" pattern="/api/smartdriver/**" access="permitAll" />
+		<!-- hermes -->
+		<security:intercept-url method="GET" pattern="/api/hermes/**" access="permitAll" />
 		
 		<!-- dataservice -->
 		<security:intercept-url method="GET" pattern="/api/dataservice/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
