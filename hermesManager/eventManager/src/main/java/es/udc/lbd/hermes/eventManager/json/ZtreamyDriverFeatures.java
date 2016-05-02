@@ -1,5 +1,8 @@
 package es.udc.lbd.hermes.eventManager.json;
 
+import java.util.Calendar;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,6 +21,9 @@ public class ZtreamyDriverFeatures extends EventData {
 	private Integer deepSleep;
 	@JsonProperty("previousStress")
 	private Integer previousStress;
+	@JsonProperty("timeStamp")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+	private Calendar timeStamp;	
 	
 	public Integer getAwakeFor() {
 		return awakeFor;
@@ -54,6 +60,12 @@ public class ZtreamyDriverFeatures extends EventData {
 	}
 	public void setPreviousStress(Integer previousStress) {
 		this.previousStress = previousStress;
+	}
+	public Calendar getTimeStamp() {
+		return timeStamp;
+	}
+	public void setTimeStamp(Calendar timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 	
 }

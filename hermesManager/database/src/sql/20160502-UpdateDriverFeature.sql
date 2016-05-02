@@ -1,0 +1,1 @@
+ALTER TABLE driverfeatures ADD COLUMN timestamp timestamp without time zone;

@@ -223,7 +223,10 @@
 							DTColumnBuilder.newColumn('workingTime').withTitle($translate.instant('driverFeatures.workingtime')),
 							DTColumnBuilder.newColumn('lightSleep').withTitle($translate.instant('driverFeatures.lightsleep')),
 							DTColumnBuilder.newColumn('deepSleep').withTitle($translate.instant('driverFeatures.deepsleep')),
-							DTColumnBuilder.newColumn('previousStress').withTitle($translate.instant('driverFeatures.previousstress'))
+							DTColumnBuilder.newColumn('previousStress').withTitle($translate.instant('driverFeatures.previousstress')),
+							DTColumnBuilder.newColumn('timeStamp').withTitle($translate.instant('driverFeatures.timestamp')).renderWith(function(data, type, full) {
+								return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				            })
 		                   ];
 		
 		vm.dtColumnsHRD  = [
