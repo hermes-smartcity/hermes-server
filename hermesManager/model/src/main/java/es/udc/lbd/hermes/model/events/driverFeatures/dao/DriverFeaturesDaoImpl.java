@@ -62,7 +62,7 @@ DriverFeaturesDao {
 		if(idUsuario!=null)
 			queryStr += " and v.idusuariomovil = :idUsuario ";
 
-		queryStr += " and v.endTime < :fechaFin ) "
+		queryStr += " and v.timestamp < :fechaFin ) "
 				+ "  group by cast(v.timestamp as date)) as eventos right join "
 				+ "(select cast(:fechaIni as date) + s AS generateddate from generate_series(0,(cast(:fechaFin as date) - cast(:fechaIni as date)),1) as s) as todoslosdias "
 				+ " on cast(eventos.timestamp as date) = generateddate order by anio, mes, dia";

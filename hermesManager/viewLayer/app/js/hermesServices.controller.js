@@ -144,7 +144,7 @@
 		                   ];
 		
 		vm.dtColumnsVL  = [
-		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('vehicleLocation.userId')),
+		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('vehicleLocation.userId')),
 		                   DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('vehicleLocation.time')).renderWith(function(data, type, full) {
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
@@ -155,7 +155,7 @@
 		                   ];
 
 		vm.dtColumnsM  = [
-		                  DTColumnBuilder.newColumn('userId').withTitle($translate.instant('measurement.userId')),
+		                  DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('measurement.userId')),
 		                  DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('measurement.time')).renderWith(function(data, type, full) {
 		                	  return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                  }),
@@ -169,7 +169,7 @@
 		                  ];
 
 		vm.dtColumnsDS  = [
-		                   DTColumnBuilder.newColumn('usuarioMovil.id').withTitle($translate.instant('dataSection.userId')),
+		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('dataSection.userId')),
 		                   DTColumnBuilder.newColumn('timestamp').withTitle($translate.instant('dataSection.date')).renderWith(function(data, type, full) {
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
@@ -209,7 +209,7 @@
 		                   ];
 
 		vm.dtColumnsCD  = [
-		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('contextData.userId')),
+		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('contextData.userId')),
 		                   DTColumnBuilder.newColumn('timeLog').withTitle($translate.instant('contextData.time')).renderWith(function(data, type, full) {
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
@@ -218,7 +218,7 @@
 		                   ];
 		
 		vm.dtColumnsUL  = [
-		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userLocation.userId')),
+		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userLocation.userId')),
 		                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userLocation.timeStart')).renderWith(function(data, type, full) {
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
@@ -229,7 +229,7 @@
 		                   ];
 		
 		vm.dtColumnsUA  = [
-		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userActivity.userId')),
+		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userActivity.userId')),
 		                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userActivity.timeStart')).renderWith(function(data, type, full) {
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
@@ -240,7 +240,7 @@
 		                   ];
 		
 		vm.dtColumnsDF  = [
-							DTColumnBuilder.newColumn('userId').withTitle($translate.instant('driverFeatures.userId')),
+							DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('driverFeatures.userId')),
 							DTColumnBuilder.newColumn('awakeFor').withTitle($translate.instant('driverFeatures.awakefor')),
 							DTColumnBuilder.newColumn('inBed').withTitle($translate.instant('driverFeatures.inbed')),
 							DTColumnBuilder.newColumn('workingTime').withTitle($translate.instant('driverFeatures.workingtime')),
@@ -253,7 +253,7 @@
 		                   ];
 		
 		vm.dtColumnsHRD  = [
-		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('heartRateData.userId')),
+		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('heartRateData.userId')),
 		                   DTColumnBuilder.newColumn('eventId').withTitle($translate.instant('heartRateData.eventid')),
 		                   DTColumnBuilder.newColumn('timeLog').withTitle($translate.instant('heartRateData.timelog')).renderWith(function(data, type, full) {
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
@@ -262,7 +262,7 @@
 		                   ];
 		
 		vm.dtColumnsSLD  = [
-			               DTColumnBuilder.newColumn('userId').withTitle($translate.instant('sleepData.userId')),
+			               DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('sleepData.userId')),
 			               DTColumnBuilder.newColumn('eventId').withTitle($translate.instant('sleepData.eventid')),
 			               DTColumnBuilder.newColumn('awakenings').withTitle($translate.instant('sleepData.awakenings')),
 			               DTColumnBuilder.newColumn('minutesAsleep').withTitle($translate.instant('sleepData.minutesasleep')),
@@ -276,7 +276,7 @@
 			               ];
 		
 		vm.dtColumnsSTD  = [
-				           DTColumnBuilder.newColumn('userId').withTitle($translate.instant('stepData.userId')),
+				           DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('stepData.userId')),
 				           DTColumnBuilder.newColumn('eventId').withTitle($translate.instant('stepData.eventid')),
 				           DTColumnBuilder.newColumn('timeLog').withTitle($translate.instant('stepData.timelog')).renderWith(function(data, type, full) {
 				          	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
@@ -1314,8 +1314,8 @@
 			vm.nwLng = layer.getLatLngs()[0].lng;
 			vm.nwLat = layer.getLatLngs()[0].lat;
 			
-			vm.seLng = layer.getLatLngs()[1].lng;
-			vm.seLat = layer.getLatLngs()[1].lat;
+			vm.seLng = layer.getLatLngs()[2].lng;
+			vm.seLat = layer.getLatLngs()[2].lat;
 		}
 		
 		function infoPopupComputeRoute(linkId, maxSpeed, linkName, linkType, length, cost) {
@@ -1344,6 +1344,185 @@
 				'<br/><b>' + $translate.instant('hermesServices.length') + ':</b> '+lenghtEvento +
 				'<br/><b>' + $translate.instant('hermesServices.cost') + ':</b> '+costEvento;
 			
+			return datosEvento;
+		}
+		
+		function infoPopupVehicleLocation(userId, timestamp, eventSpeed, eventAccuracy) {
+			var date = new Date(timestamp);
+			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
+			var hourEvento = $filter('date')(date, 'HH:mm:ss');
+			
+			var speedEvento = "";
+			if (eventSpeed !== null){
+				speedEvento = $filter('number')(eventSpeed, 2);	
+			}
+			
+			var datosEvento = L.DomUtil.create('datosEvento');
+
+			datosEvento.innerHTML = '<b>' + $translate.instant('vehicleLocation.userId') + ':</b> ' + userId +
+				'<br/><b>' + $translate.instant('vehicleLocation.date') + ':</b> '+dateEvento+
+				'<br/><b>' + $translate.instant('vehicleLocation.time') + ':</b> '+hourEvento+
+				'<br/><b>' + $translate.instant('vehicleLocation.speed') + ':</b> '+speedEvento +
+				'<br/><b>' + $translate.instant('vehicleLocation.accuracy') + ':</b> '+eventAccuracy;
+			return datosEvento;
+		}
+		
+		function infoPopupMeasurement(userId, timestamp, eventValue, eventSpeed, eventAccuracy) {
+			var date = new Date(timestamp);
+			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
+			var hourEvento = $filter('date')(date, 'HH:mm:ss');
+			
+			var valueEvento = "";
+			if (eventValue !== null){
+				valueEvento = $filter('number')(eventValue, 2);	
+			}
+			
+			var speedEvento = "";
+			if (eventSpeed !== null){
+				speedEvento = $filter('number')(eventSpeed, 2);	
+			}
+			
+			var datosEvento = L.DomUtil.create('datosEvento');
+
+			datosEvento.innerHTML = '<b>' + $translate.instant('measurement.userId') + ':</b> ' + userId +
+				'<br/><b>' + $translate.instant('measurement.date') + ':</b> '+dateEvento+
+				'<br/><b>' + $translate.instant('measurement.time') + ':</b> '+hourEvento+
+				'<br/><b>' + $translate.instant('measurement.value') + ':</b> '+valueEvento+
+				'<br/><b>' + $translate.instant('measurement.speed') + ':</b> '+speedEvento +
+				'<br/><b>' + $translate.instant('measurement.accuracy') + ':</b> '+eventAccuracy;
+			return datosEvento;
+		}
+
+		function infoPopupDataSection(userId, timestamp, eventAccuracy, eventMinSpeed, eventMaxSpeed, eventMedianSpeed, eventAverageSpeed, eventAverageEr, eventAverageHearRate, eventStandardDeviationSpeed, eventStandardDeviationRr, eventStandardDeviationHeartRate, eventPke, eventNumHighAccelerations, eventNumHighDecelerations, eventAverageAcceleration, eventAverageDeceleration, eventRrSection ) {
+			var date = new Date(timestamp);
+			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
+			var hourEvento = $filter('date')(date, 'HH:mm:ss');
+			
+			var minSpeedEvento = "";
+			if (eventMinSpeed !== null){
+				minSpeedEvento = $filter('number')(eventMinSpeed, 2);	
+			}
+			
+			var maxSpeedEvento = "";
+			if (eventMaxSpeed !== null){
+				maxSpeedEvento = $filter('number')(eventMaxSpeed, 2);
+			}
+			
+			var medianSpeedEvento = "";
+			if (eventMedianSpeed !== null){
+				medianSpeedEvento = $filter('number')(eventMedianSpeed, 2);
+			}
+			
+			var averageSpeedEvento = "";
+			if (eventAverageSpeed !== null){
+				averageSpeedEvento = $filter('number')(eventAverageSpeed, 2);	
+			}
+			
+			var averageErEvento = "";
+			if (eventAverageEr !== null){
+				averageErEvento = $filter('number')(eventAverageEr, 2);	
+			}
+			
+			var averageHearRateEvento = "";
+			if (eventAverageHearRate !== null){
+				averageHearRateEvento = $filter('number')(eventAverageHearRate, 2);	
+			}
+			
+			var standardDeviationSpeedEvento = "";
+			if (eventStandardDeviationSpeed !== null){
+				standardDeviationSpeedEvento = $filter('number')(eventStandardDeviationSpeed, 2);	
+			}
+			
+			var standardDeviationRrEvento = "";
+			if (eventStandardDeviationRr !== null){
+				standardDeviationRrEvento = $filter('number')(eventStandardDeviationRr, 2);	
+			}
+			
+			var standardDeviationHeartRateEvento = "";
+			if (eventStandardDeviationHeartRate !== null){
+				standardDeviationHeartRateEvento = $filter('number')(eventStandardDeviationHeartRate, 2);
+			}
+			
+			var pkeEvento = "";
+			if (eventPke !== null){
+				pkeEvento = $filter('number')(eventPke, 2);				
+			}
+			
+			var numHighAccelerationsEvento = "";
+			if (eventNumHighAccelerations !== null){
+				numHighAccelerationsEvento = $filter('number')(eventNumHighAccelerations, 2);
+			}
+			
+			var numHighDecelerationsEvento = "";
+			if (eventNumHighDecelerations !== null){
+				numHighDecelerationsEvento = $filter('number')(eventNumHighDecelerations, 2);	
+			}
+			
+			var averageAccelerationEvento = "";
+			if (eventAverageAcceleration !== null){
+				averageAccelerationEvento = $filter('number')(eventAverageAcceleration, 2);	
+			}
+			
+			var averageDecelerationEvento = "";
+			if (eventAverageDeceleration !== null){
+				averageDecelerationEvento = $filter('number')(eventAverageDeceleration, 2);	
+			}
+			
+			var datosEvento = L.DomUtil.create('datosEvento');
+
+			datosEvento.innerHTML = '<b>' + $translate.instant('dataSection.userId') + ':</b> ' + userId +
+			'<br/><b>' + $translate.instant('dataSection.date') + ':</b> '+dateEvento+
+			'<br/><b>' + $translate.instant('dataSection.time') + ':</b> '+hourEvento+
+			'<br/><b>' + $translate.instant('dataSection.speed') + ':</b>' +
+			'<br/>' + $translate.instant('dataSection.minimum') + ': '+minSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.maximum') + ': '+maxSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.median') + ': '+medianSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.average') + ': '+averageSpeedEvento +
+			'<br/>' + $translate.instant('dataSection.stdDev') + ':'+standardDeviationSpeedEvento + 
+			'<br/><b>' + $translate.instant('dataSection.acceleration') + ':</b>'+
+			'<br/>' + $translate.instant('dataSection.averageAcceleration') + ':'+averageAccelerationEvento +
+			'<br/>' + $translate.instant('dataSection.averageDeceleration') + ':'+averageDecelerationEvento +
+			'<br/>' + $translate.instant('dataSection.highAcceleration') + ':'+numHighAccelerationsEvento +
+			'<br/>' + $translate.instant('dataSection.highDecceleration') + ':'+numHighDecelerationsEvento +
+			'<br/><b>' + $translate.instant('dataSection.hearRate') + ':</b>'+
+			'<br/>' + $translate.instant('dataSection.average') + ':'+averageHearRateEvento +
+			'<br/>' + $translate.instant('dataSection.stdDev') + ':'+standardDeviationHeartRateEvento;
+
+			return datosEvento;
+		}
+
+		function infoPopupUserLocation(userId, startTime, endTime, eventAccuracy) {
+			var dateStart = new Date(startTime);
+			var dateStartEvento = $filter('date')(dateStart, 'yyyy-MM-dd');
+			var hourStartEvento = $filter('date')(dateStart, 'HH:mm:ss');
+			
+			var dateEnd = new Date(endTime);
+			var dateEndEvento = $filter('date')(dateEnd, 'yyyy-MM-dd');
+			var hourEndEvento = $filter('date')(dateEnd, 'HH:mm:ss');
+						
+			var datosEvento = L.DomUtil.create('datosEvento');
+
+			datosEvento.innerHTML = '<b>' + $translate.instant('userLocation.userId') + ':</b> ' + userId +
+				'<br/><b>' + $translate.instant('userLocation.dateStart') + ':</b> '+dateStartEvento+
+				'<br/><b>' + $translate.instant('userLocation.timeStart') + ':</b> '+hourStartEvento+
+				'<br/><b>' + $translate.instant('userLocation.dateEnd') + ':</b> '+dateEndEvento+
+				'<br/><b>' + $translate.instant('userLocation.timeEnd') + ':</b> '+hourEndEvento+
+				'<br/><b>' + $translate.instant('userLocation.accuracy') + ':</b> '+eventAccuracy;
+			
+			return datosEvento;
+		}
+
+		function infoPopupContextData(userId, timestamp, eventActivity, eventAccuracy) {
+			var date = new Date(timestamp);
+			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
+			var hourEvento = $filter('date')(date, 'HH:mm:ss');
+			var datosEvento = L.DomUtil.create('datosEvento');
+
+			datosEvento.innerHTML = '<b>' + $translate.instant('contextData.userId') + ':</b> ' + userId +
+						'<br/><b>' + $translate.instant('contextData.date') + ':</b> '+dateEvento+
+						'<br/><b>' + $translate.instant('contextData.time') + ':</b> '+hourEvento+
+						'<br/><b>' + $translate.instant('contextData.detectedActivity') + ':</b> '+eventActivity +
+						'<br/><b>' + $translate.instant('contextData.accuracy') + ':</b> '+eventAccuracy;
 			return datosEvento;
 		}
 		
@@ -1376,7 +1555,7 @@
 
 			markers.clearLayers();
 			angular.forEach(events, function(value, key) {
-				var info = infoPopupVehicleLocation(value.userId.substring(0,10) + "...", value.timestamp, value.speed, value.accuracy);			
+				var info = infoPopupVehicleLocation(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.speed, value.accuracy);			
 				//Convierto el punto que quiero pintar para tener su lat y log
 				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 				//Añado al mapa el punto
@@ -1392,7 +1571,7 @@
 
 			markers.clearLayers();
 			angular.forEach(events, function(value, key) {
-				var info = infoPopupHigh(value.userId.substring(0,10) + "...", value.timestamp, value.value, value.speed, value.accuracy);			
+				var info = infoPopupMeasurement(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.value, value.speed, value.accuracy);			
 				//Convierto el punto que quiero pintar para tener su lat y log
 				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 				//Añado al mapa el punto
@@ -1429,7 +1608,7 @@
 
 			markers.clearLayers();
 			angular.forEach(events, function(value, key) {
-				var info = infoPopupContextData(value.userId.substring(0,10) + "...", value.timeLog, value.detectedActivity, value.accuracy);			
+				var info = infoPopupContextData(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timeLog, value.detectedActivity, value.accuracy);			
 				//Convierto el punto que quiero pintar para tener su lat y log
 				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 				//Añado al mapa el punto
@@ -1445,7 +1624,7 @@
 
 			markers.clearLayers();
 			angular.forEach(events, function(value, key) {
-				var info = infoPopupUserLocation(value.userId.substring(0,10) + "...", value.startTime, value.endTime, value.accuracy);			
+				var info = infoPopupUserLocation(value.usuarioMovil.sourceId.substring(0,10) + "...", value.startTime, value.endTime, value.accuracy);			
 				//Convierto el punto que quiero pintar para tener su lat y log
 				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 				//Añado al mapa el punto
@@ -1500,7 +1679,7 @@
 					
 					function getVehicleLocationComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						pintarPuntosVehicleLocation(vm.events);
@@ -1516,7 +1695,7 @@
 					
 					function getMeasurementComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						pintarPuntosMeasurement(vm.events);
@@ -1532,7 +1711,7 @@
 					
 					function getDataSectionComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						pintarLineasDataSection(vm.events);
@@ -1549,7 +1728,7 @@
 					
 					function getDriverFeaturesComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						markers.clearLayers();
@@ -1566,7 +1745,7 @@
 					
 					function getHeartRateDataComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						markers.clearLayers();
@@ -1582,7 +1761,7 @@
 					
 					function getSleepDataComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						markers.clearLayers();
@@ -1597,7 +1776,7 @@
 					
 					function getStepsDataComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						markers.clearLayers();
@@ -1614,7 +1793,7 @@
 					
 					function getContextDataComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						pintarPuntosContextData(vm.events);
@@ -1630,7 +1809,7 @@
 					
 					function getUserLocationsComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						pintarPuntosUserLocation(vm.events);
@@ -1646,7 +1825,7 @@
 					
 					function getUserActivitiesComplete(response) {
 						
-						vm.events = response.data;
+						vm.events = response;
 						vm.resultadoConcreto = undefined;
 												
 						markers.clearLayers();
