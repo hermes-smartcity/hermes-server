@@ -18,4 +18,7 @@ public interface HeartRateDataDao extends GenericDao<HeartRateData, Long> {
 	public Long contarHeartRateData(Long idUsuario, Calendar fechaIni,Calendar fechaFin);
 	public List<HeartRateDataDTO> obterHeartRateDataWithLimit(Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, int startIndex, Integer limit);
+	
+	public List<HeartRateData> obterHeartRateData(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, int startIndex, int count);
 }

@@ -71,10 +71,20 @@
 		<security:intercept-url method="GET" pattern="/api/systemlog/**" access="hasAnyRole('ADMIN')" />
 		
 		<!-- setting -->
-		<security:intercept-url method="GET" pattern="setting" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="GET" pattern="/api/setting/**" access="hasAnyRole('ADMIN')" />
 		
 		<!-- hermes -->
-		<security:intercept-url method="GET" pattern="/api/hermes/**" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/json/services" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/json/methods" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/json/types" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/json/datasections" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/network/link" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/measurement/aggregate" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/network/route" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/vehiclelocation" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/measurement" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/datasection" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/driverfeatures" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
 		<!-- dataservice -->
 		<security:intercept-url method="GET" pattern="/api/dataservice/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />

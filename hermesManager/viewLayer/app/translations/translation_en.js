@@ -124,7 +124,8 @@
 				"operaciones": "Type of operations",
 				"chooseService": "Choose a service first",
 				"tipoSensor": "Sensor Type: ",
-				"chooseOne": "Choose one"
+				"chooseOne": "Choose one",
+				"measurementType": "Measurement type",
 			},
 			"resultados": {
 				"titulo": "Results",
@@ -239,7 +240,10 @@
 				"mapa": "Map",
 				"tabla": "Table",
 				"cost": "Cost: ",
-				"noData": "There are not data to show"
+				"noData": "There are not data to show",
+				"selectDates": "Select dates",
+				"selectRectangle": "Select rectangle",
+				"selectMeasurementType": "Select measurement type"
 			},
 			"gpsLocation":{
 				"titulo": "Dashboard",

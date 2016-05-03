@@ -120,11 +120,22 @@ var url_update_settings = url_setting + "updateSettings";
 var url_hermesS = url_servidor+'api/hermes/';
 var url_hermesS_services = url_hermesS+'json/services';
 var url_hermesS_methods = url_hermesS+'json/methods';
-var url_types = url_hermesS+'json/types';
+var url_hermesS_types = url_hermesS+'json/types';
+var url_hermesS_measurementTypes = url_hermesS+'json/measurementTypes';
 var url_datasections = url_hermesS+'json/datasections';
 var url_network_link = url_hermesS+'network/link?';
 var url_measurement_aggregate = url_hermesS+'measurement/aggregate?';
 var url_network_route = url_hermesS+'network/route?';
+var url_get_vehicle_locations = url_hermesS + 'vehiclelocation?';
+var url_get_measurements = url_hermesS + 'measurement?';
+var url_get_data_sections = url_hermesS + 'datasection?';
+var url_get_driver_features = url_hermesS + 'driverfeatures?';
+var url_get_heart_rate_data = url_hermesS + 'heartratedata?';
+var url_get_steps_data = url_hermesS + 'stepsdata?';
+var url_get_sleep_data = url_hermesS + 'sleepdata?';
+var url_get_context_data = url_hermesS + 'contextdata?';
+var url_get_user_locations = url_hermesS + 'userlocations?';
+var url_get_user_activities = url_hermesS + 'useractivities?';
 
 //Controlador dataservice
 var url_dataservice = url_servidor+'api/dataservice/';

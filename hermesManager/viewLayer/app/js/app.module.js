@@ -212,7 +212,7 @@
 	function types(hermesServicesService) {
 		return hermesServicesService.getTypes();
 	}
-	
+
 	dataSections.$inject = ['hermesServicesService'];
 	function dataSections(hermesServicesService) {
 		return hermesServicesService.getDataSections();

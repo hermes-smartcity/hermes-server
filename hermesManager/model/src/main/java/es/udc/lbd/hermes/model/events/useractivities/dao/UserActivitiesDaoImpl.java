@@ -137,4 +137,35 @@ public class UserActivitiesDaoImpl extends GenericDaoHibernate<UserActivities, L
 		
 		return elementos;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UserActivities> obterUserActivities(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, int startIndex, int count){
+		
+		List<UserActivities> elementos = null;
+
+		String queryStr =  "from UserActivities d where 1=1 ";
+		if(idUsuario!=null)
+			queryStr += "and d.usuarioMovil.id = :idUsuario ";
+
+		if(fechaIni!=null)
+			queryStr += "and d.startTime > :fechaIni ";
+
+		if(fechaFin!=null)
+			queryStr += "and d.endTime < :fechaFin";
+
+		Query query = getSession().createQuery(queryStr);
+
+		if(idUsuario!=null)
+			query.setParameter("idUsuario", idUsuario);
+		if(fechaIni!=null)
+			query.setCalendar("fechaIni", fechaIni);
+		if(fechaFin!=null)
+			query.setCalendar("fechaFin", fechaFin);
+		if(startIndex!=-1 && count!=-1)
+			query.setFirstResult(startIndex).setMaxResults(count);
+
+		elementos = query.list();
+		return elementos;
+	}
 }

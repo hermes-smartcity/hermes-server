@@ -22,4 +22,7 @@ public interface UserLocationsDao extends GenericDao<UserLocations, Long> {
 			Calendar fechaFin, Geometry bounds, int startIndex, Integer limit);
 	
 	public List<EventosPorDia> eventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	
+	public List<UserLocations> obterUserLocations(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, Geometry bounds, int startIndex, int count);
 }

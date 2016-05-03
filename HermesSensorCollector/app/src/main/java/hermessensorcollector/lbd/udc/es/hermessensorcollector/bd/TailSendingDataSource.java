@@ -106,7 +106,8 @@ public class TailSendingDataSource {
 
         List<TailSending> lista = new ArrayList<TailSending>();
 
-        Cursor cursor = db.query(TablesDB.TABLA_TAILSENDING, columnasColaEnvio, null, null,
+        Cursor cursor = db.query(TablesDB.TABLA_TAILSENDING, columnasColaEnvio,
+                TablesDB.TAILSENDING_COLUMNA_TYPE + "=?", new String[] { type },
                 null, null, TablesDB.TAILSENDING_COLUMNA_DATE);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

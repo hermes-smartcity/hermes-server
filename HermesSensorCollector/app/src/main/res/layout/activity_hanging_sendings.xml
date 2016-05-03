@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent"
-    android:orientation="vertical">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textViewNoSending"
@@ -13,13 +15,18 @@
         android:padding="10dp" />
 
     <ListView android:id="@+id/listViewTailSending"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:scrollingCache="true"
+        android:smoothScrollbar="true"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/bottomLayout"/>
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" android:id="@+id/bottomLayout">
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true" android:id="@+id/bottomLayout">
 
         <Button
             android:id="@+id/buttonDeleteAll"
@@ -37,4 +44,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

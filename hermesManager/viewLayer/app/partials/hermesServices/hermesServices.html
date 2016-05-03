@@ -14,7 +14,7 @@
 	    
 	<div class="col-md-9">
 		<div class="panel panel-default">
-			<div class="panel-heading" data-ng-show="vm.methodSelected === 'COMPUTE_ROUTE'">
+			<div class="panel-heading" data-ng-show="vm.showSelectorMapTab">
 				<i class="fa glyphicon fa-fw"></i>
 				<div class="pull-left">
 					<span class="glyphicon glyphicon-eye-open"></span>
@@ -45,7 +45,7 @@
 				<div data-ng-show="vm.showMap">
 					<div id="map"></div>
 				</div>
-				<div data-ng-show="vm.showTab && vm.methodSelected === 'COMPUTE_ROUTE'">
+				<div data-ng-show="vm.showTab && vm.showSelectorMapTab">
 					<div data-ng-include="vm.tabla"></div>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 	
 	<div class="cabeceraFiltro col-md-3">
 		<div class="slide-animate" data-ng-include="'./partials/hermesservices/filtros.html'"></div>
-		<div class="slide-animate" data-ng-if="vm.methodSelected !== 'COMPUTE_ROUTE'" 
+		<div class="slide-animate" data-ng-if="!vm.showResult" 
 			data-ng-include="'./partials/hermesservices/resultados.html'"></div>
 	</div>
 </div>
