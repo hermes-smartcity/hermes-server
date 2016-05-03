@@ -30,8 +30,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Queue;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -437,13 +437,17 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     //Creamos el json a enviar
                     SensorJSON sensorJsonToSend = new SensorJSON(nombreUsuario, typeSensor, firstSend, lastSend, elementsToSend);
 
-                    //Creamos un numero aleatorio para concatenar al nombre
-                    Random generator = new Random();
-                    int n1 = Math.abs(generator.nextInt() % 6);
+                    //Creamos un texto aleatorio para concatenar al nombre
+                    Date dateEnvio = new Date();
+                    Locale locale = Utils.getLocale();
+                    String textoAletorio = Utils.obtenerFechaSegunFormato(dateEnvio, Utils.FECHA_SQLITE, locale);
+                    //Quitamos los espacios
+                    textoAletorio = textoAletorio.replace(" ","_");
 
                     //Creamos un fichero json con el contenido de dicho json
                     File directorio_json = rutaJson;
-                    nombre_fichero_json = jsonSensorName + "_" + String.valueOf(n1);
+                    nombre_fichero_json = jsonSensorName + "_" + textoAletorio;
+                    nombre_fichero_json = jsonSensorName + "_" + textoAletorio;
                     String fileName = directorio_json.getAbsolutePath() + File.separator +
                             nombre_fichero_json + terminacionJson;
                     String[] files = new String[1];
@@ -453,7 +457,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
                     //Creamos el zip en la ruta indicada
                     File directorio_zip = rutaZip;
-                    nombre_zip = zipSensorName + "_" + String.valueOf(n1);
+                    nombre_zip = zipSensorName + "_" + textoAletorio;
                     rutaDirectorioZip = directorio_zip + File.separator + nombre_zip;
                     Compress c = new Compress(files, rutaDirectorioZip);
                     c.zip();
@@ -690,13 +694,16 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                     //Creamos el json a enviar
                     GpsJSON gpsJsonToSend = new GpsJSON(nombreUsuario, provider, elementsToSend);
 
-                    //Creamos un numero aleatorio para concatenar al nombre
-                    Random generator = new Random();
-                    int n1 = Math.abs(generator.nextInt() % 6);
+                    //Creamos un texto aleatorio para concatenar al nombre
+                    Date dateEnvio = new Date();
+                    Locale locale = Utils.getLocale();
+                    String textoAletorio = Utils.obtenerFechaSegunFormato(dateEnvio, Utils.FECHA_SQLITE, locale);
+                    //Quitamos los espacios
+                    textoAletorio = textoAletorio.replace(" ","_");
 
                     //Creamos un fichero json con el contenido de dicho json
                     File directorio_json = rutaJson;
-                    nombre_fichero_json = jsonGpsName + "_" + String.valueOf(n1);
+                    nombre_fichero_json = jsonGpsName + "_" + textoAletorio;
                     String fileName = directorio_json.getAbsolutePath() + File.separator +
                             nombre_fichero_json + terminacionJson;
                     String[] files = new String[1];
@@ -706,7 +713,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
                     //Creamos el zip en la ruta indicada
                     File directorio_zip = rutaZip;
-                    nombre_zip = zipGpsName + "_" + String.valueOf(n1);
+                    nombre_zip = zipGpsName + "_" + textoAletorio;
                     rutaDirectorioZip = directorio_zip + File.separator + nombre_zip;
                     Compress c = new Compress(files, rutaDirectorioZip);
                     c.zip();
