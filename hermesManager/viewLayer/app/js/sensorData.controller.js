@@ -64,7 +64,6 @@
 				 displayExactValues: true,
 				 legendPosition: 'newRow',
 				 dateFormat: 'HH:mm:ss MMMM dd, yyyy',
-				 explorer : { maxZoomOut:5, keepInBounds: true, maxZoomIn: 20},
 				 displayRangeSelector: true,
 			      "colors": ['#0000FF', '#009900', '#CC0000', '#DD9900'],
 			      "defaultColors": ['#0000FF', '#009900', '#CC0000', '#DD9900'],
