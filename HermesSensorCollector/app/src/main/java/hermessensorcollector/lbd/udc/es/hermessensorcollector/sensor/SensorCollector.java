@@ -97,6 +97,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
     private Boolean firstSend = false;
     private Boolean lastSend = false;
 
+    private LocationDTO lastLocation = null;
+
     public SensorCollector(FacadeSettings facadeSetting, FacadeSendings facadeSendings, Activity activity, SensorManager mgr, Sensor sensor,
                            int numValues, String typeSensor, LocationManager lmgr, String provider) {
         this.facadeSettings = facadeSetting;
@@ -175,7 +177,6 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
         }
 
-
     }
 
     public void unregisterSensorCollector() {
@@ -189,6 +190,21 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         }
     }
 
+    public int recuperarNumeroSensorToSend(){
+        return valuesSensorToSend.size();
+    }
+
+    public int recuperarNumeroPositionToSend(){
+        return valuesLocationToSend.size();
+    }
+
+    public String recuperarProvider(){
+        return provider;
+    }
+
+    public LocationDTO recuperarLastLocation(){
+        return lastLocation;
+    }
 
     private void asignarValoresEnviar(SensorEvent event){
         //long tiempo = event.timestamp;
@@ -229,6 +245,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
             LocationDTO locationDto = new LocationDTO(time, longitude, latitude, altitude, speed, bearing, accuracy);
             valuesLocationToSend.add(locationDto);
+
+            lastLocation = locationDto;
         }
 
     }

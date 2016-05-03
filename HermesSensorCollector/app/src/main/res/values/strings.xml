@@ -73,4 +73,18 @@
     <string name="hangingSendings">Hanging sendings</string>
     <string name="noEnvios">There are not hanging sendings</string>
 
+    <string name="sensorCollector">Sensor collector</string>
+    <string name="positionCollector">Position collector</string>
+    <string name="sensor_tag">Sensor: </string>
+    <string name="eventDelay_tag">Event delay: </string>
+    <string name="eventsStored_tag">Events stored: </string>
+    <string name="packedStored_tag">Packets stored: </string>
+    <string name="lastPosition_tag">Last position: </string>
+    <string name="speed_tag">Speed: </string>
+    <string name="accuracy_tag">Accuracy: </string>
+    <string name="longitude_tag">Longitude: </string>
+    <string name="latitude_tag">Latitude: </string>
+
+    <string name="unknown">Unknown</string>
+    <string name="registeringProvider">Registering the provider</string>
 </resources>
