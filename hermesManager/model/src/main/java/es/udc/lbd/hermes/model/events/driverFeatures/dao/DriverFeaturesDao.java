@@ -17,4 +17,7 @@ public interface DriverFeaturesDao extends GenericDao<DriverFeatures, Long> {
 	public Long contarDriverFeatures(Long idUsuario, Calendar fechaIni,Calendar fechaFin);
 	public List<DriverFeaturesDTO> obterDriverFeaturesWithLimit(Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, int startIndex, Integer limit);
+	
+	public List<DriverFeatures> obterDriverFeatures(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, int startIndex, int count);
 }

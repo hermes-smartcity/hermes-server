@@ -142,4 +142,35 @@ public class HeartRateDataDaoImpl extends GenericDaoHibernate<HeartRateData, Lon
 		
 		return elementos;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<HeartRateData> obterHeartRateData(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, int startIndex, int count){
+		
+		List<HeartRateData> elementos = null;
+
+		String queryStr =  "from HeartRateData d where 1=1 ";
+		if(idUsuario!=null)
+			queryStr += "and d.usuarioMovil.id = :idUsuario ";
+
+		if(fechaIni!=null)
+			queryStr += "and d.timeLog > :fechaIni ";
+
+		if(fechaFin!=null)
+			queryStr += "and d.timeLog < :fechaFin";
+
+		Query query = getSession().createQuery(queryStr);
+
+		if(idUsuario!=null)
+			query.setParameter("idUsuario", idUsuario);
+		if(fechaIni!=null)
+			query.setCalendar("fechaIni", fechaIni);
+		if(fechaFin!=null)
+			query.setCalendar("fechaFin", fechaFin);
+		if(startIndex!=-1 && count!=-1)
+			query.setFirstResult(startIndex).setMaxResults(count);
+
+		elementos = query.list();
+		return elementos;
+	}
 }

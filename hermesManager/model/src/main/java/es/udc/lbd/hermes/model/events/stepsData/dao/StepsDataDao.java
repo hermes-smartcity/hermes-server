@@ -18,4 +18,7 @@ public interface StepsDataDao extends GenericDao<StepsData, Long> {
 	public Long contarStepsData(Long idUsuario, Calendar fechaIni,Calendar fechaFin);
 	public List<StepsDataDTO> obterStepsDataWithLimit(Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, int startIndex, Integer limit);
+	
+	public List<StepsData> obterStepsData(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, int startIndex, int count);
 }
