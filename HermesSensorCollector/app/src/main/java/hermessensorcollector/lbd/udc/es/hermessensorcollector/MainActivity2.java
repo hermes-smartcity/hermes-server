@@ -679,6 +679,8 @@ public class MainActivity2 extends AppCompatActivity implements SensorEventListe
         // handling currently.
         if (event.sensor.getType() == this.si.sensor().getType()) {
 
+            DecimalFormat twoDForm = new DecimalFormat("#.##");
+
             // Increment event counter
             event_counter++;
 
@@ -694,7 +696,7 @@ public class MainActivity2 extends AppCompatActivity implements SensorEventListe
                         getString(R.string.sensor_data_format), i);
                 text += String.format(getString(R.string.sensor_value_format),
                         si.getLabel(i), si.getUnits());
-                text += String.valueOf(event.values[i]) + "\n";
+                text += twoDForm.format(event.values[i]) + "\n";
 
             }
         }
