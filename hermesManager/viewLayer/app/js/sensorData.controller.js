@@ -12,7 +12,8 @@
 	function SensorDataController($state, $interval, $scope, usuarios, $http, $timeout, $log, $filter,
 			eventsService, $rootScope, eventsToday, eventoProcesado, statistics,
 			$translate, sensorDataService) {
-
+		
+		var that = this;
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
 		vm.sensorsType = $rootScope.sensorsType;
@@ -44,43 +45,53 @@
 		vm.totalHRD = statistics.totalHeartRateData;
 		vm.totalCD = statistics.totalContextData;
 		vm.recuperarYpintarSensores = recuperarYpintarSensores;
+		vm.seriesSelected = seriesSelected;
 		
 		// Gráfico con los datos de los sensores
+		vm.chartAxis = {
+			       ejeX : true,
+			       ejeY : true,
+			       ejeZ: true
+			     };
 		vm.chart = {};
 		vm.chart.type = "AnnotationChart";
 		vm.chart.options =  {
 				 title: 'Data Sensor',
-				 height: 500,
+				 height: 500,				 
 				 displayAnnotations: false,
+				 displayLegendDots: true,
 				 displayAnnotationsFilter: true,
 				 displayExactValues: true,
+				 legendPosition: 'newRow',
 				 dateFormat: 'HH:mm:ss MMMM dd, yyyy',
-				 displayRangeSelector: true
+				 explorer : { maxZoomOut:5, keepInBounds: true, maxZoomIn: 20},
+				 displayRangeSelector: true,
+			      "colors": ['#0000FF', '#009900', '#CC0000', '#DD9900'],
+			      "defaultColors": ['#0000FF', '#009900', '#CC0000', '#DD9900'],
+			      "isStacked": "true",
+			      "fill": 20,
+			      "vAxis": {
+			        "title": "Data Sensor",
+			        "gridlines": {
+			          "count": 10
+			        }
+			      },
+			      "hAxis": {
+			        "title": "Date"
+			      }
 	    };
+	
+		vm.chart.view = {
+	      columns: [0, 1, 2, 3]
+	    };
+		
 		vm.chart.data = {"cols": [	        {id: "fecha", label: "Fecha", type: "date"},
 		                         	        {id: "ejeX", label: "Eje X", type: "number"},
 		                         	        {id: "ejeY", label: "Eje Y", type: "number"},
 		                         	        {id: "ejeZ", label: "Eje Z", type: "number"}
 		                         	    ],  "rows": []};
 		
-		/* *  Prueba para elegir que tipo de gráfico escogemos * * */
-		vm.chartLine = {};
-		vm.chartLine.type = "LineChart";
-		vm.chartLine.options =  {
-				 title: 'Data Sensor',
-				 height: 800,
-				 width: 800,
-				 displayExactValues: true,
-				 explorer : { maxZoomOut:5, keepInBounds: true, maxZoomIn: 20},
-				 dateFormat: 'HH:mm:ss MMMM dd, yyyy'
-				
-	    };
-		vm.chartLine.data = {"cols": [	     {id: "fecha", label: "Fecha", type: "date"},
-		                         	        {id: "ejeX", label: "Eje X", type: "number"},
-		                         	        {id: "ejeY", label: "Eje Y", type: "number"},
-		                         	        {id: "ejeZ", label: "Eje Z", type: "number"}
-		                         	    ],  "rows": []};
-		/* * *  */
+	
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);	
@@ -118,6 +129,45 @@
 		    }
 		}
 		
+		function seriesSelected(selectedItem) {
+			console.log(selectedItem);
+//		      var col = selectedItem.column;
+				var col = selectedItem;
+		      //If there's no row value, user clicked the legend.
+//		      if (selectedItem.row !== null) {
+		        //If true, the chart series is currently displayed normally.  Hide it.
+		        console.log(vm.chart.view.columns[col]);
+		        if (vm.chart.view.columns[col] == col) {
+		          //Replace the integer value with this object initializer.
+		          vm.chart.view.columns[col] = {
+		            //Take the label value and type from the existing column.
+		            label: vm.chart.data.cols[col].label,
+		            type: vm.chart.data.cols[col].type,
+		            //makes the new column a calculated column based on a function that returns null, 
+		            //effectively hiding the series.
+		            calc: function() {
+		              return null;
+		            }
+		          };
+		          //Change the series color to grey to indicate that it is hidden.
+		          //Uses color[col-1] instead of colors[col] because the domain column (in my case the date values)
+		          //does not need a color value.
+		          vm.chart.options.colors[col - 1] = '#CCCCCC';
+		        }
+		        //series is currently hidden, bring it back.
+		        else {
+		          console.log("Ran this.");
+		          //Simply reassigning the integer column index value removes the calculated column.
+		          vm.chart.view.columns[col] = col;
+		          console.log(vm.chart.view.columns[col]);
+		          //I had the original colors already backed up in another array.  If you want to do this in a more
+		          //dynamic way (say if the user could change colors for example), then you'd need to have them backed
+		          //up when you switch to grey.
+		          vm.chart.options.colors[col - 1] = vm.chart.options.defaultColors[col - 1];
+		        }
+//		      }
+        }
+		
 		function recuperarYpintarSensores(urlGet){
 
 			sensorDataService.getInfoSensoresPorDia(urlGet).then(getInfoSensoresPorDiaComplete);
@@ -126,9 +176,7 @@
 				convertDateStringsToDates(response);
 				vm.rows = response.data.rows;
 
-				vm.chart.data.rows = vm.rows;
-				vm.chartLine.data.rows = vm.rows;
-				
+				vm.chart.data.rows = vm.rows;				
 			}
 			
 		}
@@ -138,7 +186,7 @@
 		vm.sensorTypeSelected = "TYPE_LINEAR_ACCELERATION";
 		vm.startDate = new Date();
 		// Inicializamos la fecha de inicio a la del mes anterior
-		vm.startDate.setDate(vm.startDate.getDate() - 31);
+		vm.startDate.setMinutes(vm.startDate.getMinutes() - 5);
 		vm.endDate = new Date();
 		
 		  

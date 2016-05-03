@@ -301,3 +301,9 @@ ol.submenu li.activo a,ol.submenu li.activo span {
     display:block;
     text-align:center
 }
+
+.chartLegend{
+	font-size: 9px;
+	float: right;
+	
+}
