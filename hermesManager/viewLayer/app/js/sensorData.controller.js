@@ -47,50 +47,49 @@
 		vm.recuperarYpintarSensores = recuperarYpintarSensores;
 		vm.seriesSelected = seriesSelected;
 		
-		// Gráfico con los datos de los sensores
-		vm.chartAxis = {
-			       ejeX : true,
-			       ejeY : true,
-			       ejeZ: true
-			     };
+		// Gráfico con los datos de los sensores		
 		vm.chart = {};
 		vm.chart.type = "AnnotationChart";
 		vm.chart.options =  {
 				 title: 'Data Sensor',
 				 height: 500,				 
 				 displayAnnotations: false,
-				 displayLegendDots: true,
-				 displayAnnotationsFilter: true,
 				 displayExactValues: true,
 				 legendPosition: 'newRow',
 				 dateFormat: 'HH:mm:ss MMMM dd, yyyy',
-				 displayRangeSelector: true,
-			      "colors": ['#0000FF', '#009900', '#CC0000', '#DD9900'],
-			      "defaultColors": ['#0000FF', '#009900', '#CC0000', '#DD9900'],
-			      "isStacked": "true",
-			      "fill": 20,
-			      "vAxis": {
-			        "title": "Data Sensor",
-			        "gridlines": {
-			          "count": 10
+			      colors: ['#0000FF', '#009900', '#CC0000', '#DD9900'],
+			      defaultColors: ['#0000FF', '#009900', '#CC0000', '#DD9900'],
+			      isStacked: true,
+			      vAxis: {
+			        title: 'Data Sensor',
+			        gridlines: {
+			          count: 10
 			        }
 			      },
-			      "hAxis": {
-			        "title": "Date"
+			      hAxis: {
+			        title: 'Date'
 			      }
 	    };
-	
+		
+		// Componente del gráfico: eje X, eje Y, eje Z
 		vm.chart.view = {
 	      columns: [0, 1, 2, 3]
 	    };
 		
+		// Inicializamos gráfico
 		vm.chart.data = {"cols": [	        {id: "fecha", label: "Fecha", type: "date"},
 		                         	        {id: "ejeX", label: "Eje X", type: "number"},
 		                         	        {id: "ejeY", label: "Eje Y", type: "number"},
 		                         	        {id: "ejeZ", label: "Eje Z", type: "number"}
 		                         	    ],  "rows": []};
 		
-	
+		// Selección ejes para ocultar/mostrar
+		vm.chartAxis = {
+			       ejeX : true,
+			       ejeY : true,
+			       ejeZ: true
+		};
+		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);	
@@ -100,8 +99,7 @@
 			vm.active = response.data;
 		}
 	
-		// Detecta el patrón de una fecha en la response y lo cambia por el formato new Date( ) para que la librería de angular puede pintar por fecha y distribuya los puntos de manera uniforme
-		
+		// Detecta el patrón de una fecha en la response y lo cambia por el formato new Date( ) (librería de angular necesita new Date para pintar los datos)		
 		function convertDateStringsToDates(input) {
 			var regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
 		    // Ignore things that aren't objects.
@@ -128,6 +126,7 @@
 		    }
 		}
 		
+		// Cuando se hace click en uno de los checkbox oculta/muestra el eje correspondiente
 		function seriesSelected(selectedItem) {
 //		      var col = selectedItem.column;
 				var col = selectedItem;
@@ -164,9 +163,8 @@
         }
 		
 		function recuperarYpintarSensores(urlGet){
-
 			sensorDataService.getInfoSensoresPorDia(urlGet).then(getInfoSensoresPorDiaComplete);
-			// En cuanto tenga los eventos los pinto
+			// En cuanto tenga los datos los pinto
 			function getInfoSensoresPorDiaComplete(response) {
 				convertDateStringsToDates(response);
 				vm.rows = response.data.rows;
