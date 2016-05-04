@@ -149,8 +149,8 @@ public class SensorCollector implements SensorEventListener, LocationListener {
                 }
 
                 if (param.getName().equals(Constants.MINIMUM_TIME)){
-                    //El tiempo viene en segundos asi que lo multiplicamos por 10000 para pasarlo a milisegundos
-                    MIN_TIME_BW_UPDATES = 10000 * Long.parseLong(param.getValue());
+                    //El tiempo viene en segundos asi que lo multiplicamos por  para pasarlo a milisegundos
+                    MIN_TIME_BW_UPDATES = 1000 * Long.parseLong(param.getValue());
                 }
 
             }
