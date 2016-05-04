@@ -129,13 +129,11 @@
 		}
 		
 		function seriesSelected(selectedItem) {
-			console.log(selectedItem);
 //		      var col = selectedItem.column;
 				var col = selectedItem;
 		      //If there's no row value, user clicked the legend.
 //		      if (selectedItem.row !== null) {
 		        //If true, the chart series is currently displayed normally.  Hide it.
-		        console.log(vm.chart.view.columns[col]);
 		        if (vm.chart.view.columns[col] == col) {
 		          //Replace the integer value with this object initializer.
 		          vm.chart.view.columns[col] = {
@@ -155,10 +153,8 @@
 		        }
 		        //series is currently hidden, bring it back.
 		        else {
-		          console.log("Ran this.");
 		          //Simply reassigning the integer column index value removes the calculated column.
 		          vm.chart.view.columns[col] = col;
-		          console.log(vm.chart.view.columns[col]);
 		          //I had the original colors already backed up in another array.  If you want to do this in a more
 		          //dynamic way (say if the user could change colors for example), then you'd need to have them backed
 		          //up when you switch to grey.
