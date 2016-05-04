@@ -12,7 +12,8 @@
 		'angularUtils.directives.dirPagination',
 		'datatables',
 		'ngCookies', 'permission','ngStorage', 'googlechart',
-		'pascalprecht.translate', 'tmh.dynamicLocale'
+		'pascalprecht.translate', 'tmh.dynamicLocale',
+		'oitozero.ngSweetAlert'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
@@ -159,6 +160,15 @@
 				eventsToday: eventsToday,
 				statistics: statistics
 			}
+		}).state('dbconnection', {
+			url: '/dbconnection',
+			templateUrl: 'partials/dbconnection/dbconnection.html',
+			controller: 'DBConnectionController',
+			controllerAs: 'vm',
+			resolve: {
+				dbconnectionstype: dbconnectionstype,
+				dbconnections: dbconnections
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -221,6 +231,16 @@
 	services.$inject = ['dataServicesService'];
 	function services(dataServicesService) {
 		return dataServicesService.getServices();
+	}
+	
+	dbconnectionstype.$inject = ['dbConnectionService'];
+	function dbconnectionstype(dbConnectionService) {
+		return dbConnectionService.getDbConnectionsType();
+	}
+	
+	dbconnections.$inject = ['dbConnectionService'];
+	function dbconnections(dbConnectionService) {
+		return dbConnectionService.getDbConnections();
 	}
 	
 	angular.module('app').config(translateAppConfig);

@@ -7,11 +7,12 @@
 	                                '$state', '$rootScope', 'eventsService', 'services', 
 	                                'types', 'dataSections', 'eventsToday', 
 	                                'eventoProcesado', 'statistics', 'hermesServicesService',
-	                                'DTOptionsBuilder', 'DTColumnBuilder', '$q'];
+	                                'DTOptionsBuilder', 'DTColumnBuilder', '$q', 'SweetAlert'];
 
 	function HermesServicesController($scope, $filter, $http, $translate, $state, 
 			$rootScope, eventsService, services, types, dataSections, eventsToday, 
-			eventoProcesado, statistics, hermesServicesService, DTOptionsBuilder, DTColumnBuilder, $q) {
+			eventoProcesado, statistics, hermesServicesService, DTOptionsBuilder, DTColumnBuilder, 
+			$q, SweetAlert) {
 	
 		var vm = this;
 		
@@ -1844,7 +1845,7 @@
 		function validacionLinkInformation(){
 			if (vm.previousLong === undefined || vm.previousLat === undefined || 
 				vm.currentLong === undefined || vm.currentLat === undefined){
-				alert($translate.instant('hermesServices.selectSegment'));
+				SweetAlert.swal($translate.instant('hermesServices.selectSegment'));
 			}else{
 				ejecutarPeticion();
 			}
@@ -1873,7 +1874,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -1890,7 +1891,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -1908,7 +1909,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -1930,7 +1931,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -1948,7 +1949,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -1961,7 +1962,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -1974,7 +1975,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -1987,7 +1988,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -2000,7 +2001,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -2018,7 +2019,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -2036,7 +2037,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}
@@ -2049,7 +2050,7 @@
 			}
 			
 			if (texto !== ""){
-				alert(texto);
+				SweetAlert.swal(texto);
 			}else{
 				ejecutarPeticion();
 			}

@@ -25,6 +25,8 @@
 			"noResults": "There are no results",
 			"noEvents": "There are not events to show",
 			"noData": "There are no data",
+			"confirmDelete": "Are you sure?",
+			"textDelete": "Your will not be able to recover this item?",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
@@ -109,7 +111,10 @@
 				"systemLogs": "System Logs",
 				"hermesServices": "Hermes Services",
 				"sensorData": "Sensor Data",
-				"gpsLocation": "GPS Location"
+				"gpsLocation": "GPS Location",
+				"testServices": "Test services",
+				"statistics": "Statistics",
+				"dbConnections": "DB Connections"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -312,6 +317,17 @@
 				"timelog": "Time log",
 				"heartrate": "Heart rate"
 			},
+			"dbconnection":{
+				"id": "ID",
+				"type": "Type",
+				"host": "Host",
+				"port": "Port",
+				"dbname": "DB Name",
+				"actions": "Actions",
+				"noData": "There are not data to show",
+				"create": "Create new DB Connection",
+				"deletedOK": "DBConnection deleted"
+			}
 		});
 	}
 

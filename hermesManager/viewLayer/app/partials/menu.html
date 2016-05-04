@@ -50,25 +50,39 @@
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav in" id="side-menu">
 				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
-					<a data-ui-sref="dashboard"> <i class="fa fa-dashboard fa-fw">
-							<!--  -->
-					</i> <span>{{'menu.dashboard' | translate}}</span>
-				</a>
+					<a data-ui-sref="dashboard"> 
+						<i class="fa fa-dashboard fa-fw"><!--  --></i> 
+						<span>{{'menu.dashboard' | translate}}</span>
+					</a>
 				</li>
 				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
-					<a data-ui-sref="eventManager"> <i class="fa fa-bar-chart-o fa-fw">
-							<!--  -->
-						</i> <span> {{'menu.eventManager' | translate}}</span>
+					<a data-ui-sref="eventManager"> 
+						<i class="fa fa-bar-chart-o fa-fw"><!--  --></i> 
+						<span> {{'menu.eventManager' | translate}}</span>
 					</a>
 				</li>
 
+				<!-- <li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
+					<a href="#">
+						<i class="fa fa-bar-chart-o fa-fw"></i> 
+						{{'menu.hermesServices' | translate}}
+						<span class="fa arrow"></span>
+					</a>
+					<ul class="nav nav-second-level collapse">
+						<li>
+							<a data-ui-sref="hermesServices">{{'menu.testServices' | translate}}</a>
+						</li>
+						<li>
+							<a data-ui-sref="dataServices">{{'menu.statistics' | translate}}</a>
+						</li>
+					</ul>
+				</li>-->
 
 				<li data-ng-if="hasRole('ROLE_ADMIN')">
-					<!--  --> <a data-ui-sref="userManager"> <i
-						class="fa fa-wrench fa-fw">
-							<!--  -->
-					</i> <span>{{'menu.userManager' | translate}}</span>
-				</a>
+					<a data-ui-sref="userManager"> 
+						<i class="fa fa-wrench fa-fw"><!--  --></i> 
+						<span>{{'menu.userManager' | translate}}</span>
+					</a>
 				</li>
 
 				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
@@ -105,6 +119,13 @@
 					<a data-ui-sref="gpsLocation"> <i class="fa fa-dashboard fa-fw">
 							<!--  -->
 						</i> <span>{{'menu.gpsLocation' | translate}}</span>
+					</a>
+				</li>
+				
+				<li data-ng-if="hasRole('ROLE_ADMIN')">
+					<a data-ui-sref="dbconnection"> <i class="fa fa-dashboard fa-fw">
+							<!--  -->
+						</i> <span>{{'menu.dbConnections' | translate}}</span>
 					</a>
 				</li>
 			</ul>

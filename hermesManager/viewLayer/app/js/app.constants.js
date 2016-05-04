@@ -149,3 +149,9 @@ var url_request_sensors = url_sensordata + 'sensors';
 var url_request_gps = url_sensordata + 'gps';
 var url_infoPorDia = url_sensordata + 'json/infoPorDia?';
 var url_gpslocation = url_sensordata+'json/gpslocations?';
+
+//Controlador db connections
+var url_dbconnection = url_servidor+'api/dbconnection/';
+var url_dbConnectionsTypes = url_dbconnection+'json/dbConnectionsTypes';
+var url_dbConnections = url_dbconnection+'json/dbConnections';
+var url_delete_dbconnection = url_dbconnection+"delete";
