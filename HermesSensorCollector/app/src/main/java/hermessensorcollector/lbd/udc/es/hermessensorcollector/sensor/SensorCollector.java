@@ -87,7 +87,7 @@ public class SensorCollector implements SensorEventListener, LocationListener {
 
     //The minimum time beetwen updates in milliseconds
     //Le ponemos un tiempo por defecto por si no esta en el settings (que deberia)
-    private long MIN_TIME_BW_UPDATES = 60000 * 30 * 1;  // 30 seconds
+    private long MIN_TIME_BW_UPDATES = 1000 * 30 * 1;  // 30 seconds
 
     private Timer timer = null;
 
