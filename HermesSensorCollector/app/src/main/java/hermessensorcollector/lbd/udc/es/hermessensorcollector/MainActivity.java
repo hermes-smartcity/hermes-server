@@ -14,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -23,11 +24,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +35,10 @@ import android.widget.Toast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -47,7 +50,9 @@ import hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor.SensorColle
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.sensor.SensorInterface;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Constants;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.utils.Utils;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.LocationDTO;
 import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.Parameter;
+import hermessensorcollector.lbd.udc.es.hermessensorcollector.vo.TailSending;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -65,21 +70,39 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //Objetos de la pantalla
     private TextView no_sensor_details;
-    private ImageView sensor_icon;
-    private LinearLayout sensor_name_layout;
-    private LinearLayout sensor_vendor_layout;
-    private LinearLayout sensor_version_layout;
-    private LinearLayout sensor_type_layout;
-    private LinearLayout sensor_power_layout;
-    private LinearLayout sensor_range_layout;
-    private LinearLayout sensor_resolution_layout;
-    private LinearLayout layout_real_time_data;
 
-    // Dynamic (real-time views)
-    private TextView delay_view;
-    private TextView event_count_view;
-    private TextView timestamp_view;
-    private TextView accuracy_view;
+    //Sensor collector
+    private TextView textViewTituloSensorCollector;
+    private LinearLayout sensor_collector_name_layout;
+    private LinearLayout event_delay_layout;
+    private LinearLayout event_sensor_stored_layout;
+    private LinearLayout packets_sensor_stored_layout;
+
+    // Position collector
+    private TextView textViewTituloPositionCollector;
+    private LinearLayout position_collector_name_layout;
+    private LinearLayout event_position_stored_layout;
+    private LinearLayout packets_position_stored_layout;
+    private LinearLayout last_position_layout;
+    private LinearLayout latitude_layout;
+    private LinearLayout longitude_layout;
+    private LinearLayout speed_layout;
+    private LinearLayout accuracy_layout;
+
+
+    // Objetos dinamicos de la pantalla
+    private TextView event_delay;
+    private TextView event_sensor_stored;
+    private TextView packets_sensor_stored;
+
+    private TextView position_collector_name;
+    private TextView event_position_stored;
+    private TextView packets_position_stored;
+    private TextView last_position;
+    private TextView latitude;
+    private TextView longitude;
+    private TextView speed;
+    private TextView accuracy;
 
     private ArrayList<TextView> data_value_views;
 
@@ -95,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //The sensor collector to shis sensor
     private SensorCollector sc;
     //The type of the sensor
-    String typeSensor;
+    private String typeSensor;
 
     private static final int REQUEST_SETTING = 1;
     private static final int REQUEST_GPS = 2;
@@ -110,6 +133,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private Boolean firstTime = true;
 
     private String providerChoosen = null; //para si gira la pantalla
+
+    //Tiempo de esperar para hacer las peticiones periodicas para actualizar los datos de la pantalla
+    private int UPDATE_INTERVAL = 10000; //10 segundos
+    private Handler handlerSensor = new Handler();
+    private Handler handlerPosition = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,15 +161,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //Recuperamos los objetos de la pantalla
         no_sensor_details = (TextView) findViewById(R.id.no_sensor_details);
-        sensor_icon = (ImageView) findViewById(R.id.sensor_icon);
-        sensor_name_layout = (LinearLayout) findViewById(R.id.sensor_name_layout);
-        sensor_vendor_layout = (LinearLayout) findViewById(R.id.sensor_vendor_layout);
-        sensor_version_layout = (LinearLayout) findViewById(R.id.sensor_version_layout);
-        sensor_type_layout = (LinearLayout) findViewById(R.id.sensor_type_layout);
-        sensor_power_layout = (LinearLayout) findViewById(R.id.sensor_power_layout);
-        sensor_range_layout = (LinearLayout) findViewById(R.id.sensor_range_layout);
-        sensor_resolution_layout = (LinearLayout) findViewById(R.id.sensor_resolution_layout);
-        layout_real_time_data = (LinearLayout) findViewById(R.id.layout_real_time_data);
+
+        textViewTituloSensorCollector = (TextView) findViewById(R.id.textViewTituloSensorCollector);
+        sensor_collector_name_layout = (LinearLayout) findViewById(R.id.sensor_collector_name_layout);
+        event_delay_layout = (LinearLayout) findViewById(R.id.event_delay_layout);
+        event_sensor_stored_layout = (LinearLayout) findViewById(R.id.event_sensor_stored_layout);
+        packets_sensor_stored_layout = (LinearLayout) findViewById(R.id.packets_sensor_stored_layout);
+
+        textViewTituloPositionCollector = (TextView) findViewById(R.id.textViewTituloPositionCollector);
+        position_collector_name_layout = (LinearLayout) findViewById(R.id.position_collector_name_layout);
+        event_position_stored_layout = (LinearLayout) findViewById(R.id.event_position_stored_layout);
+        packets_position_stored_layout = (LinearLayout) findViewById(R.id.packets_position_stored_layout);
+        last_position_layout = (LinearLayout) findViewById(R.id.last_position_layout);
+        latitude_layout = (LinearLayout) findViewById(R.id.latitude_layout);
+        longitude_layout = (LinearLayout) findViewById(R.id.longitude_layout);
+        speed_layout = (LinearLayout) findViewById(R.id.speed_layout);
+        accuracy_layout = (LinearLayout) findViewById(R.id.accuracy_layout);
 
         buttonDataCollection = (Button) findViewById(R.id.buttonDataCollection);
         //Asociamos evento al boton
@@ -159,15 +194,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (typeLinearAcceleration != null || typeAccelerometer != null){
             // Hay sensores de ese tipo asi que podremos mostrar los datos de la pantalla
             no_sensor_details.setVisibility(View.INVISIBLE);
-            sensor_icon.setVisibility(View.VISIBLE);
-            sensor_name_layout.setVisibility(View.VISIBLE);
-            sensor_vendor_layout.setVisibility(View.VISIBLE);
-            sensor_version_layout.setVisibility(View.VISIBLE);
-            sensor_type_layout.setVisibility(View.VISIBLE);
-            sensor_power_layout.setVisibility(View.VISIBLE);
-            sensor_range_layout.setVisibility(View.VISIBLE);
-            sensor_resolution_layout.setVisibility(View.VISIBLE);
-            layout_real_time_data.setVisibility(View.VISIBLE);
+            textViewTituloSensorCollector.setVisibility(View.VISIBLE);
+            sensor_collector_name_layout.setVisibility(View.VISIBLE);
+            event_delay_layout.setVisibility(View.VISIBLE);
+            event_sensor_stored_layout.setVisibility(View.VISIBLE);
+            packets_sensor_stored_layout.setVisibility(View.VISIBLE);
+            textViewTituloPositionCollector.setVisibility(View.VISIBLE);
+            position_collector_name_layout.setVisibility(View.VISIBLE);
+            event_position_stored_layout.setVisibility(View.VISIBLE);
+            packets_position_stored_layout.setVerticalGravity(View.VISIBLE);
+            last_position_layout.setVisibility(View.VISIBLE);
+            latitude_layout.setVisibility(View.VISIBLE);
+            longitude_layout.setVisibility(View.VISIBLE);
+            speed_layout.setVisibility(View.VISIBLE);
+            accuracy_layout.setVisibility(View.VISIBLE);
 
             //Recuperamos el email del usuario
             obtainEmail();
@@ -184,25 +224,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //antes de crear la instancia de sensorcollection
             getGpsProvider();
 
-            // Initialize basic (static) sensor view
-            loadStaticView();
+            //Cargamos informacion de sensorCollector
+            loadInfoSensorCollector();
 
-            // Initialize real-time sensor view
-            loadRealTimeView();
+            //Cargamos informacion de positionCollector
+            loadInfoPositionCollector();
 
         }
         else {
             // No hay sensores de ese tipo asi que mostramos el mensaje de no hay sensores y ocultamos el resto
             no_sensor_details.setVisibility(View.VISIBLE);
-            sensor_icon.setVisibility(View.INVISIBLE);
-            sensor_name_layout.setVisibility(View.INVISIBLE);
-            sensor_vendor_layout.setVisibility(View.INVISIBLE);
-            sensor_version_layout.setVisibility(View.INVISIBLE);
-            sensor_type_layout.setVisibility(View.INVISIBLE);
-            sensor_power_layout.setVisibility(View.INVISIBLE);
-            sensor_range_layout.setVisibility(View.INVISIBLE);
-            sensor_resolution_layout.setVisibility(View.INVISIBLE);
-            layout_real_time_data.setVisibility(View.INVISIBLE);
+            textViewTituloSensorCollector.setVisibility(View.INVISIBLE);
+            sensor_collector_name_layout.setVisibility(View.INVISIBLE);
+            event_delay_layout.setVisibility(View.INVISIBLE);
+            event_sensor_stored_layout.setVisibility(View.INVISIBLE);
+            packets_sensor_stored_layout.setVisibility(View.INVISIBLE);
+            textViewTituloPositionCollector.setVisibility(View.INVISIBLE);
+            position_collector_name_layout.setVisibility(View.INVISIBLE);
+            event_position_stored_layout.setVisibility(View.INVISIBLE);
+            packets_position_stored_layout.setVisibility(View.INVISIBLE);
+            last_position_layout.setVisibility(View.INVISIBLE);
+            latitude_layout.setVisibility(View.INVISIBLE);
+            longitude_layout.setVisibility(View.INVISIBLE);
+            speed_layout.setVisibility(View.INVISIBLE);
+            accuracy_layout.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -277,8 +322,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
 
             } catch (InternalErrorException e) {
-                Log.e("MainActivity", "Error recuperando los parametros de la base de datos");
-                LOG.error("MainActivity", "Error recuperando los parametros de la base de datos");
+                Log.e("MainActivityOld", "Error recuperando los parametros de la base de datos");
+                LOG.error("MainActivityOld", "Error recuperando los parametros de la base de datos");
             }
 
         }
@@ -355,8 +400,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             createSensorCollection();
         }else{
             // API 23: we have to check if ACCESS_FINE_LOCATION and/or ACCESS_COARSE_LOCATION permission are granted
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 // getting GPS status
                 isGPSEnabled = lmgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -413,76 +458,35 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sc = new SensorCollector(facadeSettings, facadeSendings, MainActivity.this, mgr, sensor, si.getNumValues(), typeSensor, lmgr, provider);
     }
 
-    // method to load in the static sensor information
-    private void loadStaticView() {
+    private void loadInfoSensorCollector(){
+        // Escribimos la informacion estatica del sensor (nombre)
+        loadStaticViewSensor();
 
-        ImageView iv;
+        // Escribimos la informacion en tiempo real del sensor
+        loadRealTimeViewSensor();
+
+        //actualizar la informacion periodica relativa al sensor
+        actualizarDatosPeriodicosSensor();
+    }
+
+    // method to load in the static sensor information
+    private void loadStaticViewSensor() {
+
         TextView tv;
 
-        // Load sensor icon
-        iv = (ImageView) findViewById(R.id.sensor_icon);
-        if (iv != null) {
-            iv.setImageResource(si.getIcon());
-        }
-        // Load sensor name
-        tv = (TextView) findViewById(R.id.sensor_name);
+        // Nombre del sensor
+        tv = (TextView) findViewById(R.id.sensor_collector_name);
         if (tv != null) {
             tv.setText(si.sensor().getName());
-        }
-        // Load sensor vendor
-        tv = (TextView) findViewById(R.id.sensor_vendor);
-        if (tv != null) {
-            tv.setText(si.sensor().getVendor());
-        }
-        // Load sensor version
-        tv = (TextView) findViewById(R.id.sensor_version);
-        if (tv != null) {
-            tv.setText(((Integer) si.sensor().getVersion()).toString());
-        }
-        // Load sensor type
-        tv = (TextView) findViewById(R.id.sensor_type);
-        if (tv != null) {
-            tv.setText(si.getType() + " ("
-                    + ((Integer) si.sensor().getType()).toString() + ")");
-        }
-        // Load sensor power
-        tv = (TextView) findViewById(R.id.sensor_power);
-        if (tv != null) {
-            tv.setText(((Float) si.sensor().getPower()).toString());
-        }
-        // Load sensor range
-        tv = (TextView) findViewById(R.id.sensor_range);
-        if (tv != null) {
-            tv.setText(((Float) si.sensor().getMaximumRange()).toString());
-        }
-        // Load sensor range units
-        tv = (TextView) findViewById(R.id.sensor_range_units);
-        if (tv != null) {
-            tv.setText(si.getUnits());
-        }
-        // Load sensor resolution
-        tv = (TextView) findViewById(R.id.sensor_resolution);
-        if (tv != null) {
-            tv.setText(((Float) si.sensor().getResolution()).toString());
-        }
-        // Load sensor range units
-        tv = (TextView) findViewById(R.id.sensor_resolution_units);
-        if (tv != null) {
-            tv.setText(si.getUnits());
         }
 
         return;
     }
 
-    // load and configure dynamic sensor information
-    private void loadRealTimeView() {
+        // load and configure dynamic sensor information
+    private void loadRealTimeViewSensor() {
 
-        delay_view = (TextView) findViewById(R.id.sensor_delay);
-        event_count_view = (TextView) findViewById(R.id.sensor_events);
-        timestamp_view = (TextView) findViewById(R.id.sensor_timestamp);
-        accuracy_view = (TextView) findViewById(R.id.sensor_accuracy);
-
-        accuracy_view.setText("Unknown");
+        event_delay = (TextView) findViewById(R.id.event_delay);
 
         data_value_views = new ArrayList<TextView>();
 
@@ -536,11 +540,144 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return;
     }
 
+    private void actualizarDatosPeriodicosSensor(){
+
+        event_sensor_stored = (TextView) findViewById(R.id.event_sensor_stored);
+        packets_sensor_stored = (TextView) findViewById(R.id.packets_sensor_stored);
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                //Recuperamos nº eventos pendientes de meter en el json
+                if (sc!=null) {
+                    int numeroEnvios = sc.recuperarNumeroSensorToSend();
+                    event_sensor_stored.setText(String.valueOf(numeroEnvios));
+                }else{
+                    event_sensor_stored.setText(getString(R.string.registeringProvider));
+                }
+
+                try{
+                    List<TailSending> lista = facadeSendings.getListTailSendingFromType(Constants.TYPE_ZIP);
+                    int numeroPaquetes = lista.size();
+                    packets_sensor_stored.setText(String.valueOf(numeroPaquetes));
+
+                } catch (InternalErrorException e) {
+                    Log.e("MainActivityOld", "InternalErrorException " + e.getMessage());
+                    LOG.error("MainActivityOld: InternalErrorException " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+                handlerSensor.postDelayed(this, UPDATE_INTERVAL);
+            }
+        };
+
+        handlerSensor.postDelayed(runnable, 1);
+
+    }
+
+    private void loadInfoPositionCollector(){
+
+        //actualizar la informacion periodica relativa a la posicion
+        actualizarDatosPeriodicosPosition();
+    }
+
+
+    private void actualizarDatosPeriodicosPosition(){
+
+        position_collector_name = (TextView) findViewById(R.id.position_collector_name);
+        event_position_stored = (TextView) findViewById(R.id.event_position_stored);
+        packets_position_stored = (TextView) findViewById(R.id.packets_position_stored);
+        last_position = (TextView) findViewById(R.id.last_position);;
+        latitude = (TextView) findViewById(R.id.latitude);;
+        longitude = (TextView) findViewById(R.id.longitude);;
+        speed = (TextView) findViewById(R.id.speed);;
+        accuracy = (TextView) findViewById(R.id.accuracy);;
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                if (sc!=null) {
+                    position_collector_name.setText(sc.recuperarProvider());
+
+                    //Recuperamos nº eventos pendientes de meter en el json
+                    int numeroEnvios = sc.recuperarNumeroPositionToSend();
+                    event_position_stored.setText(String.valueOf(numeroEnvios));
+
+                    LocationDTO lastLocation = sc.recuperarLastLocation();
+                    if (lastLocation != null){
+                        DecimalFormat sixDForm = new DecimalFormat("#.######");
+                        DecimalFormat twoDForm = new DecimalFormat("#.##");
+
+                        // Create a calendar object that will convert the date and time value in milliseconds to date.
+                        SimpleDateFormat formatter = new SimpleDateFormat(Utils.FECHA_SQLITE);
+                        String dateString = formatter.format(new Date(lastLocation.getTime()));
+                        last_position.setText(dateString);
+
+                        if (lastLocation.getLatitude() != null) {
+                            latitude.setText(sixDForm.format(lastLocation.getLatitude()));
+                        }
+
+                        if (lastLocation.getLongitude() != null) {
+                            longitude.setText(sixDForm.format(lastLocation.getLongitude()));
+                        }
+
+                        if (lastLocation.getSpeed() != null) {
+                            speed.setText(twoDForm.format(lastLocation.getSpeed()));
+                        }
+
+                        if (lastLocation.getAccuracy() != null) {
+                            accuracy.setText(twoDForm.format(lastLocation.getAccuracy()));
+                        }
+                    }else{
+                        last_position.setText(getString(R.string.unknown));
+                        latitude.setText(getString(R.string.unknown));
+                        longitude.setText(getString(R.string.unknown));
+                        speed.setText(getString(R.string.unknown));
+                        accuracy.setText(getString(R.string.unknown));
+                    }
+
+                }else{
+                    position_collector_name.setText(getString(R.string.registeringProvider));
+                    event_position_stored.setText(getString(R.string.registeringProvider));
+
+                    last_position.setText(getString(R.string.registeringProvider));
+                    latitude.setText(getString(R.string.registeringProvider));
+                    longitude.setText(getString(R.string.registeringProvider));
+                    speed.setText(getString(R.string.registeringProvider));
+                    accuracy.setText(getString(R.string.registeringProvider));
+                }
+
+
+
+
+
+                try{
+                    List<TailSending> lista = facadeSendings.getListTailSendingFromType(Constants.TYPE_GPS);
+                    int numeroPaquetes = lista.size();
+                    packets_position_stored.setText(String.valueOf(numeroPaquetes));
+
+                } catch (InternalErrorException e) {
+                    Log.e("MainActivityOld", "InternalErrorException " + e.getMessage());
+                    LOG.error("MainActivityOld: InternalErrorException " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+                handlerSensor.postDelayed(this, UPDATE_INTERVAL);
+            }
+        };
+
+        handlerSensor.postDelayed(runnable, 1);
+
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         // Sensor changed event fired, verify it is the type we are
         // handling currently.
         if (event.sensor.getType() == this.si.sensor().getType()) {
+
+            DecimalFormat twoDForm = new DecimalFormat("#.##");
 
             // Increment event counter
             event_counter++;
@@ -548,27 +685,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             for (int i = 0; (i < event.values.length)
                     && (i < si.getNumValues()); i++) {
 
-                // Update event count text view
-                event_count_view.setText(((Integer) event_counter).toString());
-
-                // Convert time stamp to seconds and update timestamp view
-                Float ts = (float) event.timestamp / 1000000000;
-                timestamp_view.setText(ts.toString());
-
-                // Update accuracy text view
-                accuracy_view.setText(SensorInterface
-                        .accuracyToString((event.accuracy)));
-
                 // Update data values text view
                 TextView tv = data_value_views.get(i);
-                tv.setText(String.valueOf(event.values[i]));
+                tv.setText(twoDForm.format(event.values[i]));
 
                 // Write some info to the log about this sensor
                 String text = String.format(
                         getString(R.string.sensor_data_format), i);
                 text += String.format(getString(R.string.sensor_value_format),
                         si.getLabel(i), si.getUnits());
-                text += String.valueOf(event.values[i]) + "\n";
+                text += twoDForm.format(event.values[i]) + "\n";
 
             }
         }
@@ -756,7 +882,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             // Register as a listener at set rate
             boolean result = mgr.registerListener(this, si.sensor(), d);
             if (result == true) {
-                delay_view.setText(SensorInterface.delayToString(d));
+                event_delay.setText(SensorInterface.delayToString(d));
                 if (notify == true) {
                     Toast.makeText(
                             getApplicationContext(),
