@@ -85,7 +85,7 @@ public class GpsDaoImp extends GenericDaoHibernate<Gps, Long> implements GpsDao{
 		query.addScalar("userId", StringType.INSTANCE);
 		query.addScalar("accuracy", DoubleType.INSTANCE);
 		query.addScalar("speed", DoubleType.INSTANCE);
-		query.addScalar("bearing", StringType.INSTANCE);
+		query.addScalar("bearing", DoubleType.INSTANCE);
 		query.addScalar("altitude", DoubleType.INSTANCE);
 		query.addScalar("provider", StringType.INSTANCE);
 		
