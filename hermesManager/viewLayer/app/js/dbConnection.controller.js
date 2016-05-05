@@ -4,13 +4,13 @@
 	angular.module('app').controller('DBConnectionController', DBConnectionController);
 
 	DBConnectionController.$inject = ['$scope', '$filter', '$http', '$translate', 
-	                                '$state', '$rootScope', '$q', '$compile', 
+	                                '$state', '$rootScope', '$q', '$compile', '$uibModal',
 	                                'dbConnectionService', 'SweetAlert',  
 	                                'DTOptionsBuilder', 'DTColumnBuilder', 
-	                                'dbconnectionstype', 'dbconnections', ];
+	                                'dbconnectionstype', 'dbconnections'];
 
 	function DBConnectionController($scope, $filter, $http, $translate, $state, 
-			$rootScope, $q, $compile, dbConnectionService, SweetAlert, 
+			$rootScope, $q, $compile, $uibModal , dbConnectionService, SweetAlert, 
 			DTOptionsBuilder, DTColumnBuilder, dbconnectionstype, dbconnections) {
 	
 		var vm = this;
@@ -18,6 +18,7 @@
 		vm.dbconnectionstype = dbconnectionstype;
 		vm.dbconnections = dbconnections;
 		
+		vm.add = add;
 		vm.edit = edit;
 		vm.delet = delet;
 		
@@ -60,16 +61,83 @@
 		                   })
 		                ];
 		
+		
+		function add(){
+			
+			vm.infoAction = undefined;
+			
+			var modalInstance = $uibModal.open({
+                templateUrl: './partials/dbconnection/modal-form.html',
+                controller: 'DBConnectionModalController',
+                scope: $scope,
+                resolve: {
+                	infoConnection: function(){
+                    	return null;
+                    },
+                	types: function () {
+                        return vm.dbconnectionstype;
+                    },
+                    connectionForm: function () {
+                        return $scope.connectionForm;
+                    }
+                }
+            });
+	        
+	        modalInstance.result.then(function (response) {
+		     	vm.infoAction = response;
+		     	
+		     	dbConnectionService.getDbConnections().then(function(response) {
+		     		vm.dbconnections = response;
+	        		if (vm.dtInstance !== null){
+	        			vm.dtInstance.reloadData();
+	        		}
+	        	});
+    	        
+            }, function () {
+            	console.log('Modal dismissed at: ' + new Date());
+            });
+		}
+		
 		function edit (id) {
-	        console.log('Editing ' + id);
-	        // Edit some data and call server to make changes...
-	        // Then reload the data so that DT is refreshed
-	        vm.dtOptions.reloadData();
+			
+			vm.infoAction = undefined;
+			
+			var modalInstance = $uibModal.open({
+                templateUrl: './partials/dbconnection/modal-form.html',
+                controller: 'DBConnectionModalController',
+                scope: $scope,
+                resolve: {
+                	infoConnection: function(){
+                    	return dbConnectionService.getDBConnection(id);
+                    },
+                	types: function () {
+                        return vm.dbconnectionstype;
+                    },
+                    connectionForm: function () {
+                        return $scope.connectionForm;
+                    }
+                }
+            });
+	        
+	        modalInstance.result.then(function (response) {
+	        	vm.infoAction = response;
+                
+	        	dbConnectionService.getDbConnections().then(function(response) {
+		     		vm.dbconnections = response;
+	        		if (vm.dtInstance !== null){
+	        			vm.dtInstance.reloadData();
+	        		}
+	        	});
+    	        
+            }, function () {
+            	console.log('Modal dismissed at: ' + new Date());
+            });
 	    }
 	    
 	    function delet(id) {
-	        console.log('Deleting' + id);
 	        
+	    	vm.infoAction = undefined;
+	    	
 	        SweetAlert.swal({
 	        	   title: $translate.instant('confirmDelete'),
 	        	   text: $translate.instant('textDelete'),
@@ -77,16 +145,18 @@
 	        	   showCancelButton: true,
 	        	   confirmButtonColor: "#DD6B55",
 	        	   confirmButtonText: $translate.instant('aceptar'),
-	        	   closeOnConfirm: false,
+	        	   closeOnConfirm: true,
 	        	   closeOnCancel: true 
 	        	}, 
 	        	function(isConfirm){
 	        		if (isConfirm){
-	        			dbConnectionService.delet(id).then(function() {
+	        			dbConnectionService.delet(id).then(function(response) {
 		   	        		vm.infoAction = response.data;
-		   	        		dbConnectionService.getDbConnections().then(function() {
-		   	        			vm.dbconnections = response.data;
-		   						 vm.dtOptions.reloadData();
+		   	        		dbConnectionService.getDbConnections().then(function(response) {
+		   	        			vm.dbconnections = response;
+		   	        			if (vm.dtInstance !== null){
+		   	        				vm.dtInstance.reloadData();
+		   	        			}
 		   	        		});
 		   	        	});	
 	        		}

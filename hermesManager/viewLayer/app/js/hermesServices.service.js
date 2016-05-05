@@ -3,9 +3,9 @@
 
 	angular.module('app').factory('hermesServicesService', hermesServicesService);
 
-	hermesServicesService.$inject = ['$http', '$log', '$q', '$filter'];
+	hermesServicesService.$inject = ['$http', '$log', '$q', '$filter', '$localStorage'];
 
-	function hermesServicesService($http, $log, $q, $filter) {
+	function hermesServicesService($http, $log, $q, $filter, $localStorage) {
 		var service = {
 				getServices: getServices,
 				getMethods: getMethods,
@@ -102,9 +102,13 @@
 	
 	
 		function getComputeRoute (fromLat, fromLng, toLat, toLng) {
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
 			return $http({
 				method : 'GET',
-				url : url_network_route + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng
+				url : url_network_route + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng,
+				params: {"lang": lang}
 			});
 			
 		}

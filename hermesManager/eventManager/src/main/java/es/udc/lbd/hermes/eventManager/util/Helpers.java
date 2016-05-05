@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.eventManager.json.RoadSectionPoint;
@@ -68,5 +70,23 @@ public class Helpers {
 		strdate = sdf.format(calendar.getTime());
 		
 		return strdate;
+	}
+	
+	public static Locale construirLocale(String lang){
+		Locale locale = null;
+		switch (lang) {
+		case "es":
+			locale = new Locale("es", "ES");
+			break;
+
+		case "en":
+			locale = new Locale("en", "EN");
+			break;
+		default:
+			locale = new Locale("en", "EN");
+			break;
+		}
+		
+		return locale;
 	}
 }

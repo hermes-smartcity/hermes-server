@@ -155,3 +155,6 @@ var url_dbconnection = url_servidor+'api/dbconnection/';
 var url_dbConnectionsTypes = url_dbconnection+'json/dbConnectionsTypes';
 var url_dbConnections = url_dbconnection+'json/dbConnections';
 var url_delete_dbconnection = url_dbconnection+"delete";
+var url_register_dbconnection = url_dbconnection+"register";
+var url_edit_dbconnection = url_dbconnection+"edit";
+var url_get_dbconnection = url_dbconnection+'json/dbConnection';

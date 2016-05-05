@@ -19,7 +19,7 @@ import es.udc.lbd.hermes.model.util.jackson.CustomGeometrySerializer;
 import es.udc.lbd.hermes.model.util.jackson.CustomMultiPolygonDeserializer;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "job_id_seq")
+@SequenceGenerator(name = "xeradorId", sequenceName = "osmimport.job_id_seq")
 @Table(schema="\"osmimport\"", name = "job")
 @SuppressWarnings("serial")
 public class Job implements Serializable{

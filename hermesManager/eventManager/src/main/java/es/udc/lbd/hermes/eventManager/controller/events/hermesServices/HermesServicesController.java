@@ -127,8 +127,14 @@ public class HermesServicesController {
 			@RequestParam(value = "fromLng", required = true) Double fromLng,
 			@RequestParam(value = "toLat", required = true) Double toLat, 
 			@RequestParam(value = "toLng", required = true) Double toLng,
-			Locale locale) { 
+			@RequestParam(value = "lang", required = false) String lang) { 
 
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
 		try{
 			List<RouteSegment> lista = networkServicio.getComputeRoute(fromLat, fromLng, toLat, toLng);
 		

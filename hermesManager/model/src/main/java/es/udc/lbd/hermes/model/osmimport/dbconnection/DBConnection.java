@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "dbconnection_id_seq")
+@SequenceGenerator(name = "xeradorId", sequenceName = "osmimport.dbconnection_id_seq")
 @Table(schema="\"osmimport\"", name = "dbconnection")
 @SuppressWarnings("serial")
 public class DBConnection implements Serializable{

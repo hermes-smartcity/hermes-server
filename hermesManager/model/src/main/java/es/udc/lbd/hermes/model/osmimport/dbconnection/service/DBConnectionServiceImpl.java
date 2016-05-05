@@ -24,4 +24,23 @@ public class DBConnectionServiceImpl implements DBConnectionService{
 	public void delete(Long id){
 		dbConnectionDao.delete(id);
 	}
+	
+	public DBConnection register(DBConnection dbConnection){
+		dbConnectionDao.create(dbConnection);
+		
+		return dbConnection;
+	}
+	
+	@Transactional(readOnly = true)
+	public DBConnection get(Long id){
+		return dbConnectionDao.get(id);
+	}
+
+	public DBConnection update(DBConnection dbConnection, Long id){
+		dbConnectionDao.update(dbConnection);
+		
+		return dbConnection;
+	}
+	
+	
 }

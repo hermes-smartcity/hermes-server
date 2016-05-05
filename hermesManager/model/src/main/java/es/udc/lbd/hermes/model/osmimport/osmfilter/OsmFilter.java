@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import es.udc.lbd.hermes.model.osmimport.osmconcept.OsmConcept;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "osmfilter_id_seq")
+@SequenceGenerator(name = "xeradorId", sequenceName = "osmimport.osmfilter_id_seq")
 @Table(schema="\"osmimport\"", name = "osmfilter")
 @SuppressWarnings("serial")
 public class OsmFilter implements Serializable{

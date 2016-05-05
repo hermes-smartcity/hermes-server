@@ -10,7 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "osmconcept_id_seq")
+@SequenceGenerator(name = "xeradorId", sequenceName = "osmimport.osmconcept_id_seq")
 @Table(schema="\"osmimport\"", name = "osmconcept")
 @SuppressWarnings("serial")
 public class OsmConcept implements Serializable{

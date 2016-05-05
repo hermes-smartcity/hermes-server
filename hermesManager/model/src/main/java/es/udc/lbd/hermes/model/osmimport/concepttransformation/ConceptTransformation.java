@@ -25,7 +25,7 @@ import es.udc.lbd.hermes.model.util.jackson.CustomGeometrySerializer;
 import es.udc.lbd.hermes.model.util.jackson.CustomMultiPolygonDeserializer;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "concepttransformation_id_seq")
+@SequenceGenerator(name = "xeradorId", sequenceName = "osmimport.concepttransformation_id_seq")
 @Table(schema="\"osmimport\"", name = "concepttransformation")
 @SuppressWarnings("serial")
 public class ConceptTransformation implements Serializable{

@@ -17,7 +17,7 @@ import es.udc.lbd.hermes.model.osmimport.dbattribute.DBAttribute;
 import es.udc.lbd.hermes.model.osmimport.osmattribute.OsmAttribute;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "attributemapping_id_seq")
+@SequenceGenerator(name = "xeradorId", sequenceName = "osmimport.attributemapping_id_seq")
 @Table(schema="\"osmimport\"", name = "attributemapping")
 @SuppressWarnings("serial")
 public class AttributeMapping implements Serializable{

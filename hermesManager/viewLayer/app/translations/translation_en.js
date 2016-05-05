@@ -17,6 +17,7 @@
 			"volver": "Back",
 			"editar": "Edit",
 			"aceptar": "Ok",
+			"cancelar": "Cancel",
 			"emailPasswordIncorrectos": "Incorrect Email/password",
 			"en": " on ",
 			"falloConEstado": " failed with status ",
@@ -326,7 +327,12 @@
 				"actions": "Actions",
 				"noData": "There are not data to show",
 				"create": "Create new DB Connection",
-				"deletedOK": "DBConnection deleted"
+				"deletedOK": "DBConnection deleted",
+				"hostRequired": "Host required",
+				"portRequired": "Port required",
+				"dbnameRequired": "DB Name required",
+				"typeRequired": "Type required",
+				"portFormat": "Port format incorrect. Use 4 numbers"
 			}
 		});
 	}

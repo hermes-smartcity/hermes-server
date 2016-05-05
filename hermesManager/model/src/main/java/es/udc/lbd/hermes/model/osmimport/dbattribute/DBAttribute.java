@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import es.udc.lbd.hermes.model.osmimport.dbconcept.DBConcept;
 
 @Entity
-@SequenceGenerator(name = "xeradorId", sequenceName = "dbattribute_id_seq")
+@SequenceGenerator(name = "xeradorId", sequenceName = "osmimport.dbattribute_id_seq")
 @Table(schema="\"osmimport\"", name = "dbattribute")
 @SuppressWarnings("serial")
 public class DBAttribute implements Serializable{

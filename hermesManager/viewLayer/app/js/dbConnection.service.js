@@ -3,13 +3,16 @@
 
 	angular.module('app').factory('dbConnectionService', dbConnectionService);
 
-	dbConnectionService.$inject = ['$http', '$log', '$q'];
+	dbConnectionService.$inject = ['$http', '$log', '$q', '$localStorage'];
 
-	function dbConnectionService($http, $log, $q) {
+	function dbConnectionService($http, $log, $q, $localStorage) {
 		var service = {
 				getDbConnectionsType: getDbConnectionsType,
 				getDbConnections: getDbConnections,
 				delet: delet,
+				register: register,
+				edit: edit,
+				getDBConnection: getDBConnection
 		};
 
 		return service;
@@ -38,10 +41,54 @@
 			}
 		}
 		
-		function delet (id) {		
+		function delet (id) {	
+			 
+	        var lang = $localStorage.hermesmanager.lang;
+	       
 			return $http({
 				method : 'DELETE',
-				url : url_delete_dbconnection+"/"+id
+				url : url_delete_dbconnection + "/" + id,
+				params: {"lang": lang}
+			});
+		}
+		
+		function register (connection) {
+			
+			var lang = $localStorage.hermesmanager.lang;
+		       
+			return $http({
+				method : 'POST',
+				headers: { 
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+				url : url_register_dbconnection,
+				data : connection,
+				params: {"lang": lang}
+			});
+		}
+		
+		function edit (connection) {	
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
+			return $http({
+				method : 'PUT',
+				headers: { 
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+				url : url_edit_dbconnection + "/" + connection.id,
+				data : connection,
+				params: {"lang": lang}
+			});
+		}
+		
+		function getDBConnection (id) {		
+			return $http({
+				method : 'GET',
+				url : url_get_dbconnection,
+				params: {"id": id}
 			});
 		}
 	}

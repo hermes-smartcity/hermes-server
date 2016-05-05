@@ -1,7 +1,5 @@
 <div class="col-lg-9">
 
-	<div data-ng-hide="!vm.dbconnections.length">{{'dbconnection.noData' | translate}}</div>
-	
 	<div class="top-buffer">
 		{{'dbconnection.create' | translate}}
 		<button class="btn btn-danger" data-ng-click="vm.add()">
@@ -9,7 +7,7 @@
 		</button>
 	</div>
 	
-	<div data-ng-if="vm.infoCuenta" class="top-buffer pull-center alert alert-info" data-role="alert">
+	<div data-ng-if="vm.infoAction" class="top-buffer pull-center alert alert-info" data-role="alert">
 		{{vm.infoAction.value}}
 	</div>
 	
