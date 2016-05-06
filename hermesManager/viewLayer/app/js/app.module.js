@@ -177,6 +177,20 @@
 			resolve: {
 				dbconcepts: dbconcepts
 			}
+		}).state('manageAttributes', {
+			url: '/manageAttributes/:idConcept',
+			templateUrl:'partials/dbattribute/dbattribute.html',
+			controller: 'DBAttributeController',
+			controllerAs: 'vm',
+			resolve: {
+				idConcept: function($stateParams) {
+					return $stateParams.idConcept;
+				},
+				dbattributestype: dbattributestype,
+				dbattributes: function(dbAttributeService, $stateParams) {
+					return dbAttributeService.getDbAttributes($stateParams.idConcept);
+				}
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -254,6 +268,11 @@
 	dbconcepts.$inject = ['dbConceptService'];
 	function dbconcepts(dbConceptService) {
 		return dbConceptService.getDbConcepts();
+	}
+	
+	dbattributestype.$inject = ['dbAttributeService'];
+	function dbattributestype(dbAttributeService) {
+		return dbAttributeService.getDbAttributesType();
 	}
 	
 	angular.module('app').config(translateAppConfig);

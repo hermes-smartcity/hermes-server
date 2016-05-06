@@ -347,6 +347,15 @@
 				"create": "Create new DB Concept",
 				"nameRequired": "Name required",
 				"tableNameRequired": "Table name required",
+			},
+			"dbattribute":{
+				"actions": "Actions",
+				"id": "ID",
+				"name": "Name",
+				"type": "Type",
+				"create": "Create new DB Attribute",
+				"nameRequired": "Name required",
+				"typeRequired": "Type required",
 			}
 		});
 	}

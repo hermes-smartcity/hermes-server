@@ -168,15 +168,15 @@ public class SensorCollector implements SensorEventListener, LocationListener {
         mgr.registerListener(SensorCollector.this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         //Registrar listener de gps
-        if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (provider != null) {
+            if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                lmgr.requestLocationUpdates(provider,
+                        MIN_TIME_BW_UPDATES,
+                        MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
-            lmgr.requestLocationUpdates(provider,
-                    MIN_TIME_BW_UPDATES,
-                    MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
+            }
         }
-
     }
 
     public void unregisterSensorCollector() {
@@ -436,10 +436,13 @@ public class SensorCollector implements SensorEventListener, LocationListener {
             //Recuperamos la lista de elementos a enviar
             int numElementos = valuesSensorToSend.size();
 
-            //Si no hay elementos, no haremos nada  y tampoco cambiaremos
-            //el valor del primer envio
-            if (numElementos == 0){
+            //Si es el primer envio y no hay elementos, no enviamos nada y decimos que todavia estamos en el primer envio
+            //Si no es el primer envio y no hay elemento, no enviamos nada y no cambiamos las variables de primer/ultimo envio
+            //Si no es el primer envio y hay datos, procedemos normal
+            if (firstSend && numElementos == 0){
                 return false;
+            }else if (!firstSend && numElementos == 0){
+                return true;
             }else{
                 try {
 

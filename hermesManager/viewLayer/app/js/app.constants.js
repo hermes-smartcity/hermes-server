@@ -166,3 +166,12 @@ var url_delete_dbconcept = url_dbconcept+"delete";
 var url_register_dbconcept = url_dbconcept+"register";
 var url_edit_dbconcept = url_dbconcept+"edit";
 var url_get_dbconcept = url_dbconcept+'json/dbConcept';
+
+//Controlador db attributes
+var url_dbattribute = url_servidor+'api/dbattribute/';
+var url_dbAttributesTypes = url_dbattribute+'json/dbAttributesTypes';
+var url_dbAttributes = url_dbattribute+'json/dbAttributes';
+var url_delete_dbattribute = url_dbattribute+"delete";
+var url_register_dbattribute = url_dbattribute+"register";
+var url_edit_dbattribute = url_dbattribute+"edit";
+var url_get_dbattribute = url_dbattribute+'json/dbAttribute';

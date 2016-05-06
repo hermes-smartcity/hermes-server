@@ -1,4 +1,4 @@
-package es.udc.lbd.hermes.eventManager.controller.osmimport.dbConnection;
+package es.udc.lbd.hermes.eventManager.controller.osmimport.dbAttribute;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,29 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
-import es.udc.lbd.hermes.model.osmimport.dbconnection.DBConnection;
-import es.udc.lbd.hermes.model.osmimport.dbconnection.DBConnectionType;
-import es.udc.lbd.hermes.model.osmimport.dbconnection.service.DBConnectionService;
+import es.udc.lbd.hermes.model.osmimport.dbattribute.DBAttribute;
+import es.udc.lbd.hermes.model.osmimport.dbattribute.DBAttributeDTO;
+import es.udc.lbd.hermes.model.osmimport.dbattribute.DBAttributeType;
+import es.udc.lbd.hermes.model.osmimport.dbattribute.service.DBAttributeService;
 
 @RestController
-@RequestMapping(value = "/api/dbconnection")
-public class DBConnectionController extends MainResource {
+@RequestMapping(value = "/api/dbattribute")
+public class DBAttributeController extends MainResource{
 
-	static Logger logger = Logger.getLogger(DBConnectionController.class);
+	static Logger logger = Logger.getLogger(DBAttributeController.class);
 	
-	@Autowired private DBConnectionService dbConnectionServicio;
+	@Autowired private DBAttributeService dbAttributeServicio;
 	
 	@Autowired private MessageSource messageSource;
 	
-	@RequestMapping(value="/json/dbConnectionsTypes", method = RequestMethod.GET)
-	public List<DBConnectionType> getDbConnectionsType() {
-		return Arrays.asList(DBConnectionType.values());
+	@RequestMapping(value="/json/dbAttributesTypes", method = RequestMethod.GET)
+	public List<DBAttributeType> getDbAttributesType() {
+		return Arrays.asList(DBAttributeType.values());
 	}
 	
-	@RequestMapping(value="/json/dbConnections", method = RequestMethod.GET)
-	public List<DBConnection> getDBConnections() { 
+	@RequestMapping(value="/json/dbAttributes", method = RequestMethod.GET)
+	public List<DBAttribute> getDBConcepts(@RequestParam(value = "idConcept", required = true) Long idConcept) { 
 
-		return dbConnectionServicio.getDBConnections();
+		return dbAttributeServicio.getAll(idConcept);
 
 	}
 	
@@ -50,57 +51,57 @@ public class DBConnectionController extends MainResource {
 		
 		JSONData jsonD = new JSONData();
 
-		dbConnectionServicio.delete(id);
+		dbAttributeServicio.delete(id);
 		
 		if (lang == null){
 			lang = "en";
 		}
 		
 		Locale locale = Helpers.construirLocale(lang);
-		String mensaje = messageSource.getMessage("deletedConnectionOK", null, locale);
+		String mensaje = messageSource.getMessage("deletedAttributeOK", null, locale);
 		jsonD.setValue(mensaje);
 		
 		return jsonD;
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public JSONData register(@RequestBody DBConnection connection,
+	public JSONData register(@RequestBody DBAttributeDTO attribute,
 			@RequestParam(value = "lang", required = false) String lang) {
 		
 		JSONData jsonD = new JSONData();
-		dbConnectionServicio.register(connection);
+		dbAttributeServicio.register(attribute);
 
 		if (lang == null){
 			lang = "en";
 		}
 		
 		Locale locale = Helpers.construirLocale(lang);
-		String mensaje = messageSource.getMessage("createdConnectionOK", null, locale);
+		String mensaje = messageSource.getMessage("createdAttributeOK", null, locale);
 		jsonD.setValue(mensaje);
 		
 		return jsonD;
 	}
 	
 	
-	@RequestMapping(value = "/json/dbConnection", method = RequestMethod.GET)
-	public DBConnection getDBConnection(@RequestParam(value = "id", required = true) Long id) {
-		return dbConnectionServicio.get(id);
+	@RequestMapping(value = "/json/dbAttribute", method = RequestMethod.GET)
+	public DBAttribute getDBAttribute(@RequestParam(value = "id", required = true) Long id) {
+		return dbAttributeServicio.get(id);
 
 	}
 	
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public JSONData update(@PathVariable Long id, @RequestBody DBConnection dbConnection,
+	public JSONData update(@PathVariable Long id, @RequestBody DBAttributeDTO dbAttribute,
 			@RequestParam(value = "lang", required = false) String lang) {
 		
 		JSONData jsonD = new JSONData();
-		dbConnectionServicio.update(dbConnection, id);
+		dbAttributeServicio.update(dbAttribute, id);
 		
 		if (lang == null){
 			lang = "en";
 		}
 		
 		Locale locale = Helpers.construirLocale(lang);
-		String mensaje = messageSource.getMessage("updatedConnectionOK", null, locale);
+		String mensaje = messageSource.getMessage("updatedAttributeOK", null, locale);
 		jsonD.setValue(mensaje);
 		
 		return jsonD;
