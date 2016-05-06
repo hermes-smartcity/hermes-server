@@ -84,7 +84,6 @@ public class NetworkServiceImpl implements NetworkService{
 	private UserActivitiesDao userActivitiesDao;
 		
 	@Override
-	@Transactional(readOnly = true)
 	public NetworkLinkVO getLinkInformation(Double currentLong, Double currentLat, Double previousLong, Double previousLat){
 		//Recuperamos el datos
 		NetworkLinkVO resultado = networkDao.getLinkInformation(currentLong, currentLat, previousLong, previousLat);
@@ -97,7 +96,6 @@ public class NetworkServiceImpl implements NetworkService{
 	}
 	
 	@Override
-	@Transactional(readOnly = true)
 	public AggregateMeasurementVO getAggregateMeasurement(Type type, Double lat, Double lon, Integer day, Integer time, String value){
 		
 		AggregateMeasurementVO resultado = null;
@@ -144,7 +142,6 @@ public class NetworkServiceImpl implements NetworkService{
 		return resultado;
 	}
 	
-	@Transactional(readOnly = true)
 	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng) throws PointDestinyException, PointOriginException{
 		//Obtenemos el id de origen
 		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
