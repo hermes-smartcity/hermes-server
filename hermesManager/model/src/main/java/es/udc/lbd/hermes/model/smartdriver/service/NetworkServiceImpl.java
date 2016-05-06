@@ -84,6 +84,7 @@ public class NetworkServiceImpl implements NetworkService{
 	private UserActivitiesDao userActivitiesDao;
 		
 	@Override
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public NetworkLinkVO getLinkInformation(Double currentLong, Double currentLat, Double previousLong, Double previousLat){
 		//Recuperamos el datos
 		NetworkLinkVO resultado = networkDao.getLinkInformation(currentLong, currentLat, previousLong, previousLat);
@@ -96,6 +97,7 @@ public class NetworkServiceImpl implements NetworkService{
 	}
 	
 	@Override
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public AggregateMeasurementVO getAggregateMeasurement(Type type, Double lat, Double lon, Integer day, Integer time, String value){
 		
 		AggregateMeasurementVO resultado = null;
@@ -142,6 +144,7 @@ public class NetworkServiceImpl implements NetworkService{
 		return resultado;
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng) throws PointDestinyException, PointOriginException{
 		//Obtenemos el id de origen
 		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
@@ -163,7 +166,6 @@ public class NetworkServiceImpl implements NetworkService{
 		return listado;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<VehicleLocation> getVehicleLocation(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double nwLng, Double nwLat,	Double seLng, Double seLat) {
@@ -173,10 +175,13 @@ public class NetworkServiceImpl implements NetworkService{
 		List<VehicleLocation> vehicleLocations = vehicleLocationDao.obterVehicleLocations(idUsuario, fechaIni, 
 				fechaFin, polygon, -1, -1);	
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.vehicleLocationSmartDriver();
+				
 		return vehicleLocations;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<Measurement> getMeasurement(MeasurementType tipo,Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double nwLng, Double nwLat,	Double seLng, Double seLat) {
@@ -184,10 +189,13 @@ public class NetworkServiceImpl implements NetworkService{
 
 		List<Measurement> measurements = measurementDao.obterMeasurementsSegunTipo(tipo, idUsuario, fechaIni, fechaFin, polygon, -1, -1);
 
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.measurementSmartDriver();
+				
 		return measurements;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<DataSection> getDataSection(Long idUsuarioMovil, Calendar fechaIni, Calendar fechaFin,
 			Double nwLng, Double nwLat,	Double seLng, Double seLat) {
@@ -195,51 +203,66 @@ public class NetworkServiceImpl implements NetworkService{
 
 		List<DataSection> dataSections = dataSectionDao.obterDataSections(idUsuarioMovil, fechaIni, fechaFin, polygon, -1, -1);
 
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.dataSectionsSmartDriver();
+				
 		return dataSections;
 		
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<DriverFeatures> getDriverFeatures(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
 		
 		List<DriverFeatures> driverFeatures = driverFeaturesDao.obterDriverFeatures(idUsuario, fechaIni, 
 				fechaFin, -1, -1);	
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.driverFeaturesSmartDriver();
+				
 		return driverFeatures;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<HeartRateData> getHeartRateData(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
 		
 		List<HeartRateData> heartRateData = heartRateDataDao.obterHeartRateData(idUsuario, fechaIni, 
 				fechaFin, -1, -1);	
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.heartRateDataSmartCitizien();
+				
 		return heartRateData;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<StepsData> getStepsData(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
 		
 		List<StepsData> stepsData = stepsDataDao.obterStepsData(idUsuario, fechaIni, 
 				fechaFin, -1, -1);	
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.stepsDataSmartCitizien();
+				
 		return stepsData;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<SleepData> getSleepData(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
 		
 		List<SleepData> sleepData = sleepDataDao.obterSleepData(idUsuario, fechaIni, 
 				fechaFin, -1, -1);	
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.sleepDataSmartCitizien();
+		
 		return sleepData;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<ContextData> getContextData(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double nwLng, Double nwLat,	Double seLng, Double seLat){
@@ -248,10 +271,13 @@ public class NetworkServiceImpl implements NetworkService{
 
 		List<ContextData> contextData = contextDataDao.obterContextData(idUsuario, fechaIni, fechaFin, polygon, -1, -1);
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.contextDataSmartCitizien();
+				
 		return contextData;
 	}
 	
-	@Transactional(readOnly = true)
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<UserLocations> getUserLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double nwLng, Double nwLat,	Double seLng, Double seLat){
@@ -260,13 +286,22 @@ public class NetworkServiceImpl implements NetworkService{
 
 		List<UserLocations> userLocations = userLocationsDao.obterUserLocations(idUsuario, fechaIni, fechaFin, polygon, -1, -1);
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.userLocationsSmartCitizien();
+				
 		return userLocations;
 	}
 	
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<UserActivities> getUserActivities(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
 		List<UserActivities> userActivities = userActivitiesDao.obterUserActivities(idUsuario, fechaIni, 
 				fechaFin, -1, -1);	
 		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.userActivitiesSmartCitizien();
+				
 		return userActivities;
 	}
 }
