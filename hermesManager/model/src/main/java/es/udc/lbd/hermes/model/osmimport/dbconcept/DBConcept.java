@@ -24,6 +24,7 @@ public class DBConcept implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "xeradorId")
 	private Long id;
 	
+	private String name;
 	private String schemaName;
 	private String tableName;
 	
@@ -33,10 +34,11 @@ public class DBConcept implements Serializable{
 	
 	public DBConcept(){}
 
-	public DBConcept(Long id, String schemaName, String tableName,
+	public DBConcept(Long id, String name, String schemaName, String tableName,
 			DBConnection dbConnection) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.schemaName = schemaName;
 		this.tableName = tableName;
 		this.dbConnection = dbConnection;
@@ -48,6 +50,14 @@ public class DBConcept implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getSchemaName() {

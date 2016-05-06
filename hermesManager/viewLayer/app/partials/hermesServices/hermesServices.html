@@ -4,14 +4,14 @@
 <div class="row">
 
 	<div class="col-md-9" >
-					    			
+
 		<div data-ng-show="vm.errorPoint" class="alert alert-danger alert-dismissable">
 			<button type="button" class="close" data-ng-click="vm.errorPoint = false" data-aria-hidden="true">&times;</button>
 			{{vm.mensajeErrorPoint}}
 		</div>
-		
+
 	</div>
-	    
+
 	<div class="col-md-9">
 		<div class="panel panel-default">
 			<div class="panel-heading" data-ng-show="vm.showSelectorMapTab">
@@ -51,12 +51,11 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div class="cabeceraFiltro col-md-3">
-		<div class="slide-animate" data-ng-include="'./partials/hermesservices/filtros.html'"></div>
-		<div class="slide-animate" data-ng-if="!vm.showResult" 
-			data-ng-include="'./partials/hermesservices/resultados.html'"></div>
+		<div class="slide-animate" data-ng-include="'./partials/hermesServices/filtros.html'"></div>
+		<div class="slide-animate" data-ng-if="!vm.showResult"
+			data-ng-include="'./partials/hermesServices/resultados.html'"></div>
 	</div>
 </div>
-	

@@ -9,6 +9,7 @@ create sequence dbconnection_id_seq;
 
 CREATE TABLE dbconnection (
   id bigint NOT NULL DEFAULT nextval('dbconnection_id_seq'::regclass),
+  name VARCHAR(100) NOT NULL,
   type VARCHAR(50) NOT NULL,
   host VARCHAR(150) NOT NULL,
   port int NOT NULL,
@@ -24,6 +25,7 @@ create sequence dbconcept_id_seq;
 
 CREATE TABLE dbconcept (
   id bigint NOT NULL DEFAULT nextval('dbconcept_id_seq'::regclass),
+  name VARCHAR(100) NOT NULL,
   schemaName VARCHAR(150),
   tableName VARCHAR(150) NOT NULL,
   idDbConnection bigint,

@@ -4,6 +4,14 @@
 
 <form name="form.connectionForm" novalidate>
     <div class="modal-body">
+    
+    	<!-- HOST -->
+        <div class="form-group">
+            <label>{{'dbconnection.name' | translate}}</label>
+            <input type="text" name="name" class="form-control" data-ng-model="name" required>
+            <p data-ng-show="form.connectionForm.name.$error.required && !form.connectionForm.name.$pristine" class="avisoError">{{'dbconnection.nameRequired' | translate}}</p>
+        </div>
+        
         <!-- HOST -->
         <div class="form-group">
             <label>{{'dbconnection.host' | translate}}</label>
