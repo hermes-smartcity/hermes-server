@@ -1,20 +1,22 @@
 (function() {
 	'use strict';
 
-	angular.module('app').controller('DBConceptController', DBConceptController);
+	angular.module('app').controller('DBAttributeController', DBAttributeController);
 
-	DBConceptController.$inject = ['$scope', '$filter', '$http', '$translate', 
+	DBAttributeController.$inject = ['$scope', '$filter', '$http', '$translate', 
 	                                '$state', '$rootScope', '$q', '$compile', '$uibModal',
-	                                'dbConceptService', 'SweetAlert',  'DTOptionsBuilder', 
-	                                'DTColumnBuilder', 'dbconcepts'];
+	                                'dbAttributeService', 'SweetAlert',  'DTOptionsBuilder', 
+	                                'DTColumnBuilder', 'idConcept', 'dbattributestype', 'dbattributes'];
 	
-	function DBConceptController($scope, $filter, $http, $translate, $state, 
-			$rootScope, $q, $compile, $uibModal , dbConceptService, SweetAlert, 
-			DTOptionsBuilder, DTColumnBuilder, dbconcepts) {
+	function DBAttributeController($scope, $filter, $http, $translate, $state, 
+			$rootScope, $q, $compile, $uibModal , dbAttributeService, SweetAlert, 
+			DTOptionsBuilder, DTColumnBuilder, idConcept, dbattributestype, dbattributes) {
 	
 		var vm = this;
 		
-		vm.dbconcepts = dbconcepts;
+		vm.idConcept = parseInt(idConcept);
+		vm.dbattributestype = dbattributestype;
+		vm.dbattributes = dbattributes.data;
 		
 		vm.add = add;
 		vm.edit = edit;
@@ -32,7 +34,7 @@
 		
 		function datosPromise(){
 			var dfd = $q.defer();		
-			dfd.resolve(vm.dbconcepts);
+			dfd.resolve(vm.dbattributes);
 
 			return dfd.promise;
 		}
@@ -43,24 +45,16 @@
 		}
 		
 		vm.dtColumns  = [
-		                   DTColumnBuilder.newColumn('id').withTitle($translate.instant('dbconcept.id')),
-		                   DTColumnBuilder.newColumn('name').withTitle($translate.instant('dbconcept.name')),
-		                   DTColumnBuilder.newColumn('schemaName').withTitle($translate.instant('dbconcept.schemaName')),
-		                   DTColumnBuilder.newColumn('tableName').withTitle($translate.instant('dbconcept.tableName')),
-		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('dbconcept.dbconnection')).renderWith(function(data,type,full) {
-		                	   var texto = data.dbConnection.name;
-		                	   return texto;
-		                   }),
-		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('dbconcept.actions')).notSortable()
+		                   DTColumnBuilder.newColumn('id').withTitle($translate.instant('dbattribute.id')),
+		                   DTColumnBuilder.newColumn('attributeName').withTitle($translate.instant('dbattribute.name')),
+		                   DTColumnBuilder.newColumn('attributeType').withTitle($translate.instant('dbattribute.type')),
+		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('dbattribute.actions')).notSortable()
 		                   .renderWith(function(data, type, full, meta) {
 		                       return '<button class="btn btn-warning" data-ng-click="vm.edit(' + data.id + ')">' +
 		                           '   <i class="fa fa-edit"></i>' +
 		                           '</button>&nbsp;' +
 		                           '<button class="btn btn-danger" data-ng-click="vm.delet(' + data.id + ')">' +
 		                           '   <i class="fa fa-trash-o"></i>' +
-		                           '</button>&nbsp;' +
-		                           '<button class="btn btn-info" data-ui-sref="manageAttributes({idConcept:'+ data.id + '})" >' +
-		                           	$translate.instant('dbconcept.manageAttributes') + 
 		                           '</button>';
 		                   })
 		                ];  
@@ -71,18 +65,21 @@
 			vm.infoAction = undefined;
 			
 			var modalInstance = $uibModal.open({
-                templateUrl: './partials/dbconcept/modal-form.html',
-                controller: 'DBConceptModalController',
+                templateUrl: './partials/dbattribute/modal-form.html',
+                controller: 'DBAttributeModalController',
                 scope: $scope,
                 resolve: {
-                	infoConcept: function(){
+                	infoAttribute: function(){
                     	return null;
                     },
-                	dbconnections: function () {
-                		return dbConceptService.getDbConnections();
+                    idConcept: function(){
+                    	return vm.idConcept;
                     },
-                    conceptForm: function () {
-                        return $scope.conceptForm;
+                    attributestypes: function () {
+                        return vm.dbattributestype;
+                    },
+                    attributeForm: function () {
+                        return $scope.attributeForm;
                     }
                 }
             });
@@ -90,8 +87,8 @@
 	        modalInstance.result.then(function (response) {
 		     	vm.infoAction = response;
 		     	
-		     	dbConceptService.getDbConcepts().then(function(response) {
-		     		vm.dbconcepts = response;
+		     	dbAttributeService.getDbAttributes(vm.idConcept).then(function(response) {
+		     		vm.dbattributes = response.data;
 	        		if (vm.dtInstance !== null){
 	        			vm.dtInstance.reloadData();
 	        		}
@@ -107,18 +104,21 @@
 			vm.infoAction = undefined;
 			
 			var modalInstance = $uibModal.open({
-                templateUrl: './partials/dbconcept/modal-form.html',
-                controller: 'DBConceptModalController',
+                templateUrl: './partials/dbattribute/modal-form.html',
+                controller: 'DBAttributeModalController',
                 scope: $scope,
                 resolve: {
-                	infoConcept: function(){
-                		return dbConceptService.getDbConcept(id);
+                	infoAttribute: function(){
+                		return dbAttributeService.getDbAttribute(id);
                     },
-                	dbconnections: function () {
-                		return dbConceptService.getDbConnections();
+                    idConcept: function(){
+                    	return vm.idConcept;
                     },
-                    conceptForm: function () {
-                        return $scope.conceptForm;
+                    attributestypes: function () {
+                        return vm.dbattributestype;
+                    },
+                    attributeForm: function () {
+                        return $scope.attributeForm;
                     }
                 }
             });
@@ -126,8 +126,8 @@
 	        modalInstance.result.then(function (response) {
 		     	vm.infoAction = response;
 		     	
-		     	dbConceptService.getDbConcepts().then(function(response) {
-		     		vm.dbconcepts = response;
+		     	dbAttributeService.getDbAttributes(vm.idConcept).then(function(response) {
+		     		vm.dbattributes = response.data;
 	        		if (vm.dtInstance !== null){
 	        			vm.dtInstance.reloadData();
 	        		}
@@ -154,10 +154,10 @@
 	        	}, 
 	        	function(isConfirm){
 	        		if (isConfirm){
-	        			dbConceptService.delet(id).then(function(response) {
+	        			dbAttributeService.delet(id).then(function(response) {
 		   	        		vm.infoAction = response.data;
-		   	        		dbConceptService.getDbConcepts().then(function(response) {
-		   	        			vm.dbconcepts = response;
+		   	        		dbAttributeService.getDbAttributes(vm.idConcept).then(function(response) {
+		   	        			vm.dbattributes = response.data;
 		   	        			if (vm.dtInstance !== null){
 		   	        				vm.dtInstance.reloadData();
 		   	        			}

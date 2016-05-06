@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.udc.lbd.hermes.eventManager.controller.events.hermesServices.HermesServicesController;
 import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
@@ -25,7 +24,7 @@ import es.udc.lbd.hermes.model.osmimport.dbconcept.service.DBConceptService;
 @RequestMapping(value = "/api/dbconcept")
 public class DBConceptController extends MainResource{
 
-	static Logger logger = Logger.getLogger(HermesServicesController.class);
+	static Logger logger = Logger.getLogger(DBConceptController.class);
 	
 	@Autowired private DBConceptService dbConceptServicio;
 	
