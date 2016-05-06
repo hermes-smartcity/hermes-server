@@ -158,3 +158,11 @@ var url_delete_dbconnection = url_dbconnection+"delete";
 var url_register_dbconnection = url_dbconnection+"register";
 var url_edit_dbconnection = url_dbconnection+"edit";
 var url_get_dbconnection = url_dbconnection+'json/dbConnection';
+
+//Controlador db concepts
+var url_dbconcept = url_servidor+'api/dbconcept/';
+var url_dbConcepts = url_dbconcept+'json/dbConcepts';
+var url_delete_dbconcept = url_dbconcept+"delete";
+var url_register_dbconcept = url_dbconcept+"register";
+var url_edit_dbconcept = url_dbconcept+"edit";
+var url_get_dbconcept = url_dbconcept+'json/dbConcept';

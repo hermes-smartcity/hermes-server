@@ -21,6 +21,8 @@ public class DBConnection implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "xeradorId")
 	private Long id;
 	
+	private String name;
+	
 	@Enumerated(EnumType.STRING)
     private DBConnectionType type;
 	
@@ -30,10 +32,11 @@ public class DBConnection implements Serializable{
 
 	public DBConnection(){}
 
-	public DBConnection(Long id, DBConnectionType type, String host,
+	public DBConnection(Long id, String name, DBConnectionType type, String host,
 			Integer port, String dbName) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.type = type;
 		this.host = host;
 		this.port = port;
@@ -46,6 +49,14 @@ public class DBConnection implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public DBConnectionType getType() {

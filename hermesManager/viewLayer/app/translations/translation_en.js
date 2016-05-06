@@ -115,7 +115,8 @@
 				"gpsLocation": "GPS Location",
 				"testServices": "Test services",
 				"statistics": "Statistics",
-				"dbConnections": "DB Connections"
+				"dbConnections": "DB Connections",
+				"dbConcepts": "DB Concepts"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -320,6 +321,7 @@
 			},
 			"dbconnection":{
 				"id": "ID",
+				"name": "Name",
 				"type": "Type",
 				"host": "Host",
 				"port": "Port",
@@ -327,12 +329,24 @@
 				"actions": "Actions",
 				"noData": "There are not data to show",
 				"create": "Create new DB Connection",
-				"deletedOK": "DBConnection deleted",
+				"nameRequired": "Name required",
 				"hostRequired": "Host required",
 				"portRequired": "Port required",
 				"dbnameRequired": "DB Name required",
 				"typeRequired": "Type required",
 				"portFormat": "Port format incorrect. Use 4 numbers"
+			},
+			"dbconcept":{
+				"actions": "Actions",
+				"id": "ID",
+				"name": "Name",
+				"schemaName": "Schema name",
+				"tableName": "Table name",
+				"manageAttributes": "Manage attributes",
+				"dbconnection": "DBConnection",
+				"create": "Create new DB Concept",
+				"nameRequired": "Name required",
+				"tableNameRequired": "Table name required",
 			}
 		});
 	}

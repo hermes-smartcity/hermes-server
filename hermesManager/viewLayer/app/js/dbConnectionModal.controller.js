@@ -15,6 +15,7 @@
 		
 		//Si infoConnection no es undefined, es porque estamos editando
 		if (infoConnection !== null){
+			$scope.name = infoConnection.data.name;
 			$scope.type = infoConnection.data.type;
 			$scope.host = infoConnection.data.host;
 			$scope.port = infoConnection.data.port;
@@ -27,6 +28,7 @@
 	            if (infoConnection === null){
 	            	//es un alta
 	            	var connectionNueva = {id: null,
+	            		   name: $scope.form.connectionForm.name.$viewValue,
 	            		   type: $scope.form.connectionForm.type.$viewValue, 
      					   host: $scope.form.connectionForm.host.$viewValue, 
      					   port: parseInt($scope.form.connectionForm.port.$viewValue), 
@@ -38,6 +40,7 @@
 	            }else{
 	            	//es una actualizacion
 	            	var connectionEditar = {id: infoConnection.data.id, 
+	            			name: $scope.form.connectionForm.name.$viewValue,
 	            			type: $scope.form.connectionForm.type.$viewValue, 
 	     					host: $scope.form.connectionForm.host.$viewValue, 
 	     					port: parseInt($scope.form.connectionForm.port.$viewValue), 

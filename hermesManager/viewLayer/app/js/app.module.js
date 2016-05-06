@@ -169,6 +169,14 @@
 				dbconnectionstype: dbconnectionstype,
 				dbconnections: dbconnections
 			}
+		}).state('dbconcept', {
+			url: '/dbconcept',
+			templateUrl: 'partials/dbconcept/dbconcept.html',
+			controller: 'DBConceptController',
+			controllerAs: 'vm',
+			resolve: {
+				dbconcepts: dbconcepts
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -241,6 +249,11 @@
 	dbconnections.$inject = ['dbConnectionService'];
 	function dbconnections(dbConnectionService) {
 		return dbConnectionService.getDbConnections();
+	}
+	
+	dbconcepts.$inject = ['dbConceptService'];
+	function dbconcepts(dbConceptService) {
+		return dbConceptService.getDbConcepts();
 	}
 	
 	angular.module('app').config(translateAppConfig);

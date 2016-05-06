@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h3>{{'dbconcept.create' | translate}}</h3>
+</div>
+
+<form name="form.conceptForm" novalidate>
+    <div class="modal-body">
+       
+        <!-- TABLE NAME -->
+        <div class="form-group">
+            <label>{{'dbconcept.name' | translate}}</label>
+            <input type="text" name="name" class="form-control" data-ng-model="name" required>
+            <p data-ng-show="form.conceptForm.name.$error.required && !form.conceptForm.name.$pristine" class="avisoError">{{'dbconcept.nameRequired' | translate}}</p>
+        </div>
+    
+		<!-- SCHEMA NAME-->
+        <div class="form-group">
+            <label>{{'dbconcept.schemaName' | translate}}</label>
+            <input type="text" name="schemaName" class="form-control" data-ng-model="schemaName">
+        </div>
+        
+        <!-- TABLE NAME -->
+        <div class="form-group">
+            <label>{{'dbconcept.tableName' | translate}}</label>
+            <input type="text" name="tableName" class="form-control" data-ng-model="tableName" required>
+            <p data-ng-show="form.conceptForm.tableName.$error.required && !form.conceptForm.tableName.$pristine" class="avisoError">{{'dbconcept.tableNameRequired' | translate}}</p>
+        </div>
+  
+  		<!-- DB CONNECTION -->
+  		<div class="form-group">
+  			<label>{{'dbconcept.dbconnection' | translate}}</label>
+  			<select id="dbconnection" name="dbconnection" data-ng-model="dbconnection" class="form-control"
+					data-ng-options="dbconnection.id as dbconnection.name for dbconnection in dbconnections" required>
+			</select>
+			<p data-ng-show="form.conceptForm.dbconnection.$error.required && !form.conceptForm.dbconnection.$pristine" class="avisoError">{{'dbconnection.typeRequired' | translate}}</p>
+  		</div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="submitForm()"  data-ng-disabled="form.conceptForm.$invalid">{{'aceptar' | translate}}</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">{{'cancelar' | translate}}</button>
+    </div>
+</form>

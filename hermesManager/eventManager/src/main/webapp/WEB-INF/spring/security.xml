@@ -98,6 +98,13 @@
 		<security:intercept-url method="POST" pattern="/api/dbconnection/register/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="PUT" pattern="/api/dbconnection/edit/**" access="hasRole('ADMIN')" />
 		
+		<!-- dbconcept -->
+		<security:intercept-url method="GET" pattern="/api/dbconcept/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/dbconcept/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/dbconcept/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/dbconcept/edit/**" access="hasRole('ADMIN')" />
+		
+		
 		<security:csrf disabled="true"/>
 	</security:http>
 	
