@@ -75,8 +75,7 @@
 		vm.eventTypeSelectedIni = "VEHICLE_LOCATION";
 		vm.eventTypeSelected = "VEHICLE_LOCATION";
 		vm.listadoCarga = undefined;
-
-
+		
 		vm.startDate = new Date();
 		// Inicializamos la fecha de inicio a la de ayer 
 		vm.startDate.setDate(vm.startDate.getDate()-1);
@@ -223,7 +222,10 @@
 							DTColumnBuilder.newColumn('workingTime').withTitle($translate.instant('driverFeatures.workingtime')),
 							DTColumnBuilder.newColumn('lightSleep').withTitle($translate.instant('driverFeatures.lightsleep')),
 							DTColumnBuilder.newColumn('deepSleep').withTitle($translate.instant('driverFeatures.deepsleep')),
-							DTColumnBuilder.newColumn('previousStress').withTitle($translate.instant('driverFeatures.previousstress'))
+							DTColumnBuilder.newColumn('previousStress').withTitle($translate.instant('driverFeatures.previousstress')),
+							DTColumnBuilder.newColumn('timeStamp').withTitle($translate.instant('driverFeatures.timestamp')).renderWith(function(data, type, full) {
+								return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				            })
 		                   ];
 		
 		vm.dtColumnsHRD  = [
@@ -385,7 +387,7 @@
 				}
 			}else{ //si hemos cambiado de evento, hay que volver a cargar los datos de datospromise
 				vm.eventTypeSelectedIni = vm.eventTypeSelected;
-				vm.cargarListadoTabla();	
+				vm.cargarListadoTabla();
 			}
 
 		}
@@ -602,7 +604,7 @@
 
 		function pintarLineas(events) {
 			markers.clearLayers();
-			angular.forEach(vm.events, function(value, key) {			
+			angular.forEach(events, function(value, key) {			
 				var info = infoPopup(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.tipo, value.value);
 
 				//Almaceno array de puntos 
@@ -686,7 +688,7 @@
 		
 		function pintarLineasDataSection(events) {
 			markers.clearLayers();
-			angular.forEach(vm.events, function(value, key) {			
+			angular.forEach(events, function(value, key) {			
 				var info = infoPopupDataSection(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.accuracy, value.minSpeed , value.maxSpeed , value.medianSpeed , value.averageSpeed , value.averageRR , value.averageHeartRate , value.standardDeviationSpeed , value.standardDeviationRR , value.standardDeviationHeartRate , value.pke , value.numHighAccelerations , value.numHighDecelerations , value.averageAcceleration , value.averageDeceleration , value.rrSection);
 
 				//Almaceno array de puntos 
@@ -718,7 +720,7 @@
 				vm.events = response.results;
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
-				pintarPuntosVehicleLocation(vm.events);
+				pintarPuntosVehicleLocation(response.results);
 
 				vm.recargarTabla();
 			}
@@ -737,7 +739,7 @@
 				vm.events = response.results;
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
-				pintarLineasDataSection(vm.events);
+				pintarLineasDataSection(response.results);
 
 				vm.recargarTabla();
 			}
@@ -760,7 +762,7 @@
 				vm.events = response.results;
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
-				pintarPuntos(vm.events);
+				pintarPuntos(response.results);
 
 				vm.recargarTabla();
 			}
@@ -781,7 +783,7 @@
 				vm.events = response.results;
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
-				pintarPuntosContextData(vm.events);
+				pintarPuntosContextData(response.results);
 
 				vm.recargarTabla();
 			}
@@ -803,7 +805,7 @@
 				vm.events = response.results;
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
-				pintarPuntosHigh(vm.events);
+				pintarPuntosHigh(response.results);
 
 				vm.recargarTabla();
 			}
@@ -823,7 +825,7 @@
 				vm.events = response.results;
 				vm.totalResults = response.totalResults;
 				vm.returnedResults = response.returnedResults;
-				pintarPuntosUserLocation(vm.events);
+				pintarPuntosUserLocation(response.results);
 
 				vm.recargarTabla();
 			}

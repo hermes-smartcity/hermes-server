@@ -18,4 +18,7 @@ public interface SleepDataDao extends GenericDao<SleepData, Long> {
 	public Long contarSleepData(Long idUsuario, Calendar fechaIni,Calendar fechaFin);
 	public List<SleepDataDTO> obterSleepDataWithLimit(Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, int startIndex, Integer limit);
+	
+	public List<SleepData> obterSleepData(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, int startIndex, int count);
 }

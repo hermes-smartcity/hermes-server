@@ -24,6 +24,7 @@
     "update-webdriver": "webdriver-manager update"
   },
   "dependencies": {
+    "angular-sweetalert": "^1.1.0",
     "bower": "^1.7.2",
     "gulp": "^3.9.0",
     "gulp-change": "^1.0.0",

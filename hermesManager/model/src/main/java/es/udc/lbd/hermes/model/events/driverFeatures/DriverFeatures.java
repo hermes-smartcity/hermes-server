@@ -1,6 +1,7 @@
 package es.udc.lbd.hermes.model.events.driverFeatures;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 
 @Entity
@@ -35,6 +39,9 @@ public class DriverFeatures implements Serializable{
         
         private Integer lightSleep;
         
+        @Temporal(TemporalType.TIMESTAMP)
+		private Calendar timestamp;
+        
         @ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuarioMovil")
     	private UsuarioMovil usuarioMovil;
@@ -42,12 +49,14 @@ public class DriverFeatures implements Serializable{
         public DriverFeatures() {
         }
 
-        public DriverFeatures(Integer awakeFor, Integer inBed, Integer workingTime, Integer deepSleep,Integer lightSleep) {
+        public DriverFeatures(Integer awakeFor, Integer inBed, Integer workingTime, Integer deepSleep,
+        		Integer lightSleep, Calendar timestamp) {
         	this.awakeFor= awakeFor;
         	this.inBed= inBed;
         	this.workingTime= workingTime;
         	this.deepSleep= deepSleep;
         	this.lightSleep= lightSleep;
+        	this.timestamp = timestamp;
         }
        
 		public Long getId() {
@@ -112,6 +121,14 @@ public class DriverFeatures implements Serializable{
 
 		public void setUsuarioMovil(UsuarioMovil usuarioMovil) {
 			this.usuarioMovil = usuarioMovil;
+		}
+
+		public Calendar getTimestamp() {
+			return timestamp;
+		}
+
+		public void setTimestamp(Calendar timestamp) {
+			this.timestamp = timestamp;
 		}
 		
 }

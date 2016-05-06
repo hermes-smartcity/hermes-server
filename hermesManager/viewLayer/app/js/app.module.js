@@ -12,7 +12,8 @@
 		'angularUtils.directives.dirPagination',
 		'datatables',
 		'ngCookies', 'permission','ngStorage', 'googlechart',
-		'pascalprecht.translate', 'tmh.dynamicLocale'
+		'pascalprecht.translate', 'tmh.dynamicLocale',
+		'oitozero.ngSweetAlert'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
@@ -39,13 +40,7 @@
 			url: '/registerAdmin',
 			templateUrl:'partials/user/register.html',
 			controller: 'RegisterAdminController',
-			controllerAs: 'vm',
-			data: {
-			      permissions: {
-			          only: ['ROLE_ADMIN'],
-						redirectTo: 'login'
-			        }
-			}
+			controllerAs: 'vm'
 		}).state('editUser', {
 			url: '/editUser/idUser/:idUser',
 			templateUrl:'partials/user/edit.html',
@@ -53,12 +48,6 @@
 			controllerAs: 'vm',
 			resolve: {
 				usuariosMoviles: usuariosMoviles
-			},
-			data: {
-			      permissions: {
-			          only: ['ROLE_ADMIN'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('dashboard', {
 			url: '/dashboard',
@@ -70,12 +59,6 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('userManager', {
 			url: '/userManager',
@@ -87,12 +70,6 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			          only: ['ROLE_ADMIN'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('eventManager', {
 			url: '/eventManager',
@@ -104,12 +81,6 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('systemLogs', {
 			url: '/systemLogs',
@@ -121,12 +92,6 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			          only: ['ROLE_ADMIN'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('changePassword', {
 			url: '/changePassword',
@@ -140,12 +105,6 @@
 			controllerAs: 'vm',
 			resolve: {
 				datosSettings: datosSettings
-			},
-			data: {
-			      permissions: {
-			          only: ['ROLE_ADMIN'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('userProfile', {
 			url: '/userProfile',
@@ -155,10 +114,10 @@
 			resolve: {
 				datosUsuario: datosUsuario
 			}
-		}).state('smartdriver', {
-			url: '/smartdriver',
-			templateUrl: 'partials/smartdriver/smartdriver.html',
-			controller: 'SmartDriverController',
+		}).state('hermesServices', {
+			url: '/hermesServices',
+			templateUrl: 'partials/hermesServices/hermesServices.html',
+			controller: 'HermesServicesController',
 			controllerAs: 'vm',
 			resolve: {
 				services: services,
@@ -167,12 +126,6 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('dataServices', {
 			url: '/dataServices',
@@ -184,12 +137,6 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('sensorData', {
 			url: '/sensorData',
@@ -201,12 +148,6 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
-						redirectTo: 'login'
-			        }
 			}
 		}).state('gpsLocation', {
 			url: '/gpsLocation',
@@ -218,12 +159,15 @@
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
 				statistics: statistics
-			},
-			data: {
-			      permissions: {
-			    	  only: ['ROLE_ADMIN', 'ROLE_CONSULTA'],
-						redirectTo: 'login'
-			        }
+			}
+		}).state('dbconnection', {
+			url: '/dbconnection',
+			templateUrl: 'partials/dbconnection/dbconnection.html',
+			controller: 'DBConnectionController',
+			controllerAs: 'vm',
+			resolve: {
+				dbconnectionstype: dbconnectionstype,
+				dbconnections: dbconnections
 			}
 		});
 
@@ -269,24 +213,34 @@
 		return userService.getUserProfile();
 	}
 	
-	methods.$inject = ['smartDriverService'];
-	function methods(smartDriverService) {
-		return smartDriverService.getMethods();
+	methods.$inject = ['hermesServicesService'];
+	function methods(hermesServicesService) {
+		return hermesServicesService.getMethods();
 	}
 	
-	types.$inject = ['smartDriverService'];
-	function types(smartDriverService) {
-		return smartDriverService.getTypes();
+	types.$inject = ['hermesServicesService'];
+	function types(hermesServicesService) {
+		return hermesServicesService.getTypes();
 	}
-	
-	dataSections.$inject = ['smartDriverService'];
-	function dataSections(smartDriverService) {
-		return smartDriverService.getDataSections();
+
+	dataSections.$inject = ['hermesServicesService'];
+	function dataSections(hermesServicesService) {
+		return hermesServicesService.getDataSections();
 	}
 	
 	services.$inject = ['dataServicesService'];
 	function services(dataServicesService) {
 		return dataServicesService.getServices();
+	}
+	
+	dbconnectionstype.$inject = ['dbConnectionService'];
+	function dbconnectionstype(dbConnectionService) {
+		return dbConnectionService.getDbConnectionsType();
+	}
+	
+	dbconnections.$inject = ['dbConnectionService'];
+	function dbconnections(dbConnectionService) {
+		return dbConnectionService.getDbConnections();
 	}
 	
 	angular.module('app').config(translateAppConfig);

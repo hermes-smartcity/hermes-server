@@ -34,7 +34,7 @@ public class HeartRateDataController extends MainResource {
 
 
 	@RequestMapping(value="/json/heartRateData", method = RequestMethod.GET)
-	public ListaHeartRateData getStepsData(@RequestParam(value = "idUsuario", required = false) Long idUsuario,		
+	public ListaHeartRateData getHeartRateData(@RequestParam(value = "idUsuario", required = false) Long idUsuario,		
 			@RequestParam(value = "fechaIni", required = true) String fechaIni,
 			@RequestParam(value = "fechaFin", required = true) String fechaFin) { 
 

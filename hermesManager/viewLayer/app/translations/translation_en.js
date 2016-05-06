@@ -17,6 +17,7 @@
 			"volver": "Back",
 			"editar": "Edit",
 			"aceptar": "Ok",
+			"cancelar": "Cancel",
 			"emailPasswordIncorrectos": "Incorrect Email/password",
 			"en": " on ",
 			"falloConEstado": " failed with status ",
@@ -25,6 +26,8 @@
 			"noResults": "There are no results",
 			"noEvents": "There are not events to show",
 			"noData": "There are no data",
+			"confirmDelete": "Are you sure?",
+			"textDelete": "Your will not be able to recover this item?",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
@@ -107,9 +110,12 @@
 				"userManager": "User Manager",
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
-				"smartdriver": "Smart Driver",
+				"hermesServices": "Hermes Services",
 				"sensorData": "Sensor Data",
-				"gpsLocation": "GPS Location"
+				"gpsLocation": "GPS Location",
+				"testServices": "Test services",
+				"statistics": "Statistics",
+				"dbConnections": "DB Connections"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -124,7 +130,8 @@
 				"operaciones": "Type of operations",
 				"chooseService": "Choose a service first",
 				"tipoSensor": "Sensor Type: ",
-				"chooseOne": "Choose one"
+				"chooseOne": "Choose one",
+				"measurementType": "Measurement type",
 			},
 			"resultados": {
 				"titulo": "Results",
@@ -193,7 +200,7 @@
 				"passwordsNotSame": "New passwords are not the same",
 				"passwordOk": "Password changed satisfactory"
 			},
-			"smartdriver":{
+			"hermesServices":{
 				"filtros": "Filters",
 				"filtrar": "Filter",
 				"methods": "Methods",
@@ -239,7 +246,10 @@
 				"mapa": "Map",
 				"tabla": "Table",
 				"cost": "Cost: ",
-				"noData": "There are not data to show"
+				"noData": "There are not data to show",
+				"selectDates": "Select dates",
+				"selectRectangle": "Select rectangle",
+				"selectMeasurementType": "Select measurement type"
 			},
 			"gpsLocation":{
 				"titulo": "Dashboard",
@@ -281,7 +291,8 @@
 				"workingtime": "Working time",
 				"lightsleep": "Light Sleep",
 				"deepsleep": "Deep Sleep",
-				"previousstress": "Previous Stress"
+				"previousstress": "Previous Stress",
+				"timestamp": "Time"
 			},
 			"sleepData":{
 				"noEvents": "There are not events to show",
@@ -307,6 +318,22 @@
 				"timelog": "Time log",
 				"heartrate": "Heart rate"
 			},
+			"dbconnection":{
+				"id": "ID",
+				"type": "Type",
+				"host": "Host",
+				"port": "Port",
+				"dbname": "DB Name",
+				"actions": "Actions",
+				"noData": "There are not data to show",
+				"create": "Create new DB Connection",
+				"deletedOK": "DBConnection deleted",
+				"hostRequired": "Host required",
+				"portRequired": "Port required",
+				"dbnameRequired": "DB Name required",
+				"typeRequired": "Type required",
+				"portFormat": "Port format incorrect. Use 4 numbers"
+			}
 		});
 	}
 

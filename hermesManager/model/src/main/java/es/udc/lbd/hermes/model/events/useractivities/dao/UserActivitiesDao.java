@@ -19,4 +19,7 @@ public interface UserActivitiesDao extends GenericDao<UserActivities, Long> {
 	public Long contarUserActivities(Long idUsuario, Calendar fechaIni,Calendar fechaFin);
 	public List<UserActivityDTO> obterUserActivitiesWithLimit(Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, int startIndex, Integer limit);
+	
+	public List<UserActivities> obterUserActivities(Long idUsuario, Calendar fechaIni,
+			Calendar fechaFin, int startIndex, int count);
 }

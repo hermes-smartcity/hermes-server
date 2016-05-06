@@ -1,31 +1,22 @@
 package es.udc.lbd.hermes.model.sensordata.service;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import es.udc.lbd.hermes.model.events.GraficasSensorData;
 import es.udc.lbd.hermes.model.sensordata.C;
 import es.udc.lbd.hermes.model.sensordata.Row;
 import es.udc.lbd.hermes.model.sensordata.SensorData;
+import es.udc.lbd.hermes.model.sensordata.SensorDataDTO;
 import es.udc.lbd.hermes.model.sensordata.SensorDataJson;
 import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.sensordata.SensorsDataJson;
-import es.udc.lbd.hermes.model.sensordata.V;
 import es.udc.lbd.hermes.model.sensordata.VBigDecimal;
 import es.udc.lbd.hermes.model.sensordata.VDate;
 import es.udc.lbd.hermes.model.sensordata.dao.SensorDataDao;
@@ -129,7 +120,7 @@ public class SensorDataServiceImpl implements SensorDataService{
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public Row obtenerInfoPorDia(SensorDataType tipo, Long idUsuario, Calendar fechaIni, Calendar fechaFin){
 
-		List<SensorData> informacion = sensorDataDao.informacionPorDia(tipo, idUsuario, fechaIni, fechaFin);
+		List<SensorDataDTO> informacion = sensorDataDao.informacionPorDia(tipo, idUsuario, fechaIni, fechaFin);
 		
 		Row row = new Row();	
 		for (int i = 1; i < informacion.size(); i++) {
@@ -203,7 +194,7 @@ public class SensorDataServiceImpl implements SensorDataService{
 		
 	}
 
-	private boolean sensorDataConsecutivos(SensorData sensorDataAnt, SensorData sensorDataSigu){
+	private boolean sensorDataConsecutivos(SensorDataDTO sensorDataAnt, SensorDataDTO sensorDataSigu){
 			if(sensorDataAnt.getEndtime().equals(sensorDataSigu.getStartime()))
 					return true;
 			else return false;

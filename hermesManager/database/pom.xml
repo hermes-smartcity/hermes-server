@@ -16,6 +16,7 @@
 		<datasource.createTNSchemaScript>03-PSQL-CreateTNSchema.sql</datasource.createTNSchemaScript>	
 		<datasource.createEventsSchemaScript>04-PSQL-CreateEventsSchema.sql</datasource.createEventsSchemaScript>
 		<datasource.createEventsDataScript>05-PSQL-CreateEventsData.sql</datasource.createEventsDataScript>
+		<datasource.createOsmImportSchemaScript>06-PSQL-CreateOsmImportSchema.sql</datasource.createOsmImportSchemaScript>
 	</properties>
   	
    <build>
@@ -51,6 +52,7 @@
 									<include>src/sql/${datasource.setupDBScript}</include>
 									<include>src/sql/${datasource.createEventsSchemaScript}</include>
 									<include>src/sql/${datasource.createEventsDataScript}</include>
+									<include>src/sql/${datasource.createOsmImportSchemaScript}</include>
 								</includes>
 							</fileset>
 				</configuration>

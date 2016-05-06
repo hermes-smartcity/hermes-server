@@ -20,9 +20,10 @@ import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.vividsolutions.jts.geom.Point;
-import es.udc.lbd.hermes.model.util.jackson.CustomPointDeserializer;
+
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.util.jackson.CustomGeometrySerializer;
+import es.udc.lbd.hermes.model.util.jackson.CustomPointDeserializer;
 
 
 @Entity

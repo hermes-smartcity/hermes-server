@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h3>{{'dbconnection.create' | translate}}</h3>
+</div>
+
+<form name="form.connectionForm" novalidate>
+    <div class="modal-body">
+        <!-- HOST -->
+        <div class="form-group">
+            <label>{{'dbconnection.host' | translate}}</label>
+            <input type="text" name="host" class="form-control" data-ng-model="host" required>
+            <p data-ng-show="form.connectionForm.host.$error.required && !form.connectionForm.host.$pristine" class="avisoError">{{'dbconnection.hostRequired' | translate}}</p>
+        </div>
+
+		<!-- PORT -->
+        <div class="form-group">
+            <label>{{'dbconnection.port' | translate}}</label>
+            <input type="text" name="port" class="form-control" data-ng-model="port" 
+            data-ng-pattern="/^[0-9]{4,4}$/" required>
+            <p data-ng-show="form.connectionForm.port.$error.required && !form.connectionForm.port.$pristine" class="avisoError">{{'dbconnection.portRequired' | translate}}</p>
+            <p data-ng-show="form.connectionForm.port.$error.pattern && !form.connectionForm.port.$pristine" class="avisoError">{{'dbconnection.portFormat' | translate}}</p>
+        </div>
+        
+        <!-- DBNAME -->
+        <div class="form-group">
+            <label>{{'dbconnection.dbname' | translate}}</label>
+            <input type="text" name="dbName" class="form-control" data-ng-model="dbName" required>
+            <p data-ng-show="form.connectionForm.dbName.$error.required && !form.connectionForm.dbName.$pristine" class="avisoError">{{'dbconnection.dbnameRequired' | translate}}</p>
+        </div>
+  
+  		<!-- TYPE -->
+  		<div class="form-group">
+  			<label>{{'dbconnection.type' | translate}}</label>
+  			<select id="type" name="type" data-ng-model="type" class="form-control"
+					data-ng-options="type as type for type in types" required>
+			</select>
+			<p data-ng-show="form.connectionForm.type.$error.required && !form.connectionForm.type.$pristine" class="avisoError">{{'dbconnection.typeRequired' | translate}}</p>
+  		</div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="submitForm()"  data-ng-disabled="form.connectionForm.$invalid">{{'aceptar' | translate}}</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">{{'cancelar' | translate}}</button>
+    </div>
+</form>

@@ -1,30 +1,6 @@
-<div data-ng-if="!vm.events.length">{{'measurement.noEvents' | translate}}</div>
+<div data-ng-hide="!vm.events.length">{{'measurement.noEvents' | translate}}</div>
 <div class="table-responsive">
-	<!-- <table data-ng-if="vm.events.length" class="table table-hover"
-			data-dt-options="vm.dtOptions" data-datatable="ng" >
-		<thead>
-			<tr>
-				<th>{{'measurement.userId' | translate}}</th>
-				<th>{{'measurement.date' | translate}}</th>
-				<th>{{'measurement.value' | translate}}</th>
-				<th>{{'measurement.speed' | translate}}</th>
-				<th>{{'measurement.accuracy' | translate}}</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<tr data-ng-repeat="measurement in vm.events track by $index">
-				<td>{{measurement.userId.substring(0,10)+'...'}}</td>
-				<td>{{measurement.timestamp | date : "dd/MM/yyyy HH:mm:ss"}}</td>
-				<td>{{measurement.value | number:2}}</td>
-				<td>{{measurement.speed | number:2}}</td>
-				<td>{{measurement.accuracy}}</td>
-			</tr>
-		</tbody>
-
-	</table>-->
-	
-	<table id="tableId" data-ng-if="vm.events.length" class="table table-hover" data-datatable="" 
+	<table id="tableId" data-ng-show="vm.events.length" class="table table-hover" data-datatable="" 
 			data-dt-options="vm.dtOptions" data-dt-columns="vm.dtColumnsM" data-dt-instance="vm.dtInstanceCallback">
 	</table>
 </div>

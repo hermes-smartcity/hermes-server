@@ -146,4 +146,34 @@ public class UserLocationsDaoImpl extends GenericDaoHibernate<UserLocations, Lon
 		query.setResultTransformer(Transformers.aliasToBean(EventosPorDia.class));
 		return (List<EventosPorDia>) query.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UserLocations> obterUserLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Geometry bounds,
+			int startIndex, int count){
+
+		List<UserLocations> elementos = null;
+
+		String queryStr =  "from UserLocations where within(position, :bounds) = true ";
+		if(idUsuario!=null)
+			queryStr += "and usuarioMovil.id = :idUsuario ";
+
+		queryStr += "and startTime > :fechaIni ";
+		queryStr += "and endTime < :fechaFin";
+
+		Query query = getSession().createQuery(queryStr);
+
+		query.setParameter("bounds", bounds);
+
+		if(idUsuario!=null)
+			query.setParameter("idUsuario", idUsuario);
+
+		query.setCalendar("fechaIni", fechaIni);
+		query.setCalendar("fechaFin", fechaFin);
+
+		if(startIndex!=-1 && count!=-1)
+			query.setFirstResult(startIndex).setMaxResults(count);
+
+		elementos = query.list();
+		return elementos;
+	}
 }

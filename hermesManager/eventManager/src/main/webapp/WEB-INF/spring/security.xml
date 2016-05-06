@@ -71,16 +71,32 @@
 		<security:intercept-url method="GET" pattern="/api/systemlog/**" access="hasAnyRole('ADMIN')" />
 		
 		<!-- setting -->
-		<security:intercept-url method="GET" pattern="setting" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="GET" pattern="/api/setting/**" access="hasAnyRole('ADMIN')" />
 		
-		<!-- smartdriver -->
-		<security:intercept-url method="GET" pattern="/api/smartdriver/**" access="permitAll" />
+		<!-- hermes -->
+		<security:intercept-url method="GET" pattern="/api/hermes/json/services" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/json/methods" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/json/types" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/json/datasections" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/network/link" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/measurement/aggregate" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/network/route" access="permitAll" />
+		<security:intercept-url method="GET" pattern="/api/hermes/vehiclelocation" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/measurement" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/datasection" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/driverfeatures" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
 		<!-- dataservice -->
 		<security:intercept-url method="GET" pattern="/api/dataservice/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
 		<!-- sensordata -->
 		<security:intercept-url method="GET" pattern="/api/sensordata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- dbconnection -->
+		<security:intercept-url method="GET" pattern="/api/dbconnection/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/dbconnection/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/dbconnection/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/dbconnection/edit/**" access="hasRole('ADMIN')" />
 		
 		<security:csrf disabled="true"/>
 	</security:http>

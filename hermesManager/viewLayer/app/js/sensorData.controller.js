@@ -12,7 +12,8 @@
 	function SensorDataController($state, $interval, $scope, usuarios, $http, $timeout, $log, $filter,
 			eventsService, $rootScope, eventsToday, eventoProcesado, statistics,
 			$translate, sensorDataService) {
-
+		
+		var that = this;
 		var vm = this;
 		vm.aplicarFiltros = aplicarFiltros;
 		vm.sensorsType = $rootScope.sensorsType;
@@ -44,42 +45,51 @@
 		vm.totalHRD = statistics.totalHeartRateData;
 		vm.totalCD = statistics.totalContextData;
 		vm.recuperarYpintarSensores = recuperarYpintarSensores;
+		vm.seriesSelected = seriesSelected;
 		
-		// Gráfico con los datos de los sensores
+		// Gráfico con los datos de los sensores		
 		vm.chart = {};
 		vm.chart.type = "AnnotationChart";
 		vm.chart.options =  {
 				 title: 'Data Sensor',
-				 height: 500,
+				 height: 500,				 
 				 displayAnnotations: false,
-				 displayAnnotationsFilter: true,
 				 displayExactValues: true,
+				 legendPosition: 'newRow',
 				 dateFormat: 'HH:mm:ss MMMM dd, yyyy',
-				 displayRangeSelector: true
+			      colors: ['#0000FF', '#009900', '#CC0000', '#DD9900'],
+			      defaultColors: ['#0000FF', '#009900', '#CC0000', '#DD9900'],
+			      isStacked: true,
+			      vAxis: {
+			        title: 'Data Sensor',
+			        gridlines: {
+			          count: 10
+			        }
+			      },
+			      hAxis: {
+			        title: 'Date'
+			      }
 	    };
+		
+		// Componente del gráfico: eje X, eje Y, eje Z
+		vm.chart.view = {
+	      columns: [0, 1, 2, 3]
+	    };
+		
+		// Inicializamos gráfico
 		vm.chart.data = {"cols": [	        {id: "fecha", label: "Fecha", type: "date"},
 		                         	        {id: "ejeX", label: "Eje X", type: "number"},
 		                         	        {id: "ejeY", label: "Eje Y", type: "number"},
 		                         	        {id: "ejeZ", label: "Eje Z", type: "number"}
 		                         	    ],  "rows": []};
 		
-		/* *  Prueba para elegir que tipo de gráfico escogemos * * */
-		vm.chartLine = {};
-		vm.chartLine.type = "LineChart";
-		vm.chartLine.options =  {
-				 title: 'Data Sensor',
-				 height: 600,
-				 displayExactValues: true,
-				 explorer : { maxZoomOut:5, keepInBounds: true, maxZoomIn: 20},
-				 dateFormat: 'HH:mm:ss MMMM dd, yyyy'
-				
-	    };
-		vm.chartLine.data = {"cols": [	     {id: "fecha", label: "Fecha", type: "date"},
-		                         	        {id: "ejeX", label: "Eje X", type: "number"},
-		                         	        {id: "ejeY", label: "Eje Y", type: "number"},
-		                         	        {id: "ejeZ", label: "Eje Z", type: "number"}
-		                         	    ],  "rows": []};
-		/* * *  */
+		// Selección ejes para ocultar/mostrar
+		vm.chartAxis = {
+			       ejeX : true,
+			       ejeY : true,
+			       ejeZ: true
+		};
+		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);	
@@ -89,8 +99,7 @@
 			vm.active = response.data;
 		}
 	
-		// Detecta el patrón de una fecha en la response y lo cambia por el formato new Date( ) para que la librería de angular puede pintar por fecha y distribuya los puntos de manera uniforme
-		
+		// Detecta el patrón de una fecha en la response y lo cambia por el formato new Date( ) (librería de angular necesita new Date para pintar los datos)		
 		function convertDateStringsToDates(input) {
 			var regexIso8601 = /^(\d{4}|\+\d{6})(?:-(\d{2})(?:-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})\.(\d{1,})(Z|([\-+])(\d{2}):(\d{2}))?)?)?)?$/;
 		    // Ignore things that aren't objects.
@@ -117,17 +126,50 @@
 		    }
 		}
 		
+		// Cuando se hace click en uno de los checkbox oculta/muestra el eje correspondiente
+		function seriesSelected(selectedItem) {
+//		      var col = selectedItem.column;
+				var col = selectedItem;
+		      //If there's no row value, user clicked the legend.
+//		      if (selectedItem.row !== null) {
+		        //If true, the chart series is currently displayed normally.  Hide it.
+		        if (vm.chart.view.columns[col] == col) {
+		          //Replace the integer value with this object initializer.
+		          vm.chart.view.columns[col] = {
+		            //Take the label value and type from the existing column.
+		            label: vm.chart.data.cols[col].label,
+		            type: vm.chart.data.cols[col].type,
+		            //makes the new column a calculated column based on a function that returns null, 
+		            //effectively hiding the series.
+		            calc: function() {
+		              return null;
+		            }
+		          };
+		          //Change the series color to grey to indicate that it is hidden.
+		          //Uses color[col-1] instead of colors[col] because the domain column (in my case the date values)
+		          //does not need a color value.
+		          vm.chart.options.colors[col - 1] = '#CCCCCC';
+		        }
+		        //series is currently hidden, bring it back.
+		        else {
+		          //Simply reassigning the integer column index value removes the calculated column.
+		          vm.chart.view.columns[col] = col;
+		          //I had the original colors already backed up in another array.  If you want to do this in a more
+		          //dynamic way (say if the user could change colors for example), then you'd need to have them backed
+		          //up when you switch to grey.
+		          vm.chart.options.colors[col - 1] = vm.chart.options.defaultColors[col - 1];
+		        }
+//		      }
+        }
+		
 		function recuperarYpintarSensores(urlGet){
-
 			sensorDataService.getInfoSensoresPorDia(urlGet).then(getInfoSensoresPorDiaComplete);
-			// En cuanto tenga los eventos los pinto
+			// En cuanto tenga los datos los pinto
 			function getInfoSensoresPorDiaComplete(response) {
 				convertDateStringsToDates(response);
 				vm.rows = response.data.rows;
 
-				vm.chart.data.rows = vm.rows;
-				vm.chartLine.data.rows = vm.rows;
-				
+				vm.chart.data.rows = vm.rows;				
 			}
 			
 		}
@@ -137,7 +179,7 @@
 		vm.sensorTypeSelected = "TYPE_LINEAR_ACCELERATION";
 		vm.startDate = new Date();
 		// Inicializamos la fecha de inicio a la del mes anterior
-		vm.startDate.setDate(vm.startDate.getDate() - 31);
+		vm.startDate.setMinutes(vm.startDate.getMinutes() - 5);
 		vm.endDate = new Date();
 		
 		  
