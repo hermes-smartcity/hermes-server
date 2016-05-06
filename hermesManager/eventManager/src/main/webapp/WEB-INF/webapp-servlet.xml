@@ -17,9 +17,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<mvc:default-servlet-handler />
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator"/>
  
-	<bean id="exceptionResolver"
-		class=" es.udc.lbd.hermes.eventManager.controller.util.exceptionresolver.ExceptionResolver" />
-	
 	<bean id="formattingFactory"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="formatterRegistrars">
