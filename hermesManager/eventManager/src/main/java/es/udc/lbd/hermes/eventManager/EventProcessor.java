@@ -110,8 +110,7 @@ public class EventProcessor extends Thread {
 				logger.info("Evento ignorado: " + chunk);
 			}
 		} catch (IOException e) {
-			logger.error("Error convirtiendo chunk a JSON", e);
-			e.printStackTrace();
+			logger.error("Error convirtiendo chunk a JSON: "+chunk, e);
 		}
 	}
 	

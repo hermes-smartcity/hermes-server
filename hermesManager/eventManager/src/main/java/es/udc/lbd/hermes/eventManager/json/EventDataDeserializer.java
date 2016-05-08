@@ -1,8 +1,11 @@
 package es.udc.lbd.hermes.eventManager.json;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -33,8 +36,8 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 		registerEventType("Context Data", ZtreamyContextDataList.class);
 		registerEventType("Sleep Data", ZtreamySleepData.class);
 		registerEventType("Heart Rate Data", ZtreamyHeartRateData.class);
-		registerEventType("User Activities", ZtreamyUserActivity.class);
-		registerEventType("User Locations", ZtreamyUserLocation.class);
+		registerEventType("User Activities", ZtreamyUserActivityList.class);
+		registerEventType("User Locations", ZtreamyUserLocationList.class);
 	}
 
 	void registerEventType(String uniqueName, Class<? extends EventData> eventTypeClass) {
@@ -45,6 +48,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 	public EventData deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 		Class<? extends EventData> eventTypeClass = null;
 		JsonNode eventTypeData = null;
+		String eventTypeKey = "";
 
 		ObjectMapper mapper = (ObjectMapper) jp.getCodec();
 		JsonNode root = mapper.readTree(jp);		
@@ -55,16 +59,13 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 			if (registry.containsKey(name)) {
 				eventTypeClass = registry.get(name);
 				eventTypeData = element.getValue();
+				eventTypeKey = element.getKey();
 				break;
 			}
 		}
 		if (eventTypeClass != null) {
 			if (eventTypeData instanceof ArrayNode) {
-				try {
-					return new EventDataArray((EventData[])mapper.treeToValue(eventTypeData, Class.forName("[L"+eventTypeClass.getName()+";")));
-				} catch (ClassNotFoundException e) {
-					return null;
-				}
+				 throw new JsonProcessingException("An array was received but an object was expected") {};
 			} else {
 				return mapper.treeToValue(eventTypeData, eventTypeClass);
 			}
