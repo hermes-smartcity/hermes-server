@@ -21,6 +21,7 @@
 		vm.add = add;
 		vm.edit = edit;
 		vm.delet = delet;
+		vm.doTheBack = doTheBack;
 	
 		 //Inicializar options de la tabla
 		vm.dtInstance = null;
@@ -167,6 +168,10 @@
 	        	});
 	        	             
 	    }
+		
+		function doTheBack(){
+			window.history.back();
+		}
 	}
 	
 })();
