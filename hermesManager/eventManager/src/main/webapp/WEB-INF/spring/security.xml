@@ -116,6 +116,18 @@
 		<security:intercept-url method="POST" pattern="/api/osmconcept/register/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="PUT" pattern="/api/osmconcept/edit/**" access="hasRole('ADMIN')" />
 		
+		<!-- osmfilter -->
+		<security:intercept-url method="GET" pattern="/api/osmfilter/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/osmfilter/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/osmfilter/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/osmfilter/edit/**" access="hasRole('ADMIN')" />
+		
+		<!-- osmattribute -->
+		<security:intercept-url method="GET" pattern="/api/osmattribute/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/osmattribute/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/osmattribute/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/osmattribute/edit/**" access="hasRole('ADMIN')" />
+		
 		
 		<security:csrf disabled="true"/>
 	</security:http>
