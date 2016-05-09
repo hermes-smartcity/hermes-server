@@ -191,6 +191,41 @@
 					return dbAttributeService.getDbAttributes($stateParams.idConcept);
 				}
 			}
+		}).state('osmconcept', {
+			url: '/osmconcept',
+			templateUrl: 'partials/osmconcept/osmconcept.html',
+			controller: 'OSMConceptController',
+			controllerAs: 'vm',
+			resolve: {
+				osmconcepts: osmconcepts
+			}
+		}).state('manageOsmAttributes', {
+			url: '/manageOsmAttributes/:idOsmConcept',
+			templateUrl:'partials/osmattribute/osmattribute.html',
+			controller: 'OSMAttributeController',
+			controllerAs: 'vm',
+			resolve: {
+				idOsmConcept: function($stateParams) {
+					return $stateParams.idOsmConcept;
+				},
+				osmattributes: function(osmAttributeService, $stateParams) {
+					return osmAttributeService.getOsmAttributes($stateParams.idOsmConcept);
+				}
+			}
+		}).state('manageOsmFilters', {
+			url: '/manageOsmFilters/:idOsmConcept',
+			templateUrl:'partials/osmfilter/osmfilter.html',
+			controller: 'OSMFilterController',
+			controllerAs: 'vm',
+			resolve: {
+				idOsmConcept: function($stateParams) {
+					return $stateParams.idOsmConcept;
+				},
+				osmoperations: osmoperations,
+				osmfilters: function(osmFilterService, $stateParams) {
+					return osmFilterService.getOsmFilters($stateParams.idOsmConcept);
+				}
+			}
 		});
 
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
@@ -273,6 +308,16 @@
 	dbattributestype.$inject = ['dbAttributeService'];
 	function dbattributestype(dbAttributeService) {
 		return dbAttributeService.getDbAttributesType();
+	}
+	
+	osmconcepts.$inject = ['osmConceptService'];
+	function osmconcepts(osmConceptService) {
+		return osmConceptService.getOsmConcepts();
+	}
+	
+	osmoperations.$inject = ['osmFilterService'];
+	function osmoperations(osmFilterService) {
+		return osmFilterService.getOsmFiltersOperation();
 	}
 	
 	angular.module('app').config(translateAppConfig);

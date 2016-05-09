@@ -28,6 +28,7 @@
 			"noData": "There are no data",
 			"confirmDelete": "Are you sure?",
 			"textDelete": "Your will not be able to recover this item?",
+			"back": "BACK",
 			"contextData":{
 				"noEvents": "There are not events to show",
 				"userId": "UserId",
@@ -116,7 +117,8 @@
 				"testServices": "Test services",
 				"statistics": "Statistics",
 				"dbConnections": "DB Connections",
-				"dbConcepts": "DB Concepts"
+				"dbConcepts": "DB Concepts",
+				"osmConcepts": "OSM Concepts",
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -356,7 +358,34 @@
 				"create": "Create new DB Attribute",
 				"nameRequired": "Name required",
 				"typeRequired": "Type required",
-			}
+			},
+			"osmconcept":{
+				"actions": "Actions",
+				"id": "ID",
+				"name": "Name",
+				"manageFilters": "Manage filters",
+				"manageAttributes": "Manage attributes",
+				"create": "Create new OSM Concept",
+				"nameRequired": "Name required",
+			},
+			"osmattribute":{
+				"actions": "Actions",
+				"id": "ID",
+				"name": "Name",
+				"create": "Create new OSM Attribute",
+				"nameRequired": "Name required",
+			},
+			"osmfilter":{
+				"actions": "Actions",
+				"id": "ID",
+				"name": "Name",
+				"operation": "Operation",
+				"value": "Value",
+				"create": "Create new OSM Filter",
+				"nameRequired": "Name required",
+				"operationRequired": "Operation required",
+				"valueRequired": "Value required",
+			},
 		});
 	}
 

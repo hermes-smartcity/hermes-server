@@ -110,6 +110,12 @@
 		<security:intercept-url method="POST" pattern="/api/dbattribute/register/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="PUT" pattern="/api/dbattribute/edit/**" access="hasRole('ADMIN')" />
 		
+		<!-- osmconcept -->
+		<security:intercept-url method="GET" pattern="/api/osmconcept/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/osmconcept/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/osmconcept/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/osmconcept/edit/**" access="hasRole('ADMIN')" />
+		
 		
 		<security:csrf disabled="true"/>
 	</security:http>

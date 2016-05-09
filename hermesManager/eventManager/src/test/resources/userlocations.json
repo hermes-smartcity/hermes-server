@@ -1,3 +1,2 @@
 {"Body": {"User Locations": {"userLocationsList": [{"latitude": 37.33767, "endTime": 1462730269985, "longitude": -5.8288574, "startTime": 1462730170403, "accuracy": 28.797}]}}, "Timestamp": "2016-05-08T19:57:49+02:00", "Application-Id":
-"SmartCitizen", "Syntax": "application/json", "Event-Id": "0bc31a9d-aed0-472d-977a-25eb4cbac43e", "Event-Type": "User Locations", "Aggregator-Ids": ["feed71e0-abbb-4755-a49b-7253287916ef", "865d1527-a4ab-4069-a67a-f091f800e1c3"], "Source
--Id": "12FF1519A30C5093836016EC175D381C11B1AF92967B18A0DEFE6C7A9364DC30"}
+"SmartCitizen", "Syntax": "application/json", "Event-Id": "0bc31a9d-aed0-472d-977a-25eb4cbac43e", "Event-Type": "User Locations", "Aggregator-Ids": ["feed71e0-abbb-4755-a49b-7253287916ef", "865d1527-a4ab-4069-a67a-f091f800e1c3"], "Source-Id": "12FF1519A30C5093836016EC175D381C11B1AF92967B18A0DEFE6C7A9364DC30"}

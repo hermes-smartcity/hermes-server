@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <h3>{{'osmfilter.create' | translate}}</h3>
+</div>
+
+<form name="form.filterForm" novalidate>
+    <div class="modal-body">
+    
+    	<!-- NAME -->
+        <div class="form-group">
+            <label>{{'osmfilter.name' | translate}}</label>
+            <input type="text" name="name" class="form-control" data-ng-model="name" required>
+            <p data-ng-show="form.filterForm.name.$error.required && !form.filterForm.name.$pristine" class="avisoError">{{'osmfilter.nameRequired' | translate}}</p>
+        </div>
+         
+  		<!-- TYPE -->
+  		<div class="form-group">
+  			<label>{{'osmfilter.operation' | translate}}</label>
+  			<select id="operation" name="operation" data-ng-model="type" class="form-control"
+					data-ng-options="operation as operation for operation in operations" required>
+			</select>
+			<p data-ng-show="form.filterForm.operation.$error.required && !form.filterForm.operation.$pristine" class="avisoError">{{'osmfilter.operationRequired' | translate}}</p>
+  		</div>
+  		
+  		<!-- VALUE -->
+        <div class="form-group">
+            <label>{{'osmfilter.value' | translate}}</label>
+            <input type="text" name="value" class="form-control" data-ng-model="value" required>
+            <p data-ng-show="form.filterForm.value.$error.required && !form.filterForm.value.$pristine" class="avisoError">{{'osmfilter.valueRequired' | translate}}</p>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="submitForm()"  data-ng-disabled="form.filterForm.$invalid">{{'aceptar' | translate}}</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">{{'cancelar' | translate}}</button>
+    </div>
+</form>

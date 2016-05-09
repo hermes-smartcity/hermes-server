@@ -135,6 +135,13 @@
 						</i> <span>{{'menu.dbConcepts' | translate}}</span>
 					</a>
 				</li>
+				
+				<li data-ng-if="hasRole('ROLE_ADMIN')">
+					<a data-ui-sref="osmconcept"> <i class="fa fa-dashboard fa-fw">
+							<!--  -->
+						</i> <span>{{'menu.osmConcepts' | translate}}</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 		<!-- /.sidebar-collapse -->

@@ -175,3 +175,28 @@ var url_delete_dbattribute = url_dbattribute+"delete";
 var url_register_dbattribute = url_dbattribute+"register";
 var url_edit_dbattribute = url_dbattribute+"edit";
 var url_get_dbattribute = url_dbattribute+'json/dbAttribute';
+
+//Controlador osm concepts
+var url_osmconcept = url_servidor+'api/osmconcept/';
+var url_osmConcepts = url_osmconcept+'json/osmConcepts';
+var url_delete_osmconcept = url_osmconcept+"delete";
+var url_register_osmconcept = url_osmconcept+"register";
+var url_edit_osmconcept = url_osmconcept+"edit";
+var url_get_osmconcept = url_osmconcept+'json/osmConcept';
+
+//Controlador osm attributes
+var url_osmattribute = url_servidor+'api/osmattribute/';
+var url_osmAttributes = url_osmattribute+'json/osmAttributes';
+var url_delete_osmattribute = url_osmattribute+"delete";
+var url_register_osmattribute = url_osmattribute+"register";
+var url_edit_osmattribute = url_osmattribute+"edit";
+var url_get_osmattribute = url_osmattribute+'json/osmAttribute';
+
+//Controlador osm filter
+var url_osmfilter = url_servidor+'api/osmfilter/';
+var url_osmFiltersOperation = url_osmfilter+'json/osmFiltersOperation';
+var url_osmFilters = url_osmfilter+'json/osmFilters';
+var url_delete_osmfilter = url_osmfilter+"delete";
+var url_register_osmfilter = url_osmfilter+"register";
+var url_edit_osmfilter = url_osmfilter+"edit";
+var url_get_osmfilter = url_osmfilter+'json/osmFilter';
