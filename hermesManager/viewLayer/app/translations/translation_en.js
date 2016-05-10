@@ -404,7 +404,7 @@
 				"name": "Name",
 				"create": "Create new Concept Transformation",
 				"osmconcept": "OSM Concept",
-				"dbConcept": "DB Concept",
+				"dbconcept": "DB Concept",
 				"osmconceptRequired": "OSM Concept required",
 				"dbConceptRequired": "DB Concept required",
 				"manageAttributeMapping": "Manage attribute mapping",

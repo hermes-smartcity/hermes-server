@@ -17,17 +17,13 @@
 		};
 
 		return service;
-				
-		function getConceptTransformations() {
-			return $http.get(url_concepttransformations)
-				.then(getConceptTransformationComplete)
-				.catch(getConceptTransformationFailed);
-			function getConceptTransformationComplete(response) {
-				return response.data;
-			}
-			function getConceptTransformationFailed(error) {
-				$log.error('XHR Failed for getConceptTransformation.' + error.data);
-			}
+		
+		function getConceptTransformations(idJob) {
+			return $http({
+				method : 'GET',
+				url : url_concepttransformations,
+				params: {"idJob": idJob}
+			});
 		}
 		
 		function delet (id) {	

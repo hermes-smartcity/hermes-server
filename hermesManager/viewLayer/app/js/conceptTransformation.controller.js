@@ -14,13 +14,14 @@
 	
 		var vm = this;
 				
-		vm.idJob = idJob;
-		vm.concepttransformations = concepttransformations;
+		vm.idJob = parseInt(idJob);
+		vm.concepttransformations = concepttransformations.data;
 		
 		vm.add = add;
 		vm.edit = edit;
 		vm.delet = delet;
-	
+		vm.doTheBack = doTheBack;
+		
 		 //Inicializar options de la tabla
 		vm.dtInstance = null;
 
@@ -45,7 +46,6 @@
 		
 		vm.dtColumns  = [
 		                   DTColumnBuilder.newColumn('id').withTitle($translate.instant('concepttransformation.id')),
-		                   DTColumnBuilder.newColumn('name').withTitle($translate.instant('concepttransformation.name')),
 		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('concepttransformation.osmconcept')).renderWith(function(data,type,full) {
 		                	   var texto = data.osmConcept.name;
 		                	   return texto;
@@ -61,9 +61,6 @@
 		                           '</button>&nbsp;' +
 		                           '<button class="btn btn-danger" data-ng-click="vm.delet(' + data.id + ')">' +
 		                           '   <i class="fa fa-trash-o"></i>' +
-		                           '</button>&nbsp;' +
-		                           '<button class="btn btn-info" data-ui-sref="manageAttributeMapping({idConceptTransformation:'+ data.id + '})" >' +
-		                           	$translate.instant('concepttransformation.manageAttributeMapping') + 
 		                           '</button>';
 		                   })
 		                ];  
@@ -81,6 +78,9 @@
                 	infoConcept: function(){
                     	return null;
                     },
+                    idJob: function(){
+                    	return vm.idJob;
+                    },
                 	osmconcepts: function () {
                 		return conceptTransformationService.getOsmConcepts();
                     },
@@ -96,8 +96,8 @@
 	        modalInstance.result.then(function (response) {
 		     	vm.infoAction = response;
 		     	
-		     	conceptTransformationService.getConceptTransformations().then(function(response) {
-		     		vm.concepttransformations = response;
+		     	conceptTransformationService.getConceptTransformations(vm.idJob).then(function(response) {
+		     		vm.concepttransformations = response.data;
 	        		if (vm.dtInstance !== null){
 	        			vm.dtInstance.reloadData();
 	        		}
@@ -120,6 +120,9 @@
                 	infoConcept: function(){
                 		return conceptTransformationService.getConceptTransformation(id);
                     },
+                    idJob: function(){
+                    	return vm.idJob;
+                    },
                     osmconcepts: function () {
                 		return conceptTransformationService.getOsmConcepts();
                     },
@@ -135,8 +138,8 @@
 	        modalInstance.result.then(function (response) {
 		     	vm.infoAction = response;
 		     	
-		     	conceptTransformationService.getConceptTransformations().then(function(response) {
-		     		vm.concepttransformations = response;
+		     	conceptTransformationService.getConceptTransformations(vm.idJob).then(function(response) {
+		     		vm.concepttransformations = response.data;
 	        		if (vm.dtInstance !== null){
 	        			vm.dtInstance.reloadData();
 	        		}
@@ -165,8 +168,8 @@
 	        		if (isConfirm){
 	        			conceptTransformationService.delet(id).then(function(response) {
 		   	        		vm.infoAction = response.data;
-		   	        		conceptTransformationService.getConceptTransformations().then(function(response) {
-		   			     		vm.concepttransformations = response;
+		   	        		conceptTransformationService.getConceptTransformations(vm.idJob).then(function(response) {
+		   			     		vm.concepttransformations = response.data;
 		   	        			if (vm.dtInstance !== null){
 		   	        				vm.dtInstance.reloadData();
 		   	        			}
@@ -176,6 +179,10 @@
 	        	});
 	        	             
 	    }
+		
+		function doTheBack(){
+			window.history.back();
+		}
 	}
 	
 })();

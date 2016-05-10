@@ -210,9 +210,9 @@ var url_edit_job = url_job+"edit";
 var url_get_job = url_job+'json/job';
 
 //Controlador concept transformation
-var url_concepttranformation = url_servidor+'api/concepttranformation/';
-var url_concepttranformations = url_concepttranformation+'json/concepttranformations';
-var url_delete_concepttranformation = url_concepttranformation+"delete";
-var url_register_concepttranformation = url_concepttranformation+"register";
-var url_edit_concepttranformation = url_concepttranformation+"edit";
-var url_get_concepttranformation = url_concepttranformation+'json/concepttranformation';
+var url_concepttransformation = url_servidor+'api/concepttransformation/';
+var url_concepttransformations = url_concepttransformation+'json/concepttransformations';
+var url_delete_concepttransformation = url_concepttransformation+"delete";
+var url_register_concepttransformation = url_concepttransformation+"register";
+var url_edit_concepttransformation = url_concepttransformation+"edit";
+var url_get_concepttransformation = url_concepttransformation+'json/concepttransformation';
