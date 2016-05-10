@@ -128,6 +128,12 @@
 		<security:intercept-url method="POST" pattern="/api/osmattribute/register/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="PUT" pattern="/api/osmattribute/edit/**" access="hasRole('ADMIN')" />
 		
+		<!-- job -->
+		<security:intercept-url method="GET" pattern="/api/job/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/job/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/job/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/job/edit/**" access="hasRole('ADMIN')" />
+		
 		
 		<security:csrf disabled="true"/>
 	</security:http>

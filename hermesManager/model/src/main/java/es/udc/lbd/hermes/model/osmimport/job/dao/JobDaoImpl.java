@@ -14,4 +14,6 @@ public class JobDaoImpl extends GenericDaoHibernate<Job, Long> implements JobDao
 	public List<Job> getAll(){
 		return getSession().createCriteria(this.entityClass).list();
 	}
+	
+	
 }

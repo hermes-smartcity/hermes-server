@@ -226,8 +226,30 @@
 					return osmFilterService.getOsmFilters($stateParams.idOsmConcept);
 				}
 			}
+		}).state('job', {
+			url: '/job',
+			templateUrl: 'partials/job/job.html',
+			controller: 'JobController',
+			controllerAs: 'vm',
+			resolve: {
+				jobs: jobs
+			}
+		}).state('manageConceptTransformation', {
+			url: '/manageConceptTransformation/:idJob',
+			templateUrl:'partials/concepttransformation/concepttransformation.html',
+			controller: 'ConceptTransformationController',
+			controllerAs: 'vm',
+			resolve: {
+				idJob: function($stateParams) {
+					return $stateParams.idJob;
+				},
+				concepttransformations: function(conceptTransformationService, $stateParams) {
+					return conceptTransformationService.getConceptTransformations($stateParams.idJob);
+				}
+			}
 		});
 
+		
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 		$httpProvider.interceptors.push('ErrorInterceptor');
 		$httpProvider.interceptors.push('TokenAuthInterceptor');
@@ -319,6 +341,12 @@
 	function osmoperations(osmFilterService) {
 		return osmFilterService.getOsmFiltersOperation();
 	}
+	
+	jobs.$inject = ['jobService'];
+	function jobs(jobService) {
+		return jobService.getJobs();
+	}
+		
 	
 	angular.module('app').config(translateAppConfig);
 	translateAppConfig.$inject = ['$translateProvider'];

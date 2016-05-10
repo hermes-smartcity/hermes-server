@@ -200,3 +200,19 @@ var url_delete_osmfilter = url_osmfilter+"delete";
 var url_register_osmfilter = url_osmfilter+"register";
 var url_edit_osmfilter = url_osmfilter+"edit";
 var url_get_osmfilter = url_osmfilter+'json/osmFilter';
+
+//Controlador job
+var url_job = url_servidor+'api/job/';
+var url_jobs = url_job+'json/jobs';
+var url_delete_job = url_job+"delete";
+var url_register_job = url_job+"register";
+var url_edit_job = url_job+"edit";
+var url_get_job = url_job+'json/job';
+
+//Controlador concept transformation
+var url_concepttranformation = url_servidor+'api/concepttranformation/';
+var url_concepttranformations = url_concepttranformation+'json/concepttranformations';
+var url_delete_concepttranformation = url_concepttranformation+"delete";
+var url_register_concepttranformation = url_concepttranformation+"register";
+var url_edit_concepttranformation = url_concepttranformation+"edit";
+var url_get_concepttranformation = url_concepttranformation+'json/concepttranformation';

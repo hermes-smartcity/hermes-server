@@ -142,6 +142,11 @@ fieldset table.alternable {
 	width: 100%;
 }
 
+#mapModal{
+	height:450px;
+	width: 100%;
+}
+
 #selectUsers{
 	width: 100%;
 }

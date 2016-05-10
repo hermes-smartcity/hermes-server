@@ -119,6 +119,7 @@
 				"dbConnections": "DB Connections",
 				"dbConcepts": "DB Concepts",
 				"osmConcepts": "OSM Concepts",
+				"job": "Job"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -386,6 +387,28 @@
 				"operationRequired": "Operation required",
 				"valueRequired": "Value required",
 			},
+			"job":{
+				"titulo": "Job",
+				"actions": "Actions",
+				"id": "ID",
+				"name": "Name",
+				"create": "Create new Job",
+				"nameRequired": "Name required",
+				"bboxRequired": "Bbox required",
+				"selectBbox": "Select bbox",
+				"manageConceptTransformation": "Manage concept transformation",
+			},
+			"concepttransformation":{
+				"actions": "Actions",
+				"id": "ID",
+				"name": "Name",
+				"create": "Create new Concept Transformation",
+				"osmconcept": "OSM Concept",
+				"dbConcept": "DB Concept",
+				"osmconceptRequired": "OSM Concept required",
+				"dbConceptRequired": "DB Concept required",
+				"manageAttributeMapping": "Manage attribute mapping",
+			}
 		});
 	}
 
