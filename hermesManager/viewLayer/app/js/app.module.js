@@ -247,6 +247,25 @@
 					return conceptTransformationService.getConceptTransformations($stateParams.idJob);
 				}
 			}
+		}).state('manageAttributeMapping', {
+			url: '/manageAttributeMapping/:idConceptTransformation/:idOsmConcept/:idDbConcept',
+			templateUrl:'partials/attributemapping/attributemapping.html',
+			controller: 'AttributeMappingController',
+			controllerAs: 'vm',
+			resolve: {
+				idConceptTransformation: function($stateParams) {
+					return $stateParams.idConceptTransformation;
+				},
+				idOsmConcept: function($stateParams) {
+					return $stateParams.idOsmConcept;
+				},
+				idDbConcept: function($stateParams) {
+					return $stateParams.idDbConcept;
+				},
+				attributemappings: function(attributeMappingService, $stateParams) {
+					return attributeMappingService.getAttributeMappings($stateParams.idConceptTransformation);
+				}
+			}
 		});
 
 		

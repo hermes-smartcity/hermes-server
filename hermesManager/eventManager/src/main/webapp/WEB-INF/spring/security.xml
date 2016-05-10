@@ -140,6 +140,12 @@
 		<security:intercept-url method="POST" pattern="/api/concepttransformation/register/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="PUT" pattern="/api/concepttransformation/edit/**" access="hasRole('ADMIN')" />
 		
+		<!-- attributemapping -->
+		<security:intercept-url method="GET" pattern="/api/attributemapping/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/attributemapping/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/attributemapping/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/attributemapping/edit/**" access="hasRole('ADMIN')" />
+		
 		<security:csrf disabled="true"/>
 	</security:http>
 	

@@ -49,6 +49,14 @@ public class AttributeMapping implements Serializable{
 		this.dbAttribute = dbAttribute;
 		this.osmAttribute = osmAttribute;
 	}
+	
+	public AttributeMapping(ConceptTransformation conceptTransformation,
+			DBAttribute dbAttribute, OsmAttribute osmAttribute) {
+		super();
+		this.conceptTransformation = conceptTransformation;
+		this.dbAttribute = dbAttribute;
+		this.osmAttribute = osmAttribute;
+	}
 
 	public Long getId() {
 		return id;

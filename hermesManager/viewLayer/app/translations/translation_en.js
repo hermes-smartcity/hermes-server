@@ -401,13 +401,21 @@
 			"concepttransformation":{
 				"actions": "Actions",
 				"id": "ID",
-				"name": "Name",
 				"create": "Create new Concept Transformation",
 				"osmconcept": "OSM Concept",
 				"dbconcept": "DB Concept",
-				"osmconceptRequired": "OSM Concept required",
+				"osmConceptRequired": "OSM Concept required",
 				"dbConceptRequired": "DB Concept required",
 				"manageAttributeMapping": "Manage attribute mapping",
+			},
+			"attributemapping":{
+				"actions": "Actions",
+				"id": "ID",
+				"create": "Create new Attribute Mapping",
+				"osmattribute": "OSM Attribute",
+				"dbattribute": "DB Attribute",
+				"osmAttributeRequired": "OSM Attribute required",
+				"dbAttributeRequired": "DB Attribute required"
 			}
 		});
 	}

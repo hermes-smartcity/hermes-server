@@ -216,3 +216,11 @@ var url_delete_concepttransformation = url_concepttransformation+"delete";
 var url_register_concepttransformation = url_concepttransformation+"register";
 var url_edit_concepttransformation = url_concepttransformation+"edit";
 var url_get_concepttransformation = url_concepttransformation+'json/concepttransformation';
+
+//Controlador attributemapping
+var url_attributemapping = url_servidor+'api/attributemapping/';
+var url_attributemappings = url_attributemapping+'json/attributemappings';
+var url_delete_attributemapping = url_attributemapping+"delete";
+var url_register_attributemapping = url_attributemapping+"register";
+var url_edit_attributemapping = url_attributemapping+"edit";
+var url_get_attributemapping = url_attributemapping+'json/attributemapping';

@@ -1,21 +1,25 @@
 (function() {
 	'use strict';
 
-	angular.module('app').controller('ConceptTransformationController', ConceptTransformationController);
+	angular.module('app').controller('AttributeMappingController', AttributeMappingController);
 
-	ConceptTransformationController.$inject = ['$scope', '$filter', '$http', '$translate', 
+	AttributeMappingController.$inject = ['$scope', '$filter', '$http', '$translate', 
 	                                '$state', '$rootScope', '$q', '$compile', '$uibModal',
-	                                'conceptTransformationService', 'SweetAlert',  'DTOptionsBuilder', 
-	                                'DTColumnBuilder', 'idJob', 'concepttransformations'];
+	                                'attributeMappingService', 'SweetAlert',  'DTOptionsBuilder', 
+	                                'DTColumnBuilder', 'idConceptTransformation', 'idOsmConcept',
+	                                'idDbConcept', 'attributemappings'];
 	
-	function ConceptTransformationController($scope, $filter, $http, $translate, $state, 
-			$rootScope, $q, $compile, $uibModal , conceptTransformationService, SweetAlert, 
-			DTOptionsBuilder, DTColumnBuilder, idJob, concepttransformations) {
+	function AttributeMappingController($scope, $filter, $http, $translate, $state, 
+			$rootScope, $q, $compile, $uibModal , attributeMappingService, SweetAlert, 
+			DTOptionsBuilder, DTColumnBuilder, idConceptTransformation, idOsmConcept,
+			idDbConcept, attributemappings) {
 	
 		var vm = this;
 				
-		vm.idJob = parseInt(idJob);
-		vm.concepttransformations = concepttransformations.data;
+		vm.idConceptTransformation = parseInt(idConceptTransformation);
+		vm.idOsmConcept = parseInt(idOsmConcept);
+		vm.idDbConcept = parseInt(idDbConcept);
+		vm.attributemappings = attributemappings.data;
 		
 		vm.add = add;
 		vm.edit = edit;
@@ -34,7 +38,7 @@
 		
 		function datosPromise(){
 			var dfd = $q.defer();		
-			dfd.resolve(vm.concepttransformations);
+			dfd.resolve(vm.attributemappings);
 
 			return dfd.promise;
 		}
@@ -45,26 +49,23 @@
 		}
 		
 		vm.dtColumns  = [
-		                   DTColumnBuilder.newColumn('id').withTitle($translate.instant('concepttransformation.id')),
-		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('concepttransformation.osmconcept')).renderWith(function(data,type,full) {
-		                	   var texto = data.osmConcept.name;
+		                   DTColumnBuilder.newColumn('id').withTitle($translate.instant('attributemapping.id')),
+		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('attributemapping.osmattribute')).renderWith(function(data,type,full) {
+		                	   var texto = data.osmAttribute.name;
 		                	   return texto;
 		                   }),
-		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('concepttransformation.dbconcept')).renderWith(function(data,type,full) {
-		                	   var texto = data.dbConcept.name;
+		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('attributemapping.dbattribute')).renderWith(function(data,type,full) {
+		                	   var texto = data.dbAttribute.attributeName;
 		                	   return texto;
 		                   }),
-		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('concepttransformation.actions')).notSortable()
+		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('attributemapping.actions')).notSortable()
 		                   .renderWith(function(data, type, full, meta) {
 		                	   return '<button class="btn btn-warning" data-ng-click="vm.edit(' + data.id + ')">' +
 	                           '   <i class="fa fa-edit"></i>' +
 	                           '</button>&nbsp;' +
 	                           '<button class="btn btn-danger" data-ng-click="vm.delet(' + data.id + ')">' +
 	                           '   <i class="fa fa-trash-o"></i>' +
-	                           '</button>&nbsp;' +
-	                           '<button class="btn btn-info" data-ui-sref="manageAttributeMapping({idConceptTransformation:'+ data.id + ',idOsmConcept:'+ data.osmConcept.id + ',idDbConcept:'+ data.dbConcept.id + '})" >' +
-	                           	$translate.instant('concepttransformation.manageAttributeMapping') + 
-	                           '</button>';
+	                           '</button>&nbsp';
 		                   })
 		                ];  
 		
@@ -74,24 +75,24 @@
 			vm.infoAction = undefined;
 			
 			var modalInstance = $uibModal.open({
-                templateUrl: './partials/concepttransformation/modal-form.html',
-                controller: 'ConceptTransformationModalController',
+                templateUrl: './partials/attributemapping/modal-form.html',
+                controller: 'AttributeMappingModalController',
                 scope: $scope,
                 resolve: {
-                	infoConcept: function(){
+                	infoAttribute: function(){
                     	return null;
                     },
-                    idJob: function(){
-                    	return vm.idJob;
+                    idConceptTransformation: function(){
+                    	return vm.idConceptTransformation;
                     },
-                	osmconcepts: function () {
-                		return conceptTransformationService.getOsmConcepts();
+                	osmattributes: function () {
+                		return attributeMappingService.getOsmAttributes(idOsmConcept);
                     },
-                    dbconcepts: function () {
-                		return conceptTransformationService.getDbConcepts();
+                    dbattributes: function () {
+                		return attributeMappingService.getDbAttributes(idDbConcept);
                     },
-                    conceptForm: function () {
-                        return $scope.conceptForm;
+                    attributeForm: function () {
+                        return $scope.attributeForm;
                     }
                 }
             });
@@ -99,8 +100,8 @@
 	        modalInstance.result.then(function (response) {
 		     	vm.infoAction = response;
 		     	
-		     	conceptTransformationService.getConceptTransformations(vm.idJob).then(function(response) {
-		     		vm.concepttransformations = response.data;
+		     	attributeMappingService.getAttributeMappings(vm.idConceptTransformation).then(function(response) {
+		     		vm.attributemappings = response.data;
 	        		if (vm.dtInstance !== null){
 	        			vm.dtInstance.reloadData();
 	        		}
@@ -116,24 +117,24 @@
 			vm.infoAction = undefined;
 			
 			var modalInstance = $uibModal.open({
-                templateUrl: './partials/concepttransformation/modal-form.html',
-                controller: 'ConceptTransformationModalController',
+                templateUrl: './partials/attributemapping/modal-form.html',
+                controller: 'AttributeMappingModalController',
                 scope: $scope,
                 resolve: {
-                	infoConcept: function(){
-                		return conceptTransformationService.getConceptTransformation(id);
+                	infoAttribute: function(){
+                		return attributeMappingService.getAttributeMapping(id);
                     },
-                    idJob: function(){
-                    	return vm.idJob;
+                    idConceptTransformation: function(){
+                    	return vm.idConceptTransformation;
                     },
-                    osmconcepts: function () {
-                		return conceptTransformationService.getOsmConcepts();
+                	osmattributes: function () {
+                		return attributeMappingService.getOsmAttributes(idOsmConcept);
                     },
-                    dbconcepts: function () {
-                		return conceptTransformationService.getDbConcepts();
+                    dbattributes: function () {
+                		return attributeMappingService.getDbAttributes(idDbConcept);
                     },
-                    conceptForm: function () {
-                        return $scope.conceptForm;
+                    attributeForm: function () {
+                        return $scope.attributeForm;
                     }
                 }
             });
@@ -141,8 +142,8 @@
 	        modalInstance.result.then(function (response) {
 		     	vm.infoAction = response;
 		     	
-		     	conceptTransformationService.getConceptTransformations(vm.idJob).then(function(response) {
-		     		vm.concepttransformations = response.data;
+		     	attributeMappingService.getAttributeMappings(vm.idConceptTransformation).then(function(response) {
+		     		vm.attributemappings = response.data;
 	        		if (vm.dtInstance !== null){
 	        			vm.dtInstance.reloadData();
 	        		}
@@ -169,10 +170,10 @@
 	        	}, 
 	        	function(isConfirm){
 	        		if (isConfirm){
-	        			conceptTransformationService.delet(id).then(function(response) {
+	        			attributeMappingService.delet(id).then(function(response) {
 		   	        		vm.infoAction = response.data;
-		   	        		conceptTransformationService.getConceptTransformations(vm.idJob).then(function(response) {
-		   			     		vm.concepttransformations = response.data;
+		   	        		attributeMappingService.getAttributeMappings(vm.idConceptTransformation).then(function(response) {
+		   			     		vm.attributemappings = response.data;
 		   	        			if (vm.dtInstance !== null){
 		   	        				vm.dtInstance.reloadData();
 		   	        			}
