@@ -45,6 +45,13 @@ public class Message implements Serializable{
 		this.timestamp = timestamp;
 		this.execution = execution;
 	}
+	
+	public Message(String text, Calendar timestamp, Execution execution) {
+		super();
+		this.text = text;
+		this.timestamp = timestamp;
+		this.execution = execution;
+	}
 
 	public Long getId() {
 		return id;

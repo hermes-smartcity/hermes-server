@@ -18,6 +18,8 @@ import es.udc.lbd.hermes.model.osmimport.execution.dao.ExecutionDao;
 import es.udc.lbd.hermes.model.osmimport.job.Job;
 import es.udc.lbd.hermes.model.osmimport.job.JobDTO;
 import es.udc.lbd.hermes.model.osmimport.job.dao.JobDao;
+import es.udc.lbd.hermes.model.osmimport.message.Message;
+import es.udc.lbd.hermes.model.osmimport.message.dao.MessageDao;
 
 @Service("jobService")
 @Transactional
@@ -28,6 +30,9 @@ public class JobServiceImpl implements JobService{
 	
 	@Autowired
 	private ExecutionDao executionDao;
+	
+	@Autowired
+	private MessageDao messageDao;
 	
 	@Transactional(readOnly = true)
 	public List<Job> getAll(){
@@ -74,6 +79,10 @@ public class JobServiceImpl implements JobService{
 		Execution execution =  new Execution(ExecutionStatus.RUNNING, timestamp, job);
 		
 		executionDao.create(execution);
+		
+		//Creamos el mensaje inicial asociado a la ejecucion
+		Message message = new Message("Initiating execution of the job", timestamp, execution);
+		messageDao.create(message);
 		
 		return execution;
 	}
