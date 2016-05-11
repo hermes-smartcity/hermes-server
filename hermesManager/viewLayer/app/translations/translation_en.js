@@ -119,7 +119,11 @@
 				"dbConnections": "DB Connections",
 				"dbConcepts": "DB Concepts",
 				"osmConcepts": "OSM Concepts",
-				"job": "Job"
+				"job": "Job",
+				"sensorCollector": "Sensor Collector",
+				"administration": "Administration",
+				"osmImport": "OSM Import",
+				"jobs": "Jobs"
 			},
 			"filtros": {
 				"titulo": "Filters",
