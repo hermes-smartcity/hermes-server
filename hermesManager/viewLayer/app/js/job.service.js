@@ -12,6 +12,7 @@
 				register: register,
 				edit: edit,
 				getJob: getJob,
+				executeJob: executeJob
 		};
 
 		return service;
@@ -75,6 +76,14 @@
 			return $http({
 				method : 'GET',
 				url : url_get_job,
+				params: {"id": id}
+			});
+		}
+		
+		function executeJob (id) {		
+			return $http({
+				method : 'POST',
+				url : url_execute_job,
 				params: {"id": id}
 			});
 		}

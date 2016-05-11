@@ -123,7 +123,8 @@
 				"sensorCollector": "Sensor Collector",
 				"administration": "Administration",
 				"osmImport": "OSM Import",
-				"jobs": "Jobs"
+				"jobs": "Jobs",
+				"executions": "Executions"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -401,6 +402,7 @@
 				"bboxRequired": "Bbox required",
 				"selectBbox": "Select bbox",
 				"manageConceptTransformation": "Manage concept transformation",
+				"executeJob": "Execute Job"
 			},
 			"concepttransformation":{
 				"actions": "Actions",
@@ -420,6 +422,18 @@
 				"dbattribute": "DB Attribute",
 				"osmAttributeRequired": "OSM Attribute required",
 				"dbAttributeRequired": "DB Attribute required"
+			},
+			"execution":{
+				"actions": "Actions",
+				"id": "ID",
+				"job": "Job",
+				"status": "Status",
+				"time": "Time"
+			},
+			"message":{
+				"id": "ID",
+				"text": "Text",
+				"time": "Time"
 			}
 		});
 	}

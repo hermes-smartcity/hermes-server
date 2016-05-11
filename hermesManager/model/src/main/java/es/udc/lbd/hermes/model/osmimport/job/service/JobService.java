@@ -2,6 +2,7 @@ package es.udc.lbd.hermes.model.osmimport.job.service;
 
 import java.util.List;
 
+import es.udc.lbd.hermes.model.osmimport.execution.Execution;
 import es.udc.lbd.hermes.model.osmimport.job.Job;
 import es.udc.lbd.hermes.model.osmimport.job.JobDTO;
 
@@ -16,4 +17,6 @@ public interface JobService {
 	public Job get(Long id);
 	
 	public void update(JobDTO jobDto, Long id);
+	
+	public Execution createExecution(Long idJob);
 }

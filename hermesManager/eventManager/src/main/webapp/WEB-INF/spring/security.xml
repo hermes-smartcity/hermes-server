@@ -146,6 +146,13 @@
 		<security:intercept-url method="POST" pattern="/api/attributemapping/register/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="PUT" pattern="/api/attributemapping/edit/**" access="hasRole('ADMIN')" />
 		
+		<!-- execution -->
+		<security:intercept-url method="GET" pattern="/api/execution/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/execution/delete/**" access="hasRole('ADMIN')" />
+		
+		<!-- message -->
+		<security:intercept-url method="GET" pattern="/api/message/**" access="hasAnyRole('ADMIN')" />
+		
 		<security:csrf disabled="true"/>
 	</security:http>
 	

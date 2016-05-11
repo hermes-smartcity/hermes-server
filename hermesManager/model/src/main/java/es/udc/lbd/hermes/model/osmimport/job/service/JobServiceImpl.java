@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.osmimport.job.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
+import es.udc.lbd.hermes.model.osmimport.execution.Execution;
+import es.udc.lbd.hermes.model.osmimport.execution.ExecutionStatus;
+import es.udc.lbd.hermes.model.osmimport.execution.dao.ExecutionDao;
 import es.udc.lbd.hermes.model.osmimport.job.Job;
 import es.udc.lbd.hermes.model.osmimport.job.JobDTO;
 import es.udc.lbd.hermes.model.osmimport.job.dao.JobDao;
@@ -21,6 +25,9 @@ public class JobServiceImpl implements JobService{
 
 	@Autowired
 	private JobDao jobDao;
+	
+	@Autowired
+	private ExecutionDao executionDao;
 	
 	@Transactional(readOnly = true)
 	public List<Job> getAll(){
@@ -56,5 +63,18 @@ public class JobServiceImpl implements JobService{
 		
 		jobDao.update(job);
 		
+	}
+	
+	public Execution createExecution(Long idJob){
+		//Recuperamos el job
+		Job job = jobDao.get(idJob);
+		
+		//Creamos el objeto execution
+		Calendar timestamp = Calendar.getInstance();
+		Execution execution =  new Execution(ExecutionStatus.RUNNING, timestamp, job);
+		
+		executionDao.create(execution);
+		
+		return execution;
 	}
 }

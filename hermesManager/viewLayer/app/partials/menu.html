@@ -161,6 +161,13 @@
 						</li>
                    </ul>
                 </li>
+                
+                <li data-ng-if="hasRole('ROLE_ADMIN')">
+					<a data-ui-sref="executions"> 
+						<i class="fa fa-list fa-fw"><!--  --></i> 
+						<span> {{'menu.executions' | translate}}</span>
+					</a>
+				</li>
              
 			</ul>
 		</div>

@@ -266,6 +266,30 @@
 					return attributeMappingService.getAttributeMappings($stateParams.idConceptTransformation);
 				}
 			}
+		}).state('executions', {
+			url: '/executions',
+			templateUrl: 'partials/execution/executions.html',
+			controller: 'ExecutionController',
+			controllerAs: 'vm',
+			resolve: {
+				executions: executions
+			}
+		}).state('showMessages', {
+			url: '/showMessages/:idExecution/:status',
+			templateUrl:'partials/message/messages.html',
+			controller: 'MessageController',
+			controllerAs: 'vm',
+			resolve: {
+				idExecution: function($stateParams) {
+					return $stateParams.idExecution;
+				},
+				status: function($stateParams) {
+					return $stateParams.status;
+				},
+				messages: function(messageService, $stateParams) {
+					return messageService.getMessages($stateParams.idExecution);
+				}
+			}
 		});
 
 		
@@ -366,6 +390,10 @@
 		return jobService.getJobs();
 	}
 		
+	executions.$inject = ['executionService'];
+	function executions(executionService) {
+		return executionService.getExecutions();
+	}
 	
 	angular.module('app').config(translateAppConfig);
 	translateAppConfig.$inject = ['$translateProvider'];

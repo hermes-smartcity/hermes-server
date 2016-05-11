@@ -19,7 +19,8 @@
 		vm.add = add;
 		vm.edit = edit;
 		vm.delet = delet;
-	
+		vm.executeJob = executeJob;
+			
 		 //Inicializar options de la tabla
 		vm.dtInstance = null;
 
@@ -55,6 +56,9 @@
 	                           '</button>&nbsp;' +
 	                           '<button class="btn btn-info" data-ui-sref="manageConceptTransformation({idJob:'+ data.id + '})" >' +
 	                           	$translate.instant('job.manageConceptTransformation') + 
+	                           '</button>&nbsp;' +
+	                           '<button class="btn btn-success" data-ng-click="vm.executeJob(' + data.id + ')">' +
+	                           $translate.instant('job.executeJob') + 
 	                           '</button>';
 		                   })
 		                ];  
@@ -153,9 +157,22 @@
 		   	        		});
 		   	        	});	
 	        		}
-	        	});
-	        	             
+	        	}
+	        );
 	    }
+		
+		function executeJob(id){
+			jobService.executeJob(id).then(function(response) {
+				var idExecution = response.data.id;
+				var status = response.data.status;
+				
+				//Lanzamos la tarea de ejecucion de un trabajo
+				
+				//Redirigimos a la pantalla con los mensajes de la ejecucion
+				$state.go('showMessages', {idExecution: idExecution, status: status});
+			});	
+		}
+		
 	}
 	
 })();

@@ -18,6 +18,7 @@ import es.udc.lbd.hermes.eventManager.controller.osmimport.dbConcept.DBConceptCo
 import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
 import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
+import es.udc.lbd.hermes.model.osmimport.execution.Execution;
 import es.udc.lbd.hermes.model.osmimport.job.Job;
 import es.udc.lbd.hermes.model.osmimport.job.JobDTO;
 import es.udc.lbd.hermes.model.osmimport.job.service.JobService;
@@ -99,5 +100,11 @@ static Logger logger = Logger.getLogger(DBConceptController.class);
 		jsonD.setValue(mensaje);
 		
 		return jsonD;
+	}
+	
+	@RequestMapping(value = "/executeJob", method = RequestMethod.POST)
+	public Execution executeJob(@RequestParam(value = "id", required = true) Long id) {
+		//Creamos la execution del job y devolvemos su id
+		return jobServicio.createExecution(id);
 	}
 }

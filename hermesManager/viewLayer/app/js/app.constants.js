@@ -208,6 +208,7 @@ var url_delete_job = url_job+"delete";
 var url_register_job = url_job+"register";
 var url_edit_job = url_job+"edit";
 var url_get_job = url_job+'json/job';
+var url_execute_job = url_job+"executeJob";
 
 //Controlador concept transformation
 var url_concepttransformation = url_servidor+'api/concepttransformation/';
@@ -224,3 +225,12 @@ var url_delete_attributemapping = url_attributemapping+"delete";
 var url_register_attributemapping = url_attributemapping+"register";
 var url_edit_attributemapping = url_attributemapping+"edit";
 var url_get_attributemapping = url_attributemapping+'json/attributemapping';
+
+//Controlador executions
+var url_execution = url_servidor+'api/execution/';
+var url_executions = url_execution+'json/executions';
+var url_delete_execution = url_execution+"delete";
+
+//Controlador messages
+var url_message = url_servidor+'api/message/';
+var url_messages = url_message+'json/messages';
