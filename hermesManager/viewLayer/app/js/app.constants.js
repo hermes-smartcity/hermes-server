@@ -175,3 +175,65 @@ var url_delete_dbattribute = url_dbattribute+"delete";
 var url_register_dbattribute = url_dbattribute+"register";
 var url_edit_dbattribute = url_dbattribute+"edit";
 var url_get_dbattribute = url_dbattribute+'json/dbAttribute';
+
+//Controlador osm concepts
+var url_osmconcept = url_servidor+'api/osmconcept/';
+var url_osmConcepts = url_osmconcept+'json/osmConcepts';
+var url_delete_osmconcept = url_osmconcept+"delete";
+var url_register_osmconcept = url_osmconcept+"register";
+var url_edit_osmconcept = url_osmconcept+"edit";
+var url_get_osmconcept = url_osmconcept+'json/osmConcept';
+
+//Controlador osm attributes
+var url_osmattribute = url_servidor+'api/osmattribute/';
+var url_osmAttributes = url_osmattribute+'json/osmAttributes';
+var url_delete_osmattribute = url_osmattribute+"delete";
+var url_register_osmattribute = url_osmattribute+"register";
+var url_edit_osmattribute = url_osmattribute+"edit";
+var url_get_osmattribute = url_osmattribute+'json/osmAttribute';
+
+//Controlador osm filter
+var url_osmfilter = url_servidor+'api/osmfilter/';
+var url_osmFiltersOperation = url_osmfilter+'json/osmFiltersOperation';
+var url_osmFilters = url_osmfilter+'json/osmFilters';
+var url_delete_osmfilter = url_osmfilter+"delete";
+var url_register_osmfilter = url_osmfilter+"register";
+var url_edit_osmfilter = url_osmfilter+"edit";
+var url_get_osmfilter = url_osmfilter+'json/osmFilter';
+
+//Controlador job
+var url_job = url_servidor+'api/job/';
+var url_jobs = url_job+'json/jobs';
+var url_delete_job = url_job+"delete";
+var url_register_job = url_job+"register";
+var url_edit_job = url_job+"edit";
+var url_get_job = url_job+'json/job';
+var url_execute_job = url_job+"executeJob";
+var url_launch_execute_job = url_job+"launchExecuteJob";
+
+
+//Controlador concept transformation
+var url_concepttransformation = url_servidor+'api/concepttransformation/';
+var url_concepttransformations = url_concepttransformation+'json/concepttransformations';
+var url_delete_concepttransformation = url_concepttransformation+"delete";
+var url_register_concepttransformation = url_concepttransformation+"register";
+var url_edit_concepttransformation = url_concepttransformation+"edit";
+var url_get_concepttransformation = url_concepttransformation+'json/concepttransformation';
+
+//Controlador attributemapping
+var url_attributemapping = url_servidor+'api/attributemapping/';
+var url_attributemappings = url_attributemapping+'json/attributemappings';
+var url_delete_attributemapping = url_attributemapping+"delete";
+var url_register_attributemapping = url_attributemapping+"register";
+var url_edit_attributemapping = url_attributemapping+"edit";
+var url_get_attributemapping = url_attributemapping+'json/attributemapping';
+
+//Controlador executions
+var url_execution = url_servidor+'api/execution/';
+var url_executions = url_execution+'json/executions';
+var url_delete_execution = url_execution+"delete";
+
+//Controlador messages
+var url_message = url_servidor+'api/message/';
+var url_messages = url_message+'json/messages';
+var url_messages_with_status = url_message+'json/messagesstatus';

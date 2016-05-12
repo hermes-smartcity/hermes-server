@@ -142,6 +142,11 @@ fieldset table.alternable {
 	width: 100%;
 }
 
+#mapModal{
+	height:450px;
+	width: 100%;
+}
+
 #selectUsers{
 	width: 100%;
 }
@@ -313,4 +318,8 @@ ol.submenu li.activo a,ol.submenu li.activo span {
 
 .top-buffer { 
 	margin-top:20px; 
+}
+
+.mylist-unstyled {
+    list-style: none;
 }

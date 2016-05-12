@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3>{{'attributemapping.create' | translate}}</h3>
+</div>
+
+<form name="form.attributeForm" novalidate>
+    <div class="modal-body">
+  
+  		<!-- OSM ATTRIBUTE -->
+  		<div class="form-group">
+  			<label>{{'attributemapping.osmattribute' | translate}}</label>
+  			<select id="osmconcept" name="osmattribute" data-ng-model="osmattribute" class="form-control"
+					data-ng-options="osmattribute.id as osmattribute.name for osmattribute in osmattributes" required>
+			</select>
+			<p data-ng-show="form.attributeForm.osmattribute.$error.required && !form.attributeForm.osmattribute.$pristine" class="avisoError">{{'attributemapping.osmAttributeRequired' | translate}}</p>
+  		</div>
+  		
+  		<!-- DB ATTRIBUTE -->
+  		<div class="form-group">
+  			<label>{{'attributemapping.dbattribute' | translate}}</label>
+  			<select id="dbconcept" name="dbattribute" data-ng-model="dbattribute" class="form-control"
+					data-ng-options="dbattribute.id as dbattribute.attributeName for dbattribute in dbattributes" required>
+			</select>
+			<p data-ng-show="form.attributeForm.dbattribute.$error.required && !form.attributeForm.dbattribute.$pristine" class="avisoError">{{'attributemapping.dbAttributeRequired' | translate}}</p>
+  		</div>
+  		
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="submitForm()"  data-ng-disabled="form.attributeForm.$invalid">{{'aceptar' | translate}}</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">{{'cancelar' | translate}}</button>
+    </div>
+</form>

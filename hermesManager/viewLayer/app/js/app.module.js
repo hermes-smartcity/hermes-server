@@ -191,8 +191,108 @@
 					return dbAttributeService.getDbAttributes($stateParams.idConcept);
 				}
 			}
+		}).state('osmconcept', {
+			url: '/osmconcept',
+			templateUrl: 'partials/osmconcept/osmconcept.html',
+			controller: 'OSMConceptController',
+			controllerAs: 'vm',
+			resolve: {
+				osmconcepts: osmconcepts
+			}
+		}).state('manageOsmAttributes', {
+			url: '/manageOsmAttributes/:idOsmConcept',
+			templateUrl:'partials/osmattribute/osmattribute.html',
+			controller: 'OSMAttributeController',
+			controllerAs: 'vm',
+			resolve: {
+				idOsmConcept: function($stateParams) {
+					return $stateParams.idOsmConcept;
+				},
+				osmattributes: function(osmAttributeService, $stateParams) {
+					return osmAttributeService.getOsmAttributes($stateParams.idOsmConcept);
+				}
+			}
+		}).state('manageOsmFilters', {
+			url: '/manageOsmFilters/:idOsmConcept',
+			templateUrl:'partials/osmfilter/osmfilter.html',
+			controller: 'OSMFilterController',
+			controllerAs: 'vm',
+			resolve: {
+				idOsmConcept: function($stateParams) {
+					return $stateParams.idOsmConcept;
+				},
+				osmoperations: osmoperations,
+				osmfilters: function(osmFilterService, $stateParams) {
+					return osmFilterService.getOsmFilters($stateParams.idOsmConcept);
+				}
+			}
+		}).state('job', {
+			url: '/job',
+			templateUrl: 'partials/job/job.html',
+			controller: 'JobController',
+			controllerAs: 'vm',
+			resolve: {
+				jobs: jobs
+			}
+		}).state('manageConceptTransformation', {
+			url: '/manageConceptTransformation/:idJob',
+			templateUrl:'partials/concepttransformation/concepttransformation.html',
+			controller: 'ConceptTransformationController',
+			controllerAs: 'vm',
+			resolve: {
+				idJob: function($stateParams) {
+					return $stateParams.idJob;
+				},
+				concepttransformations: function(conceptTransformationService, $stateParams) {
+					return conceptTransformationService.getConceptTransformations($stateParams.idJob);
+				}
+			}
+		}).state('manageAttributeMapping', {
+			url: '/manageAttributeMapping/:idConceptTransformation/:idOsmConcept/:idDbConcept',
+			templateUrl:'partials/attributemapping/attributemapping.html',
+			controller: 'AttributeMappingController',
+			controllerAs: 'vm',
+			resolve: {
+				idConceptTransformation: function($stateParams) {
+					return $stateParams.idConceptTransformation;
+				},
+				idOsmConcept: function($stateParams) {
+					return $stateParams.idOsmConcept;
+				},
+				idDbConcept: function($stateParams) {
+					return $stateParams.idDbConcept;
+				},
+				attributemappings: function(attributeMappingService, $stateParams) {
+					return attributeMappingService.getAttributeMappings($stateParams.idConceptTransformation);
+				}
+			}
+		}).state('executions', {
+			url: '/executions',
+			templateUrl: 'partials/execution/executions.html',
+			controller: 'ExecutionController',
+			controllerAs: 'vm',
+			resolve: {
+				executions: executions
+			}
+		}).state('showMessages', {
+			url: '/showMessages/:idExecution/:status',
+			templateUrl:'partials/message/messages.html',
+			controller: 'MessageController',
+			controllerAs: 'vm',
+			resolve: {
+				idExecution: function($stateParams) {
+					return $stateParams.idExecution;
+				},
+				status: function($stateParams) {
+					return $stateParams.status;
+				},
+				messages: function(messageService, $stateParams) {
+					return messageService.getMessages($stateParams.idExecution);
+				}
+			}
 		});
 
+		
 //		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 		$httpProvider.interceptors.push('ErrorInterceptor');
 		$httpProvider.interceptors.push('TokenAuthInterceptor');
@@ -273,6 +373,26 @@
 	dbattributestype.$inject = ['dbAttributeService'];
 	function dbattributestype(dbAttributeService) {
 		return dbAttributeService.getDbAttributesType();
+	}
+	
+	osmconcepts.$inject = ['osmConceptService'];
+	function osmconcepts(osmConceptService) {
+		return osmConceptService.getOsmConcepts();
+	}
+	
+	osmoperations.$inject = ['osmFilterService'];
+	function osmoperations(osmFilterService) {
+		return osmFilterService.getOsmFiltersOperation();
+	}
+	
+	jobs.$inject = ['jobService'];
+	function jobs(jobService) {
+		return jobService.getJobs();
+	}
+		
+	executions.$inject = ['executionService'];
+	function executions(executionService) {
+		return executionService.getExecutions();
 	}
 	
 	angular.module('app').config(translateAppConfig);

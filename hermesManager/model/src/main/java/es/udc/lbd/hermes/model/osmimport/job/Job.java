@@ -43,6 +43,12 @@ public class Job implements Serializable{
 		this.name = name;
 		this.bbox = bbox;
 	}
+	
+	public Job(String name, Polygon bbox) {
+		super();
+		this.name = name;
+		this.bbox = bbox;
+	}
 
 	public Long getId() {
 		return id;

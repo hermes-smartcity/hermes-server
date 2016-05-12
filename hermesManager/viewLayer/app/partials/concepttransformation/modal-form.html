@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3>{{'concepttransformation.create' | translate}}</h3>
+</div>
+
+<form name="form.conceptForm" novalidate>
+    <div class="modal-body">
+  
+  		<!-- OSM CONCEPT -->
+  		<div class="form-group">
+  			<label>{{'concepttransformation.osmconcept' | translate}}</label>
+  			<select id="osmconcept" name="osmconcept" data-ng-model="osmconcept" class="form-control"
+					data-ng-options="osmconcept.id as osmconcept.name for osmconcept in osmconcepts" required>
+			</select>
+			<p data-ng-show="form.conceptForm.osmconcept.$error.required && !form.conceptForm.osmconcept.$pristine" class="avisoError">{{'concepttransformation.osmConceptRequired' | translate}}</p>
+  		</div>
+  		
+  		<!-- DB CONCEPT -->
+  		<div class="form-group">
+  			<label>{{'concepttransformation.dbconcept' | translate}}</label>
+  			<select id="dbconcept" name="dbconcept" data-ng-model="dbconcept" class="form-control"
+					data-ng-options="dbconcept.id as dbconcept.name for dbconcept in dbconcepts" required>
+			</select>
+			<p data-ng-show="form.conceptForm.dbconcept.$error.required && !form.conceptForm.dbconcept.$pristine" class="avisoError">{{'concepttransformation.dbConceptRequired' | translate}}</p>
+  		</div>
+  		
+  		<div class="form-group">
+   			<div id="mapModal"></div>
+   		</div>
+   		
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="submitForm()"  data-ng-disabled="form.conceptForm.$invalid">{{'aceptar' | translate}}</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">{{'cancelar' | translate}}</button>
+    </div>
+</form>

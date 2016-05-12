@@ -110,6 +110,48 @@
 		<security:intercept-url method="POST" pattern="/api/dbattribute/register/**" access="hasRole('ADMIN')" />	
 		<security:intercept-url method="PUT" pattern="/api/dbattribute/edit/**" access="hasRole('ADMIN')" />
 		
+		<!-- osmconcept -->
+		<security:intercept-url method="GET" pattern="/api/osmconcept/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/osmconcept/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/osmconcept/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/osmconcept/edit/**" access="hasRole('ADMIN')" />
+		
+		<!-- osmfilter -->
+		<security:intercept-url method="GET" pattern="/api/osmfilter/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/osmfilter/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/osmfilter/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/osmfilter/edit/**" access="hasRole('ADMIN')" />
+		
+		<!-- osmattribute -->
+		<security:intercept-url method="GET" pattern="/api/osmattribute/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/osmattribute/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/osmattribute/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/osmattribute/edit/**" access="hasRole('ADMIN')" />
+		
+		<!-- job -->
+		<security:intercept-url method="GET" pattern="/api/job/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/job/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/job/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/job/edit/**" access="hasRole('ADMIN')" />
+		
+		<!-- concepttransformation -->
+		<security:intercept-url method="GET" pattern="/api/concepttransformation/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/concepttransformation/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/concepttransformation/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/concepttransformation/edit/**" access="hasRole('ADMIN')" />
+		
+		<!-- attributemapping -->
+		<security:intercept-url method="GET" pattern="/api/attributemapping/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/attributemapping/delete/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST" pattern="/api/attributemapping/register/**" access="hasRole('ADMIN')" />	
+		<security:intercept-url method="PUT" pattern="/api/attributemapping/edit/**" access="hasRole('ADMIN')" />
+		
+		<!-- execution -->
+		<security:intercept-url method="GET" pattern="/api/execution/**" access="hasAnyRole('ADMIN')" />
+		<security:intercept-url method="DELETE" pattern="/api/execution/delete/**" access="hasRole('ADMIN')" />
+		
+		<!-- message -->
+		<security:intercept-url method="GET" pattern="/api/message/**" access="hasAnyRole('ADMIN')" />
 		
 		<security:csrf disabled="true"/>
 	</security:http>

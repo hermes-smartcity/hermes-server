@@ -118,6 +118,7 @@
 		<property name="basenames">
 			<list>
 				<value>classpath:/mensajes/eventManagerMensaxes_es</value>
+				<value>classpath:/mensajes/eventManagerMensaxes_en</value>
 			</list>
 		</property>
 		<property name="fallbackToSystemLocale" value="false" />

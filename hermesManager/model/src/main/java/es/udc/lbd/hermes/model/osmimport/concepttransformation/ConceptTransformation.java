@@ -63,6 +63,16 @@ public class ConceptTransformation implements Serializable{
 		this.osmConcept = osmConcept;
 	}
 
+	public ConceptTransformation(Polygon bbox, Job job,
+			DBConcept dbConcept, OsmConcept osmConcept) {
+		super();
+		this.bbox = bbox;
+		this.job = job;
+		this.dbConcept = dbConcept;
+		this.osmConcept = osmConcept;
+	}
+
+	
 	public Long getId() {
 		return id;
 	}

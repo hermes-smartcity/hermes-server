@@ -39,7 +39,7 @@ public class DBAttributeController extends MainResource{
 	}
 	
 	@RequestMapping(value="/json/dbAttributes", method = RequestMethod.GET)
-	public List<DBAttribute> getDBConcepts(@RequestParam(value = "idConcept", required = true) Long idConcept) { 
+	public List<DBAttribute> getDBAttributes(@RequestParam(value = "idConcept", required = true) Long idConcept) { 
 
 		return dbAttributeServicio.getAll(idConcept);
 

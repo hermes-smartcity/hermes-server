@@ -1,0 +1,14 @@
+<div class="col-lg-12">
+
+	<div data-ng-if="vm.infoAction" class="top-buffer pull-center alert alert-info" data-role="alert">
+		{{vm.infoAction.value}}
+	</div>
+	
+	<div class="table-responsive top-buffer">
+			
+		<table id="tableId" data-ng-show="vm.executions.length" class="table table-hover" data-datatable="" 
+				data-dt-options="vm.dtOptions" data-dt-columns="vm.dtColumns" data-dt-instance="vm.dtInstanceCallback">
+		</table>
+	</div>
+
+</div>

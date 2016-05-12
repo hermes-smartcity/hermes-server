@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h3>{{'osmconcept.create' | translate}}</h3>
+</div>
+
+<form name="form.conceptForm" novalidate>
+    <div class="modal-body">
+       
+        <!-- NAME -->
+        <div class="form-group">
+            <label>{{'osmconcept.name' | translate}}</label>
+            <input type="text" name="name" class="form-control" data-ng-model="name" required>
+            <p data-ng-show="form.conceptForm.name.$error.required && !form.conceptForm.name.$pristine" class="avisoError">{{'osmconcept.nameRequired' | translate}}</p>
+        </div>
+    
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="submitForm()"  data-ng-disabled="form.conceptForm.$invalid">{{'aceptar' | translate}}</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">{{'cancelar' | translate}}</button>
+    </div>
+</form>

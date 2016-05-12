@@ -131,10 +131,14 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 							"end as \"linkType\", km as length, link.cost as cost, geom_way " +
 							"FROM network.link, " +
 							"(SELECT seq, id1 as node, id2 as edge, cost " +
-							"FROM pgr_bdAstar('SELECT id, source, target, cost, x1, y1, x2, y2, " +
+							"FROM pgr_astar('SELECT id, source, target, cost, x1, y1, x2, y2, " +
 													"reverse_cost " +
-											  "FROM network.link', :originPoint, :destinyPoint, true, true)" +
-							") as path " +
+											  "FROM network.link " +
+											  "WHERE geom_way && " +
+											  	"(SELECT st_expand(st_envelope(st_union(geom_way)),1) " +
+											  	"FROM network.link " +
+											  	"WHERE source IN ('||:originPoint || ', ' ||:destinyPoint||'))', " +
+											  	":originPoint, :destinyPoint, true, true)) as path " +
 							"where link.id = path.edge " +
 							"order by path.seq";
 		
@@ -149,7 +153,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 				
 		query.setParameter("originPoint", originPoint);
 		query.setParameter("destinyPoint", destinyPoint);
-		
+				
 		query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 		return (List<RouteSegment>) query.list();
 	}

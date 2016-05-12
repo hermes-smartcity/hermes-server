@@ -80,10 +80,10 @@ public class Helpers {
 			break;
 
 		case "en":
-			locale = new Locale("en", "EN");
+			locale = Locale.ENGLISH;
 			break;
 		default:
-			locale = new Locale("en", "EN");
+			locale = Locale.ENGLISH;
 			break;
 		}
 		

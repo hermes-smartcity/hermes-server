@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h3>{{'osmattribute.create' | translate}}</h3>
+</div>
+
+<form name="form.attributeForm" novalidate>
+    <div class="modal-body">
+    
+    	<!-- NAME -->
+        <div class="form-group">
+            <label>{{'osmattribute.name' | translate}}</label>
+            <input type="text" name="name" class="form-control" data-ng-model="name" required>
+            <p data-ng-show="form.attributeForm.name.$error.required && !form.attributeForm.name.$pristine" class="avisoError">{{'osmattribute.nameRequired' | translate}}</p>
+        </div>
+       
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="submitForm()"  data-ng-disabled="form.attributeForm.$invalid">{{'aceptar' | translate}}</button>
+        <button class="btn btn-warning" data-ng-click="cancel()">{{'cancelar' | translate}}</button>
+    </div>
+</form>
