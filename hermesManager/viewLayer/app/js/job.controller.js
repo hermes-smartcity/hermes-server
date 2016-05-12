@@ -163,10 +163,12 @@
 		
 		function executeJob(id){
 			jobService.executeJob(id).then(function(response) {
+				var idJob = response.data.job.id;
 				var idExecution = response.data.id;
 				var status = response.data.status;
 				
 				//Lanzamos la tarea de ejecucion de un trabajo
+				jobService.launchExecutionJob(idJob, idExecution);
 				
 				//Redirigimos a la pantalla con los mensajes de la ejecucion
 				$state.go('showMessages', {idExecution: idExecution, status: status});

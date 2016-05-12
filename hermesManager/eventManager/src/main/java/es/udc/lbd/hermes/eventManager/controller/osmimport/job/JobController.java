@@ -103,8 +103,31 @@ static Logger logger = Logger.getLogger(DBConceptController.class);
 	}
 	
 	@RequestMapping(value = "/executeJob", method = RequestMethod.POST)
-	public Execution executeJob(@RequestParam(value = "id", required = true) Long id) {
+	public Execution executeJob(@RequestParam(value = "id", required = true) Long id,
+			@RequestParam(value = "lang", required = false) String lang) {
+		
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
 		//Creamos la execution del job y devolvemos su id
-		return jobServicio.createExecution(id);
+		return jobServicio.createExecution(id, locale);
+	}
+	
+	@RequestMapping(value = "/launchExecuteJob", method = RequestMethod.POST)
+	public void launcExecuteJob(@RequestParam(value = "idJob", required = true) Long idJob,
+			@RequestParam(value = "idExecution", required = true) Long idExecution,
+			@RequestParam(value = "lang", required = false) String lang) {
+		
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
+		//Lanzamos la ejecucion del trabajo
+		jobServicio.launchExecuteJob(idJob, idExecution, locale);
 	}
 }

@@ -21,6 +21,8 @@
 		vm.updateMessages = updateMessages;
 		vm.doTheBack = doTheBack;
 		
+		vm.intervalo = undefined;
+		
 		 //Inicializar options de la tabla
 		vm.dtInstance = null;
 
@@ -52,22 +54,29 @@
 		                ];  
 						
 		function doTheBack(){
-			window.history.back();
+			$state.go("executions");
 		}
 		
 		//Si el status de la ejecucion es running, tenemos que solicitar cada X segundos los mensajes
 		//por si se van actualizando
 		function updateMessages() {
-			messageService.getMessages(vm.idExecution).then(function(response) {
-	   			vm.messages = response.data;
+			messageService.getMessagesWithStatus(vm.idExecution).then(function(response) {
+	   			vm.messages = response.data.messages;
+	   			vm.status = response.data.status;
 	   			if (vm.dtInstance !== null){
 	   				vm.dtInstance.reloadData();
+	   			}
+	   			
+	   			//Si al volver de consultar los mensajes, resulta que ya no tiene estado
+	   			//running, tenemos que parar de solicitar los mensajes cada x segundos
+	   			if (vm.status !== 'RUNNING'){
+	   				$interval.cancel(vm.intervalo);
 	   			}
 	   		});	
 		}
 		
 		if (vm.status === 'RUNNING'){
-			$interval(function() {
+			vm.intervalo = $interval(function() {
 				vm.updateMessages();
 			}, 1000*10); //1 segundo son 1000
 		}

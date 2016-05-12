@@ -209,6 +209,8 @@ var url_register_job = url_job+"register";
 var url_edit_job = url_job+"edit";
 var url_get_job = url_job+'json/job';
 var url_execute_job = url_job+"executeJob";
+var url_launch_execute_job = url_job+"launchExecuteJob";
+
 
 //Controlador concept transformation
 var url_concepttransformation = url_servidor+'api/concepttransformation/';
@@ -234,3 +236,4 @@ var url_delete_execution = url_execution+"delete";
 //Controlador messages
 var url_message = url_servidor+'api/message/';
 var url_messages = url_message+'json/messages';
+var url_messages_with_status = url_message+'json/messagesstatus';

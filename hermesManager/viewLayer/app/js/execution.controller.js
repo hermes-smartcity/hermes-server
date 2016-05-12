@@ -56,7 +56,7 @@
 		                       return '<button class="btn btn-danger" data-ng-show="\'' + data.status + '\' !== \'RUNNING\'" data-ng-click="vm.delet(' + data.id + ')">' +
 		                           '   <i class="fa fa-trash-o"></i>' +
 		                           '</button>&nbsp;' +
-		                           '<button class="btn btn-info" data-ui-sref="showMessages({idExecution:'+ data.id + ', status: ' + data.status + '})" >' +
+		                           '<button class="btn btn-info" data-ui-sref="showMessages({idExecution:'+ data.id + ', status:\'' + data.status + '\'})" >' +
 		                           '   <i class="fa fa-eye"></i>' +
 		                           '</button>';
 		                   })

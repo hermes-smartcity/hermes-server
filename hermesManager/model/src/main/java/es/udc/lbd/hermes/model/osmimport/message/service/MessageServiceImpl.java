@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.lbd.hermes.model.osmimport.execution.Execution;
+import es.udc.lbd.hermes.model.osmimport.execution.dao.ExecutionDao;
 import es.udc.lbd.hermes.model.osmimport.message.Message;
+import es.udc.lbd.hermes.model.osmimport.message.MessageWithStatus;
 import es.udc.lbd.hermes.model.osmimport.message.dao.MessageDao;
 
 @Service("messageService")
@@ -15,6 +18,9 @@ public class MessageServiceImpl implements MessageService{
 
 	@Autowired
 	private MessageDao messageDao;
+	
+	@Autowired
+	private ExecutionDao executionDao;
 	
 	@Transactional(readOnly = true)
 	public List<Message> getAll(Long idExecution){
@@ -42,5 +48,15 @@ public class MessageServiceImpl implements MessageService{
 		messageDao.update(message);
 		
 		return message;
+	}
+	
+	@Transactional(readOnly = true)
+	public MessageWithStatus getAllMessagesWithStatus(Long idExecution){
+		Execution execution = executionDao.get(idExecution);
+		List<Message> messages = messageDao.getAll(idExecution);
+		
+		MessageWithStatus mws = new MessageWithStatus(execution.getStatus(), messages);
+		
+		return mws;
 	}
 }

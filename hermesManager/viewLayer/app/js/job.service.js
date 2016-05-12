@@ -12,7 +12,8 @@
 				register: register,
 				edit: edit,
 				getJob: getJob,
-				executeJob: executeJob
+				executeJob: executeJob,
+				launchExecutionJob: launchExecutionJob
 		};
 
 		return service;
@@ -80,11 +81,25 @@
 			});
 		}
 		
-		function executeJob (id) {		
+		function executeJob (id) {	
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
 			return $http({
 				method : 'POST',
 				url : url_execute_job,
-				params: {"id": id}
+				params: {"id": id, "lang": lang}
+			});
+		}
+		
+		function launchExecutionJob (idJob, idExecution) {	
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
+			$http({
+				method : 'POST',
+				url : url_launch_execute_job,
+				params: {"idJob": idJob, "idExecution": idExecution, "lang": lang}
 			});
 		}
 				
