@@ -70,7 +70,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 				return mapper.treeToValue(eventTypeData, eventTypeClass);
 			}
 		} else {
-			return null;
+			throw new JsonProcessingException("Unexpected event data in Body.") {};
 		}		
 	}
 }
