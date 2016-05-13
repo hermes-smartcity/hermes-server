@@ -2,3 +2,5 @@
 /.settings/
 /.classpath
 /.project
+/*.log
+/hermes-dashboard.log.1
