@@ -4,5 +4,5 @@ import java.util.Calendar;
 
 public interface EfficiencyTestService {
 
-	public void create(String eventType, Long eventSize, Calendar time, Long parseTime, Long totalTime, Boolean result);
+	public void create(String eventType, Long eventSize, Calendar time, Long delay, Long parseTime, Long totalTime, Boolean result);
 }

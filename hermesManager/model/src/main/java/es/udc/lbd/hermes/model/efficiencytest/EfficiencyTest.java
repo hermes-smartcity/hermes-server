@@ -38,6 +38,7 @@ public class EfficiencyTest implements Serializable{
 	private Long eventSize;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar time;
+	private Long delay;
 	private Long parseTime;
 	private Long totalTime;
 	private Boolean result;
@@ -46,23 +47,25 @@ public class EfficiencyTest implements Serializable{
 		super();
 	}
 
-	public EfficiencyTest(String eventType, Long eventSize, Calendar time, Long parseTime, Long totalTime, Boolean result) {
+	public EfficiencyTest(String eventType, Long eventSize, Calendar time, Long delay, Long parseTime, Long totalTime, Boolean result) {
 		super();
 		this.id = null;
 		this.eventType = eventType;
 		this.eventSize = eventSize;
 		this.time = time;
+		this.delay = delay;
 		this.parseTime = parseTime;
 		this.totalTime = totalTime;
 		this.result = result;
 	}
 	
-	public EfficiencyTest(Long id, String eventType, Long eventSize, Calendar time, Long parseTime, Long totalTime, Boolean result) {
+	public EfficiencyTest(Long id, String eventType, Long eventSize, Calendar time, Long delay, Long parseTime, Long totalTime, Boolean result) {
 		super();
 		this.id = id;
 		this.eventType = eventType;
 		this.eventSize = eventSize;
 		this.time = time;
+		this.delay = delay;
 		this.parseTime = parseTime;
 		this.totalTime = totalTime;
 		this.result = result;
@@ -109,5 +112,11 @@ public class EfficiencyTest implements Serializable{
 	}
 	public void setEventSize(Long eventSize) {
 		this.eventSize = eventSize;
+	}
+	public Long getDelay() {
+		return delay;
+	}
+	public void setDelay(Long delay) {
+		this.delay = delay;
 	}	
 }

@@ -343,6 +343,7 @@ CREATE TABLE efficiencytest (
   eventtype varchar,
   eventsize integer,
   time timestamp without time zone,
+  delay integer,
   parsetime integer,
   totaltime integer,
   result boolean,
