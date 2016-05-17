@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
@@ -26,6 +27,7 @@ import es.udc.lbd.hermes.eventManager.json.EventParser;
 import es.udc.lbd.hermes.eventManager.strategy.EventStrategy;
 import es.udc.lbd.hermes.eventManager.util.DeflateReaderInterceptor;
 import es.udc.lbd.hermes.eventManager.util.ReadPropertiesFile;
+import es.udc.lbd.hermes.model.efficiencytest.service.EfficiencyTestService;
 import es.udc.lbd.hermes.model.events.EventType;
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
 import es.udc.lbd.hermes.model.events.service.EventService;
@@ -38,6 +40,7 @@ public class EventProcessor extends Thread {
 	private Client client;
 	private EventParser eventParser = new EventParser();
 	private Inflater inflater = new Inflater();
+	EfficiencyTestService efficiencyTestService = ApplicationContextProvider.getApplicationContext().getBean("efficiencyTestService", EfficiencyTestService.class);
 
 	// Comportamiento del thread
 	public void run() {
@@ -87,16 +90,23 @@ public class EventProcessor extends Thread {
 	// Almacenamos los diferentes tipos de eventos en la BD
 	private void procesaUnEvento(String chunk) {
 		
+		long startTime = System.nanoTime();
+		long parseTime = 0;
+		boolean result = false;
+		String eventType = null;
 		try {
 			Event event = eventParser.parse(chunk);
+			parseTime = System.nanoTime() - startTime;
 			if (!"ztreamy-command".equals(event.getSyntax())) {
 				if (event.getEventData() != null) { 
 					if (event.getEventType() != null) {
-						EventType tipoEvento = EventType.getTipo((String) event.getEventType());
+						eventType = event.getEventType();
+						EventType tipoEvento = EventType.getTipo(eventType);
 						EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
 						if (estrategia != null) {
 							try {
 								estrategia.processEvent(event);
+								result = true;
 							} catch (ClassCastException e) {
 								logger.error("Event-Type no coincide con el tipo especificado en el body\n"+chunk, e);
 							}
@@ -116,6 +126,8 @@ public class EventProcessor extends Thread {
 		} catch (IOException e) {
 			logger.error("Error convirtiendo chunk a JSON: "+chunk, e);
 		}
+		long totalTime = System.nanoTime() - startTime;
+		efficiencyTestService.create(eventType, (long)chunk.length(), Calendar.getInstance(), parseTime, totalTime, result);
 	}
 	
 	private void waitBeforeReconnect(long timeToWait) {
