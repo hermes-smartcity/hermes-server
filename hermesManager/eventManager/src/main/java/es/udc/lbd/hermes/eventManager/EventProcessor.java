@@ -94,8 +94,10 @@ public class EventProcessor extends Thread {
 		long parseTime = 0;
 		boolean result = false;
 		String eventType = null;
+		long eventTime = -1; 
 		try {
 			Event event = eventParser.parse(chunk);
+			eventTime = event.getTimestamp().getTimeInMillis();
 			parseTime = System.nanoTime() - startTime;
 			if (!"ztreamy-command".equals(event.getSyntax())) {
 				if (event.getEventData() != null) { 
@@ -127,7 +129,8 @@ public class EventProcessor extends Thread {
 			logger.error("Error convirtiendo chunk a JSON: "+chunk, e);
 		}
 		long totalTime = System.nanoTime() - startTime;
-		efficiencyTestService.create(eventType, (long)chunk.length(), Calendar.getInstance(), parseTime, totalTime, result);
+		long delay = eventTime != -1 ? System.currentTimeMillis() - eventTime : 0;
+		efficiencyTestService.create(eventType, (long)chunk.length(), Calendar.getInstance(), delay, parseTime, totalTime, result);
 	}
 	
 	private void waitBeforeReconnect(long timeToWait) {

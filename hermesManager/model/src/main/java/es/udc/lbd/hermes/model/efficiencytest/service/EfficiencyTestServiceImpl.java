@@ -16,8 +16,8 @@ public class EfficiencyTestServiceImpl implements EfficiencyTestService {
 	@Autowired
 	private EfficiencyTestDao efficiencyTestDao;
 
-	public void create(String eventType, Long eventSize, Calendar time, Long parseTime, Long totalTime, Boolean result) {
-		EfficiencyTest efficiencyTest = new EfficiencyTest(eventType, eventSize, time, parseTime, totalTime, result);
+	public void create(String eventType, Long eventSize, Calendar time, Long delay, Long parseTime, Long totalTime, Boolean result) {
+		EfficiencyTest efficiencyTest = new EfficiencyTest(eventType, eventSize, time, delay, parseTime, totalTime, result);
 		efficiencyTestDao.create(efficiencyTest);
 	}
 }
