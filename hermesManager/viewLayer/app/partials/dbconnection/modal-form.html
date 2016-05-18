@@ -34,6 +34,20 @@
             <input type="text" name="dbName" class="form-control" data-ng-model="dbName" required>
             <p data-ng-show="form.connectionForm.dbName.$error.required && !form.connectionForm.dbName.$pristine" class="avisoError">{{'dbconnection.dbnameRequired' | translate}}</p>
         </div>
+        
+         <!-- USER -->
+        <div class="form-group">
+            <label>{{'dbconnection.userDb' | translate}}</label>
+            <input type="text" name="userDb" class="form-control" data-ng-model="userDb" required>
+            <p data-ng-show="form.connectionForm.userDb.$error.required && !form.connectionForm.userDb.$pristine" class="avisoError">{{'dbconnection.userDbRequired' | translate}}</p>
+        </div>
+        
+         <!-- PASSWORD -->
+        <div class="form-group">
+            <label>{{'dbconnection.passDb' | translate}}</label>
+            <input type="password" name="passDb" class="form-control" data-ng-model="passDb" required>
+            <p data-ng-show="form.connectionForm.passDb.$error.required && !form.connectionForm.passDb.$pristine" class="avisoError">{{'dbconnection.passDbRequired' | translate}}</p>
+        </div>
   
   		<!-- TYPE -->
   		<div class="form-group">

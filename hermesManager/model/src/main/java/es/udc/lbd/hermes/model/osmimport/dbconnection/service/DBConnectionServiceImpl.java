@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.osmimport.dbconnection.DBConnection;
 import es.udc.lbd.hermes.model.osmimport.dbconnection.dao.DBConnectionDao;
+import es.udc.lbd.hermes.model.util.CifrarDescifrarUtil;
 
 @Service("dbConnectinService")
 @Transactional
@@ -26,8 +27,14 @@ public class DBConnectionServiceImpl implements DBConnectionService{
 	}
 	
 	public DBConnection register(DBConnection dbConnection){
-		dbConnectionDao.create(dbConnection);
 		
+		try {
+			dbConnection.setPassDb(CifrarDescifrarUtil.cifra(dbConnection.getPassDb()));
+			dbConnectionDao.create(dbConnection);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return dbConnection;
 	}
 	
@@ -37,7 +44,28 @@ public class DBConnectionServiceImpl implements DBConnectionService{
 	}
 
 	public DBConnection update(DBConnection dbConnection, Long id){
-		dbConnectionDao.update(dbConnection);
+		try{
+			//Comparamos si la contrasena indicada coincide con la anterior.
+			//Si no ha cambiado, no se modifica la contraseña
+			//Si ha cambiado, se modificada
+			DBConnection dbConnectionDB = dbConnectionDao.get(dbConnection.getId());
+			String passwordDB = dbConnectionDB.getPassDb();
+			String passwordNew = dbConnection.getPassDb();
+			
+			if (passwordNew.equals(passwordDB)){
+				//No ha cambiado, se mantiene la antigua (que ya estaba encriptada)
+				dbConnection.setPassDb(dbConnectionDB.getPassDb());
+			}else{
+				//Se encripta la nueva
+				dbConnection.setPassDb(CifrarDescifrarUtil.cifra(dbConnection.getPassDb()));
+	
+			}
+			
+			dbConnectionDao.update(dbConnection);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return dbConnection;
 	}

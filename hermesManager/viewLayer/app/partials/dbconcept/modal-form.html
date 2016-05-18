@@ -24,6 +24,20 @@
             <input type="text" name="tableName" class="form-control" data-ng-model="tableName" required>
             <p data-ng-show="form.conceptForm.tableName.$error.required && !form.conceptForm.tableName.$pristine" class="avisoError">{{'dbconcept.tableNameRequired' | translate}}</p>
         </div>
+        
+        <!-- OSMID NAME -->
+        <div class="form-group">
+            <label>{{'dbconcept.osmIdName' | translate}}</label>
+            <input type="text" name="osmIdName" class="form-control" data-ng-model="osmIdName" required>
+            <p data-ng-show="form.conceptForm.osmIdName.$error.required && !form.conceptForm.osmIdName.$pristine" class="avisoError">{{'dbconcept.osmIdNameRequired' | translate}}</p>
+        </div>
+        
+        <!-- GEOM NAME -->
+        <div class="form-group">
+            <label>{{'dbconcept.geomName' | translate}}</label>
+            <input type="text" name="geomName" class="form-control" data-ng-model="geomName" required>
+            <p data-ng-show="form.conceptForm.geomName.$error.required && !form.conceptForm.geomName.$pristine" class="avisoError">{{'dbconcept.geomNameRequired' | translate}}</p>
+        </div>
   
   		<!-- DB CONNECTION -->
   		<div class="form-group">

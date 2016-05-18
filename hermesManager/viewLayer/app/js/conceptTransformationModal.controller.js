@@ -91,6 +91,8 @@
 				//borramos si hubiese pintado algun marker con el recorrido
 				markers.clearLayers();
 				
+				$scope.limpiarParametrosMapa();
+				
 			});
 			
 			map.on('draw:created', function (e) {

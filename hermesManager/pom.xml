@@ -28,8 +28,8 @@
 		<log4j.level>${development.log4j.level}</log4j.level>
 <!-- 		<log4j.appenders>${development.log4j.appenders}</log4j.appenders> -->
 		
-		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5432/postgres</development.datasource.jdbcUrlPostgres>		
-		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5432/smartcity</development.datasource.jdbcUrl>
+		<development.datasource.jdbcUrlPostgres>jdbc:postgresql://localhost:5434/postgres</development.datasource.jdbcUrlPostgres>		
+		<development.datasource.jdbcUrl>jdbc:postgresql://localhost:5434/smartcity</development.datasource.jdbcUrl>
 		<development.datasource.dataBaseName>smartcity</development.datasource.dataBaseName>
 		<development.datasource.user>postgres</development.datasource.user>
 		<development.datasource.password>postgres</development.datasource.password>
@@ -37,6 +37,16 @@
 		<development.jdbcDriver.artifactId>postgresql</development.jdbcDriver.artifactId>
 		<development.jdbcDriver.version>9.3-1100-jdbc4</development.jdbcDriver.version>
 		<development.jdbcDriver.className>org.postgresql.Driver</development.jdbcDriver.className>
+		
+		<!-- <development.datasource.jdbcUrlPostgres>jdbc:postgresql://cronos.lbd.org.es:5432/postgres</development.datasource.jdbcUrlPostgres>		
+		<development.datasource.jdbcUrl>jdbc:postgresql://cronos.lbd.org.es:5432/meco1401_prod</development.datasource.jdbcUrl>
+		<development.datasource.dataBaseName>meco1401_prod</development.datasource.dataBaseName>
+		<development.datasource.user>***REMOVED***</development.datasource.user>
+		<development.datasource.password>***REMOVED***</development.datasource.password>
+		<development.jdbcDriver.groupId>org.postgresql</development.jdbcDriver.groupId>
+		<development.jdbcDriver.artifactId>postgresql</development.jdbcDriver.artifactId>
+		<development.jdbcDriver.version>9.3-1100-jdbc4</development.jdbcDriver.version>
+		<development.jdbcDriver.className>org.postgresql.Driver</development.jdbcDriver.className>-->
 		
 		<production.datasource.jdbcUrlPostgres>jdbc:postgresql://cronos.lbd.org.es:5432/postgres</production.datasource.jdbcUrlPostgres>		
 		<production.datasource.jdbcUrl>jdbc:postgresql://cronos.lbd.org.es:5432/meco1401_prod</production.datasource.jdbcUrl>
@@ -412,6 +422,11 @@
 			<artifactId>jasypt</artifactId>
 			<version>1.9.0</version>
 		</dependency>	
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
   	</dependencies>
   </dependencyManagement>
   

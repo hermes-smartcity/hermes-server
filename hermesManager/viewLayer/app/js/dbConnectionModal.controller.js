@@ -20,6 +20,8 @@
 			$scope.host = infoConnection.data.host;
 			$scope.port = infoConnection.data.port;
 			$scope.dbName = infoConnection.data.dbName;
+			$scope.userDb = infoConnection.data.userDb;
+			$scope.passDb = infoConnection.data.passDb;
 		}
 		
 		$scope.submitForm = function () {
@@ -32,7 +34,9 @@
 	            		   type: $scope.form.connectionForm.type.$viewValue, 
      					   host: $scope.form.connectionForm.host.$viewValue, 
      					   port: parseInt($scope.form.connectionForm.port.$viewValue), 
-     					   dbName: $scope.form.connectionForm.dbName.$viewValue};	
+     					   dbName: $scope.form.connectionForm.dbName.$viewValue,
+     					   userDb: $scope.form.connectionForm.userDb.$viewValue,
+     					   passDb: $scope.form.connectionForm.passDb.$viewValue};	
      
 				     dbConnectionService.register(connectionNueva).then(function(response){
 				         $uibModalInstance.close(response.data);
@@ -44,7 +48,9 @@
 	            			type: $scope.form.connectionForm.type.$viewValue, 
 	     					host: $scope.form.connectionForm.host.$viewValue, 
 	     					port: parseInt($scope.form.connectionForm.port.$viewValue), 
-	     					dbName: $scope.form.connectionForm.dbName.$viewValue};	
+	     					dbName: $scope.form.connectionForm.dbName.$viewValue,
+	     					userDb: $scope.form.connectionForm.userDb.$viewValue,
+	     					passDb: $scope.form.connectionForm.passDb.$viewValue};	
 	        		
 	            	dbConnectionService.edit(connectionEditar).then(function(response){
 				        $uibModalInstance.close(response.data);

@@ -47,6 +47,8 @@
 		                   DTColumnBuilder.newColumn('name').withTitle($translate.instant('dbconcept.name')),
 		                   DTColumnBuilder.newColumn('schemaName').withTitle($translate.instant('dbconcept.schemaName')),
 		                   DTColumnBuilder.newColumn('tableName').withTitle($translate.instant('dbconcept.tableName')),
+		                   DTColumnBuilder.newColumn('osmIdName').withTitle($translate.instant('dbconcept.osmIdName')),
+		                   DTColumnBuilder.newColumn('geomName').withTitle($translate.instant('dbconcept.geomName')),
 		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('dbconcept.dbconnection')).renderWith(function(data,type,full) {
 		                	   var texto = data.dbConnection.name;
 		                	   return texto;
