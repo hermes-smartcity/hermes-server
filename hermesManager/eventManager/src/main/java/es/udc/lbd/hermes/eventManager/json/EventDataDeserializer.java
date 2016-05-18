@@ -65,7 +65,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 		}
 		if (eventTypeClass != null) {
 			if (eventTypeData instanceof ArrayNode) {
-				 throw new JsonProcessingException("An array was received but an object was expected") {};
+				return null;
 			} else {
 				return mapper.treeToValue(eventTypeData, eventTypeClass);
 			}

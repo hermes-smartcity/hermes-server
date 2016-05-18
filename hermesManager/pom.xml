@@ -117,6 +117,7 @@
 				<url.viewLayer>${production.url.viewLayer}</url.viewLayer>
 				<log4j.appender.logfile.File>/var/log/tomcat7/hermes-dashboard.log</log4j.appender.logfile.File>
 				
+				<maven.test.skip>true</maven.test.skip>
 			</properties>
 		</profile>
 	</profiles>	
