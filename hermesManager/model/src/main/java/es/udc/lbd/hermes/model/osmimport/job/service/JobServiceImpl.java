@@ -48,6 +48,7 @@ import es.udc.lbd.hermes.model.osmimport.job.Job;
 import es.udc.lbd.hermes.model.osmimport.job.JobDTO;
 import es.udc.lbd.hermes.model.osmimport.job.dao.JobDao;
 import es.udc.lbd.hermes.model.osmimport.job.json.Element;
+import es.udc.lbd.hermes.model.osmimport.job.json.OSMParser;
 import es.udc.lbd.hermes.model.osmimport.job.json.Overpass;
 import es.udc.lbd.hermes.model.osmimport.message.Message;
 import es.udc.lbd.hermes.model.osmimport.message.dao.MessageDao;
@@ -143,6 +144,7 @@ public class JobServiceImpl implements JobService{
 	}
 	
 	public void launchExecuteJob(Long idJob, Long idExecution, Locale locale){
+		OSMParser osmParser = new OSMParser(); 
 		
 		//Recuperamos la lista de conceptTransformations asociados al trabajo
 		List<ConceptTransformation> listaCT = conceptTransformationDao.getAll(idJob);
@@ -274,7 +276,7 @@ public class JobServiceImpl implements JobService{
 						
 						//Parseamos el string al objeto que corresponde
 						try {
-							Overpass ob = new ObjectMapper().readValue(peticionJson, Overpass.class);
+							Overpass ob = osmParser.parse(peticionJson);
 							List<Element> elementos = ob.getElements();
 							
 							for (Element element : elementos) {
@@ -474,7 +476,7 @@ public class JobServiceImpl implements JobService{
 						Message message = new Message(mensaje, timestamp, execution);
 						messageDao.create(message);
 						
-						todasTablasColumnasExisten = false;
+						todasTablasColumnasExisten = true;
 					}
 				}
 			}

@@ -19,7 +19,7 @@ public class Element {
 	private Double lon;
 	
 	@JsonProperty("tags")
-	private Tag tags;
+	private Tags tags;
 
 	public String getType() {
 		return type;
@@ -53,11 +53,11 @@ public class Element {
 		this.lon = lon;
 	}
 
-	public Tag getTags() {
+	public Tags getTags() {
 		return tags;
 	}
 
-	public void setTags(Tag tags) {
+	public void setTags(Tags tags) {
 		this.tags = tags;
 	}
 	

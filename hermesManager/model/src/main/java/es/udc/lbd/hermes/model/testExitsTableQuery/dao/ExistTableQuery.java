@@ -17,7 +17,7 @@ import es.udc.lbd.hermes.model.osmimport.dbconcept.DBConcept;
 import es.udc.lbd.hermes.model.osmimport.dbconnection.DBConnection;
 import es.udc.lbd.hermes.model.osmimport.dbconnection.DBConnectionType;
 import es.udc.lbd.hermes.model.osmimport.job.json.Element;
-import es.udc.lbd.hermes.model.osmimport.job.json.Tag;
+import es.udc.lbd.hermes.model.osmimport.job.json.Tags;
 import es.udc.lbd.hermes.model.osmimport.osmattribute.OsmAttribute;
 import es.udc.lbd.hermes.model.util.CifrarDescifrarUtil;
 
@@ -273,7 +273,7 @@ public class ExistTableQuery {
 			
 				//Recuperamos el osmAttribute indicado en la lista de tags de elemento
 				String osmAttributeName = osmAttribute.getName();
-				Tag tag = element.getTags();
+				Tags tag = element.getTags();
 				String valueTag = tag.recuperarAtributoIndicado(osmAttributeName);
 				
 				if (valueTag != null){

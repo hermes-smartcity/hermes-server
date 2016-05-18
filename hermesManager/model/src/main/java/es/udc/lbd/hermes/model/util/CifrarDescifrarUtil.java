@@ -30,7 +30,6 @@ public class CifrarDescifrarUtil {
 	
 	
 	private static Cipher obtieneCipher(boolean paraCifrar) throws Exception {
-		//final String frase = "FraseLargaConDiferentesLetrasNumerosYCaracteresEspeciales_áÁéÉíÍóÓúÚüÜñÑ1234567890!#%$&()=%_NO_USAR_ESTA_FRASE!_";
 		final String frase = "!!FrAsePaRaEnCrIpTaCiOn_#()#_%45589239087%_PrOyEcTo!!";
 		final MessageDigest digest = MessageDigest.getInstance("SHA");
 		digest.update(frase.getBytes(StandardCharsets.UTF_8));
