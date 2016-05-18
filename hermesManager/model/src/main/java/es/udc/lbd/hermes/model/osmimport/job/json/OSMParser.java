@@ -20,7 +20,7 @@ public class OSMParser {
 	public OSMParser() {
 		mapper = new ObjectMapper();
 	    OSMTagDeserializer deserializer = new OSMTagDeserializer();  
-	    SimpleModule module = new SimpleModule("EventDataDeserializerModule", new Version(1, 0, 0, null, null, null));  
+	    SimpleModule module = new SimpleModule("OSMTagDeserializerModule", new Version(1, 0, 0, null, null, null));  
 	    module.addDeserializer(Tags.class, deserializer);  
 	    mapper.registerModule(module);
 	}

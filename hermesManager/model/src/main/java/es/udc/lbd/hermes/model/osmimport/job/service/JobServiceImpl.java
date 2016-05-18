@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -57,6 +56,7 @@ import es.udc.lbd.hermes.model.osmimport.osmfilter.OsmFilter;
 import es.udc.lbd.hermes.model.osmimport.osmfilter.OsmFilterOperation;
 import es.udc.lbd.hermes.model.osmimport.osmfilter.dao.OsmFilterDao;
 import es.udc.lbd.hermes.model.testExitsTableQuery.dao.ExistTableQuery;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeException;
 
 @Service("jobService")
 @Transactional
@@ -212,10 +212,10 @@ public class JobServiceImpl implements JobService{
 						for(int i=0;i<coordenadas.length-1;i++){
 							Coordinate coordinate = coordenadas[i];
 						
-							if (i != coordenadas.length-1){
-								consulta = consulta + coordinate.x + " " + coordinate.y + " ";
+							if (i != coordenadas.length){
+								consulta = consulta + coordinate.y + " " + coordinate.x + " ";
 							}else{
-								consulta = consulta + coordinate.x + " " + coordinate.y;	
+								consulta = consulta + coordinate.y + " " + coordinate.x;	
 							}
 							
 						}
@@ -249,11 +249,9 @@ public class JobServiceImpl implements JobService{
 						}
 						
 						//Anadimos el final de la consulta
-						consulta = consulta + "out;";
+						consulta = consulta + ";out;";
 					}
 
-					consulta = "http://overpass-api.de/api/interpreter?data=[out:json];node[\"name\"=\"Im Tannenbusch\"][\"highway\"=\"bus_stop\"];out;";
-					
 					//Escribimos mensaje de empezar a procesar la consulta
 					timestamp = Calendar.getInstance();
 
@@ -351,6 +349,16 @@ public class JobServiceImpl implements JobService{
 							messageDao.create(message);
 							
 							algunErrorImportante = true;
+						} catch (OsmAttributeException e) {
+						
+							e.printStackTrace();
+							
+							timestamp = Calendar.getInstance();
+							parametros = new Object[] {e.getTagName()};
+							mensaje = messageSource.getMessage("executionjob.osmAttributeException", parametros, locale);
+							message = new Message(mensaje, timestamp, execution);
+							messageDao.create(message);
+							
 						} catch (Exception e) {
 							e.printStackTrace();
 							
@@ -490,6 +498,8 @@ public class JobServiceImpl implements JobService{
 			Message message = new Message(mensaje, timestamp, execution);
 			messageDao.create(message);
 			
+			e.printStackTrace();
+			
 		}catch(SQLException e){
 			todasTablasColumnasExisten = false;
 			
@@ -499,6 +509,9 @@ public class JobServiceImpl implements JobService{
 			String mensaje = messageSource.getMessage("executionjob.sqlexception", parametros, locale);
 			Message message = new Message(mensaje, timestamp, execution);
 			messageDao.create(message);
+			
+			e.printStackTrace();
+			
 		}catch(Exception e){
 			todasTablasColumnasExisten = false;
 			
@@ -508,6 +521,8 @@ public class JobServiceImpl implements JobService{
 			String mensaje = messageSource.getMessage("executionjob.cifradoexception", parametros, locale);
 			Message message = new Message(mensaje, timestamp, execution);
 			messageDao.create(message);
+			
+			e.printStackTrace();
 		}
 		
 		

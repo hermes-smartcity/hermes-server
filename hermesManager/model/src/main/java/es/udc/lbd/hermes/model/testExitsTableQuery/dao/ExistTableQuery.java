@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -20,6 +22,7 @@ import es.udc.lbd.hermes.model.osmimport.job.json.Element;
 import es.udc.lbd.hermes.model.osmimport.job.json.Tags;
 import es.udc.lbd.hermes.model.osmimport.osmattribute.OsmAttribute;
 import es.udc.lbd.hermes.model.util.CifrarDescifrarUtil;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeException;
 
 public class ExistTableQuery {
 
@@ -70,11 +73,11 @@ public class ExistTableQuery {
 		DBConnectionType dbConnectionType = dbConnection.getType();
 		switch (dbConnectionType) {
 		case POSTGRESQL:
-			url = "jdbc:postgresql://" + dbConnection.getHost() + ":" + dbConnection.getPort() + "/" + dbConnection.getName();
+			url = "jdbc:postgresql://" + dbConnection.getHost() + ":" + dbConnection.getPort() + "/" + dbConnection.getDbName();
 			break;
 
 		case MYSQL:
-			url = "jdbc:mysql://" + dbConnection.getHost() + ":" + dbConnection.getPort() + "/" + dbConnection.getName();
+			url = "jdbc:mysql://" + dbConnection.getHost() + ":" + dbConnection.getPort() + "/" + dbConnection.getDbName();
 			break;
 		
 		}
@@ -199,10 +202,12 @@ public class ExistTableQuery {
 					  "AND table_name = ? " +
 					  "AND column_name = ? ";
 			
+			queryStr = queryStr + "AND data_type IN (";
 			for (int j=0; j<types.size();j++) {
-				queryStr = queryStr + "AND data_type IN (?) ";
+				queryStr = queryStr + "?, ";
 			}
-					  
+			queryStr = queryStr.substring(0, queryStr.length()-2);
+			queryStr = queryStr + ")";
 			queryStr = queryStr + ")";
 	
 			preparedStatement = connection.prepareStatement(queryStr);
@@ -237,32 +242,44 @@ public class ExistTableQuery {
 		return existe;
 	}
 	
-	public void insertarDBConcept(DBConcept dbConcept, List<AttributeMapping> attributeMappings, Element element) throws SQLException, ClassNotFoundException, Exception{
+	public void insertarDBConcept(DBConcept dbConcept, List<AttributeMapping> attributeMappings, Element element) throws SQLException, ClassNotFoundException, OsmAttributeException, Exception{
 		PreparedStatement preparedStatement = null;
 		try{
 
 			abrirConexionBD();
 			
-			String queryStr = "INSERT INTO ?.? (?, ?";
-			
-			preparedStatement = connection.prepareStatement(queryStr);
-			
-			int i = 1;
-			preparedStatement.setString(i++, dbConcept.getSchemaName());
-			preparedStatement.setString(i++, dbConcept.getTableName());
-			preparedStatement.setString(i++, dbConcept.getOsmIdName());
-			preparedStatement.setString(i++, dbConcept.getGeomName());
+			String queryStr = "INSERT INTO \"" + dbConcept.getSchemaName() + "\".\"" + dbConcept.getTableName() + "\""
+					+ " (\"" + dbConcept.getOsmIdName() + "\", \"" + dbConcept.getGeomName() + "\"";
 			
 			for (AttributeMapping attributeMapping : attributeMappings) {
 				DBAttribute dbAttribute = attributeMapping.getDbAttribute();
-				
-				queryStr = queryStr + ", ?";
-				
-				preparedStatement.setString(i++, dbAttribute.getAttributeName());
+				queryStr = queryStr + ", \"" + dbAttribute.getAttributeName() + "\"";
 			}
 			
 			queryStr = queryStr + ") VALUES (?, st_geometryfromtext('POINT('|| ? || ' ' || ? ||')', 4326)";
 			
+			
+			for (AttributeMapping attributeMapping : attributeMappings) {
+				OsmAttribute osmAttribute = attributeMapping.getOsmAttribute();
+				
+				//Recuperamos el osmAttribute indicado en la lista de tags de elemento
+				String osmAttributeName = osmAttribute.getName();
+				Tags tag = element.getTags();
+				String valueTag = tag.recuperarAtributoIndicado(osmAttributeName);
+				
+				if (valueTag != null){
+					queryStr = queryStr + ", ?";
+				}else{
+					throw new OsmAttributeException(osmAttributeName);
+				}
+			}
+						
+			queryStr = queryStr + ")";
+			
+			preparedStatement = connection.prepareStatement(queryStr);
+			
+			int i = 1;
+						
 			preparedStatement.setLong(i++, element.getId());
 			preparedStatement.setDouble(i++, element.getLon());
 			preparedStatement.setDouble(i++, element.getLat());
@@ -278,15 +295,22 @@ public class ExistTableQuery {
 				
 				if (valueTag != null){
 					
-					queryStr = queryStr + ", ?";
-					
 					//En funcion del tipo asignaremos un long, char, boolean...
 					DBAttributeType dbAttributeType = dbAttribute.getAttributeType();
 									
 					switch (dbAttributeType) {
 					case DATE:
-						//TODO: en que formato vienen los date?
-						preparedStatement.setDate(i++, new Date(4535363));
+						//Otros formatos: YYYY-MM-DDThh:mmTZD, YYYY-MM-DDThh:mm:ssTZD, 
+						//YYYY-MM-DDThh:mm:ss.sTZD
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+						java.util.Date fecha = null;
+						try {
+						    fecha = sdf.parse(valueTag);
+						    preparedStatement.setDate(i++, new Date(fecha.getTime()));
+						} catch (ParseException ex) {
+						    ex.printStackTrace();
+						}
+						
 						break;
 
 					case NUMBER_LONG:
@@ -314,18 +338,18 @@ public class ExistTableQuery {
 						break;
 						
 					case BOOLEAN:
-						//TODO: ¿COMO VIENE LOS BOOLEAN "SI", "NO", "S", "N", ..
-						preparedStatement.setBoolean(i++, true);
+						if (valueTag.equals("yes")){
+							preparedStatement.setBoolean(i++, true);	
+						}else if (valueTag.equals("no")){
+							preparedStatement.setBoolean(i++, false);
+						}
+						
 						break;
 					
 					}
 				}
 				
-				
 			}
-						
-			queryStr = queryStr + ")";
-			
 			
 			preparedStatement.executeUpdate();
 			
