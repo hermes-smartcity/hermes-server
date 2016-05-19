@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserLocation;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserLocationList;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.userlocations.UserLocations;
 import es.udc.lbd.hermes.model.events.userlocations.service.UserLocationsService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -20,9 +18,9 @@ import es.udc.lbd.hermes.model.util.HelpersModel;
 public class FullUserLocationsEventStrategy extends EventStrategy{
 
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		UserLocationsService userLocationsService = ApplicationContextProvider.getApplicationContext().getBean("userLocationsService", UserLocationsService.class);
 		
 		ZtreamyUserLocationList ztreamyUserLocationList = (ZtreamyUserLocationList) event.getEventData();
@@ -47,8 +45,7 @@ public class FullUserLocationsEventStrategy extends EventStrategy{
 			userLocations.setEndTime(ztreamyUserLocation.getEndTime());
 			userLocations.setEventId(event.getEventId());
 			userLocationsService.create(userLocations, event.getSourceId());
-		}		
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		}
+		end();
 	}
 }

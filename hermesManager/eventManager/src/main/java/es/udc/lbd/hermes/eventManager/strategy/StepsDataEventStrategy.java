@@ -5,10 +5,8 @@ import java.util.TimeZone;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamySteps;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyStepsData;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.stepsData.StepsData;
 import es.udc.lbd.hermes.model.events.stepsData.service.StepsDataService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -17,9 +15,9 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class StepsDataEventStrategy extends EventStrategy {
 	
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		StepsDataService stepsDataService = ApplicationContextProvider.getApplicationContext().getBean("stepsDataService", StepsDataService.class);
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyStepsData ztreamyStepsData = (ZtreamyStepsData) event.getEventData();
@@ -33,8 +31,7 @@ public class StepsDataEventStrategy extends EventStrategy {
 			stepsData.setEventId(event.getEventId());
 			stepsDataService.create(stepsData, event.getSourceId());
 		}		
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		end();
 	}
 
 }

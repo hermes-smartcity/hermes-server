@@ -1,13 +1,10 @@
 package es.udc.lbd.hermes.eventManager;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
-import java.util.zip.DataFormatException;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
@@ -39,12 +36,19 @@ public class EventProcessor extends Thread {
 	static Logger logger = Logger.getLogger(EventProcessor.class);
 	private Client client;
 	private EventParser eventParser = new EventParser();
-	private Inflater inflater = new Inflater();
 	EfficiencyTestService efficiencyTestService = ApplicationContextProvider.getApplicationContext().getBean("efficiencyTestService", EfficiencyTestService.class);
+	private ExecutorService processors;
 
 	// Comportamiento del thread
 	public void run() {
+		processors = Executors.newFixedThreadPool(100);
 		escucharEventos();
+		processors.shutdown();
+		try {
+			processors.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+		} catch (InterruptedException e) {
+			logger.error("ExecutorService was interrupted. Events may have been lost\n", e);
+		}
 	}
 
 	// Escucha los eventos que se le envían en tiempo real
@@ -104,15 +108,10 @@ public class EventProcessor extends Thread {
 					if (event.getEventType() != null) {
 						eventType = event.getEventType();
 						EventProcesor tipoEvento = EventProcesor.getTipo(eventType);
-						EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
+						EventStrategy estrategia = EventFactory.getStrategy(tipoEvento, event);
 						if (estrategia != null) {
-							try {
-								estrategia.processEvent(event);
-								result = true;
-							} catch (ClassCastException e) {
-								logger.error("Event-Type no coincide con el tipo especificado en el body\n"+chunk, e);
-							}
-							logger.info("Guardado el evento con Event-Type: " + tipoEvento.getName());
+							processors.execute(estrategia);
+							result = true;
 						} else {
 							logger.warn("EventType desconocido: " + chunk);
 						}
@@ -130,7 +129,7 @@ public class EventProcessor extends Thread {
 		}
 		long totalTime = System.nanoTime() - startTime;
 		long delay = eventTime != -1 ? System.currentTimeMillis() - eventTime : 0;
-		efficiencyTestService.create(eventType, (long)chunk.length(), Calendar.getInstance(), delay, parseTime, totalTime, result);
+		efficiencyTestService.create("procesaUnEvento", (long)chunk.length(), Calendar.getInstance(), delay, parseTime, totalTime, result);
 	}
 	
 	private void waitBeforeReconnect(long timeToWait) {
@@ -141,19 +140,4 @@ public class EventProcessor extends Thread {
 			// Interrupted. Do nothing
 		}		
 	} 
-	
-	private byte[] decompress(byte[] compressed) throws DataFormatException, IOException {
-		
-		InputStream in = new InflaterInputStream(new ByteArrayInputStream(compressed));
-		ByteArrayOutputStream out  = new ByteArrayOutputStream();
-		byte[] buffer = new byte[1024];
-        int len;
-        while((len = in.read(buffer)) > 0) {
-            out.write(buffer, 0, len);
-        }
-        byte[] result = out.toByteArray();
-        in.close();
-        out.close();
-		return result;
-	}
 }

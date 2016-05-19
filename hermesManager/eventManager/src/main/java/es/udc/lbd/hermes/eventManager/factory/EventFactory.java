@@ -1,8 +1,13 @@
 package es.udc.lbd.hermes.eventManager.factory;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
+import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.strategy.ContextDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.DataSectionEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.DriverFeaturesEventStrategy;
@@ -31,46 +36,64 @@ import es.udc.lbd.hermes.model.events.EventProcesor;
 
 public class EventFactory {
 
-//	private Logger logger = LoggerFactory.getLogger(getClass());
-	private static Map<EventProcesor, EventStrategy> registry;
+	private static Logger logger = Logger.getLogger(EventFactory.class);
+	private static Map<EventProcesor, Class<? extends EventStrategy>> registry;
 	static {
-		registry = new HashMap<EventProcesor, EventStrategy>();
-		//registry.put(EventProcesor.VEHICLE_LOCATION, new VehicleLocationEventStrategy());
-		registry.put(EventProcesor.HIGH_SPEED, new HighSpeedEventStrategy());
-		registry.put(EventProcesor.HIGH_ACCELERATION, new HighAccelerationEventStrategy());
-		registry.put(EventProcesor.HIGH_DECELERATION, new HighDecelerationEventStrategy());
-		registry.put(EventProcesor.HIGH_HEART_RATE, new HighHeartRateEventStrategy());
-		registry.put(EventProcesor.DRIVER_FEATURES, new DriverFeaturesEventStrategy());
-		registry.put(EventProcesor.DATA_SECTION, new DataSectionEventStrategy());
-		registry.put(EventProcesor.SLEEP_DATA, new SleepDataEventStrategy());
-		registry.put(EventProcesor.STEPS_DATA, new StepsDataEventStrategy());
-		registry.put(EventProcesor.CONTEXT_DATA, new ContextDataEventStrategy());
-		registry.put(EventProcesor.HEART_RATE_DATA, new HeartRateDataEventStrategy());
-		registry.put(EventProcesor.USER_ACTIVITIES, new UserActivitiesEventStrategy());
-		registry.put(EventProcesor.USER_LOCATIONS, new UserLocationsEventStrategy());
-		registry.put(EventProcesor.FULL_USER_ACTIVITIES, new FullUserActivitiesEventStrategy());
-		registry.put(EventProcesor.FULL_USER_LOCATIONS, new FullUserLocationsEventStrategy());
-		registry.put(EventProcesor.USER_DISTANCES, new UserDistancesEventStrategy());
-		registry.put(EventProcesor.USER_STEPS, new UserStepsEventStrategy());
-		registry.put(EventProcesor.USER_CALORIES_EXPENDED, new UserCaloriesExpendedEventStrategy());
-		registry.put(EventProcesor.USER_HEART_RATES , new UserHeartRatesEventStrategy());
-		registry.put(EventProcesor.USER_SLEEP, new UserSleepEventStrategy());
-		registry.put(EventProcesor.FULL_USER_DISTANCES, new FullUserDistancesEventStrategy());
-		registry.put(EventProcesor.FULL_USER_STEPS, new FullUserStepsEventStrategy());
-		registry.put(EventProcesor.FULL_USER_CALORIES_EXPENDED, new FullUserCaloriesExpendedEventStrategy());
-		registry.put(EventProcesor.FULL_USER_HEART_RATES, new FullUserHeartRatesEventStrategy());
-	
+		registry = new HashMap<EventProcesor, Class<? extends EventStrategy>>();
+		registry.put(EventProcesor.HIGH_SPEED, HighSpeedEventStrategy.class);
+		registry.put(EventProcesor.HIGH_ACCELERATION, HighAccelerationEventStrategy.class);
+		registry.put(EventProcesor.HIGH_DECELERATION, HighDecelerationEventStrategy.class);
+		registry.put(EventProcesor.HIGH_HEART_RATE, HighHeartRateEventStrategy.class);
+		registry.put(EventProcesor.DRIVER_FEATURES, DriverFeaturesEventStrategy.class);
+		registry.put(EventProcesor.DATA_SECTION, DataSectionEventStrategy.class);
+		registry.put(EventProcesor.SLEEP_DATA, SleepDataEventStrategy.class);
+		registry.put(EventProcesor.STEPS_DATA, StepsDataEventStrategy.class);
+		registry.put(EventProcesor.CONTEXT_DATA, ContextDataEventStrategy.class);
+		registry.put(EventProcesor.HEART_RATE_DATA, HeartRateDataEventStrategy.class);
+		registry.put(EventProcesor.USER_ACTIVITIES, UserActivitiesEventStrategy.class);
+		registry.put(EventProcesor.USER_LOCATIONS, UserLocationsEventStrategy.class);
+		registry.put(EventProcesor.FULL_USER_ACTIVITIES, FullUserActivitiesEventStrategy.class);
+		registry.put(EventProcesor.FULL_USER_LOCATIONS, FullUserLocationsEventStrategy.class);
+		registry.put(EventProcesor.USER_DISTANCES, UserDistancesEventStrategy.class);
+		registry.put(EventProcesor.USER_STEPS, UserStepsEventStrategy.class);
+		registry.put(EventProcesor.USER_CALORIES_EXPENDED, UserCaloriesExpendedEventStrategy.class);
+		registry.put(EventProcesor.USER_HEART_RATES, UserHeartRatesEventStrategy.class);
+		registry.put(EventProcesor.USER_SLEEP, UserSleepEventStrategy.class);
+		registry.put(EventProcesor.FULL_USER_DISTANCES, FullUserDistancesEventStrategy.class);
+		registry.put(EventProcesor.FULL_USER_STEPS, FullUserStepsEventStrategy.class);
+		registry.put(EventProcesor.FULL_USER_CALORIES_EXPENDED, FullUserCaloriesExpendedEventStrategy.class);
+		registry.put(EventProcesor.FULL_USER_HEART_RATES, FullUserHeartRatesEventStrategy.class);		
 	}
 
 	private EventFactory() {
 	}
 	
-	public static EventStrategy getStrategy(EventProcesor tipoEvento) {
+	public static EventStrategy getStrategy(EventProcesor tipoEvento, Event event) {
 		
 		EventStrategy result = null;
 		if (tipoEvento!= null) {
-			result = registry.get(tipoEvento);
+			Class<? extends EventStrategy> resultClass = registry.get(tipoEvento);
+			if (resultClass!=null) {
+				try {
+					result = resultClass.newInstance();
+					Method method;
+					method = result.getClass().getMethod("setEvent", Event.class);
+					method.invoke(result, event);
+				} catch (InstantiationException e) {
+					logger.error(e);				
+				} catch (IllegalAccessException e) {
+					logger.error(e);				
+				} catch (SecurityException e) {
+					logger.error(e);				
+				} catch (NoSuchMethodException e) {
+					logger.error(e);				
+				} catch (IllegalArgumentException e) {
+					logger.error(e);
+				} catch (InvocationTargetException e) {
+					logger.error(e);
+				}
+			}
 		}
-		return result;		
+		return result;
 	}
 }

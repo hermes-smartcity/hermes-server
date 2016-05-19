@@ -4,10 +4,8 @@ import java.util.Calendar;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserSteps;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserStepsList;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.usersteps.UserSteps;
 import es.udc.lbd.hermes.model.events.usersteps.service.UserStepsService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -16,9 +14,9 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class FullUserStepsEventStrategy extends EventStrategy{
 
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		UserStepsService userStepsService = ApplicationContextProvider.getApplicationContext().getBean("userStepsService", UserStepsService.class);
 		
 		ZtreamyUserStepsList ztreamyUserStepsList = (ZtreamyUserStepsList) event.getEventData();
@@ -42,8 +40,6 @@ public class FullUserStepsEventStrategy extends EventStrategy{
 			userSteps.setEventId(event.getEventId());
 			userStepsService.create(userSteps, event.getSourceId());
 		}
-		
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		end();
 	}
 }

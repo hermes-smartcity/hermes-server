@@ -2,10 +2,8 @@ package es.udc.lbd.hermes.eventManager.strategy;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserDistances;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserDistancesList;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.userdistances.UserDistances;
 import es.udc.lbd.hermes.model.events.userdistances.service.UserDistancesService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -14,9 +12,9 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class UserDistancesEventStrategy extends EventStrategy{
 
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		UserDistancesService userDistancesService = ApplicationContextProvider.getApplicationContext().getBean("userDistancesService", UserDistancesService.class);
 		
 		ZtreamyUserDistancesList ztreamyUserDistancesList = (ZtreamyUserDistancesList) event.getEventData();
@@ -28,8 +26,6 @@ public class UserDistancesEventStrategy extends EventStrategy{
 			userDistances.setEventId(event.getEventId());
 			userDistancesService.create(userDistances, event.getSourceId());
 		}
-		
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		end();
 	}
 }

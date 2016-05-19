@@ -5,9 +5,7 @@ import java.util.TimeZone;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamySleepData;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.sleepData.SleepData;
 import es.udc.lbd.hermes.model.events.sleepData.service.SleepDataService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -16,9 +14,9 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class SleepDataEventStrategy extends EventStrategy {
 	
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		SleepDataService sleepDataService = ApplicationContextProvider.getApplicationContext().getBean("sleepDataService", SleepDataService.class);
 		// Construir un objeto del modelo a partir del evento
 		ZtreamySleepData ztreamysleepData = (ZtreamySleepData) event.getEventData();
@@ -34,8 +32,7 @@ public class SleepDataEventStrategy extends EventStrategy {
 		sleepData.setEndTime(ztreamysleepData.getEndTime());
 		sleepData.setEventId(event.getEventId());
 		sleepDataService.create(sleepData, event.getSourceId());
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		end();
 	}
 
 }

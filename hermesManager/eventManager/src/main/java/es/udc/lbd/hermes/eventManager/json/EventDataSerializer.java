@@ -18,7 +18,7 @@ public class EventDataSerializer extends StdSerializer<EventData> {
 		
 	public EventDataSerializer() {
 		super(EventData.class);
-		//registerEventType(ZtreamyVehicleLocation.class, "Location");  
+		registerEventType(ZtreamyVehicleLocation.class, "Location");  
 		registerEventType(ZtreamyHighSpeed.class, "High Speed");  
 		registerEventType(ZtreamyHighAcceleration.class, "High Acceleration");  		
 		registerEventType(ZtreamyHighDeceleration.class, "High Deceleration");  		

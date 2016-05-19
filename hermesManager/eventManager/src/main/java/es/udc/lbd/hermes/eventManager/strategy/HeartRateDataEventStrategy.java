@@ -5,21 +5,19 @@ import java.util.TimeZone;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHeartRate;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyHeartRateData;
 import es.udc.lbd.hermes.model.events.heartRateData.HeartRateData;
 import es.udc.lbd.hermes.model.events.heartRateData.service.HeartRateDataService;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 
 @Component
 public class HeartRateDataEventStrategy extends EventStrategy {
 	
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		HeartRateDataService heartRateDataService = ApplicationContextProvider.getApplicationContext().getBean("heartRateDataService", HeartRateDataService.class);
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyHeartRateData ztreamyHeartRateData = (ZtreamyHeartRateData) event.getEventData();
@@ -32,8 +30,7 @@ public class HeartRateDataEventStrategy extends EventStrategy {
 			heartRateData.setTimeLog(ztreamyHeartRate.getTimeLog());
 			heartRateData.setEventId(event.getEventId());
 			heartRateDataService.create(heartRateData, event.getSourceId());
-		}		
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		}
+		end();
 	}
 }

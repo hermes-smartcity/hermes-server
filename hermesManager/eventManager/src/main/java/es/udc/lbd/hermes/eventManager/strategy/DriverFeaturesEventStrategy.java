@@ -1,11 +1,9 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyDriverFeatures;
 import es.udc.lbd.hermes.model.events.driverFeatures.DriverFeatures;
 import es.udc.lbd.hermes.model.events.driverFeatures.service.DriverFeaturesService;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 
 
@@ -14,9 +12,9 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class DriverFeaturesEventStrategy extends EventStrategy {
 
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 		
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		DriverFeaturesService driverFeaturesService = ApplicationContextProvider.getApplicationContext().getBean("driverFeaturesService", DriverFeaturesService.class);
 
 		// Construir un objeto del modelo a partir del evento
@@ -31,8 +29,7 @@ public class DriverFeaturesEventStrategy extends EventStrategy {
 		driverFeatures.setTimestamp(event.getTimestamp());
 		
 		driverFeaturesService.create(driverFeatures, event.getSourceId());
-		eventService.create(event.getTimestamp(),event.getEventId());
-		
+		end();		
 	}
 
 }

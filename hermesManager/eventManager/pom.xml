@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>es.udc.lbd.hermes</groupId>
-    <artifactId>hermesManager</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>eventManager</artifactId>
-  <build>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>es.udc.lbd.hermes</groupId>
+		<artifactId>hermesManager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>eventManager</artifactId>
+	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -23,11 +23,11 @@
 	</build>
 	<dependencies>
 		<dependency>
-		    <groupId>es.udc.lbd.hermes</groupId>
-		    <artifactId>model</artifactId>
+			<groupId>es.udc.lbd.hermes</groupId>
+			<artifactId>model</artifactId>
 		</dependency>
 
-	<!-- Spring -->
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -68,7 +68,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 		</dependency>
-		
 		<!-- cors -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -83,19 +82,19 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<exclusions>
-			    <exclusion>
-			        <groupId>com.sun.jmx</groupId>
-			        <artifactId>jmxri</artifactId>
-			    </exclusion>
-			    <exclusion>
-			        <groupId>com.sun.jdmk</groupId>
-			        <artifactId>jmxtools</artifactId>
-			    </exclusion>
-			    <exclusion>
-			            <groupId>javax.jms</groupId>
-			            <artifactId>jms</artifactId>
-			    </exclusion>
-		</exclusions>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- Servlet -->
 		<dependency>
@@ -119,49 +118,29 @@
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-		</dependency>		
-  
-		<dependency>
-		    <groupId>org.glassfish.jersey.core</groupId>
-		    <artifactId>jersey-client</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.glassfish.jersey.connectors</groupId>
-		    <artifactId>jersey-grizzly-connector</artifactId>
-		</dependency>
-		 
-		<dependency>
-		    <groupId>org.glassfish.jersey.connectors</groupId>
-		    <artifactId>jersey-apache-connector</artifactId>
-		</dependency>
-		 
-		<dependency>
-		    <groupId>org.glassfish.jersey.connectors</groupId>
-		    <artifactId>jersey-jetty-connector</artifactId>
-		</dependency>
-		
-		<!-- Apache Tiles 
-		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-jsp</artifactId>
+			<groupId>org.glassfish.jersey.connectors</groupId>
+			<artifactId>jersey-apache-connector</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tiles</groupId>
-			<artifactId>tiles-el</artifactId>
-		</dependency>-->
-		
+			<groupId>org.glassfish.jersey.connectors</groupId>
+			<artifactId>jersey-jetty-connector</artifactId>
+		</dependency>
 		<!-- File upload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 		</dependency>
 	</dependencies>
-	
-	 <packaging>war</packaging>
+	<packaging>war</packaging>
 	<name>hermes-eventmanager</name>
 </project>

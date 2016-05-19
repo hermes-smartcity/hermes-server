@@ -2,10 +2,8 @@ package es.udc.lbd.hermes.eventManager.strategy;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserHeartRates;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserHeartRatesList;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.userheartrates.UserHeartRates;
 import es.udc.lbd.hermes.model.events.userheartrates.service.UserHeartRatesService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -14,9 +12,9 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class UserHeartRatesEventStrategy extends EventStrategy{
 
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		UserHeartRatesService userHeartRatesService = ApplicationContextProvider.getApplicationContext().getBean("userHeartRatesService", UserHeartRatesService.class);
 		
 		ZtreamyUserHeartRatesList ztreamyUserHeartRatesList = (ZtreamyUserHeartRatesList) event.getEventData();
@@ -28,8 +26,6 @@ public class UserHeartRatesEventStrategy extends EventStrategy{
 			userHeartRates.setEventId(event.getEventId());
 			userHeartRatesService.create(userHeartRates, event.getSourceId());
 		}
-		
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		end();
 	}
 }

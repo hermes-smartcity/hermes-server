@@ -2,10 +2,8 @@ package es.udc.lbd.hermes.eventManager.strategy;
 
 import org.springframework.stereotype.Component;
 
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserCaloriesExpended;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserCaloriesExpendedList;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.usercaloriesexpended.UserCaloriesExpended;
 import es.udc.lbd.hermes.model.events.usercaloriesexpended.service.UserCaloriesExpendedService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -14,9 +12,9 @@ import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
 public class UserCaloriesExpendedEventStrategy extends EventStrategy{
 
 	@Override
-	public void processEvent(Event event) {
+	public void run() {
 
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+		start();
 		UserCaloriesExpendedService userCaloriesExpendedService = ApplicationContextProvider.getApplicationContext().getBean("userCaloriesExpendedService", UserCaloriesExpendedService.class);
 		
 		ZtreamyUserCaloriesExpendedList ztreamyUserCaloriesExpendedList = (ZtreamyUserCaloriesExpendedList) event.getEventData();
@@ -28,8 +26,6 @@ public class UserCaloriesExpendedEventStrategy extends EventStrategy{
 			userCaloriesExpended.setEventId(event.getEventId());
 			userCaloriesExpendedService.create(userCaloriesExpended, event.getSourceId());
 		}
-		
-		// Ultimo evento procesado
-		eventService.create(event.getTimestamp(),event.getEventId());
+		end();
 	}
 }

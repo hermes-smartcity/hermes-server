@@ -1,18 +1,11 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
-
-
 import java.util.List;
-
 import org.springframework.stereotype.Component;
-
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
-
-import es.udc.lbd.hermes.eventManager.json.Event;
 import es.udc.lbd.hermes.eventManager.json.RoadSectionPoint;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyDataSection;
-import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -20,15 +13,12 @@ import es.udc.lbd.hermes.model.util.HelpersModel;
 
 @Component
 public class DataSectionEventStrategy extends EventStrategy {
-
-	//private static Logger logger = Logger.getLogger(DataSectionEventStrategy.class);
 	
 	@Override
-	public void processEvent(Event event) {
-		
-		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
+	public void run() {
+
+		start();
 		VehicleLocationService vehicleLocationService = ApplicationContextProvider.getApplicationContext().getBean("vehicleLocationService", VehicleLocationService.class);		
-		
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyDataSection ztreamyDataSection = (ZtreamyDataSection) event.getEventData();
 		List<RoadSectionPoint> vehicles = ztreamyDataSection.getRoadSection();
@@ -53,8 +43,6 @@ public class DataSectionEventStrategy extends EventStrategy {
 			vehicleLocation.setTimestamp(event.getTimestamp());
 			vehicleLocationService.create(vehicleLocation, event.getSourceId());
 		}
-		
-		
-		eventService.create(event.getTimestamp(),event.getEventId());		
+		end();
 	}
 }
