@@ -64,20 +64,18 @@
 
 				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
 					<a href="javascript:;" data-toggle="collapse" data-target="#hermesServices">
-						<i class="fa fa-bar-chart-o fa-fw"></i> 
+						<i class="fa fa-exchange fa-fw"></i> 
 						{{'menu.hermesServices' | translate}}	 
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
                     <ul id="hermesServices" class="collapse mylist-unstyled">
                       <li>
 							<a data-ui-sref="hermesServices">
-								<i class="fa fa-wrench fa-fw"></i>
 								<span>{{'menu.testServices' | translate}}</span>
 							</a>
 						</li>
 						<li>
 							<a data-ui-sref="dataServices">
-								<i class="fa fa-bar-chart-o fa-fw"></i>
 								<span>{{'menu.statistics' | translate}}</span>
 							</a>
 						</li>
@@ -86,20 +84,18 @@
 
 				<li data-ng-if="hasRole('ROLE_ADMIN') || hasRole('ROLE_CONSULTA')">
 					<a href="javascript:;" data-toggle="collapse" data-target="#sensorCollector">
-						<i class="fa fa-bar-chart-o fa-fw"></i> 
+						<i class="fa fa-mobile fa-fw"></i> 
 						{{'menu.sensorCollector' | translate}}	 
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
                     <ul id="sensorCollector" class="collapse mylist-unstyled">
                       <li>
 							<a data-ui-sref="sensorData"> 
-								<i class="fa fa-bar-chart-o fa-fw"></i> 
 								<span> {{'menu.sensorData' | translate}}</span>
 							</a>
 						</li>
 						<li>
 							<a data-ui-sref="gpsLocation"> 
-								<i class="fa fa-dashboard fa-fw"></i> 
 								<span>{{'menu.gpsLocation' | translate}}</span>
 							</a>
 						</li>
@@ -108,20 +104,18 @@
                 
                 <li data-ng-if="hasRole('ROLE_ADMIN')">
 					<a href="javascript:;" data-toggle="collapse" data-target="#administration">
-						<i class="fa fa-bar-chart-o fa-fw"></i> 
+						<i class="fa fa-wrench fa-fw"></i> 
 						{{'menu.administration' | translate}}	 
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
                     <ul id="administration" class="collapse mylist-unstyled">
                       <li>
 							<a data-ui-sref="userManager"> 
-								<i class="fa fa-wrench fa-fw"><!--  --></i> 
 								<span>{{'menu.userManager' | translate}}</span>
 							</a>
 						</li>
 						<li>
 							<a data-ui-sref="systemLogs"> 
-								<i class="fa fa-wrench fa-fw"></i> 
 								<span>{{'menu.systemLogs' | translate}}</span>
 							</a>
 						</li>
@@ -130,38 +124,33 @@
                 
                 <li data-ng-if="hasRole('ROLE_ADMIN')">
 					<a href="javascript:;" data-toggle="collapse" data-target="#osmimport">
-						<i class="fa fa-bar-chart-o fa-fw"></i> 
+						<i class="fa fa-database fa-fw"></i> 
 						{{'menu.osmImport' | translate}}	 
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
                     <ul id="osmimport" class="collapse mylist-unstyled">
                       <li>
 							<a data-ui-sref="dbconnection"> 
-								<i class="fa fa-dashboard fa-fw"></i> 
 								<span>{{'menu.dbConnections' | translate}}</span>
 							</a>
 						</li>
 						<li>
 							<a data-ui-sref="dbconcept"> 
-								<i class="fa fa-dashboard fa-fw"></i> 
 								<span>{{'menu.dbConcepts' | translate}}</span>
 							</a>
 						</li>
 						<li>
 							<a data-ui-sref="osmconcept"> 
-								<i class="fa fa-dashboard fa-fw"></i> 
 								<span>{{'menu.osmConcepts' | translate}}</span>
 							</a>
 						</li>
 						<li>
 							<a data-ui-sref="job"> 
-								<i class="fa fa-dashboard fa-fw"></i> 
 								<span>{{'menu.job' | translate}}</span>
 							</a>
 						</li>
 						<li>
 							<a data-ui-sref="executions"> 
-							<i class="fa fa-list fa-fw"><!--  --></i> 
 							<span> {{'menu.executions' | translate}}</span>
 						</a>
 						</li>
