@@ -41,6 +41,7 @@
 				"titulo": "Dashboard",
 				"mapa": "Map",
 				"tabla": "Table",
+				"headMap": "Head Map"
 			},
 			"dataSection":{
 				"noEvents": "There are not events to show",
@@ -333,6 +334,7 @@
 				"type": "Type",
 				"host": "Host",
 				"port": "Port",
+				"dbname": "DB name",
 				"userDb": "User",
 				"passDb": "Password",
 				"actions": "Actions",
