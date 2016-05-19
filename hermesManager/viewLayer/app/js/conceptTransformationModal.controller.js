@@ -4,10 +4,11 @@
 	angular.module('app').controller('ConceptTransformationModalController', ConceptTransformationModalController);
 
 	ConceptTransformationModalController.$inject = ['$scope', '$uibModalInstance', 'conceptForm', 
-	                                       'infoConcept', 'idJob', 'osmconcepts', 'dbconcepts', 'conceptTransformationService'];
+	                                       'infoConcept', 'idJob', 'osmconcepts', 'dbconcepts', 
+	                                       'conceptTransformationService', '$translate'];
 
 	function ConceptTransformationModalController($scope, $uibModalInstance, conceptForm, infoConcept, 
-			idJob, osmconcepts, dbconcepts, conceptTransformationService) {
+			idJob, osmconcepts, dbconcepts, conceptTransformationService, $translate) {
 	
 		$scope.form = {};
 		
@@ -32,6 +33,11 @@
 				$scope.seLat = infoConcept.data.bbox.coordinates[0][2][1];	
 			}
 			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('concepttransformation.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('concepttransformation.create');
 		}
 		
 		$uibModalInstance.rendered.then(function(){

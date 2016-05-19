@@ -135,6 +135,12 @@
 			$scope.nwLat = infoJob.data.bbox.coordinates[0][0][1];
 			$scope.seLng = infoJob.data.bbox.coordinates[0][2][0];
 			$scope.seLat = infoJob.data.bbox.coordinates[0][2][1];
+			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('job.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('job.create');
 		}
 		
 		$scope.submitForm = function () {

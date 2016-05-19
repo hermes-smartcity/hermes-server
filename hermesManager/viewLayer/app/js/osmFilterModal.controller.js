@@ -5,10 +5,10 @@
 
 	OSMFilterModalController.$inject = ['$scope', '$uibModalInstance', 'filterForm', 
 	                                       'infoFilter', 'idOsmConcept', 'operations',
-	                                       'osmFilterService'];
+	                                       'osmFilterService', '$translate'];
 
 	function OSMFilterModalController($scope, $uibModalInstance, filterForm, infoFilter, 
-			idOsmConcept, operations, osmFilterService) {
+			idOsmConcept, operations, osmFilterService, $translate) {
 	
 		$scope.form = {};
 		
@@ -20,6 +20,12 @@
 			$scope.name = infoFilter.data.name;
 			$scope.type = infoFilter.data.operation;
 			$scope.value = infoFilter.data.value;
+			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('osmfilter.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('osmfilter.create');
 		}
 		
 		$scope.submitForm = function () {

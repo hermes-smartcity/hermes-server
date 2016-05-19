@@ -4,10 +4,11 @@
 	angular.module('app').controller('DBConceptModalController', DBConceptModalController);
 
 	DBConceptModalController.$inject = ['$scope', '$uibModalInstance', 'conceptForm', 
-	                                       'infoConcept', 'dbconnections', 'dbConceptService'];
+	                                       'infoConcept', 'dbconnections', 'dbConceptService',
+	                                       '$translate'];
 
 	function DBConceptModalController($scope, $uibModalInstance, conceptForm, infoConcept, 
-			dbconnections, dbConceptService) {
+			dbconnections, dbConceptService, $translate) {
 	
 		$scope.form = {};
 		
@@ -22,6 +23,11 @@
 			$scope.geomName = infoConcept.data.geomName;
 			$scope.dbconnection = infoConcept.data.dbConnection.id;
 
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbconcept.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbconcept.create');
 		}
 		
 		$scope.submitForm = function () {

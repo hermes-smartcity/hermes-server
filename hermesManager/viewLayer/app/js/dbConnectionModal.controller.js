@@ -4,10 +4,11 @@
 	angular.module('app').controller('DBConnectionModalController', DBConnectionModalController);
 
 	DBConnectionModalController.$inject = ['$scope', '$uibModalInstance', 'connectionForm', 
-	                                       'infoConnection', 'types', 'dbConnectionService'];
+	                                       'infoConnection', 'types', 'dbConnectionService',
+	                                       '$translate'];
 
 	function DBConnectionModalController($scope, $uibModalInstance, connectionForm, infoConnection, types, 
-			dbConnectionService) {
+			dbConnectionService, $translate) {
 	
 		$scope.form = {};
 		
@@ -22,6 +23,12 @@
 			$scope.dbName = infoConnection.data.dbName;
 			$scope.userDb = infoConnection.data.userDb;
 			$scope.passDb = infoConnection.data.passDb;
+			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbconnection.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbconnection.create');
 		}
 		
 		$scope.submitForm = function () {

@@ -5,10 +5,10 @@
 
 	OSMAttributeModalController.$inject = ['$scope', '$uibModalInstance', 'attributeForm', 
 	                                       'infoAttribute', 'idOsmConcept', 
-	                                       'osmAttributeService'];
+	                                       'osmAttributeService', '$translate'];
 
 	function OSMAttributeModalController($scope, $uibModalInstance, attributeForm, infoAttribute, 
-			idOsmConcept, osmAttributeService) {
+			idOsmConcept, osmAttributeService, $translate) {
 	
 		$scope.form = {};
 		
@@ -17,6 +17,12 @@
 		//Si infoConnection no es undefined, es porque estamos editando
 		if (infoAttribute !== null){
 			$scope.name = infoAttribute.data.name;
+			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('osmattribute.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('osmattribute.create');
 		}
 		
 		$scope.submitForm = function () {

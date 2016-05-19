@@ -4,10 +4,10 @@
 	angular.module('app').controller('OSMConceptModalController', OSMConceptModalController);
 
 	OSMConceptModalController.$inject = ['$scope', '$uibModalInstance', 'conceptForm', 
-	                                       'infoConcept', 'osmConceptService'];
+	                                       'infoConcept', 'osmConceptService', '$translate'];
 
 	function OSMConceptModalController($scope, $uibModalInstance, conceptForm, infoConcept, 
-			osmConceptService) {
+			osmConceptService, $translate) {
 	
 		$scope.form = {};
 		
@@ -15,6 +15,12 @@
 		//Si infoConcept no es undefined, es porque estamos editando
 		if (infoConcept !== null){
 			$scope.name = infoConcept.data.name;
+			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('osmconcept.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('osmconcept.create');
 		}
 		
 		$scope.submitForm = function () {
