@@ -61,17 +61,22 @@
 		//por si se van actualizando
 		function updateMessages() {
 			messageService.getMessagesWithStatus(vm.idExecution).then(function(response) {
-	   			vm.messages = response.data.messages;
-	   			vm.status = response.data.status;
-	   			if (vm.dtInstance !== null){
-	   				vm.dtInstance.reloadData();
-	   			}
+				if (response.data !== ""){
+					vm.messages = response.data.messages;
+		   			vm.status = response.data.status;
+		   			if (vm.dtInstance !== null){
+		   				vm.dtInstance.reloadData();
+		   			}
+		   			
+		   			//Si al volver de consultar los mensajes, resulta que ya no tiene estado
+		   			//running, tenemos que parar de solicitar los mensajes cada x segundos
+		   			if (vm.status !== 'RUNNING'){
+		   				$interval.cancel(vm.intervalo);
+		   			}	
+				}else{
+					$interval.cancel(vm.intervalo);
+				}
 	   			
-	   			//Si al volver de consultar los mensajes, resulta que ya no tiene estado
-	   			//running, tenemos que parar de solicitar los mensajes cada x segundos
-	   			if (vm.status !== 'RUNNING'){
-	   				$interval.cancel(vm.intervalo);
-	   			}
 	   		});	
 		}
 		
