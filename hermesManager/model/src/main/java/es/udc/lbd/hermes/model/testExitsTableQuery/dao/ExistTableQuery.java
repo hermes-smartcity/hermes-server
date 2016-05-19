@@ -22,7 +22,10 @@ import es.udc.lbd.hermes.model.osmimport.job.json.Element;
 import es.udc.lbd.hermes.model.osmimport.job.json.Tags;
 import es.udc.lbd.hermes.model.osmimport.osmattribute.OsmAttribute;
 import es.udc.lbd.hermes.model.util.CifrarDescifrarUtil;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeBooleanException;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeDateException;
 import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeException;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeTypeException;
 
 public class ExistTableQuery {
 
@@ -242,7 +245,7 @@ public class ExistTableQuery {
 		return existe;
 	}
 	
-	public void insertarDBConcept(DBConcept dbConcept, List<AttributeMapping> attributeMappings, Element element) throws SQLException, ClassNotFoundException, OsmAttributeException, Exception{
+	public void insertarDBConcept(DBConcept dbConcept, List<AttributeMapping> attributeMappings, Element element) throws SQLException, ClassNotFoundException, OsmAttributeException, OsmAttributeDateException, OsmAttributeBooleanException, OsmAttributeTypeException, Exception{
 		PreparedStatement preparedStatement = null;
 		try{
 
@@ -302,13 +305,12 @@ public class ExistTableQuery {
 					case DATE:
 						//Otros formatos: YYYY-MM-DDThh:mmTZD, YYYY-MM-DDThh:mm:ssTZD, 
 						//YYYY-MM-DDThh:mm:ss.sTZD
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
-						java.util.Date fecha = null;
 						try {
-						    fecha = sdf.parse(valueTag);
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+							java.util.Date fecha = sdf.parse(valueTag);
 						    preparedStatement.setDate(i++, new Date(fecha.getTime()));
 						} catch (ParseException ex) {
-						    ex.printStackTrace();
+							throw new OsmAttributeDateException(osmAttributeName);
 						}
 						
 						break;
@@ -338,14 +340,19 @@ public class ExistTableQuery {
 						break;
 						
 					case BOOLEAN:
-						if (valueTag.equals("yes")){
+						if (valueTag.toLowerCase().equals("yes")){
 							preparedStatement.setBoolean(i++, true);	
-						}else if (valueTag.equals("no")){
+						}else if (valueTag.toLowerCase().equals("no")){
 							preparedStatement.setBoolean(i++, false);
+						}else{
+							throw new OsmAttributeBooleanException(osmAttributeName);
 						}
 						
 						break;
 					
+					default :
+						throw new OsmAttributeTypeException(osmAttributeName, dbAttributeType.getName());
+						
 					}
 				}
 				

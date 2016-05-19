@@ -56,7 +56,10 @@ import es.udc.lbd.hermes.model.osmimport.osmfilter.OsmFilter;
 import es.udc.lbd.hermes.model.osmimport.osmfilter.OsmFilterOperation;
 import es.udc.lbd.hermes.model.osmimport.osmfilter.dao.OsmFilterDao;
 import es.udc.lbd.hermes.model.testExitsTableQuery.dao.ExistTableQuery;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeBooleanException;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeDateException;
 import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeException;
+import es.udc.lbd.hermes.model.util.exceptions.OsmAttributeTypeException;
 
 @Service("jobService")
 @Transactional
@@ -349,6 +352,7 @@ public class JobServiceImpl implements JobService{
 							messageDao.create(message);
 							
 							algunErrorImportante = true;
+							
 						} catch (OsmAttributeException e) {
 						
 							e.printStackTrace();
@@ -358,6 +362,44 @@ public class JobServiceImpl implements JobService{
 							mensaje = messageSource.getMessage("executionjob.osmAttributeException", parametros, locale);
 							message = new Message(mensaje, timestamp, execution);
 							messageDao.create(message);
+							
+							algunErrorImportante = true;
+							
+						} catch (OsmAttributeDateException e) {
+							
+							e.printStackTrace();
+							
+							timestamp = Calendar.getInstance();
+							parametros = new Object[] {e.getTagName()};
+							mensaje = messageSource.getMessage("executionjob.osmAttributeDateException", parametros, locale);
+							message = new Message(mensaje, timestamp, execution);
+							messageDao.create(message);
+							
+							algunErrorImportante = true;
+						
+						} catch (OsmAttributeBooleanException e) {
+							
+							e.printStackTrace();
+							
+							timestamp = Calendar.getInstance();
+							parametros = new Object[] {e.getTagName()};
+							mensaje = messageSource.getMessage("executionjob.osmAttributeBooleanException", parametros, locale);
+							message = new Message(mensaje, timestamp, execution);
+							messageDao.create(message);
+							
+							algunErrorImportante = true;
+							
+						} catch (OsmAttributeTypeException e) {
+							
+							e.printStackTrace();
+							
+							timestamp = Calendar.getInstance();
+							parametros = new Object[] {e.getTypeName(), e.getTagName()};
+							mensaje = messageSource.getMessage("executionjob.osmAttributeTypeException", parametros, locale);
+							message = new Message(mensaje, timestamp, execution);
+							messageDao.create(message);
+							
+							algunErrorImportante = true;
 							
 						} catch (Exception e) {
 							e.printStackTrace();
