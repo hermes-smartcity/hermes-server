@@ -8,7 +8,8 @@ CREATE TABLE setting (
   valueChar VARCHAR(100),
   valueNumber decimal,
   type VARCHAR(20) NOT NULL,
-  CONSTRAINT idsetting_pk PRIMARY KEY (id)
+  CONSTRAINT idsetting_pk PRIMARY KEY (id),
+  CONSTRAINT name_different UNIQUE (name)
 )
 ;
 		

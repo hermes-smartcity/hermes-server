@@ -1,0 +1,1 @@
+ALTER TABLE setting ADD CONSTRAINT name_different UNIQUE (name);

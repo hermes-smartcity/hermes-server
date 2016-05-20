@@ -14,4 +14,6 @@ public interface SettingService {
 	
 	public List<Setting> obterSettings();
 	
+	public Setting getByName(String name);
+	
 }

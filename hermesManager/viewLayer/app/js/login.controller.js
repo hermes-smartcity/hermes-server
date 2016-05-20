@@ -37,7 +37,7 @@
 						function getSensorsTypeComplete(response){
 							$rootScope.sensorsType = response;
 						
-							settingsService.getSetting(2).then(getSettingComplete);
+							settingsService.getSetting("numberOfCells").then(getSettingComplete);
 							function getSettingComplete(response){
 								if (response.data === ""){
 									$rootScope.numberofcells = 5;

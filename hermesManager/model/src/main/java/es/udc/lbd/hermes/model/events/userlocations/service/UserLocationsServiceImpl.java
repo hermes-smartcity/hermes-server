@@ -24,6 +24,7 @@ import es.udc.lbd.hermes.model.setting.dao.SettingDao;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
+import es.udc.lbd.hermes.model.util.SettingsName;
 
 @Service("userLocationsService")
 @Transactional
@@ -93,7 +94,7 @@ public class UserLocationsServiceImpl implements UserLocationsService{
 				
 		//Tenemos que limitar la consulta a un tamano maximo		
 		//Para ello, recuperamos el valor limitQuery
-		Setting settingLimit = settingDao.get(new Long(1));
+		Setting settingLimit = settingDao.getByName(SettingsName.LIMITQUERY);
 		Integer returnedResults = null;
 		if (settingLimit != null){
 			returnedResults = settingLimit.getValueNumber().intValue();
@@ -140,7 +141,7 @@ public class UserLocationsServiceImpl implements UserLocationsService{
 		Geometry bounds =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
 		
 		//Recuperamos el numero de celdas
-		Setting settingNumberOfCells  = settingDao.get(new Long(2));
+		Setting settingNumberOfCells  = settingDao.getByName(SettingsName.NUMBEROFCELLS);
 		Integer numberOfCells = 5;
 		if (settingNumberOfCells != null){
 			numberOfCells = settingNumberOfCells.getValueNumber().intValue();

@@ -34,11 +34,11 @@
 			});
 		}
 		
-		function getSetting (id) {		
+		function getSetting (name) {		
 			return $http({
 				method : 'GET',
 				url : url_get_setting,
-				params: {"id": id}
+				params: {"name": name}
 			});
 		}
 	

@@ -22,6 +22,7 @@ import es.udc.lbd.hermes.model.setting.dao.SettingDao;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
+import es.udc.lbd.hermes.model.util.SettingsName;
 
 
 @Service("dataSectionService")
@@ -79,7 +80,7 @@ public class DataSectionServiceImpl implements DataSectionService {
 
 		//Tenemos que limitar la consulta a un tamano maximo		
 		//Para ello, recuperamos el valor limitQuery
-		Setting settingLimit = settingDao.get(new Long(1));
+		Setting settingLimit = settingDao.getByName(SettingsName.LIMITQUERY);
 		Integer returnedResults = null;
 		if (settingLimit != null){
 			returnedResults = settingLimit.getValueNumber().intValue();

@@ -44,8 +44,8 @@ public class SettingController extends MainResource {
 	}
 	
 	@RequestMapping(value = "/json/getSetting", method = RequestMethod.GET)
-	public Setting getSetting(@RequestParam(value = "id", required = true) Long id) {
-		return settingService.get(id);
+	public Setting getSetting(@RequestParam(value = "name", required = true) String name) {
+		return settingService.getByName(name);
 
 	}
 }
