@@ -39,7 +39,7 @@
 						
 							settingsService.getSetting(2).then(getSettingComplete);
 							function getSettingComplete(response){
-								if (response.data === undefined){
+								if (response.data === ""){
 									$rootScope.numberofcells = 5;
 								}else{
 									$rootScope.numberofcells = response.data.valueNumber;	
