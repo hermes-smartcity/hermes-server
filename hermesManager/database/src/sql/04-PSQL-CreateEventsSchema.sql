@@ -341,11 +341,11 @@ create sequence efficiencytest_id_seq;
 CREATE TABLE efficiencytest (
   id bigint NOT NULL DEFAULT nextval('efficiencytest_id_seq'::regclass),
   eventtype varchar,
-  eventsize integer,
+  eventsize bigint,
   time timestamp without time zone,
-  delay integer,
-  parsetime integer,
-  totaltime integer,
+  delay bigint,
+  parsetime bigint,
+  totaltime bigint,
   result boolean,
   CONSTRAINT idsetting_pk PRIMARY KEY (id)
 )
