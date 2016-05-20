@@ -119,6 +119,7 @@ var url_delete_log = url_systemL+"deleteLog";
 var url_setting = url_servidor+'api/setting/';
 var url_settings = url_setting+'json/settings';
 var url_update_settings = url_setting + "updateSettings";
+var url_get_setting = url_setting+'json/getSetting';
 
 //Controlador hermes services
 var url_hermesS = url_servidor+'api/hermes/';

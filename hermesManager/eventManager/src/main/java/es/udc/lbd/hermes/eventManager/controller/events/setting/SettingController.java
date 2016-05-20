@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.eventManager.controller.util.JSONDataType;
@@ -40,5 +41,11 @@ public class SettingController extends MainResource {
 		logger.info("Setting actualizado correctamente correctamente");
 
 		return jsonD;
+	}
+	
+	@RequestMapping(value = "/json/getSetting", method = RequestMethod.GET)
+	public Setting getSetting(@RequestParam(value = "id", required = true) Long id) {
+		return settingService.get(id);
+
 	}
 }

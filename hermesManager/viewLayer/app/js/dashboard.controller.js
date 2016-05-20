@@ -65,6 +65,7 @@
 		vm.cargarListadoTabla = cargarListadoTabla;
 		vm.recargarTabla = recargarTabla;
 		
+		vm.numberofcells = $rootScope.numberofcells;
 		vm.changeEventType = changeEventType;
 		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
@@ -98,7 +99,7 @@
 
 		var heatmap = new L.webGLHeatmap({
 			autoresize: true,
-			size: 100, 
+			size: 750/vm.numberofcells, 
 			units: 'px'
 		});
 	
@@ -971,11 +972,21 @@
 
 			map.removeLayer(heatmap);
 			
+			//Hacemos un primer recorrido sobre los puntos para descubrir el de mayor intensidad
+			var maxIntensity = 0;
+			angular.forEach(grouped, function(value, key) {
+				var intensity = value.count;
+				if (intensity > maxIntensity){
+					maxIntensity = intensity;
+				}
+			});
+			
+			//anadimos los puntos con la intensidad normalizada
 			var dataPoints = [];
 			angular.forEach(grouped, function(value, key) {
 				  var point = value.geom.coordinates;
 				  var intensity = value.count;
-				  var dataPoint = [point[1], point[0], intensity];
+				  var dataPoint = [point[1], point[0], intensity/maxIntensity];
 				  dataPoints.push(dataPoint);
 			});
 			heatmap.setData(dataPoints);

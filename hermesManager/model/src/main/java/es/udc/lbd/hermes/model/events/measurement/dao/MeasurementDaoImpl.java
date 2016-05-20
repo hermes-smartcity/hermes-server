@@ -248,7 +248,7 @@ MeasurementDao {
         	measurementQuery += " and idUsuarioMovil = :idUsuario";
         	measurementQuery += " and tipo LIKE :type ";
 	
-        String queryStr = "select st_centroid(geom) as geom, count(*) as count " 
+        String queryStr = "select st_centroid(st_union(position)) as geom, count(*) as count " 
                 + "from " 
                 + "("+gridQuery+") as grid " 
                 + "left join " 

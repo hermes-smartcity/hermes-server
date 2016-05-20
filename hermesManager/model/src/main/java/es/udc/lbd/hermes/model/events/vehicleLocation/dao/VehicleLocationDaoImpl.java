@@ -221,7 +221,7 @@ VehicleLocationDao {
         if(idUsuario!=null)
             vehicleLocationQuery += " and idUsuarioMovil = :idUsuario";
 	
-        String queryStr = "select st_centroid(geom) as geom, count(*) as count " 
+        String queryStr = "select st_centroid(st_union(position)) as geom, count(*) as count " 
                 + "from " 
                 + "("+gridQuery+") as grid " 
                 + "left join " 
