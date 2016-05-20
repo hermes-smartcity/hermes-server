@@ -48,11 +48,11 @@
 
 		vm.mostrarMapa = mostrarMapa;
 		vm.mostrarTabla = mostrarTabla;
-		vm.mostrarHeadMap = mostrarHeadMap;
+		vm.mostrarHeatMap = mostrarHeatMap;
 		vm.showMap = true;
 		vm.showTab = false;
-		vm.showHeadMap = false;
-		vm.showSelectorHeadMapTab = false;
+		vm.showHeatMap = false;
+		vm.showSelectorHeatMapTab = false;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
 		vm.showCalendarStart = false;
@@ -310,7 +310,7 @@
 						
 			vm.showMap = true;
 			vm.showTab = false;
-			vm.showHeadMap = false;
+			vm.showHeatMap = false;
 			vm.activeInput = $translate.instant('dashboard.mapa');
 
 			//Para evitar que se carguen las tablas de la parte Table
@@ -320,21 +320,21 @@
 		function mostrarTabla() {	
 			vm.showMap = false;
 			vm.showTab = true;
-			vm.showHeadMap = false;
+			vm.showHeatMap = false;
 			vm.activeInput = $translate.instant('dashboard.tabla');
 
 			vm.cargarListadoTabla();
 		}
 
-		function mostrarHeadMap() {	
+		function mostrarHeatMap() {	
 			map.removeLayer(heatmap);
 			
 			markers.clearLayers();
 			
 			vm.showMap = false;
 			vm.showTab = false;
-			vm.showHeadMap = true;
-			vm.activeInput = $translate.instant('dashboard.headMap');
+			vm.showHeatMap = true;
+			vm.activeInput = $translate.instant('dashboard.heatMap');
 
 			//Para evitar que se carguen las tablas de la parte Table
 			vm.listadoCarga = undefined;
@@ -406,7 +406,7 @@
 			}
 		}
 		
-		function aplicarFiltrosHeadMap(){
+		function aplicarFiltrosHeatMap(){
 			var bounds = map.getBounds();				
 			var esLng = bounds.getSouthEast().lng;
 			var esLat = bounds.getSouthEast().lat;
@@ -430,16 +430,16 @@
 				url = url_userLocationsGrouped;
 			}
 			
-			dashboardService.recuperarDatosPeticion(url, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionHeadMapComplete);
+			dashboardService.recuperarDatosPeticion(url, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionHeatMapComplete);
 			// En cuanto tenga los eventos los pinto
-			function getPeticionHeadMapComplete(response) {
-				pintarHeadMap(response);
+			function getPeticionHeatMapComplete(response) {
+				pintarHeatMap(response);
 			}
 		}
 		
 		function aplicarFiltros() {		
-			if (vm.showHeadMap){
-				aplicarFiltrosHeadMap();
+			if (vm.showHeatMap){
+				aplicarFiltrosHeatMap();
 			}else{
 				aplicarFiltrosMapa();
 			}
@@ -967,7 +967,7 @@
 			}
 		}
 		
-		function pintarHeadMap(grouped) {
+		function pintarHeatMap(grouped) {
 
 			map.removeLayer(heatmap);
 			
@@ -1000,9 +1000,9 @@
 				angular.equals(vm.eventTypeSelected, "CONTEXT_DATA") ||
 				angular.equals(vm.eventTypeSelected, "USER_LOCATIONS")){
 				
-				vm.showSelectorHeadMapTab = true;
+				vm.showSelectorHeatMapTab = true;
 			}else{
-				vm.showSelectorHeadMapTab = false;
+				vm.showSelectorHeatMapTab = false;
 			}
 			
 			//Y nos situamos en la vista de mapa

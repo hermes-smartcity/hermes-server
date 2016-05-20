@@ -41,7 +41,7 @@
 				"titulo": "Dashboard",
 				"mapa": "Map",
 				"tabla": "Table",
-				"headMap": "Head Map"
+				"heatMap": "Heat Map"
 			},
 			"dataSection":{
 				"noEvents": "There are not events to show",
