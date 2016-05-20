@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.GroupedDTO;
 import es.udc.lbd.hermes.model.events.ListaContextData;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.contextData.ContextData;
@@ -140,5 +141,18 @@ public class ContextDataServiceImpl implements ContextDataService {
 		return listaEventosDias;		
 	}
 	
-	
+	@Transactional(readOnly = true)
+	public List<GroupedDTO> obterContextDataGrouped(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Double wnLng, Double wnLat,	Double esLng, Double esLat,int startIndex){
+		
+		Geometry bounds =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+		
+		//Recuperamos el numero de celdas
+		Setting settingNumberOfCells  = settingDao.get(new Long(2));
+		Integer numberOfCells = 5;
+		if (settingNumberOfCells != null){
+			numberOfCells = settingNumberOfCells.getValueNumber().intValue();
+		}
+
+		return contextDataDao.obterContextDataGrouped(idUsuario, fechaIni, fechaFin, bounds, startIndex, numberOfCells);
+	}
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.GroupedDTO;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.ListaVehicleLocations;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
@@ -128,6 +129,21 @@ public class VehicleLocationServiceImpl implements VehicleLocationService {
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public long contar(){
 		return vehicleLocationDao.contar();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<GroupedDTO> obterVehicleLocationsGrouped(Long idUsuario, Calendar fechaIni, Calendar fechaFin, Double wnLng, Double wnLat,	Double esLng, Double esLat, int startIndex){
+		
+		Geometry bounds =  HelpersModel.prepararPoligono(wnLng, wnLat, esLng, esLat);
+		
+		//Recuperamos el numero de celdas
+		Setting settingNumberOfCells  = settingDao.get(new Long(2));
+		Integer numberOfCells = 5;
+		if (settingNumberOfCells != null){
+			numberOfCells = settingNumberOfCells.getValueNumber().intValue();
+		}
+		
+		return vehicleLocationDao.obterVehicleLocationsGrouped(idUsuario, fechaIni, fechaFin, bounds, startIndex, numberOfCells);
 	}
 	
 }

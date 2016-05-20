@@ -48,8 +48,11 @@
 
 		vm.mostrarMapa = mostrarMapa;
 		vm.mostrarTabla = mostrarTabla;
+		vm.mostrarHeadMap = mostrarHeadMap;
 		vm.showMap = true;
 		vm.showTab = false;
+		vm.showHeadMap = false;
+		vm.showSelectorHeadMapTab = false;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
 		vm.showCalendarStart = false;
@@ -61,6 +64,8 @@
 		vm.datosPromise = datosPromise;
 		vm.cargarListadoTabla = cargarListadoTabla;
 		vm.recargarTabla = recargarTabla;
+		
+		vm.changeEventType = changeEventType;
 		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
@@ -91,6 +96,13 @@
 			maxClusterRadius: 20
 		});
 
+		var heatmap = new L.webGLHeatmap({
+			autoresize: true,
+			size: 100, 
+			units: 'px'
+		});
+	
+		
 		var osmLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 		var layerControl = L.control.layers(
 				{'OpenStreetMap': osmLayer,
@@ -293,8 +305,12 @@
 		}
 
 		function mostrarMapa() {	
+			
+			map.removeLayer(heatmap);
+						
 			vm.showMap = true;
 			vm.showTab = false;
+			vm.showHeadMap = false;
 			vm.activeInput = $translate.instant('dashboard.mapa');
 
 			//Para evitar que se carguen las tablas de la parte Table
@@ -304,11 +320,25 @@
 		function mostrarTabla() {	
 			vm.showMap = false;
 			vm.showTab = true;
+			vm.showHeadMap = false;
 			vm.activeInput = $translate.instant('dashboard.tabla');
 
 			vm.cargarListadoTabla();
 		}
 
+		function mostrarHeadMap() {	
+			map.removeLayer(heatmap);
+			
+			markers.clearLayers();
+			
+			vm.showMap = false;
+			vm.showTab = false;
+			vm.showHeadMap = true;
+			vm.activeInput = $translate.instant('dashboard.headMap');
+
+			//Para evitar que se carguen las tablas de la parte Table
+			vm.listadoCarga = undefined;
+		}
 
 		function arrancar() {
 			var resultado = {
@@ -340,9 +370,7 @@
 			return dfd.promise;
 		}
 
-		
-		function aplicarFiltros() {		
-
+		function aplicarFiltrosMapa(){
 			var pos = vm.eventTypeSelected.indexOf('_'); 
 			var value = vm.eventTypeSelected.substr(0, pos);
 			value += vm.eventTypeSelected.substr(pos+1, vm.eventTypeSelected.length);
@@ -376,7 +404,45 @@
 			} else{
 				console.log("No corresponde a ningún tipo --> En construcción");
 			}
+		}
 		
+		function aplicarFiltrosHeadMap(){
+			var bounds = map.getBounds();				
+			var esLng = bounds.getSouthEast().lng;
+			var esLat = bounds.getSouthEast().lat;
+			var wnLng = bounds.getNorthWest().lng;
+			var wnLat = bounds.getNorthWest().lat;
+
+			//En funcion del eventtype seleccionado, cargaremos una url u otra
+			var url;
+			if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
+				url = url_vehicleLocationsGrouped;
+			}else if(angular.equals(vm.eventTypeSelected, "CONTEXT_DATA")){
+				url = url_contextDataGrouped;
+			}else if(angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
+					angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
+					angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
+					angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE")){
+				url = url_measurementsGrouped;
+				url+='?tipo='+vm.eventTypeSelected+'&';
+				
+			}else if (angular.equals(vm.eventTypeSelected, "USER_LOCATIONS")){
+				url = url_userLocationsGrouped;
+			}
+			
+			dashboardService.recuperarDatosPeticion(url, esLng, esLat, wnLng, wnLat, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionHeadMapComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionHeadMapComplete(response) {
+				pintarHeadMap(response);
+			}
+		}
+		
+		function aplicarFiltros() {		
+			if (vm.showHeadMap){
+				aplicarFiltrosHeadMap();
+			}else{
+				aplicarFiltrosMapa();
+			}
 		}
 
 		function recargarTabla(){
@@ -901,6 +967,22 @@
 			}
 		}
 		
+		function pintarHeadMap(grouped) {
+
+			map.removeLayer(heatmap);
+			
+			var dataPoints = [];
+			angular.forEach(grouped, function(value, key) {
+				  var point = value.geom.coordinates;
+				  var intensity = value.count;
+				  var dataPoint = [point[1], point[0], intensity];
+				  dataPoints.push(dataPoint);
+			});
+			heatmap.setData(dataPoints);
+			map.addLayer(heatmap);
+		}
+
+		
 		function onTimeSetStart() {
 			vm.showCalendarStart = !vm.showCalendarStart;
 		}
@@ -908,8 +990,28 @@
 		function onTimeSetEnd() {
 			vm.showCalendarEnd = !vm.showCalendarEnd;
 		}
+		
+		function changeEventType(){
+			if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION") ||
+				angular.equals(vm.eventTypeSelected, "HIGH_SPEED") || 
+				angular.equals(vm.eventTypeSelected, "HIGH_ACCELERATION") ||
+				angular.equals(vm.eventTypeSelected, "HIGH_DECELERATION") ||
+				angular.equals(vm.eventTypeSelected, "HIGH_HEART_RATE") ||
+				angular.equals(vm.eventTypeSelected, "CONTEXT_DATA") ||
+				angular.equals(vm.eventTypeSelected, "USER_LOCATIONS")){
+				
+				vm.showSelectorHeadMapTab = true;
+			}else{
+				vm.showSelectorHeadMapTab = false;
+			}
+			
+			//Y nos situamos en la vista de mapa
+			vm.mostrarMapa();
+			
+		}
 
 		// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
+		vm.changeEventType();
 		vm.aplicarFiltros();
 
 	}

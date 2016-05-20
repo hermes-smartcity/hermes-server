@@ -6,6 +6,7 @@ import java.util.List;
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.GroupedDTO;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocationDTO;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
@@ -26,4 +27,6 @@ public interface VehicleLocationDao extends GenericDao<VehicleLocation, Long> {
 			int startIndex, Integer limit);
 	
 	public AggregateMeasurementVO getAggregateValue(Double lat, Double lon, Integer day, Integer time);
+	
+	public List<GroupedDTO> obterVehicleLocationsGrouped(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds,int startIndex, Integer numberOfCells);
 }

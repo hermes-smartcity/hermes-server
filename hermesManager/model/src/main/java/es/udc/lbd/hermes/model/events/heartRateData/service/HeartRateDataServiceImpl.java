@@ -135,6 +135,5 @@ public class HeartRateDataServiceImpl implements HeartRateDataService {
 		
 		return listado;
 	}
-	
-	
+
 }

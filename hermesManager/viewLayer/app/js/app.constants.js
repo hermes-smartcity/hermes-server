@@ -59,6 +59,7 @@ var url_sensorsTypes = url_dashboard+'json/sensorsType';
 //Controlador vehicleLocation
 var url_vehicleL = url_servidor+'api/vehiclelocation/';
 var url_vehicleLocations = url_vehicleL+'json/vehicleLocations?';
+var url_vehicleLocationsGrouped = url_vehicleL+'json/vehicleLocationsGrouped?';
 var url_eventosPorDiaVL = url_vehicleL+'json/eventosPorDia?';
 		
 //Controlador dataSection
@@ -70,16 +71,19 @@ var url_eventosPorDiaDS = url_dataS+'json/eventosPorDia?';
 var url_measurement = url_servidor+'api/measurement/';
 var url_measurements = url_measurement+'json/measurements';
 var url_eventosPorDiaM = url_measurement+'json/eventosPorDia?';
+var url_measurementsGrouped = url_measurement+'json/measurementsGrouped';
 
 //Controlador contextdata
 var url_contextD = url_servidor+'api/contextdata/';
 var url_contextData = url_contextD+'json/contextData?';
 var url_eventosPorDiaCD = url_contextD+'json/eventosPorDia?';
+var url_contextDataGrouped = url_contextD+'json/contextDataGrouped?';
 
 //Controlador userLocations
 var url_userL = url_servidor+'api/userlocation/';
 var url_userLocations = url_userL+'json/userLocations?';
 var url_eventosPorDiaUL = url_userL+'json/eventosPorDia?';
+var url_userLocationsGrouped = url_userL+'json/userLocationsGrouped?';
 
 //Controlador userActivities
 var url_userA = url_servidor+'api/useractivity/';

@@ -173,4 +173,6 @@ public class HeartRateDataDaoImpl extends GenericDaoHibernate<HeartRateData, Lon
 		elementos = query.list();
 		return elementos;
 	}
+	
+	
 }

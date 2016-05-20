@@ -21,4 +21,5 @@ public interface HeartRateDataDao extends GenericDao<HeartRateData, Long> {
 	
 	public List<HeartRateData> obterHeartRateData(Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, int startIndex, int count);
+
 }

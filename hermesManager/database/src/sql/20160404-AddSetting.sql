@@ -13,3 +13,4 @@ CREATE TABLE setting (
 ;
 		
 INSERT INTO setting(name,valueNumber,type) VALUES ('limitQuery',1000, 'number');
+INSERT INTO setting(name,valueNumber,type) VALUES ('numberOfCells', 5, 'number');
