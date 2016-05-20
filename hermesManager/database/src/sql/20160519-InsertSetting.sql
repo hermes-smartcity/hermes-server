@@ -1,0 +1,1 @@
+INSERT INTO setting(name,valueNumber,type) VALUES ('numberOfCells', 5, 'number');

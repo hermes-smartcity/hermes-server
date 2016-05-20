@@ -8,7 +8,8 @@
 	function settingsService($http, $log, $q) {
 		var service = {
 			getSettings: getSettings,
-			updateSettings: updateSettings
+			updateSettings: updateSettings,
+			getSetting: getSetting,
 		};
 
 		return service;
@@ -30,6 +31,14 @@
 				method : 'POST',
 				url : url_update_settings,
 				data : settings
+			});
+		}
+		
+		function getSetting (name) {		
+			return $http({
+				method : 'GET',
+				url : url_get_setting,
+				params: {"name": name}
 			});
 		}
 	

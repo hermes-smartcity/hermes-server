@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.GroupedDTO;
 import es.udc.lbd.hermes.model.events.contextData.ContextData;
 import es.udc.lbd.hermes.model.events.contextData.ContextDataDTO;
 import es.udc.lbd.hermes.model.util.GeomUtil;
@@ -184,5 +185,48 @@ public class ContextDataDaoImpl extends GenericDaoHibernate<ContextData, Long> i
 		
 		elementos = query.list();
 		return elementos;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<GroupedDTO> obterContextDataGrouped(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds,int startIndex, Integer numberOfCells){
+		List<GroupedDTO> elementos = null;
+		
+		String gridQuery = "select (ST_Dump(makegrid_2d(:bounds, :numberOfCells))).geom";
+        String contextdataQuery = "select * from contextdata where st_within(position, :bounds) and timeLog > :fechaIni and timeLog < :fechaFin";
+
+        if(idUsuario!=null)
+        	contextdataQuery += " and idUsuarioMovil = :idUsuario";
+	
+        String queryStr = "select st_centroid(st_union(position)) as geom, count(*) as count " 
+                + "from " 
+                + "("+gridQuery+") as grid " 
+                + "left join " 
+                + "(" + contextdataQuery + ") as contextdata " 
+                + "on (position && geom) " 
+                + "group by geom " 
+                + "having count(*) > 1 ";
+        
+        
+		SQLQuery query = getSession().createSQLQuery(queryStr);
+		query.addScalar("geom", GeometryType.INSTANCE);  
+		query.addScalar("count", IntegerType.INSTANCE);
+		
+		query.setParameter("bounds", bounds);
+		query.setParameter("numberOfCells", numberOfCells);
+		
+		if(idUsuario!=null)
+			query.setParameter("idUsuario", idUsuario);
+
+		query.setCalendar("fechaIni", fechaIni);
+		query.setCalendar("fechaFin", fechaFin);
+		
+		if(startIndex!=-1)
+            query.setFirstResult(startIndex);
+		
+		query.setResultTransformer(Transformers.aliasToBean(GroupedDTO.class));
+        
+		elementos = query.list();
+		
+        return elementos;        
 	}
 }

@@ -3,6 +3,7 @@ package es.udc.lbd.hermes.model.events.userlocations.service;
 import java.util.Calendar;
 import java.util.List;
 
+import es.udc.lbd.hermes.model.events.GroupedDTO;
 import es.udc.lbd.hermes.model.events.ListaEventosYdias;
 import es.udc.lbd.hermes.model.events.ListaUserLocations;
 import es.udc.lbd.hermes.model.events.userlocations.UserLocations;
@@ -27,4 +28,6 @@ public interface UserLocationsService {
 			Double wnLng, Double wnLat,	Double esLng, Double esLat);
 	
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	
+	public List<GroupedDTO> obterUserLocationsGrouped(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Double wnLng, Double wnLat,	Double esLng, Double esLat,int startIndex);
 }

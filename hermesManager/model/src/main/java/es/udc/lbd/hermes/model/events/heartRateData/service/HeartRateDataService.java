@@ -26,5 +26,6 @@ public interface HeartRateDataService {
 	public ListaHeartRateData obterHeartRateData(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 	
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	
 }
 

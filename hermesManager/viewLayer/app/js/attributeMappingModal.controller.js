@@ -5,10 +5,10 @@
 
 	AttributeMappingModalController.$inject = ['$scope', '$uibModalInstance', 'attributeForm', 
 	                                       'infoAttribute', 'idConceptTransformation', 'osmattributes', 
-	                                       'dbattributes', 'attributeMappingService'];
+	                                       'dbattributes', 'attributeMappingService', '$translate'];
 
 	function AttributeMappingModalController($scope, $uibModalInstance, attributeForm, infoAttribute, 
-			idConceptTransformation, osmattributes, dbattributes, attributeMappingService) {
+			idConceptTransformation, osmattributes, dbattributes, attributeMappingService, $translate) {
 	
 		$scope.form = {};
 		
@@ -20,6 +20,12 @@
 		if (infoAttribute !== null){
 			$scope.dbattribute = infoAttribute.data.dbAttribute.id;
 			$scope.osmattribute = infoAttribute.data.osmAttribute.id;
+			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('attributemapping.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('attributemapping.create');
 		}
 		
 		

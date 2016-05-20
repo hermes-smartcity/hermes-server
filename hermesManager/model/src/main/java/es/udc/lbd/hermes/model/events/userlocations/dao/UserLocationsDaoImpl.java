@@ -11,6 +11,7 @@ import org.hibernate.spatial.GeometryType;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.CalendarType;
 import org.hibernate.type.DoubleType;
+import org.hibernate.type.IntegerType;
 import org.hibernate.type.LongType;
 import org.hibernate.type.StringType;
 import org.springframework.orm.hibernate4.SessionFactoryUtils;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Repository;
 import com.vividsolutions.jts.geom.Geometry;
 
 import es.udc.lbd.hermes.model.events.EventosPorDia;
+import es.udc.lbd.hermes.model.events.GroupedDTO;
 import es.udc.lbd.hermes.model.events.userlocations.UserLocationDTO;
 import es.udc.lbd.hermes.model.events.userlocations.UserLocations;
 import es.udc.lbd.hermes.model.util.GeomUtil;
@@ -175,5 +177,48 @@ public class UserLocationsDaoImpl extends GenericDaoHibernate<UserLocations, Lon
 
 		elementos = query.list();
 		return elementos;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<GroupedDTO> obterUserLocationsGrouped(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds,int startIndex, Integer numberOfCells){
+		List<GroupedDTO> elementos = null;
+		
+		String gridQuery = "select (ST_Dump(makegrid_2d(:bounds, :numberOfCells))).geom";
+        String userLocationsQuery = "select * from userLocations where st_within(position, :bounds) and startTime > :fechaIni and endTime < :fechaFin";
+
+        if(idUsuario!=null)
+        	userLocationsQuery += " and idUsuarioMovil = :idUsuario";
+	
+        String queryStr = "select st_centroid(st_union(position)) as geom, count(*) as count " 
+                + "from " 
+                + "("+gridQuery+") as grid " 
+                + "left join " 
+                + "(" + userLocationsQuery + ") as userLocations " 
+                + "on (position && geom) " 
+                + "group by geom " 
+                + "having count(*) > 1 ";
+        
+        
+		SQLQuery query = getSession().createSQLQuery(queryStr);
+		query.addScalar("geom", GeometryType.INSTANCE);  
+		query.addScalar("count", IntegerType.INSTANCE);
+		
+		query.setParameter("bounds", bounds);
+		query.setParameter("numberOfCells", numberOfCells);
+		
+		if(idUsuario!=null)
+			query.setParameter("idUsuario", idUsuario);
+
+		query.setCalendar("fechaIni", fechaIni);
+		query.setCalendar("fechaFin", fechaFin);
+		
+		if(startIndex!=-1)
+            query.setFirstResult(startIndex);
+		
+		query.setResultTransformer(Transformers.aliasToBean(GroupedDTO.class));
+        
+		elementos = query.list();
+		
+        return elementos;        
 	}
 }

@@ -1,0 +1,5 @@
+ALTER TABLE osmimport.dbconcept ADD COLUMN osmIdName VARCHAR(100) NOT NULL DEFAULT '';
+ALTER TABLE osmimport.dbconcept ADD COLUMN geomName VARCHAR(100) NOT NULL DEFAULT '';
+
+ALTER TABLE osmimport.dbconnection ADD COLUMN userDb VARCHAR(160) NOT NULL DEFAULT '';
+ALTER TABLE osmimport.dbconnection ADD COLUMN passDb VARCHAR(160) NOT NULL DEFAULT '';

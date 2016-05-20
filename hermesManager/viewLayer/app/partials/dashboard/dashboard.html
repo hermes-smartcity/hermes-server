@@ -20,6 +20,7 @@
 								data-role="menu">
 								<li data-ng-click="vm.mostrarMapa()"><a>{{'dashboard.mapa' | translate}}</a></li>
 								<li data-ng-click="vm.mostrarTabla()"><a>{{'dashboard.tabla' | translate}}</a></li>
+								<li data-ng-show="vm.showSelectorHeatMapTab" data-ng-click="vm.mostrarHeatMap()"><a>{{'dashboard.heatMap' | translate}}</a></li>
 							</ul>
 						</div>
 					</div>
@@ -30,7 +31,7 @@
 				</div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-					<div data-ng-show="vm.showMap">
+					<div data-ng-show="(vm.showMap) || (vm.showHeatMap && vm.showSelectorHeatMapTab)">
 						<div id="map"></div>
 					</div>
 					<div data-ng-show="vm.showTab">

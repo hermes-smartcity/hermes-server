@@ -3,7 +3,7 @@
 		<strong>{{'resultados.titulo' | translate}}</strong>
 	</div>
 	<div class="panel-body">
-
+					
 		<div data-ng-if="vm.totalResults <= 0">{{'noResults' | translate}}</div>
 		
 		<div data-ng-if="vm.totalResults > 0" class="row margin-top-20">
@@ -14,5 +14,6 @@
 			</div>
 		</div>
 
+		<span data-us-spinner="{radius:5, width:4, length: 16, position: 'relative'}"></span>
 	</div>
 </div>

@@ -39,4 +39,9 @@ public class SettingServiceImpl implements SettingService{
 		List<Setting> settings = settingDao.obterSettings();
 		return settings;
 	}
+	
+	@Transactional(readOnly = true)
+	public Setting getByName(String name){
+		return settingDao.getByName(name);
+	}
 }

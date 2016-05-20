@@ -55,7 +55,11 @@ public class MessageServiceImpl implements MessageService{
 		Execution execution = executionDao.get(idExecution);
 		List<Message> messages = messageDao.getAll(idExecution);
 		
-		MessageWithStatus mws = new MessageWithStatus(execution.getStatus(), messages);
+		MessageWithStatus mws = null;
+		//Por si se ha eliminado la ejecucion mientras se hacia la peticion (para evitar el nulo)
+		if (execution!=null){ 
+			mws = new MessageWithStatus(execution.getStatus(), messages);
+		}
 		
 		return mws;
 	}

@@ -13,7 +13,7 @@
 		'datatables',
 		'ngCookies', 'permission','ngStorage', 'googlechart',
 		'pascalprecht.translate', 'tmh.dynamicLocale',
-		'oitozero.ngSweetAlert'
+		'oitozero.ngSweetAlert', 'ngLoadingSpinner'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];

@@ -27,6 +27,8 @@ public class DBConcept implements Serializable{
 	private String name;
 	private String schemaName;
 	private String tableName;
+	private String osmIdName;
+	private String geomName;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idDbConnection")
@@ -35,12 +37,14 @@ public class DBConcept implements Serializable{
 	public DBConcept(){}
 
 	public DBConcept(Long id, String name, String schemaName, String tableName,
-			DBConnection dbConnection) {
+			String osmIdName, String geomName, DBConnection dbConnection) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.schemaName = schemaName;
 		this.tableName = tableName;
+		this.osmIdName = osmIdName;
+		this.geomName = geomName;
 		this.dbConnection = dbConnection;
 	}
 
@@ -74,6 +78,22 @@ public class DBConcept implements Serializable{
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
+	}
+
+	public String getOsmIdName() {
+		return osmIdName;
+	}
+
+	public void setOsmIdName(String osmIdName) {
+		this.osmIdName = osmIdName;
+	}
+
+	public String getGeomName() {
+		return geomName;
+	}
+
+	public void setGeomName(String geomName) {
+		this.geomName = geomName;
 	}
 
 	public DBConnection getDbConnection() {

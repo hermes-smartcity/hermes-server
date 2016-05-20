@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.udc.lbd.hermes.eventManager.controller.util.JSONDataType;
@@ -15,7 +15,6 @@ import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.setting.Setting;
 import es.udc.lbd.hermes.model.setting.service.SettingService;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/setting")
 public class SettingController extends MainResource {
@@ -42,5 +41,11 @@ public class SettingController extends MainResource {
 		logger.info("Setting actualizado correctamente correctamente");
 
 		return jsonD;
+	}
+	
+	@RequestMapping(value = "/json/getSetting", method = RequestMethod.GET)
+	public Setting getSetting(@RequestParam(value = "name", required = true) String name) {
+		return settingService.getByName(name);
+
 	}
 }

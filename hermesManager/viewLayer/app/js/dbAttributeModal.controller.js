@@ -5,10 +5,10 @@
 
 	DBAttributeModalController.$inject = ['$scope', '$uibModalInstance', 'attributeForm', 
 	                                       'infoAttribute', 'idConcept', 'attributestypes',
-	                                       'dbAttributeService'];
+	                                       'dbAttributeService', '$translate'];
 
 	function DBAttributeModalController($scope, $uibModalInstance, attributeForm, infoAttribute, 
-			idConcept, attributestypes, dbAttributeService) {
+			idConcept, attributestypes, dbAttributeService, $translate) {
 	
 		$scope.form = {};
 		
@@ -19,6 +19,12 @@
 		if (infoAttribute !== null){
 			$scope.name = infoAttribute.data.attributeName;
 			$scope.type = infoAttribute.data.attributeType;
+			
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbattribute.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbattribute.create');
 		}
 		
 		$scope.submitForm = function () {

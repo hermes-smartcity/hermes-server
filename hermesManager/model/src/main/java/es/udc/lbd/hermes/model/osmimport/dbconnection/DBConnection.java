@@ -29,11 +29,13 @@ public class DBConnection implements Serializable{
 	private String host;
 	private Integer port;
 	private String dbName;
+	private String userDb;
+	private String passDb;
 
 	public DBConnection(){}
 
 	public DBConnection(Long id, String name, DBConnectionType type, String host,
-			Integer port, String dbName) {
+			Integer port, String dbName, String userDb, String passDb) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -41,6 +43,8 @@ public class DBConnection implements Serializable{
 		this.host = host;
 		this.port = port;
 		this.dbName = dbName;
+		this.userDb = userDb;
+		this.passDb = passDb;
 	}
 
 	public Long getId() {
@@ -89,6 +93,22 @@ public class DBConnection implements Serializable{
 
 	public void setDbName(String dbName) {
 		this.dbName = dbName;
+	}
+
+	public String getUserDb() {
+		return userDb;
+	}
+
+	public void setUserDb(String userDb) {
+		this.userDb = userDb;
+	}
+
+	public String getPassDb() {
+		return passDb;
+	}
+
+	public void setPassDb(String passDb) {
+		this.passDb = passDb;
 	}
 	
 	

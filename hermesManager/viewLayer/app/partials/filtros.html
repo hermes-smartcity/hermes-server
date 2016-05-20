@@ -17,6 +17,7 @@
 					<label for="singleSelect">{{'filtros.tipoEvento' | translate}}</label><br />
 					<!-- Filtro event type -->
 					<select id="selectEvent" data-ng-model="vm.eventTypeSelected" class="form-control"
+						data-ng-change="vm.changeEventType()"
 						data-ng-options="eventType as eventType for eventType in vm.eventsType">
 					</select>
 				</div>
@@ -44,7 +45,7 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12 text-center">
-			<button id="btnFilter" class="btn btn-primary" data-ng-click="vm.aplicarFiltros()">{{'filtros.filtrar' | translate}}</button>
+					<button id="btnFilter" class="btn btn-primary" data-ng-click="vm.aplicarFiltros()">{{'filtros.filtrar' | translate}}</button>
 				</div>
 			</div>
 		</div>

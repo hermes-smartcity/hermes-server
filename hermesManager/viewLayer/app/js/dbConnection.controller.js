@@ -51,6 +51,12 @@
 		                   DTColumnBuilder.newColumn('host').withTitle($translate.instant('dbconnection.host')),
 		                   DTColumnBuilder.newColumn('port').withTitle($translate.instant('dbconnection.port')),
 		                   DTColumnBuilder.newColumn('dbName').withTitle($translate.instant('dbconnection.dbname')),
+		                   DTColumnBuilder.newColumn('userDb').withTitle($translate.instant('dbconnection.userDb')),
+		                   //DTColumnBuilder.newColumn('passDb').withTitle($translate.instant('dbconnection.passDb')),
+		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('dbconnection.passDb')).renderWith(function(data,type,full) {
+		                	   var texto = "************";
+		                	   return texto;
+		                   }),
 		                   DTColumnBuilder.newColumn(null).withTitle($translate.instant('dbconnection.actions')).notSortable()
 		                   .renderWith(function(data, type, full, meta) {
 		                       return '<button class="btn btn-warning" data-ng-click="vm.edit(' + data.id + ')">' +

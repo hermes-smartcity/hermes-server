@@ -4,10 +4,11 @@
 	angular.module('app').controller('DBConceptModalController', DBConceptModalController);
 
 	DBConceptModalController.$inject = ['$scope', '$uibModalInstance', 'conceptForm', 
-	                                       'infoConcept', 'dbconnections', 'dbConceptService'];
+	                                       'infoConcept', 'dbconnections', 'dbConceptService',
+	                                       '$translate'];
 
 	function DBConceptModalController($scope, $uibModalInstance, conceptForm, infoConcept, 
-			dbconnections, dbConceptService) {
+			dbconnections, dbConceptService, $translate) {
 	
 		$scope.form = {};
 		
@@ -18,8 +19,15 @@
 			$scope.name = infoConcept.data.name;
 			$scope.schemaName = infoConcept.data.schemaName;
 			$scope.tableName = infoConcept.data.tableName;
+			$scope.osmIdName = infoConcept.data.osmIdName;
+			$scope.geomName = infoConcept.data.geomName;
 			$scope.dbconnection = infoConcept.data.dbConnection.id;
 
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbconcept.edit');
+		}else{
+			//Titulo
+			$scope.tituloPagina = $translate.instant('dbconcept.create');
 		}
 		
 		$scope.submitForm = function () {
@@ -33,6 +41,8 @@
 	            			name: $scope.form.conceptForm.name.$viewValue,
 	            			schemaName: $scope.form.conceptForm.schemaName.$viewValue, 
 	            			tableName: $scope.form.conceptForm.tableName.$viewValue,  
+	            			osmIdName: $scope.form.conceptForm.osmIdName.$viewValue,  
+	            			geomName: $scope.form.conceptForm.geomName.$viewValue,  
 	            			dbConnection: connection};	
      
 	            	dbConceptService.register(conceptNueva).then(function(response){
@@ -44,6 +54,8 @@
 	            			name: $scope.form.conceptForm.name.$viewValue,
 	            			schemaName: $scope.form.conceptForm.schemaName.$viewValue, 
 	            			tableName: $scope.form.conceptForm.tableName.$viewValue, 
+	            			osmIdName: $scope.form.conceptForm.osmIdName.$viewValue,  
+	            			geomName: $scope.form.conceptForm.geomName.$viewValue,
 	            			dbConnection: connection};	
 	        		
 	            	dbConceptService.edit(conceptEditar).then(function(response){

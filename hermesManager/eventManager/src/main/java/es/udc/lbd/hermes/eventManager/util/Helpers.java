@@ -74,11 +74,11 @@ public class Helpers {
 	
 	public static Locale construirLocale(String lang){
 		Locale locale = null;
+		
 		switch (lang) {
 		case "es":
 			locale = new Locale("es", "ES");
 			break;
-
 		case "en":
 			locale = Locale.ENGLISH;
 			break;
