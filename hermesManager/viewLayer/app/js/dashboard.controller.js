@@ -986,7 +986,7 @@
 			angular.forEach(grouped, function(value, key) {
 				  var point = value.geom.coordinates;
 				  var intensity = value.count;
-				  var dataPoint = [point[1], point[0], intensity/maxIntensity];
+				  var dataPoint = [point[1], point[0], Math.log(intensity)/Math.log(maxIntensity)];
 				  dataPoints.push(dataPoint);
 			});
 			heatmap.setData(dataPoints);
