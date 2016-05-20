@@ -462,16 +462,76 @@
 	        };
 	}]);
 
+	angular.module('app').factory('IntervalExecutions', IntervalExecutions);
+
+	IntervalExecutions.$inject = ['$interval'];
+	function IntervalExecutions($interval) {
+	  var _interval = null;
+
+	  var service = {
+	    start: start,
+	    stop: stop
+	  };
+
+	  return service;
+
+	  function start(seconds, callback) {
+	    service.stop();
+	    _interval = $interval(callback, 1000 * seconds);
+	  }
+
+	  function stop() {
+	    if (_interval) {
+	      $interval.cancel(_interval);
+	      _interval = null;
+	    }
+	  }
+	}
+
+	angular.module('app').factory('IntervalMessages', IntervalMessages);
+
+	IntervalMessages.$inject = ['$interval'];
+	function IntervalMessages($interval) {
+	  var _interval = null;
+
+	  var service = {
+	    start: start,
+	    stop: stop
+	  };
+
+	  return service;
+
+	  function start(seconds, callback) {
+	    service.stop();
+	    _interval = $interval(callback, 1000 * seconds);
+	  }
+
+	  function stop() {
+	    if (_interval) {
+	      $interval.cancel(_interval);
+	      _interval = null;
+	    }
+	  }
+	}
+	
 	function getUserComplete(response) {
 		$rootScope.user = response.data;
 		$location.path(originalPath);
 	}
 
 	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', 
-	                  '$state', '$translate', 'tmhDynamicLocale'];
+	                  '$state', '$translate', 'tmhDynamicLocale', 'IntervalExecutions',
+	                  'IntervalMessages'];
 	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, 
-			userService, $state, $translate, tmhDynamicLocale) {
+			userService, $state, $translate, tmhDynamicLocale, IntervalExecutions,
+			IntervalMessages) {
 
+		//Paramos el manejador de peticiones para comprobar las ejecuciones de forma periodica 
+		//cuando se cambia de pagina
+		$rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
+			IntervalExecutions.stop();    
+			IntervalMessages.stop();
+	    });
 		
 		//Configuramos el idioma por defecto
 		if (angular.isDefined($localStorage.hermesmanager)) {

@@ -6,11 +6,12 @@
 	MessageController.$inject = ['$scope', '$filter', '$http', '$translate', '$interval', 
 	                                '$state', '$rootScope', '$q', '$compile', '$uibModal',
 	                                'messageService', 'SweetAlert',  'DTOptionsBuilder', 
-	                                'DTColumnBuilder', 'idExecution', 'status', 'messages'];
+	                                'DTColumnBuilder', 'idExecution', 'status', 'messages',
+	                                'IntervalMessages'];
 	
 	function MessageController($scope, $filter, $http, $translate, $interval, $state, 
 			$rootScope, $q, $compile, $uibModal , messageService, SweetAlert, 
-			DTOptionsBuilder, DTColumnBuilder, idExecution, status, messages) {
+			DTOptionsBuilder, DTColumnBuilder, idExecution, status, messages, IntervalMessages) {
 	
 		var vm = this;
 		
@@ -71,19 +72,17 @@
 		   			//Si al volver de consultar los mensajes, resulta que ya no tiene estado
 		   			//running, tenemos que parar de solicitar los mensajes cada x segundos
 		   			if (vm.status !== 'RUNNING'){
-		   				$interval.cancel(vm.intervalo);
+		   				IntervalMessages.stop();
 		   			}	
 				}else{
-					$interval.cancel(vm.intervalo);
+					IntervalMessages.stop();
 				}
 	   			
 	   		});	
 		}
 		
 		if (vm.status === 'RUNNING'){
-			vm.intervalo = $interval(function() {
-				vm.updateMessages();
-			}, 1000*10); //1 segundo son 1000
+			IntervalMessages.start(10, updateMessages);
 		}
 	}
 	
