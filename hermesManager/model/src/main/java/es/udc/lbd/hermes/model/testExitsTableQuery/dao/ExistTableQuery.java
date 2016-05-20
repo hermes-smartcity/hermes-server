@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -261,20 +262,8 @@ public class ExistTableQuery {
 			
 			queryStr = queryStr + ") VALUES (?, st_geometryfromtext('POINT('|| ? || ' ' || ? ||')', 4326)";
 			
-			
-			for (AttributeMapping attributeMapping : attributeMappings) {
-				OsmAttribute osmAttribute = attributeMapping.getOsmAttribute();
-				
-				//Recuperamos el osmAttribute indicado en la lista de tags de elemento
-				String osmAttributeName = osmAttribute.getName();
-				Tags tag = element.getTags();
-				String valueTag = tag.recuperarAtributoIndicado(osmAttributeName);
-				
-				if (valueTag != null){
-					queryStr = queryStr + ", ?";
-				}else{
-					throw new OsmAttributeException(osmAttributeName);
-				}
+			for(int i=0;i<attributeMappings.size();i++){	
+				queryStr = queryStr + ", ?";
 			}
 						
 			queryStr = queryStr + ")";
@@ -296,13 +285,13 @@ public class ExistTableQuery {
 				Tags tag = element.getTags();
 				String valueTag = tag.recuperarAtributoIndicado(osmAttributeName);
 				
-				if (valueTag != null){
+				//En funcion del tipo asignaremos un long, char, boolean...
+				DBAttributeType dbAttributeType = dbAttribute.getAttributeType();
+								
+				switch (dbAttributeType) {
+				case DATE:
 					
-					//En funcion del tipo asignaremos un long, char, boolean...
-					DBAttributeType dbAttributeType = dbAttribute.getAttributeType();
-									
-					switch (dbAttributeType) {
-					case DATE:
+					if (valueTag != null){
 						//Otros formatos: YYYY-MM-DDThh:mmTZD, YYYY-MM-DDThh:mm:ssTZD, 
 						//YYYY-MM-DDThh:mm:ss.sTZD
 						try {
@@ -312,34 +301,63 @@ public class ExistTableQuery {
 						} catch (ParseException ex) {
 							throw new OsmAttributeDateException(osmAttributeName);
 						}
-						
-						break;
+					}else{
+						preparedStatement.setNull(i++, Types.DATE);
+					}
+										
+					break;
 
-					case NUMBER_LONG:
+				case NUMBER_LONG:
+					if (valueTag != null){
 						Long valueLong = new Long(valueTag);
-						preparedStatement.setLong(i++, valueLong);
-						break;
-						
-					case NUMBER_DOUBLE:
+						preparedStatement.setLong(i++, valueLong);	
+					}else{
+						preparedStatement.setNull(i++, Types.LONGVARBINARY);
+					}
+					
+					break;
+					
+				case NUMBER_DOUBLE:
+					if (valueTag != null){
 						Double valueDouble = new Double(valueTag);
-						preparedStatement.setDouble(i++, valueDouble);
-						break;
-						
-					case NUMBER_INT:
+						preparedStatement.setDouble(i++, valueDouble);	
+					}else{
+						preparedStatement.setNull(i++, Types.DOUBLE);
+					}
+					
+					break;
+					
+				case NUMBER_INT:
+					if (valueTag != null){
 						Integer valueInteger = new Integer(valueTag);
-						preparedStatement.setInt(i++, valueInteger);
-						break;
-						
-					case NUMBER_FLOAT:
+						preparedStatement.setInt(i++, valueInteger);	
+					}else{
+						preparedStatement.setNull(i++, Types.INTEGER);
+					}
+					
+					break;
+					
+				case NUMBER_FLOAT:
+					if (valueTag != null){
 						Float valueFloat = new Float(valueTag);
-						preparedStatement.setFloat(i++, valueFloat);
-						break;
-						
-					case CHAR:
-						preparedStatement.setString(i++, valueTag);
-						break;
-						
-					case BOOLEAN:
+						preparedStatement.setFloat(i++, valueFloat);	
+					}else{
+						preparedStatement.setNull(i++, Types.FLOAT);
+					}
+					
+					break;
+					
+				case CHAR:
+					if (valueTag != null){
+						preparedStatement.setString(i++, valueTag);	
+					}else{
+						preparedStatement.setNull(i++, Types.CHAR);
+					}
+					
+					break;
+					
+				case BOOLEAN:
+					if (valueTag != null){
 						if (valueTag.toLowerCase().equals("yes")){
 							preparedStatement.setBoolean(i++, true);	
 						}else if (valueTag.toLowerCase().equals("no")){
@@ -347,13 +365,16 @@ public class ExistTableQuery {
 						}else{
 							throw new OsmAttributeBooleanException(osmAttributeName);
 						}
-						
-						break;
-					
-					default :
-						throw new OsmAttributeTypeException(osmAttributeName, dbAttributeType.getName());
-						
+					}else{
+						preparedStatement.setNull(i++, Types.BOOLEAN);
 					}
+					
+					
+					break;
+				
+				default :
+					throw new OsmAttributeTypeException(osmAttributeName, dbAttributeType.getName());
+					
 				}
 				
 			}
