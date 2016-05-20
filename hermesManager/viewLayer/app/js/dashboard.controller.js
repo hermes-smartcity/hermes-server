@@ -67,7 +67,7 @@
 		
 		vm.numberofcells = $rootScope.numberofcells;
 		vm.changeEventType = changeEventType;
-		
+				
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);		
@@ -316,6 +316,8 @@
 
 			//Para evitar que se carguen las tablas de la parte Table
 			vm.listadoCarga = undefined;
+			
+			vm.aplicarFiltros();
 		}
 
 		function mostrarTabla() {	
@@ -339,6 +341,8 @@
 
 			//Para evitar que se carguen las tablas de la parte Table
 			vm.listadoCarga = undefined;
+			
+			vm.aplicarFiltros();
 		}
 
 		function arrancar() {
@@ -1018,7 +1022,6 @@
 			
 			//Y nos situamos en la vista de mapa
 			vm.mostrarMapa();
-			
 		}
 
 		// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
