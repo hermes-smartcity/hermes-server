@@ -11,6 +11,8 @@ CREATE TABLE usuario_movil(
   CONSTRAINT usuario_movil_id_pk PRIMARY KEY (id)
 );
 
+create index usuario_movil_sourceid on usuario_movil(sourceid);
+
 drop table if exists usuario_web cascade;
 drop sequence if exists usuario_web_id_seq cascade;
 create sequence usuario_web_id_seq;
