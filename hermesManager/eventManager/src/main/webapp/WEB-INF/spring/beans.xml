@@ -30,10 +30,7 @@
 		location="classpath:jdbc.properties, classpath:javamail.properties" />
   		
     <task:annotation-driven />
-   
-    
-  	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"/>
-
+      
   	<bean id="multipartResolver"
   	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
@@ -114,14 +111,24 @@
 
 
 	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basenames">
-			<list>
-				<value>classpath:/mensajes/eventManagerMensaxes_es</value>
-				<value>classpath:/mensajes/eventManagerMensaxes_en</value>
-			</list>
-		</property>
-		<property name="fallbackToSystemLocale" value="false" />
+	    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	    <property name="basename" value="classpath:eventManagerMensaxes" />
+	    <property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang" />
+    </bean>
+    
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en" />
+    </bean>
+     
+    <bean id="handlerMapping" 
+        class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+    	<property name="interceptors">
+        	<ref bean="localeChangeInterceptor" />
+    	</property>
 	</bean>
 
 </beans>
