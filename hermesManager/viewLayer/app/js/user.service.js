@@ -32,33 +32,61 @@
 		}
 		
 		function registerUser (user) {		
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
 			return $http({
+				headers: { 
+					'Accept': 'application/json',
+					'Content-Type': 'application/json' 
+					},
 				method : 'POST',
 				url : url_register_user,
-				data : user
+				data : user,
+				params: {"lang": lang}
 			});
 		}
 		
-		function registerAdmin (user) {		
+		function registerAdmin (user) {	
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
 			return $http({
+				headers: { 
+					'Accept': 'application/json',
+					'Content-Type': 'application/json' 
+					},
 				method : 'POST',
 				url : url_register_admin,
-				data : user
+				data : user,
+				params: {"lang": lang}
 			});
 		}
 		
 		function editUser (user) {		
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
 			return $http({
+				headers: { 
+					'Accept': 'application/json',
+					'Content-Type': 'application/json' 
+					},
 				method : 'PUT',
 				url : url_edit_user+"/"+user.id,
-				data : user
+				data : user,
+				params: {"lang": lang}
 			});
 		}
 
-		function deleteUser (id) {		
+		function deleteUser (id) {	
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
 			return $http({
 				method : 'DELETE',
-				url : url_delete_user+"/"+id
+				url : url_delete_user+"/"+id,
+				params: {"lang": lang}
 			});
 		}
 		
@@ -98,10 +126,14 @@
 		}
 		
 		// Activar cuenta
-		function getInfoCuenta (email, hash) {		
+		function getInfoCuenta (email, hash) {	
+			
+			var lang = $localStorage.hermesmanager.lang;
+			
 			return $http({
 				method : 'GET',
-				url : url_infoCuenta+"?email="+email+"&hash="+hash
+				url : url_infoCuenta+"?email="+email+"&hash="+hash,
+				params: {"lang": lang}
 			});
 		}
 		
@@ -120,6 +152,10 @@
 		function renewToken (oldToken) {
 			
 			return $http({
+				headers: { 
+					'Accept': 'application/json',
+					'Content-Type': 'application/json' 
+					},
 				method : 'POST',
 				url : url_renewToken,
 				data: oldToken
@@ -128,6 +164,10 @@
 		
 		function changePassword (newPassword) {		
 			return $http({
+				headers: { 
+					'Accept': 'application/json',
+					'Content-Type': 'application/json' 
+					},
 				method : 'POST',
 				url : url_change_password,
 				data : newPassword

@@ -11,7 +11,9 @@ import javax.ws.rs.WebApplicationException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -34,6 +36,7 @@ import es.udc.lbd.hermes.eventManager.controller.util.JSONData;
 import es.udc.lbd.hermes.eventManager.controller.util.JSONDataType;
 import es.udc.lbd.hermes.eventManager.transfer.TokenTransfer;
 import es.udc.lbd.hermes.eventManager.transfer.UserTransfer;
+import es.udc.lbd.hermes.eventManager.util.Helpers;
 import es.udc.lbd.hermes.eventManager.util.TokenUtils;
 import es.udc.lbd.hermes.eventManager.web.rest.MainResource;
 import es.udc.lbd.hermes.model.usuario.exceptions.ActivarCuentaException;
@@ -60,6 +63,8 @@ public class UserController extends MainResource {
 	@Qualifier("authenticationManager")
 	private AuthenticationManager authManager;
 
+	@Autowired private MessageSource messageSource;
+	
 	// Autenticar usuario
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	@ResponseBody
@@ -95,16 +100,26 @@ public class UserController extends MainResource {
 	}
 
 	// Registrar usuario
-	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public JSONData registerUser(@RequestBody UserJSON userJSON) {
+	@RequestMapping(value = "/registerUser", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
+	public JSONData registerUser(@RequestBody UserJSON userJSON,
+			@RequestParam(value = "lang", required = false) String lang) {
 		JSONData jsonD = new JSONData();
-		try {			
-			// TODO paso por parametro el locale?
-			// new Locale("es")
-			usuarioWebService.registerUser(userJSON, Locale.getDefault(), false);
-			jsonD.setValue("Usuario/a registrado/a correctamente. En unos instantes recibirá un correo para completar su registro en Dashboard.");
+		
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
+		try {				
+			usuarioWebService.registerUser(userJSON, locale, false);
+			
+			String mensaje = messageSource.getMessage("registrousuario.createok", null, locale);			
+			jsonD.setValue(mensaje);
+			
 		} catch (NoExiteNingunUsuarioMovilConSourceIdException e) {
-			jsonD.setValue("No exite ningún usuario movil con el email indicado. Primero debe instalar la aplicación Smart Driver en su teléfono móvil");
+			String mensaje = messageSource.getMessage("registrousuario.nousuariomovil", null, locale);	
+			jsonD.setValue(mensaje);
 			logger.error("No exite ningún usuarioMovil con ese sourceId");
 		} catch (DuplicateEmailException e) {
 			jsonD.setValue("DuplicateEmailException");
@@ -116,14 +131,24 @@ public class UserController extends MainResource {
 	// Controlador al que redirigimos desde un enlace de activación
 	@RequestMapping(value = "/activarCuenta")
 	public JSONData activarConta(@RequestParam(required = true) String email,
-			@RequestParam(required = true) String hash) {
+			@RequestParam(required = true) String hash,
+			@RequestParam(value = "lang", required = false) String lang) {
 
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
 		JSONData jsonD = new JSONData();
 		try {
 			usuarioWebService.activarCuenta(email, hash);
-			jsonD.setValue("Su usuario se ha registrado correctamente");
+			String mensaje = messageSource.getMessage("registrousuario.createok", null, locale);	
+			jsonD.setValue(mensaje);
 		} catch (ActivarCuentaException | EnlaceCaducadoException e) {
-			jsonD.setValue("Ha surgido un problema al activar su cuenta. Si el problema persiste contacte con el administrador del sistema");
+			
+			String mensaje = messageSource.getMessage("registrousuario.problemaemail", null, locale);
+			jsonD.setValue(mensaje);
 			logger.error("ActivarCuentaException "+e);
 		}
 
@@ -131,38 +156,67 @@ public class UserController extends MainResource {
 	}
 	
 	// Registrar admin - Sólo administradores
-	@RequestMapping(value = "/registerAdmin", method = RequestMethod.POST)
-	public void registerAdmin(@RequestBody UserJSON userJSON) {
+	@RequestMapping(value = "/registerAdmin", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void registerAdmin(@RequestBody UserJSON userJSON,
+			@RequestParam(value = "lang", required = false) String lang) {
 		JSONData jsonD = new JSONData();
+		
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
 		try {
-			// TODO paso por parametro el locale?
-			// new Locale("es")
-			usuarioWebService.registerUser(userJSON, Locale.getDefault(), true);
-			jsonD.setValue("Usuario/a registrado/a correctamente.En unos instantes el administrador/a dado/a de alta recibirá un correo para completar su registro en Dashboard.");
+		
+			usuarioWebService.registerUser(userJSON, locale, true);
+			
+			String mensaje = messageSource.getMessage("registrousuario.adminok", null, locale);	
+			jsonD.setValue(mensaje);
 		} catch (NoExiteNingunUsuarioMovilConSourceIdException | DuplicateEmailException e) {
-			jsonD.setValue("No exite ningún usuario movil con el email indicado. Comunique al usuario administrador que primero debe instalar la aplicación Smart Driver en su teléfono móvil");
+			
+			String mensaje = messageSource.getMessage("registrousuario.nousuariomoviladmin", null, locale);	
+			jsonD.setValue(mensaje);
 			logger.error("No exite ningún usuarioMovil con ese sourceId");
 		}
 
 	}
 
 	// Editar usuario - Sólo administradores 
-	@RequestMapping(value = "/editUser/{id}", method = RequestMethod.PUT)
-	public JSONData updateUser(@PathVariable Long id, @RequestBody UserJSON userJSON) {
+	@RequestMapping(value = "/editUser/{id}", method = RequestMethod.PUT,  consumes = MediaType.APPLICATION_JSON_VALUE)
+	public JSONData updateUser(@PathVariable Long id, @RequestBody UserJSON userJSON,
+			@RequestParam(value = "lang", required = false) String lang) {
 		JSONData jsonD = new JSONData();
 		usuarioWebService.updateUser(userJSON, id);
-		jsonD.setValue("Usuario/a modificado/a correctamente");
+		
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
+		String mensaje = messageSource.getMessage("registrousuario.updateok", null, locale);	
+		jsonD.setValue(mensaje);
 		return jsonD;
 	}
 
 	// Eliminar usuario - Sólo administradores
 	@RequestMapping(value = "/deleteUser" + "/{id}", method = RequestMethod.DELETE)
-	public JSONData eliminar(@PathVariable(value = "id") Long usuarioId) throws NoEsPosibleBorrarseASiMismoException {
+	public JSONData eliminar(@PathVariable(value = "id") Long usuarioId,
+			@RequestParam(value = "lang", required = false) String lang) throws NoEsPosibleBorrarseASiMismoException {
 		JSONData jsonD = new JSONData();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login = auth.getName();
 		usuarioWebService.eliminar(usuarioId, login);
-		jsonD.setValue("Usuario/a eliminado/a correctamente");
+		
+		if (lang == null){
+			lang = "en";
+		}
+		
+		Locale locale = Helpers.construirLocale(lang);
+		
+		String mensaje = messageSource.getMessage("registrousuario.deleteok", null, locale);	
+		jsonD.setValue(mensaje);
 		return jsonD;
 	}
 
@@ -191,7 +245,7 @@ public class UserController extends MainResource {
 	}
 
 	// Generar nuevo token
-	@RequestMapping(value = "/renewToken", method = RequestMethod.POST)
+	@RequestMapping(value = "/renewToken", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TokenTransfer> renewToken(@RequestBody String oldToken) {
 		
 		String userName = TokenUtils.getUserNameFromToken(oldToken);
@@ -220,7 +274,7 @@ public class UserController extends MainResource {
 	}
 	
 	// Registrar usuario
-	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
 	public JSONDataType changePassword(@RequestBody PasswordJSON passwordJSON) {
 		JSONDataType jsonD = new JSONDataType();
 
