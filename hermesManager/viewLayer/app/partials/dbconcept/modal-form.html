@@ -45,7 +45,7 @@
   			<select id="dbconnection" name="dbconnection" data-ng-model="dbconnection" class="form-control"
 					data-ng-options="dbconnection.id as dbconnection.name for dbconnection in dbconnections" required>
 			</select>
-			<p data-ng-show="form.conceptForm.dbconnection.$error.required && !form.conceptForm.dbconnection.$pristine" class="avisoError">{{'dbconnection.typeRequired' | translate}}</p>
+			<p data-ng-show="form.conceptForm.dbconnection.$error.required && !form.conceptForm.dbconnection.$pristine" class="avisoError">{{'dbconcept.dbConnectionRequired' | translate}}</p>
   		</div>
     </div>
     <div class="modal-footer">

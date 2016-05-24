@@ -125,7 +125,8 @@
 				"administration": "Administration",
 				"osmImport": "OSM Import",
 				"jobs": "Jobs",
-				"executions": "Executions"
+				"executions": "Executions",
+				"importShapefiles": "Import shapefiles"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -366,6 +367,7 @@
 				"tableNameRequired": "Table name required",
 				"osmIdNameRequired": "OSMId name required",
 				"geomNameRequired": "Geom name required",
+				"dbConnectionRequired": "DB Connection required"
 			},
 			"dbattribute":{
 				"actions": "Actions",
@@ -452,6 +454,18 @@
 				"id": "ID",
 				"text": "Text",
 				"time": "Time"
+			},
+			"importShapefiles":{
+				"titulo": "Import Shapefile",
+				"dbconnection": "DB Connection",
+				"dbconcept": "DB Concept",
+				"createTable": "Create Table",
+				"selectFile": "Select File",
+				"selectDbConcept": "Select DB Concept or mark the check 'Create table' and write a name table",
+				"import": "Import",
+				"dbConnectionRequired": "DB Connection required",
+				"dbConceptRequired": "DB Concept required",
+				"fileRequired": "File required"
 			}
 		});
 	}

@@ -290,6 +290,15 @@
 					return messageService.getMessages($stateParams.idExecution);
 				}
 			}
+		}).state('importShapefiles', {
+			url: '/importShapefiles',
+			templateUrl: 'partials/importShapefiles/importShapefiles.html',
+			controller: 'ImportShapefileController',
+			controllerAs: 'vm',
+			resolve: {
+				dbconnections: dbconnections,
+				dbconcepts: dbconcepts
+			}
 		});
 
 		
@@ -462,6 +471,23 @@
 	        };
 	}]);
 
+	angular.module('app').directive("fileread", [function () {
+	    return {
+	        scope: {
+	            fileread: "="
+	        },
+	        link: function (scope, element, attributes) {
+	            element.bind("change", function (changeEvent) {
+	                scope.$apply(function () {
+	                    scope.fileread = changeEvent.target.files[0];
+	                    // or all selected files:
+	                    // scope.fileread = changeEvent.target.files;
+	                });
+	            });
+	        }
+	    };
+	}]);
+	
 	angular.module('app').factory('IntervalExecutions', IntervalExecutions);
 
 	IntervalExecutions.$inject = ['$interval'];
