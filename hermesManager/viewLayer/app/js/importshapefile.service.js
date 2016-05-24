@@ -12,23 +12,27 @@
 
 		return service;
 	
-		function importar (importacion) {
+		function importar (importacion, filezip) {
 			
 			var lang = $localStorage.hermesmanager.lang;
-		       
-			var fd = new FormData();
-			fd.append("file", importacion.filezip);
-			
+		   
 			return $http({
 				method : 'POST',
-				//withCredentials: true,
-				transformRequest: angular.identity,
+				url : url_import_shape,
 				headers: { 
 			        'Content-Type': undefined 
 			    },
-				url : url_import_shape,
-				data : importacion,
-				params: {"lang": lang, "fdata": fd}
+			    transformRequest: function (data) {
+	                var formData = new FormData();
+	                //need to convert our json object to a string version of json otherwise
+	                // the browser will do a 'toString()' on the object which will result 
+	                // in the value '[Object object]' on the server.
+	                formData.append("model", angular.toJson(data.model));
+	                formData.append("file", data.file);
+	                return formData;
+	            },
+				data : {model: importacion, file: filezip},
+				params: {"lang": lang}
 			});
 		}
 		

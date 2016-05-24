@@ -154,10 +154,9 @@
 	    		var importacion = {
 	    				dbConnection: dbConnection, 
 	    				dbConcept: dbConcept,
-	    				dbConceptName: dbConceptName,
-	    				filezip: vm.filezip};	
+	    				dbConceptName: dbConceptName};	
 
-	    		importShapefileService.importar(importacion).then(function(response){
+	    		importShapefileService.importar(importacion, vm.filezip).then(function(response){
 	    			vm.typeAction = response.data.type;
 					vm.infoAction = response.data.value;
 	    		});	

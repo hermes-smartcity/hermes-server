@@ -5,10 +5,10 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,11 +27,11 @@ public class ImportShapefileController extends MainResource{
 	@Autowired private MessageSource messageSource;
 	@Autowired
 	private ImportShapefileService importShapefileServicio;
-	
+		
 	@RequestMapping(value = "/import", method = RequestMethod.POST)
-	public JSONDataType importar(@RequestBody ImportShapefile importacion,
-			@RequestParam(value = "lang", required = false) String lang,
-			@RequestParam("fdata") MultipartFile fdata) {
+	public JSONDataType importar(@RequestPart(value = "model", required = true) ImportShapefile model,
+			@RequestPart(value = "file", required = true) MultipartFile file,
+			@RequestParam(value = "lang", required = false) String lang) {
 		
 		JSONDataType jsonD = new JSONDataType();
 		
@@ -41,7 +41,7 @@ public class ImportShapefileController extends MainResource{
 		
 		Locale locale = Helpers.construirLocale(lang);
 		
-		importShapefileServicio.importar(importacion, fdata);
+		importShapefileServicio.importar(model, file);
 
 		return jsonD;
 		
