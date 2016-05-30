@@ -25,6 +25,13 @@
             <p data-ng-show="form.conceptForm.tableName.$error.required && !form.conceptForm.tableName.$pristine" class="avisoError">{{'dbconcept.tableNameRequired' | translate}}</p>
         </div>
         
+         <!-- ID NAME -->
+        <div class="form-group">
+            <label>{{'dbconcept.idName' | translate}}</label>
+            <input type="text" name="idName" class="form-control" data-ng-model="idName" required>
+            <p data-ng-show="form.conceptForm.idName.$error.required && !form.conceptForm.idName.$pristine" class="avisoError">{{'dbconcept.idNameRequired' | translate}}</p>
+        </div>
+        
         <!-- OSMID NAME -->
         <div class="form-group">
             <label>{{'dbconcept.osmIdName' | translate}}</label>

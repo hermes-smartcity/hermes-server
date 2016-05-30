@@ -357,6 +357,7 @@
 				"name": "Name",
 				"schemaName": "Schema name",
 				"tableName": "Table name",
+				"idName": "Id name",
 				"osmIdName": "OSMId name",
 				"geomName": "Geom name",
 				"manageAttributes": "Manage attributes",
@@ -366,6 +367,7 @@
 				"nameRequired": "Name required",
 				"tableNameRequired": "Table name required",
 				"osmIdNameRequired": "OSMId name required",
+				"idNameRequired": "Id name required",
 				"geomNameRequired": "Geom name required",
 				"dbConnectionRequired": "DB Connection required"
 			},

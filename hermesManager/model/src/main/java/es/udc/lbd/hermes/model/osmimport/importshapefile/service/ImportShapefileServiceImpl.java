@@ -27,6 +27,7 @@ import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.jdbc.JDBCFeatureSource;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
@@ -58,8 +59,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 
 	@Autowired
 	private DBAttributeDao dbAttributeDao;
-	
-	
+		
 	@Autowired
 	private DBConnectionDao dbConnectionDao;
 	
@@ -156,7 +156,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 				
 				//Si el usuario marcha el checkbox "[ ] Crear la tabla", la tabla no debe existir
 			    String nombreTabla = null;
-
+			    String nombreAtributoId = null;
 				if (dbConceptName != null && dbConceptSchema != null){
 					
 					ExistTableQuery existTableQuery = new ExistTableQuery(dbConnectionObject);
@@ -167,12 +167,13 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 						throw new TablaExisteException(dbConceptSchema, dbConceptName);	
 					}else{
 						//Se crea la tabla con los mismos atributos que en el shapefile
+						nombreAtributoId = "hermesId";
 						ImportShapefileDao importShapefileDao = new ImportShapefileDao(dbConnectionObject);
-						importShapefileDao.createTable(dbConceptName, dbConceptSchema, mapaAtributos);
+						importShapefileDao.createTable(dbConceptName, dbConceptSchema, mapaAtributos, nombreAtributoId);
 						
 						//Asignamos nombreTabla para luego usarla en el datastore
 						nombreTabla = dbConceptName;
-						
+												
 						dataStore.dispose();
 						
 						//Volvemos a recuperar el datastore para que tenga la tabla nueva creada
@@ -206,6 +207,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 				    }else{
 				    	//Asignamos nombreTabla para luego usarla en el datastore
 						nombreTabla = dbConceptObject.getTableName();
+						nombreAtributoId = dbConceptObject.getIdName();
 				    }
 				}
 				
@@ -239,7 +241,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 							
 							featureStore.setTransaction(transaction);
 
-							DefaultFeatureCollection featureCollectionBD = construirFeaturesInsertar(dataStore, nombreTabla, schemaBD, featuresShp);
+							DefaultFeatureCollection featureCollectionBD = construirFeaturesInsertar(dataStore, nombreAtributoId, nombreTabla, schemaBD, featuresShp);
 							
 							featureStore.addFeatures(featureCollectionBD);
 
@@ -329,7 +331,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 		return dataStore;
 	}
 	
-	private DefaultFeatureCollection construirFeaturesInsertar(DataStore dataStore, String nombreTabla, SimpleFeatureType schemaBD, FeatureCollection<SimpleFeatureType, SimpleFeature> featuresShp){
+	private DefaultFeatureCollection construirFeaturesInsertar(DataStore dataStore, String nombreAtributoId, String nombreTabla, SimpleFeatureType schemaBD, FeatureCollection<SimpleFeatureType, SimpleFeature> featuresShp){
 		 
 		//Cuando recuperemos los objetos del shapefile tenemos luego que insertarlos en el mismo orden que el esquemaBD
 		//Como puede ser que no esten en el mismo orden hacemos un map para poder saber para cada atributo cual es la
@@ -348,9 +350,8 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 			
 			String nombreClase = tipo.getBinding().getName();
 			
-			//Descartamos el id porque es autoincremental
-			//TODO: esto es asi??
-			if (!name.toLowerCase().equals("id")){
+			//Descartamos el primarykey porque es autoincremental
+			if (!name.toLowerCase().equals(nombreAtributoId)){
 				if (nombreClase.contains("com.vividsolutions.jts.geom.")){
 					posicionesAtributos.put("the_geom", i);
 				}else{
@@ -369,18 +370,25 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 				SimpleFeature featureShp = iterator.next();
 				List<AttributeDescriptor> atributos = featureShp.getFeatureType().getAttributeDescriptors();
 				
-				//Recuperamos de la feature cual es el nombre del atributo que se usa para el identificador
-				String nombreId = featuresShp.getID();
-				
 				//Siempre le quitamos uno porque TODAS las tablas son autoincrement
-				//TODO: esto es así siempre?
-				Object[] objetos = new Object[atributos.size()-1];
+				
+				//Si los atributos de la feature contienen el atributo usado como primarykey,
+				//ese valor no se insertara asi que el numero de atributos sera -1
+				int numeroAtributos = 0;
+				for (AttributeDescriptor attributo : atributos) {
+					String name = attributo.getLocalName();
+					
+					if (!name.toLowerCase().equals(nombreAtributoId)){
+						numeroAtributos++;
+					}
+				}
+				Object[] objetos = new Object[numeroAtributos];
 				
 				for (AttributeDescriptor attributo : atributos) {
 					String name = attributo.getLocalName();
 					
-					//TODO: hacer mejor para saber cual es el campo id que no suponer que se llama id
-					if (!name.toLowerCase().equals("id")){
+					//El primarykey no se inserta
+					if (!name.toLowerCase().equals(nombreAtributoId)){
 						
 						Object objeto = null;
 						if (!featureShp.getAttribute(name).equals("")){

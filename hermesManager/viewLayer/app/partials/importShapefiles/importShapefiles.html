@@ -78,11 +78,11 @@
   				<input type="checkbox" data-ng-model="vm.keep" name="keep" id="keep">
   				{{'importShapefiles.keepExistingData' | translate}}
   			</label>
-  			
   		</div>
      </div>
      
     <div class="modal-footer">
         <button class="btn btn-primary" data-ng-click="vm.submitForm()">{{'importShapefiles.import' | translate}}</button>
+        <span data-us-spinner="{radius:5, width:4, length: 16, position: 'relative'}"></span>
     </div>
 </form>

@@ -83,7 +83,7 @@ static Logger logger = Logger.getLogger(ImportShapefileDao.class);
 		}
 	}
 	
-	public void createTable(String nombreTabla, String nombreEsquema, Map<String, PropertyType> mapaAtributos) throws Exception{
+	public void createTable(String nombreTabla, String nombreEsquema, Map<String, PropertyType> mapaAtributos, String nombreAtributoId) throws Exception{
 		
 		PreparedStatement preparedStatement = null;
 		try{
@@ -91,6 +91,7 @@ static Logger logger = Logger.getLogger(ImportShapefileDao.class);
 			abrirConexionBD();
 		
 			String queryStr = "CREATE TABLE \"" + nombreEsquema + "\".\"" + nombreTabla + "\" (";
+			queryStr = queryStr + nombreAtributoId + " bigserial primary key,";
 			
 			Iterator<Entry<String, PropertyType>> it = mapaAtributos.entrySet().iterator();
 			while (it.hasNext()) {
