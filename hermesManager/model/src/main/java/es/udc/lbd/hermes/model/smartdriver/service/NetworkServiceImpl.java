@@ -41,6 +41,7 @@ import es.udc.lbd.hermes.model.util.HelpersModel;
 import es.udc.lbd.hermes.model.util.RegistroPeticionesHelper;
 import es.udc.lbd.hermes.model.util.exceptions.PointDestinyException;
 import es.udc.lbd.hermes.model.util.exceptions.PointOriginException;
+import es.udc.lbd.hermes.model.util.exceptions.RouteException;
 
 
 @Service("networkService")
@@ -145,7 +146,7 @@ public class NetworkServiceImpl implements NetworkService{
 	}
 	
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
-	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng) throws PointDestinyException, PointOriginException{
+	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng) throws PointDestinyException, PointOriginException, RouteException{
 		//Obtenemos el id de origen
 		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
 		if (originPoint == null)
@@ -157,13 +158,20 @@ public class NetworkServiceImpl implements NetworkService{
 			throw new PointDestinyException(toLat, toLng);
 				
 		//Obtenemos la lista de tramos
-		List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint);
+		try{
+			List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint);
+			
+			//Registramos peticion realizada al servicio rest 
+			RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+			registro.computeRouteSmartDriver();
+					
+			return listado;
+			
+		}catch(RouteException e){
+			throw e;
+		}
 		
-		//Registramos peticion realizada al servicio rest 
-		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
-		registro.computeRouteSmartDriver();
-				
-		return listado;
+		
 	}
 	
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
