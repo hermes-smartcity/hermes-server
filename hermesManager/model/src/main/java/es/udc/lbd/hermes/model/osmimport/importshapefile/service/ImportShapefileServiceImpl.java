@@ -25,8 +25,11 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.NameImpl;
+import org.geotools.feature.FeatureComparators.Name;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
+import org.geotools.jdbc.JDBCDataStore;
 import org.geotools.jdbc.JDBCFeatureSource;
 import org.opengis.feature.Property;
 import org.opengis.feature.simple.SimpleFeature;
@@ -147,7 +150,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 			    
 			    //Recuperamos el datastore asociado a la conexion
 			    DBConnection dbConnectionObject = dbConnectionDao.get(dbConnection);
-				DataStore dataStore = recuperarDataStore(dbConnectionObject);
+			    JDBCDataStore dataStore = recuperarDataStore(dbConnectionObject);
 
 				// Accedemos a la base de datos donde se quieren incorporar los datos
 				if (dataStore == null) {
@@ -156,6 +159,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 				
 				//Si el usuario marcha el checkbox "[ ] Crear la tabla", la tabla no debe existir
 			    String nombreTabla = null;
+			    String esquemaTabla = null;
 			    String nombreAtributoId = null;
 				if (dbConceptName != null && dbConceptSchema != null){
 					
@@ -173,7 +177,8 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 						
 						//Asignamos nombreTabla para luego usarla en el datastore
 						nombreTabla = dbConceptName;
-												
+						esquemaTabla = dbConceptSchema;
+						
 						dataStore.dispose();
 						
 						//Volvemos a recuperar el datastore para que tenga la tabla nueva creada
@@ -207,13 +212,16 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 				    }else{
 				    	//Asignamos nombreTabla para luego usarla en el datastore
 						nombreTabla = dbConceptObject.getTableName();
+						esquemaTabla = dbConceptObject.getSchemaName();
 						nombreAtributoId = dbConceptObject.getIdName();
 				    }
 				}
 				
 				//Si tenemos nombreTabla es porque o bien se creo o porque se tomo de dbconcept
 				if (nombreTabla != null){
-					SimpleFeatureType schemaBD = dataStore.getSchema(nombreTabla);					
+					dataStore.setDatabaseSchema(esquemaTabla);
+					SimpleFeatureType schemaBD = dataStore.getSchema(nombreTabla);
+				
 					SimpleFeatureSource featureSource = dataStore.getFeatureSource(nombreTabla);
 					
 					Transaction transaction = new DefaultTransaction("remove_add");
@@ -316,7 +324,7 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 		return coinciden;
 	}
 	
-	private DataStore recuperarDataStore(DBConnection dbConnection) throws Exception{
+	private JDBCDataStore recuperarDataStore(DBConnection dbConnection) throws Exception{
 		Properties params = new Properties();
 		
 		params.put("user", dbConnection.getUserDb());
@@ -328,7 +336,12 @@ public class ImportShapefileServiceImpl implements ImportShapefileService{
 		
 		DataStore dataStore = DataStoreFinder.getDataStore(params);
 		
-		return dataStore;
+		if (dataStore instanceof JDBCDataStore){
+			return (JDBCDataStore)dataStore;
+		}else{
+			throw new Exception();
+		}
+		
 	}
 	
 	private DefaultFeatureCollection construirFeaturesInsertar(DataStore dataStore, String nombreAtributoId, String nombreTabla, SimpleFeatureType schemaBD, FeatureCollection<SimpleFeatureType, SimpleFeature> featuresShp){

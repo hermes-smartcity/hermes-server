@@ -42,7 +42,7 @@
 	            			name: $scope.form.conceptForm.name.$viewValue,
 	            			schemaName: $scope.form.conceptForm.schemaName.$viewValue, 
 	            			tableName: $scope.form.conceptForm.tableName.$viewValue, 
-	            			iIdName: $scope.form.conceptForm.idName.$viewValue, 
+	            			idName: $scope.form.conceptForm.idName.$viewValue, 
 	            			osmIdName: $scope.form.conceptForm.osmIdName.$viewValue,  
 	            			geomName: $scope.form.conceptForm.geomName.$viewValue,  
 	            			dbConnection: connection};	
