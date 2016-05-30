@@ -460,12 +460,19 @@
 				"dbconnection": "DB Connection",
 				"dbconcept": "DB Concept",
 				"createTable": "Create Table",
+				"tableName": "Name",
+				"schemaName": "Schema",
 				"selectFile": "Select File",
-				"selectDbConcept": "Select DB Concept or mark the check 'Create table' and write a name table",
+				"selectDbConcept": "Select DB Concept or mark the check 'Create table' and write a schema/name table",
 				"import": "Import",
 				"dbConnectionRequired": "DB Connection required",
 				"dbConceptRequired": "DB Concept required",
-				"fileRequired": "File required"
+				"fileRequired": "File required",
+				"file": "File:",
+				"keepExistingData":"Keep existing data",
+				"charset": "Charset",
+				"selectCharset": "Select Charset",
+				"chooseFile":"..."
 			}
 		});
 	}

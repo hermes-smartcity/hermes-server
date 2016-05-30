@@ -57,10 +57,10 @@
 			<artifactId>javassist</artifactId>
 		</dependency>
 		<!--Conexion a base de datos -->
-			<dependency>
-				<groupId>com.mchange</groupId>
-				<artifactId>c3p0</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
 		<!-- the postgresql driver -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -70,19 +70,19 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<exclusions>
-			    <exclusion>
-			        <groupId>com.sun.jmx</groupId>
-			        <artifactId>jmxri</artifactId>
-			    </exclusion>
-			    <exclusion>
-			        <groupId>com.sun.jdmk</groupId>
-			        <artifactId>jmxtools</artifactId>
-			    </exclusion>
-			    <exclusion>
-			            <groupId>javax.jms</groupId>
-			            <artifactId>jms</artifactId>
-			    </exclusion>
-		</exclusions>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- Servlet -->
 		<dependency>
@@ -132,6 +132,22 @@
 			<groupId>org.geotools</groupId>
 			<artifactId>gt-geojson</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-shapefile</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-main</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools.jdbc</groupId>
+			<artifactId>gt-jdbc-postgis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-epsg-hsql</artifactId>
+		</dependency>
 		<!-- Apache Commons Codec - Para encriptar -->
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -163,7 +179,7 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>

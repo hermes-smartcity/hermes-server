@@ -5,38 +5,42 @@
 
 	ImportShapefileController.$inject = ['$scope', '$filter', '$http', '$translate', 
 	                                '$state', '$rootScope', '$q', '$compile',
-	                                'SweetAlert',  'importShapefileService', 'dbconnections', 'dbconcepts'];
+	                                'SweetAlert',  'importShapefileService', 
+	                                'dbconnections', 'dbconcepts', 'charsets', 'Upload'];
 	
 	function ImportShapefileController($scope, $filter, $http, $translate, $state, 
 			$rootScope, $q, $compile, SweetAlert, importShapefileService,
-			dbconnections, dbconcepts) {
+			dbconnections, dbconcepts, charsets, Upload) {
 	
 		var vm = this;
 		
 		vm.shapefileForm = {};
-		
-		//parametro del formulario
-		/*vm.shapefileForm.dbconnection = null;
-		vm.shapefileForm.dbconcept = null;
-		vm.shapefileForm.table = null;
-		vm.shapefileForm.filezip = null;*/
-		
+	
 		vm.dbconnections = dbconnections;
 		vm.dbconcepts = dbconcepts;
+		vm.charsets = charsets;
 		
 		vm.createTable = createTable;
 		vm.validarFormulario = validarFormulario;
 		vm.validarDbConnection = validarDbConnection;
 		vm.validarDbConcept = validarDbConcept;
+		vm.validarCharset = validarCharset;
+		vm.validarFile = validarFile;
 		vm.recuperarConnection = recuperarConnection;
 		vm.recuperarDbConcept = recuperarDbConcept;
+		
+		vm.uploadFiles = uploadFiles;
 		vm.submitForm = submitForm;
 				
 		function createTable(){
 			if (table.checked){
 				vm.shapefileForm.dbconcept = undefined;
+				vm.dbconcept = undefined;
 			}else{
 				vm.shapefileForm.tableName = undefined;
+				vm.shapefileForm.schemaName = undefined;
+				vm.tableName = undefined;
+				vm.schemaName = undefined;
 			}
 			
 			//para que se quiten los errores si los hay
@@ -68,10 +72,29 @@
 					if (vm.tableName === undefined){
 						vm.errorConcept = true;
 					}
+					
+					if (vm.schemaName === undefined){
+						vm.errorConcept = true;
+					}
 				}
 			}
 			
 		}
+		
+		function validarCharset(){
+			vm.errorCharset = false;
+			if (vm.charset === undefined){
+				vm.errorCharset = true;
+			}
+		}
+		
+		function validarFile(){
+			vm.errorFilezip = false;
+			if (vm.filezip === undefined){
+				vm.errorFilezip = true;
+			}
+		}
+		
 		function validarFormulario(){
 			var error = false;
 			vm.errorConnection = false;
@@ -107,7 +130,17 @@
 						vm.errorConcept = true;
 						error = true;
 					}
+					
+					if (vm.schemaName === undefined){
+						vm.errorConcept = true;
+						error = true;
+					}
 				}
+			}
+			
+			if (vm.charset === undefined){
+				vm.errorCharset = true;
+				error = true;
 			}
 			
 			return error;
@@ -134,6 +167,10 @@
 	    	}
 	    }
 	    
+	    function uploadFiles(file){
+	    	vm.filezip = file;
+	    }
+	    
 	    function submitForm() {
 	    	vm.infoAction = undefined;
 	    	
@@ -145,16 +182,21 @@
 
 	    		var dbConcept = null;
 	    		var dbConceptName = null;
+	    		var dbConceptSchema = null;
 	    		if (vm.table){
-	    			dbConceptName = vm.tableName;	 
+	    			dbConceptName = vm.tableName;	
+	    			dbConceptSchema = vm.schemaName;
 	    		}else{
 	    			dbConcept = vm.recuperarDbConcept();
 	    		}
 
 	    		var importacion = {
-	    				dbConnection: dbConnection, 
-	    				dbConcept: dbConcept,
-	    				dbConceptName: dbConceptName};	
+	    				dbConnection: vm.dbconnection, 
+	    				dbConcept: vm.dbconcept,
+	    				dbConceptName: dbConceptName,
+	    				dbConceptSchema: dbConceptSchema,
+	    				keepExistingData: vm.keep, 
+	    				charset: vm.charset};	
 
 	    		importShapefileService.importar(importacion, vm.filezip).then(function(response){
 	    			vm.typeAction = response.data.type;

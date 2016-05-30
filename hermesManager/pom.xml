@@ -24,6 +24,7 @@
 		<development.datasource.dataBaseName>smartcity</development.datasource.dataBaseName>
 		<development.datasource.user>postgres</development.datasource.user>
 		<development.datasource.password>postgres</development.datasource.password>
+		
 		<development.jdbcDriver.groupId>org.postgresql</development.jdbcDriver.groupId>
 		<development.jdbcDriver.artifactId>postgresql</development.jdbcDriver.artifactId>
 		<development.jdbcDriver.version>9.3-1100-jdbc4</development.jdbcDriver.version>
@@ -382,6 +383,26 @@
 			<dependency>
 				<groupId>org.geotools</groupId>
 				<artifactId>gt-geojson</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-shapefile</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-main</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools.jdbc</groupId>
+				<artifactId>gt-jdbc-postgis</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-epsg-hsql</artifactId>
 				<version>${geotools.version}</version>
 			</dependency>
 			<!-- Encriptar código para activación de registro de usuarios -->

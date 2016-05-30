@@ -7,16 +7,20 @@ public class ImportShapefile {
 
 	private DBConnection dbConnection;
 	private DBConcept dbConcept;
+	private String dbConceptSchema;
 	private String dbConceptName;
+	private Boolean keepExistingData;
 	
 	public ImportShapefile(){}
 
 	public ImportShapefile(DBConnection dbConnection, DBConcept dbConcept,
-			String dbConceptName) {
+			String dbConceptSchema, String dbConceptName, Boolean keepExistingData) {
 		super();
 		this.dbConnection = dbConnection;
 		this.dbConcept = dbConcept;
+		this.dbConceptSchema = dbConceptSchema;
 		this.dbConceptName = dbConceptName;
+		this.keepExistingData = keepExistingData;
 	}
 
 	public DBConnection getDbConnection() {
@@ -35,6 +39,14 @@ public class ImportShapefile {
 		this.dbConcept = dbConcept;
 	}
 
+	public String getDbConceptSchema() {
+		return dbConceptSchema;
+	}
+
+	public void setDbConceptSchema(String dbConceptSchema) {
+		this.dbConceptSchema = dbConceptSchema;
+	}
+
 	public String getDbConceptName() {
 		return dbConceptName;
 	}
@@ -43,5 +55,12 @@ public class ImportShapefile {
 		this.dbConceptName = dbConceptName;
 	}
 
-	
+	public Boolean getKeepExistingData() {
+		return keepExistingData;
+	}
+
+	public void setKeepExistingData(Boolean keepExistingData) {
+		this.keepExistingData = keepExistingData;
+	}
+
 }

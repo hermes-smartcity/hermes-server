@@ -4,8 +4,8 @@
 
 <form name="vm.shapefileForm" novalidate>
 
-	<div data-ng-if="vm.infoAction" data-ng-class="{'top-buffer pull-center alert alert-info' : vm.infoAction.type === 'info', 'alert alert-danger' : vm.infoAction.type === 'error'}" data-role="alert">
-		{{vm.infoAction.value}}
+	<div data-ng-if="vm.infoAction" data-ng-class="{'top-buffer pull-center alert alert-info' : vm.typeAction === 'info', 'alert alert-danger' : vm.typeAction === 'error'}" data-role="alert">
+		{{vm.infoAction}}
 	</div>	
 	
     <div class="modal-body">
@@ -37,15 +37,48 @@
   				{{'importShapefiles.createTable' | translate}}
   			</label>
   			
-  			<input type="text" class="form-control" id="tableName" name="tableName" data-ng-model="vm.tableName" >
+  			<br/>
+  			<label>{{'importShapefiles.schemaName' | translate}}</label>
+  			<input data-ng-readonly="!vm.table" type="text" class="form-control" id="schemaName" name="schemaName" data-ng-model="vm.schemaName" >
+  			<label>{{'importShapefiles.tableName' | translate}}</label>
+  			<input data-ng-readonly="!vm.table" type="text" class="form-control" id="tableName" name="tableName" data-ng-model="vm.tableName" >
+  			
+  		</div>
+  		
+  		<!-- Encoding shapefile -->
+  		<div class="form-group">
+  			<label>{{'importShapefiles.charset' | translate}}</label>
+  			<select id="charset" name="charset" data-ng-model="vm.charset" class="form-control"
+					data-ng-options="charset as charset for charset in vm.charsets"
+					data-ng-change="vm.validarCharset()">
+			</select>
+			<p data-ng-show="vm.errorCharset" class="avisoError">{{'importShapefiles.selectCharset' | translate}}</p>
   		</div>
   		
   		<!-- Input File -->
   		<div class="form-group">
   		    <label class="control-label">{{'importShapefiles.selectFile' | translate}}</label>
-    		<input id="filezip" name="filezip" type="file" class="file"  
-    		data-fileread="vm.filezip" accept=".zip" required>
+    		
+    		<button data-type="file" data-ngf-select="vm.uploadFiles($file)" id="filezip" name="filezip" 
+    			data-accept=".zip" data-ng-change="vm.validarFile()" data-ng-model="vm.filezip" required>
+    			{{'importShapefiles.chooseFile' | translate}}
+    		</button>
+      		
+      		<div style="font:smaller">
+      			{{'importShapefiles.file' | translate}} {{vm.filezip.name}}
+      		</div>
+      		
+    		<!-- <input id="filezip" name="filezip" type="file" data-fileread="vm.filezip" accept=".zip" required>-->
     		<p data-ng-show="vm.errorFilezip" class="avisoError">{{'importShapefiles.fileRequired' | translate}}</p>
+  		</div>
+  		
+  		<!-- CHECK mantener datos -->
+  		<div class="form-group">
+  			<label>
+  				<input type="checkbox" data-ng-model="vm.keep" name="keep" id="keep">
+  				{{'importShapefiles.keepExistingData' | translate}}
+  			</label>
+  			
   		</div>
      </div>
      
