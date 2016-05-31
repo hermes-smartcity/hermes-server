@@ -13,7 +13,7 @@
 		'datatables',
 		'ngCookies', 'permission','ngStorage', 'googlechart',
 		'pascalprecht.translate', 'tmh.dynamicLocale',
-		'oitozero.ngSweetAlert', 'ngLoadingSpinner'
+		'oitozero.ngSweetAlert', 'ngLoadingSpinner','ngFileUpload'
 	]).config(routeConfig).run(appRun);
 
 	routeConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$httpProvider'];
@@ -290,6 +290,16 @@
 					return messageService.getMessages($stateParams.idExecution);
 				}
 			}
+		}).state('importShapefiles', {
+			url: '/importShapefiles',
+			templateUrl: 'partials/importShapefiles/importShapefiles.html',
+			controller: 'ImportShapefileController',
+			controllerAs: 'vm',
+			resolve: {
+				dbconnections: dbconnections,
+				dbconcepts: dbconcepts,
+				charsets: charsets 
+			}
 		});
 
 		
@@ -395,6 +405,11 @@
 		return executionService.getExecutions();
 	}
 	
+	charsets.$inject = ['importShapefileService'];
+	function charsets(importShapefileService) {
+		return importShapefileService.getCharsets();
+	}
+	
 	angular.module('app').config(translateAppConfig);
 	translateAppConfig.$inject = ['$translateProvider'];
 	function translateAppConfig($translateProvider) {
@@ -462,16 +477,116 @@
 	        };
 	}]);
 
+	angular.module('app').directive("fileread", [function () {
+	    return {
+	        scope: {
+	            fileread: "="
+	        },
+	        link: function (scope, element, attributes) {
+	            element.bind("change", function (changeEvent) {
+	                scope.$apply(function () {
+	                    scope.fileread = changeEvent.target.files[0];
+	                    // or all selected files:
+	                    // scope.fileread = changeEvent.target.files;
+	                });
+	            });
+	        }
+	    };
+	}]);
+	
+	
+	angular.module('app').directive('filestyle', function () {
+		return {
+			restrict:'AC',
+			scope: true,
+			link: function (scope, element, attrs) {
+				var options = {
+						'input': attrs.input === 'false' ? false : true,
+						'icon': attrs.icon === 'false' ? false : true,
+						'buttonBefore': attrs.buttonBefore === 'true' ? true : false,
+						'disabled': attrs.disabled === 'true' ? true : false,
+						'size': attrs.size,
+						'buttonText': attrs.buttonText,
+						'buttonName': attrs.buttonName,
+						'iconName': attrs.iconName,
+						'badge': attrs.badge === 'false' ? false : true,
+						'placeholder': attrs.placeholder
+				};
+				$(element).filestyle(options);
+			}
+		};
+	});
+	
+	angular.module('app').factory('IntervalExecutions', IntervalExecutions);
+
+	IntervalExecutions.$inject = ['$interval'];
+	function IntervalExecutions($interval) {
+	  var _interval = null;
+
+	  var service = {
+	    start: start,
+	    stop: stop
+	  };
+
+	  return service;
+
+	  function start(seconds, callback) {
+	    service.stop();
+	    _interval = $interval(callback, 1000 * seconds);
+	  }
+
+	  function stop() {
+	    if (_interval) {
+	      $interval.cancel(_interval);
+	      _interval = null;
+	    }
+	  }
+	}
+
+	angular.module('app').factory('IntervalMessages', IntervalMessages);
+
+	IntervalMessages.$inject = ['$interval'];
+	function IntervalMessages($interval) {
+	  var _interval = null;
+
+	  var service = {
+	    start: start,
+	    stop: stop
+	  };
+
+	  return service;
+
+	  function start(seconds, callback) {
+	    service.stop();
+	    _interval = $interval(callback, 1000 * seconds);
+	  }
+
+	  function stop() {
+	    if (_interval) {
+	      $interval.cancel(_interval);
+	      _interval = null;
+	    }
+	  }
+	}
+	
 	function getUserComplete(response) {
 		$rootScope.user = response.data;
 		$location.path(originalPath);
 	}
 
 	appRun.$inject = ['$rootScope', '$location', '$cookieStore', 'PermissionStore', '$localStorage', 'userService', 
-	                  '$state', '$translate', 'tmhDynamicLocale'];
+	                  '$state', '$translate', 'tmhDynamicLocale', 'IntervalExecutions',
+	                  'IntervalMessages'];
 	function appRun($rootScope, $location, $cookieStore, PermissionStore, $localStorage, 
-			userService, $state, $translate, tmhDynamicLocale) {
+			userService, $state, $translate, tmhDynamicLocale, IntervalExecutions,
+			IntervalMessages) {
 
+		//Paramos el manejador de peticiones para comprobar las ejecuciones de forma periodica 
+		//cuando se cambia de pagina
+		$rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
+			IntervalExecutions.stop();    
+			IntervalMessages.stop();
+	    });
 		
 		//Configuramos el idioma por defecto
 		if (angular.isDefined($localStorage.hermesmanager)) {

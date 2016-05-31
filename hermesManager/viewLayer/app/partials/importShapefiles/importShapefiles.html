@@ -1,0 +1,88 @@
+<div class="modal-header">
+    <h3>{{'importShapefiles.titulo' | translate}}</h3>
+</div>
+
+<form name="vm.shapefileForm" novalidate>
+
+	<div data-ng-if="vm.infoAction" data-ng-class="{'top-buffer pull-center alert alert-info' : vm.typeAction === 'info', 'alert alert-danger' : vm.typeAction === 'error'}" data-role="alert">
+		{{vm.infoAction}}
+	</div>	
+	
+    <div class="modal-body">
+    	<!-- DB CONNECTION -->
+  		<div class="form-group">
+  			<label>{{'importShapefiles.dbconnection' | translate}}</label>
+  			<select id="dbconnection" name="dbconnection" data-ng-model="vm.dbconnection" class="form-control"
+					data-ng-options="dbconnection.id as dbconnection.name for dbconnection in vm.dbconnections" 
+					data-ng-change="vm.validarDbConnection()" required>
+			</select>
+			<p data-ng-show="vm.errorConnection" class="avisoError">{{'importShapefiles.dbConnectionRequired' | translate}}</p>
+  		</div>
+  		
+  		<!-- DB CONCEPT -->
+  		<div class="form-group">
+  			<label>{{'importShapefiles.dbconcept' | translate}}</label>
+  			<select id="dbconcept" name="dbconcept" data-ng-model="vm.dbconcept" class="form-control"
+					data-ng-options="dbconcept.id as dbconcept.name for dbconcept in vm.dbconcepts"
+					data-ng-change="vm.validarDbConcept()">
+			</select>
+			<p data-ng-show="vm.errorConcept" class="avisoError">{{'importShapefiles.selectDbConcept' | translate}}</p>
+  		</div>
+  		
+  		<!-- CHECK crear table -->
+  		<div class="form-group">
+  			<label>
+  				<input type="checkbox" data-ng-model="vm.table" name="table" id="table"
+  				data-ng-change="vm.createTable()">
+  				{{'importShapefiles.createTable' | translate}}
+  			</label>
+  			
+  			<br/>
+  			<label>{{'importShapefiles.schemaName' | translate}}</label>
+  			<input data-ng-readonly="!vm.table" type="text" class="form-control" id="schemaName" name="schemaName" data-ng-model="vm.schemaName" >
+  			<label>{{'importShapefiles.tableName' | translate}}</label>
+  			<input data-ng-readonly="!vm.table" type="text" class="form-control" id="tableName" name="tableName" data-ng-model="vm.tableName" >
+  			
+  		</div>
+  		
+  		<!-- Encoding shapefile -->
+  		<div class="form-group">
+  			<label>{{'importShapefiles.charset' | translate}}</label>
+  			<select id="charset" name="charset" data-ng-model="vm.charset" class="form-control"
+					data-ng-options="charset as charset for charset in vm.charsets"
+					data-ng-change="vm.validarCharset()">
+			</select>
+			<p data-ng-show="vm.errorCharset" class="avisoError">{{'importShapefiles.selectCharset' | translate}}</p>
+  		</div>
+  		
+  		<!-- Input File -->
+  		<div class="form-group">
+  		    <label class="control-label">{{'importShapefiles.selectFile' | translate}}</label>
+    		
+    		<button data-type="file" data-ngf-select="vm.uploadFiles($file)" id="filezip" name="filezip" 
+    			data-accept=".zip" data-ng-change="vm.validarFile()" data-ng-model="vm.filezip" required>
+    			{{'importShapefiles.chooseFile' | translate}}
+    		</button>
+      		
+      		<div style="font:smaller">
+      			{{'importShapefiles.file' | translate}} {{vm.filezip.name}}
+      		</div>
+      		
+    		<!-- <input id="filezip" name="filezip" type="file" data-fileread="vm.filezip" accept=".zip" required>-->
+    		<p data-ng-show="vm.errorFilezip" class="avisoError">{{'importShapefiles.fileRequired' | translate}}</p>
+  		</div>
+  		
+  		<!-- CHECK mantener datos -->
+  		<div class="form-group">
+  			<label>
+  				<input type="checkbox" data-ng-model="vm.keep" name="keep" id="keep">
+  				{{'importShapefiles.keepExistingData' | translate}}
+  			</label>
+  		</div>
+     </div>
+     
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-ng-click="vm.submitForm()">{{'importShapefiles.import' | translate}}</button>
+        <span data-us-spinner="{radius:5, width:4, length: 16, position: 'relative'}"></span>
+    </div>
+</form>

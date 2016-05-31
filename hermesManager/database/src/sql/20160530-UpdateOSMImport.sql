@@ -1,0 +1,1 @@
+ALTER TABLE osmimport.dbconcept ADD COLUMN idName VARCHAR(100) NOT NULL DEFAULT '';

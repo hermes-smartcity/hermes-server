@@ -6,11 +6,11 @@
 	ExecutionController.$inject = ['$scope', '$filter', '$http', '$translate', '$interval',
 	                                '$state', '$rootScope', '$q', '$compile', '$uibModal',
 	                                'executionService', 'SweetAlert',  'DTOptionsBuilder', 
-	                                'DTColumnBuilder', 'executions'];
+	                                'DTColumnBuilder', 'executions', 'IntervalExecutions'];
 	
 	function ExecutionController($scope, $filter, $http, $translate, $interval, $state, 
 			$rootScope, $q, $compile, $uibModal , executionService, SweetAlert, 
-			DTOptionsBuilder, DTColumnBuilder, executions) {
+			DTOptionsBuilder, DTColumnBuilder, executions, IntervalExecutions) {
 	
 		var vm = this;
 		
@@ -103,9 +103,8 @@
 	   		});	
 		}
 		
-		$interval(function() {
-			vm.updateExecutions();
-		}, 1000*10); //1 segundo son 1000
+		IntervalExecutions.start(10, updateExecutions);
+		
 	}
 	
 })();

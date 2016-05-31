@@ -19,6 +19,7 @@
 			$scope.name = infoConcept.data.name;
 			$scope.schemaName = infoConcept.data.schemaName;
 			$scope.tableName = infoConcept.data.tableName;
+			$scope.idName = infoConcept.data.idName;
 			$scope.osmIdName = infoConcept.data.osmIdName;
 			$scope.geomName = infoConcept.data.geomName;
 			$scope.dbconnection = infoConcept.data.dbConnection.id;
@@ -40,7 +41,8 @@
 	            	var conceptNueva = {id: null,
 	            			name: $scope.form.conceptForm.name.$viewValue,
 	            			schemaName: $scope.form.conceptForm.schemaName.$viewValue, 
-	            			tableName: $scope.form.conceptForm.tableName.$viewValue,  
+	            			tableName: $scope.form.conceptForm.tableName.$viewValue, 
+	            			idName: $scope.form.conceptForm.idName.$viewValue, 
 	            			osmIdName: $scope.form.conceptForm.osmIdName.$viewValue,  
 	            			geomName: $scope.form.conceptForm.geomName.$viewValue,  
 	            			dbConnection: connection};	
@@ -54,6 +56,7 @@
 	            			name: $scope.form.conceptForm.name.$viewValue,
 	            			schemaName: $scope.form.conceptForm.schemaName.$viewValue, 
 	            			tableName: $scope.form.conceptForm.tableName.$viewValue, 
+	            			idName: $scope.form.conceptForm.idName.$viewValue, 
 	            			osmIdName: $scope.form.conceptForm.osmIdName.$viewValue,  
 	            			geomName: $scope.form.conceptForm.geomName.$viewValue,
 	            			dbConnection: connection};	

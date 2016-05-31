@@ -125,7 +125,8 @@
 				"administration": "Administration",
 				"osmImport": "OSM Import",
 				"jobs": "Jobs",
-				"executions": "Executions"
+				"executions": "Executions",
+				"importShapefiles": "Import shapefiles"
 			},
 			"filtros": {
 				"titulo": "Filters",
@@ -356,6 +357,7 @@
 				"name": "Name",
 				"schemaName": "Schema name",
 				"tableName": "Table name",
+				"idName": "Id name",
 				"osmIdName": "OSMId name",
 				"geomName": "Geom name",
 				"manageAttributes": "Manage attributes",
@@ -365,7 +367,9 @@
 				"nameRequired": "Name required",
 				"tableNameRequired": "Table name required",
 				"osmIdNameRequired": "OSMId name required",
+				"idNameRequired": "Id name required",
 				"geomNameRequired": "Geom name required",
+				"dbConnectionRequired": "DB Connection required"
 			},
 			"dbattribute":{
 				"actions": "Actions",
@@ -452,6 +456,25 @@
 				"id": "ID",
 				"text": "Text",
 				"time": "Time"
+			},
+			"importShapefiles":{
+				"titulo": "Import Shapefile",
+				"dbconnection": "DB Connection",
+				"dbconcept": "DB Concept",
+				"createTable": "Create Table",
+				"tableName": "Name",
+				"schemaName": "Schema",
+				"selectFile": "Select File",
+				"selectDbConcept": "Select DB Concept or mark the check 'Create table' and write a schema/name table",
+				"import": "Import",
+				"dbConnectionRequired": "DB Connection required",
+				"dbConceptRequired": "DB Concept required",
+				"fileRequired": "File required",
+				"file": "File:",
+				"keepExistingData":"Keep existing data",
+				"charset": "Charset",
+				"selectCharset": "Select Charset",
+				"chooseFile":"..."
 			}
 		});
 	}

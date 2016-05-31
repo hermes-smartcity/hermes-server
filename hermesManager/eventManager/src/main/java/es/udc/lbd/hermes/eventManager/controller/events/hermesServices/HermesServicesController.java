@@ -45,6 +45,7 @@ import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.service.UsuarioWebService;
 import es.udc.lbd.hermes.model.util.exceptions.PointDestinyException;
 import es.udc.lbd.hermes.model.util.exceptions.PointOriginException;
+import es.udc.lbd.hermes.model.util.exceptions.RouteException;
 
 @RestController
 @RequestMapping(value = "/api/hermes")
@@ -159,7 +160,16 @@ public class HermesServicesController {
 			
 			//El error de debe a que no se encontro punto de destino
 			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
+			
+		}catch (RouteException e) {
+			
+			String mensaje = messageSource.getMessage("route.exception", null, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);
+			
+			//El error de debe a que no se encontro punto de destino
+			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 		}
+
 
 	}
 	

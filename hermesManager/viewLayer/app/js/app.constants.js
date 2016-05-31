@@ -242,3 +242,9 @@ var url_delete_execution = url_execution+"delete";
 var url_message = url_servidor+'api/message/';
 var url_messages = url_message+'json/messages';
 var url_messages_with_status = url_message+'json/messagesstatus';
+
+//Controlador import shapefile
+var url_importshapefile = url_servidor+'api/importshapefile/';
+var url_import_shape = url_importshapefile+"import";
+var url_charsets = url_importshapefile+'json/charsets';
+

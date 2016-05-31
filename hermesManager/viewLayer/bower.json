@@ -37,7 +37,8 @@
     "angular-google-chart": "^0.1.0",
     "ngSweetAlert": "angular-sweetalert#^1.1.0",
     "angular-loading-spinner": "^0.0.3",
-    "webgl-heatmap-leaflet": "*"
+    "webgl-heatmap-leaflet": "*",
+    "ng-file-upload": "^12.0.4"
   },
   "authors": [
     "cmartinez <cristinacmp1988@gmail.com>"

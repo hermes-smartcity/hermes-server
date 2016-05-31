@@ -14,6 +14,8 @@ CREATE TABLE dbconnection (
   host VARCHAR(150) NOT NULL,
   port int NOT NULL,
   dbName VARCHAR(100) NOT NULL,
+  userDb VARCHAR(160) NOT NULL,
+  passDb VARCHAR(160) NOT NULL,
   CONSTRAINT iddbconnection_pk PRIMARY KEY (id)
 )
 ;
@@ -28,6 +30,9 @@ CREATE TABLE dbconcept (
   name VARCHAR(100) NOT NULL,
   schemaName VARCHAR(150),
   tableName VARCHAR(150) NOT NULL,
+  osmIdName VARCHAR(100) NOT NULL,
+  geomName VARCHAR(100) NOT NULL,
+  idName VARCHAR(100) NOT NULL,
   idDbConnection bigint,
   CONSTRAINT iddbconcept_pk PRIMARY KEY (id),
   CONSTRAINT dbconcept_fk_dbconnection FOREIGN KEY (idDbConnection) REFERENCES dbconnection(id) ON DELETE CASCADE

@@ -16,6 +16,7 @@ import es.udc.lbd.hermes.model.smartdriver.NetworkLink;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
+import es.udc.lbd.hermes.model.util.exceptions.RouteException;
 
 @Repository
 public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implements NetworkDao {
@@ -103,58 +104,65 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<RouteSegment> obtainListSections(Integer originPoint, Integer destinyPoint){
+	public List<RouteSegment> obtainListSections(Integer originPoint, Integer destinyPoint) throws RouteException{
 		
-		String queryString = "SELECT osm_id as \"linkId\", kmh as \"maxSpeed\", osm_name as \"linkName\", " +
-							"case " +
-								"when clazz = 1 then 'highway' " +
-								"when clazz = 2 then 'highway_link' " +
-								"when clazz = 3 then 'trunk' " +
-								"when clazz = 4 then 'trunk_link' " +
-								"when clazz = 5 then 'primary' " +
-								"when clazz = 6 then 'primary_link' " +
-								"when clazz = 7 then 'secondary' " +
-								"when clazz = 8 then 'secondary_link' " +
-								"when clazz = 9 then 'tertiary' " +
-								"when clazz = 10 then 'tertiary_link' " +
-								"when clazz = 11 then 'residential' " +
-								"when clazz = 12 then 'road' " +
-								"when clazz = 13 then 'unclassified' " +
-								"when clazz = 14 then 'service' " +
-								"when clazz = 15 then 'living_street' " +
-								"when clazz = 16 then 'pedestrian' " +
-								"when clazz = 17 then 'track' " +
-								"when clazz = 18 then 'path' " +
-								"when clazz = 19 then 'cicleway' " +
-								"when clazz = 20 then 'footway' " +
-								"when clazz = 21 then 'steps' " +
-							"end as \"linkType\", km as length, link.cost as cost, geom_way " +
-							"FROM network.link, " +
-							"(SELECT seq, id1 as node, id2 as edge, cost " +
-							"FROM pgr_astar('SELECT id, source, target, cost, x1, y1, x2, y2, " +
-													"reverse_cost " +
-											  "FROM network.link " +
-											  "WHERE geom_way && " +
-											  	"(SELECT st_expand(st_envelope(st_union(geom_way)),1) " +
-											  	"FROM network.link " +
-											  	"WHERE source IN ('||:originPoint || ', ' ||:destinyPoint||'))', " +
-											  	":originPoint, :destinyPoint, true, true)) as path " +
-							"where link.id = path.edge " +
-							"order by path.seq";
+		List<RouteSegment> listado = null;
+		try{
+			String queryString = "SELECT osm_id as \"linkId\", kmh as \"maxSpeed\", osm_name as \"linkName\", " +
+								"case " +
+									"when clazz = 1 then 'highway' " +
+									"when clazz = 2 then 'highway_link' " +
+									"when clazz = 3 then 'trunk' " +
+									"when clazz = 4 then 'trunk_link' " +
+									"when clazz = 5 then 'primary' " +
+									"when clazz = 6 then 'primary_link' " +
+									"when clazz = 7 then 'secondary' " +
+									"when clazz = 8 then 'secondary_link' " +
+									"when clazz = 9 then 'tertiary' " +
+									"when clazz = 10 then 'tertiary_link' " +
+									"when clazz = 11 then 'residential' " +
+									"when clazz = 12 then 'road' " +
+									"when clazz = 13 then 'unclassified' " +
+									"when clazz = 14 then 'service' " +
+									"when clazz = 15 then 'living_street' " +
+									"when clazz = 16 then 'pedestrian' " +
+									"when clazz = 17 then 'track' " +
+									"when clazz = 18 then 'path' " +
+									"when clazz = 19 then 'cicleway' " +
+									"when clazz = 20 then 'footway' " +
+									"when clazz = 21 then 'steps' " +
+								"end as \"linkType\", km as length, link.cost as cost, geom_way " +
+								"FROM network.link, " +
+								"(SELECT seq, id1 as node, id2 as edge, cost " +
+								"FROM pgr_astar('SELECT id, source, target, cost, x1, y1, x2, y2, " +
+														"reverse_cost " +
+												  "FROM network.link " +
+												  "WHERE geom_way && " +
+												  	"(SELECT st_expand(st_envelope(st_union(geom_way)),1) " +
+												  	"FROM network.link " +
+												  	"WHERE source IN ('||:originPoint || ', ' ||:destinyPoint||'))', " +
+												  	":originPoint, :destinyPoint, true, true)) as path " +
+								"where link.id = path.edge " +
+								"order by path.seq";
+			
+			SQLQuery query = getSession().createSQLQuery(queryString);
+			query.addScalar("linkId", LongType.INSTANCE);
+			query.addScalar("maxSpeed", IntegerType.INSTANCE);
+			query.addScalar("linkName", StringType.INSTANCE);
+			query.addScalar("linkType", StringType.INSTANCE);
+			query.addScalar("length", DoubleType.INSTANCE);
+			query.addScalar("cost", DoubleType.INSTANCE);
+			query.addScalar("geom_way", GeometryType.INSTANCE);		
+					
+			query.setParameter("originPoint", originPoint);
+			query.setParameter("destinyPoint", destinyPoint);
+					
+			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
+			listado = (List<RouteSegment>) query.list();
+		} catch (org.hibernate.exception.GenericJDBCException e){
+			throw new RouteException();
+		}
 		
-		SQLQuery query = getSession().createSQLQuery(queryString);
-		query.addScalar("linkId", LongType.INSTANCE);
-		query.addScalar("maxSpeed", IntegerType.INSTANCE);
-		query.addScalar("linkName", StringType.INSTANCE);
-		query.addScalar("linkType", StringType.INSTANCE);
-		query.addScalar("length", DoubleType.INSTANCE);
-		query.addScalar("cost", DoubleType.INSTANCE);
-		query.addScalar("geom_way", GeometryType.INSTANCE);		
-				
-		query.setParameter("originPoint", originPoint);
-		query.setParameter("destinyPoint", destinyPoint);
-				
-		query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
-		return (List<RouteSegment>) query.list();
+		return listado;
 	}
 }
