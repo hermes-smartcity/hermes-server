@@ -451,6 +451,10 @@
 			}
 		}
 		
+		function listaCallBack(data){
+			return data;
+		}
+		
 		function aplicarFiltros() {		
 			if (vm.showHeatMap){
 				aplicarFiltrosHeatMap();
@@ -463,7 +467,7 @@
 			//Para saber cuales estan activadas, obtenemos de la lista de overlays del mapa
 			//las capas anadidas y para cada una comprobamos si esta activada. Si lo esta
 			//hacemos la correspondiente peticion al servidor
-			/*var listaOverlayRecalculada = [];
+			var listaOverlayRecalculada = [];
 			for(var i = 0; i< vm.listaOverlay.length; i++){
 				var overlay = vm.listaOverlay[i];
 				
@@ -478,9 +482,13 @@
 						//hacemos la peticion de los datos de nuevo
 						var geojsonMarkerOptions = overlay.style;
 						var dbconceptId = overlay.id;
-						//crearemos un nuevo overlay con el mismo estilo que antes
-						listaOverlayRecalculada = vm.reloadGeojson(dbconceptId, geojsonMarkerOptions, listaOverlayRecalculada);
+						var dbconceptName = overlay.name;
 						
+						//crearemos un nuevo overlay con el mismo estilo que antes
+						vm.reloadGeojson(dbconceptId, dbconceptName, geojsonMarkerOptions, listaOverlayRecalculada).then(function(data){
+							listaOverlayRecalculada = data;
+						});
+						 							   
 						//borramos del mapa la capa vieja
 						map.removeLayer(overlay);
 						
@@ -490,7 +498,7 @@
 				}
 			}
 			
-			vm.listaOverlay = listaOverlayRecalculada;*/
+			vm.listaOverlay = listaOverlayRecalculada;
 		}
 
 		function recargarTabla(){
@@ -1136,6 +1144,7 @@
 				//anadimos a la lista de overlays creados
 				var capa = {
 					id: vm.dbconcept.id,
+					name: vm.dbconcept.name,
 					layer: myLayer,
 					style: geojsonMarkerOptions
 				};
@@ -1144,7 +1153,7 @@
 			}
 		}
 		
-		function reloadGeojson(dbconceptId, geojsonMarkerOptions, listaOverlayRecalculada){
+		function reloadGeojson(dbconceptId, dbconceptName, geojsonMarkerOptions, listaOverlayRecalculada){
 			var bounds = map.getBounds();				
 			var esLng = bounds.getSouthEast().lng;
 			var esLat = bounds.getSouthEast().lat;
@@ -1186,7 +1195,7 @@
 					});
 				}
 				
-				layerControl.addOverlay(myLayer, vm.dbconcept.name);
+				layerControl.addOverlay(myLayer, dbconceptName);
 				
 				// set the layer visible and the box checked. Without this the 
 				// layer is not visible on map load
@@ -1194,7 +1203,8 @@
 				
 				//anadimos a la lista de overlays creados
 				var capa = {
-					id: vm.dbconcept.id,
+					id: dbconceptId,
+					name: dbconceptName, 
 					layer: myLayer,
 					style: geojsonMarkerOptions
 				};
