@@ -171,6 +171,7 @@ var url_delete_dbconcept = url_dbconcept+"delete";
 var url_register_dbconcept = url_dbconcept+"register";
 var url_edit_dbconcept = url_dbconcept+"edit";
 var url_get_dbconcept = url_dbconcept+'json/dbConcept';
+var url_dbconcept_geojson = url_dbconcept+'geojson';
 
 //Controlador db attributes
 var url_dbattribute = url_servidor+'api/dbattribute/';
@@ -215,7 +216,6 @@ var url_edit_job = url_job+"edit";
 var url_get_job = url_job+'json/job';
 var url_execute_job = url_job+"executeJob";
 var url_launch_execute_job = url_job+"launchExecuteJob";
-
 
 //Controlador concept transformation
 var url_concepttransformation = url_servidor+'api/concepttransformation/';

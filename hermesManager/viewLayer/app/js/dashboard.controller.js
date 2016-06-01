@@ -4,12 +4,13 @@
 	angular.module('app').controller('DashboardController', DashboardController);
 
 	DashboardController.$inject = ['$scope', 'usuarios', 'eventoProcesado', 'eventsToday', 'statistics', 
-	                               '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', '$state',
-	                               'DTOptionsBuilder', 'DTColumnBuilder', '$translate', 'dashboardService', '$q'];
+	                               '$http', '$timeout', '$log', '$filter', 'eventsService', '$rootScope', 
+	                               '$state', 'DTOptionsBuilder', 'DTColumnBuilder', '$translate', 
+	                               'dashboardService', '$q', 'dbconcepts'];
 
 	function DashboardController($scope, usuarios, eventoProcesado, eventsToday, statistics, 
-			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, DTColumnBuilder,
-			$translate, dashboardService, $q) {
+			$http, $timeout, $log, $filter, eventsService, $rootScope, $state, DTOptionsBuilder, 
+			DTColumnBuilder, $translate, dashboardService, $q, dbconcepts) {
 
 		var vm = this;
 		vm.pintarMapaVehicleLocations = pintarMapaVehicleLocations;
@@ -31,7 +32,8 @@
 		vm.usuarios = usuarios;
 		vm.eventsToday = eventsToday;
 		vm.eventoProcesado = eventoProcesado;
-
+		vm.dbconcepts = dbconcepts;
+		
 		vm.totalMUsers = statistics.contarUsuariosMovil;
 		vm.totalWebUsers = statistics.contarUsuariosWeb;
 		vm.numberActiveUsers = statistics.numberActiveUsers;
@@ -68,6 +70,12 @@
 		vm.numberofcells = $rootScope.numberofcells;
 		vm.changeEventType = changeEventType;
 				
+		vm.labelDbConcept = labelDbConcept;
+		vm.getRandomColor = getRandomColor;
+		vm.addGeojson = addGeojson;
+		vm.reloadGeojson = reloadGeojson;
+		vm.listaOverlay = [];
+		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);		
@@ -409,6 +417,7 @@
 			} else{
 				console.log("No corresponde a ningún tipo --> En construcción");
 			}
+			
 		}
 		
 		function aplicarFiltrosHeatMap(){
@@ -448,6 +457,40 @@
 			}else{
 				aplicarFiltrosMapa();
 			}
+			
+			//Para cada una de las capas overlays que estan activas tenemos que calcular
+			//los datos en la pantalla de nuevo
+			//Para saber cuales estan activadas, obtenemos de la lista de overlays del mapa
+			//las capas anadidas y para cada una comprobamos si esta activada. Si lo esta
+			//hacemos la correspondiente peticion al servidor
+			/*var listaOverlayRecalculada = [];
+			for(var i = 0; i< vm.listaOverlay.length; i++){
+				var overlay = vm.listaOverlay[i];
+				
+				if (overlay.layer !== null){
+					if (map.hasLayer(overlay.layer)){
+						//Eliminamos todas las capas que contiene ese overlay
+						var capas = overlay.layer._layers;
+						for (var j in capas){
+							map.removeLayer(capas[j]);	
+						}
+						
+						//hacemos la peticion de los datos de nuevo
+						var geojsonMarkerOptions = overlay.style;
+						var dbconceptId = overlay.id;
+						//crearemos un nuevo overlay con el mismo estilo que antes
+						listaOverlayRecalculada = vm.reloadGeojson(dbconceptId, geojsonMarkerOptions, listaOverlayRecalculada);
+						
+						//borramos del mapa la capa vieja
+						map.removeLayer(overlay);
+						
+						//borramos la que habia para que no salgan duplicadas
+						layerControl.removeLayer(overlay.layer);
+					}
+				}
+			}
+			
+			vm.listaOverlay = listaOverlayRecalculada;*/
 		}
 
 		function recargarTabla(){
@@ -1024,6 +1067,146 @@
 			vm.mostrarMapa();
 		}
 
+		function labelDbConcept(nameDbConcept, nameDbConnection){
+			return nameDbConcept + "(" + nameDbConnection + ")";
+		}
+		
+		function getRandomColor() {
+		    var letters = '0123456789ABCDEF'.split('');
+		    var color = '#';
+		    for (var i = 0; i < 6; i++ ) {
+		       color += letters[Math.round(Math.random() * 15)];
+		    }
+		    return color;
+		}
+		
+		function addGeojson(){
+			var bounds = map.getBounds();				
+			var esLng = bounds.getSouthEast().lng;
+			var esLat = bounds.getSouthEast().lat;
+			var wnLng = bounds.getNorthWest().lng;
+			var wnLat = bounds.getNorthWest().lat;
+
+			dashboardService.recuperaGeojsonDdConcept(vm.dbconcept.id, esLng, esLat, wnLng, wnLat).then(recuperaGeojsonDdConceptComplete);
+			// En cuanto tenga los eventos los pinto
+			function recuperaGeojsonDdConceptComplete(response) {
+				
+				var geojsonMarkerOptions = {
+					    radius: 8,
+					    fillColor: vm.getRandomColor(),
+					    color: "#000",
+					    weight: 1,
+					    opacity: 1,
+					    fillOpacity: 0.8
+				};
+					
+				var myLayer;
+				if (response.features !== null){
+					
+					vm.noFeatures = false;
+										
+					myLayer = L.geoJson(response, {
+						pointToLayer: function (feature, latlng) {
+					        return L.circleMarker(latlng, geojsonMarkerOptions);
+					    },
+					    /*onEachFeature: function (feature, layer) {
+					    	layer.bindPopup("OsmId:" + feature.properties.osm_id);
+					    }*/
+					});
+					
+				}else{
+					vm.noFeatures = true;
+					
+					myLayer = L.geoJson(null, {
+						pointToLayer: function (feature, latlng) {
+					        return L.circleMarker(latlng, geojsonMarkerOptions);
+					    },
+					    /*onEachFeature: function (feature, layer) {
+					    	layer.bindPopup("OsmId:" + feature.properties.osm_id);
+					    }*/
+					});
+				}
+				
+				layerControl.addOverlay(myLayer, vm.dbconcept.name);
+				
+				// set the layer visible and the box checked. Without this the 
+				// layer is not visible on map load
+				map.addLayer(myLayer);
+				
+				//anadimos a la lista de overlays creados
+				var capa = {
+					id: vm.dbconcept.id,
+					layer: myLayer,
+					style: geojsonMarkerOptions
+				};
+				
+				vm.listaOverlay.push(capa);
+			}
+		}
+		
+		function reloadGeojson(dbconceptId, geojsonMarkerOptions, listaOverlayRecalculada){
+			var bounds = map.getBounds();				
+			var esLng = bounds.getSouthEast().lng;
+			var esLat = bounds.getSouthEast().lat;
+			var wnLng = bounds.getNorthWest().lng;
+			var wnLat = bounds.getNorthWest().lat;
+			
+			var defered = $q.defer();	
+			var promise = defered.promise;
+			
+			dashboardService.recuperaGeojsonDdConcept(dbconceptId, esLng, esLat, wnLng, wnLat).then(recuperaGeojsonDdConceptComplete);
+			// En cuanto tenga los eventos los pinto
+			function recuperaGeojsonDdConceptComplete(response) {
+				
+				var myLayer;
+				if (response.features !== null){
+					
+					vm.noFeatures = false;
+					
+					myLayer = L.geoJson(response, {
+						pointToLayer: function (feature, latlng) {
+					        return L.circleMarker(latlng, geojsonMarkerOptions);
+					    },
+					    /*onEachFeature: function (feature, layer) {
+					    	layer.bindPopup("OsmId:" + feature.properties.osm_id);
+					    }*/
+					});
+					
+					
+				}else{
+					vm.noFeatures = true;
+				
+					myLayer = L.geoJson(null, {
+						pointToLayer: function (feature, latlng) {
+					        return L.circleMarker(latlng, geojsonMarkerOptions);
+					    },
+					    /*onEachFeature: function (feature, layer) {
+					    	layer.bindPopup("OsmId:" + feature.properties.osm_id);
+					    }*/
+					});
+				}
+				
+				layerControl.addOverlay(myLayer, vm.dbconcept.name);
+				
+				// set the layer visible and the box checked. Without this the 
+				// layer is not visible on map load
+				map.addLayer(myLayer);
+				
+				//anadimos a la lista de overlays creados
+				var capa = {
+					id: vm.dbconcept.id,
+					layer: myLayer,
+					style: geojsonMarkerOptions
+				};
+				
+				listaOverlayRecalculada.push(capa);
+			
+				defered.resolve(listaOverlayRecalculada);
+			}
+			
+			return promise;
+		}
+		
 		// Inicialmente sé que voy a pintar los vehicleLocation (la opción por defecto en el select)
 		vm.changeEventType();
 		vm.aplicarFiltros();

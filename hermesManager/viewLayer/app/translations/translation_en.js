@@ -41,7 +41,9 @@
 				"titulo": "Dashboard",
 				"mapa": "Map",
 				"tabla": "Table",
-				"heatMap": "Heat Map"
+				"heatMap": "Heat Map",
+				"dbconcept": "DBConcept",
+				"noFeatures": "No features in the selected DBConcept"
 			},
 			"dataSection":{
 				"noEvents": "There are not events to show",

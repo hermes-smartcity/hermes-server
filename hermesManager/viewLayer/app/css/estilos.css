@@ -323,3 +323,8 @@ ol.submenu li.activo a,ol.submenu li.activo span {
 .mylist-unstyled {
     list-style: none;
 }
+
+.separacionDerecha {
+	padding-left: 10px;
+	margin-top:-7px;
+}
