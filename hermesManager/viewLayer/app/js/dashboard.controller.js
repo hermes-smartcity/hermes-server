@@ -468,6 +468,7 @@
 			//las capas anadidas y para cada una comprobamos si esta activada. Si lo esta
 			//hacemos la correspondiente peticion al servidor
 			var listaOverlayRecalculada = [];
+			var promesas = [];
 			for(var i = 0; i< vm.listaOverlay.length; i++){
 				var overlay = vm.listaOverlay[i];
 				
@@ -485,9 +486,8 @@
 						var dbconceptName = overlay.name;
 						
 						//crearemos un nuevo overlay con el mismo estilo que antes
-						vm.reloadGeojson(dbconceptId, dbconceptName, geojsonMarkerOptions, listaOverlayRecalculada).then(function(data){
-							listaOverlayRecalculada = data;
-						});
+						//esto va metiendo mediante promesas las nuevas capas en listaOverlayRecalculada
+						promesas.push(vm.reloadGeojson(dbconceptId, dbconceptName, geojsonMarkerOptions, listaOverlayRecalculada));
 						 							   
 						//borramos del mapa la capa vieja
 						map.removeLayer(overlay);
@@ -498,7 +498,11 @@
 				}
 			}
 			
-			vm.listaOverlay = listaOverlayRecalculada;
+			//cuando se han cargado todos las capas nuevas, asignamos los valores a listaoverlya
+			$q.when(promesas).then(function(){
+				vm.listaOverlay = listaOverlayRecalculada;	
+			});
+			
 		}
 
 		function recargarTabla(){
@@ -1153,6 +1157,55 @@
 			}
 		}
 		
+		// En cuanto tenga los eventos los pinto
+		function recuperaGeojsonDdConceptComplete(response) {
+			
+			var myLayer;
+			if (response.features !== null){
+				
+				vm.noFeatures = false;
+				
+				myLayer = L.geoJson(response, {
+					pointToLayer: function (feature, latlng) {
+				        return L.circleMarker(latlng, geojsonMarkerOptions);
+				    },
+				    /*onEachFeature: function (feature, layer) {
+				    	layer.bindPopup("OsmId:" + feature.properties.osm_id);
+				    }*/
+				});
+				
+				
+			}else{
+				vm.noFeatures = true;
+			
+				myLayer = L.geoJson(null, {
+					pointToLayer: function (feature, latlng) {
+				        return L.circleMarker(latlng, geojsonMarkerOptions);
+				    },
+				    /*onEachFeature: function (feature, layer) {
+				    	layer.bindPopup("OsmId:" + feature.properties.osm_id);
+				    }*/
+				});
+			}
+			
+			layerControl.addOverlay(myLayer, dbconceptName);
+			
+			// set the layer visible and the box checked. Without this the 
+			// layer is not visible on map load
+			map.addLayer(myLayer);
+			
+			//anadimos a la lista de overlays creados
+			var capa = {
+				id: dbconceptId,
+				name: dbconceptName, 
+				layer: myLayer,
+				style: geojsonMarkerOptions
+			};
+			
+			listaOverlayRecalculada.push(capa);
+		
+		}
+		
 		function reloadGeojson(dbconceptId, dbconceptName, geojsonMarkerOptions, listaOverlayRecalculada){
 			var bounds = map.getBounds();				
 			var esLng = bounds.getSouthEast().lng;
@@ -1162,6 +1215,8 @@
 			
 			var defered = $q.defer();	
 			var promise = defered.promise;
+			
+			
 			
 			dashboardService.recuperaGeojsonDdConcept(dbconceptId, esLng, esLat, wnLng, wnLat).then(recuperaGeojsonDdConceptComplete);
 			// En cuanto tenga los eventos los pinto
