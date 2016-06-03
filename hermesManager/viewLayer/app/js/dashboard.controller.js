@@ -499,7 +499,7 @@
 			}
 			
 			//cuando se han cargado todos las capas nuevas, asignamos los valores a listaoverlya
-			$q.when(promesas).then(function(){
+			$q.all(promesas).then(function(){
 				vm.listaOverlay = listaOverlayRecalculada;	
 			});
 			
