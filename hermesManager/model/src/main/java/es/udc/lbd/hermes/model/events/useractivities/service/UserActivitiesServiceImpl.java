@@ -129,6 +129,13 @@ public class UserActivitiesServiceImpl implements UserActivitiesService{
 		return listado;
 	}
 	
-	
+	public void delete(String sourceId, Calendar starttime){
+		
+		UsuarioMovil usuarioMovil = usuarioMovilDao.findBySourceId(sourceId);
+		if(usuarioMovil != null){
+			userActivitiesDao.delete(usuarioMovil.getId(), starttime);
+		}	
+				
+	}
 	
 }

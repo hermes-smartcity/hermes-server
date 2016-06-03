@@ -31,6 +31,8 @@ public class EventDataSerializer extends StdSerializer<EventData> {
 		registerEventType(ZtreamyHeartRateData.class, "Heart Rate Data");
 		registerEventType(ZtreamyUserActivityList.class, "User Activities");
 		registerEventType(ZtreamyUserLocationList.class, "User Locations");
+		registerEventType(ZtreamyUserActivityList.class, "Full User Activities");
+		registerEventType(ZtreamyUserLocationList.class, "Full User Locations");
 	}
 	
 	void registerEventType(Class<? extends EventData> eventTypeClass, String uniqueName) {

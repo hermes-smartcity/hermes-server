@@ -7,6 +7,8 @@ import es.udc.lbd.hermes.eventManager.strategy.ContextDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.DataSectionEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.DriverFeaturesEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.EventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.FullUserActivitiesEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.FullUserLocationsEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HeartRateDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HighAccelerationEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.HighDecelerationEventStrategy;
@@ -38,6 +40,8 @@ public class EventFactory {
 		registry.put(EventType.HEART_RATE_DATA, new HeartRateDataEventStrategy());
 		registry.put(EventType.USER_ACTIVITIES, new UserActivitiesEventStrategy());
 		registry.put(EventType.USER_LOCATIONS, new UserLocationsEventStrategy());
+		registry.put(EventType.FULL_USER_ACTIVITIES, new FullUserActivitiesEventStrategy());
+		registry.put(EventType.FULL_USER_LOCATIONS, new FullUserLocationsEventStrategy());
 	}
 
 	private EventFactory() {

@@ -253,4 +253,54 @@ public class EventParserTest {
 			Assert.fail(e.getLocalizedMessage());
 		}		
 	}
+	
+	/*@Test
+	public void testFullUserActivities() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/fulluseractivities.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserActivity) {
+						Assert.assertEquals("unknown", ((ZtreamyUserActivity)eventData).getName());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+	
+	@Test
+	public void testFullUserLocations() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/fulluserlocations.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserLocation) {
+						Assert.assertEquals(new Integer(30), ((ZtreamyUserLocation)eventData).getAccuracy());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}*/
 }

@@ -4,7 +4,7 @@ public enum EventType {
 
 	VEHICLE_LOCATION, HIGH_SPEED, HIGH_ACCELERATION, HIGH_DECELERATION, HIGH_HEART_RATE, 
 	DATA_SECTION, DRIVER_FEATURES, SLEEP_DATA, STEPS_DATA, HEART_RATE_DATA, CONTEXT_DATA,
-	USER_ACTIVITIES, USER_LOCATIONS;
+	USER_ACTIVITIES, USER_LOCATIONS, FULL_USER_ACTIVITIES, FULL_USER_LOCATIONS;
 
 	public String getName(){		
 		return this.name();
@@ -38,6 +38,10 @@ public enum EventType {
 			return USER_ACTIVITIES;
 		case "User Locations":
 			return USER_LOCATIONS;
+		case "Full User Activities":
+			return FULL_USER_ACTIVITIES;
+		case "Full User Locations":
+			return FULL_USER_LOCATIONS;
 		default:
 			return null;
 		}
