@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.linearref.LengthIndexedLine;
 
 import es.udc.lbd.hermes.model.smartdriver.NetworkLink;
@@ -169,7 +170,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 			for (RouteSegment routeSegment:listado){
 				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
 				if (!firstCoordinate.equals2D(previousCoordinate)) {
-					routeSegment.getGeom_way().reverse();
+					routeSegment.setGeom_way((LineString)routeSegment.getGeom_way().reverse());
 				}
 				previousCoordinate = routeSegment.getGeom_way().getEndPoint().getCoordinate();
 			}
@@ -243,7 +244,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 			for (RouteSegment routeSegment:listado){
 				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
 				if (!firstCoordinate.equals2D(previousEnd)) {
-					routeSegment.getGeom_way().reverse();
+					routeSegment.setGeom_way((LineString)routeSegment.getGeom_way().reverse());
 				}
 				double rsSpeed = kmPerHourToDegreesPerSecond(routeSegment.getMaxSpeed() * sf, routeSegment.getGeom_way().getStartPoint().getY());
 				LengthIndexedLine lil = new LengthIndexedLine(routeSegment.getGeom_way());
