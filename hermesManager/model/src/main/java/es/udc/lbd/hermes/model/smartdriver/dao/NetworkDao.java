@@ -5,6 +5,7 @@ import java.util.List;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLink;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
+import es.udc.lbd.hermes.model.smartdriver.RoutePoint;
 import es.udc.lbd.hermes.model.util.dao.GenericDao;
 import es.udc.lbd.hermes.model.util.exceptions.RouteException;
 
@@ -14,5 +15,6 @@ public interface NetworkDao extends GenericDao<NetworkLink, Long> {
 	
 	public Integer obtainOriginPoint(Double fromLat, Double fromLng);
 	public Integer obtainDestinyPoint(Double toLat, Double toLng);
-	public List<RouteSegment> obtainListSections(Integer originPoint, Integer destinyPoint)  throws RouteException;
+	public List<RouteSegment> obtainListSections(Integer originPoint, Integer destinyPoint, Double fromLat, Double fromLng)  throws RouteException;
+	public List<RoutePoint> simulateListSections(Integer originPoint, Integer destinyPoint, Double fromLat, Double fromLng, Double sf, Double secondsPerStep)  throws RouteException;
 }
