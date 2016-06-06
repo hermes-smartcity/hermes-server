@@ -39,7 +39,6 @@ import es.udc.lbd.hermes.model.osmimport.dbattribute.DBAttribute;
 import es.udc.lbd.hermes.model.osmimport.dbattribute.DBAttributeType;
 import es.udc.lbd.hermes.model.osmimport.dbattribute.dao.DBAttributeDao;
 import es.udc.lbd.hermes.model.osmimport.dbconcept.DBConcept;
-import es.udc.lbd.hermes.model.osmimport.dbconnection.dao.DBConnectionDao;
 import es.udc.lbd.hermes.model.osmimport.execution.Execution;
 import es.udc.lbd.hermes.model.osmimport.execution.ExecutionStatus;
 import es.udc.lbd.hermes.model.osmimport.execution.dao.ExecutionDao;
@@ -85,9 +84,6 @@ public class JobServiceImpl implements JobService{
 	
 	@Autowired
 	private OsmFilterDao osmFilerDao;
-	
-	@Autowired
-	private DBConnectionDao dbConnectionDao;
 	
 	@Autowired
 	private AttributeMappingDao attributeMappingDao;

@@ -9,7 +9,8 @@
 
 		var service = {
 				recuperarDatosPeticion: recuperarDatosPeticion,
-				recuperarDatosPeticionSinGeometria: recuperarDatosPeticionSinGeometria
+				recuperarDatosPeticionSinGeometria: recuperarDatosPeticionSinGeometria,
+				recuperaGeojsonDdConcept: recuperaGeojsonDdConcept 
 		};
 
 		return service;
@@ -77,7 +78,25 @@
 			}
 			
 			function getRequestFailed(error) {
-				$log.error('XHR Failed for recuperarDatosPeticion.' + error.data);
+				$log.error('XHR Failed for recuperarDatosPeticionSinGeometria.' + error.data);
+			}
+		}
+		
+		function recuperaGeojsonDdConcept(dbconceptId, esLng, esLat, wnLng, wnLat) {
+
+			var url = url_dbconcept_geojson;
+			url+="?dbconceptId=" + dbconceptId + "&wnLng="+wnLng+"&wnLat="+wnLat+"&esLng="+esLng+"&esLat="+esLat;
+
+			return $http.get(url)
+				.then(getRequestComplete)
+				.catch(getRequestFailed);
+			
+			function getRequestComplete(response) {
+				return response.data;
+			}
+			
+			function getRequestFailed(error) {
+				$log.error('XHR Failed for recuperaGeojsonDdConcept.' + error.data);
 			}
 		}
 

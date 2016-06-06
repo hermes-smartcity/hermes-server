@@ -149,4 +149,13 @@ public class UserLocationsServiceImpl implements UserLocationsService{
 
 		return userLocationsDao.obterUserLocationsGrouped(idUsuario, fechaIni, fechaFin, bounds, startIndex, numberOfCells);
 	}
+	
+	public void delete(String sourceId, Calendar starttime){
+		
+		UsuarioMovil usuarioMovil = usuarioMovilDao.findBySourceId(sourceId);
+		if(usuarioMovil != null){
+			userLocationsDao.delete(usuarioMovil.getId(), starttime);
+		}	
+				
+	}		
 }

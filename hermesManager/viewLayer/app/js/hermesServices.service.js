@@ -15,6 +15,7 @@
 				getLinkInformation: getLinkInformation,
 				getAggregateMeasurement: getAggregateMeasurement,
 				getComputeRoute: getComputeRoute,
+				getSimulateRoute: getSimulateRoute,
 				getVehicleLocation: getVehicleLocation,
 				getMeasurement: getMeasurement,
 				getDataSection: getDataSection,
@@ -28,7 +29,7 @@
 		};
 
 		return service;
-	
+
 		function getServices() {
 			return $http.get(url_hermesS_services)
 				.then(getServicesComplete)
@@ -40,16 +41,16 @@
 				$log.error('XHR Failed for getServices.' + error.data);
 			}
 		}
-	
+
 		// Opcion uno, asi, sino con then and catch
-		function getMethods (service) {		
+		function getMethods (service) {
 			return $http({
 				method : 'GET',
 				url : url_hermesS_methods,
 				params: {"service": service}
 			});
 		}
-		
+
 		function getTypes() {
 			return $http.get(url_hermesS_types)
 				.then(getTypesComplete)
@@ -61,7 +62,7 @@
 				$log.error('XHR Failed for getTypes.' + error.data);
 			}
 		}
-		
+
 		function getMeasurementTypes() {
 			return $http.get(url_hermesS_measurementTypes)
 				.then(getMeasurementTypesComplete)
@@ -73,7 +74,7 @@
 				$log.error('XHR Failed for getMeasurementTypes.' + error.data);
 			}
 		}
-		
+
 		function getDataSections() {
 			return $http.get(url_datasections)
 				.then(getDataSectionsComplete)
@@ -85,35 +86,45 @@
 				$log.error('XHR Failed for getDataSections.' + error.data);
 			}
 		}
-		
+
 		function getLinkInformation (currentLong, currentLat, previousLong, previousLat) {
 			return $http({
 				method : 'GET',
 				url : url_network_link + "currentLat=" + currentLat + "&currentLong=" + currentLong + "&previousLat=" + previousLat + "&previousLong=" + previousLong
 			});
 		}
-		
+
 		function getAggregateMeasurement (type, lat, long, day, time, value) {
 			return $http({
 				method : 'GET',
 				url : url_measurement_aggregate + "type=" + type + "&lat=" + lat + "&lon=" + long + "&day=" + day + "&time=" + time + "&value=" + value
 			});
 		}
-	
-	
+
+
 		function getComputeRoute (fromLat, fromLng, toLat, toLng) {
-			
+
 			var lang = $localStorage.hermesmanager.lang;
-			
+
 			return $http({
 				method : 'GET',
 				url : url_network_route + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng,
 				params: {"lang": lang}
 			});
-			
+
 		}
-		
-		
+
+		function getSimulateRoute (fromLat, fromLng, toLat, toLng) {
+			var lang = $localStorage.hermesmanager.lang;
+			return $http({
+				method : 'GET',
+				url : url_network_simulate + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng + "&speedFactor=1",
+				params: {"lang": lang}
+			});
+
+		}
+
+
 		function prepararParametrosFechas(startDate, endDate){
 			var url = "";
 			if(startDate!==null){
@@ -127,195 +138,195 @@
 			return url;
 		}
 
-		function prepararUrl(startDate, endDate, seLng, seLat, nwLng, nwLat){		
+		function prepararUrl(startDate, endDate, seLng, seLat, nwLng, nwLat){
 			var url ="";
-			
-			url+=prepararParametrosFechas(startDate, endDate);		
-			url+="seLng="+seLng+"&seLat="+seLat+"&nwLng="+nwLng+"&nwLat="+nwLat;	
+
+			url+=prepararParametrosFechas(startDate, endDate);
+			url+="seLng="+seLng+"&seLat="+seLat+"&nwLng="+nwLng+"&nwLat="+nwLat;
 			return url;
 		}
-		
-		
-		
+
+
+
 		function getVehicleLocation (from, to, seLng, seLat, nwLng, nwLat) {
-			
+
 			var url = url_get_vehicle_locations;
 			url+=prepararUrl(from, to, seLng, seLat, nwLng, nwLat);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getVehicleLocation.' + error.data);
 			}
-			
+
 		}
-		
+
 		function getMeasurement (tipo, from, to, seLng, seLat, nwLng, nwLat) {
-			
+
 			var url = url_get_measurements;
 			url+=prepararUrl(from, to, seLng, seLat, nwLng, nwLat);
 			url+="&tipo=" + tipo;
-			
+
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getMeasurement.' + error.data);
 			}
-			
+
 		}
-		
+
 		function getDataSection (from, to, seLng, seLat, nwLng, nwLat) {
-			
+
 			var url = url_get_data_sections;
 			url+=prepararUrl(from, to, seLng, seLat, nwLng, nwLat);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getDataSection.' + error.data);
 			}
-			
+
 		}
-		
+
 		function getDriverFeatures (from, to) {
-			
+
 			var url = url_get_driver_features;
 			url+=prepararParametrosFechas(from, to);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getDriverFeatures.' + error.data);
 			}
 		}
-		
+
 		function getHeartRateData (from, to) {
-			
+
 			var url = url_get_heart_rate_data;
 			url+=prepararParametrosFechas(from, to);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getHeartRateData.' + error.data);
 			}
 		}
-		
+
 		function getStepsData (from, to) {
-			
+
 			var url = url_get_steps_data;
 			url+=prepararParametrosFechas(from, to);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getStepsData.' + error.data);
 			}
 		}
-		
+
 		function getSleepData (from, to) {
-			
+
 			var url = url_get_sleep_data;
 			url+=prepararParametrosFechas(from, to);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getSleepData.' + error.data);
 			}
 		}
-		
+
 		function getContextData (from, to, seLng, seLat, nwLng, nwLat) {
-			
+
 			var url = url_get_context_data;
 			url+=prepararUrl(from, to, seLng, seLat, nwLng, nwLat);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getContextData.' + error.data);
 			}
 		}
-		
+
 		function getUserLocations (from, to, seLng, seLat, nwLng, nwLat) {
-		
+
 			var url = url_get_user_locations;
 			url+=prepararUrl(from, to, seLng, seLat, nwLng, nwLat);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getUserLocations.' + error.data);
 			}
 		}
-		
+
 		function getUserActivities (from, to) {
-			
+
 			var url = url_get_user_activities;
 			url+=prepararParametrosFechas(from, to);
 
 			return $http.get(url)
 				.then(getRequestComplete)
 				.catch(getRequestFailed);
-			
+
 			function getRequestComplete(response) {
 				return response.data;
 			}
-			
+
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getUserActivities.' + error.data);
 			}

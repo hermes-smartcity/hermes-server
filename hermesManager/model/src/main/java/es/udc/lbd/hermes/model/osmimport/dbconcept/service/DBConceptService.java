@@ -15,4 +15,6 @@ public interface DBConceptService {
 	public DBConcept get(Long id);
 	
 	public DBConcept update(DBConcept dbConcept, Long id);
+	
+	public String recuperaGeojsonDdConcept(Long dbconceptId, Double nwLng, Double nwLat, Double seLng, Double seLat)  throws Exception;
 }

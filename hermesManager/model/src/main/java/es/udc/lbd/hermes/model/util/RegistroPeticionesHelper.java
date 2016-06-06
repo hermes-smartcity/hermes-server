@@ -48,7 +48,19 @@ public class RegistroPeticionesHelper {
 		
 		dataServiceDao.create(dataService);
 	}
+
+	public void simulateRouteSmartDriver(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTCITIZEN.toString());
+		dataService.setMethod(Method.SIMULATE_ROUTE.toString());
 		
+		String formato = "yyyy-MM-dd HH:mm:ss";
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato(formato);
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy, formato));
+		
+		dataServiceDao.create(dataService);
+	}
+	
 	public void vehicleLocationSmartDriver(){
 		DataServices dataService = new DataServices();
 		dataService.setService(Service.SMARTDRIVER.toString());

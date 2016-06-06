@@ -30,4 +30,6 @@ public interface UserLocationsService {
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 	
 	public List<GroupedDTO> obterUserLocationsGrouped(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Double wnLng, Double wnLat,	Double esLng, Double esLat,int startIndex);
+	
+	public void delete(String sourceId, Calendar starttime);
 }

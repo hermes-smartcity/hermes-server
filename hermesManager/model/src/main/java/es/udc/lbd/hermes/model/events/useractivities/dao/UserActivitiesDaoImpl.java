@@ -168,4 +168,16 @@ public class UserActivitiesDaoImpl extends GenericDaoHibernate<UserActivities, L
 		elementos = query.list();
 		return elementos;
 	}
+		
+	public void delete(Long idUsuario, Calendar starttime){
+		String queryStr =  "DELETE from UserActivities WHERE usuarioMovil.id = :idUsuario ";
+		queryStr += "and extract(day from cast(starttime as date)) = extract(day from cast(:starttime as date)) ";
+		
+		Query query = getSession().createQuery(queryStr);
+
+		query.setParameter("idUsuario", idUsuario);
+		query.setCalendar("starttime", starttime);
+		
+		query.executeUpdate();
+	}
 }

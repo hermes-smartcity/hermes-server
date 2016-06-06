@@ -26,4 +26,6 @@ public interface UserActivitiesService {
 	public ListaUserActivities obterUserActivities(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 	
 	public ListaEventosYdias obterEventosPorDia(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	
+	public void delete(String sourceId, Calendar starttime);
 }

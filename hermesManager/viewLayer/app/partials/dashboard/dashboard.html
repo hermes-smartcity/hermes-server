@@ -24,6 +24,20 @@
 							</ul>
 						</div>
 					</div>
+					<div class="pull-left form-inline separacionDerecha">
+						<label>{{'dashboard.dbconcept' | translate}}</label>
+			  			<select id="dbconcept" name="dbconcept" data-ng-model="vm.dbconcept" class="form-control"
+								data-ng-options="dbconcept as vm.labelDbConcept(dbconcept.name, dbconcept.dbConnection.name) for dbconcept in vm.dbconcepts">
+						</select>
+						<button class="btn btn-danger" data-ng-click="vm.addGeojson()">
+							<i class="fa fa-plus"></i>
+						</button>
+						
+						<div data-ng-if="vm.noFeatures" class="top-buffer pull-center alert alert-warning" data-role="alert">
+							{{'dashboard.noFeatures' | translate}}
+						</div>
+					</div>
+					
 					<div data-ng-if="vm.showAdmin" class="pull-right">
 						<!--  -->
 						<span class="glyphicon"></span>

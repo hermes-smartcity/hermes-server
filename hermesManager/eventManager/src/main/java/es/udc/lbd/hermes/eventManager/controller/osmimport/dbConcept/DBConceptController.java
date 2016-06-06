@@ -98,4 +98,23 @@ public class DBConceptController extends MainResource{
 		
 		return jsonD;
 	}
+	
+	@RequestMapping(value="/geojson", method = RequestMethod.GET)
+	public String getGeoJson(		
+			@RequestParam(value = "dbconceptId", required = true) Long dbconceptId,
+			@RequestParam(value = "wnLng", required = true) Double wnLng,
+			@RequestParam(value = "wnLat", required = true) Double wnLat,
+			@RequestParam(value = "esLng", required = true) Double esLng, 
+			@RequestParam(value = "esLat", required = true) Double esLat) { 
+
+		try {
+			String geojson = dbConceptServicio.recuperaGeojsonDdConcept(dbconceptId, wnLng, wnLat, esLng, esLat);
+			
+			return geojson;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 }

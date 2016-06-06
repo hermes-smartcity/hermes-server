@@ -39,6 +39,7 @@ import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
+import es.udc.lbd.hermes.model.smartdriver.RoutePoint;
 import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.smartdriver.service.NetworkService;
 import es.udc.lbd.hermes.model.usuario.usuarioWeb.UsuarioWeb;
@@ -132,46 +133,66 @@ public class HermesServicesController {
 
 		if (lang == null){
 			lang = "en";
-		}
-		
+		}		
 		Locale locale = Helpers.construirLocale(lang);
-		
 		try{
 			List<RouteSegment> lista = networkServicio.getComputeRoute(fromLat, fromLng, toLat, toLng);
-		
 			return new ResponseEntity<List<RouteSegment>>(lista,HttpStatus.OK);
-			
 		}catch (PointOriginException e) {
-			
-			Object [] parametros = new Object[] {fromLat, fromLng, fromLat, fromLng};
-
-			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
-			ErrorMessage errorMessage = new ErrorMessage(mensaje);
-			
 			//El error de debe a que no se encontro punto de origen
-			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
-			
-		}catch (PointDestinyException e) {
-			
-			Object [] parametros = new Object[] {toLat, toLng, toLat, toLng};
-
+			Object [] parametros = new Object[] {fromLat, fromLng, fromLat, fromLng};
 			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
 			ErrorMessage errorMessage = new ErrorMessage(mensaje);
-			
-			//El error de debe a que no se encontro punto de destino
 			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
-			
-		}catch (RouteException e) {
-			
-			String mensaje = messageSource.getMessage("route.exception", null, locale);
-			ErrorMessage errorMessage = new ErrorMessage(mensaje);
-			
+		}catch (PointDestinyException e) {
 			//El error de debe a que no se encontro punto de destino
+			Object [] parametros = new Object[] {toLat, toLng, toLat, toLng};
+			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);
+			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
+		}catch (RouteException e) {
+			//El error de debe a que no existe ruta entre el origen y el destino
+			String mensaje = messageSource.getMessage("route.exception", null, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);			
 			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
 		}
-
-
 	}
+	
+	@RequestMapping(value="/network/simulate", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?> simulateRoute(@RequestParam(value = "fromLat", required = true) Double fromLat,
+			@RequestParam(value = "fromLng", required = true) Double fromLng,
+			@RequestParam(value = "toLat", required = true) Double toLat, 
+			@RequestParam(value = "toLng", required = true) Double toLng,
+			@RequestParam(value = "speedFactor", required = true) Double sf,
+			@RequestParam(value = "lang", required = false) String lang) { 
+
+		if (lang == null){
+			lang = "en";
+		}
+		Locale locale = Helpers.construirLocale(lang);
+		try{
+			List<RoutePoint> lista = networkServicio.simulateRoute(fromLat, fromLng, toLat, toLng, sf);
+			return new ResponseEntity<List<RoutePoint>>(lista,HttpStatus.OK);
+		}catch (PointOriginException e) {
+			//El error de debe a que no se encontro punto de origen
+			Object [] parametros = new Object[] {fromLat, fromLng, fromLat, fromLng};
+			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);
+			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
+		}catch (PointDestinyException e) {
+			//El error de debe a que no se encontro punto de destino
+			Object [] parametros = new Object[] {toLat, toLng, toLat, toLng};
+			String mensaje = messageSource.getMessage("point.exception", parametros, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);
+			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
+		}catch (RouteException e) {
+			//El error de debe a que no se encontro una ruta			
+			String mensaje = messageSource.getMessage("route.exception", null, locale);
+			ErrorMessage errorMessage = new ErrorMessage(mensaje);
+			return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.BAD_REQUEST);
+		}
+	}	
 	
 	@RequestMapping(value="/vehiclelocation", method = RequestMethod.GET)
 	public List<VehicleLocation> getVehicleLocation(		

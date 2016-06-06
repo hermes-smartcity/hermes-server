@@ -3,9 +3,7 @@ package es.udc.lbd.hermes.model.util;
 import java.util.Calendar;
 
 public class FechaUtil {
-	
-	private  final static Float  MILESEGUNDOSPORDIA = new Float(24 * 60 * 60 * 1000); //Milisegundos al día 
-	
+		
 	/** Devuelve la semana siguiente (suma 7 dias) **/
 	public static Calendar getSiguienteSemana(Calendar fecha2){
 		//Clonamos la fecha

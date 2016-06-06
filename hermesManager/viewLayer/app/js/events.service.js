@@ -16,14 +16,13 @@
 			getUsuarios: getUsuarios,
 			getMeasurementsType: getMeasurementsType,
 			getEventoProcesado: getEventoProcesado,
-			getEventosPorDia: getEventosPorDia,
-			getSensorsType: getSensorsType
+			getEventosPorDia: getEventosPorDia
 		};
 
 		return service;
-	
-		
-		function arrancar() {		
+
+
+		function arrancar() {
 			return $http.post(url_arrancar)
 				.success(arrancarSuccess)
 				.error(arrancarFailed);
@@ -36,8 +35,8 @@
 				$log.error('XHR Failed for arrancar.' + error);
 			}
 		}
-		
-		function parar() {		
+
+		function parar() {
 			return $http.post(url_parar)
 				.success(pararSuccess)
 				.error(pararFailed);
@@ -50,14 +49,14 @@
 				$log.error('XHR Failed for parar.' + error);
 			}
 		}
-		
+
 		function getStateActualizado() {
 			return $http({
 				method : 'GET',
 				url : url_state
 			});
 		}
-		
+
 		function getEventsToday() {
 			return $http.get(url_eventsToday)
 				.then(getEventsTodayComplete)
@@ -69,7 +68,7 @@
 				$log.error('XHR Failed for getEventsToday.' + error.data);
 			}
 		}
-		
+
 		function getEvensType() {
 			return $http.get(url_eventsType)
 				.then(getEvensTypeComplete)
@@ -81,7 +80,7 @@
 				$log.error('XHR Failed for getEvensType.' + error.data);
 			}
 		}
-		
+
 		function getUsuarios() {
 			return $http.get(url_usuarios)
 				.then(getUsuariosComplete)
@@ -93,7 +92,7 @@
 				$log.error('XHR Failed for getUsuarios.' + error.data);
 			}
 		}
-		
+
 		function getMeasurementsType() {
 			return $http.get(url_measurementTypes)
 				.then(getMeasurementsTypeComplete)
@@ -105,7 +104,7 @@
 				$log.error('XHR Failed for getMeasurementsType.' + error.data);
 			}
 		}
-		
+
 		function getEventoProcesado() {
 			return $http.get(url_eventoProcesado)
 				.then(getEventoProcesadoComplete)
@@ -117,25 +116,13 @@
 				$log.error('XHR Failed for getEventoProcesado.' + error.data);
 			}
 		}
-		
+
 		function getEventosPorDia(urlEv) {
-		
+
 			return $http({
 				method : 'GET',
 				url : urlEv
 			});
-		}
-		
-		function getSensorsType() {
-			return $http.get(url_sensorsTypes)
-				.then(getSensorsTypeComplete)
-				.catch(getSensorsTypeFailed);
-			function getSensorsTypeComplete(response) {
-				return response.data;
-			}
-			function getSensorsTypeFailed(error) {
-				$log.error('XHR Failed for getSensorsType.' + error.data);
-			}
 		}
 	}
 })();

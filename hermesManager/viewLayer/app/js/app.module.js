@@ -58,7 +58,8 @@
 				usuarios: usuarios,
 				eventoProcesado: eventoProcesado,
 				eventsToday: eventsToday,
-				statistics: statistics
+				statistics: statistics,
+				dbconcepts: dbconcepts
 			}
 		}).state('userManager', {
 			url: '/userManager',

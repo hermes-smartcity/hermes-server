@@ -28,4 +28,6 @@ public interface UserLocationsDao extends GenericDao<UserLocations, Long> {
 			Calendar fechaFin, Geometry bounds, int startIndex, int count);
 	
 	public List<GroupedDTO> obterUserLocationsGrouped(Long idUsuario, Calendar fechaIni,Calendar fechaFin, Geometry bounds,int startIndex, Integer numberOfCells);
+	
+	public void delete(Long idUsuario, Calendar starttime);
 }

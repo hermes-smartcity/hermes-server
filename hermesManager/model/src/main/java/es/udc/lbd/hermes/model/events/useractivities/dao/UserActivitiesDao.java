@@ -22,4 +22,6 @@ public interface UserActivitiesDao extends GenericDao<UserActivities, Long> {
 	
 	public List<UserActivities> obterUserActivities(Long idUsuario, Calendar fechaIni,
 			Calendar fechaFin, int startIndex, int count);
+	
+	public void delete(Long idUsuario, Calendar starttime);
 }

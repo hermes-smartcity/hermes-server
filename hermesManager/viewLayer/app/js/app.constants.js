@@ -53,15 +53,13 @@ var url_measurementTypes = url_dashboard+'json/measurementTypes';
 var url_usuarios = url_dashboard+'json/usuarios';
 var url_eventoProcesado = url_dashboard+'json/eventoProcesado';
 var url_parameters_statistics = url_dashboard+'json/parametersStatistics';
-var url_sensorsTypes = url_dashboard+'json/sensorsType';
-
 
 //Controlador vehicleLocation
 var url_vehicleL = url_servidor+'api/vehiclelocation/';
 var url_vehicleLocations = url_vehicleL+'json/vehicleLocations?';
 var url_vehicleLocationsGrouped = url_vehicleL+'json/vehicleLocationsGrouped?';
 var url_eventosPorDiaVL = url_vehicleL+'json/eventosPorDia?';
-		
+
 //Controlador dataSection
 var url_dataS = url_servidor+'api/datasection/';
 var url_dataSections = url_dataS+'json/dataSections?';
@@ -131,6 +129,7 @@ var url_datasections = url_hermesS+'json/datasections';
 var url_network_link = url_hermesS+'network/link?';
 var url_measurement_aggregate = url_hermesS+'measurement/aggregate?';
 var url_network_route = url_hermesS+'network/route?';
+var url_network_simulate = url_hermesS+'network/simulate?';
 var url_get_vehicle_locations = url_hermesS + 'vehiclelocation?';
 var url_get_measurements = url_hermesS + 'measurement?';
 var url_get_data_sections = url_hermesS + 'datasection?';
@@ -171,6 +170,7 @@ var url_delete_dbconcept = url_dbconcept+"delete";
 var url_register_dbconcept = url_dbconcept+"register";
 var url_edit_dbconcept = url_dbconcept+"edit";
 var url_get_dbconcept = url_dbconcept+'json/dbConcept';
+var url_dbconcept_geojson = url_dbconcept+'geojson';
 
 //Controlador db attributes
 var url_dbattribute = url_servidor+'api/dbattribute/';
@@ -216,7 +216,6 @@ var url_get_job = url_job+'json/job';
 var url_execute_job = url_job+"executeJob";
 var url_launch_execute_job = url_job+"launchExecuteJob";
 
-
 //Controlador concept transformation
 var url_concepttransformation = url_servidor+'api/concepttransformation/';
 var url_concepttransformations = url_concepttransformation+'json/concepttransformations';
@@ -247,4 +246,3 @@ var url_messages_with_status = url_message+'json/messagesstatus';
 var url_importshapefile = url_servidor+'api/importshapefile/';
 var url_import_shape = url_importshapefile+"import";
 var url_charsets = url_importshapefile+'json/charsets';
-
