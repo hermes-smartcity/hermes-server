@@ -378,7 +378,7 @@ CREATE TABLE efficiencytest (
   parsetime bigint,
   totaltime bigint,
   result boolean,
-  CONSTRAINT idsetting_pk PRIMARY KEY (id)
+  CONSTRAINT idefficiencytest_pk PRIMARY KEY (id)
 )
 ;
 
