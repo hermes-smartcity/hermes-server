@@ -15,6 +15,7 @@ import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 public class UsuarioWebDaoImpl extends GenericDaoHibernate<UsuarioWeb, Long> implements
 UsuarioWebDao {
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<UsuarioWeb> obterUsuariosWeb() {
 		try {
 			return getSession().createCriteria(this.entityClass).list();
@@ -33,6 +34,7 @@ UsuarioWebDao {
 		}				
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<UsuarioWeb> obterUsuariosWebSegunRol(Rol rol){
 
 		try {

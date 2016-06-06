@@ -17,6 +17,7 @@ import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 public class UsuarioMovilDaoImpl extends GenericDaoHibernate<UsuarioMovil, Long> implements
 UsuarioMovilDao {
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<UsuarioMovil> obterUsuariosMovil() {
 		try {
 			return getSession().createCriteria(this.entityClass).list();

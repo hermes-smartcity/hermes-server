@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.lbd.hermes.model.events.log.Log;
 import es.udc.lbd.hermes.model.events.log.dao.LogDao;
-import es.udc.lbd.hermes.model.usuario.usuarioMovil.dao.UsuarioMovilDao;
 
 
 @Service("lognService")
@@ -19,11 +18,7 @@ public class LogServiceImpl implements LogService {
 	
 	@Autowired
 	private LogDao logDao;
-	
-	@Autowired
-	private UsuarioMovilDao usuarioMovilDao;
-	
-	
+
 	@Override
 	public void delete(Long id) {
 		Log log = logDao.get(id);
