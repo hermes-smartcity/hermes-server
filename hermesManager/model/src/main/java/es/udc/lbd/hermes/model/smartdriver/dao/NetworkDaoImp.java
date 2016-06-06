@@ -167,11 +167,11 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 			listado = (List<RouteSegment>) query.list();
 			Coordinate previousCoordinate = new Coordinate(fromLng, fromLat);			
 			for (RouteSegment routeSegment:listado){
-				Coordinate firstCoordinate = routeSegment.getGeom_way().getCoordinateN(0);
+				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
 				if (!firstCoordinate.equals2D(previousCoordinate)) {
 					routeSegment.getGeom_way().reverse();
 				}
-				previousCoordinate = firstCoordinate;
+				previousCoordinate = routeSegment.getGeom_way().getEndPoint().getCoordinate();
 			}
 		} catch (org.hibernate.exception.GenericJDBCException e){
 			throw new RouteException();
@@ -258,11 +258,11 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 				if (position > 0) {
 					double lastDistance = lil.indexOf(result.get(result.size()-1).getPosition().getCoordinate());
 					double lastStep = routeSegment.getGeom_way().getLength() - lastDistance;
-					previousSeconds = lastStep/rsSpeed;
-					previousEnd = routeSegment.getGeom_way().getEndPoint().getCoordinate();
+					previousSeconds = lastStep/rsSpeed;					
 				} else { // No point was used for this segment
 					previousSeconds = previousSeconds - (routeSegment.getGeom_way().getLength() / rsSpeed); 
 				}
+				previousEnd = routeSegment.getGeom_way().getEndPoint().getCoordinate();
 			}
 		} catch (org.hibernate.exception.GenericJDBCException e){
 			throw new RouteException();
