@@ -224,7 +224,7 @@ public class UserLocationsDaoImpl extends GenericDaoHibernate<UserLocations, Lon
 	
 	public void delete(Long idUsuario, Calendar starttime){
 		String queryStr =  "DELETE from UserLocations WHERE usuarioMovil.id = :idUsuario ";
-		queryStr += "and extract(day from startTime) = extract(day from :starttime) ";
+		queryStr += "and extract(day from cast(starttime as date)) = extract(day from cast(:starttime as date)) ";
 		
 		Query query = getSession().createQuery(queryStr);
 
