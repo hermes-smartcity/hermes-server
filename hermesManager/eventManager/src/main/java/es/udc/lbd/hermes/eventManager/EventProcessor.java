@@ -28,7 +28,7 @@ import es.udc.lbd.hermes.eventManager.strategy.EventStrategy;
 import es.udc.lbd.hermes.eventManager.util.DeflateReaderInterceptor;
 import es.udc.lbd.hermes.eventManager.util.ReadPropertiesFile;
 import es.udc.lbd.hermes.model.efficiencytest.service.EfficiencyTestService;
-import es.udc.lbd.hermes.model.events.EventType;
+import es.udc.lbd.hermes.model.events.EventProcesor;
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
 import es.udc.lbd.hermes.model.events.service.EventService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -103,7 +103,7 @@ public class EventProcessor extends Thread {
 				if (event.getEventData() != null) { 
 					if (event.getEventType() != null) {
 						eventType = event.getEventType();
-						EventType tipoEvento = EventType.getTipo(eventType);
+						EventProcesor tipoEvento = EventProcesor.getTipo(eventType);
 						EventStrategy estrategia = EventFactory.getStrategy(tipoEvento);
 						if (estrategia != null) {
 							try {

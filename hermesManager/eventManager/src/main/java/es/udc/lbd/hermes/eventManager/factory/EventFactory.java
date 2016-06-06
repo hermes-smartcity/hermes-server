@@ -19,35 +19,35 @@ import es.udc.lbd.hermes.eventManager.strategy.StepsDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.UserActivitiesEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.UserLocationsEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.VehicleLocationEventStrategy;
-import es.udc.lbd.hermes.model.events.EventType;
+import es.udc.lbd.hermes.model.events.EventProcesor;
 
 public class EventFactory {
 
 //	private Logger logger = LoggerFactory.getLogger(getClass());
-	private static Map<EventType, EventStrategy> registry;
+	private static Map<EventProcesor, EventStrategy> registry;
 	static {
-		registry = new HashMap<EventType, EventStrategy>();
-		registry.put(EventType.VEHICLE_LOCATION, new VehicleLocationEventStrategy());
-		registry.put(EventType.HIGH_SPEED, new HighSpeedEventStrategy());
-		registry.put(EventType.HIGH_ACCELERATION, new HighAccelerationEventStrategy());
-		registry.put(EventType.HIGH_DECELERATION, new HighDecelerationEventStrategy());
-		registry.put(EventType.HIGH_HEART_RATE, new HighHeartRateEventStrategy());
-		registry.put(EventType.DRIVER_FEATURES, new DriverFeaturesEventStrategy());
-		registry.put(EventType.DATA_SECTION, new DataSectionEventStrategy());
-		registry.put(EventType.SLEEP_DATA, new SleepDataEventStrategy());
-		registry.put(EventType.STEPS_DATA, new StepsDataEventStrategy());
-		registry.put(EventType.CONTEXT_DATA, new ContextDataEventStrategy());
-		registry.put(EventType.HEART_RATE_DATA, new HeartRateDataEventStrategy());
-		registry.put(EventType.USER_ACTIVITIES, new UserActivitiesEventStrategy());
-		registry.put(EventType.USER_LOCATIONS, new UserLocationsEventStrategy());
-		registry.put(EventType.FULL_USER_ACTIVITIES, new FullUserActivitiesEventStrategy());
-		registry.put(EventType.FULL_USER_LOCATIONS, new FullUserLocationsEventStrategy());
+		registry = new HashMap<EventProcesor, EventStrategy>();
+		registry.put(EventProcesor.VEHICLE_LOCATION, new VehicleLocationEventStrategy());
+		registry.put(EventProcesor.HIGH_SPEED, new HighSpeedEventStrategy());
+		registry.put(EventProcesor.HIGH_ACCELERATION, new HighAccelerationEventStrategy());
+		registry.put(EventProcesor.HIGH_DECELERATION, new HighDecelerationEventStrategy());
+		registry.put(EventProcesor.HIGH_HEART_RATE, new HighHeartRateEventStrategy());
+		registry.put(EventProcesor.DRIVER_FEATURES, new DriverFeaturesEventStrategy());
+		registry.put(EventProcesor.DATA_SECTION, new DataSectionEventStrategy());
+		registry.put(EventProcesor.SLEEP_DATA, new SleepDataEventStrategy());
+		registry.put(EventProcesor.STEPS_DATA, new StepsDataEventStrategy());
+		registry.put(EventProcesor.CONTEXT_DATA, new ContextDataEventStrategy());
+		registry.put(EventProcesor.HEART_RATE_DATA, new HeartRateDataEventStrategy());
+		registry.put(EventProcesor.USER_ACTIVITIES, new UserActivitiesEventStrategy());
+		registry.put(EventProcesor.USER_LOCATIONS, new UserLocationsEventStrategy());
+		registry.put(EventProcesor.FULL_USER_ACTIVITIES, new FullUserActivitiesEventStrategy());
+		registry.put(EventProcesor.FULL_USER_LOCATIONS, new FullUserLocationsEventStrategy());
 	}
 
 	private EventFactory() {
 	}
 	
-	public static EventStrategy getStrategy(EventType tipoEvento) {
+	public static EventStrategy getStrategy(EventProcesor tipoEvento) {
 		
 		EventStrategy result = null;
 		if (tipoEvento!= null) {
