@@ -300,42 +300,6 @@ CREATE TABLE network.es_cor_2po_4pgr
 -- NetworkLink
 CREATE OR REPLACE VIEW network.link as select * from network.es_cor_2po_4pgr;
 
--- SensorData
-drop table if exists sensordata cascade;
-drop sequence if exists sensordata_id_seq cascade;
-create sequence sensordata_id_seq;
-
-CREATE TABLE sensordata (
-	id bigint NOT NULL DEFAULT nextval('sensordata_id_seq'::regclass),
-  	typesensor varchar NOT NULL,
-	startime timestamp without time zone NOT NULL,
-	endtime timestamp without time zone,
-  	values numeric[] NOT NULL,
-	idUsuarioMovil BIGINT,
-  	CONSTRAINT idssensordata_pk PRIMARY KEY (id),
-  	CONSTRAINT sensordata_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
-)
-;
-
--- Gps
-drop table if exists gps cascade;
-drop sequence if exists gps_id_seq cascade;
-create sequence gps_id_seq;
-
-CREATE TABLE gps (
-	id bigint NOT NULL DEFAULT nextval('gps_id_seq'::regclass),
-  	provider varchar NOT NULL,
-	time timestamp without time zone NOT NULL,
-	position geometry(POINT, 4326),
-	altitude double precision,
-  	speed double precision,
-  	bearing double precision,
-	accuracy double precision,
-	idUsuarioMovil BIGINT,
-  	CONSTRAINT idsgps_pk PRIMARY KEY (id),
-  	CONSTRAINT gps_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
-)
-;
 
 -- User activities
 drop table if exists useractivities cascade;

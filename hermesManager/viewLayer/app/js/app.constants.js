@@ -53,15 +53,13 @@ var url_measurementTypes = url_dashboard+'json/measurementTypes';
 var url_usuarios = url_dashboard+'json/usuarios';
 var url_eventoProcesado = url_dashboard+'json/eventoProcesado';
 var url_parameters_statistics = url_dashboard+'json/parametersStatistics';
-var url_sensorsTypes = url_dashboard+'json/sensorsType';
-
 
 //Controlador vehicleLocation
 var url_vehicleL = url_servidor+'api/vehiclelocation/';
 var url_vehicleLocations = url_vehicleL+'json/vehicleLocations?';
 var url_vehicleLocationsGrouped = url_vehicleL+'json/vehicleLocationsGrouped?';
 var url_eventosPorDiaVL = url_vehicleL+'json/eventosPorDia?';
-		
+
 //Controlador dataSection
 var url_dataS = url_servidor+'api/datasection/';
 var url_dataSections = url_dataS+'json/dataSections?';
@@ -247,4 +245,3 @@ var url_messages_with_status = url_message+'json/messagesstatus';
 var url_importshapefile = url_servidor+'api/importshapefile/';
 var url_import_shape = url_importshapefile+"import";
 var url_charsets = url_importshapefile+'json/charsets';
-

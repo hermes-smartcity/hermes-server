@@ -2,11 +2,11 @@
 	'use strict';
 
 	angular.module('app').config(translateConfig);
-	
+
 	translateConfig.$inject = ['$translateProvider'];
-	
+
 	function translateConfig($translateProvider) {
-		
+
 		$translateProvider.translations('en', {
 			"entrar": "Enter",
 			"recordar": "Remember me",
@@ -84,7 +84,7 @@
 				"titulo": "Settings",
 				"numberError": "Only numbers",
 				"required": "This field is required",
-				"updateOk": "Settings updated" 
+				"updateOk": "Settings updated"
 			},
 			"systemLogs": {
 				"titulo": "System logs",
@@ -115,15 +115,12 @@
 				"dataServices": "Data Services",
 				"systemLogs": "System Logs",
 				"hermesServices": "Hermes Services",
-				"sensorData": "Sensor Data",
-				"gpsLocation": "GPS Location",
 				"testServices": "Test services",
 				"statistics": "Statistics",
 				"dbConnections": "DB Connections",
 				"dbConcepts": "DB Concepts",
 				"osmConcepts": "OSM Concepts",
 				"job": "Job",
-				"sensorCollector": "Sensor Collector",
 				"administration": "Administration",
 				"osmImport": "OSM Import",
 				"jobs": "Jobs",
@@ -263,20 +260,6 @@
 				"selectDates": "Select dates",
 				"selectRectangle": "Select rectangle",
 				"selectMeasurementType": "Select measurement type"
-			},
-			"gpsLocation":{
-				"titulo": "Dashboard",
-				"mapa": "Map",
-				"tabla": "Table",
-				"userId": "UserId",
-				"time": "Time",
-				"date": "Date",
-				"speed": "Speed",
-				"accuracy": "Accuracy",
-				"bearing": "Bearing",
-				"altitude": "Altitude",
-				"provider": "Provider",
-				"noData": "There are not data to show",
 			},
 			"userLocation":{
 				"noEvents": "There are not events to show",

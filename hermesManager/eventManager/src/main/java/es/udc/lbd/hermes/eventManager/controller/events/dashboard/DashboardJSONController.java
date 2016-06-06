@@ -15,7 +15,6 @@ import es.udc.lbd.hermes.model.events.EventType;
 import es.udc.lbd.hermes.model.events.eventoProcesado.EventoProcesado;
 import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.service.EventService;
-import es.udc.lbd.hermes.model.sensordata.SensorDataType;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.UsuarioMovil;
 import es.udc.lbd.hermes.model.usuario.usuarioMovil.service.UsuarioMovilService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
@@ -65,10 +64,5 @@ public class DashboardJSONController extends MainResource {
 		Statistics statistics = ApplicationContextProvider.getApplicationContext().getBean("statisticsComponent", Statistics.class);
 	
 		return statistics;
-	}
-	
-	@RequestMapping(value="/json/sensorsType", method = RequestMethod.GET)
-	public List<SensorDataType> sensorsType() {
-		return Arrays.asList(SensorDataType.values());
-	}
+	}	
 }
