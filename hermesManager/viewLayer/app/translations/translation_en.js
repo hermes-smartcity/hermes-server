@@ -172,7 +172,9 @@
 				"userSteps": "User Steps",
 				"userCaloriesExpended": "User Calories Expended",
 				"userHeartRates": "User Heart Rates",
-				"userSleep": "User Sleep"
+				"userSleep": "User Sleep",
+				"fitBit": "Fit Bit",
+				"googleFit": "Google Fit"
 			},
 			"vehicleLocation":{
 				"noEvents": "There are not events to show",

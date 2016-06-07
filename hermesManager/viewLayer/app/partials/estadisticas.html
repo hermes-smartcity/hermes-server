@@ -87,11 +87,11 @@
 						<strong>{{'estadisticas.measurements' | translate}}</strong><span class="pull-right">{{vm.totalM}}</span>
 					</div>
 				</div>
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-xs-12">
 						<strong>{{'estadisticas.dataSections' | translate}}</strong> <span class="pull-right">{{vm.totalDS}}</span>
 					</div>
-				</div>
+				</div>-->
 				<div class="row">
 					<div class="col-xs-12">
 						<strong>{{'estadisticas.driverFeatures' | translate}}</strong> <span class="pull-right">{{vm.totalDF}}</span>
@@ -111,57 +111,17 @@
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-12">
-						<strong>{{'estadisticas.stepsData' | translate}}</strong><span class="pull-right">{{vm.totalSTD}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<strong>{{'estadisticas.sleepData' | translate}}</strong><span class="pull-right">{{vm.totalSLD}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<strong>{{'estadisticas.heartRateData' | translate}}</strong><span class="pull-right">{{vm.totalHRD}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<strong>{{'estadisticas.contextData' | translate}}</strong><span class="pull-right">{{vm.totalCD}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
 						<strong>{{'estadisticas.userLocations' | translate}}</strong><span class="pull-right">{{vm.totalUL}}</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<strong>{{'estadisticas.userActivities' | translate}}</strong><span class="pull-right">{{vm.totalUA}}</span>
+						<strong>{{'estadisticas.fitBit' | translate}}</strong><span class="pull-right">{{vm.totalSTD + vm.totalSLD + vm.totalHRD}}</span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<strong>{{'estadisticas.userDistances' | translate}}</strong><span class="pull-right">{{vm.totalUDI}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<strong>{{'estadisticas.userSteps' | translate}}</strong><span class="pull-right">{{vm.totalUST}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<strong>{{'estadisticas.userCaloriesExpended' | translate}}</strong><span class="pull-right">{{vm.totalUCE}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<strong>{{'estadisticas.userHeartRates' | translate}}</strong><span class="pull-right">{{vm.totalUHR}}</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12">
-						<strong>{{'estadisticas.userSleep' | translate}}</strong><span class="pull-right">{{vm.totalUSL}}</span>
+						<strong>{{'estadisticas.googleFit' | translate}}</strong><span class="pull-right">{{vm.totalU + vm.totalUA + vm.totalUDI + vm.totalUST + vm.totalUCE + vm.totalUHR + vm.totalUSL}}</span>
 					</div>
 				</div>
 			</div>
