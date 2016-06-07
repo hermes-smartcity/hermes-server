@@ -24,7 +24,12 @@
 				getStepsData: getStepsData,
 				getContextData: getContextData,
 				getUserLocations: getUserLocations,
-				getUserActivities: getUserActivities
+				getUserActivities: getUserActivities,
+				getUserDistances: getUserDistances,
+				getUserSteps: getUserSteps,
+				getUserCaloriesExpended: getUserCaloriesExpended,
+				getUserHeartRates: getUserHeartRates,
+				getUserSleep: getUserSleep
 		};
 
 		return service;
@@ -318,6 +323,96 @@
 			
 			function getRequestFailed(error) {
 				$log.error('XHR Failed for getUserActivities.' + error.data);
+			}
+		}
+		
+		function getUserDistances (from, to) {
+			
+			var url = url_get_user_distances;
+			url+=prepararParametrosFechas(from, to);
+
+			return $http.get(url)
+				.then(getRequestComplete)
+				.catch(getRequestFailed);
+			
+			function getRequestComplete(response) {
+				return response.data;
+			}
+			
+			function getRequestFailed(error) {
+				$log.error('XHR Failed for getUserDistances.' + error.data);
+			}
+		}
+		
+		function getUserSteps (from, to) {
+			
+			var url = url_get_user_steps;
+			url+=prepararParametrosFechas(from, to);
+
+			return $http.get(url)
+				.then(getRequestComplete)
+				.catch(getRequestFailed);
+			
+			function getRequestComplete(response) {
+				return response.data;
+			}
+			
+			function getRequestFailed(error) {
+				$log.error('XHR Failed for getUserSteps.' + error.data);
+			}
+		}
+		
+		function getUserCaloriesExpended (from, to) {
+			
+			var url = url_get_user_calories_expended;
+			url+=prepararParametrosFechas(from, to);
+
+			return $http.get(url)
+				.then(getRequestComplete)
+				.catch(getRequestFailed);
+			
+			function getRequestComplete(response) {
+				return response.data;
+			}
+			
+			function getRequestFailed(error) {
+				$log.error('XHR Failed for getUserCaloriesExpended.' + error.data);
+			}
+		}
+		
+		function getUserHeartRates (from, to) {
+			
+			var url = url_get_user_heart_rates;
+			url+=prepararParametrosFechas(from, to);
+
+			return $http.get(url)
+				.then(getRequestComplete)
+				.catch(getRequestFailed);
+			
+			function getRequestComplete(response) {
+				return response.data;
+			}
+			
+			function getRequestFailed(error) {
+				$log.error('XHR Failed for getUserHeartRates.' + error.data);
+			}
+		}
+		
+		function getUserSleep (from, to) {
+			
+			var url = url_get_user_sleep;
+			url+=prepararParametrosFechas(from, to);
+
+			return $http.get(url)
+				.then(getRequestComplete)
+				.catch(getRequestFailed);
+			
+			function getRequestComplete(response) {
+				return response.data;
+			}
+			
+			function getRequestFailed(error) {
+				$log.error('XHR Failed for getUserSleep.' + error.data);
 			}
 		}
 

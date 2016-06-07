@@ -139,6 +139,12 @@ var url_get_sleep_data = url_hermesS + 'sleepdata?';
 var url_get_context_data = url_hermesS + 'contextdata?';
 var url_get_user_locations = url_hermesS + 'userlocations?';
 var url_get_user_activities = url_hermesS + 'useractivities?';
+var url_get_user_distances = url_hermesS + 'userdistances?';
+var url_get_user_steps = url_hermesS + 'usersteps?';
+var url_get_user_calories_expended = url_hermesS + 'usercaloriesexpended?';
+var url_get_user_heart_rates = url_hermesS + 'userheartrates?';
+var url_get_user_sleep = url_hermesS + 'usersleep?';
+
 
 //Controlador dataservice
 var url_dataservice = url_servidor+'api/dataservice/';
@@ -245,3 +251,28 @@ var url_messages_with_status = url_message+'json/messagesstatus';
 var url_importshapefile = url_servidor+'api/importshapefile/';
 var url_import_shape = url_importshapefile+"import";
 var url_charsets = url_importshapefile+'json/charsets';
+
+//Controlador userDistances
+var url_userDI = url_servidor+'api/userdistance/';
+var url_userDistances = url_userDI+'json/userDistances?';
+var url_eventosPorDiaUDI = url_userDI+'json/eventosPorDia?';
+
+//Controlador userSteps
+var url_userST = url_servidor+'api/userstep/';
+var url_userSteps = url_userST+'json/userSteps?';
+var url_eventosPorDiaUST = url_userST+'json/eventosPorDia?';
+
+//Controlador userCaloriesExpended
+var url_userCE = url_servidor+'api/usercaloriesexpended/';
+var url_userCaloriesExpended = url_userCE+'json/userCaloriesExpended?';
+var url_eventosPorDiaUCE = url_userCE+'json/eventosPorDia?';
+
+//Controlador userHeartRates
+var url_userHR = url_servidor+'api/userheartrates/';
+var url_userHeartRates = url_userHR+'json/userHeartRates?';
+var url_eventosPorDiaUHR = url_userHR+'json/eventosPorDia?';
+
+//Controlador userSleep
+var url_userSL = url_servidor+'api/usersleep/';
+var url_userSleep = url_userSL+'json/userSleep?';
+var url_eventosPorDiaUSL = url_userSL+'json/eventosPorDia?';

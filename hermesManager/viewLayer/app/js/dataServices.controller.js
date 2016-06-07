@@ -37,6 +37,11 @@
 		vm.totalCD = statistics.totalContextData;
 		vm.totalUL = statistics.totalUserLocations;
 		vm.totalUA = statistics.totalUserActivities;
+		vm.totalUDI = statistics.totalUserDistances;
+		vm.totalUST = statistics.totalUserSteps;
+		vm.totalUCE = statistics.totalUserCaloriesExpended;
+		vm.totalUHR = statistics.totalUserHeartRates;
+		vm.totalUSL = statistics.totalUserSleep;
 		
 		vm.recuperarYpintarPeticiones = recuperarYpintarPeticiones;
 		vm.onTimeSetStart = onTimeSetStart;

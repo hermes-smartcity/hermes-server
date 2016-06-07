@@ -17,7 +17,12 @@ import es.udc.lbd.hermes.eventManager.strategy.HighSpeedEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.SleepDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.StepsDataEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.UserActivitiesEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.UserCaloriesExpendedEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.UserDistancesEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.UserHeartRatesEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.UserLocationsEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.UserSleepEventStrategy;
+import es.udc.lbd.hermes.eventManager.strategy.UserStepsEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.VehicleLocationEventStrategy;
 import es.udc.lbd.hermes.model.events.EventProcesor;
 
@@ -42,6 +47,11 @@ public class EventFactory {
 		registry.put(EventProcesor.USER_LOCATIONS, new UserLocationsEventStrategy());
 		registry.put(EventProcesor.FULL_USER_ACTIVITIES, new FullUserActivitiesEventStrategy());
 		registry.put(EventProcesor.FULL_USER_LOCATIONS, new FullUserLocationsEventStrategy());
+		registry.put(EventProcesor.USER_DISTANCES, new UserDistancesEventStrategy());
+		registry.put(EventProcesor.USER_STEPS, new UserStepsEventStrategy());
+		registry.put(EventProcesor.USER_CALORIES_EXPENDED, new UserCaloriesExpendedEventStrategy());
+		registry.put(EventProcesor.USER_HEART_RATES , new UserHeartRatesEventStrategy());
+		registry.put(EventProcesor.USER_SLEEP, new UserSleepEventStrategy());
 	}
 
 	private EventFactory() {

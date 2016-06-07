@@ -166,7 +166,12 @@
 				"contextData": "Context Data:",
 				"viewDetails": "View Details",
 				"userLocations": "User Locations",
-				"userActivities": "User Activities"
+				"userActivities": "User Activities",
+				"userDistances": "User Distances",
+				"userSteps": "User Steps",
+				"userCaloriesExpended": "User Calories Expended",
+				"userHeartRates": "User Heart Rates",
+				"userSleep": "User Sleep"
 			},
 			"vehicleLocation":{
 				"noEvents": "There are not events to show",
@@ -460,7 +465,52 @@
 				"charset": "Charset",
 				"selectCharset": "Select Charset",
 				"chooseFile":"..."
-			}
+			},
+			"userDistances":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"dateStart": "Date end",
+				"timeStart": "Time start",
+				"dateEnd": "Date end",
+				"timeEnd": "Time end",
+				"distance": "Distance"
+			},
+			"userSteps":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"dateStart": "Date end",
+				"timeStart": "Time start",
+				"dateEnd": "Date end",
+				"timeEnd": "Time end",
+				"steps": "Steps"
+			},
+			"userCaloriesExpended":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"dateStart": "Date end",
+				"timeStart": "Time start",
+				"dateEnd": "Date end",
+				"timeEnd": "Time end",
+				"calories": "Calories"
+			},
+			"userHeartRates":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"dateStart": "Date end",
+				"timeStart": "Time start",
+				"dateEnd": "Date end",
+				"timeEnd": "Time end",
+				"bmp": "bpm"
+			},
+			"userSleep":{
+				"noEvents": "There are not events to show",
+				"userId": "UserId",
+				"dateStart": "Date end",
+				"timeStart": "Time start",
+				"dateEnd": "Date end",
+				"timeEnd": "Time end",
+				"name": "Name"
+			},
 		});
 	}
 

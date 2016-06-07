@@ -42,6 +42,11 @@
 		vm.totalCD = statistics.totalContextData;
 		vm.totalUL = statistics.totalUserLocations;
 		vm.totalUA = statistics.totalUserActivities;
+		vm.totalUDI = statistics.totalUserDistances;
+		vm.totalUST = statistics.totalUserSteps;
+		vm.totalUCE = statistics.totalUserCaloriesExpended;
+		vm.totalUHR = statistics.totalUserHeartRates;
+		vm.totalUSL = statistics.totalUserSleep;
 		
 		vm.arrancar = arrancar;
 		vm.parar = parar;
@@ -285,6 +290,67 @@
 				           DTColumnBuilder.newColumn('steps').withTitle($translate.instant('stepData.steps'))
 				           ];
 		
+		vm.dtColumnsUDI  = [
+			                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userDistances.userId')),
+			                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userDistances.timeStart')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userDistances.timeEnd')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('distance').withTitle($translate.instant('userDistances.distance')).renderWith(function(data, type, full) {
+			                	   return $filter('number')(data, 2);   
+			                   })
+			                   ];
+			
+			vm.dtColumnsUST  = [
+				                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userSteps.userId')),
+				                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userSteps.timeStart')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userSteps.timeEnd')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('steps').withTitle($translate.instant('userSteps.steps'))
+				                   ];
+			
+			vm.dtColumnsUCE  = [
+				                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userCaloriesExpended.userId')),
+				                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userCaloriesExpended.timeStart')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userCaloriesExpended.timeEnd')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('calories').withTitle($translate.instant('userCaloriesExpended.calories')).renderWith(function(data, type, full) {
+				                	   return $filter('number')(data, 2);   
+				                   })
+				                   ];
+			
+			vm.dtColumnsUHR  = [
+				                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userHeartRates.userId')),
+				                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userHeartRates.timeStart')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userHeartRates.timeEnd')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('bpm').withTitle($translate.instant('userHeartRates.bpm')).renderWith(function(data, type, full) {
+				                	   return $filter('number')(data, 2);   
+				                   })
+				                   ];		
+			
+			vm.dtColumnsUSL  = [
+				                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userSleep.userId')),
+				                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userSleep.timeStart')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userSleep.timeEnd')).renderWith(function(data, type, full) {
+				                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+				                   }),
+				                   DTColumnBuilder.newColumn('name').withTitle($translate.instant('userSleep.name'))
+				                   ];
+			
 		vm.errorPoint = false;
 		vm.mensajeErrorPoint = undefined;
 		
@@ -333,7 +399,21 @@
 		    case "GET_USER_ACTIVITIES":
 		    	vm.tabla = "./partials/hermesServices/tablaGetUserActivities.html";
 		    	break;
-		  
+		    case "GET_USER_DISTANCES":
+		    	vm.tabla = "./partials/hermesServices/tablaGetUserDistances.html";
+		    	break;
+		    case "GET_USER_STEPS":
+		    	vm.tabla = "./partials/hermesServices/tablaGetUserSteps.html";
+		    	break;
+		    case "GET_USER_CALORIES_EXPENDED":
+		    	vm.tabla = "./partials/hermesServices/tablaGetUserCaloriesExpended.html";
+		    	break;
+		    case "GET_USER_HEART_RATES":
+		    	vm.tabla = "./partials/hermesServices/tablaGetUserHeartRates.html";
+		    	break;
+		    case "GET_USER_SLEEP":
+		    	vm.tabla = "./partials/hermesServices/tablaGetUserSleep.html";
+		    	break;
 		    }
 			
 		}
@@ -355,7 +435,7 @@
 		function mostrarMapa() {	
 			vm.showMap = true;
 			vm.showTab = false;
-			vm.showResult = true;
+			mostrarResultados();
 			vm.activeInput = $translate.instant('hermesServices.mapa');
 
 			//Para evitar que se carguen las tablas de la parte Table
@@ -365,13 +445,28 @@
 		function mostrarTabla() {	
 			vm.showMap = false;
 			vm.showTab = true;
-			vm.showResult = true;
+			mostrarResultados();
 			vm.activeInput = $translate.instant('hermesServices.tabla');
 
 			vm.cargarListadoTabla();
 		}
 
-
+		function mostrarResultados(){
+			//Segun el metodo elegido querremos mostrar lo de resultados o no
+			if (vm.methodSelected === 'COMPUTE_ROUTE' || vm.methodSelected === 'GET_VEHICLE_LOCATIONS' ||
+				vm.methodSelected === 'GET_MEASUREMENTS' || vm.methodSelected === 'GET_DATA_SECTIONS' ||
+				vm.methodSelected === 'GET_DRIVER_FEATURES' || vm.methodSelected === 'GET_STEPS_DATA' ||
+				vm.methodSelected === 'GET_HEART_RATE_DATA' || vm.methodSelected === 'GET_SLEEP_DATA' ||
+				vm.methodSelected === 'GET_CONTEXT_DATA' || vm.methodSelected === 'GET_USER_LOCATIONS' ||
+				vm.methodSelected === 'GET_USER_ACTIVITIES' || vm.methodSelected === 'GET_USER_DISTANCES' ||
+				vm.methodSelected === 'GET_USER_STEPS' || vm.methodSelected === 'GET_USER_CALORIES_EXPENDED' ||
+				vm.methodSelected === 'GET_USER_HEART_RATES' || vm.methodSelected === 'GET_USER_SLEEP'){
+				vm.showResult = false;
+				
+			}else{
+				vm.showResult = true;
+			}
+		}
 		
 		//mapa
 		var map = L.map( 'map', {
@@ -735,7 +830,9 @@
 				vm.methodSelected === 'GET_DRIVER_FEATURES' || vm.methodSelected === 'GET_STEPS_DATA' ||
 				vm.methodSelected === 'GET_HEART_RATE_DATA' || vm.methodSelected === 'GET_SLEEP_DATA' ||
 				vm.methodSelected === 'GET_CONTEXT_DATA' || vm.methodSelected === 'GET_USER_LOCATIONS' ||
-				vm.methodSelected === 'GET_USER_ACTIVITIES' ){
+				vm.methodSelected === 'GET_USER_ACTIVITIES' || vm.methodSelected === 'GET_USER_DISTANCES' ||
+				vm.methodSelected === 'GET_USER_STEPS' || vm.methodSelected === 'GET_USER_CALORIES_EXPENDED' ||
+				vm.methodSelected === 'GET_USER_HEART_RATES' || vm.methodSelected === 'GET_USER_SLEEP'){
 				vm.showResult = false;
 				vm.showSelectorMapTab = true;
 			}else{
@@ -1272,6 +1369,21 @@
 		    	vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
 		    	break;
 		    case "GET_USER_ACTIVITIES":
+		    	vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
+		    	break;
+		    case "GET_USER_DISTANCES":
+		    	vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
+		    	break;
+		    case "GET_USER_STEPS":
+		    	vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
+		    	break;
+		    case "GET_USER_CALORIES_EXPENDED":
+		    	vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
+		    	break;
+		    case "GET_USER_HEART_RATES":
+		    	vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
+		    	break;
+		    case "GET_USER_SLEEP":
 		    	vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
 		    	break;
 			default:
@@ -1822,7 +1934,7 @@
 			    	break;
 			    	
 			    case "GET_USER_ACTIVITIES":
-			    	hermesServicesService.getUserActivities(vm.startDate, vm.endDate, vm.seLng, vm.seLat, vm.nwLng, vm.nwLat).then(getUserActivitiesComplete);
+			    	hermesServicesService.getUserActivities(vm.startDate, vm.endDate).then(getUserActivitiesComplete);
 					
 					function getUserActivitiesComplete(response) {
 						
@@ -1837,6 +1949,86 @@
 					
 			    	break;
 			    	
+			    case "GET_USER_DISTANCES":
+			    	hermesServicesService.getUserDistances(vm.startDate, vm.endDate).then(getUserDistancesComplete);
+					
+					function getUserDistancesComplete(response) {
+						
+						vm.events = response;
+						vm.resultadoConcreto = undefined;
+												
+						markers.clearLayers();
+
+						vm.cargarListadoTabla();
+						
+					}
+					
+			    	break;
+			    	
+			    case "GET_USER_STEPS":
+			    	hermesServicesService.getUserSteps(vm.startDate, vm.endDate).then(getUserStepsComplete);
+					
+					function getUserStepsComplete(response) {
+						
+						vm.events = response;
+						vm.resultadoConcreto = undefined;
+												
+						markers.clearLayers();
+
+						vm.cargarListadoTabla();
+						
+					}
+			    	
+					break;
+					
+			    case "GET_USER_CALORIES_EXPENDED":
+			    	hermesServicesService.getUserCaloriesExpended(vm.startDate, vm.endDate).then(getUserCaloriesExpendedComplete);
+					
+					function getUserCaloriesExpendedComplete(response) {
+						
+						vm.events = response;
+						vm.resultadoConcreto = undefined;
+												
+						markers.clearLayers();
+
+						vm.cargarListadoTabla();
+						
+					}
+					
+					break;
+					
+			    case "GET_USER_HEART_RATES":
+			    	hermesServicesService.getUserHeartRates(vm.startDate, vm.endDate).then(getUserHeartRatesComplete);
+					
+					function getUserHeartRatesComplete(response) {
+						
+						vm.events = response;
+						vm.resultadoConcreto = undefined;
+												
+						markers.clearLayers();
+
+						vm.cargarListadoTabla();
+						
+					}
+					
+					break;
+					
+			    case "GET_USER_SLEEP":
+			    	hermesServicesService.getUserSleep(vm.startDate, vm.endDate).then(getUserSleepComplete);
+					
+					function getUserSleepComplete(response) {
+						
+						vm.events = response;
+						vm.resultadoConcreto = undefined;
+												
+						markers.clearLayers();
+
+						vm.cargarListadoTabla();
+						
+					}
+					
+					break;
+					
 			  default:
 				 break;
 			}
@@ -2056,6 +2248,71 @@
 			}
 		}
 		
+		function validacionGetUserDistances(){
+			var texto = "";
+			if (vm.startDate === undefined || vm.endDate === undefined){
+				texto = texto + $translate.instant('hermesServices.selectDates');
+			}
+			
+			if (texto !== ""){
+				SweetAlert.swal(texto);
+			}else{
+				ejecutarPeticion();
+			}
+		}
+		
+		function validacionGetUserSteps(){
+			var texto = "";
+			if (vm.startDate === undefined || vm.endDate === undefined){
+				texto = texto + $translate.instant('hermesServices.selectDates');
+			}
+			
+			if (texto !== ""){
+				SweetAlert.swal(texto);
+			}else{
+				ejecutarPeticion();
+			}
+		}
+		
+		function validacionGetUserCaloriesExpended(){
+			var texto = "";
+			if (vm.startDate === undefined || vm.endDate === undefined){
+				texto = texto + $translate.instant('hermesServices.selectDates');
+			}
+			
+			if (texto !== ""){
+				SweetAlert.swal(texto);
+			}else{
+				ejecutarPeticion();
+			}
+		}
+		
+		function validacionGetUserHeartRates(){
+			var texto = "";
+			if (vm.startDate === undefined || vm.endDate === undefined){
+				texto = texto + $translate.instant('hermesServices.selectDates');
+			}
+			
+			if (texto !== ""){
+				SweetAlert.swal(texto);
+			}else{
+				ejecutarPeticion();
+			}
+		}
+		
+		function validacionGetUserSleep(){
+			var texto = "";
+			if (vm.startDate === undefined || vm.endDate === undefined){
+				texto = texto + $translate.instant('hermesServices.selectDates');
+			}
+			
+			if (texto !== ""){
+				SweetAlert.swal(texto);
+			}else{
+				ejecutarPeticion();
+			}
+		}
+		
 		function aplicarFiltros() {	
 			
 			vm.errorPoint = false;
@@ -2113,6 +2370,26 @@
 
 			case "GET_USER_ACTIVITIES":
 				validacionGetUserActivities();
+				break;
+				
+			case "GET_USER_DISTANCES":
+				validacionGetUserDistances();
+				break;
+				
+			case "GET_USER_STEPS":
+				validacionGetUserSteps();
+				break;
+				
+			case "GET_USER_CALORIES_EXPENDED":
+				validacionGetUserCaloriesExpended();
+				break;
+				
+			case "GET_USER_HEART_RATES":
+				validacionGetUserHeartRates();
+				break;
+				
+			case "GET_USER_SLEEP":
+				validacionGetUserSleep();
 				break;
 			}	
 		}

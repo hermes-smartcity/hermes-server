@@ -32,6 +32,7 @@ CREATE TABLE dbconcept (
   tableName VARCHAR(150) NOT NULL,
   osmIdName VARCHAR(100) NOT NULL,
   geomName VARCHAR(100) NOT NULL,
+  idName VARCHAR(100) NOT NULL,
   idDbConnection bigint,
   CONSTRAINT iddbconcept_pk PRIMARY KEY (id),
   CONSTRAINT dbconcept_fk_dbconnection FOREIGN KEY (idDbConnection) REFERENCES dbconnection(id) ON DELETE CASCADE

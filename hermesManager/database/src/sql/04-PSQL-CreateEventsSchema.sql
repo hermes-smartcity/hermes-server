@@ -417,3 +417,88 @@ BEGIN
 END;
 $body$
 LANGUAGE 'plpgsql';
+
+-- User distance
+drop table if exists userdistances cascade;
+drop sequence if exists userdistances_id_seq cascade;
+create sequence userdistances_id_seq;
+
+CREATE TABLE userdistances (
+  id bigint NOT NULL DEFAULT nextval('userdistances_id_seq'::regclass),
+  eventId VARCHAR(50) NOT NULL,
+  starttime timestamp without time zone,
+  endtime timestamp without time zone,
+  distance decimal,
+  idUsuarioMovil bigint,
+  CONSTRAINT iduserdistances_pk PRIMARY KEY (id),
+  CONSTRAINT iduserdistances_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+)
+;
+
+-- User calories expended
+drop table if exists usercaloriesexpended cascade;
+drop sequence if exists usercaloriesexpended_id_seq cascade;
+create sequence usercaloriesexpended_id_seq;
+
+CREATE TABLE usercaloriesexpended (
+  id bigint NOT NULL DEFAULT nextval('usercaloriesexpended_id_seq'::regclass),
+  eventId VARCHAR(50) NOT NULL,
+  starttime timestamp without time zone,
+  endtime timestamp without time zone,
+  calories decimal,
+  idUsuarioMovil bigint,
+  CONSTRAINT idusercaloriesexpended_pk PRIMARY KEY (id),
+  CONSTRAINT idusercaloriesexpended_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+)
+;
+
+-- User heart rates
+drop table if exists userheartrates cascade;
+drop sequence if exists userheartrates_id_seq cascade;
+create sequence userheartrates_id_seq;
+
+CREATE TABLE userheartrates (
+  id bigint NOT NULL DEFAULT nextval('userheartrates_id_seq'::regclass),
+  eventId VARCHAR(50) NOT NULL,
+  starttime timestamp without time zone,
+  endtime timestamp without time zone,
+  bpm decimal,
+  idUsuarioMovil bigint,
+  CONSTRAINT iduserheartrates_pk PRIMARY KEY (id),
+  CONSTRAINT iduserheartrates_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+)
+;
+
+-- User steps
+drop table if exists usersteps cascade;
+drop sequence if exists usersteps_id_seq cascade;
+create sequence usersteps_id_seq;
+
+CREATE TABLE usersteps (
+  id bigint NOT NULL DEFAULT nextval('usersteps_id_seq'::regclass),
+  eventId VARCHAR(50) NOT NULL,
+  starttime timestamp without time zone,
+  endtime timestamp without time zone,
+  steps integer,
+  idUsuarioMovil bigint,
+  CONSTRAINT idusersteps_pk PRIMARY KEY (id),
+  CONSTRAINT idusersteps_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+)
+;
+
+-- User sleep
+drop table if exists usersleep cascade;
+drop sequence if exists usersleep_id_seq cascade;
+create sequence usersleep_id_seq;
+
+CREATE TABLE usersleep (
+  id bigint NOT NULL DEFAULT nextval('usersleep_id_seq'::regclass),
+  eventId VARCHAR(50) NOT NULL,
+  starttime timestamp without time zone,
+  endtime timestamp without time zone,
+  name VARCHAR(100),
+  idUsuarioMovil bigint,
+  CONSTRAINT idusersleep_pk PRIMARY KEY (id),
+  CONSTRAINT idusersleep_fk_usuario FOREIGN KEY (idUsuarioMovil) REFERENCES usuario_movil(id) ON DELETE CASCADE
+)
+;

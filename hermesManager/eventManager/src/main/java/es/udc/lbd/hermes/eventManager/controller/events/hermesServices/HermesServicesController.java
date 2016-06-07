@@ -34,7 +34,12 @@ import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.sleepData.SleepData;
 import es.udc.lbd.hermes.model.events.stepsData.StepsData;
 import es.udc.lbd.hermes.model.events.useractivities.UserActivities;
+import es.udc.lbd.hermes.model.events.usercaloriesexpended.UserCaloriesExpended;
+import es.udc.lbd.hermes.model.events.userdistances.UserDistances;
+import es.udc.lbd.hermes.model.events.userheartrates.UserHeartRates;
 import es.udc.lbd.hermes.model.events.userlocations.UserLocations;
+import es.udc.lbd.hermes.model.events.usersleep.UserSleep;
+import es.udc.lbd.hermes.model.events.usersteps.UserSteps;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
@@ -399,4 +404,106 @@ public class HermesServicesController {
 			return new ArrayList<UserActivities>();
 		}
 	}
+	
+	@RequestMapping(value="/userdistances", method = RequestMethod.GET)
+	public List<UserDistances> getUserDistances(		
+			@RequestParam(value = "from", required = true) String from,
+			@RequestParam(value = "to", required = true) String to) { 
+
+		// Un usuario tipo consulta solo puede ver sus propios eventos
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		if (usuario.getUsuarioMovil() != null){
+			Long idUsuario = usuario.getUsuarioMovil().getId();  
+			
+			Calendar ini = Helpers.getFecha(from);
+			Calendar fin = Helpers.getFecha(to);
+			
+			return networkServicio.getUserDistances(idUsuario, ini, fin);
+		}else{
+			return new ArrayList<UserDistances>();
+		}
+	}
+	
+	@RequestMapping(value="/usersteps", method = RequestMethod.GET)
+	public List<UserSteps> getUserSteps(		
+			@RequestParam(value = "from", required = true) String from,
+			@RequestParam(value = "to", required = true) String to) { 
+
+		// Un usuario tipo consulta solo puede ver sus propios eventos
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		if (usuario.getUsuarioMovil() != null){
+			Long idUsuario = usuario.getUsuarioMovil().getId();  
+			
+			Calendar ini = Helpers.getFecha(from);
+			Calendar fin = Helpers.getFecha(to);
+			
+			return networkServicio.getUserSteps(idUsuario, ini, fin);
+		}else{
+			return new ArrayList<UserSteps>();
+		}
+	}
+	
+	@RequestMapping(value="/usercaloriesexpended", method = RequestMethod.GET)
+	public List<UserCaloriesExpended> getUserCaloriesExpended(		
+			@RequestParam(value = "from", required = true) String from,
+			@RequestParam(value = "to", required = true) String to) { 
+
+		// Un usuario tipo consulta solo puede ver sus propios eventos
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		if (usuario.getUsuarioMovil() != null){
+			Long idUsuario = usuario.getUsuarioMovil().getId();  
+			
+			Calendar ini = Helpers.getFecha(from);
+			Calendar fin = Helpers.getFecha(to);
+			
+			return networkServicio.getUserCaloriesExpended(idUsuario, ini, fin);
+		}else{
+			return new ArrayList<UserCaloriesExpended>();
+		}
+	}
+	
+	@RequestMapping(value="/userheartrates", method = RequestMethod.GET)
+	public List<UserHeartRates> getUserHeartRates(		
+			@RequestParam(value = "from", required = true) String from,
+			@RequestParam(value = "to", required = true) String to) { 
+
+		// Un usuario tipo consulta solo puede ver sus propios eventos
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		if (usuario.getUsuarioMovil() != null){
+			Long idUsuario = usuario.getUsuarioMovil().getId();  
+			
+			Calendar ini = Helpers.getFecha(from);
+			Calendar fin = Helpers.getFecha(to);
+			
+			return networkServicio.getUserHeartRates(idUsuario, ini, fin);
+		}else{
+			return new ArrayList<UserHeartRates>();
+		}
+	}
+	
+	@RequestMapping(value="/usersleep", method = RequestMethod.GET)
+	public List<UserSleep> getUserSleep(		
+			@RequestParam(value = "from", required = true) String from,
+			@RequestParam(value = "to", required = true) String to) { 
+
+		// Un usuario tipo consulta solo puede ver sus propios eventos
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UsuarioWeb usuario = (UsuarioWeb) usuarioWebService.loadUserByUsername(auth.getName());
+		if (usuario.getUsuarioMovil() != null){
+			Long idUsuario = usuario.getUsuarioMovil().getId();  
+			
+			Calendar ini = Helpers.getFecha(from);
+			Calendar fin = Helpers.getFecha(to);
+			
+			return networkServicio.getUserSleep(idUsuario, ini, fin);
+		}else{
+			return new ArrayList<UserSleep>();
+		}
+	}
+	
+	
 }

@@ -24,6 +24,12 @@
 		vm.pintarSleepData = pintarSleepData;
 		vm.pintarStepsData = pintarStepsData;
 		vm.pintarHeartRateData = pintarHeartRateData;
+		vm.pintarUserDistances = pintarUserDistances;
+		vm.pintarUserSteps = pintarUserSteps;
+		vm.pintarUserCaloriesExpended = pintarUserCaloriesExpended;
+		vm.pintarUserHeartRates = pintarUserHeartRates;
+		vm.pintarUserSleep = pintarUserSleep;
+				
 		vm.pintarPuntos = pintarPuntos;
 		vm.pintarLineas = pintarLineas;
 		vm.aplicarFiltros = aplicarFiltros;
@@ -47,6 +53,11 @@
 		vm.totalCD = statistics.totalContextData;
 		vm.totalUL = statistics.totalUserLocations;
 		vm.totalUA = statistics.totalUserActivities;
+		vm.totalUDI = statistics.totalUserDistances;
+		vm.totalUST = statistics.totalUserSteps;
+		vm.totalUCE = statistics.totalUserCaloriesExpended;
+		vm.totalUHR = statistics.totalUserHeartRates;
+		vm.totalUSL = statistics.totalUserSleep;
 
 		vm.mostrarMapa = mostrarMapa;
 		vm.mostrarTabla = mostrarTabla;
@@ -281,6 +292,67 @@
 				           DTColumnBuilder.newColumn('steps').withTitle($translate.instant('stepData.steps'))
 				           ];
 		
+		vm.dtColumnsUDI  = [
+		                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userDistances.userId')),
+		                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userDistances.timeStart')).renderWith(function(data, type, full) {
+		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                   }),
+		                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userDistances.timeEnd')).renderWith(function(data, type, full) {
+		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+		                   }),
+		                   DTColumnBuilder.newColumn('distance').withTitle($translate.instant('userDistances.distance')).renderWith(function(data, type, full) {
+		                	   return $filter('number')(data, 2);   
+		                   })
+		                   ];
+		
+		vm.dtColumnsUST  = [
+			                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userSteps.userId')),
+			                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userSteps.timeStart')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userSteps.timeEnd')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('steps').withTitle($translate.instant('userSteps.steps'))
+			                   ];
+		
+		vm.dtColumnsUCE  = [
+			                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userCaloriesExpended.userId')),
+			                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userCaloriesExpended.timeStart')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userCaloriesExpended.timeEnd')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('calories').withTitle($translate.instant('userCaloriesExpended.calories')).renderWith(function(data, type, full) {
+			                	   return $filter('number')(data, 2);   
+			                   })
+			                   ];
+		
+		vm.dtColumnsUHR  = [
+			                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userHeartRates.userId')),
+			                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userHeartRates.timeStart')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userHeartRates.timeEnd')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('bpm').withTitle($translate.instant('userHeartRates.bpm')).renderWith(function(data, type, full) {
+			                	   return $filter('number')(data, 2);   
+			                   })
+			                   ];		
+		
+		vm.dtColumnsUSL  = [
+			                   DTColumnBuilder.newColumn('userId').withTitle($translate.instant('userSleep.userId')),
+			                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userSleep.timeStart')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('endTime').withTitle($translate.instant('userSleep.timeEnd')).renderWith(function(data, type, full) {
+			                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
+			                   }),
+			                   DTColumnBuilder.newColumn('name').withTitle($translate.instant('userSleep.name'))
+			                   ];
+		
 		function cargarListadoTabla(){
 			//Para mostrar la tabla correspondiente
 			if(angular.equals(vm.eventTypeSelected, "VEHICLE_LOCATION")){
@@ -308,6 +380,16 @@
 				vm.listadoCarga = "./partials/heartratedata/heartRateDataListar.html";
 			}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 				vm.listadoCarga = "./partials/measurement/measurementListar.html";
+			}else if (angular.equals(vm.eventTypeSelected, "USER_DISTANCES")){
+				vm.listadoCarga = "./partials/userDistances/userDistancesListar.html";
+			}else if (angular.equals(vm.eventTypeSelected, "USER_STEPS")){
+				vm.listadoCarga = "./partials/userSteps/userStepsListar.html";
+			}else if (angular.equals(vm.eventTypeSelected, "USER_CALORIES_EXPENDED")){
+				vm.listadoCarga = "./partials/userCaloriesExpended/userCaloriesExpendedListar.html";
+			}else if (angular.equals(vm.eventTypeSelected, "USER_HEART_RATES")){
+				vm.listadoCarga = "./partials/userHeartRates/userHeartRatesListar.html";
+			}else if (angular.equals(vm.eventTypeSelected, "USER_SLEEP")){
+				vm.listadoCarga = "./partials/userSleep/userSleepListar.html";
 			} else{
 				vm.listadoCarga = undefined;
 			}	
@@ -412,6 +494,16 @@
 				vm.pintarStepsData();
 			}else if (angular.equals(vm.eventTypeSelected, "HEART_RATE_DATA")){
 				vm.pintarHeartRateData();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_DISTANCES")){
+				vm.pintarUserDistances();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_STEPS")){
+				vm.pintarUserSteps();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_CALORIES_EXPENDED")){
+				vm.pintarUserCaloriesExpended();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_HEART_RATES")){
+				vm.pintarUserHeartRates();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_SLEEP")){
+				vm.pintarUserSleep();
 			}else if(vm.measurementsType.indexOf(vm.eventTypeSelected) > -1){
 				vm.pintarMapaMeasurements();
 			} else{
@@ -1052,6 +1144,75 @@
 			map.addLayer(heatmap);
 		}
 
+		function pintarUserDistances() {
+
+			dashboardService.recuperarDatosPeticionSinGeometria(url_userDistances, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionUserDistancesComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionUserDistancesComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
+				
+				markers.clearLayers();
+				vm.recargarTabla();
+			}
+		}
+		
+		function pintarUserSteps() {
+
+			dashboardService.recuperarDatosPeticionSinGeometria(url_userSteps, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionUserStepsComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionUserStepsComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
+				
+				markers.clearLayers();
+				vm.recargarTabla();
+			}
+		}
+		
+		function pintarUserCaloriesExpended() {
+
+			dashboardService.recuperarDatosPeticionSinGeometria(url_userCaloriesExpended, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionUserCaloriesExpendedComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionUserCaloriesExpendedComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
+				
+				markers.clearLayers();
+				vm.recargarTabla();
+			}
+		}
+		
+		function pintarUserHeartRates() {
+
+			dashboardService.recuperarDatosPeticionSinGeometria(url_userHeartRates, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionUserHeartRatesComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionUserHeartRatesComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
+				
+				markers.clearLayers();
+				vm.recargarTabla();
+			}
+		}
+		
+		function pintarUserSleep() {
+
+			dashboardService.recuperarDatosPeticionSinGeometria(url_userSleep, vm.startDate, vm.endDate, vm.usuarioSelected).then(getPeticionUserSleepComplete);
+			// En cuanto tenga los eventos los pinto
+			function getPeticionUserSleepComplete(response) {
+				vm.events = response.results;
+				vm.totalResults = response.totalResults;
+				vm.returnedResults = response.returnedResults;
+				
+				markers.clearLayers();
+				vm.recargarTabla();
+			}
+		}
 		
 		function onTimeSetStart() {
 			vm.showCalendarStart = !vm.showCalendarStart;
@@ -1215,8 +1376,6 @@
 			
 			var defered = $q.defer();	
 			var promise = defered.promise;
-			
-			
 			
 			dashboardService.recuperaGeojsonDdConcept(dbconceptId, esLng, esLat, wnLng, wnLat).then(recuperaGeojsonDdConceptComplete);
 			// En cuanto tenga los eventos los pinto

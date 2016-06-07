@@ -40,6 +40,11 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 		registerEventType("User Locations", ZtreamyUserLocationList.class);
 		registerEventType("Full User Activities", ZtreamyUserActivityList.class);
 		registerEventType("Full User Locations", ZtreamyUserLocationList.class);
+		registerEventType("User Distances", ZtreamyUserDistancesList.class);
+		registerEventType("User Steps", ZtreamyUserStepsList.class);
+		registerEventType("User Calories Expended", ZtreamyUserCaloriesExpendedList.class);
+		registerEventType("User Heart Rates", ZtreamyUserHeartRatesList.class);
+		registerEventType("User Sleep", ZtreamyUserSleepList.class);
 	}
 
 	void registerEventType(String uniqueName, Class<? extends EventData> eventTypeClass) {

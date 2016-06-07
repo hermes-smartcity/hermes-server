@@ -168,4 +168,64 @@ public class RegistroPeticionesHelper {
 		
 		dataServiceDao.create(dataService);
 	}
+	
+	public void userDistancesSmartCitizien(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTCITIZEN.toString());
+		dataService.setMethod(Method.GET_USER_DISTANCES.toString());
+		
+		String formato = "yyyy-MM-dd HH:mm:ss";
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato(formato);
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy, formato));
+		
+		dataServiceDao.create(dataService);
+	}
+	
+	public void userStepsSmartCitizien(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTCITIZEN.toString());
+		dataService.setMethod(Method.GET_USER_STEPS.toString());
+		
+		String formato = "yyyy-MM-dd HH:mm:ss";
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato(formato);
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy, formato));
+		
+		dataServiceDao.create(dataService);
+	}
+	
+	public void userCaloriesExpendedSmartCitizien(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTCITIZEN.toString());
+		dataService.setMethod(Method.GET_USER_CALORIES_EXPENDED.toString());
+		
+		String formato = "yyyy-MM-dd HH:mm:ss";
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato(formato);
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy, formato));
+		
+		dataServiceDao.create(dataService);
+	}
+	
+	public void userHeartRatesSmartCitizien(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTCITIZEN.toString());
+		dataService.setMethod(Method.GET_USER_HEART_RATES.toString());
+		
+		String formato = "yyyy-MM-dd HH:mm:ss";
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato(formato);
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy, formato));
+		
+		dataServiceDao.create(dataService);
+	}
+	
+	public void userSleepSmartCitizien(){
+		DataServices dataService = new DataServices();
+		dataService.setService(Service.SMARTCITIZEN.toString());
+		dataService.setMethod(Method.GET_USER_SLEEP.toString());
+		
+		String formato = "yyyy-MM-dd HH:mm:ss";
+		String fechaHoy = HelpersModel.obtenerHoySegunFormato(formato);
+		dataService.setTimelog(HelpersModel.getFecha(fechaHoy, formato));
+		
+		dataServiceDao.create(dataService);
+	}
 }

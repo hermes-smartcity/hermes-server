@@ -12,7 +12,12 @@ import es.udc.lbd.hermes.model.events.measurement.MeasurementType;
 import es.udc.lbd.hermes.model.events.sleepData.SleepData;
 import es.udc.lbd.hermes.model.events.stepsData.StepsData;
 import es.udc.lbd.hermes.model.events.useractivities.UserActivities;
+import es.udc.lbd.hermes.model.events.usercaloriesexpended.UserCaloriesExpended;
+import es.udc.lbd.hermes.model.events.userdistances.UserDistances;
+import es.udc.lbd.hermes.model.events.userheartrates.UserHeartRates;
 import es.udc.lbd.hermes.model.events.userlocations.UserLocations;
+import es.udc.lbd.hermes.model.events.usersleep.UserSleep;
+import es.udc.lbd.hermes.model.events.usersteps.UserSteps;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
@@ -45,5 +50,11 @@ public interface NetworkService {
 	public List<UserLocations> getUserLocations(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
 			Double nwLng, Double nwLat,	Double seLng, Double seLat);
 	public List<UserActivities> getUserActivities(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	
+	public List<UserDistances> getUserDistances(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	public List<UserSteps> getUserSteps(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	public List<UserCaloriesExpended> getUserCaloriesExpended(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	public List<UserHeartRates> getUserHeartRates(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
+	public List<UserSleep> getUserSleep(Long idUsuario, Calendar fechaIni, Calendar fechaFin);
 }
 

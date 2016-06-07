@@ -67,6 +67,39 @@
 		<!-- contextdata -->
 		<security:intercept-url method="GET" pattern="/api/contextdata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
+		<!-- driver feature -->
+		<security:intercept-url method="GET" pattern="/api/driverfeature/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- sleepData -->
+		<security:intercept-url method="GET" pattern="/api/sleepdata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- stepsData -->
+		<security:intercept-url method="GET" pattern="/api/stepsdata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- heartRateData -->
+		<security:intercept-url method="GET" pattern="/api/heartratedata/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- userLocations -->
+		<security:intercept-url method="GET" pattern="/api/userlocation/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- userActivities -->
+		<security:intercept-url method="GET" pattern="/api/useractivity/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- userDistances -->
+		<security:intercept-url method="GET" pattern="/api/userdistance/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- userSteps -->
+		<security:intercept-url method="GET" pattern="/api/userstep/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- userCaloriesExpended -->
+		<security:intercept-url method="GET" pattern="/api/usercaloriesexpended/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- userHeartRates -->
+		<security:intercept-url method="GET" pattern="/api/userheartrates/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
+		<!-- userSleep -->
+		<security:intercept-url method="GET" pattern="/api/usersleep/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		
 		<!-- systemlog -->
 		<security:intercept-url method="GET" pattern="/api/systemlog/**" access="hasAnyRole('ADMIN')" />
 		
@@ -85,6 +118,17 @@
 		<security:intercept-url method="GET" pattern="/api/hermes/measurement" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		<security:intercept-url method="GET" pattern="/api/hermes/datasection" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		<security:intercept-url method="GET" pattern="/api/hermes/driverfeatures" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/heartratedata" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/stepsdata" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/sleepdata" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/contextdata" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/userlocations" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/useractivities" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/userdistances" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/usersteps" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/usercaloriesexpended" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/userheartrates" access="hasAnyRole('ADMIN', 'CONSULTA')" />
+		<security:intercept-url method="GET" pattern="/api/hermes/usersleep" access="hasAnyRole('ADMIN', 'CONSULTA')" />
 		
 		<!-- dataservice -->
 		<security:intercept-url method="GET" pattern="/api/dataservice/**" access="hasAnyRole('ADMIN', 'CONSULTA')" />

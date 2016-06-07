@@ -27,6 +27,11 @@
 		vm.pintarGraficoStepsData = pintarGraficoStepsData;
 		vm.pintarGraficoSleepData = pintarGraficoSleepData;
 		vm.pintarGraficoHeartRateData = pintarGraficoHeartRateData;
+		vm.pintarGraficoUserDistances = pintarGraficoUserDistances;
+		vm.pintarGraficoUserSteps = pintarGraficoUserSteps;
+		vm.pintarGraficoUserCaloriesExpended = pintarGraficoUserCaloriesExpended;
+		vm.pintarGraficoUserHeartRates = pintarGraficoUserHeartRates;
+		vm.pintarGraficoUserSleep = pintarGraficoUserSleep;
 		vm.recuperarYpintarEventos = recuperarYpintarEventos;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
@@ -50,6 +55,11 @@
 		vm.totalCD = statistics.totalContextData;
 		vm.totalUL = statistics.totalUserLocations;
 		vm.totalUA = statistics.totalUserActivities;
+		vm.totalUDI = statistics.totalUserDistances;
+		vm.totalUST = statistics.totalUserSteps;
+		vm.totalUCE = statistics.totalUserCaloriesExpended;
+		vm.totalUHR = statistics.totalUserHeartRates;
+		vm.totalUSL = statistics.totalUserSleep;
 		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
@@ -204,6 +214,36 @@
 			vm.recuperarYpintarEventos(url);
 		}
 		
+		function pintarGraficoUserDistances() {
+			var url = url_eventosPorDiaUDI;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoUserSteps() {
+			var url = url_eventosPorDiaUST;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoUserCaloriesExpended() {
+			var url = url_eventosPorDiaUCE;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoUserHeartRates() {
+			var url = url_eventosPorDiaUHR;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
+		function pintarGraficoUserSleep() {
+			var url = url_eventosPorDiaUSL;	
+			url+=prepararUrl();
+			vm.recuperarYpintarEventos(url);
+		}
+		
 		function aplicarFiltros() {
 			var pos = vm.eventTypeSelected.indexOf('_');
 			var value = vm.eventTypeSelected.substr(0, pos);
@@ -231,6 +271,16 @@
 				vm.pintarGraficoHeartRateData();
 			}else if (vm.measurementsType.indexOf(vm.eventTypeSelected) > -1) {
 				vm.pintarGraficoMeasurements();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_DISTANCES")){
+				vm.pintarGraficoUserDistances();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_STEPS")){
+				vm.pintarGraficoUserSteps();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_CALORIES_EXPENDED")){
+				vm.pintarGraficoUserCaloriesExpended();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_HEART_RATES")){
+				vm.pintarGraficoUserHeartRates();
+			}else if (angular.equals(vm.eventTypeSelected, "USER_SLEEP")){
+				vm.pintarGraficoUserSleep();
 			} else
 				console.log("No corresponde a ningún tipo --> En construcción");
 

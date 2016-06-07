@@ -28,8 +28,18 @@ import es.udc.lbd.hermes.model.events.stepsData.StepsData;
 import es.udc.lbd.hermes.model.events.stepsData.dao.StepsDataDao;
 import es.udc.lbd.hermes.model.events.useractivities.UserActivities;
 import es.udc.lbd.hermes.model.events.useractivities.dao.UserActivitiesDao;
+import es.udc.lbd.hermes.model.events.usercaloriesexpended.UserCaloriesExpended;
+import es.udc.lbd.hermes.model.events.usercaloriesexpended.dao.UserCaloriesExpendedDao;
+import es.udc.lbd.hermes.model.events.userdistances.UserDistances;
+import es.udc.lbd.hermes.model.events.userdistances.dao.UserDistancesDao;
+import es.udc.lbd.hermes.model.events.userheartrates.UserHeartRates;
+import es.udc.lbd.hermes.model.events.userheartrates.dao.UserHeartRatesDao;
 import es.udc.lbd.hermes.model.events.userlocations.UserLocations;
 import es.udc.lbd.hermes.model.events.userlocations.dao.UserLocationsDao;
+import es.udc.lbd.hermes.model.events.usersleep.UserSleep;
+import es.udc.lbd.hermes.model.events.usersleep.dao.UserSleepDao;
+import es.udc.lbd.hermes.model.events.usersteps.UserSteps;
+import es.udc.lbd.hermes.model.events.usersteps.dao.UserStepsDao;
 import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
@@ -83,6 +93,21 @@ public class NetworkServiceImpl implements NetworkService{
 	
 	@Autowired
 	private UserActivitiesDao userActivitiesDao;
+	
+	@Autowired
+	private UserDistancesDao userDistancesDao;
+	
+	@Autowired
+	private UserStepsDao userStepsDao;
+	
+	@Autowired
+	private UserCaloriesExpendedDao userCaloriesExpendedDao;
+	
+	@Autowired
+	private UserHeartRatesDao userHeartRatesDao;
+	
+	@Autowired
+	private UserSleepDao userSleepDao;
 		
 	@Override
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
@@ -312,4 +337,60 @@ public class NetworkServiceImpl implements NetworkService{
 				
 		return userActivities;
 	}
+	
+	public List<UserDistances> getUserDistances(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
+		List<UserDistances> userDistances = userDistancesDao.obterUserDistances(idUsuario, fechaIni, 
+				fechaFin, -1, -1);	
+		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.userDistancesSmartCitizien();
+				
+		return userDistances;
+	}
+	
+	public List<UserSteps> getUserSteps(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
+		List<UserSteps> userSteps = userStepsDao.obterUserSteps(idUsuario, fechaIni, 
+				fechaFin, -1, -1);	
+		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.userStepsSmartCitizien();
+				
+		return userSteps;
+	}
+	
+	public List<UserCaloriesExpended> getUserCaloriesExpended(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
+		List<UserCaloriesExpended> userCaloriesExpended = userCaloriesExpendedDao.obterUserCaloriesExpended(idUsuario, fechaIni, 
+				fechaFin, -1, -1);	
+		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.userCaloriesExpendedSmartCitizien();
+				
+		return userCaloriesExpended;
+	}
+	
+	public List<UserHeartRates> getUserHeartRates(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
+		List<UserHeartRates> userHeartRates = userHeartRatesDao.obterUserHeartRates(idUsuario, fechaIni, 
+				fechaFin, -1, -1);	
+		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.userHeartRatesSmartCitizien();
+				
+		return userHeartRates;
+	}
+	
+	public List<UserSleep> getUserSleep(Long idUsuario, Calendar fechaIni, Calendar fechaFin){
+		List<UserSleep> userSleep = userSleepDao.obterUserSleep(idUsuario, fechaIni, 
+				fechaFin, -1, -1);	
+		
+		//Registramos peticion realizada al servicio rest 
+		RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+		registro.userSleepSmartCitizien();
+				
+		return userSleep;
+	}
+	
 }

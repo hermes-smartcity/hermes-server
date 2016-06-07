@@ -13,7 +13,12 @@ import es.udc.lbd.hermes.eventManager.json.EventData;
 import es.udc.lbd.hermes.eventManager.json.EventDataArray;
 import es.udc.lbd.hermes.eventManager.json.EventParser;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserActivity;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyUserCaloriesExpended;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyUserDistances;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyUserHeartRates;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyUserLocation;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyUserSleep;
+import es.udc.lbd.hermes.eventManager.json.ZtreamyUserSteps;
 
 public class EventParserTest {
 
@@ -303,4 +308,130 @@ public class EventParserTest {
 			Assert.fail(e.getLocalizedMessage());
 		}		
 	}*/
+	
+	/*@Test
+	public void testUserDistances() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/userdistances.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserDistances) {
+						Assert.assertEquals(new Float(5.3), ((ZtreamyUserDistances)eventData).getDistance());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+	
+	@Test
+	public void testUserSteps() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/usersteps.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserSteps) {
+						Assert.assertEquals(new Integer(20), ((ZtreamyUserSteps)eventData).getSteps());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+	
+	@Test
+	public void testUserCaloriesExpended() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/usercaloriesexpended.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserCaloriesExpended) {
+						Assert.assertEquals(new Float(5.3), ((ZtreamyUserCaloriesExpended)eventData).getCalories());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+	
+	@Test
+	public void testUserHeartRates() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/userheartrates.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserHeartRates) {
+						Assert.assertEquals(new Float(5.3), ((ZtreamyUserHeartRates)eventData).getBpm());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}
+	
+	@Test
+	public void testUserSleep() {
+		try {
+			EventParser parser = new EventParser();
+			Event event = parser.parse(this.getClass().getResourceAsStream("/usersleep.json"));			
+			if (event.getEventData() instanceof EventDataArray) {
+				EventDataArray eventDataArray = (EventDataArray)event.getEventData();
+				for (EventData eventData : eventDataArray.getEvents()) {
+					if (eventData instanceof ZtreamyUserSleep) {
+						Assert.assertEquals("sleep.light", ((ZtreamyUserSleep)eventData).getName());
+					}
+				}
+			}
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+			Assert.fail(e.getLocalizedMessage());
+		}		
+	}*/
+	
 }
