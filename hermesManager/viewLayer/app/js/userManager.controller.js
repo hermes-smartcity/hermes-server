@@ -51,6 +51,9 @@
 	vm.totalUHR = statistics.totalUserHeartRates;
 	vm.totalUSL = statistics.totalUserSleep;
 	
+	vm.totalGoogleFit = vm.totalUL + vm.totalUA + vm.totalUDI + vm.totalUST + vm.totalUCE + vm.totalUHR + vm.totalUSL;
+	vm.totalFitBit = vm.totalSTD + vm.totalSLD + vm.totalHRD;
+	
 	//Inicializar options de la tabla
 	vm.dtOptions = DTOptionsBuilder.newOptions().withLanguageSource("./translations/datatables-locale_en.json");
 	

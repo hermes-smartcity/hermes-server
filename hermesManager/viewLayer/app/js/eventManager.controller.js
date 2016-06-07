@@ -61,6 +61,9 @@
 		vm.totalUHR = statistics.totalUserHeartRates;
 		vm.totalUSL = statistics.totalUserSleep;
 		
+		vm.totalGoogleFit = vm.totalUL + vm.totalUA + vm.totalUDI + vm.totalUST + vm.totalUCE + vm.totalUHR + vm.totalUSL;
+		vm.totalFitBit = vm.totalSTD + vm.totalSLD + vm.totalHRD;
+		
 		// Si el usuario tiene rol admin se mostrará en dashoboard el estado de event manager. Ese apartado sin embargo no lo tiene el usuario consulta
 		if($rootScope.hasRole('ROLE_ADMIN')){
 			eventsService.getStateActualizado().then(getStateActualizadoComplete);	

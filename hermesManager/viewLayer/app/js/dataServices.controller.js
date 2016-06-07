@@ -43,6 +43,9 @@
 		vm.totalUHR = statistics.totalUserHeartRates;
 		vm.totalUSL = statistics.totalUserSleep;
 		
+		vm.totalGoogleFit = vm.totalUL + vm.totalUA + vm.totalUDI + vm.totalUST + vm.totalUCE + vm.totalUHR + vm.totalUSL;
+		vm.totalFitBit = vm.totalSTD + vm.totalSLD + vm.totalHRD;
+		
 		vm.recuperarYpintarPeticiones = recuperarYpintarPeticiones;
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
