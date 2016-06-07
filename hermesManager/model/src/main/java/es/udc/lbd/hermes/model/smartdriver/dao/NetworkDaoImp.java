@@ -166,7 +166,10 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 					
 			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 			listado = (List<RouteSegment>) query.list();
-			Coordinate previousCoordinate = new Coordinate(fromLng, fromLat);			
+			Coordinate previousCoordinate = null;
+			if (listado.size() > 0) {
+				previousCoordinate = listado.get(0).getGeom_way().getStartPoint().getCoordinate();
+			}
 			for (RouteSegment routeSegment:listado){
 				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
 				if (!firstCoordinate.equals2D(previousCoordinate)) {
@@ -240,7 +243,10 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 			listado = (List<RouteSegment>) query.list();
 			double previousSeconds = 0;
-			Coordinate previousEnd = new Coordinate(fromLng, fromLat);
+			Coordinate previousEnd = null;
+			if (listado.size() > 0) {
+				previousEnd = listado.get(0).getGeom_way().getStartPoint().getCoordinate();
+			}
 			for (RouteSegment routeSegment:listado){
 				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
 				if (!firstCoordinate.equals2D(previousEnd)) {
