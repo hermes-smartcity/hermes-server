@@ -92,6 +92,7 @@ CREATE TABLE vehicleLocation (
   position geometry(POINT, 4326),
   accuracy double precision,
   speed double precision,
+  rr double precision,
   eventId VARCHAR(50) NOT NULL,
   idUsuarioMovil BIGINT,
   CONSTRAINT idvehicleLocation_pk PRIMARY KEY (id),

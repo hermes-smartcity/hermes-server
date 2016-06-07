@@ -50,7 +50,8 @@ public class VehicleLocation implements Serializable{
 		
 		private Double speed;
 		
-
+		private Double rr;
+		
 		@ManyToOne(fetch = FetchType.EAGER)
     	@JoinColumn(name = "idUsuarioMovil")
     	private UsuarioMovil usuarioMovil;
@@ -118,4 +119,14 @@ public class VehicleLocation implements Serializable{
 		public void setSpeed(Double speed) {
 			this.speed = speed;
 		}
+
+		public Double getRr() {
+			return rr;
+		}
+
+		public void setRr(Double rr) {
+			this.rr = rr;
+		}
+		
+		
 }

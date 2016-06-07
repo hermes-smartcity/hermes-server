@@ -1,63 +1,59 @@
 package es.udc.lbd.hermes.eventManager.strategy;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
-import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Point;
 
 import es.udc.lbd.hermes.eventManager.json.Event;
-import es.udc.lbd.hermes.eventManager.json.EventParser;
+import es.udc.lbd.hermes.eventManager.json.RoadSectionPoint;
 import es.udc.lbd.hermes.eventManager.json.ZtreamyDataSection;
-import es.udc.lbd.hermes.eventManager.util.Helpers;
-import es.udc.lbd.hermes.model.events.dataSection.DataSection;
-import es.udc.lbd.hermes.model.events.dataSection.service.DataSectionService;
 import es.udc.lbd.hermes.model.events.service.EventService;
+import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
+import es.udc.lbd.hermes.model.events.vehicleLocation.service.VehicleLocationService;
 import es.udc.lbd.hermes.model.util.ApplicationContextProvider;
+import es.udc.lbd.hermes.model.util.HelpersModel;
 
 @Component
 public class DataSectionEventStrategy extends EventStrategy {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	//private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Override
 	public void processEvent(Event event) {
 		
 		EventService eventService = ApplicationContextProvider.getApplicationContext().getBean("eventService", EventService.class);
-		DataSectionService dataSectionService = ApplicationContextProvider.getApplicationContext().getBean("dataSectionService", DataSectionService.class);		
+		VehicleLocationService vehicleLocationService = ApplicationContextProvider.getApplicationContext().getBean("vehicleLocationService", VehicleLocationService.class);		
+		
 		// Construir un objeto del modelo a partir del evento
 		ZtreamyDataSection ztreamyDataSection = (ZtreamyDataSection) event.getEventData();
-		if (ztreamyDataSection.getRoadSection().size() >= 2) {
-			DataSection dataSection = new DataSection();
-			dataSection.setMinSpeed(ztreamyDataSection.getMedianSpeed());
-			dataSection.setMaxSpeed(ztreamyDataSection.getMaxSpeed());
-			dataSection.setMedianSpeed(ztreamyDataSection.getMedianSpeed());
-			dataSection.setAverageSpeed(ztreamyDataSection.getAverageSpeed());
-			dataSection.setAverageRR(ztreamyDataSection.getAverageRR());
-			dataSection.setAverageHeartRate(ztreamyDataSection.getAverageHeartRate());
-			dataSection.setStandardDeviationSpeed(ztreamyDataSection.getStandardDeviationSpeed());
-			dataSection.setStandardDeviationRR(ztreamyDataSection.getStandardDeviationRR());
-			dataSection.setStandardDeviationHeartRate(ztreamyDataSection.getStandardDeviationHeartRate());
-			dataSection.setNumHighDecelerations(ztreamyDataSection.getNumHighDecelerations());
-			dataSection.setNumHighAccelerations(ztreamyDataSection.getNumHighAccelerations());
-			dataSection.setAverageAcceleration(ztreamyDataSection.getAverageAcceleration());
-			dataSection.setAverageDeceleration(ztreamyDataSection.getAverageDeceleration());
-			dataSection.setRrSection(ztreamyDataSection.getRrSection());
-			dataSection.setPke(ztreamyDataSection.getPke());
-			// TODO Falta decidir como se va a hacer
-			dataSection.setRoadSection((LineString) Helpers.prepararRuta(ztreamyDataSection.getRoadSection()));
-			dataSection.setAccuracy(Helpers.prepararPrecision(ztreamyDataSection.getRoadSection()));
-			dataSection.setSpeed(Helpers.prepararVelocidad(ztreamyDataSection.getRoadSection()));
-			dataSection.setEventId(event.getEventId());
-	
-			dataSection.setTimestamp(event.getTimestamp());
-			dataSectionService.create(dataSection, event.getSourceId());
-		} else {
-			EventParser parser = new EventParser();
-			String eventAsString = parser.prettyPrint(event);
-			logger.warn("Evento descartado. DataSection con un único punto." + eventAsString);
+		List<RoadSectionPoint> vehicles = ztreamyDataSection.getRoadSection();
+		Double[] rrSection = ztreamyDataSection.getRrSection();
+		
+		for (int i=0;i<vehicles.size();i++){
+			RoadSectionPoint vehicle = vehicles.get(i);
+			
+			Double rr = null;
+			if (rrSection!=null && rrSection.length > 0){
+				rr = rrSection[i];
+			}
+			
+			VehicleLocation vehicleLocation = new VehicleLocation();	
+			Geometry punto = HelpersModel.prepararPunto(vehicle.getLatitude(), vehicle.getLongitude());
+			vehicleLocation.setPosition((Point)punto);
+			vehicleLocation.setAccuracy(vehicle.getAccuracy());
+			vehicleLocation.setSpeed(vehicle.getSpeed());
+			vehicleLocation.setRr(rr);
+			vehicleLocation.setEventId(event.getEventId());
+			
+			vehicleLocation.setTimestamp(event.getTimestamp());
+			vehicleLocationService.create(vehicleLocation, event.getSourceId());
 		}
+		
+		
 		eventService.create(event.getTimestamp(),event.getEventId());		
 	}
 }

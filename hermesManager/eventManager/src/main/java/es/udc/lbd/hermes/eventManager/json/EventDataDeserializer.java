@@ -22,7 +22,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 
 	public EventDataDeserializer() {
 		super(EventData.class);
-		registerEventType("Location", ZtreamyVehicleLocation.class);  
+		//registerEventType("Location", ZtreamyVehicleLocation.class);  
 		registerEventType("High Speed", ZtreamyHighSpeed.class);  
 		registerEventType("High Acceleration", ZtreamyHighAcceleration.class);  		
 		registerEventType("High Deceleration", ZtreamyHighDeceleration.class);

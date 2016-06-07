@@ -18,6 +18,7 @@ public class VehicleLocationDTO {
     private Point position;
 	private Double accuracy;
 	private Double speed;
+	private Double rr;
 	private String userId;
 	
 	public Long getId() {
@@ -49,6 +50,12 @@ public class VehicleLocationDTO {
 	}
 	public void setSpeed(Double speed) {
 		this.speed = speed;
+	}
+	public Double getRr() {
+		return rr;
+	}
+	public void setRr(Double rr) {
+		this.rr = rr;
 	}
 	public String getUserId() {
 		return userId;

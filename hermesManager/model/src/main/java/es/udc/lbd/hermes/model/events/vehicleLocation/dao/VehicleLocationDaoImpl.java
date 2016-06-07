@@ -149,7 +149,7 @@ VehicleLocationDao {
 		
 		String queryStr = "select last(id) as id, last(timestamp) as timestamp, last(position) as position, "
 				+ "(select sourceid from usuario_movil where id = last(idUsuarioMovil)) as \"userId\", "
-				+ "last(accuracy) as accuracy, last(speed) as speed "
+				+ "last(accuracy) as accuracy, last(speed) as speed, last(rr) as rr "
 				+ "from vehicleLocation where st_within(position, :bounds) = true ";
 		if(idUsuario!=null)
 			queryStr += "and idUsuarioMovil = :idUsuario ";
@@ -164,7 +164,8 @@ VehicleLocationDao {
 		query.addScalar("position", GeometryType.INSTANCE);		
 		query.addScalar("userId", StringType.INSTANCE);
 		query.addScalar("accuracy", DoubleType.INSTANCE);
-		query.addScalar("speed", DoubleType.INSTANCE);		
+		query.addScalar("speed", DoubleType.INSTANCE);
+		query.addScalar("rr", DoubleType.INSTANCE);
 		query.setParameter("bounds", bounds);
 
 		if(idUsuario!=null)

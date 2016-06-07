@@ -180,6 +180,7 @@
 				"date": "Date",
 				"time": "Time",
 				"speed": "Speed",
+				"rr": "RR",
 				"accuracy": "Accuracy"
 			},
 			"user":{

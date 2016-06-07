@@ -1,0 +1,1 @@
+ALTER TABLE vehiclelocation ADD COLUMN rr double precision;

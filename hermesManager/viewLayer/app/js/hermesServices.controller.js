@@ -161,6 +161,9 @@
 		                   DTColumnBuilder.newColumn('speed').withTitle($translate.instant('vehicleLocation.speed')).renderWith(function(data, type, full) {
 		                	   return $filter('number')(data, 2);
 		                   }),
+		                   DTColumnBuilder.newColumn('rr').withTitle($translate.instant('vehicleLocation.rr')).renderWith(function(data, type, full) {
+		                	   return $filter('number')(data, 2);   
+		                   }),
 		                   DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
 		                   ];
 
