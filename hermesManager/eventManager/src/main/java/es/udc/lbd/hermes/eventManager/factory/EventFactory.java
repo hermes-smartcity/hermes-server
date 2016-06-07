@@ -27,7 +27,6 @@ import es.udc.lbd.hermes.eventManager.strategy.UserHeartRatesEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.UserLocationsEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.UserSleepEventStrategy;
 import es.udc.lbd.hermes.eventManager.strategy.UserStepsEventStrategy;
-import es.udc.lbd.hermes.eventManager.strategy.VehicleLocationEventStrategy;
 import es.udc.lbd.hermes.model.events.EventProcesor;
 
 public class EventFactory {
@@ -36,7 +35,7 @@ public class EventFactory {
 	private static Map<EventProcesor, EventStrategy> registry;
 	static {
 		registry = new HashMap<EventProcesor, EventStrategy>();
-		registry.put(EventProcesor.VEHICLE_LOCATION, new VehicleLocationEventStrategy());
+		//registry.put(EventProcesor.VEHICLE_LOCATION, new VehicleLocationEventStrategy());
 		registry.put(EventProcesor.HIGH_SPEED, new HighSpeedEventStrategy());
 		registry.put(EventProcesor.HIGH_ACCELERATION, new HighAccelerationEventStrategy());
 		registry.put(EventProcesor.HIGH_DECELERATION, new HighDecelerationEventStrategy());
