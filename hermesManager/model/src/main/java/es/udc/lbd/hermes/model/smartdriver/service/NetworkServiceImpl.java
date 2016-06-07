@@ -186,7 +186,7 @@ public class NetworkServiceImpl implements NetworkService{
 				
 		//Obtenemos la lista de tramos
 		try{
-			List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint, fromLat, fromLng);
+			List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint);
 			//Registramos peticion realizada al servicio rest 
 			RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
 			registro.computeRouteSmartDriver();
@@ -210,7 +210,7 @@ public class NetworkServiceImpl implements NetworkService{
 				
 		//Obtenemos la lista de tramos
 		try{
-			List<RoutePoint> listado = networkDao.simulateListSections(originPoint, destinyPoint, fromLat, fromLng, sf, new Double(1));			
+			List<RoutePoint> listado = networkDao.simulateListSections(originPoint, destinyPoint, sf, new Double(1));			
 			//Registramos peticion realizada al servicio rest 
 			RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
 			registro.simulateRouteSmartDriver();

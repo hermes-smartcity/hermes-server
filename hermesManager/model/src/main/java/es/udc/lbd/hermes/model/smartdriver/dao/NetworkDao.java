@@ -16,6 +16,6 @@ public interface NetworkDao extends GenericDao<NetworkLink, Long> {
 	
 	public OriginDestinyPoint obtainOriginPoint(Double fromLat, Double fromLng);
 	public OriginDestinyPoint obtainDestinyPoint(Double toLat, Double toLng);
-	public List<RouteSegment> obtainListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double fromLat, Double fromLng)  throws RouteException;
-	public List<RoutePoint> simulateListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double fromLat, Double fromLng, Double sf, Double secondsPerStep)  throws RouteException;
+	public List<RouteSegment> obtainListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint)  throws RouteException;
+	public List<RoutePoint> simulateListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double sf, Double secondsPerStep)  throws RouteException;
 }
