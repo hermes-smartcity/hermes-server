@@ -114,7 +114,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<RouteSegment> obtainListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double fromLat, Double fromLng) throws RouteException{
+	public List<RouteSegment> obtainListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint) throws RouteException{
 		
 		List<RouteSegment> listado = null;
 		try{
@@ -169,7 +169,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 					
 			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 			listado = (List<RouteSegment>) query.list();
-			Coordinate previousCoordinate = new Coordinate(fromLng, fromLat);			
+			Coordinate previousCoordinate = new Coordinate(originPoint.getX1(), originPoint.getY1());			
 			for (RouteSegment routeSegment:listado){
 				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
 				if (!firstCoordinate.equals2D(previousCoordinate)) {
@@ -184,7 +184,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<RoutePoint> simulateListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double fromLat, Double fromLng, Double sf, Double secondsperstep)  throws RouteException{
+	public List<RoutePoint> simulateListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double sf, Double secondsperstep)  throws RouteException{
 		
 		List<RouteSegment> listado = null;
 		List<RoutePoint> result = new ArrayList<RoutePoint>();
@@ -243,7 +243,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 			listado = (List<RouteSegment>) query.list();
 			double previousSeconds = 0;
-			Coordinate previousEnd = new Coordinate(fromLng, fromLat);
+			Coordinate previousEnd = new Coordinate(originPoint.getX1(), originPoint.getY1());
 			for (RouteSegment routeSegment:listado){
 				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
 				if (!firstCoordinate.equals2D(previousEnd)) {
