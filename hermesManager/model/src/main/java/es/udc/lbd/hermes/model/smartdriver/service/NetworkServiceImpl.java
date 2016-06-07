@@ -44,8 +44,9 @@ import es.udc.lbd.hermes.model.events.vehicleLocation.VehicleLocation;
 import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
-import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
+import es.udc.lbd.hermes.model.smartdriver.OriginDestinyPoint;
 import es.udc.lbd.hermes.model.smartdriver.RoutePoint;
+import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
 import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.smartdriver.dao.NetworkDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
@@ -174,12 +175,12 @@ public class NetworkServiceImpl implements NetworkService{
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<RouteSegment> getComputeRoute(Double fromLat, Double fromLng, Double toLat, Double toLng) throws PointDestinyException, PointOriginException, RouteException{
 		//Obtenemos el id de origen
-		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
+		OriginDestinyPoint originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
 		if (originPoint == null)
 			throw new PointOriginException(fromLat, fromLng);
 		
 		//Obtenemos el id de destino
-		Integer destinyPoint = networkDao.obtainDestinyPoint(toLat, toLng);
+		OriginDestinyPoint destinyPoint = networkDao.obtainDestinyPoint(toLat, toLng);
 		if (destinyPoint == null)
 			throw new PointDestinyException(toLat, toLng);
 				
@@ -198,12 +199,12 @@ public class NetworkServiceImpl implements NetworkService{
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<RoutePoint> simulateRoute(Double fromLat, Double fromLng, Double toLat, Double toLng, Double sf) throws PointDestinyException, PointOriginException, RouteException{
 		//Obtenemos el id de origen
-		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
+		OriginDestinyPoint originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
 		if (originPoint == null)
 			throw new PointOriginException(fromLat, fromLng);
 		
 		//Obtenemos el id de destino
-		Integer destinyPoint = networkDao.obtainDestinyPoint(toLat, toLng);
+		OriginDestinyPoint destinyPoint = networkDao.obtainDestinyPoint(toLat, toLng);
 		if (destinyPoint == null)
 			throw new PointDestinyException(toLat, toLng);
 				

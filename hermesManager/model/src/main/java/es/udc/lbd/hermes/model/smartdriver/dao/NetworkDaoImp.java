@@ -20,8 +20,9 @@ import com.vividsolutions.jts.linearref.LengthIndexedLine;
 
 import es.udc.lbd.hermes.model.smartdriver.NetworkLink;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
-import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
+import es.udc.lbd.hermes.model.smartdriver.OriginDestinyPoint;
 import es.udc.lbd.hermes.model.smartdriver.RoutePoint;
+import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 import es.udc.lbd.hermes.model.util.exceptions.RouteException;
 
@@ -79,39 +80,41 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 		return resultado;
 	}
 	
-	public Integer obtainOriginPoint(Double fromLat, Double fromLng){
+	public OriginDestinyPoint obtainOriginPoint(Double fromLat, Double fromLng){
 		
-		String queryString = "select source " +
+		String queryString = "select source as source, x1 as x1, y1 as y1 " +
 							"from network.link " +
 							"where geom_way && st_expand(st_geometryfromtext('POINT('|| :fromLng || ' ' ||:fromLat ||')', 4326), 0.01) " + 
 							"order by st_distance(geom_way, st_geometryfromtext('POINT('|| :fromLng || ' ' ||:fromLat ||')', 4326)) " + 
 							"limit 1";
 		
 		Query query = getSession().createSQLQuery(queryString);
+		query.setResultTransformer(Transformers.aliasToBean(OriginDestinyPoint.class));
 		
 		query.setParameter("fromLat", fromLat);
 		query.setParameter("fromLng", fromLng);
 		
-		return (Integer) query.uniqueResult();
+		return (OriginDestinyPoint) query.uniqueResult();
 	}
 	
-	public Integer obtainDestinyPoint(Double toLat, Double toLng){
-		String queryString = "select source " +
+	public OriginDestinyPoint obtainDestinyPoint(Double toLat, Double toLng){
+		String queryString = "select source as source, x1 as x1, y1 as y1 " +
 				"from network.link " +
 				"where geom_way && st_expand(st_geometryfromtext('POINT('|| :toLng || ' ' ||:toLat ||')', 4326), 0.01) " + 
 				"order by st_distance(geom_way, st_geometryfromtext('POINT('|| :toLng || ' ' ||:toLat ||')', 4326)) " + 
 				"limit 1";
 
 		Query query = getSession().createSQLQuery(queryString);
+		query.setResultTransformer(Transformers.aliasToBean(OriginDestinyPoint.class));
 		
 		query.setParameter("toLat", toLat);
 		query.setParameter("toLng", toLng);
 		
-		return (Integer) query.uniqueResult();
+		return (OriginDestinyPoint) query.uniqueResult();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<RouteSegment> obtainListSections(Integer originPoint, Integer destinyPoint, Double fromLat, Double fromLng) throws RouteException{
+	public List<RouteSegment> obtainListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double fromLat, Double fromLng) throws RouteException{
 		
 		List<RouteSegment> listado = null;
 		try{
@@ -161,8 +164,8 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 			query.addScalar("cost", DoubleType.INSTANCE);
 			query.addScalar("geom_way", GeometryType.INSTANCE);		
 					
-			query.setParameter("originPoint", originPoint);
-			query.setParameter("destinyPoint", destinyPoint);
+			query.setParameter("originPoint", originPoint.getSource());
+			query.setParameter("destinyPoint", destinyPoint.getSource());
 					
 			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 			listado = (List<RouteSegment>) query.list();
@@ -181,7 +184,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<RoutePoint> simulateListSections(Integer originPoint, Integer destinyPoint, Double fromLat, Double fromLng, Double sf, Double secondsperstep)  throws RouteException{
+	public List<RoutePoint> simulateListSections(OriginDestinyPoint originPoint, OriginDestinyPoint destinyPoint, Double fromLat, Double fromLng, Double sf, Double secondsperstep)  throws RouteException{
 		
 		List<RouteSegment> listado = null;
 		List<RoutePoint> result = new ArrayList<RoutePoint>();
@@ -234,8 +237,8 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 			query.addScalar("cost", DoubleType.INSTANCE);
 			query.addScalar("geom_way", GeometryType.INSTANCE);		
 					
-			query.setParameter("originPoint", originPoint);
-			query.setParameter("destinyPoint", destinyPoint);
+			query.setParameter("originPoint", originPoint.getSource());
+			query.setParameter("destinyPoint", destinyPoint.getSource());
 					
 			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 			listado = (List<RouteSegment>) query.list();
