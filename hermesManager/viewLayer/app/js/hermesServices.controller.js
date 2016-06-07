@@ -1493,7 +1493,7 @@
 		}
 		
 		
-		function infoPopupVehicleLocation(userId, timestamp, eventSpeed, eventAccuracy) {
+		function infoPopupVehicleLocation(userId, timestamp, eventSpeed, eventAccuracy, eventRR) {
 			var date = new Date(timestamp);
 			var dateEvento = $filter('date')(date, 'yyyy-MM-dd');
 			var hourEvento = $filter('date')(date, 'HH:mm:ss');
@@ -1503,13 +1503,20 @@
 				speedEvento = $filter('number')(eventSpeed, 2);	
 			}
 			
+			var rrEvento = "";
+			if (eventRR !== null){
+				rrEvento = $filter('number')(eventRR, 2);	
+			}
+			
+			
 			var datosEvento = L.DomUtil.create('datosEvento');
 
 			datosEvento.innerHTML = '<b>' + $translate.instant('vehicleLocation.userId') + ':</b> ' + userId +
 				'<br/><b>' + $translate.instant('vehicleLocation.date') + ':</b> '+dateEvento+
 				'<br/><b>' + $translate.instant('vehicleLocation.time') + ':</b> '+hourEvento+
 				'<br/><b>' + $translate.instant('vehicleLocation.speed') + ':</b> '+speedEvento +
-				'<br/><b>' + $translate.instant('vehicleLocation.accuracy') + ':</b> '+eventAccuracy;
+				'<br/><b>' + $translate.instant('vehicleLocation.accuracy') + ':</b> '+eventAccuracy +
+				'<br/><b>' + $translate.instant('vehicleLocation.rr') + ':</b> '+rrEvento;
 			return datosEvento;
 		}
 		
@@ -1714,7 +1721,7 @@
 
 			markers.clearLayers();
 			angular.forEach(events, function(value, key) {
-				var info = infoPopupVehicleLocation(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.speed, value.accuracy);			
+				var info = infoPopupVehicleLocation(value.usuarioMovil.sourceId.substring(0,10) + "...", value.timestamp, value.speed, value.accuracy, value.rr);			
 				//Convierto el punto que quiero pintar para tener su lat y log
 				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
 				//Añado al mapa el punto
