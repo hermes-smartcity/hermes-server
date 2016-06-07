@@ -129,6 +129,7 @@ var url_datasections = url_hermesS+'json/datasections';
 var url_network_link = url_hermesS+'network/link?';
 var url_measurement_aggregate = url_hermesS+'measurement/aggregate?';
 var url_network_route = url_hermesS+'network/route?';
+var url_network_simulate = url_hermesS+'network/simulate?';
 var url_get_vehicle_locations = url_hermesS + 'vehiclelocation?';
 var url_get_measurements = url_hermesS + 'measurement?';
 var url_get_data_sections = url_hermesS + 'datasection?';

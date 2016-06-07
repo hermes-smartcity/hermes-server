@@ -1,5 +1,6 @@
 package es.udc.lbd.hermes.model.smartdriver.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -12,9 +13,15 @@ import org.hibernate.type.LongType;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.linearref.LengthIndexedLine;
+
 import es.udc.lbd.hermes.model.smartdriver.NetworkLink;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
+import es.udc.lbd.hermes.model.smartdriver.RoutePoint;
 import es.udc.lbd.hermes.model.util.dao.GenericDaoHibernate;
 import es.udc.lbd.hermes.model.util.exceptions.RouteException;
 
@@ -104,7 +111,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<RouteSegment> obtainListSections(Integer originPoint, Integer destinyPoint) throws RouteException{
+	public List<RouteSegment> obtainListSections(Integer originPoint, Integer destinyPoint, Double fromLat, Double fromLng) throws RouteException{
 		
 		List<RouteSegment> listado = null;
 		try{
@@ -159,10 +166,131 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 					
 			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
 			listado = (List<RouteSegment>) query.list();
+			Coordinate previousCoordinate = null;
+			if (listado.size() > 0) {
+				previousCoordinate = listado.get(0).getGeom_way().getStartPoint().getCoordinate();
+			}
+			for (RouteSegment routeSegment:listado){
+				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
+				if (!firstCoordinate.equals2D(previousCoordinate)) {
+					routeSegment.setGeom_way((LineString)routeSegment.getGeom_way().reverse());
+				}
+				previousCoordinate = routeSegment.getGeom_way().getEndPoint().getCoordinate();
+			}
 		} catch (org.hibernate.exception.GenericJDBCException e){
 			throw new RouteException();
-		}
-		
+		}		
 		return listado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<RoutePoint> simulateListSections(Integer originPoint, Integer destinyPoint, Double fromLat, Double fromLng, Double sf, Double secondsperstep)  throws RouteException{
+		
+		List<RouteSegment> listado = null;
+		List<RoutePoint> result = new ArrayList<RoutePoint>();
+		GeometryFactory geometryFactory = new GeometryFactory();
+		
+		try{
+			String queryString = "SELECT osm_id as \"linkId\", kmh as \"maxSpeed\", osm_name as \"linkName\", " +
+								"case " +
+									"when clazz = 1 then 'highway' " +
+									"when clazz = 2 then 'highway_link' " +
+									"when clazz = 3 then 'trunk' " +
+									"when clazz = 4 then 'trunk_link' " +
+									"when clazz = 5 then 'primary' " +
+									"when clazz = 6 then 'primary_link' " +
+									"when clazz = 7 then 'secondary' " +
+									"when clazz = 8 then 'secondary_link' " +
+									"when clazz = 9 then 'tertiary' " +
+									"when clazz = 10 then 'tertiary_link' " +
+									"when clazz = 11 then 'residential' " +
+									"when clazz = 12 then 'road' " +
+									"when clazz = 13 then 'unclassified' " +
+									"when clazz = 14 then 'service' " +
+									"when clazz = 15 then 'living_street' " +
+									"when clazz = 16 then 'pedestrian' " +
+									"when clazz = 17 then 'track' " +
+									"when clazz = 18 then 'path' " +
+									"when clazz = 19 then 'cicleway' " +
+									"when clazz = 20 then 'footway' " +
+									"when clazz = 21 then 'steps' " +
+								"end as \"linkType\", km as length, link.cost as cost, geom_way " +
+								"FROM network.link, " +
+								"(SELECT seq, id1 as node, id2 as edge, cost " +
+								"FROM pgr_astar('SELECT id, source, target, cost, x1, y1, x2, y2, " +
+														"reverse_cost " +
+												  "FROM network.link " +
+												  "WHERE geom_way && " +
+												  	"(SELECT st_expand(st_envelope(st_union(geom_way)),1) " +
+												  	"FROM network.link " +
+												  	"WHERE source IN ('||:originPoint || ', ' ||:destinyPoint||'))', " +
+												  	":originPoint, :destinyPoint, true, true)) as path " +
+								"where link.id = path.edge " +
+								"order by path.seq";
+			
+			SQLQuery query = getSession().createSQLQuery(queryString);
+			query.addScalar("linkId", LongType.INSTANCE);
+			query.addScalar("maxSpeed", IntegerType.INSTANCE);
+			query.addScalar("linkName", StringType.INSTANCE);
+			query.addScalar("linkType", StringType.INSTANCE);
+			query.addScalar("length", DoubleType.INSTANCE);
+			query.addScalar("cost", DoubleType.INSTANCE);
+			query.addScalar("geom_way", GeometryType.INSTANCE);		
+					
+			query.setParameter("originPoint", originPoint);
+			query.setParameter("destinyPoint", destinyPoint);
+					
+			query.setResultTransformer(Transformers.aliasToBean(RouteSegment.class));
+			listado = (List<RouteSegment>) query.list();
+			double previousSeconds = 0;
+			Coordinate previousEnd = null;
+			if (listado.size() > 0) {
+				previousEnd = listado.get(0).getGeom_way().getStartPoint().getCoordinate();
+			}
+			for (RouteSegment routeSegment:listado){
+				Coordinate firstCoordinate = routeSegment.getGeom_way().getStartPoint().getCoordinate();
+				if (!firstCoordinate.equals2D(previousEnd)) {
+					routeSegment.setGeom_way((LineString)routeSegment.getGeom_way().reverse());
+				}
+				double rsSpeed = kmPerHourToDegreesPerSecond(routeSegment.getMaxSpeed() * sf, routeSegment.getGeom_way().getStartPoint().getY());
+				LengthIndexedLine lil = new LengthIndexedLine(routeSegment.getGeom_way());
+				int position = 0;
+				double step = distanceStep(rsSpeed, secondsperstep);
+				double offset = distanceStep(rsSpeed, previousSeconds);
+				while (position*step+offset <= routeSegment.getGeom_way().getLength()) {
+					Coordinate point = lil.extractPoint(position*step+offset);
+					result.add(new RoutePoint(degreesPerSecondToKmPerHour(rsSpeed, routeSegment.getGeom_way().getStartPoint().getY()), geometryFactory.createPoint(point)));
+					position++;
+				}
+				if (position > 0) {
+					double lastDistance = lil.indexOf(result.get(result.size()-1).getPosition().getCoordinate());
+					double lastStep = routeSegment.getGeom_way().getLength() - lastDistance;
+					previousSeconds = lastStep/rsSpeed;					
+				} else { // No point was used for this segment
+					previousSeconds = previousSeconds - (routeSegment.getGeom_way().getLength() / rsSpeed); 
+				}
+				previousEnd = routeSegment.getGeom_way().getEndPoint().getCoordinate();
+			}
+		} catch (org.hibernate.exception.GenericJDBCException e){
+			throw new RouteException();
+		}		
+		return result;		
+	}
+	
+	private double kmPerHourToDegreesPerSecond(double speed, double latitude) {
+		return speed * (metersToDecimalDegrees(1000.0, latitude)/3600.0);
+	}
+
+	private double degreesPerSecondToKmPerHour(double speed, double latitude) {
+		return (speed * 3600.0) / metersToDecimalDegrees(1000, latitude);
+	}
+
+	
+	private double distanceStep(double speed, double seconds) {
+		return speed * seconds;
+	}
+	
+	private double metersToDecimalDegrees(double meters, double latitude) {
+	    return meters / (111.32 * 1000 * Math.cos(latitude * (Math.PI / 180)));
 	}
 }

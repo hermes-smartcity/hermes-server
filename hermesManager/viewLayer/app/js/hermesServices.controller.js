@@ -3,36 +3,36 @@
 
 	angular.module('app').controller('HermesServicesController', HermesServicesController);
 
-	HermesServicesController.$inject = ['$scope', '$filter', '$http', '$translate', 
-	                                '$state', '$rootScope', 'eventsService', 'services', 
-	                                'types', 'dataSections', 'eventsToday', 
+	HermesServicesController.$inject = ['$scope', '$filter', '$http', '$translate',
+	                                '$state', '$rootScope', 'eventsService', 'services',
+	                                'types', 'dataSections', 'eventsToday',
 	                                'eventoProcesado', 'statistics', 'hermesServicesService',
 	                                'DTOptionsBuilder', 'DTColumnBuilder', '$q', 'SweetAlert'];
 
-	function HermesServicesController($scope, $filter, $http, $translate, $state, 
-			$rootScope, eventsService, services, types, dataSections, eventsToday, 
-			eventoProcesado, statistics, hermesServicesService, DTOptionsBuilder, DTColumnBuilder, 
+	function HermesServicesController($scope, $filter, $http, $translate, $state,
+			$rootScope, eventsService, services, types, dataSections, eventsToday,
+			eventoProcesado, statistics, hermesServicesService, DTOptionsBuilder, DTColumnBuilder,
 			$q, SweetAlert) {
-	
+
 		var vm = this;
-		
+
 		vm.aplicarFiltros = aplicarFiltros;
-				
+
 		// Inicializamos el filtro de error type para que inicialmente liste warning
 		vm.serviceSelected = undefined;
 		vm.methodSelected = undefined;
-		
+
 		vm.services = services;
 		vm.types = types;
 		vm.measurementTypes = $rootScope.measurementsType;
 		vm.dataSections = dataSections;
 		vm.eventsToday = eventsToday;
 		vm.eventoProcesado = eventoProcesado;
-		
+
 		vm.totalMUsers = statistics.contarUsuariosMovil;
 		vm.totalWebUsers = statistics.contarUsuariosWeb;
 		vm.numberActiveUsers = statistics.numberActiveUsers;
-		vm.totalL = statistics.totalVLocations;	
+		vm.totalL = statistics.totalVLocations;
 		vm.totalDS = statistics.totalDataScts;
 		vm.totalM = statistics.totalMeasurements;
 		vm.totalDF = statistics.totalDriversF;
@@ -47,34 +47,34 @@
 		vm.totalUCE = statistics.totalUserCaloriesExpended;
 		vm.totalUHR = statistics.totalUserHeartRates;
 		vm.totalUSL = statistics.totalUserSleep;
-		
+
 		vm.arrancar = arrancar;
 		vm.parar = parar;
-		
+
 		vm.previousLong = undefined;
 		vm.previousLat = undefined;
 		vm.currentLong = undefined;
 		vm.currentLat = undefined;
-		
+
 		vm.fromLng = undefined;
 		vm.fromLat = undefined;
 		vm.toLng = undefined;
 		vm.toLat = undefined;
-		
+
 		vm.nwLng = undefined;
 		vm.nwLat = undefined;
 		vm.seLng = undefined;
 		vm.seLat = undefined;
-				
+
 		vm.changeMethod = changeMethod;
 		vm.change = change;
 		vm.changeToolbar = changeToolbar;
 		vm.changeFilter = changeFilter;
 		vm.limpiarParametrosMapa = limpiarParametrosMapa;
-				
+
 		vm.filtroConcreto = undefined;
 		vm.resultadoConcreto = undefined;
-		
+
 		//Filtros de la seccion aggregateMeasurement
 		vm.typeSelected = undefined;
 		vm.pointLng = undefined;
@@ -82,22 +82,22 @@
 		vm.daySelected = undefined;
 		vm.timeSelected = undefined;
 		vm.dataSectionSelected = undefined;
-		
+
 		//Filtros para las fechas
 		vm.onTimeSetStart = onTimeSetStart;
 		vm.onTimeSetEnd = onTimeSetEnd;
 		vm.showCalendarStart = false;
 		vm.showCalendarEnd = false;
-		
+
 		//Filtros para el tipo de measurement
 		vm.measurementTypeSelected = undefined;
-		
+
 		vm.startDate = new Date();
-		// Inicializamos la fecha de inicio a la de ayer 
+		// Inicializamos la fecha de inicio a la de ayer
 		vm.startDate.setDate(vm.startDate.getDate()-1);
 		vm.endDate = new Date();
-		
-		
+
+
 		vm.mostrarMapa = mostrarMapa;
 		vm.mostrarTabla = mostrarTabla;
 		vm.showMap = true;
@@ -106,24 +106,25 @@
 		vm.showSelectorMapTab = false;
 		vm.activeInput = $translate.instant('hermesServices.mapa');
 		vm.tabla = undefined;
-		
+
 		vm.pintarLineasDataSection = pintarLineasDataSection;
 		vm.pintarLineasCommputeRoute = pintarLineasCommputeRoute;
+		vm.pintarPuntosSimulateRoute = pintarPuntosSimulateRoute;
 		vm.pintarPuntosVehicleLocation = pintarPuntosVehicleLocation;
 		vm.pintarPuntosMeasurement = pintarPuntosMeasurement;
 		vm.pintarLineasDataSection = pintarLineasDataSection;
 		vm.pintarPuntosContextData = pintarPuntosContextData;
 		vm.pintarPuntosUserLocation = pintarPuntosUserLocation;
-		
+
 		vm.datosPromise = datosPromise;
 		vm.cargarListadoTabla = cargarListadoTabla;
-		
+
 		var hours = [];
 	    for (var i = 0; i <= 23; i++) {
 	    	hours.push(i);
 	    }
 	    vm.hours = hours;
-	    
+
 	    //Inicializar options de la tabla
 		vm.dtInstance = null;
 
@@ -137,15 +138,15 @@
 		vm.dtColumnsCR  = [
 		                   DTColumnBuilder.newColumn('linkId').withTitle($translate.instant('hermesServices.linkId')),
 		                   DTColumnBuilder.newColumn('maxSpeed').withTitle($translate.instant('hermesServices.maxSpeed')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('linkName').withTitle($translate.instant('hermesServices.linkName')),
 		                   DTColumnBuilder.newColumn('linkType').withTitle($translate.instant('hermesServices.linkType')),
 		                   DTColumnBuilder.newColumn('length').withTitle($translate.instant('hermesServices.length')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('cost').withTitle($translate.instant('hermesServices.cost')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   })
 		                   ];
 		
@@ -155,7 +156,7 @@
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
 		                   DTColumnBuilder.newColumn('speed').withTitle($translate.instant('vehicleLocation.speed')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
 		                   ];
@@ -166,10 +167,10 @@
 		                	  return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                  }),
 		                  DTColumnBuilder.newColumn('value').withTitle($translate.instant('measurement.value')).renderWith(function(data, type, full) {
-		                	  return $filter('number')(data, 2);   
+		                	  return $filter('number')(data, 2);
 		                  }),
 		                  DTColumnBuilder.newColumn('speed').withTitle($translate.instant('measurement.speed')).renderWith(function(data, type, full) {
-		                	  return $filter('number')(data, 2);   
+		                	  return $filter('number')(data, 2);
 		                  }),
 		                  DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('measurement.accuracy'))
 		                  ];
@@ -180,37 +181,37 @@
 		                	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 		                   }),
 		                   DTColumnBuilder.newColumn('minSpeed').withTitle($translate.instant('dataSection.minimimSpeed')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('maxSpeed').withTitle($translate.instant('dataSection.maximumSpeed')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('medianSpeed').withTitle($translate.instant('dataSection.medianSpeed')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('averageSpeed').withTitle($translate.instant('dataSection.averageSpeed')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('standardDeviationSpeed').withTitle($translate.instant('dataSection.stdDevSpeed')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('averageAcceleration').withTitle($translate.instant('dataSection.averageAcceleration')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('averageDeceleration').withTitle($translate.instant('dataSection.averageDeceleration')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('numHighAccelerations').withTitle($translate.instant('dataSection.highAcceleration')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('numHighDecelerations').withTitle($translate.instant('dataSection.highDecceleration')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('averageHeartRate').withTitle($translate.instant('dataSection.averageHeartRate')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   }),
 		                   DTColumnBuilder.newColumn('standardDeviationHeartRate').withTitle($translate.instant('dataSection.stdDevHeartRate')).renderWith(function(data, type, full) {
-		                	   return $filter('number')(data, 2);   
+		                	   return $filter('number')(data, 2);
 		                   })
 		                   ];
 
@@ -222,7 +223,7 @@
 		                   DTColumnBuilder.newColumn('detectedActivity').withTitle($translate.instant('contextData.detectedActivity')),
 		                   DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('contextData.accuracy'))
 		                   ];
-		
+
 		vm.dtColumnsUL  = [
 		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userLocation.userId')),
 		                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userLocation.timeStart')).renderWith(function(data, type, full) {
@@ -233,7 +234,7 @@
 		                   }),
 		                   DTColumnBuilder.newColumn('accuracy').withTitle($translate.instant('vehicleLocation.accuracy'))
 		                   ];
-		
+
 		vm.dtColumnsUA  = [
 		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userActivity.userId')),
 		                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userActivity.timeStart')).renderWith(function(data, type, full) {
@@ -244,7 +245,7 @@
 		                   }),
 		                   DTColumnBuilder.newColumn('name').withTitle($translate.instant('userActivity.name'))
 		                   ];
-		
+
 		vm.dtColumnsDF  = [
 							DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('driverFeatures.userId')),
 							DTColumnBuilder.newColumn('awakeFor').withTitle($translate.instant('driverFeatures.awakefor')),
@@ -257,7 +258,7 @@
 								return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 				            })
 		                   ];
-		
+
 		vm.dtColumnsHRD  = [
 		                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('heartRateData.userId')),
 		                   DTColumnBuilder.newColumn('eventId').withTitle($translate.instant('heartRateData.eventid')),
@@ -266,7 +267,7 @@
 		                   }),
 		                   DTColumnBuilder.newColumn('heartRate').withTitle($translate.instant('heartRateData.heartrate'))
 		                   ];
-		
+
 		vm.dtColumnsSLD  = [
 			               DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('sleepData.userId')),
 			               DTColumnBuilder.newColumn('eventId').withTitle($translate.instant('sleepData.eventid')),
@@ -280,7 +281,7 @@
 			            	   return $filter('date')(data, 'dd/MM/yyyy HH:mm:ss');
 			               })
 			               ];
-		
+
 		vm.dtColumnsSTD  = [
 				           DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('stepData.userId')),
 				           DTColumnBuilder.newColumn('eventId').withTitle($translate.instant('stepData.eventid')),
@@ -289,7 +290,7 @@
 				           }),
 				           DTColumnBuilder.newColumn('steps').withTitle($translate.instant('stepData.steps'))
 				           ];
-		
+
 		vm.dtColumnsUDI  = [
 			                   DTColumnBuilder.newColumn('usuarioMovil.sourceId').withTitle($translate.instant('userDistances.userId')),
 			                   DTColumnBuilder.newColumn('startTime').withTitle($translate.instant('userDistances.timeStart')).renderWith(function(data, type, full) {
@@ -366,6 +367,9 @@
 		    case "COMPUTE_ROUTE":
 		    	vm.tabla = "./partials/hermesServices/tablaComputeRoute.html";
 		    	break;
+		    case "SIMULATE_ROUTE":
+			  	vm.tabla = undefined;
+			  	break;	
 		    case "GET_VEHICLE_LOCATIONS":
 		    	vm.tabla = "./partials/hermesServices/tablaGetVehicleLocations.html";
 		    	break;
@@ -425,14 +429,14 @@
 			if (vm.events === undefined){
 				vm.events = [];
 			}
-		
-			var dfd = $q.defer();		
+
+			var dfd = $q.defer();
 			dfd.resolve(vm.events);
 
 			return dfd.promise;
 		}
-		
-		function mostrarMapa() {	
+
+		function mostrarMapa() {
 			vm.showMap = true;
 			vm.showTab = false;
 			mostrarResultados();
@@ -442,7 +446,7 @@
 			vm.tabla = undefined;
 		}
 
-		function mostrarTabla() {	
+		function mostrarTabla() {
 			vm.showMap = false;
 			vm.showTab = true;
 			mostrarResultados();
@@ -626,7 +630,7 @@
 			}
 		});
 
-		
+
 		//Inicialiazmos un control vacio
 		var drawControl = new L.Control.Draw({
 			draw: {
@@ -704,6 +708,9 @@
 		    case "COMPUTE_ROUTE":
 		    	asignarCoordenadasPuntoOrigenDestino(layer, type);
 		    	break;
+		    case "SIMULATE_ROUTE":
+			  	asignarCoordenadasPuntoOrigenDestino(layer, type);
+			  	break;
 		    case "GET_VEHICLE_LOCATIONS":
 		    	asignarCoordenadasRectangulo(layer);
 		    	break;
@@ -736,6 +743,9 @@
 			    case "COMPUTE_ROUTE":
 			    	asignarCoordenadasPuntoOrigenDestino(layer, layer.layerType);
 			    	break;
+			    case "SIMULATE_ROUTE":
+				  	asignarCoordenadasPuntoOrigenDestino(layer, layer.layerType);
+				  	break;
 			    case "GET_VEHICLE_LOCATIONS":
 			    	asignarCoordenadasRectangulo(layer);
 			    	break;
@@ -832,7 +842,8 @@
 				vm.methodSelected === 'GET_CONTEXT_DATA' || vm.methodSelected === 'GET_USER_LOCATIONS' ||
 				vm.methodSelected === 'GET_USER_ACTIVITIES' || vm.methodSelected === 'GET_USER_DISTANCES' ||
 				vm.methodSelected === 'GET_USER_STEPS' || vm.methodSelected === 'GET_USER_CALORIES_EXPENDED' ||
-				vm.methodSelected === 'GET_USER_HEART_RATES' || vm.methodSelected === 'GET_USER_SLEEP'){
+				vm.methodSelected === 'GET_USER_HEART_RATES' || vm.methodSelected === 'GET_USER_SLEEP' ||
+				vm.methodSelected === 'SIMULATE_ROUTE'){
 				vm.showResult = false;
 				vm.showSelectorMapTab = true;
 			}else{
@@ -958,7 +969,7 @@
 				break;
 
 			case "COMPUTE_ROUTE":
-
+			case "SIMULATE_ROUTE":
 				//map.addLayer(drawnItems);
 
 				//Los incluimos en el toolbar
@@ -1341,6 +1352,9 @@
 			case "COMPUTE_ROUTE":
 				vm.filtroConcreto = undefined;
 				break;
+			case "SIMULATE_ROUTE":
+				vm.filtroConcreto = undefined;
+				break;
 			case "GET_VEHICLE_LOCATIONS":
 				vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
 		    	break;
@@ -1459,6 +1473,19 @@
 			
 			return datosEvento;
 		}
+		
+		function infoPopupSimulateRoute(speed) {
+
+			var speedEvento = "";
+			if (speed !== null){
+				speedEvento = $filter('number')(speed, 2);
+			}
+			var datosEvento = L.DomUtil.create('datosEvento');
+
+			datosEvento.innerHTML = '<b>' + $translate.instant('vehicleLocation.speed') + ':</b> '+speedEvento + '<br/><b>';
+			return datosEvento;
+		}
+		
 		
 		function infoPopupVehicleLocation(userId, timestamp, eventSpeed, eventAccuracy) {
 			var date = new Date(timestamp);
@@ -1660,6 +1687,19 @@
 			});
 		}
 		
+		function pintarPuntosSimulateRoute(events) {
+			markers.clearLayers();
+			angular.forEach(events, function(value, key) {
+				var mystyles = {
+						color: 'red',
+						fillOpacity: 0.5
+				};
+				var info = infoPopupSimulateRoute(value.speed);
+				var latlng = L.latLng(value.position.coordinates[1], value.position.coordinates[0]);
+				markers.addLayer(L.circle(latlng, 10, mystyles).bindPopup(info));
+			});
+		}
+		
 		function pintarPuntosVehicleLocation(events) {
 			var mystyles = {
 					color: 'red',
@@ -1787,6 +1827,22 @@
 										
 				  break;
 				
+			 case "SIMULATE_ROUTE":
+					  hermesServicesService.getSimulateRoute(vm.fromLat, vm.fromLng, vm.toLat, vm.toLng).then(getSimulateRouteComplete).catch(getSimulateRouteFailed);
+
+						function getSimulateRouteComplete(response) {
+							vm.resultadoConcreto = undefined;
+							vm.events = response.data;
+							pintarPuntosSimulateRoute(vm.events);
+						}
+
+						function getSimulateRouteFailed(error) {
+							vm.errorPoint = true;
+							vm.mensajeErrorPoint = error.data.message;
+						}
+
+					  break;
+					  	
 			  case "GET_VEHICLE_LOCATIONS":
 				  	hermesServicesService.getVehicleLocation(vm.startDate, vm.endDate, vm.seLng, vm.seLat, vm.nwLng, vm.nwLat).then(getVehicleLocationComplete);
 					
@@ -2089,6 +2145,23 @@
 			}
 		}
 
+		function validacionSimulateRoute(){
+			var texto = "";
+			if (vm.fromLng === undefined || vm.fromLat === undefined){
+				texto = texto + $translate.instant('hermesServices.selectOriginPoint') + '\n';
+			}
+
+			if (vm.toLng === undefined || vm.toLat === undefined){
+				texto = texto + $translate.instant('hermesServices.selectDestinyPoint') + '\n';
+			}
+
+			if (texto !== ""){
+				SweetAlert.swal(texto);
+			}else{
+				ejecutarPeticion();
+			}
+		}
+		
 		function validacionGetVehicleLocations(){
 			var texto = "";
 			if (vm.startDate === undefined || vm.endDate === undefined){
@@ -2332,6 +2405,10 @@
 				validacionComputeRoute();
 				break;
 
+			case "SIMULATE_ROUTE":
+				validacionSimulateRoute();
+				break;
+				
 			case "GET_VEHICLE_LOCATIONS":
 				validacionGetVehicleLocations();
 				break;

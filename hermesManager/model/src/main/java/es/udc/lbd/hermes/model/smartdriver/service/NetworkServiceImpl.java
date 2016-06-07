@@ -45,6 +45,7 @@ import es.udc.lbd.hermes.model.events.vehicleLocation.dao.VehicleLocationDao;
 import es.udc.lbd.hermes.model.smartdriver.AggregateMeasurementVO;
 import es.udc.lbd.hermes.model.smartdriver.NetworkLinkVO;
 import es.udc.lbd.hermes.model.smartdriver.RouteSegment;
+import es.udc.lbd.hermes.model.smartdriver.RoutePoint;
 import es.udc.lbd.hermes.model.smartdriver.Type;
 import es.udc.lbd.hermes.model.smartdriver.dao.NetworkDao;
 import es.udc.lbd.hermes.model.util.HelpersModel;
@@ -184,20 +185,39 @@ public class NetworkServiceImpl implements NetworkService{
 				
 		//Obtenemos la lista de tramos
 		try{
-			List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint);
-			
+			List<RouteSegment> listado = networkDao.obtainListSections(originPoint, destinyPoint, fromLat, fromLng);
 			//Registramos peticion realizada al servicio rest 
 			RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
 			registro.computeRouteSmartDriver();
-					
 			return listado;
-			
 		}catch(RouteException e){
 			throw e;
 		}
-		
-		
 	}
+	
+	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
+	public List<RoutePoint> simulateRoute(Double fromLat, Double fromLng, Double toLat, Double toLng, Double sf) throws PointDestinyException, PointOriginException, RouteException{
+		//Obtenemos el id de origen
+		Integer originPoint = networkDao.obtainOriginPoint(fromLat, fromLng);
+		if (originPoint == null)
+			throw new PointOriginException(fromLat, fromLng);
+		
+		//Obtenemos el id de destino
+		Integer destinyPoint = networkDao.obtainDestinyPoint(toLat, toLng);
+		if (destinyPoint == null)
+			throw new PointDestinyException(toLat, toLng);
+				
+		//Obtenemos la lista de tramos
+		try{
+			List<RoutePoint> listado = networkDao.simulateListSections(originPoint, destinyPoint, fromLat, fromLng, sf, new Double(1));			
+			//Registramos peticion realizada al servicio rest 
+			RegistroPeticionesHelper registro = new RegistroPeticionesHelper(dataServiceDao);
+			registro.simulateRouteSmartDriver();
+			return listado;
+		}catch(RouteException e){
+			throw e;
+		}
+	}	
 	
 	@Secured({ "ROLE_ADMIN", "ROLE_CONSULTA"})
 	public List<VehicleLocation> getVehicleLocation(Long idUsuario, Calendar fechaIni, Calendar fechaFin,
