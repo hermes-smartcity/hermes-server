@@ -2148,6 +2148,18 @@
 			}
 		}
 
+		function isNumeric(val) {
+	        var validChars = '0123456789.';
+
+	        for(var i = 0; i < val.length; i++) {
+	            if(validChars.indexOf(val.charAt(i)) == -1)
+	                return false;
+	        }
+
+
+	        return true;
+	    }
+		
 		function validacionSimulateRoute(){
 			var texto = "";
 			if (vm.fromLng === undefined || vm.fromLat === undefined){
@@ -2161,10 +2173,25 @@
 			if (vm.speedFactor === undefined){
 				texto = texto + $translate.instant('hermesServices.speedFactor') + '\n';
 			}else{
-				var patron = /^\d*$/;  
+				var patron = /^\d+.?\d*$/;  
 				if (!patron.test(vm.speedFactor)) { 
 					texto = texto + $translate.instant('hermesServices.speedFactorNoNumber') + '\n';
+				}else{
+					 if(isNaN(vm.speedFactor)){
+						 texto = texto + $translate.instant('hermesServices.speedFactorNoNumber') + '\n';
+				     }
 				}
+				
+				/*if(isNumeric(strVal)) {
+			        var dblVar = parseFloat(strVar);
+
+			        if(isNaN(dblVar)){
+			        	texto = texto + $translate.instant('hermesServices.speedFactorNoNumber') + '\n';
+			        }
+			            
+			    }else{
+			    	texto = texto + $translate.instant('hermesServices.speedFactorNoNumber') + '\n';
+			    }*/
 			}
 			
 			if (texto !== ""){
