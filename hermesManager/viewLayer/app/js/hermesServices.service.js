@@ -119,14 +119,13 @@
 
 		}
 
-		function getSimulateRoute (fromLat, fromLng, toLat, toLng) {
+		function getSimulateRoute (fromLat, fromLng, toLat, toLng, speedFactor) {
 			var lang = $localStorage.hermesmanager.lang;
 			return $http({
 				method : 'GET',
-				url : url_network_simulate + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng + "&speedFactor=1",
+				url : url_network_simulate + "fromLat=" + fromLat + "&fromLng=" + fromLng + "&toLat=" + toLat + "&toLng=" + toLng + "&speedFactor=" + speedFactor,
 				params: {"lang": lang}
 			});
-
 		}
 
 

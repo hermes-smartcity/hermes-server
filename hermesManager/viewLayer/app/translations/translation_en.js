@@ -142,6 +142,7 @@
 				"tipoSensor": "Sensor Type: ",
 				"chooseOne": "Choose one",
 				"measurementType": "Measurement type",
+				"speedFactor": "Speed factor"
 			},
 			"resultados": {
 				"titulo": "Results",
@@ -264,7 +265,9 @@
 				"noData": "There are not data to show",
 				"selectDates": "Select dates",
 				"selectRectangle": "Select rectangle",
-				"selectMeasurementType": "Select measurement type"
+				"selectMeasurementType": "Select measurement type",
+				"speedFactor": "Speed factor compulsory",
+				"speedFactorNoNumber": "Speed factor has to be a positive number"
 			},
 			"userLocation":{
 				"noEvents": "There are not events to show",

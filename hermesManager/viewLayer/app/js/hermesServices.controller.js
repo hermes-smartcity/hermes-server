@@ -92,6 +92,9 @@
 		//Filtros para el tipo de measurement
 		vm.measurementTypeSelected = undefined;
 
+		//Filtros de la seccion simulaterotue
+		vm.speedFactor = undefined;
+		
 		vm.startDate = new Date();
 		// Inicializamos la fecha de inicio a la de ayer
 		vm.startDate.setDate(vm.startDate.getDate()-1);
@@ -1353,7 +1356,7 @@
 				vm.filtroConcreto = undefined;
 				break;
 			case "SIMULATE_ROUTE":
-				vm.filtroConcreto = undefined;
+				vm.filtroConcreto = "./partials/hermesServices/filtrosSimulateRoute.html";
 				break;
 			case "GET_VEHICLE_LOCATIONS":
 				vm.filtroConcreto = "./partials/hermesServices/filtrosFechas.html";
@@ -1828,7 +1831,7 @@
 				  break;
 				
 			 case "SIMULATE_ROUTE":
-					  hermesServicesService.getSimulateRoute(vm.fromLat, vm.fromLng, vm.toLat, vm.toLng).then(getSimulateRouteComplete).catch(getSimulateRouteFailed);
+					  hermesServicesService.getSimulateRoute(vm.fromLat, vm.fromLng, vm.toLat, vm.toLng, vm.speedFactor).then(getSimulateRouteComplete).catch(getSimulateRouteFailed);
 
 						function getSimulateRouteComplete(response) {
 							vm.resultadoConcreto = undefined;
@@ -2155,6 +2158,15 @@
 				texto = texto + $translate.instant('hermesServices.selectDestinyPoint') + '\n';
 			}
 
+			if (vm.speedFactor === undefined){
+				texto = texto + $translate.instant('hermesServices.speedFactor') + '\n';
+			}else{
+				var patron = /^\d*$/;  
+				if (!patron.test(vm.speedFactor)) { 
+					texto = texto + $translate.instant('hermesServices.speedFactorNoNumber') + '\n';
+				}
+			}
+			
 			if (texto !== ""){
 				SweetAlert.swal(texto);
 			}else{
