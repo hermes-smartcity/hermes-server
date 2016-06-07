@@ -1,11 +1,8 @@
 package es.udc.lbd.hermes.eventManager.json;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -45,6 +42,10 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 		registerEventType("User Calories Expended", ZtreamyUserCaloriesExpendedList.class);
 		registerEventType("User Heart Rates", ZtreamyUserHeartRatesList.class);
 		registerEventType("User Sleep", ZtreamyUserSleepList.class);
+		registerEventType("Full User Distances", ZtreamyUserDistancesList.class);
+		registerEventType("Full User Steps", ZtreamyUserStepsList.class);
+		registerEventType("Full User Calories Expended", ZtreamyUserCaloriesExpendedList.class);
+		registerEventType("Full User Heart Rates", ZtreamyUserHeartRatesList.class);
 	}
 
 	void registerEventType(String uniqueName, Class<? extends EventData> eventTypeClass) {
@@ -55,7 +56,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 	public EventData deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 		Class<? extends EventData> eventTypeClass = null;
 		JsonNode eventTypeData = null;
-		String eventTypeKey = "";
+		//String eventTypeKey = "";
 
 		ObjectMapper mapper = (ObjectMapper) jp.getCodec();
 		JsonNode root = mapper.readTree(jp);		
@@ -66,7 +67,7 @@ public class EventDataDeserializer extends StdDeserializer<EventData> {
 			if (registry.containsKey(name)) {
 				eventTypeClass = registry.get(name);
 				eventTypeData = element.getValue();
-				eventTypeKey = element.getKey();
+				//eventTypeKey = element.getKey();
 				break;
 			}
 		}
