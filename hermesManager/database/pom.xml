@@ -12,8 +12,6 @@
 	<properties>
 		<version.sql-maven-plugin>1.4</version.sql-maven-plugin>
 		<datasource.setupDBScript>01-PSQL-SetupDatabase.sql</datasource.setupDBScript>	
-		<datasource.createTNUtilityScript>02-PSQL-CreateTNUtility.sql</datasource.createTNUtilityScript>	
-		<datasource.createTNSchemaScript>03-PSQL-CreateTNSchema.sql</datasource.createTNSchemaScript>	
 		<datasource.createEventsSchemaScript>04-PSQL-CreateEventsSchema.sql</datasource.createEventsSchemaScript>
 		<datasource.createEventsDataScript>05-PSQL-CreateEventsData.sql</datasource.createEventsDataScript>
 		<datasource.createOsmImportSchemaScript>06-PSQL-CreateOsmImportSchema.sql</datasource.createOsmImportSchemaScript>

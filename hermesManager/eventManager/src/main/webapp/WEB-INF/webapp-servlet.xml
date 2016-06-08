@@ -13,19 +13,10 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
-	<mvc:annotation-driven conversion-service="formattingFactory" />
+	<mvc:annotation-driven/>
+
 	<mvc:default-servlet-handler />
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator"/>
- 
-	<bean id="formattingFactory"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="formatterRegistrars">
-			<list>
-				<bean
-					class="es.udc.lbd.hermes.eventManager.controller.util.formatter.FormattingFactory" />
-			</list>
-		</property>
-	</bean>
 	
 	<!-- Internacionalizacion -->
 	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
