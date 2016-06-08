@@ -1,36 +1,32 @@
-1) Descargar de https://git.enxenio.net/Proxectos/MECO1401.git la rama master
-
-2) Configurar el eclipse 
+1) Configure Eclipse: 
     - Windows - Preferences - General - Workspace - Text file encoding: UTF-8
     - Windows - Preferences - Java - Installed JREs: 1.7.0_80
     - Windows - Preferences - Java - Compiler: 1.7
-   
-Nota: Si no se tiene esa versión de JDk bajarla desde http://www.oracle.com/technetwork/es/java/javase/downloads/jdk7-downloads-1880260.html
+  
+2) Configure the system so that JAVA_HOME points to that JDK
 
-3) Configurar las variables de entorno para que el JAVA_HOME apunte a esa jdk
-
-4) Crear los proyectos (hermesManager) en un eclipse mediante 
+3) Create the projects in Eclipse with 
 
 File > Import > Existing Maven Projects
 
-5) Crear una base de datos en un postgres 9.x + postgis 2.X local llamada smartcity
+4) Create a database in postgres 9.x + postgis 2.X
 
-6) Editar el pom.xml de hermesManager para indicar el puerto de la instalación de postgres
+5) Edit hermesManager/pom.xml to indicate the database connection information
 
-7) Ejecutar mvn sql:execute en hermesmanager/database
+6) Execute mvn sql:execute in hermesmanager/database
 
-8) Ejecutar mvn clean install en hermesmanager
+7) Execute mvn clean install in hermesmanager
 
-9) Ejecutar mvn jetty:run en hermesmanager/eventmanager
+8) Execute mvn jetty:run in hermesmanager/eventmanager
 
--- En otra consola de comandos
+-- In a different terminal console
 
-10) Instalar Node.js desde https://nodejs.org/en/
+9) Install Node.js
 
-11) Ejecutar npm install en hermesmanager/viewlayer
+10) Execute npm install in hermesmanager/viewlayer
 
-12) Ejecutar npm install -g gulp en hermesmanager/viewlayer
+11) Execute npm install gulp in hermesmanager/viewlayer
 
-13) Ejecutar gulp build en hermesmanager/viewlayer 
+12) Execute gulp build in hermesmanager/viewlayer 
 
-14) Abrir en un navegador http://localhost:8888/
+13) Open http://localhost:8888/ in a web browser 
