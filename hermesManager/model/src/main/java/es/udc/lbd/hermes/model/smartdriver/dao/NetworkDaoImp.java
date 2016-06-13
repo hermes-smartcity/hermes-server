@@ -253,10 +253,10 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 				LengthIndexedLine lil = new LengthIndexedLine(routeSegment.getGeom_way());
 				int position = 0;
 				double step = distanceStep(rsSpeed, secondsperstep);
-				double offset = distanceStep(rsSpeed, previousSeconds);
-				while (position*step+offset <= routeSegment.getGeom_way().getLength()) {
+				double offset = distanceStep(rsSpeed, (secondsperstep - previousSeconds));
+				while (position*step+offset < routeSegment.getGeom_way().getLength()) {
 					Coordinate point = lil.extractPoint(position*step+offset);
-					result.add(new RoutePoint(degreesPerSecondToKmPerHour(rsSpeed, routeSegment.getGeom_way().getStartPoint().getY()), geometryFactory.createPoint(point)));
+					result.add(new RoutePoint(routeSegment.getMaxSpeed() * sf, geometryFactory.createPoint(point)));
 					position++;
 				}
 				if (position > 0) {
@@ -264,7 +264,7 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 					double lastStep = routeSegment.getGeom_way().getLength() - lastDistance;
 					previousSeconds = lastStep/rsSpeed;					
 				} else { // No point was used for this segment
-					previousSeconds = previousSeconds - (routeSegment.getGeom_way().getLength() / rsSpeed); 
+					previousSeconds = previousSeconds + (routeSegment.getGeom_way().getLength() / rsSpeed); 
 				}
 				previousEnd = routeSegment.getGeom_way().getEndPoint().getCoordinate();
 			}
@@ -276,10 +276,6 @@ public class NetworkDaoImp extends GenericDaoHibernate<NetworkLink, Long> implem
 	
 	private double kmPerHourToDegreesPerSecond(double speed, double latitude) {
 		return speed * (metersToDecimalDegrees(1000.0, latitude)/3600.0);
-	}
-
-	private double degreesPerSecondToKmPerHour(double speed, double latitude) {
-		return (speed * 3600.0) / metersToDecimalDegrees(1000, latitude);
 	}
 
 	
